@@ -3,7 +3,7 @@
 list of similar papers: 
 https://docs.google.com/document/d/12XlCX0UWKLH1RJ9NsSciWxXn4DD0oh4slqd_TmKjp0A/edit
 
-including these I have not read:
+including these (wasnt aware of them)
 - https://www.pnas.org/content/117/15/8398
 - https://link.springer.com/article/10.3758/s13423-017-1417-2
 - https://www.ovdakker.com/project/other-meta-research/
@@ -11,5 +11,5 @@ including these I have not read:
 - https://www.tandfonline.com/doi/full/10.1080/00031305.2019.1565553
 
 
+Other stuff:
 - ecology repo: https://osf.io/e5xhm/
-- CHIELD database: https://chield.excd.org/
