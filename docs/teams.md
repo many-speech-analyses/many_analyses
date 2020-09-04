@@ -27,6 +27,7 @@
 | Oliver Nieburh | Europe |
 | Fabian Tomaschek | Europe |
 | Kamil Kaźmierski | Europe |
+| Miša Hejna | Europe |
 | Frank Kügler | Europe |
 |  Patrycja Strycharczuk  | UK |
 | Jalal Al-Tamimi | UK |
