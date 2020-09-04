@@ -9,6 +9,8 @@
 - Dataset (see <https://github.com/jvcasillas/many_analyses/issues/2#issue-691147987>):
   - [ ] Curate dataset.
   - [ ] Data dictionary (variables description).
+  - [ ] Detailed description of experiment (plus norming study)
+  - [ ] Screen Recording of experiment (plus norming study)
 - Later phases:
   - [ ] Analytical approach collection email (SS p. 53).
   - [ ] Analytical approach collection questionnaire (SS p. 54).
