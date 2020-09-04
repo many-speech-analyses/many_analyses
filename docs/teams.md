@@ -17,7 +17,7 @@
 | Maria-Paola D’imperio | US/Canada |
 | Jo Frühwald | US/Canada |
 | Marco Fonseca | US/Canada |
-| Steven Lulich / Gosia Ćavar (Bloomington Ling dep and/or Speech lab; maybe) |
+| Steven Lulich / Gosia Ćavar (Bloomington Ling dep and/or Speech lab; maybe) | US/Canada |
 | Cologne Lab (maybe even multiple analysis teams) | Europe |
 | Munich Lab | Europe |
 | Dinah Baer-Henney | Europe |
