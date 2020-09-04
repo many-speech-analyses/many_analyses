@@ -17,6 +17,7 @@
 | Maria-Paola D’imperio | US/Canada |
 | Jo Frühwald | US/Canada |
 | Marco Fonseca | US/Canada |
+| Steven Lulich / Gosia Ćavar (Bloomington Ling dep and/or Speech lab; maybe) |
 | Cologne Lab (maybe even multiple analysis teams) | Europe |
 | Munich Lab | Europe |
 | Dinah Baer-Henney | Europe |
@@ -29,8 +30,14 @@
 | Kamil Kaźmierski | Europe |
 | Miša Hejna | Europe |
 | Frank Kügler | Europe |
+| Chiara Meluzzi | Europe |
 |  Patrycja Strycharczuk  | UK |
 | Jalal Al-Tamimi | UK |
 | Adam Chong | UK |
 | Rory Turnbull | UK |
+| George Bailey | UK |
+| Danielle Turton | UK |
+| Jim Scobbie (maybe) | UK |
+| Joanne Cleland | UK |
+| Sam Kirkham | UK |
 | Steven Politzer-Ahles | Asia |
