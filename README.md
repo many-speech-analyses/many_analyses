@@ -4,7 +4,7 @@ list of similar papers:
 https://docs.google.com/document/d/12XlCX0UWKLH1RJ9NsSciWxXn4DD0oh4slqd_TmKjp0A/edit
 
 including these (wasnt aware of them)
-- https://www.pnas.org/content/117/15/8398
+- https://www.pnas.org/content/117/15/8398 (note: not too relevant, a common practice in ML. Worth citing tho).
 - https://link.springer.com/article/10.3758/s13423-017-1417-2
 - https://www.ovdakker.com/project/other-meta-research/
 - https://discovery.ucl.ac.uk/id/eprint/10083086/7/Malejka_Assessing%20Theoretical%20Conclusions%20With%20Blinded%20Inference%20to%20Investigate%20a%20Potential%20Inference%20Crisis_AAM.pdf
