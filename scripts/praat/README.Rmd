@@ -1,0 +1,12 @@
+---
+output: github_document
+---
+
+## praat
+
+This folder contains all of the scripts necessary to reproduce any work 
+conducted in Praat. 
+
+```{r, 'basic-scripts-structure', comment=NA, echo=F}
+fs::dir_tree(recurse = 1)
+```

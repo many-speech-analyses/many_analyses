@@ -1,0 +1,12 @@
+---
+output: github_document
+---
+
+## r
+
+This folder contains all of the scripts necessary to reproduce the
+plots, tables, and analyses conducted in R.
+
+```{r, 'basic-scripts-structure', comment=NA, echo=F}
+fs::dir_tree(recurse = 1)
+```

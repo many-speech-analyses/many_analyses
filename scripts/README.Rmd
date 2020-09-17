@@ -1,0 +1,12 @@
+---
+output: github_document
+---
+
+## scripts
+
+This folder contains all of the scripts necessary to reproduce anything 
+conducted in Praat and R.
+
+```{r, 'basic-scripts-structure', comment=NA, echo=F}
+fs::dir_tree(recurse = 1)
+```
