@@ -2,6 +2,8 @@
 #
 # Last update: 20200917
 # About: This script produces a gantt chart of our project timeline
+#        The plot is produced using ganttrify: 
+#        https://github.com/giocomai/ganttrify
 #
 # -----------------------------------------------------------------------------
 
