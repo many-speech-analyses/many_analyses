@@ -13,19 +13,25 @@ options(tinytex.verbose = TRUE)
 
 
 ## 1. Research Questions
-Do speakers modify the speech signal to indicate the typicality of the modifier of the noun?
+This study investigates whether speakers modify the speech signal to signal atypical referents? Concretely, we ask whether the suprasegmental profile of an utterance with an atypical referent like "blue banana" is different from one with a typical referent such as "yellow banana". 
 
 ## 2. Participants
-Participants were paid for participation. Participants were 30 native German speakers (who grew up in a monolingual environment) recruited from the population living in the broad Cologne area with normal or corrected-to-normal vision and normal hearing. 
+30 native German speakers participated in this study. All participants grew up in a monolingual environment and were recruited from the population living in the broad Cologne area with normal or corrected-to-normal vision and normal hearing. Participants were paid for their participation.
 
 ## 3. Procedure
-In this production study, subjects had to verbally instruct the experimenter to select a certain object from sets of alternatives. The alternatives differ with respect to their colour, their identity, or both. Objects are referred to using noun phrases that consist of a modifier denoting colour and a modified object (e.g. yellow banana). These noun phrases differ with respect to the typicality of their combination, as discussed in the stimuli section.
+In this production study, participants interacted with the experimenter. Participants had to verbally instruct the experimenter to select a specified target object out of four visually presented objects. The non-target objects differed from the target with respect to their colour, their identity, or both. Objects were referred to using noun phrases that consist of a modifier denoting colour and a modified object (e.g. yellow banana, blue banana). These adjective-noun combinations differed with respect to the typicality of their combination. The adjective-noun combinations were either typical, medium typical, or atypical (as established in a norming study, see additional materials). Some combinations were typical such as yellow banana, red tomato, or yellow apricot; some were atypical such as red banana, purple tomato, or blue apricot; and some were somewhat in the middle like brown banana, green tomato, and red apricot (see ) 
 
-Participants were seated in front of a computer screen. The experimenter sat at the opposite side of the table in front of another computer screen. Participants and experiment could not see each other. 
+```{r image0, echo = FALSE, fig.align="center", out.width = "60%", fig.cap = "Three examples for typical, medium typical and atypical combinations of colour and object."}
 
-In a familiarization phase, participants saw one object per trial. In order to advance to the next trial, participants had to read the corresponding noun phrase out (e.g. red cucumber). During this phase, Participants had to name all atypical colour-object targets that we used in the critical period of the experiment as well as their typical counterparts. For example, if red cucumber (atypical) was an experimental target, participants were presented with both the red cucumber (atypical) and the green cucumber (typical). The familiarization phase thus exposes participants to the full range of typicality preceding the critical trials in order for subjects to perceive (a)typicality in relative terms. After the familiarization phase, the experiment moved on to the training and the test phase. Training and test phase differed only in the choice of stimuli. In the training phase, only objects that do not occur as targets and competitors in the test phase were used.
+knitr::include_graphics("typicality_examples.png")
 
-On each trial in the test phase, participants first see four coloured objects in the top left, top right, bottom left, and bottom right of the screen, respectively. One of the object, served as the target, another served as a competitor, and the remaining two served as unrelated distractors. The position of the visual stimuli was randomized for each trial. In the center of the picture, a black cube was displayed which could be moved by the experimenter. The participants were asked to instruct the experimenter to move the cube onto one of the four pictures.
+```
+
+Participants were seated in front of a computer screen. The experimenter sat at the opposite side of the table in front of another computer screen. Participants and experimenter could see neither each other nor each others' screens. The experiment consisted of two phases. A familiarization phase and a test phase.
+
+In a familiarization phase, participants saw one object per trial. In order to advance to the next trial, participants had to read out loud the corresponding noun phrase (e.g. blue banana). During this phase, participants had to name all atypical colour-object targets that we used in the test phase of the experiment alongside their typical counterparts. For example, if red banana (atypical) was an experimental target, participants were presented with both the red banana (atypical) and the yellow banana (typical). We included this familiarization phase in order to expose participants to the full range of typicality for each object. 
+
+After the familiarization phase, participants entered the test phase. On each trial in the test phase, participants first saw four coloured objects in the top left, top right, bottom left, and bottom right of the screen, respectively. One of the object served as the target; another served as the competitor; and the remaining two served as unrelated distractors. The position of the visual stimuli was randomized for each trial and each participant. In the center of the screen, a black cube was displayed which could be moved by the experimenter. The participants were asked to instruct the experimenter to move the cube onto one of the four pictures.
 
 After 1500 ms, a ‘trigger’ sentence containing the competitor was orthographically presented below the cube:
  
