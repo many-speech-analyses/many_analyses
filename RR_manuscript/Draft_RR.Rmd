@@ -216,14 +216,8 @@ INFORMATION ABOUT THE DATA SET AND EXP DESIGN
 # Methods (mostly copy-paste from Evo-RR)
 This project involves a series of steps (X-X) that begin recruiting independent groups of scientists to analyze the data, continuing through allowing the scientists to analyze the data as they see fit, generating peer review ratings of the analyses (based on methods, not results), evaluating the variation in effects among the different analyses, and producing the final manuscript. We estimate that this process, from the time of an in-principle acceptance of this stage 1 Registered Report, will take XX months (Table X). The factor most likely to delay our timeline is the rate of completion of the original set of analyses by independent groups of scientists.
 
-<<<<<<< HEAD
 ## Step 1: Recruitment and Initial Survey of Analysts
 Initiating authors (SC, JC, TR) created a publicly available document providing a general description of the project (LINK) and a short prerecorded slide show that summarizes the study and research question (LINK). The project will be advertised via Social Media, using mailing lists for linguistic and psychological societies (full scope of these lists is not fixed but will include LIST OF LISTS), and via word of mouth. The target population is active speech science researchers with a graduate degree (or currently studying for a graduate degree) in a relevant discipline. Researchers can choose to work independently or in a small team. For the sake of simplicity, we refer to single researcher or small teams as ‘analysis teams’. 
-=======
-# Methods
-
-We report how we determined our sample size, all data exclusions (if any), all manipulations, and all measures in the study. <!-- 21-word solution (Simmons, Nelson & Simonsohn, 2012; retrieved from http://ssrn.com/abstract=2160588) -->
->>>>>>> 04fb6b7250fb0d9e42bf455ede969f18a61f47f5
 
 Recruitment for this project is ongoing but we aim for a minimum of XX analysis teams independently evaluating each dataset (see sample size justification below). We will simultaneously recruit volunteers to peer-review the analyses conducted by the other volunteers through the same channels. Our goal is to recruit a similar number of peer-reviewers and analysts, and to ask each peer reviewer to review a minimum of four analyses. If we are unable to recruit at least half the number of reviewers as analysis teams, we will ask analysts to serve also as reviewers (after they have completed their analyses). All analysts and reviewers will share co-authorship on this manuscript and will participate in the collaborative process of producing the final manuscript. All analysts will sign a consent (ethics) document (LINK). 
 
