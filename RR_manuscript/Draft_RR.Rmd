@@ -305,11 +305,9 @@ We anticipate that the majority of statistical analyses will be expressible as a
 
 ADD FORMULA
 
-SHOULD WE TRANSFORM ALL MODELS AS BAYESIAN MODELS TO QUANTIFY THE EFFECT SIZE AS A PROB DISTRIBUTION? IF SO NEED TO DESCRIBE HOW.
+<!-- TR: SHOULD WE TRANSFORM ALL MODELS AS BAYESIAN MODELS TO QUANTIFY THE EFFECT SIZE AS A PROB DISTRIBUTION? IF SO NEED TO DESCRIBE HOW. -->
 
-JC: I believe we can use their ES in our model to get a prob dist. of the pooled estimate. I don't think we need to transform their models. 
-
-TR:TRUE? 
+<!-- JC: I believe we can use their ES in our model to get a prob dist. of the pooled estimate. I don't think we need to transform their models. -->
 
 First, we will derive standardized effect sizes from each individual analysis. 
 Since researchers are likely using multi-level linear regression models, common effect size measures such as Cohen's d are inappropriate. 
@@ -319,19 +317,19 @@ We thus will take into account all of the variance sources of the models (Hedges
 $$\delta_t = \frac{\beta}{\sqrt{\sum_{i=1}^{n} \sigma^2_{i}}}$$
 Where $_i$ refers to the individual variance components.
 
-CHECK IF THIS IS CORRECTLY EXPRESSED, NOT SURE ABOUT THE SUM SIGN...
-RELEVANT: https://www.reddit.com/r/statistics/comments/fouwp9/q_effect_size_calculation_for_brms_delta_t/
+<!-- TR: CHECK IF THIS IS CORRECTLY EXPRESSED, NOT SURE ABOUT THE SUM SIGN...
+RELEVANT: https://www.reddit.com/r/statistics/comments/fouwp9/q_effect_size_calculation_for_brms_delta_t/ -->
 
-I THINK IT LOOKS GOOD (MAKES SENSE), THOUGH THIS IS ALSO A POSSIBILITY:
+<!-- JC:I THINK IT LOOKS GOOD (MAKES SENSE), THOUGH THIS IS ALSO A POSSIBILITY:
 
-$$\delta_t = \frac{\beta}{\sqrt{\sigma^2_{i} + ... \sigma^2_{k}}}$$
+$$\delta_t = \frac{\beta}{\sqrt{\sigma^2_{i} + ... \sigma^2_{k}}}$$-->
 
 
 Variation in the resulting effect sizes can be due to many different sources, one of which is the model architecture and the specification of random effect structure. 
 Hypothetically, two analyst teams can arrive at two different effect sizes, even if they have made the exact same measurement, processed the data in the exact same way, and used the same predictor combination, but, crucially, differ in their random effect structure (e.g. one team assumes random intercepts only, the other team uses random slopes). 
 Thus, additionally, we will run all analyses with a prespecified maximal random effect structure for all predictors. 
 
-TR: THIS HAS SOME PRACTICAL ISSUES, NEED TO DISCUSS
+<!-- TR: THIS HAS SOME PRACTICAL ISSUES, NEED TO DISCUSS-->
 
 WRITE ABOUT HOW TO HANDLE GAMS
 
