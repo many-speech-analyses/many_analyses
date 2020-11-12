@@ -89,24 +89,25 @@ knitr::opts_chunk$set(cache.extra = knitr::rand_seed)
 In order to effectively accumulate knowledge, science needs to (i) produce data that can be replicated using the original methods and (ii) arrive at robust conclusions substantiated by the data. 
 In recent coordinated efforts to replicate published findings, the scientific disciplines have uncovered surprisingly low success rates for (i) [e.g., @open2015estimating; @camerer2018evaluating] leading to what is now referred to as the *replication crisis*. 
 Beyond the difficulties of replicating scientific findings, a growing body of evidence suggests that the theoretical conclusions drawn from data are often variable even when researchers have access to reliable data (REFS). 
-The latter situation has been referred to as the *inference crisis* (Rotello, Heit & Dubé 2015, Starns et al. 2019) and is, among other things, rooted in the inherent flexibility of data analysis, often referred to as researcher degrees of freedom (Simmons, Nelson, & Simonsohn, 2011, Gelman & Loken 2013). 
+The latter situation has been referred to as the *inference crisis* (Rotello, Heit & Dubé 2015, Starns et al. 2019) and is, among other things, rooted in the inherent flexibility of data analysis (often referred to as researcher degrees of freedom: Simmons, Nelson, & Simonsohn, 2011, Gelman & Loken 2013). 
 Data analysis involves many different steps, such as inspecting, organizing, transforming, and modeling the data, to name a few. 
 Along the way, different methodological and analytical choices need to be made, all of which may influence the final interpretation of the data. 
 These researcher degrees of freedom are both a blessing and a curse at the same time.
 
 They are a blessing because they afford us the opportunity to look at nature from different angles, which, in turn, allows us to make important discoveries and generate new hypothesis (e.g. Box 1976, Tukey 1977, de Groot 2014). 
 They are a curse because idiosyncratic choices can lead to categorically different interpretations, which eventually find their way into the publication record where they are taken for granted (Simmons et al. 2011). <!-- taken for granted? --> 
-Recent projects have shown that the variability between different data analysts is immense and can often lead independent researchers to draw vastly different conclusions about the same dataset (e.g. Silberzahn et al. 2018, Starns et al. 2019, Botvinik-Nezer et al., 2020). 
+Recent projects have shown that the variability between different data analysts is vast.
+This variability can lead independent researchers to draw vastly different conclusions about the same dataset (e.g. Silberzahn et al. 2018, Starns et al. 2019, Botvinik-Nezer et al., 2020). 
 These projects, however, might still underestimate the extent to which analysts vary because data analysis is not merely restricted to statistical inference of datasets. 
 Human behavior is complex and offers many ways to be translated into numbers. 
 This is particularly true for fields that draw conclusions about human behavior and cognition from multidimensional data like speech or video data. 
 In fields working on human speech production, for example, researchers need to make numerous decisions about what to measure and how to measure it. 
 This is not trivial given the temporal extension of the acoustic signal and its complex structural composition. 
-Not only can decisions about operationalizing the raw data influence downstream decisions about statistical modelling, but statistical results can also lead researchers to go back and revise earlier decisions about the raw data.
+Not only can decisions about operationalizing the raw data influence downstream decisions about statistical modelling, but statistical results can also lead researchers to go back and revise earlier decisions about the processing of the raw data.
 
-In this article, we investigate the diversity in analytic choices when many analyst teams analyze the same speech production data. 
+In this article, we investigate the variability in analytic choices when many analyst teams analyze the same speech production data. 
 We explore the interaction between analytic choices at the stage of the operationalization of raw data and subsequent statistical modelling. 
-Specifically, we report the impact of the analytic pipeline on research results obtained by XX teams that gained access to the same raw data set to answer the same research question. 
+Specifically, we report the impact of the analytic pipeline on research results obtained by XX teams that gained access to the same set of acoustic recordings to answer the same research question. 
 
 ## Researcher degrees of freedom
 
@@ -114,55 +115,57 @@ Data analysis comes with many decisions like how to operationalize a given pheno
 However, if these decisions during data analysis are not specified in advance, we might stumble upon seemingly meaningful patterns in the data that are merely statistical flukes. 
 This can be problematic because to err is human. <!-- I'd probably drop this. When we make unspecified decisions during data analysis we can stumble upon spurious results (most likely) as well as real results (less likely, still possible)... in other words it might not all be error... the issue is that we won't know the difference -->
 
-We have evolved to filter the world in irrational ways (e.g., Tversky and Kahneman 1974), seeing coherent patterns in randomness (Brugger 2001), convincing ourselves of the validity of prior expectations (“I knew it”, Nickerson 1998), and perceiving events as being plausible in hindsight (“I knew it all along”, Fischhoff 1975). <!-- If helpful we could also give a concrete common example here, like regarding forecasting the weather or something --> 
+We have evolved to filter the world in irrational ways (e.g., Tversky and Kahneman 1974), seeing coherent patterns in randomness (Brugger 2001), convincing ourselves of the validity of prior expectations (“I knew it”, Nickerson 1998), and perceiving events as being plausible in hindsight (“I knew it all along”, Fischhoff 1975). <!-- JC: If helpful we could also give a concrete common example here, like regarding forecasting the weather or something --> 
+<!-- TR: Generally a good idea, but I'd say we keep it crisp at that point. The take-home here is: Humans are biased. --> 
 In connection with an academic incentive system that rewards certain discovery processes more than others (Sterling 1959, Koole & Lakens 2012), we often find ourselves exploring many possible analytical pipelines, but only reporting a select few. 
-This issue is particularly amplified in fields in which the raw data lend themselves to flexible operationalizations (Roettger 2019). 
+This issue is particularly amplified in fields in which the raw data lend themselves to flexible measurement (Roettger 2019). 
 Combined with a wide variety of methodological and theoretical traditions as well as varying levels of statistical training across fields and subfields, the inherent flexibility of data analysis might lead to a vast plurality of analytic approaches. 
 
 Consequently, if methodologists are correct (e.g. Simmons et al. 2011, Gelman & Loken 2013), there are many published papers that present overconfident interpretations of their data based on idiosyncratic analytic strategies. 
-These interpretation are either associated with an unknown amount of uncertainty or lend themselves to alternative interpretation if analyzed differently. <!-- RE analysed, if I'm not mistaken the rest of the manuscript is in American English, right? -->
+These interpretation are either associated with an unknown amount of uncertainty or lend themselves to alternative interpretation if analyzed differently.
 However, instead of being critically evaluated, scientific results often remain unchallenged in the publication record. 
-Critical reanalyses of published analytic strategies are uncommon because data sharing is still rare (Wicherts, Borsboom, Kats, & Molenaar, 2006, RECENT REF). <!-- aside from adding recent ref, consider adding counter point. Something to the effect of "despite recent efforts to improve transparency and reproducibility, i.e., OSF, IRIS. -->
+Despite recent efforts to improve transparency and reproducibility (REFS) and freely available and accessible infrastructures such as provided by the Open Science Framework (osf.io, ADD), critical reanalyses of published analytic strategies are uncommon because data sharing is still rare (Wicherts, Borsboom, Kats, & Molenaar, 2006, RECENT REF).
 
 While this issue has been widely discussed both from a conceptual point of view (Simmons et al. 2011, Wagenmakers et al. 2012, Nosek and Lakens 2014) and its application in individual scientific fields (e.g. Wichert et al. 2015, Charles et al. 2019, Roettger 2019), there are still many unknowns regarding the extent of analytical plurality in practice. 
 Recent collaborative attempts have started to shed light on how different analysts tackle the same data set and have revealed, not surprisingly, a large amount of variability. 
 
 ## Crowdsourcing alternative analyses
 
-In a collaborative effort, Silberzahn et al. (2018) let twenty-nine independent analysis teams address the same research question. 
+In a collaborative effort, Silberzahn et al. (2018) let twenty-nine independent analysis teams address the same research hypothesis 
 Analytic approaches and consequently the results varied widely between teams. 
 Sixty-nine percent of the teams found support for the hypothesis, and 31% did not. 
 Out of the 29 analytical strategies, there were 21 unique combinations of covariates. 
 Importantly, the observed variability was neither predicted by the team's preconceptions about the phenomenon under investigation nor by peer ratings of the quality of their analyses. 
-Their results suggest that analytic plurality is a fact of life and not driven by different levels of expertise or bias. 
+The authors results suggest that analytic plurality is a fact of life and not driven by different levels of expertise or bias. 
 Similar crowd-sourced studies recruiting independent analyst teams showed similar results. 
 
+SUM UP:
 Neuroscience  
 Cognitive Modelling  
 Clinical  
 Predictive models  
 
-While these papers show a large degree of analytical flexibility with impactful consequences, these studies dealt with flexibility in inferential or computational modelling. 
-In these studies the datasets were fixed and data collection or extraction could not be changed. <!-- any particular reason to favor data table over dataset? -->
+While these projects show a large degree of analytical flexibility with impactful consequences, they dealt with flexibility in inferential or computational modelling. 
+In these studies the datasets were fixed and data collection or extraction could not be changed. <!-- JC: any particular reason to favor data table over dataset? --> <!-- TR: I think my reasoning was dataset can be data table or raw data. Data table is the numerical derivation of the raw data. Maybe not a useful distinction-->
+
 However, in many fields the primary raw data is a complex signal that needs to be operationalized according to the research question. 
 In social sciences, the raw observations correspond to recorded human behavior. 
 In many cases, the behavior is recorded and stored as a complex visual and/or acoustic signal that is temporally extended and exhibits a complex structure. <!-- I had trouble parsing "temporal extended exhibits" -->
 Decisions about how to operationalize a theoretically relevant aspect of that behavior or the underlying cognitive processes might interact with downstream decisions about statistical modelling and vice verse. 
-To understand how analytical flexibility manifests itself in a scenario where complex signals need to be operationalized, the present paper looks at an experimentally elicited speech data set 
+To understand how analytical flexibility manifests itself in a scenario where a complex decisions procedure is involved in operationalizing and measuring complex signals, the present paper looks at an experimentally elicited speech data set 
 
 ## Operationalizing speech 
 
-*(copy pasted from RDF paper and slightly shortened by myself. I think its a good point of departure. Maybe one of your can try to rephrase it in your own words?)*
+<!-- TR:(copy pasted from RDF paper and slightly shortened by myself. I think its a good point of departure. Maybe one of your can try to rephrase it in your own words?)-->
 
 RELEVANCE OF SPEECH PRODUCTION RESEARCH FOR COGSCI, AI, etc.
 
-In order to understand speech, listeners have to map a continuous, transient signal onto discrete meanings. 
-Speech offers a considerable number of perspectives and decisions along the data analysis pipeline.
+In order to understand speech, listeners have to map a continuous, transient signal onto discrete meanings. Take for example the sentence: "The president refused to concede". This sentence stretches over hundreds of milliseconds and contains several layers of linguistically relevant units such as words, syllables and individual sounds. Thus, it offers a considerable number of perspectives and decisions along the data analysis pipeline.
 
 IMAGE SHOWING A WAVE FORM WITH DIFFERENT DOMAINS (temporal) AND STRUCTURAL CUES (e.g. f0, dur, int) MAPPING ONTO FUNCTIONAL CONTRASTS
 
 When conducting a study on speech production, the first important analytic decision to test a hypothesis relates to operationalization of the relevant behavior, i.e. how to measure the phenomenon of interest. 
-For example, how do we measure whether two sounds are acoustically identical (e.g. "bear" vs. "pear"), whether one word is more prominent than others ("He told YOU to be quite"), or whether two discourse functions are produced differently ("It's raining." vs. "It's raining?")? 
+For example, how do we measure whether two sounds are acoustically identical or not (e.g. "bear" vs. "pear"), whether one word is more prominent than others ("The president REFUSES to concede"), or whether two discourse functions are produced differently ("The president refuses to concede." vs. "The president refuses to concede?")? 
 In other words, how do we quantitatively capture relevant features of speech?
 
 This is not trivial. 
@@ -173,12 +176,12 @@ Even temporally dislocated acoustic parameters correlate with this lexical contr
 For example, in the English words "led" versus "let", voicing correlates can be found in the acoustic manifestation of the initial /l/ of the word (Hawkins & Nguyen, 2004).
 
 The apparent multiplicity of phonetic cues grows exponentially if we look at larger temporal windows as is the case for suprasegmental aspects of speech. 
-Studies investigating acoustic correlates of word stress (i.e. the difference between "insight" and "incite"), for example, have been using many different measurements, including temporal characteristics (duration of certain segments or subphonemic intervals), spectral characteristics (intensity measures, formants, and spectral tilt), and measurements related to fundamental frequency (f0) (e.g. Gordon & Roettger, 2017). 
+Studies investigating acoustic correlates of word stress (e.g. the difference between "insight" and "incite"), for example, have been using many different measurements, including temporal characteristics (duration of certain segments or subphonemic intervals), spectral characteristics (intensity measures, formants, and spectral tilt), and measurements related to fundamental frequency (f0) (e.g. Gordon & Roettger, 2017). 
 
 Looking at even larger domains, the expression of pragmatic functions can be expressed by a variety of structurally different acoustic cues which can be distributed throughout the entire utterance. 
 Discourse functions are systematically expressed by multiple local pitch modulations differing in their position, shape, and alignment (e.g. Niebuhr et al., 2011). 
 They can also be expressed by global or local pitch modulations, as well as acoustic information within the temporal or spectral domain (e.g. van Heuven & van Zanten 2005). 
-All of these phonetic parameters are potential manifestations of underlying functional contrasts, like speaker's intentions, levels of arousal or identity. 
+All of these phonetic parameters are potential manifestations of underlying functional contrasts, like speaker's intentions, levels of arousal or social identity. 
 
 When testing hypotheses on speech production data, researchers need to make many decisions. 
 The larger the functional domain (e.g. are we interested in lexical items or in whole utterances), the higher the number of possible operationalizations. 
@@ -187,22 +190,21 @@ To probe the variability in data analysis pipelines across independent analytic 
 
 ## The data set - The prosody of redundant modifiers
 
-Our data set was collected in order to answer the following research question: Do speakers acoustically modify a referring expression as a function of the typicality of the modifier of the noun (e.g. “a blue banana” vs. “a yellow banana”)?
+Our data set was collected in order to answer the following research question: Do speakers acoustically modify utterances to signal atypical word combinations? (e.g. “a blue banana” vs. “a yellow banana”)?
 
 Referring is one of the most basic and prevalent uses of language and one of the most widely researched areas in language science. 
 It is an open question how speakers choose a referential expression when they want to refer to a specific entity like a banana. 
 The context within which an entity occurs (i.e., with other non-fruits, other fruits, or other bananas) plays a large part in determining the choice of referential expression. 
-Generally, speakers aim to be as informative as possible to uniquely establish reference to the intended object (Grice 1975). 
-Thus one would expect the use of a modifier, for example, if it is necessary for disambiguation. 
-For instance, one might use the adjective "yellow" to describe a banana in a situation in which there is a yellow and a less ripe green banana available.
+Generally, speakers aim to be as informative as possible to uniquely establish reference to the intended object, but they are also resource efficient in that they avoid redundancy (Grice 1975). 
+Thus one would expect the use of a modifier, for example, only if it is necessary for disambiguation. 
+For instance, one might use the adjective "yellow" to describe a banana in a situation in which there is a yellow and a less ripe green banana available, but not when there is only one banana to begin with.
 
 Despite this coherent idea that speakers are both rational and efficient, there is much evidence that speakers are often overinformative: Speakers use referring expressions that are more specific than strictly necessary for the unambiguous identification of the intended referent (Sedivy 2003, Westerbeek et al. 2015, Rubio-Fernandez 2016), which has been argued to facilitate object identification and making communication between speakers and listeners more efficient (Arts et al. 2011, Paraboni et al. 2007, Rubio-Fernandez 2016). 
 Recent findings suggest that the utility of a referring expression depends on how good it is for a listener (compared to other referring expressions) to identify a target object. 
 For example, Degen et al. (2020) showed that modifiers that are less typical for a given referent (e.g. a blue banana) are more likely to be used in an overinformative scenario (e.g. when there is just one banana).
 
-This account, however, has mainly focused on content selection (Gatt et al. 2013), i.e. whether a certain referential expression is chosen or not. 
-However, speech communication is so much richer. 
-Even looking at morphosyntactically identical expressions, speakers can modulate this expression via suprasegmental acoustic properties like temporal and spectral modifications of the segments involved (e.g. Ladd 2008). 
+This account, however, has mainly focused on content selection (Gatt et al. 2013), i.e. whether a certain referential expression is chosen or not, ignoring the fact that speech communication is much richer. 
+Even looking at morphosyntactically identical expressions, speakers can modulate these expressions via suprasegmental acoustic properties like temporal and spectral modifications of the segments involved (e.g. Ladd 2008). 
 Most prominently, languages use intonation to signal discourse relationships between referents (among other functions). 
 Intonation marks discourse-relevant referents for being new or given information to guide listeners’ interpretation of incoming messages. 
 In many languages, speakers can use particular pitch movements to signal whether a referent has already been mentioned and is therefore referred back to, or a referent is newly introduced into the discourse. 
@@ -216,9 +218,11 @@ INFORMATION ABOUT THE DATA SET AND EXP DESIGN
 
 # Methods (mostly copy-paste from Evo-RR)
 
-This project involves a series of steps (X-X) that begin recruiting independent groups of scientists to analyze the data, continuing through allowing the scientists to analyze the data as they see fit, generating peer review ratings of the analyses (based on methods, not results), evaluating the variation in effects among the different analyses, and producing the final manuscript. 
-We estimate that this process, from the time of an in-principle acceptance of this stage 1 Registered Report, will take XX months (Table X). 
-The factor most likely to delay our timeline is the rate of completion of the original set of analyses by independent groups of scientists.
+We are closely following the methodology proposed by Parker et al. (Stage 1 in-principle accepted).
+
+This project involves a series of steps (X-X) that begins with recruiting independent groups of scientists to analyze the data, continuing through allowing the scientists to analyze the data as they see fit, generating peer review ratings of the analyses (based on methods, not results), evaluating the variation among the different analyses, and producing the final manuscript. 
+We estimate that this process, from the time of an in-principle acceptance of this Stage 1 Registered Report, will take XX months (Table X). 
+The factor most likely to delay our time line is the rate of completion of the original set of analyses by independent groups of scientists.
 
 ## Step 1: Recruitment and Initial Survey of Analysts
 
@@ -228,7 +232,7 @@ The target population is active speech science researchers with a graduate degre
 Researchers can choose to work independently or in a small team. 
 For the sake of simplicity, we refer to single researcher or small teams as ‘analysis teams’. 
 
-Recruitment for this project is ongoing but we aim for a minimum of XX analysis teams independently evaluating each dataset (see sample size justification below). 
+Recruitment for this project is ongoing but we aim for a minimum of XX analysis teams independently evaluating each dataset (see sample size justification below). <!-- TR: Big to-do point. We need to only justify a minimum sample size-->
 We will simultaneously recruit volunteers to peer-review the analyses conducted by the other volunteers through the same channels. 
 Our goal is to recruit a similar number of peer-reviewers and analysts, and to ask each peer reviewer to review a minimum of four analyses. 
 If we are unable to recruit at least half the number of reviewers as analysis teams, we will ask analysts to serve also as reviewers (after they have completed their analyses). 
@@ -238,25 +242,27 @@ All analysts will sign a consent (ethics) document (LINK).
 ## Step 2: Primary Data Analyses
 
 Analysis teams will register and answer a demographic and expertise survey (LINK). 
-We will then provide them with the acoustic data set and request that they answer the following research question: RESEARCH QUESTION HERE. 
+We will then provide them with the acoustic data set and request that they answer the following research question: 
+
+Do speakers acoustically modify utterances to signal atypical word combinations?
+
 Once their analysis is complete, they will answer a structured survey (LINK), providing analysis technique, explanations of their analytical choices, quantitative results, and a statement describing their conclusions. 
 They will also upload their analysis files (including the additionally derived data and text files that were used to extract and preprocess the acoustic data), their analysis code [if applicable], and a detailed journal-ready statistical methods section. 
 
-## Step 3: Peer Reviews of Analyses (DO WE STILL DO THIS? CAN'T REMEMBER)
+## Step 3: Peer Reviews of Analyses 
+<!-- TR: So I am still unclear on how this will look like, do they only evaluate stats? if they evaluate the entire pipeline they need to be phoneticians, do they evaluate acoustic analysis and stats analysis independently?-->
 
-<!-- I believe we were still going to do this --> 
-
-At a minimum, each analysis will be evaluated by four different reviewers, and each volunteer peer-reviewer will be randomly assigned methods sections from at least four analyst teams (the exact number will depend on the number of analysis teams and peer reviewers recruited). 
+At a minimum, each analysis will be evaluated by four different reviewers, and each volunteer peer-reviewer will be randomly assigned to methods sections from at least four analyst teams (the exact number will depend on the number of analysis teams and peer reviewers recruited). 
 Each peer reviewer will register and answer a demographic and expertise survey identical to that asked of the analysts. 
 Reviewers will evaluate the methods of each of their assigned analyses one at a time in a sequence determined by the initiating authors (SC, JC, TR). 
 The sequences will be systematically assigned so that, if possible, each analysis is allocated to each position in the sequence for at least one reviewer. 
 For instance, if each reviewer is assigned four analyses to review, then each analysis will be the first analysis assigned to at least one reviewer, the second analysis assigned to another reviewer, the third analysis assigned to yet another reviewer, and the fourth analysis assigned to a fourth reviewer. 
 Balancing the order in which reviewers see the analyses controls for order effects, e.g. a reviewer might be less critical of the first methods section they read than the last.
-
 The process for a single reviewer will be as follows. 
 First, the reviewer will receive a description of the methods of a single analysis. 
 This will include the narrative methods section, the analysis team’s answers to our survey questions regarding their methods, including analysis code, and the data set. 
-The reviewer will then be asked, in an online survey (LINK), to rate both the acoustic analysis and the statistical analysis on a scale of 0-100 based on these prompts: 
+The reviewer will then be asked, in an online survey (LINK), to rate both the acoustic analysis and the statistical analysis on a scale of 0-100 based on these prompts: <!-- TR:Need flow chart here-->
+
 
 “Rate the overall appropriateness of the acoustic analysis to answer the research question with the available data. To help you calibrate your rating, please consider the following guidelines:
 
@@ -274,7 +280,7 @@ The reviewer will then be provided with a series of text boxes and the following
 
 \noindent “Please explain your ratings of this analysis.  
 \noindent Please evaluate the selection of acoustic features.  
-\noindent Please evaluate the operationalization of acoustic features.  
+\noindent Please evaluate the measurement of acoustic features.  
 \noindent Please evaluate the choice of statistical analysis type.  
 \noindent Please evaluate the process of choosing variables for and structuring the statistical model.  
 \noindent Please evaluate the suitability of the variables included in (or excluded from) the statistical model.  
@@ -291,8 +297,8 @@ The text box will be prefaced with this prompt: “Please explain your choice to
 ## Step 4: Evaluate Variation
 
 Initiating authors (SC, JC, TR) will conduct the analyses outlined in this section. 
-We will describe the variation in model specification in several ways. 
-First, we will calculate summary statistics describing variation among analysis, including the nature and number of acoustic measures, the operationalization and the temporal domain of measurement, the nature and number of variables per model included as fixed effects, the nature and number of interaction terms, the nature and number of random effects [if applicable], as well as the mean, standard deviation and range of effect sizes reported. 
+We will describe the variation in model specification in several ways:
+First, we will calculate summary statistics describing variation among analysis, including the nature and number of acoustic measures, the operationalization and the temporal domain of measurement, the nature and number of model parameters for both fixed and random effects [if applicable], as well as the mean, standard deviation and range of effect sizes reported. 
 
 We will summarize the variability in standardized effect sizes and predicted values of dependent variables among the individual analyses using standard random effects meta-analytic techniques. 
 We anticipate that the majority of statistical analyses will be expressible as a (generalized) linear regression model. 
@@ -329,6 +335,15 @@ TR: THIS HAS SOME PRACTICAL ISSUES, NEED TO DISCUSS
 
 WRITE ABOUT HOW TO HANDLE GAMS
 
+
+We will publicly archive all relevant data, code, and materials on the Open Science Framework (ADD LINK).
+Archived data will include the original data sets distributed to all analysts, any edited versions of the data analyzed by individual groups, and the data we analyze with our meta-analyses, which include the effect sizes derive from separate analyses, the statistics describing variation in model structure among analyst groups, and the anonymized answers to our surveys of analysts and peer reviewers.
+Similarly, we will archive both the analysis code used for each individual analysis and the code from our meta-analyses. 
+We will also archive copies of our survey instruments from analysts and peer reviewers. 
+
+Our rules for excluding data from our study are as follows. We will exclude from our synthesis any individual analysis submitted after we have completed peer review or those unaccompanied by analysis files that allow us to understand what the analysts did. We will also exclude any individual analysis that does not produce an outcome that can be interpreted as an answer to our primary question. 
+
+ADD GAM EXCLUSION
 
 ## Step 6: Facilitated Discussion and Collaborative Write-Up of Manuscript
 
