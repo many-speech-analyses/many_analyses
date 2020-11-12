@@ -69,9 +69,14 @@ for (i in 1:nteams) {
 
   ## generate parameters
 
-  # generate DV (divergence from meta-analytic estimate)
+  # generate effect size 
   dv_c <- c(dv_c,
+            rnorm(n = nobs, mean = 1, sd = 1))
+  
+  # generate standard error
+  se_c <- c(se_c,
             rnorm(n = nobs, mean = 0, sd = 1))
+  
   
   # generate predictors
   
@@ -96,7 +101,7 @@ for (i in 1:nteams) {
 
 ## make data frame
 df <- data.frame(team = team_c,
-                 dv = dv_c,
+                 es = dv_c,
                  fixed = fixed_c,
                  random = random_c,
                  posthoc = posthoc_c,
