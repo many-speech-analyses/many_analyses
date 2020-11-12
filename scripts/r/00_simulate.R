@@ -13,11 +13,20 @@
 library(tidyverse)
 library(truncnorm)
 library(lme4)
+library(rstudioapi)
+library(betapart)
+
+# get path
+current_path = rstudioapi::getActiveDocumentContext()$path 
+setwd(dirname(current_path))
 
 ## set parameters---------------------------------------------------------------
 
 # number of observations
 nobs = 1
+
+# overall effect
+meta_effect = 1
 
 # probability of peer verdict
 prob_peer_verdict = c(0.2, 0.6, 0.15, 0.05)
@@ -52,6 +61,7 @@ rand_revs = 0.5
 team_c = c()
 reviewer_c = c()
 dv_c = c()
+se_c = c()
 peer_rating_c = c()
 peer_verdict_c = c()
 fixed_c = c()
@@ -71,7 +81,7 @@ for (i in 1:nteams) {
 
   # generate effect size 
   dv_c <- c(dv_c,
-            rnorm(n = nobs, mean = 1, sd = 1))
+            rnorm(n = nobs, mean = meta_effect, sd = 1))
   
   # generate standard error
   se_c <- c(se_c,
@@ -102,6 +112,7 @@ for (i in 1:nteams) {
 ## make data frame
 df <- data.frame(team = team_c,
                  es = dv_c,
+                 se = se_c,
                  fixed = fixed_c,
                  random = random_c,
                  posthoc = posthoc_c,
@@ -147,11 +158,65 @@ for (j in 1:nrow(df2)) {
 } #endfor_j
 
 ## store------------------------------------------------------------------------
-write_csv(df2, "/scripts/simulated_df")
+write_csv(df2, "simulated_df.csv")
 
 
-## model------------------------------------------------------------------------
-xmdl <- lmer(dv ~ peer_rating + fixed + random + posthoc + nmodels +
+## betapart shenanigans---------------------------------------------------------
+
+# add some random columns
+df2$variable1 = ""
+df2$variable2 = ""
+df2$variable3 = ""
+df2$variable4 = ""
+df2$variable5 = ""
+
+# loop through df an fill columns
+for (k in 1:nrow(df2)) { 
+  # print progress
+  print(paste0("random sample # ", k))
+  
+  # add variable with probability proportional to df2$fixed
+  df2$variable1[k] <- rbinom(n = nobs, size = 1, prob = df2$fixed / 10)
+  df2$variable2[k] <- rbinom(n = nobs, size = 1, prob = df2$fixed / 10)
+  df2$variable3[k] <- rbinom(n = nobs, size = 1, prob = df2$fixed / 10)
+  df2$variable4[k] <- rbinom(n = nobs, size = 1, prob = df2$fixed / 10)
+  df2$variable5[k] <- rbinom(n = nobs, size = 1, prob = df2$fixed / 10)
+  
+} #endfor_k
+
+# bring into betapart shape
+df3 <- df2 %>% 
+  select(variable1,
+         variable2,
+         variable3,
+         variable4,
+         variable5)
+
+# get betapart objects
+df.core <- betapart.core(df3)
+
+# get pairwise distance
+df.pair <- beta.pair(df.core, index.family = "sorensen")
+
+# which one is it? beta.sim / beta.sne / beta.sor?
+# if beta.sor then
+
+df.pair.sor <- broom::tidy(df.pair$beta.sor) %>% 
+  rename(team = item1) %>% 
+  mutate(team = paste0("team_",team)) %>% 
+  group_by(team) %>% 
+  summarise(distance_mean = mean(distance))
+
+# NaN are based on teams without any filled columns basically, but even if I
+# force fill one column, I get NaNs. Dunno
+  
+# add to df2
+df4 <- full_join(df2, df.pair.sor)
+
+## meta analysis----------------------------------------------------------------
+
+
+## hypothesis testing analysis--------------------------------------------------
+xmdl <- lmer(dv ~ peer_rating + distance_mean + posthoc + nmodels +
                (1 | reviewer), data = df2)
-
 
