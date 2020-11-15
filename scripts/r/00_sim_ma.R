@@ -1,15 +1,20 @@
-# Source libs -----------------------------------------------------------------
+# Meta-analysis of simulated data ---------------------------------------------
+#
+# Last update: 20201115
+# About: This script loads simulated data and uses brms to conduct a 
+#        meta-analysis
+#
+# -----------------------------------------------------------------------------
+
+
+
+
+# Source libs and load simulated data -----------------------------------------
 
 source(here::here("scripts", "r", "00_libs.R"))
-
-
-
-# Load data -------------------------------------------------------------------
-
 sim_df <- read_csv(here("data", "sim", "simulated_df.csv"))
 
-
-
+# -----------------------------------------------------------------------------
 
 
 
@@ -31,53 +36,57 @@ ma_sim_m0 <- brm(
 )
 
 # Add pooling method
-m1_brm <- brm(
-  formula = es | se(se) ~ 1 + (1 | study) + (1 | stops), 
+ma_sim_m1 <- brm(
+  formula = es | se(se) ~ 1 + (1 | team) + (1 | reviewer), 
   family = gaussian, 
-  data = madata,
+  data = sim_df,
   prior = priors,
   iter = 4000, warmup = 2000,  cores = 4, chains = 4, 
-  control = list(adapt_delta = 0.9999, max_treedepth = 15), 
-  file = here::here("models", "meta_analysis_mod_1")
+  control = list(adapt_delta = 0.9999), 
+  file = here::here("models", "sim", "ma_sim_m1")
 )
 
-# Fit between variable model (add stress)
-m2_brm <- brm(
-  formula = es | se(se) ~ 0 + Intercept + is_stressed + (1 | study) + (1 | stops), 
+# Fit between variable model (add posthoc)
+ma_sim_m2 <- brm(
+  formula = es | se(se) ~ 0 + Intercept + posthoc + 
+    (1 | team) + (1 | reviewer), 
   family = gaussian, 
-  data = madata,
+  data = sim_df,
   prior = c(prior(normal(0, 1), class = b),
             prior(cauchy(0, 1), class = sd)),
   iter = 4000, warmup = 2000,  cores = 4, chains = 4, 
   control = list(adapt_delta = 0.9999), 
-  file = here::here("models", "meta_analysis_mod_2")
+  file = here::here("models", "sim", "ma_sim_m2")
 )
 
-# Add analytic strategy
-m3_brm <- brm(
-  formula = es | se(se) ~ 0 + Intercept + is_stressed + analytic_str_dev + 
-    (1 | study) + (1 | stops), 
+# Add nmodels
+ma_sim_m3 <- brm(
+  formula = es | se(se) ~ 0 + Intercept + posthoc + nmodels + 
+    (1 | team) + (1 | reviewer), 
   family = gaussian, 
-  data = madata,
+  data = sim_df,
   prior = c(prior(normal(0, 1), class = b),
             prior(cauchy(0, 1), class = sd)),
   iter = 4000, warmup = 2000,  cores = 4, chains = 4, 
   control = list(adapt_delta = 0.9999), 
-  file = here::here("models", "meta_analysis_mod_3")
+  file = here::here("models", "sim", "ma_sim_m3")
 )
 
 # Assess fit
 # pp_check(ma_sim_m0, nsamples = 200)
-# pp_check(m1_brm, nsamples = 200)
-# pp_check(m2_brm, nsamples = 200)
-# pp_check(m3_brm, nsamples = 200)
+# pp_check(ma_sim_m1, nsamples = 200)
+# pp_check(ma_sim_m2, nsamples = 200)
+# pp_check(ma_sim_m3, nsamples = 200)
 
 # -----------------------------------------------------------------------------
 
 
 
-# Plots 
-posterior_samples(ma_sim_m0, c("^b", "^sd")) %>% 
+
+# Plots -----------------------------------------------------------------------
+
+# Pooled effect and SE
+posterior_samples(ma_sim_m1, c("^b", "^sd")) %>% 
   rename(smd = b_Intercept, tau = sd_team__Intercept) %>% 
   ggplot(., aes(x = smd, y = tau)) + 
   stat_density_2d(aes(fill = after_stat(level)), geom = "polygon") +
@@ -88,12 +97,59 @@ posterior_samples(ma_sim_m0, c("^b", "^sd")) %>%
     theme(legend.position = "none")
 
 
+
+
+# Grouping variable variability (team, reviewer)
+posterior_samples(ma_sim_m3) %>% 
+  select(starts_with("sd")) %>% 
+  gather(key, tau) %>% 
+  mutate(key = str_remove(key, "sd_") %>% 
+           str_remove(., "__Intercept")) %>% 
+  ggplot(aes(x = tau, fill = key)) +
+  geom_density(color = "transparent", alpha = 0.9) +
+  scale_fill_viridis_d(name = "Group-level variance", option = "D", end = 0.6, 
+    labels = c("Reviewer", "Team")) + 
+  labs(y = "Density", x = expression(tau)) + 
+  theme_minimal() + 
+  theme(legend.position = c(0.85, 0.75), legend.title = element_text(size = 9), 
+    legend.text = element_text(size = 8), legend.key.size = unit(0.5, "cm"))
+
+
+
+
+# Plot effect of posthoc and nmodels
+posterior_samples(ma_sim_m3) %>% 
+  select(b_posthoc, b_nmodels) %>% 
+  pivot_longer(cols = everything(), names_to = "parameter", 
+    values_to = "estimate") %>% 
+  ggplot(aes(x = estimate, y = parameter)) + 
+  geom_vline(xintercept = 0, color = "grey30", lty = 3) +
+  stat_halfeye(aes(shape = parameter, fill = parameter), 
+    point_interval = median_qi, 
+    .width = c(.66, .95), slab_alpha = 0.9, 
+    slab_color = "transparent", point_fill = "white") +
+  scale_fill_viridis_d(name = "Overall effect of", end = .6, 
+    guide = guide_legend(reverse = T), 
+    labels = c("n models", "posthoc")) + 
+  scale_shape_manual(values = c(21:22), guide = F) + 
+  labs(x = expression(beta), y = " ") +
+  theme_minimal() + 
+  theme(legend.position = c(0.9, 0.75), axis.text.y = element_blank(), 
+    legend.title = element_text(size = 9), 
+    legend.text = element_text(size = 8), 
+    legend.key.size = unit(0.5, "cm")) + 
+  guides(fill = guide_legend(override.aes = list(shape = NA), reverse = T))
+
+
+
+
+# Forrest plot of teams
 # Get draws for each study
-team_draws <- spread_draws(ma_sim_m0, r_team[Team,], b_Intercept) %>% 
+team_draws <- spread_draws(ma_sim_m3, r_team[Team,], b_Intercept) %>% 
   mutate(b_Intercept = r_team + b_Intercept)
 
 # Get draws for pooled effect
-pooled_effect_draws <- spread_draws(ma_sim_m0, b_Intercept) %>% 
+pooled_effect_draws <- spread_draws(ma_sim_m3, b_Intercept) %>% 
   mutate(Team = "Pooled Effect")
 
 # Combine it and clean up
@@ -111,9 +167,9 @@ forest_data_summary <- group_by(forest_data, Team) %>%
 # Plot it all
 forest_data %>% 
   ggplot(., aes(x = b_Intercept, y = Team)) +
-  geom_vline(xintercept = fixef(ma_sim_m0)[1, 1], color = "darkred", size = 0.7, 
+  geom_vline(xintercept = fixef(ma_sim_m3)[1, 1], color = "darkred", size = 0.7, 
     lty = 3) +
-  geom_vline(xintercept = fixef(ma_sim_m0)[1, 3:4], color = "darkred", lty = 3) +
+  geom_vline(xintercept = fixef(ma_sim_m3)[1, 3:4], color = "darkred", lty = 3) +
   geom_vline(xintercept = 0, color = "grey30", size = 0.5) +
   stat_halfeye(fill = "#31688EFF", shape = 21, point_fill = "white", 
                point_size = 2, alpha = 1, slab_alpha = 0.9) + 
@@ -123,3 +179,5 @@ forest_data %>%
   labs(x = expression(italic("SMD")), y = NULL) +
   theme_minimal() + 
   theme(axis.text.y = element_text(hjust = 0))
+
+# -----------------------------------------------------------------------------
