@@ -10,11 +10,9 @@
 # ------------------------------------------------------------------------------
 
 ## libraries--------------------------------------------------------------------
-library(tidyverse)
-library(truncnorm)
-library(lme4)
-library(rstudioapi)
-library(betapart)
+source(here::here("scripts", "r", "00_libs.R"))
+
+
 
 # get path
 current_path = rstudioapi::getActiveDocumentContext()$path 
@@ -83,9 +81,10 @@ for (i in 1:nteams) {
   dv_c <- c(dv_c,
             rnorm(n = nobs, mean = meta_effect, sd = 1))
   
-  # generate standard error
+  # generate standard error (NOTE: in our model SE is equivalent to SD which 
+  # by def. must be non-negative)
   se_c <- c(se_c,
-            rnorm(n = nobs, mean = 0, sd = 1))
+            rnorm(n = nobs, mean = 1, sd = 0.35))
   
   
   # generate predictors
@@ -158,65 +157,5 @@ for (j in 1:nrow(df2)) {
 } #endfor_j
 
 ## store------------------------------------------------------------------------
-write_csv(df2, "simulated_df.csv")
-
-
-## betapart shenanigans---------------------------------------------------------
-
-# add some random columns
-df2$variable1 = ""
-df2$variable2 = ""
-df2$variable3 = ""
-df2$variable4 = ""
-df2$variable5 = ""
-
-# loop through df an fill columns
-for (k in 1:nrow(df2)) { 
-  # print progress
-  print(paste0("random sample # ", k))
-  
-  # add variable with probability proportional to df2$fixed
-  df2$variable1[k] <- rbinom(n = nobs, size = 1, prob = df2$fixed / 10)
-  df2$variable2[k] <- rbinom(n = nobs, size = 1, prob = df2$fixed / 10)
-  df2$variable3[k] <- rbinom(n = nobs, size = 1, prob = df2$fixed / 10)
-  df2$variable4[k] <- rbinom(n = nobs, size = 1, prob = df2$fixed / 10)
-  df2$variable5[k] <- rbinom(n = nobs, size = 1, prob = df2$fixed / 10)
-  
-} #endfor_k
-
-# bring into betapart shape
-df3 <- df2 %>% 
-  select(variable1,
-         variable2,
-         variable3,
-         variable4,
-         variable5)
-
-# get betapart objects
-df.core <- betapart.core(df3)
-
-# get pairwise distance
-df.pair <- beta.pair(df.core, index.family = "sorensen")
-
-# which one is it? beta.sim / beta.sne / beta.sor?
-# if beta.sor then
-
-df.pair.sor <- broom::tidy(df.pair$beta.sor) %>% 
-  rename(team = item1) %>% 
-  mutate(team = paste0("team_",team)) %>% 
-  group_by(team) %>% 
-  summarise(distance_mean = mean(distance))
-
-# NaN are based on teams without any filled columns basically, but even if I
-# force fill one column, I get NaNs. Dunno
-  
-# add to df2
-df4 <- full_join(df2, df.pair.sor)
-
-## meta analysis----------------------------------------------------------------
-
-
-## hypothesis testing analysis--------------------------------------------------
-xmdl <- lmer(dv ~ peer_rating + distance_mean + posthoc + nmodels +
-               (1 | reviewer), data = df2)
+write_csv(df2, here("data", "sim", "simulated_df.csv"))
 
