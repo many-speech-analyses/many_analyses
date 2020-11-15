@@ -1,34 +1,51 @@
+# betapart shenanigans --------------------------------------------------------
 
-## betapart shenanigans---------------------------------------------------------
+
+# Source libs and load simulated data -----------------------------------------
+
+source(here::here("scripts", "r", "00_libs.R"))
+sim_df <- read_csv(here("data", "sim", "simulated_df.csv"))
+
+# -----------------------------------------------------------------------------
+
+
+
+
+
+# Shennanigans start here
+
+# number of observations
+nobs = 1
 
 # add some random columns
-df2$variable1 = ""
-df2$variable2 = ""
-df2$variable3 = ""
-df2$variable4 = ""
-df2$variable5 = ""
+sim_df$variable1 = ""
+sim_df$variable2 = ""
+sim_df$variable3 = ""
+sim_df$variable4 = ""
+sim_df$variable5 = ""
 
 # loop through df an fill columns
-for (k in 1:nrow(df2)) { 
+for (k in 1:nrow(sim_df)) { 
   # print progress
   print(paste0("random sample # ", k))
   
-  # add variable with probability proportional to df2$fixed
-  df2$variable1[k] <- rbinom(n = nobs, size = 1, prob = df2$fixed / 10)
-  df2$variable2[k] <- rbinom(n = nobs, size = 1, prob = df2$fixed / 10)
-  df2$variable3[k] <- rbinom(n = nobs, size = 1, prob = df2$fixed / 10)
-  df2$variable4[k] <- rbinom(n = nobs, size = 1, prob = df2$fixed / 10)
-  df2$variable5[k] <- rbinom(n = nobs, size = 1, prob = df2$fixed / 10)
+  # add variable with probability proportional to sim_df$fixed
+  sim_df$variable1[k] <- rbinom(n = nobs, size = 1, prob = sim_df$fixed / 10)
+  sim_df$variable2[k] <- rbinom(n = nobs, size = 1, prob = sim_df$fixed / 10)
+  sim_df$variable3[k] <- rbinom(n = nobs, size = 1, prob = sim_df$fixed / 10)
+  sim_df$variable4[k] <- rbinom(n = nobs, size = 1, prob = sim_df$fixed / 10)
+  sim_df$variable5[k] <- rbinom(n = nobs, size = 1, prob = sim_df$fixed / 10)
   
 } #endfor_k
 
 # bring into betapart shape
-df3 <- df2 %>% 
+df3 <- sim_df %>% 
   select(variable1,
          variable2,
          variable3,
          variable4,
-         variable5)
+         variable5) %>% 
+  mutate_if(is.character, as.numeric)
 
 # get betapart objects
 df.core <- betapart.core(df3)
@@ -43,25 +60,24 @@ df.pair.sor <- broom::tidy(df.pair$beta.sor) %>%
   rename(team = item1) %>% 
   mutate(team = paste0("team_",team)) %>% 
   group_by(team) %>% 
-  summarise(distance_mean = mean(distance))
+  summarise(distance_mean = mean(distance), .groups = "drop")
 
 # NaN are based on teams without any filled columns basically, but even if I
 # force fill one column, I get NaNs. Dunno
-  
+# Update: No more NaNs
+
 # add to df2
-df4 <- full_join(df2, df.pair.sor)
-
-## meta analysis----------------------------------------------------------------
-
-
-## hypothesis testing analysis--------------------------------------------------
-xmdl <- lmer(dv ~ peer_rating + distance_mean + posthoc + nmodels +
-               (1 | reviewer), data = df2)
+df4 <- full_join(sim_df, df.pair.sor)
 
 
 
 
 
+
+
+
+
+# Tutorial from betapart article
 data(ceram.s)
 data(ceram.n)
 
