@@ -73,6 +73,47 @@ df4 <- full_join(sim_df, df.pair.sor)
 
 
 
+# Playing around
+
+# multiple site measures
+df.multi <- beta.multi(df.core)
+
+# sampling across equal sites
+df.samp <- beta.sample(df.core, sites = 16, samples=100)
+
+# plotting the distributions of components
+df.dist <- df.samp$sampled.values
+
+plot(density(df.dist$beta.SOR), xlim = c(0, 0.8), ylim = c(0, 29), 
+  xlab = 'Beta diversity', main = '', lwd = 3)
+lines(density(df.dist$beta.SNE), lty = 1, lwd = 2)
+lines(density(df.dist$beta.SIM), lty = 2, lwd = 2)
+
+# pairwise 
+pair.s <- beta.pair(df3)
+
+# plotting clusters
+dist.df <- df.samp$sampled.values
+
+plot(hclust(pair.s$beta.sim, method = "average"), 
+  hang = -1, main ='', sub = '', xlab = '')
+title(xlab = expression(beta[sim]), line=0.3)
+
+plot(hclust(pair.s$beta.sne, method = "average"), 
+  hang = -1, main = "", sub = "", xlab = "")
+title(xlab = expression(beta[sne]), line = 0.3)
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
