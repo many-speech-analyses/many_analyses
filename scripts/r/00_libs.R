@@ -7,5 +7,11 @@ library("tidyr")
 library("glue")
 library("ggplot2")
 library("ganttrify")
+library("truncnorm")
+library("lme4")
+library("brms")
+library("rstudioapi")
+library("betapart")
+library("tidybayes")
 
 # -----------------------------------------------------------------------------
