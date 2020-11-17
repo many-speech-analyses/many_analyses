@@ -8,67 +8,50 @@ sim_df <- read_csv(here("data", "sim", "simulated_df.csv"))
 
 # -----------------------------------------------------------------------------
 
-
-
-
-
-# Shenanigans start here
-
-# number of observations
-nobs = 1
-
-# add some random columns
-sim_df$variable1 = ""
-sim_df$variable2 = ""
-sim_df$variable3 = ""
-sim_df$variable4 = ""
-sim_df$variable5 = ""
-
-# loop through df an fill columns
-for (k in 1:nrow(sim_df)) { 
-  # print progress
-  print(paste0("random sample # ", k))
-  
-  # add variable with probability proportional to sim_df$fixed
-  sim_df$variable1[k] <- rbinom(n = nobs, size = 1, prob = sim_df$fixed / 10)
-  sim_df$variable2[k] <- rbinom(n = nobs, size = 1, prob = sim_df$fixed / 10)
-  sim_df$variable3[k] <- rbinom(n = nobs, size = 1, prob = sim_df$fixed / 10)
-  sim_df$variable4[k] <- rbinom(n = nobs, size = 1, prob = sim_df$fixed / 10)
-  sim_df$variable5[k] <- rbinom(n = nobs, size = 1, prob = sim_df$fixed / 10)
-  
-} #endfor_k
-
 # bring into betapart shape
-df3 <- sim_df %>% 
-  select(variable1,
-         variable2,
-         variable3,
-         variable4,
-         variable5) %>% 
-  mutate_if(is.character, as.numeric)
+fixed_df <- sim_df %>% 
+  column_to_rownames(var = "team") %>% 
+  select(fixed_1,
+         fixed_2,
+         fixed_3,
+         fixed_4,
+         fixed_5)
+
+random_df <- sim_df %>% 
+  column_to_rownames(var = "team") %>% 
+  select(random_1,
+         random_2,
+         random_3,
+         random_4,
+         random_5)
 
 # get betapart objects
-df.core <- betapart.core(df3)
+df.core.fixed <- betapart.core(fixed_df)
+df.core.random <- betapart.core(random_df)
 
 # get pairwise distance
-df.pair <- beta.pair(df.core, index.family = "sorensen")
+df.pair.fixed <- beta.pair(df.core.fixed, index.family = "sorensen")
+df.pair.random <- beta.pair(df.core.random, index.family = "sorensen")
 
 # which one is it? beta.sim / beta.sne / beta.sor?
 # if beta.sor then
 
-df.pair.sor <- broom::tidy(df.pair$beta.sor) %>% 
+df.pair.fixed.sor <- broom::tidy(df.pair.fixed$beta.sor) %>% 
   rename(team = item1) %>% 
-  mutate(team = paste0("team_",team)) %>% 
   group_by(team) %>% 
-  summarise(distance_mean = mean(distance), .groups = "drop")
+  summarise(distance_fixed_mean = mean(distance), .groups = "drop")
 
-# NaN are based on teams without any filled columns basically, but even if I
-# force fill one column, I get NaNs. Dunno
-# Update: No more NaNs
+df.pair.random.sor <- broom::tidy(df.pair.random$beta.sor) %>% 
+  rename(team = item1) %>% 
+  group_by(team) %>% 
+  summarise(distance_random_mean = mean(distance), .groups = "drop")
 
-# add to df2
-df4 <- full_join(sim_df, df.pair.sor)
+# add to sim_df
+sim_df_new <- full_join(sim_df, df.pair.fixed.sor) %>% 
+  full_join(df.pair.random.sor)
 
+# store
+write_csv(sim_df_new, here("data", "sim", "simulated_df_distances.csv"))
 
 
 
