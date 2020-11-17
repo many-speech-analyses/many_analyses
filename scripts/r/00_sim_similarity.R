@@ -6,6 +6,12 @@
 source(here::here("scripts", "r", "00_libs.R"))
 sim_df <- read_csv(here("data", "sim", "simulated_df.csv"))
 
+# global color scheme / non-optimized
+cat1_col = "#d95f02"
+cat2_col = "#7570b3"
+cat3_col = "#1b9e77"
+
+
 # -----------------------------------------------------------------------------
 
 # bring into betapart shape
@@ -46,13 +52,49 @@ df.pair.random.sor <- broom::tidy(df.pair.random$beta.sor) %>%
   group_by(team) %>% 
   summarise(distance_random_mean = mean(distance), .groups = "drop")
 
+# this way we only get values for team1-15 ?
+# this is how ecoRR does it
+
+df.pair.fixed.sor <- as.matrix(beta.pair(df.core.fixed, index.family = "sorensen")$beta.sor)
+fixed_similarity <- colMeans(df.pair.fixed.sor, na.rm = T) 
+
+df.pair.random.sor <- as.matrix(beta.pair(df.core.random, index.family = "sorensen")$beta.sor)
+random_similarity <- colMeans(df.pair.random.sor, na.rm = T)
+
+
 # add to sim_df
-sim_df_new <- full_join(sim_df, df.pair.fixed.sor) %>% 
-  full_join(df.pair.random.sor)
+sim_df_new <- sim_df %>% 
+  mutate(fixed_similarity = fixed_similarity,
+         random_similarity = random_similarity)
 
 # store
 write_csv(sim_df_new, here("data", "sim", "simulated_df_distances.csv"))
 
+# plot -------------------------------------------------------------------------
+  
+# scale distances
+sim_df_new <- sim_df_new %>% 
+  mutate(fixed_similarity_s = scale(fixed_similarity),
+         random_similarity_s = scale(random_similarity))
+
+# plot 
+ggplot(sim_df_new,
+       aes(x = fixed_similarity_s,
+           y = random_similarity_s, 
+           fill = random_num)) +
+  geom_vline(xintercept = 0, lty = "dashed") +
+  geom_hline(yintercept = 0, lty = "dashed") +
+  geom_point(alpha = 0.8, size = 3, pch = 21,
+             color = cat3_col) +
+  geom_label_repel(aes(label = team),
+                   box.padding   = 0.35, 
+                   point.padding = 0.5,
+                   segment.color = 'grey50') +
+  labs(title = "Sørensen distance for fixed & random effect parameters",
+       #subtitle = "",
+       x = "\n Distance values for random effects",
+       y = "Distance values for fixed effects\n ") +
+  theme_minimal()
 
 
 
