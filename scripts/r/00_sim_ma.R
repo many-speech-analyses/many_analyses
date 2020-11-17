@@ -6,11 +6,7 @@
 #
 # -----------------------------------------------------------------------------
 
-
-
-
 # Source libs and load simulated data -----------------------------------------
-
 source(here::here("scripts", "r", "00_libs.R"))
 sim_df <- read_csv(here("data", "sim", "simulated_df.csv"))
 
@@ -106,7 +102,7 @@ posterior_samples(ma_sim_m3) %>%
   mutate(key = str_remove(key, "sd_") %>% 
            str_remove(., "__Intercept")) %>% 
   ggplot(aes(x = tau, fill = key)) +
-  geom_density(color = "transparent", alpha = 0.9) +
+  geom_density(color = "transparent", alpha = 0.6) +
   scale_fill_viridis_d(name = "Group-level variance", option = "D", end = 0.6, 
     labels = c("Reviewer", "Team")) + 
   labs(y = "Density", x = expression(tau)) + 

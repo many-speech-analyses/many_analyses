@@ -12,7 +12,7 @@ sim_df <- read_csv(here("data", "sim", "simulated_df.csv"))
 
 
 
-# Shennanigans start here
+# Shenanigans start here
 
 # number of observations
 nobs = 1
