@@ -16,5 +16,6 @@ library("brms")
 library("rstudioapi")
 library("betapart")
 library("tidybayes")
+library("patchwork")
 
 # -----------------------------------------------------------------------------
