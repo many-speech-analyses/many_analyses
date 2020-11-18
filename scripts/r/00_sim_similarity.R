@@ -5,6 +5,7 @@
 
 source(here::here("scripts", "r", "00_libs.R"))
 sim_df <- read_csv(here("data", "sim", "simulated_df.csv"))
+ma_sim_m3 <- readRDS(here("models", "sim", "ma_sim_m3.rds"))
 
 # global color scheme / non-optimized
 cat1_col = "#d95f02"
@@ -78,7 +79,7 @@ sim_df_new <- sim_df_new %>%
          random_similarity_s = scale(random_similarity))
 
 # plot 
-ggplot(sim_df_new,
+fe_re <- ggplot(sim_df_new,
        aes(x = fixed_similarity_s,
            y = random_similarity_s, 
            fill = random_num)) +
@@ -98,102 +99,44 @@ ggplot(sim_df_new,
 
 
 
-# Playing around
+es_fe <- left_join(sim_df_new, 
+  spread_draws(ma_sim_m3, r_team[Team,], b_Intercept) %>% 
+    mutate(team = Team, b_Intercept = r_team + b_Intercept) %>% 
+    group_by(team) %>% 
+    summarize(posterior_median = median(b_Intercept), .groups = "drop"), 
+  by = "team") %>% 
+  ggplot(., 
+    aes(x = fixed_similarity_s, y = posterior_median, fill = random_num)) + 
+    geom_point(alpha = 0.8, size = 3, pch = 21,
+               color = cat3_col) +
+    geom_label_repel(aes(label = team),
+                     box.padding   = 0.35, 
+                     point.padding = 0.5,
+                     segment.color = 'grey50') + 
+    labs(title = "Effect size and Sørensen distance for fixed effects",
+       #subtitle = "",
+       y = "\nES (posterior median)",
+       x = "Distance values for fixed effects\n ") +
+    theme_minimal()
 
-# multiple site measures
-df.multi <- beta.multi(df.core)
+es_re <- left_join(sim_df_new, 
+  spread_draws(ma_sim_m3, r_team[Team,], b_Intercept) %>% 
+    mutate(team = Team, b_Intercept = r_team + b_Intercept) %>% 
+    group_by(team) %>% 
+    summarize(posterior_median = median(b_Intercept), .groups = "drop"), 
+  by = "team") %>% 
+  ggplot(., 
+    aes(x = random_similarity_s, y = posterior_median, fill = random_num)) + 
+    geom_point(alpha = 0.8, size = 3, pch = 21,
+               color = cat3_col) +
+    geom_label_repel(aes(label = team),
+                     box.padding   = 0.35, 
+                     point.padding = 0.5,
+                     segment.color = 'grey50') + 
+    labs(title = "Effect size and Sørensen distance for random effects",
+       #subtitle = "",
+       y = "\nES (posterior median)",
+       x = "Distance values for random effects\n ") +
+    theme_minimal()
 
-# sampling across equal sites
-df.samp <- beta.sample(df.core, sites = 16, samples=100)
-
-# plotting the distributions of components
-df.dist <- df.samp$sampled.values
-
-plot(density(df.dist$beta.SOR), xlim = c(0, 0.8), ylim = c(0, 29), 
-  xlab = 'Beta diversity', main = '', lwd = 3)
-lines(density(df.dist$beta.SNE), lty = 1, lwd = 2)
-lines(density(df.dist$beta.SIM), lty = 2, lwd = 2)
-
-# pairwise 
-pair.s <- beta.pair(df3)
-
-# plotting clusters
-dist.df <- df.samp$sampled.values
-
-plot(hclust(pair.s$beta.sim, method = "average"), 
-  hang = -1, main ='', sub = '', xlab = '')
-title(xlab = expression(beta[sim]), line=0.3)
-
-plot(hclust(pair.s$beta.sne, method = "average"), 
-  hang = -1, main = "", sub = "", xlab = "")
-title(xlab = expression(beta[sne]), line = 0.3)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# Tutorial from betapart article
-data(ceram.s)
-data(ceram.n)
-
-# get betapart objects
-ceram.s.core <- betapart.core(ceram.s)
-ceram.n.core <- betapart.core(ceram.n)
-
-# multiple site measures
-ceram.s.multi <- beta.multi(ceram.s.core)
-ceram.n.multi <- beta.multi(ceram.n.core)
-
-# sampling across equal sites
-ceram.s.samp <- beta.sample(ceram.s.core, sites=10, samples=100)
-ceram.n.samp <- beta.sample(ceram.n.core, sites=10, samples=100)
-
-# plotting the distributions of components
-dist.s <- ceram.s.samp$sampled.values
-dist.n <- ceram.n.samp$sampled.values
-
-plot(density(dist.s$beta.SOR), xlim = c(0, 0.8), ylim = c(0, 29), 
-  xlab = 'Beta diversity', main = '', lwd = 3)
-lines(density(dist.s$beta.SNE), lty=1, lwd=2)
-lines(density(dist.s$beta.SIM), lty=2, lwd=2)
-lines(density(dist.n$beta.SOR), col = 'grey60', lwd=3)
-lines(density(dist.n$beta.SNE), col='grey60', lty = 1, lwd = 2)
-lines(density(dist.n$beta.SIM), col='grey60', lty = 2, lwd = 2)
-
-# pairwise for south
-pair.s <- beta.pair(ceram.s)
-
-# plotting clusters
-dist.s <- ceram.s.samp$sampled.values
-dist.n <- ceram.n.samp$sampled.values
-
-plot(hclust(pair.s$beta.sim, method = "average"), 
-  hang = -1, main ='', sub = '', xlab = '')
-title(xlab = expression(beta[sim]), line=0.3)
-
-plot(hclust(pair.s$beta.sne, method = "average"), 
-  hang = -1, main = "", sub = "", xlab = "")
-title(xlab = expression(beta[sne]), line = 0.3)
-
-
-
-data(bbsData)
-
-bbs.t <- beta.temp(bbs1980, bbs2000, index.family = "sor")
-
-# plotting root transformed components
-with(bbs.t, plot(sqrt(beta.sim) ~ sqrt(beta.sne), type = "n", 
-  ylab = expression(sqrt(beta[sim])), xlab = expression(sqrt(beta[sne]))))
-with(bbs.t, text(y = sqrt(beta.sim), x = sqrt(beta.sne), 
-  labels = rownames(bbs1980)))
+fe_re + es_fe + es_re
