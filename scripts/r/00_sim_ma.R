@@ -28,7 +28,7 @@ ma_sim_m0 <- brm(
   data = sim_df,
   prior = priors,
   iter = 4000, warmup = 2000, cores = 4, chains = 4, 
-  file = here::here("models", "sim", "ma_sim_m0")
+  file = here("models", "sim", "ma_sim_m0")
 )
 
 # Add pooling method
@@ -39,7 +39,7 @@ ma_sim_m1 <- brm(
   prior = priors,
   iter = 4000, warmup = 2000,  cores = 4, chains = 4, 
   control = list(adapt_delta = 0.9999), 
-  file = here::here("models", "sim", "ma_sim_m1")
+  file = here("models", "sim", "ma_sim_m1")
 )
 
 # Fit between variable model (add posthoc)
@@ -52,7 +52,7 @@ ma_sim_m2 <- brm(
             prior(cauchy(0, 1), class = sd)),
   iter = 4000, warmup = 2000,  cores = 4, chains = 4, 
   control = list(adapt_delta = 0.9999), 
-  file = here::here("models", "sim", "ma_sim_m2")
+  file = here("models", "sim", "ma_sim_m2")
 )
 
 # Add nmodels
@@ -65,7 +65,7 @@ ma_sim_m3 <- brm(
             prior(cauchy(0, 1), class = sd)),
   iter = 4000, warmup = 2000,  cores = 4, chains = 4, 
   control = list(adapt_delta = 0.9999), 
-  file = here::here("models", "sim", "ma_sim_m3")
+  file = here("models", "sim", "ma_sim_m3")
 )
 
 # Assess fit
