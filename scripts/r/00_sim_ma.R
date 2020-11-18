@@ -158,21 +158,54 @@ forest_data <- bind_rows(team_draws, pooled_effect_draws) %>%
 
 # Calculate mean qi intervals for right margin text
 forest_data_summary <- group_by(forest_data, Team) %>% 
-  mean_qi(b_Intercept)
+  mean_qi(b_Intercept, .width = c(0.5,0.8,0.95)) %>% 
+  mutate_if(is.numeric, round, 2)
+
+# Get pooled effects
+pooled_effects_summary <- forest_data_summary %>% 
+  filter(Team == "Pooled Effect")
 
 # Plot it all
 forest_data %>% 
-  ggplot(., aes(x = b_Intercept, y = Team)) +
-  geom_vline(xintercept = fixef(ma_sim_m3)[1, 1], color = "darkred", size = 0.7, 
-    lty = 3) +
-  geom_vline(xintercept = fixef(ma_sim_m3)[1, 3:4], color = "darkred", lty = 3) +
-  geom_vline(xintercept = 0, color = "grey30", size = 0.5) +
-  stat_halfeye(fill = "#31688EFF", shape = 21, point_fill = "white", 
-               point_size = 2, alpha = 1, slab_alpha = 0.9) + 
-  geom_text(data = mutate_if(forest_data_summary, is.numeric, round, 2),
-            aes(label = glue("{b_Intercept} [{.lower}, {.upper}]"), x = Inf), 
+  ggplot(., aes(x = b_Intercept)) +
+  #geom_vline(xintercept = fixef(ma_sim_m3)[1, 3:4], color = "darkred", lty = 3) +
+  #geom_vline(xintercept = 0, color = "grey30", size = 0.5) +
+  geom_rect(data = pooled_effects_summary %>% filter(.width == 0.5),
+            aes(xmin = .lower, xmax = .upper, 
+                ymin = -Inf, ymax = Inf), 
+            fill = "#4A978A",
+            alpha = 0.5) +
+  geom_rect(data = pooled_effects_summary %>% filter(.width == 0.8),
+            aes(xmin = .lower, xmax = .upper, 
+                ymin = -Inf, ymax = Inf), 
+            fill = "#4A978A",
+            alpha = 0.4) +
+  geom_rect(data = pooled_effects_summary %>% filter(.width == 0.95),
+            aes(xmin = .lower, xmax = .upper, 
+                ymin = -Inf, ymax = Inf), 
+            fill = "#4A978A",
+            alpha = 0.3) +
+  geom_vline(xintercept = fixef(ma_sim_m3)[1, 1], 
+             color = "#40758B", size = 0.7, 
+             lty = "dashed") +
+  geom_pointinterval(data = forest_data_summary %>% 
+                       filter(.width != 0.5, Team != "Pooled Effect"), 
+                     aes(y = fct_reorder(Team, b_Intercept),
+                         xmin = .lower, xmax = .upper),
+                     interval_size_range = c(0.5, 1.5),
+                     point_size = 2) +
+  geom_text(data = forest_data_summary %>% 
+              filter(.width == 0.95, Team != "Pooled Effect"),
+            aes(y = fct_reorder(Team, b_Intercept),
+                label = glue("{b_Intercept} [{.lower}, {.upper}]"), 
+                x = Inf), 
             hjust = "inward", family = "Times") + 
-  labs(x = expression(italic("SMD")), y = NULL) +
+  labs(title = "Forest plot of individual team estimates",
+       subtitle = "meta-analytical estimate given in dashed line (mean) and green zones (50/80/95% CrI)",
+       x = expression(italic("SMD")), 
+       y = NULL) +
+  xlim(c(min(forest_data_summary$.lower) * 1.5,
+         max(forest_data_summary$.upper)* 1.5)) +
   theme_minimal() + 
   theme(axis.text.y = element_text(hjust = 0))
 
