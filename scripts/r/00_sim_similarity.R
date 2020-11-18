@@ -81,12 +81,11 @@ sim_df_new <- sim_df_new %>%
 # plot 
 fe_re <- ggplot(sim_df_new,
        aes(x = fixed_similarity_s,
-           y = random_similarity_s, 
-           fill = random_num)) +
+           y = random_similarity_s)) +
   geom_vline(xintercept = 0, lty = "dashed") +
   geom_hline(yintercept = 0, lty = "dashed") +
   geom_point(alpha = 0.8, size = 3, pch = 21,
-             color = cat3_col) +
+             fill = cat3_col) +
   geom_label_repel(aes(label = team),
                    box.padding   = 0.35, 
                    point.padding = 0.5,
@@ -97,8 +96,6 @@ fe_re <- ggplot(sim_df_new,
        y = "Distance values for fixed effects\n ") +
   theme_minimal()
 
-
-
 es_fe <- left_join(sim_df_new, 
   spread_draws(ma_sim_m3, r_team[Team,], b_Intercept) %>% 
     mutate(team = Team, b_Intercept = r_team + b_Intercept) %>% 
@@ -106,12 +103,14 @@ es_fe <- left_join(sim_df_new,
     summarize(posterior_median = median(b_Intercept), .groups = "drop"), 
   by = "team") %>% 
   ggplot(., 
-    aes(x = fixed_similarity_s, y = posterior_median, fill = random_num)) + 
-    geom_point(alpha = 0.8, size = 3, pch = 21,
-               color = cat3_col) +
+    aes(x = fixed_similarity_s, y = posterior_median, 
+        fill = random_num, color = random_num)) + 
+    geom_point(alpha = 0.8, size = 3, pch = 21) +
     geom_label_repel(aes(label = team),
                      box.padding   = 0.35, 
                      point.padding = 0.5,
+                     fill = "white",
+                     color = "black",
                      segment.color = 'grey50') + 
     labs(title = "Effect size and Sørensen distance for fixed effects",
        #subtitle = "",
@@ -126,17 +125,20 @@ es_re <- left_join(sim_df_new,
     summarize(posterior_median = median(b_Intercept), .groups = "drop"), 
   by = "team") %>% 
   ggplot(., 
-    aes(x = random_similarity_s, y = posterior_median, fill = random_num)) + 
-    geom_point(alpha = 0.8, size = 3, pch = 21,
-               color = cat3_col) +
+    aes(x = random_similarity_s, y = posterior_median, 
+        fill = fixed_num, color = fixed_num)) + 
+    geom_point(alpha = 0.8, size = 3, pch = 21) +
     geom_label_repel(aes(label = team),
-                     box.padding   = 0.35, 
-                     point.padding = 0.5,
-                     segment.color = 'grey50') + 
+                   box.padding   = 0.35, 
+                   point.padding = 0.5,
+                   fill = "white",
+                   color = "black",
+                   segment.color = 'grey50') + 
     labs(title = "Effect size and Sørensen distance for random effects",
        #subtitle = "",
        y = "\nES (posterior median)",
        x = "Distance values for random effects\n ") +
     theme_minimal()
 
+# TR: the patchwork of all three doesn't work for me, no idea why
 fe_re + es_fe + es_re
