@@ -201,7 +201,7 @@ forest_data %>%
                 x = Inf), 
             hjust = "inward", family = "Times") + 
   labs(title = "Forest plot of individual team estimates",
-       subtitle = "meta-analytical estimate given in dashed line (mean) and green zones (50/80/95% CrI)",
+       subtitle = "dashed line = meta-analytical estimate / green zones = 50/80/95% CrI",
        x = expression(italic("SMD")), 
        y = NULL) +
   xlim(c(min(forest_data_summary$.lower) * 1.5,
