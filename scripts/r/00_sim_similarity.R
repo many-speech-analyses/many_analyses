@@ -17,7 +17,8 @@ cat3_col = "#1b9e77"
 
 # bring into betapart shape
 fixed_df <- sim_df %>% 
-  column_to_rownames(var = "team") %>% 
+  mutate(team_reviewer = paste0(team, "_", reviewer)) %>% 
+  column_to_rownames(var = "team_reviewer") %>% 
   select(fixed_1,
          fixed_2,
          fixed_3,
@@ -25,7 +26,8 @@ fixed_df <- sim_df %>%
          fixed_5)
 
 random_df <- sim_df %>% 
-  column_to_rownames(var = "team") %>% 
+  mutate(team_reviewer = paste0(team, "_", reviewer)) %>% 
+  column_to_rownames(var = "team_reviewer") %>% 
   select(random_1,
          random_2,
          random_3,
@@ -92,8 +94,8 @@ fe_re <- ggplot(sim_df_new,
                    segment.color = 'grey50') +
   labs(title = "Sørensen distance for fixed & random effect parameters",
        #subtitle = "",
-       x = "\n Distance values for random effects",
-       y = "Distance values for fixed effects\n ") +
+       x = "\nDistance values for random effects",
+       y = "Distance values for fixed effects\n") +
   theme_minimal()
 
 es_fe <- left_join(sim_df_new, 
@@ -112,10 +114,14 @@ es_fe <- left_join(sim_df_new,
                      fill = "white",
                      color = "black",
                      segment.color = 'grey50') + 
+    scale_fill_viridis_c(option = "D", end = 1) +
+    scale_color_viridis_c(option = "D", end = 1) +
     labs(title = "Effect size and Sørensen distance for fixed effects",
        #subtitle = "",
-       y = "\nES (posterior median)",
-       x = "Distance values for fixed effects\n ") +
+       y = "ES (posterior median)\n",
+       x = "\n Distance values for fixed effects",
+       fill = "# fixed effects",
+       color = "# fixed effects") +
     theme_minimal()
 
 es_re <- left_join(sim_df_new, 
@@ -134,10 +140,14 @@ es_re <- left_join(sim_df_new,
                    fill = "white",
                    color = "black",
                    segment.color = 'grey50') + 
+    scale_fill_viridis_c(option = "D", end = 1) +
+    scale_color_viridis_c(option = "D", end = 1) +
     labs(title = "Effect size and Sørensen distance for random effects",
        #subtitle = "",
-       y = "\nES (posterior median)",
-       x = "Distance values for random effects\n ") +
+       y = "ES (posterior median)\n",
+       x = "\nDistance values for random effects",
+       fill = "# fixed effects",
+       color = "# fixed effects") +
     theme_minimal()
 
 # TR: the patchwork of all three doesn't work for me, no idea why

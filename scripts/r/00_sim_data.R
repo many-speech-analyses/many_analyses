@@ -39,10 +39,10 @@ models_lambda = 3
 nteams = 16
 
 # number of reviewers
-nrevs  = 8
+nrevs  = nteams
 
 # number of reviews per reviewer
-nreviews  = nteams / nrevs
+nreviews  = 4
 
 # random fluctuation between reviewers for rating
 rand_revs = 0.5
@@ -55,7 +55,6 @@ reviewer_c = c()
 dv_c = c()
 se_c = c()
 peer_rating_c = c()
-peer_verdict_c = c()
 posthoc_c = c()
 nmodels_c = c()
 
@@ -83,7 +82,9 @@ for (i in 1:nteams) {
 
   # generate effect size 
   dv_c <- c(dv_c,
-            rnorm(n = nobs, mean = meta_effect, sd = 1))
+            rnorm(n = nobs, mean = meta_effect, sd = rnorm(n = 1,
+                                                           mean = 1,
+                                                           sd = 1)))
   
   # generate standard error (NOTE: in our model SE is equivalent to SD which 
   # by def. must be non-negative)
@@ -150,28 +151,39 @@ df <- df %>%
          random_num = random_1 + random_2 + random_3 + random_4 + random_5
   )
 
-
 ## add reviewer infos-----------------------------------------------------------
 
 ## create reviewers
 reviewers <- paste0("rev", 
                     seq(from = 1, to = nrevs))
 
-# split teams into reviewers
-split_list <- split(df$team, reviewers)
+## add to df
+df$reviewer <- reviewers
 
-# make data frame
-split <- data.frame(split_list) %>% 
-  # long format
-  pivot_longer(cols = 1:ncol(data.frame(split_list)),
-               names_to = "reviewer",
-               values_to = "team") %>% 
-  group_by(reviewer) %>% 
-  # create random number that represents reviewer bias
-  mutate(reviewer_noise = rnorm(1, 0, rand_revs))
+# make empty list
+reviewer_assignment <- list()
 
+# sample nreviews * teams for each reviewer 
+for (k in 1:length(reviewers)){
+  # sample from teams
+  reviewer_assignment[[k]] <- sample(df$team, nreviews)
+}
+
+# assign to df
+  reviewer_df <- data.frame(df) %>%  
+    mutate(reviewer_assignment = reviewer_assignment) %>% 
+    select(reviewer, reviewer_assignment) %>% 
+    unnest(reviewer_assignment) %>% 
+    mutate(team = reviewer_assignment) %>% 
+    group_by(reviewer) %>% 
+    # create random number that represents reviewer bias
+    mutate(reviewer_noise = rnorm(1, 0, rand_revs))
+
+df_dummy <- df %>% 
+  select(-reviewer)
+  
 # combine data frames
-df2 <- full_join(df, split)
+df2 <- full_join(df_dummy, reviewer_df)
 
 ## assign nreviews to each reviewer
 for (j in 1:nrow(df2)) { 
@@ -181,12 +193,6 @@ for (j in 1:nrow(df2)) {
   df2$peer_rating[j] <- rtruncnorm(nobs, a = 0, b = 100, 
                                    mean = 50 *df2$reviewer_noise[j], 
                                    sd = 15)
-  # peer verdict (ordinal)
-  df2$peer_verdict[j] <- sample(x = c("reject", "major", "minor", "accept"), 
-                             size = nobs, replace = TRUE,
-                             # some random-ish weights
-                             prob = prob_peer_verdict)
-  
 } #endfor_j
 
 ## store------------------------------------------------------------------------

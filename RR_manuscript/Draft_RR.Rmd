@@ -226,7 +226,7 @@ The factor most likely to delay our time line is the rate of completion of the o
 
 ## Step 1: Recruitment and Initial Survey of Analysts
 
-Initiating authors (SC, JC, TR) created a publicly available document providing a general description of the project (LINK) and a short prerecorded slide show that summarizes the study and research question (LINK). 
+Initiating authors (SC, JC, TR) created a publicly available document providing a general description of the project (LINK) and a short prerecorded slide show that summarizes the study and research question in order to increase accesibilty to potential analysts (LINK). 
 The project will be advertised via Social Media, using mailing lists for linguistic and psychological societies (full scope of these lists is not fixed but will include LIST OF LISTS), and via word of mouth. 
 The target population is active speech science researchers with a graduate degree (or currently studying for a graduate degree) in a relevant discipline. 
 Researchers can choose to work independently or in a small team. 
@@ -261,13 +261,13 @@ We then find a minimum n = 12 according to this formula.
 
 ## Step 2: Primary Data Analyses
 
-Analysis teams will register and answer a demographic and expertise survey (LINK). 
-We will then provide them with the acoustic data set and request that they answer the following research question: 
+Analysis teams will register and answer a demographic and expertise survey (LINK). The survey collects information on the analysts current position and self-estimated breadth and level of statistical expertise.
+We will then provide teams with the acoustic data set and request that they answer the following research question: 
 
 Do speakers acoustically modify utterances to signal atypical word combinations?
 
 Once their analysis is complete, they will answer a structured survey (LINK), providing analysis technique, explanations of their analytical choices, quantitative results, and a statement describing their conclusions. 
-They will also upload their analysis files (including the additionally derived data and text files that were used to extract and preprocess the acoustic data), their analysis code [if applicable], and a detailed journal-ready statistical methods section. 
+They will also upload their analysis files (including the additionally derived data and text files that were used to extract and preprocess the acoustic data), their analysis code (if applicable), and a detailed journal-ready statistical methods section. 
 
 ## Step 3: Peer Reviews of Analyses 
 
@@ -284,7 +284,6 @@ First, the reviewer will receive a description of the methods of a single analys
 This will include the narrative methods section, the analysis team’s answers to our survey questions regarding their methods, including analysis code, and the data set. 
 The reviewer will then be asked, in an online survey (LINK), to rate both the acoustic analysis and the statistical analysis on a scale of 0-100 based on these prompts: <!-- TR:Need flow chart here-->
 
-
 “Rate the overall appropriateness of the acoustic analysis to answer the research question with the available data. To help you calibrate your rating, please consider the following guidelines:
 
 - 100. A perfect analysis with no conceivable improvements from the reviewer
@@ -296,8 +295,7 @@ The reviewer will then be asked, in an online survey (LINK), to rate both the ac
 \*Please note that these values are meant to calibrate your ratings. 
 We welcome ratings of any number between 0 and 100."
 
-After providing this rating, the reviewer will be presented with this prompt, in multiple-choice format: “Would the analytical methods presented produce an analysis that is (a) publishable as is, (b) publishable with minor revision, (c) publishable with major revision, (d) deeply flawed and unpublishable?” 
-The reviewer will then be provided with a series of text boxes and the following prompts:  
+After providing this rating, the reviewer will then be provided with a series of text boxes and the following prompts:  
 
 \noindent “Please explain your ratings of this analysis.  
 \noindent Please evaluate the selection of acoustic features.  
@@ -316,7 +314,6 @@ The invitation to revise the original ratings will be as follows: “If, now tha
 The text box will be prefaced with this prompt: “Please explain your choice to revise (or not to revise) your ratings.”
 
 ## Step 4: Evaluate Variation
-
 Initiating authors (SC, JC, TR) will conduct the analyses outlined in this section. 
 We will describe the variation in model specification in several ways:
 First, we will calculate summary statistics describing variation among analysis, including the nature and number of acoustic measures, the operationalization and the temporal domain of measurement, the nature and number of model parameters for both fixed and random effects [if applicable], as well as the mean, standard deviation and range of effect sizes reported. 
@@ -331,7 +328,7 @@ ADD FORMULA
 <!-- JC: I believe we can use their ES in our model to get a prob dist. of the pooled estimate. I don't think we need to transform their models. -->
 
 First, we will derive standardized effect sizes from each individual analysis. 
-Since researchers are likely using multi-level linear regression models, common effect size measures such as Cohen's d are inappropriate. 
+Since we anticipate that researchers use multi-level linear regression models, common effect size measures such as Cohen's d are inappropriate. 
 In multi-level models the variance components are partitioned into multiple sources of variation (e.g. varying intercept of speakers and items, varying by-predictor slopes, etc.). 
 We thus will take into account all of the variance sources of the models (Hedges, 2007) and derive the index $\delta_t$ (where t stands for “total” variance), which is calculated by the estimated difference between group means ($\beta$), divided by the square root of the sum of all variance components as formulated below:
 
@@ -344,7 +341,6 @@ RELEVANT: https://www.reddit.com/r/statistics/comments/fouwp9/q_effect_size_calc
 <!-- JC:I THINK IT LOOKS GOOD (MAKES SENSE), THOUGH THIS IS ALSO A POSSIBILITY:
 
 $$\delta_t = \frac{\beta}{\sqrt{\sigma^2_{i} + ... \sigma^2_{k}}}$$-->
-
 
 Variation in the resulting effect sizes can be due to many different sources, one of which is the model architecture and the specification of random effect structure. 
 Hypothetically, two analyst teams can arrive at two different effect sizes, even if they have made the exact same measurement, processed the data in the exact same way, and used the same predictor combination, but, crucially, differ in their random effect structure (e.g. one team assumes random intercepts only, the other team uses random slopes). 
@@ -395,7 +391,6 @@ We then will use the per-model average Sorensen's index value as an independent 
 
 WRITE ABOUT HOW TO HANDLE GAMS
 
-
 We will publicly archive all relevant data, code, and materials on the Open Science Framework (ADD LINK).
 Archived data will include the original data sets distributed to all analysts, any edited versions of the data analyzed by individual groups, and the data we analyze with our meta-analyses, which include the effect sizes derive from separate analyses, the statistics describing variation in model structure among analyst groups, and the anonymized answers to our surveys of analysts and peer reviewers.
 Similarly, we will archive both the analysis code used for each individual analysis and the code from our meta-analyses. 
@@ -407,10 +402,13 @@ We will also exclude any individual analysis that does not produce an outcome th
 
 ADD GAM EXCLUSION
 
-## Step 6: Facilitated Discussion and Collaborative Write-Up of Manuscript
+DESCRIBE META-NALYSIS
 
-Analysts and initiating authors will discuss the limitations, results, and implications of the study and collaborate on writing the final manuscript for review as a stage-2 Registered Report.
+We will assess the extent to which deviations from the meta-analytic mean by individual effect sizes can be explained by the following predictors:
 
+The peer ratings (1-100) of each analysis, a measurement of the ‘uniqueness’ of the set of model parameters included in each analysis (see below), whether or not analysis teams have changed their analyses in a post hoc fashion (EXPLAIN ABOVE, binary), the number of analyses performed before the final model was performed (as self-estimated by the teams).
+
+<<<<<<< HEAD
 
 
 SAMPLE SIZE
@@ -424,7 +422,21 @@ SOreenson analysis
 
 
 
+=======
+The uniqueness of model parameters will be assessed using the Sorensen’s Similarity Index (an index typically used to compare species composition across sites). Here we treat model parameters as species and individual analyses as sites. To generate an individual Sorensen’s value for each analysis requires calculating the pairwise Sorensen’s value for all pairs of analyses (of the same data set), and then taking the average across these Sorensen’s values for each analysis. We will calculate the Sorensen’s index values using the betapart package (Baselga et al. 2018) in R:
 
+$$\beta_{Sorensen} = \frac{b+c}{2_a + b + c}$$
+>>>>>>> 425a9416a85ac74052850df81c9fd687543f9abb
+
+where $$a$$ is the number of variables common to both models, $$b$$ is the number of variables that occur in the first model but not in the second and $$c$$ is the number of variables that occur in the second model but not in the first. 
+
+The individual posterior mean for each analysis of each team serves as the dependent variable in these analyses. 
+
+We wish to quantify relationships among variables, but we have no a priori expectation of effect size and we will not make dichotomous decisions (such as statistical significance). 
+
+## Step 6: Collaborative Write-Up of Manuscript
+
+Analysts and initiating authors will discuss the limitations, results, and implications of the study and collaborate on writing the final manuscript for review as a stage-2 Registered Report.
 
 
 \newpage
