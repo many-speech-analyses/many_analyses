@@ -17,7 +17,8 @@ cat3_col = "#1b9e77"
 
 # bring into betapart shape
 fixed_df <- sim_df %>% 
-  column_to_rownames(var = "team") %>% 
+  mutate(team_reviewer = paste0(team, "_", reviewer)) %>% 
+  column_to_rownames(var = "team_reviewer") %>% 
   select(fixed_1,
          fixed_2,
          fixed_3,
@@ -25,7 +26,8 @@ fixed_df <- sim_df %>%
          fixed_5)
 
 random_df <- sim_df %>% 
-  column_to_rownames(var = "team") %>% 
+  mutate(team_reviewer = paste0(team, "_", reviewer)) %>% 
+  column_to_rownames(var = "team_reviewer") %>% 
   select(random_1,
          random_2,
          random_3,

@@ -8,7 +8,7 @@
 
 # Source libs and load simulated data -----------------------------------------
 source(here::here("scripts", "r", "00_libs.R"))
-sim_df <- read_csv(here("data", "sim", "simulated_df.csv"))
+sim_df <- read_csv(here("data", "sim", "simulated_df_distances.csv"))
 
 # -----------------------------------------------------------------------------
 
@@ -28,6 +28,7 @@ ma_sim_m0 <- brm(
   data = sim_df,
   prior = priors,
   iter = 4000, warmup = 2000, cores = 4, chains = 4, 
+  control = list(adapt_delta = 0.99, max_treedepth = 15),
   file = here("models", "sim", "ma_sim_m0")
 )
 
@@ -38,7 +39,7 @@ ma_sim_m1 <- brm(
   data = sim_df,
   prior = priors,
   iter = 4000, warmup = 2000,  cores = 4, chains = 4, 
-  control = list(adapt_delta = 0.9999), 
+  control = list(adapt_delta = 0.9999, max_treedepth = 15), 
   file = here("models", "sim", "ma_sim_m1")
 )
 
@@ -51,7 +52,7 @@ ma_sim_m2 <- brm(
   prior = c(prior(normal(0, 1), class = b),
             prior(cauchy(0, 1), class = sd)),
   iter = 4000, warmup = 2000,  cores = 4, chains = 4, 
-  control = list(adapt_delta = 0.9999), 
+  control = list(adapt_delta = 0.9999, max_treedepth = 15), 
   file = here("models", "sim", "ma_sim_m2")
 )
 
@@ -64,15 +65,45 @@ ma_sim_m3 <- brm(
   prior = c(prior(normal(0, 1), class = b),
             prior(cauchy(0, 1), class = sd)),
   iter = 4000, warmup = 2000,  cores = 4, chains = 4, 
-  control = list(adapt_delta = 0.9999), 
+  control = list(adapt_delta = 0.9999, max_treedepth = 15), 
   file = here("models", "sim", "ma_sim_m3")
 )
+
+# Add fixed_similarity
+ma_sim_m4 <- brm(
+  formula = es | se(se) ~ 0 + Intercept + posthoc + nmodels + fixed_similarity +
+    (1 | team) + (1 | reviewer), 
+  family = gaussian, 
+  data = sim_df,
+  prior = c(prior(normal(0, 1), class = b),
+            prior(cauchy(0, 1), class = sd)),
+  iter = 4000, warmup = 2000,  cores = 4, chains = 4, 
+  control = list(adapt_delta = 0.9999, max_treedepth = 15), 
+  file = here("models", "sim", "ma_sim_m4")
+)
+
+# Add random_similarity
+ma_sim_m5 <- brm(
+  formula = es | se(se) ~ 0 + Intercept + posthoc + nmodels + fixed_similarity +
+    random_similarity +
+    (1 | team) + (1 | reviewer), 
+  family = gaussian, 
+  data = sim_df,
+  prior = c(prior(normal(0, 1), class = b),
+            prior(cauchy(0, 1), class = sd)),
+  iter = 4000, warmup = 2000,  cores = 4, chains = 4, 
+  control = list(adapt_delta = 0.9999, max_treedepth = 15), 
+  file = here("models", "sim", "ma_sim_m5")
+)
+
 
 # Assess fit
 # pp_check(ma_sim_m0, nsamples = 200)
 # pp_check(ma_sim_m1, nsamples = 200)
 # pp_check(ma_sim_m2, nsamples = 200)
 # pp_check(ma_sim_m3, nsamples = 200)
+# pp_check(ma_sim_m4, nsamples = 200)
+# pp_check(ma_sim_m5, nsamples = 200)
 
 # -----------------------------------------------------------------------------
 
@@ -94,28 +125,27 @@ posterior_samples(ma_sim_m1, c("^b", "^sd")) %>%
 
 
 
-
 # Grouping variable variability (team, reviewer)
-posterior_samples(ma_sim_m3) %>% 
+posterior_samples(ma_sim_m5) %>% 
   select(starts_with("sd")) %>% 
   gather(key, tau) %>% 
   mutate(key = str_remove(key, "sd_") %>% 
            str_remove(., "__Intercept")) %>% 
   ggplot(aes(x = tau, fill = key)) +
   geom_density(color = "transparent", alpha = 0.6) +
-  scale_fill_viridis_d(name = "Group-level variance", option = "D", end = 0.6, 
+  scale_fill_viridis_d(option = "D", end = 0.6, 
     labels = c("Reviewer", "Team")) + 
-  labs(y = "Density", x = expression(tau)) + 
+  labs(y = "Density\n", 
+       x = expression(tau),
+       fill = "Group") + 
   theme_minimal() + 
   theme(legend.position = c(0.85, 0.75), legend.title = element_text(size = 9), 
     legend.text = element_text(size = 8), legend.key.size = unit(0.5, "cm"))
 
 
-
-
-# Plot effect of posthoc and nmodels
-posterior_samples(ma_sim_m3) %>% 
-  select(b_posthoc, b_nmodels) %>% 
+# Plot effect of posthoc, nmodels, fixed_similarity, random_similarity
+posterior_samples(ma_sim_m5) %>% 
+  select(b_posthoc, b_nmodels, b_fixed_similarity, b_random_similarity) %>% 
   pivot_longer(cols = everything(), names_to = "parameter", 
     values_to = "estimate") %>% 
   ggplot(aes(x = estimate, y = parameter)) + 
@@ -126,8 +156,8 @@ posterior_samples(ma_sim_m3) %>%
     slab_color = "transparent", point_fill = "white") +
   scale_fill_viridis_d(name = "Overall effect of", end = .6, 
     guide = guide_legend(reverse = T), 
-    labels = c("n models", "posthoc")) + 
-  scale_shape_manual(values = c(21:22), guide = F) + 
+    labels = c("n models", "posthoc", "fixed_similarity", "random_similarity")) + 
+  scale_shape_manual(values = c(21:24), guide = F) + 
   labs(x = expression(beta), y = " ") +
   theme_minimal() + 
   theme(legend.position = c(0.9, 0.75), axis.text.y = element_blank(), 
@@ -135,7 +165,6 @@ posterior_samples(ma_sim_m3) %>%
     legend.text = element_text(size = 8), 
     legend.key.size = unit(0.5, "cm")) + 
   guides(fill = guide_legend(override.aes = list(shape = NA), reverse = T))
-
 
 
 
