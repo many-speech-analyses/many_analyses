@@ -8,7 +8,12 @@
 
 # Source libs and load simulated data -----------------------------------------
 source(here::here("scripts", "r", "00_libs.R"))
-sim_df <- read_csv(here("data", "sim", "simulated_df_distances.csv"))
+sim_df <- read_csv(here("data", "sim", "simulated_df_distances.csv")) %>% 
+  mutate(posthoc_sum = if_else(posthoc == 0, -1, 1), 
+         nmodels_std = (nmodels - mean(nmodels)) / sd(nmodels), 
+         fixed_sim_std = (fixed_similarity - mean(fixed_similarity)) / sd(fixed_similarity), 
+         random_sim_std = (random_similarity - mean(random_similarity)) / sd(random_similarity), 
+         peer_rating_std = (peer_rating - mean(peer_rating)) / sd(peer_rating))
 
 # -----------------------------------------------------------------------------
 
@@ -28,7 +33,7 @@ ma_sim_m0 <- brm(
   data = sim_df,
   prior = priors,
   iter = 4000, warmup = 2000, cores = 4, chains = 4, 
-  control = list(adapt_delta = 0.99, max_treedepth = 15),
+  #control = list(adapt_delta = 0.99, max_treedepth = 15),
   file = here("models", "sim", "ma_sim_m0")
 )
 
@@ -45,7 +50,7 @@ ma_sim_m1 <- brm(
 
 # Fit between variable model (add posthoc)
 ma_sim_m2 <- brm(
-  formula = es | se(se) ~ 0 + Intercept + posthoc + 
+  formula = es | se(se) ~ 0 + Intercept + posthoc_sum + 
     (1 | team) + (1 | reviewer), 
   family = gaussian, 
   data = sim_df,
@@ -58,7 +63,7 @@ ma_sim_m2 <- brm(
 
 # Add nmodels
 ma_sim_m3 <- brm(
-  formula = es | se(se) ~ 0 + Intercept + posthoc + nmodels + 
+  formula = es | se(se) ~ 0 + Intercept + posthoc_sum + nmodels_std + 
     (1 | team) + (1 | reviewer), 
   family = gaussian, 
   data = sim_df,
@@ -71,7 +76,8 @@ ma_sim_m3 <- brm(
 
 # Add fixed_similarity
 ma_sim_m4 <- brm(
-  formula = es | se(se) ~ 0 + Intercept + posthoc + nmodels + fixed_similarity +
+  formula = es | se(se) ~ 0 + Intercept + posthoc_sum + nmodels_std + 
+    fixed_similarity_std +
     (1 | team) + (1 | reviewer), 
   family = gaussian, 
   data = sim_df,
@@ -84,8 +90,8 @@ ma_sim_m4 <- brm(
 
 # Add random_similarity
 ma_sim_m5 <- brm(
-  formula = es | se(se) ~ 0 + Intercept + posthoc + nmodels + fixed_similarity +
-    random_similarity +
+  formula = es | se(se) ~ 0 + Intercept + posthoc_sum + nmodels_std + 
+    fixed_similarity_std + random_similarity_std +
     (1 | team) + (1 | reviewer), 
   family = gaussian, 
   data = sim_df,
@@ -94,6 +100,20 @@ ma_sim_m5 <- brm(
   iter = 4000, warmup = 2000,  cores = 4, chains = 4, 
   control = list(adapt_delta = 0.9999, max_treedepth = 15), 
   file = here("models", "sim", "ma_sim_m5")
+)
+
+# Add peer rating and slopes
+ma_sim_m6 <- brm(
+  formula = es | se(se) ~ 0 + Intercept + posthoc_sum + nmodels_std + 
+    fixed_similarity_std +  random_similarity_std + peer_rating_std +
+    (1 + peer_rating_std | team) + (1 + peer_rating_std | reviewer), 
+  family = gaussian, 
+  data = sim_df,
+  prior = c(prior(normal(0, 1), class = b),
+            prior(cauchy(0, 1), class = sd)),
+  iter = 4000, warmup = 2000,  cores = 4, chains = 4, 
+  control = list(adapt_delta = 0.9999, max_treedepth = 15), 
+  file = here("models", "sim", "ma_sim_m6")
 )
 
 
