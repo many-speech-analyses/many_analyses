@@ -113,7 +113,7 @@ ma_sim_m5 <- brm(
 # Plots -----------------------------------------------------------------------
 
 # Pooled effect and SE
-posterior_samples(ma_sim_m1, c("^b", "^sd")) %>% 
+posterior_samples(ma_sim_m5, c("^b", "^sd")) %>% 
   rename(smd = b_Intercept, tau = sd_team__Intercept) %>% 
   ggplot(., aes(x = smd, y = tau)) + 
   stat_density_2d(aes(fill = after_stat(level)), geom = "polygon") +
@@ -170,11 +170,11 @@ posterior_samples(ma_sim_m5) %>%
 
 # Forrest plot of teams
 # Get draws for each study
-team_draws <- spread_draws(ma_sim_m3, r_team[Team,], b_Intercept) %>% 
+team_draws <- spread_draws(ma_sim_m5, r_team[Team,], b_Intercept) %>% 
   mutate(b_Intercept = r_team + b_Intercept)
 
 # Get draws for pooled effect
-pooled_effect_draws <- spread_draws(ma_sim_m3, b_Intercept) %>% 
+pooled_effect_draws <- spread_draws(ma_sim_m5, b_Intercept) %>% 
   mutate(Team = "Pooled Effect")
 
 # Combine it and clean up
@@ -214,7 +214,7 @@ forest_data %>%
                 ymin = -Inf, ymax = Inf), 
             fill = "#4A978A",
             alpha = 0.3) +
-  geom_vline(xintercept = fixef(ma_sim_m3)[1, 1], 
+  geom_vline(xintercept = fixef(ma_sim_m5)[1, 1], 
              color = "#40758B", size = 0.7, 
              lty = "dashed") +
   geom_pointinterval(data = forest_data_summary %>% 
