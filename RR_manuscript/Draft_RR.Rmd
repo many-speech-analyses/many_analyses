@@ -232,12 +232,32 @@ The target population is active speech science researchers with a graduate degre
 Researchers can choose to work independently or in a small team. 
 For the sake of simplicity, we refer to single researcher or small teams as ‘analysis teams’. 
 
-Recruitment for this project is ongoing but we aim for a minimum of XX analysis teams independently evaluating each dataset (see sample size justification below). <!-- TR: Big to-do point. We need to only justify a minimum sample size-->
+Recruitment for this project is ongoing but we aim for a minimum of XX analysis teams independently evaluating each dataset (see sample size justification below). <!-- TR: Big to-do point. We need to only justify a minimum sample size JC: added description (word for word) from ecology RR. Need to figure out what it means still and then put into our own words. -->
 We will simultaneously recruit volunteers to peer-review the analyses conducted by the other volunteers through the same channels. 
 Our goal is to recruit a similar number of peer-reviewers and analysts, and to ask each peer reviewer to review a minimum of four analyses. 
 If we are unable to recruit at least half the number of reviewers as analysis teams, we will ask analysts to serve also as reviewers (after they have completed their analyses). 
 All analysts and reviewers will share co-authorship on this manuscript and will participate in the collaborative process of producing the final manuscript. 
 All analysts will sign a consent (ethics) document (LINK). 
+
+<!-- sample size info from Ecology RR -->
+We identified our minimum number of analyses per data set by considering the number of effects needed in a meta-analysis to generate an estimate of heterogeneity ($\tau^2$) with a 95% confidence interval that does not encompass zero. 
+This minimum sample size is invariant regardless of $\tau^2$. 
+This is because the same t-statistic value will be obtained by the same sample size regardless of variance ($\tau^2$). 
+We see this by first examining the formula for the standard error, SE for variance, ($\tau^2$) or SE($\tau^2$) assuming normality in an underlying distribution of effect sizes (Knight 2000):
+
+$$SE(\tau^2) = \sqrt{\frac{2\tau^4}{(n-1)}}$$
+
+and then rearranging the above formula to show how the t-statistic is independent of $\tau^2$, as seen below.
+ 
+$$t = \frac{\tau^2}{SE(\tau^2)} = \sqrt{\frac{(n-1)}{2}}$$
+
+We then find a minimum n = 12 according to this formula. 
+<!-- We need to decide if we use this (I still don't understand it) --> 
+
+
+
+
+
 
 ## Step 2: Primary Data Analyses
 
@@ -250,6 +270,7 @@ Once their analysis is complete, they will answer a structured survey (LINK), pr
 They will also upload their analysis files (including the additionally derived data and text files that were used to extract and preprocess the acoustic data), their analysis code [if applicable], and a detailed journal-ready statistical methods section. 
 
 ## Step 3: Peer Reviews of Analyses 
+
 <!-- TR: So I am still unclear on how this will look like, do they only evaluate stats? if they evaluate the entire pipeline they need to be phoneticians, do they evaluate acoustic analysis and stats analysis independently?-->
 
 At a minimum, each analysis will be evaluated by four different reviewers, and each volunteer peer-reviewer will be randomly assigned to methods sections from at least four analyst teams (the exact number will depend on the number of analysis teams and peer reviewers recruited). 
@@ -329,7 +350,48 @@ Variation in the resulting effect sizes can be due to many different sources, on
 Hypothetically, two analyst teams can arrive at two different effect sizes, even if they have made the exact same measurement, processed the data in the exact same way, and used the same predictor combination, but, crucially, differ in their random effect structure (e.g. one team assumes random intercepts only, the other team uses random slopes). 
 Thus, additionally, we will run all analyses with a prespecified maximal random effect structure for all predictors. 
 
-<!-- TR: THIS HAS SOME PRACTICAL ISSUES, NEED TO DISCUSS-->
+<!-- TR: THIS HAS SOME PRACTICAL ISSUES, NEED TO DISCUSS ... ARE WE STILL DOING THIS? -->
+
+<!-- description of meta-analysis starts here --> 
+
+Upon calculating a standardized effect size and standard error for each analysis, the initiating authors will then fit a cross-classified Bayesian meta-analysis on the analyst team data using the multilevel regression model described below: 
+
+$$
+\begin{aligned}
+\delta_t & \sim \text{Normal}(\theta_i, \sigma_i = \text{se}_i) \\
+\theta_i     & \sim \text{Normal} (\mu, \tau) \\
+\mu          & \sim \text{Normal} (0, 1) \\
+\tau         & \sim \text{HalfCauchy} (0, 1)
+\end{aligned}
+$$
+
+Effect size ($\delta_{t}$) is the outcome variable and the number of post-hoc changes and the number of models fit will be included as population-level effects (i.e., fixed effects). 
+The likelihood of the outcome variable is assumed to be normally distributed.
+Analysis teams and reviewers will be included as group-level effects (i.e., random effects). 
+For all population-level parameters, the model will include regularizing, weakly informative priors (Gelman, 2017), which are normally distributed and centered at 0 with a standard deviation of 1. 
+A cauchy prior set at 0 with scale 1 will be used for $\tau$. 
+We will fit the model with 4000 iterations (2000 warm-up) and Hamiltonian Monte-Carlo sampling of the posterior distribution is carried out using 4 chains distributed across 4 processing cores.
+The analysis will be conducted in R (R core team, 2020) and fit using `stan` (Stan, 2019) via the R package `brms` (Bürkner, 2019). 
+
+
+<!-- Sorensen analysis starts here --> 
+
+The pooled estimate of the meta-analytic model will be used in a series of descriptive analyses that serve the purpose of describing how individual teams vary from each other. 
+Specifically, we will explain how team effect sizes deviate from the pooled estimate based on a measure of the uniqueness of the set of variables included in each analysis. 
+We will use Sorensen's Similarity Index (SSI) to derive a 'uniqueness' score. 
+The SSI is an index typically used in ecology research to compare species composition across sites. 
+For our purposes, we will treat variables as species and individual analyses as sites.
+In order to generate an SSI for each analysis team, we will calculate the average of all pairwise Sorensen's values for all pairs of analyses using the betapart package (Baselga et al. 2018) in R. 
+We achieve this using the following formula: 
+
+$$\beta_{Sorensen} = \frac{(b+c)}{(2a+b+c)}$$
+
+where, given a pair of models, a is the number of variables common to both, b is the number of variables that occur in the first model but not in the second, and c is the number of variables that occur in the second model but not in the first. 
+We then will use the per-model average Sorensen's index value as an independent variable to predict the deviation score in a general linear model, with no random effect since each analysis is included only once, in the stats package in R  (R_Core_Team 2019):
+<!-- are we going to do this last part? --> 
+
+
+
 
 WRITE ABOUT HOW TO HANDLE GAMS
 
@@ -339,7 +401,9 @@ Archived data will include the original data sets distributed to all analysts, a
 Similarly, we will archive both the analysis code used for each individual analysis and the code from our meta-analyses. 
 We will also archive copies of our survey instruments from analysts and peer reviewers. 
 
-Our rules for excluding data from our study are as follows. We will exclude from our synthesis any individual analysis submitted after we have completed peer review or those unaccompanied by analysis files that allow us to understand what the analysts did. We will also exclude any individual analysis that does not produce an outcome that can be interpreted as an answer to our primary question. 
+Our rules for excluding data from our study are as follows. 
+We will exclude from our synthesis any individual analysis submitted after we have completed peer review or those unaccompanied by analysis files that allow us to understand what the analysts did. 
+We will also exclude any individual analysis that does not produce an outcome that can be interpreted as an answer to our primary question. 
 
 ADD GAM EXCLUSION
 
@@ -347,9 +411,19 @@ ADD GAM EXCLUSION
 
 Analysts and initiating authors will discuss the limitations, results, and implications of the study and collaborate on writing the final manuscript for review as a stage-2 Registered Report.
 
-## Data analysis
 
-We used `r cite_r("r-references.bib")` for all our analyses.
+
+SAMPLE SIZE
+
+
+META ANALYSIS
+
+SOreenson analysis
+
+
+
+
+
 
 
 
