@@ -5,7 +5,7 @@
 
 source(here::here("scripts", "r", "00_libs.R"))
 sim_df <- read_csv(here("data", "sim", "simulated_df.csv"))
-ma_sim_m3 <- readRDS(here("models", "sim", "ma_sim_m3.rds"))
+ma_sim_m5 <- readRDS(here("models", "sim", "ma_sim_m5.rds"))
 
 # global color scheme / non-optimized
 cat1_col = "#d95f02"
@@ -99,7 +99,7 @@ fe_re <- ggplot(sim_df_new,
   theme_minimal()
 
 es_fe <- left_join(sim_df_new, 
-  spread_draws(ma_sim_m3, r_team[Team,], b_Intercept) %>% 
+  spread_draws(ma_sim_m5, r_team[Team,], b_Intercept) %>% 
     mutate(team = Team, b_Intercept = r_team + b_Intercept) %>% 
     group_by(team) %>% 
     summarize(posterior_median = median(b_Intercept), .groups = "drop"), 
@@ -125,7 +125,7 @@ es_fe <- left_join(sim_df_new,
     theme_minimal()
 
 es_re <- left_join(sim_df_new, 
-  spread_draws(ma_sim_m3, r_team[Team,], b_Intercept) %>% 
+  spread_draws(ma_sim_m5, r_team[Team,], b_Intercept) %>% 
     mutate(team = Team, b_Intercept = r_team + b_Intercept) %>% 
     group_by(team) %>% 
     summarize(posterior_median = median(b_Intercept), .groups = "drop"), 
