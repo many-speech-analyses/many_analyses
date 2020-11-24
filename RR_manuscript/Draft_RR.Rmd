@@ -408,27 +408,12 @@ We will assess the extent to which deviations from the meta-analytic mean by ind
 
 The peer ratings (1-100) of each analysis, a measurement of the ‘uniqueness’ of the set of model parameters included in each analysis (see below), whether or not analysis teams have changed their analyses in a post hoc fashion (EXPLAIN ABOVE, binary), the number of analyses performed before the final model was performed (as self-estimated by the teams).
 
-<<<<<<< HEAD
 
-
-SAMPLE SIZE
-
-
-META ANALYSIS
-
-SOreenson analysis
-
-
-
-
-
-=======
 The uniqueness of model parameters will be assessed using the Sorensen’s Similarity Index (an index typically used to compare species composition across sites). Here we treat model parameters as species and individual analyses as sites. To generate an individual Sorensen’s value for each analysis requires calculating the pairwise Sorensen’s value for all pairs of analyses (of the same data set), and then taking the average across these Sorensen’s values for each analysis. We will calculate the Sorensen’s index values using the betapart package (Baselga et al. 2018) in R:
 
 $$\beta_{Sorensen} = \frac{b+c}{2_a + b + c}$$
->>>>>>> 425a9416a85ac74052850df81c9fd687543f9abb
 
-where $$a$$ is the number of variables common to both models, $$b$$ is the number of variables that occur in the first model but not in the second and $$c$$ is the number of variables that occur in the second model but not in the first. 
+where $a$ is the number of variables common to both models, $b$ is the number of variables that occur in the first model but not in the second and $c$ is the number of variables that occur in the second model but not in the first. 
 
 The individual posterior mean for each analysis of each team serves as the dependent variable in these analyses. 
 
