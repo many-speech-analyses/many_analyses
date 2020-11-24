@@ -332,7 +332,7 @@ The factor most likely to delay our time line is the rate of completion of the o
 \hypertarget{step-1-recruitment-and-initial-survey-of-analysts}{%
 \subsection{Step 1: Recruitment and Initial Survey of Analysts}\label{step-1-recruitment-and-initial-survey-of-analysts}}
 
-Initiating authors (SC, JC, TR) created a publicly available document providing a general description of the project (LINK) and a short prerecorded slide show that summarizes the study and research question (LINK).
+Initiating authors (SC, JC, TR) created a publicly available document providing a general description of the project (LINK) and a short prerecorded slide show that summarizes the study and research question in order to increase accesibilty to potential analysts (LINK).
 The project will be advertised via Social Media, using mailing lists for linguistic and psychological societies (full scope of these lists is not fixed but will include LIST OF LISTS), and via word of mouth.
 The target population is active speech science researchers with a graduate degree (or currently studying for a graduate degree) in a relevant discipline.
 Researchers can choose to work independently or in a small team.
@@ -361,13 +361,13 @@ We then find a minimum n = 12 according to this formula.
 \hypertarget{step-2-primary-data-analyses}{%
 \subsection{Step 2: Primary Data Analyses}\label{step-2-primary-data-analyses}}
 
-Analysis teams will register and answer a demographic and expertise survey (LINK).
-We will then provide them with the acoustic data set and request that they answer the following research question:
+Analysis teams will register and answer a demographic and expertise survey (LINK). The survey collects information on the analysts current position and self-estimated breadth and level of statistical expertise.
+We will then provide teams with the acoustic data set and request that they answer the following research question:
 
 Do speakers acoustically modify utterances to signal atypical word combinations?
 
 Once their analysis is complete, they will answer a structured survey (LINK), providing analysis technique, explanations of their analytical choices, quantitative results, and a statement describing their conclusions.
-They will also upload their analysis files (including the additionally derived data and text files that were used to extract and preprocess the acoustic data), their analysis code {[}if applicable{]}, and a detailed journal-ready statistical methods section.
+They will also upload their analysis files (including the additionally derived data and text files that were used to extract and preprocess the acoustic data), their analysis code (if applicable), and a detailed journal-ready statistical methods section.
 
 \hypertarget{step-3-peer-reviews-of-analyses}{%
 \subsection{Step 3: Peer Reviews of Analyses}\label{step-3-peer-reviews-of-analyses}}
@@ -431,8 +431,7 @@ The reviewer will then be asked, in an online survey (LINK), to rate both the ac
 *Please note that these values are meant to calibrate your ratings.
 We welcome ratings of any number between 0 and 100."
 
-After providing this rating, the reviewer will be presented with this prompt, in multiple-choice format: \enquote{Would the analytical methods presented produce an analysis that is (a) publishable as is, (b) publishable with minor revision, (c) publishable with major revision, (d) deeply flawed and unpublishable?}
-The reviewer will then be provided with a series of text boxes and the following prompts:
+After providing this rating, the reviewer will then be provided with a series of text boxes and the following prompts:
 
 \noindent \enquote{Please explain your ratings of this analysis.\\
 \noindent Please evaluate the selection of acoustic features.\\
@@ -463,7 +462,7 @@ We anticipate that the majority of statistical analyses will be expressible as a
 ADD FORMULA
 
 First, we will derive standardized effect sizes from each individual analysis.
-Since researchers are likely using multi-level linear regression models, common effect size measures such as Cohen's d are inappropriate.
+Since we anticipate that researchers use multi-level linear regression models, common effect size measures such as Cohen's d are inappropriate.
 In multi-level models the variance components are partitioned into multiple sources of variation (e.g.~varying intercept of speakers and items, varying by-predictor slopes, etc.).
 We thus will take into account all of the variance sources of the models (Hedges, 2007) and derive the index \(\delta_t\) (where t stands for \enquote{total} variance), which is calculated by the estimated difference between group means (\(\beta\)), divided by the square root of the sum of all variance components as formulated below:
 
@@ -519,16 +518,26 @@ We will also exclude any individual analysis that does not produce an outcome th
 
 ADD GAM EXCLUSION
 
-\hypertarget{step-6-facilitated-discussion-and-collaborative-write-up-of-manuscript}{%
-\subsection{Step 6: Facilitated Discussion and Collaborative Write-Up of Manuscript}\label{step-6-facilitated-discussion-and-collaborative-write-up-of-manuscript}}
+DESCRIBE META-NALYSIS
+
+We will assess the extent to which deviations from the meta-analytic mean by individual effect sizes can be explained by the following predictors:
+
+The peer ratings (1-100) of each analysis, a measurement of the \enquote{uniqueness} of the set of model parameters included in each analysis (see below), whether or not analysis teams have changed their analyses in a post hoc fashion (EXPLAIN ABOVE, binary), the number of analyses performed before the final model was performed (as self-estimated by the teams).
+
+The uniqueness of model parameters will be assessed using the Sorensen's Similarity Index (an index typically used to compare species composition across sites). Here we treat model parameters as species and individual analyses as sites. To generate an individual Sorensen's value for each analysis requires calculating the pairwise Sorensen's value for all pairs of analyses (of the same data set), and then taking the average across these Sorensen's values for each analysis. We will calculate the Sorensen's index values using the betapart package (Baselga et al.~2018) in R:
+
+\[\beta_{Sorensen} = \frac{b+c}{2_a + b + c}\]
+
+where \(a\) is the number of variables common to both models, \(b\) is the number of variables that occur in the first model but not in the second and \(c\) is the number of variables that occur in the second model but not in the first.
+
+The individual posterior mean for each analysis of each team serves as the dependent variable in these analyses.
+
+We wish to quantify relationships among variables, but we have no a priori expectation of effect size and we will not make dichotomous decisions (such as statistical significance).
+
+\hypertarget{step-6-collaborative-write-up-of-manuscript}{%
+\subsection{Step 6: Collaborative Write-Up of Manuscript}\label{step-6-collaborative-write-up-of-manuscript}}
 
 Analysts and initiating authors will discuss the limitations, results, and implications of the study and collaborate on writing the final manuscript for review as a stage-2 Registered Report.
-
-SAMPLE SIZE
-
-META ANALYSIS
-
-SOreenson analysis
 
 \newpage
 
