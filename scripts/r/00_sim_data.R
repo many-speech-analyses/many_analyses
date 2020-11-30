@@ -82,9 +82,7 @@ for (i in 1:nteams) {
 
   # generate effect size 
   dv_c <- c(dv_c,
-            rnorm(n = nobs, mean = meta_effect, sd = rnorm(n = 1,
-                                                           mean = 1,
-                                                           sd = 1)))
+            rnorm(n = nobs, mean = meta_effect, sd = 1))
   
   # generate standard error (NOTE: in our model SE is equivalent to SD which 
   # by def. must be non-negative)

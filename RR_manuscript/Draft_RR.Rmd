@@ -100,10 +100,10 @@ Recent projects have shown that the variability between different data analysts 
 This variability can lead independent researchers to draw vastly different conclusions about the same dataset (e.g. Silberzahn et al. 2018, Starns et al. 2019, Botvinik-Nezer et al., 2020). 
 These projects, however, might still underestimate the extent to which analysts vary because data analysis is not merely restricted to statistical inference of datasets. 
 Human behavior is complex and offers many ways to be translated into numbers. 
-This is particularly true for fields that draw conclusions about human behavior and cognition from multidimensional data like speech or video data. 
-In fields working on human speech production, for example, researchers need to make numerous decisions about what to measure and how to measure it. 
+This is particularly true for fields that draw conclusions about human behavior and cognition from multidimensional data like audio or video data. 
+In fields working on human speech production, for example, researchers need to make numerous decisions about what how to measure it. 
 This is not trivial given the temporal extension of the acoustic signal and its complex structural composition. 
-Not only can decisions about operationalizing the raw data influence downstream decisions about statistical modelling, but statistical results can also lead researchers to go back and revise earlier decisions about the processing of the raw data.
+Not only can decisions about measuring the signal influence downstream decisions about statistical modelling, but statistical results can also lead researchers to go back and revise earlier decisions about the measuring process.
 
 In this article, we investigate the variability in analytic choices when many analyst teams analyze the same speech production data. 
 We explore the interaction between analytic choices at the stage of the operationalization of raw data and subsequent statistical modelling. 
@@ -111,7 +111,7 @@ Specifically, we report the impact of the analytic pipeline on research results 
 
 ## Researcher degrees of freedom
 
-Data analysis comes with many decisions like how to operationalize a given phenomenon or behavior, what data to submit to statistical modelling and which to exclude, what models to use or what inferential decision procedure to apply. 
+Data analysis comes with many decisions like how to measure a given phenomenon or behavior, what data to submit to statistical modelling and which to exclude, what models to use or what inferential decision procedure to apply. 
 However, if these decisions during data analysis are not specified in advance, we might stumble upon seemingly meaningful patterns in the data that are merely statistical flukes. 
 This can be problematic because to err is human. <!-- I'd probably drop this. When we make unspecified decisions during data analysis we can stumble upon spurious results (most likely) as well as real results (less likely, still possible)... in other words it might not all be error... the issue is that we won't know the difference -->
 
@@ -119,18 +119,17 @@ We have evolved to filter the world in irrational ways (e.g., Tversky and Kahnem
 <!-- TR: Generally a good idea, but I'd say we keep it crisp at that point. The take-home here is: Humans are biased. --> 
 In connection with an academic incentive system that rewards certain discovery processes more than others (Sterling 1959, Koole & Lakens 2012), we often find ourselves exploring many possible analytical pipelines, but only reporting a select few. 
 This issue is particularly amplified in fields in which the raw data lend themselves to flexible measurement (Roettger 2019). 
-Combined with a wide variety of methodological and theoretical traditions as well as varying levels of statistical training across fields and subfields, the inherent flexibility of data analysis might lead to a vast plurality of analytic approaches. 
+Combined with a wide variety of methodological and theoretical traditions as well as varying levels of statistical training across subfields, the inherent flexibility of data analysis might lead to a vast plurality of analytic approaches that can lead to different scientific conclusions
 
-Consequently, if methodologists are correct (e.g. Simmons et al. 2011, Gelman & Loken 2013), there are many published papers that present overconfident interpretations of their data based on idiosyncratic analytic strategies. 
-These interpretation are either associated with an unknown amount of uncertainty or lend themselves to alternative interpretation if analyzed differently.
+Consequently, there might be many published papers that present overconfident interpretations of their data based on idiosyncratic analytic strategies (e.g. Simmons et al. 2011, Gelman & Loken 2013). 
+These interpretations are either associated with an unknown amount of uncertainty or lend themselves to alternative interpretation if analyzed differently.
 However, instead of being critically evaluated, scientific results often remain unchallenged in the publication record. 
 Despite recent efforts to improve transparency and reproducibility (REFS) and freely available and accessible infrastructures such as provided by the Open Science Framework (osf.io, ADD), critical reanalyses of published analytic strategies are uncommon because data sharing is still rare (Wicherts, Borsboom, Kats, & Molenaar, 2006, RECENT REF).
 
 While this issue has been widely discussed both from a conceptual point of view (Simmons et al. 2011, Wagenmakers et al. 2012, Nosek and Lakens 2014) and its application in individual scientific fields (e.g. Wichert et al. 2015, Charles et al. 2019, Roettger 2019), there are still many unknowns regarding the extent of analytical plurality in practice. 
-Recent collaborative attempts have started to shed light on how different analysts tackle the same data set and have revealed, not surprisingly, a large amount of variability. 
+Recent collaborative attempts have started to shed light on how different analysts tackle the same data set and have revealed a large amount of variability. 
 
 ## Crowdsourcing alternative analyses
-
 In a collaborative effort, Silberzahn et al. (2018) let twenty-nine independent analysis teams address the same research hypothesis 
 Analytic approaches and consequently the results varied widely between teams. 
 Sixty-nine percent of the teams found support for the hypothesis, and 31% did not. 
@@ -146,12 +145,11 @@ Clinical
 Predictive models  
 
 While these projects show a large degree of analytical flexibility with impactful consequences, they dealt with flexibility in inferential or computational modelling. 
-In these studies the datasets were fixed and data collection or extraction could not be changed. <!-- JC: any particular reason to favor data table over dataset? --> <!-- TR: I think my reasoning was dataset can be data table or raw data. Data table is the numerical derivation of the raw data. Maybe not a useful distinction-->
+In these studies the datasets were fixed and data collection or measurement could not be changed. <!-- JC: any particular reason to favor data table over dataset? --> <!-- TR: I think my reasoning was dataset can be data table or raw data. Data table is the numerical derivation of the raw data. Maybe not a useful distinction-->
 
-However, in many fields the primary raw data is a complex signal that needs to be operationalized according to the research question. 
-In social sciences, the raw observations correspond to recorded human behavior. 
-In many cases, the behavior is recorded and stored as a complex visual and/or acoustic signal that is temporally extended and exhibits a complex structure. <!-- I had trouble parsing "temporal extended exhibits" -->
-Decisions about how to operationalize a theoretically relevant aspect of that behavior or the underlying cognitive processes might interact with downstream decisions about statistical modelling and vice verse. 
+However, in many fields the primary raw data are complex signals that need to be operationalized according to the research question. 
+In social sciences, the raw observations correspond to human behavior, sometimes measured as a complex visual and/or acoustic signal.
+Decisions about how to measure a theoretically construct of that behavior or the underlying cognitive processes might interact with downstream decisions about statistical modelling and vice verse. 
 To understand how analytical flexibility manifests itself in a scenario where a complex decisions procedure is involved in operationalizing and measuring complex signals, the present paper looks at an experimentally elicited speech data set 
 
 ## Operationalizing speech 
@@ -160,29 +158,22 @@ To understand how analytical flexibility manifests itself in a scenario where a 
 
 RELEVANCE OF SPEECH PRODUCTION RESEARCH FOR COGSCI, AI, etc.
 
-In order to understand speech, listeners have to map a continuous, transient signal onto discrete meanings. Take for example the sentence: "The president refused to concede". This sentence stretches over hundreds of milliseconds and contains several layers of linguistically relevant units such as words, syllables and individual sounds. Thus, it offers a considerable number of perspectives and decisions along the data analysis pipeline.
-
-IMAGE SHOWING A WAVE FORM WITH DIFFERENT DOMAINS (temporal) AND STRUCTURAL CUES (e.g. f0, dur, int) MAPPING ONTO FUNCTIONAL CONTRASTS
-
+In order to understand speech, listeners have to map a continuous, transient signal onto discrete meanings. Take for example the sentence: "The president refused to concede". This sentence stretches over hundreds of milliseconds and contains several layers of linguistically relevant units such as words, syllables and individual sounds. Thus, it offers a considerable number of perspectives and decisions along the data analysis pipeline. 
 When conducting a study on speech production, the first important analytic decision to test a hypothesis relates to operationalization of the relevant behavior, i.e. how to measure the phenomenon of interest. 
-For example, how do we measure whether two sounds are acoustically identical or not (e.g. "bear" vs. "pear"), whether one word is more prominent than others ("The president REFUSES to concede"), or whether two discourse functions are produced differently ("The president refuses to concede." vs. "The president refuses to concede?")? 
-In other words, how do we quantitatively capture relevant features of speech?
-
+For example, how do we measure whether two sounds are acoustically identical or not (e.g. "concede" vs. "conceal"), whether one word is more prominent than others ("The president REFUSES to concede"), or whether two discourse functions are produced differently ("The president refuses to concede." vs. "The president refuses to concede?")? 
+In other words, how do we quantitatively capture relevant features of speech that correspond to the target behavior?
 This is not trivial. 
 Speech categories are inherently multidimensional and vary through time. 
 The acoustic parameters for one category are usually asynchronous, i.e. appear at different points of time in the unfolding signal and overlap with parameters for other categories (e.g. Jongman et al., 2000; Lisker, 1986; Summerfield, 1984; Winter, 2014). 
 For example, the distinction between voiced and voiceless stops in English (i.e. /b/ and /p/ in "bear" vs. "pear") can be manifested by many different acoustic measures (Lisker, 1977). 
 Even temporally dislocated acoustic parameters correlate with this lexical contrast. 
 For example, in the English words "led" versus "let", voicing correlates can be found in the acoustic manifestation of the initial /l/ of the word (Hawkins & Nguyen, 2004).
-
 The apparent multiplicity of phonetic cues grows exponentially if we look at larger temporal windows as is the case for suprasegmental aspects of speech. 
 Studies investigating acoustic correlates of word stress (e.g. the difference between "insight" and "incite"), for example, have been using many different measurements, including temporal characteristics (duration of certain segments or subphonemic intervals), spectral characteristics (intensity measures, formants, and spectral tilt), and measurements related to fundamental frequency (f0) (e.g. Gordon & Roettger, 2017). 
-
 Looking at even larger domains, the expression of pragmatic functions can be expressed by a variety of structurally different acoustic cues which can be distributed throughout the entire utterance. 
 Discourse functions are systematically expressed by multiple local pitch modulations differing in their position, shape, and alignment (e.g. Niebuhr et al., 2011). 
 They can also be expressed by global or local pitch modulations, as well as acoustic information within the temporal or spectral domain (e.g. van Heuven & van Zanten 2005). 
 All of these phonetic parameters are potential manifestations of underlying functional contrasts, like speaker's intentions, levels of arousal or social identity. 
-
 When testing hypotheses on speech production data, researchers need to make many decisions. 
 The larger the functional domain (e.g. are we interested in lexical items or in whole utterances), the higher the number of possible operationalizations. 
 These decisions are usually made prior to any statistical analysis, but can possibly be revised a posteriori in light of downstream analytic decisions. 
@@ -191,18 +182,16 @@ To probe the variability in data analysis pipelines across independent analytic 
 ## The data set - The prosody of redundant modifiers
 
 Our data set was collected in order to answer the following research question: Do speakers acoustically modify utterances to signal atypical word combinations? (e.g. “a blue banana” vs. “a yellow banana”)?
-
+We are interested in the acoustic profile of referring expression. 
 Referring is one of the most basic and prevalent uses of language and one of the most widely researched areas in language science. 
 It is an open question how speakers choose a referential expression when they want to refer to a specific entity like a banana. 
 The context within which an entity occurs (i.e., with other non-fruits, other fruits, or other bananas) plays a large part in determining the choice of referential expression. 
 Generally, speakers aim to be as informative as possible to uniquely establish reference to the intended object, but they are also resource efficient in that they avoid redundancy (Grice 1975). 
 Thus one would expect the use of a modifier, for example, only if it is necessary for disambiguation. 
 For instance, one might use the adjective "yellow" to describe a banana in a situation in which there is a yellow and a less ripe green banana available, but not when there is only one banana to begin with.
-
 Despite this coherent idea that speakers are both rational and efficient, there is much evidence that speakers are often overinformative: Speakers use referring expressions that are more specific than strictly necessary for the unambiguous identification of the intended referent (Sedivy 2003, Westerbeek et al. 2015, Rubio-Fernandez 2016), which has been argued to facilitate object identification and making communication between speakers and listeners more efficient (Arts et al. 2011, Paraboni et al. 2007, Rubio-Fernandez 2016). 
 Recent findings suggest that the utility of a referring expression depends on how good it is for a listener (compared to other referring expressions) to identify a target object. 
 For example, Degen et al. (2020) showed that modifiers that are less typical for a given referent (e.g. a blue banana) are more likely to be used in an overinformative scenario (e.g. when there is just one banana).
-
 This account, however, has mainly focused on content selection (Gatt et al. 2013), i.e. whether a certain referential expression is chosen or not, ignoring the fact that speech communication is much richer. 
 Even looking at morphosyntactically identical expressions, speakers can modulate these expressions via suprasegmental acoustic properties like temporal and spectral modifications of the segments involved (e.g. Ladd 2008). 
 Most prominently, languages use intonation to signal discourse relationships between referents (among other functions). 
