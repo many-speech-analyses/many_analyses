@@ -1,6 +1,6 @@
 # List of necessary materials
 
-- [ ] OSF repo (?).
+- [ ] OSF repo (https://osf.io/3bmcp/).
 - [ ] Project timeline/Gannt chart (?).
 - For recruitment:
   - [ ] Project description: [draft](https://docs.google.com/document/d/1sb650Hjb6mwuG26lSyaMZchSqKrx8q1s1DnTHH1JX_I/edit?usp=sharing).
