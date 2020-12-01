@@ -33,7 +33,7 @@ ma_sim_m0 <- brm(
   data = sim_df,
   prior = priors,
   iter = 4000, warmup = 2000, cores = 4, chains = 4, 
-  #control = list(adapt_delta = 0.99, max_treedepth = 15),
+  control = list(adapt_delta = 0.99, max_treedepth = 15),
   file = here("models", "sim", "ma_sim_m0")
 )
 
@@ -77,7 +77,7 @@ ma_sim_m3 <- brm(
 # Add fixed_similarity
 ma_sim_m4 <- brm(
   formula = es | se(se) ~ 0 + Intercept + posthoc_sum + nmodels_std + 
-    fixed_similarity_std +
+    fixed_sim_std +
     (1 | team) + (1 | reviewer), 
   family = gaussian, 
   data = sim_df,
@@ -91,7 +91,7 @@ ma_sim_m4 <- brm(
 # Add random_similarity
 ma_sim_m5 <- brm(
   formula = es | se(se) ~ 0 + Intercept + posthoc_sum + nmodels_std + 
-    fixed_similarity_std + random_similarity_std +
+    fixed_sim_std + random_sim_std +
     (1 | team) + (1 | reviewer), 
   family = gaussian, 
   data = sim_df,
@@ -105,7 +105,7 @@ ma_sim_m5 <- brm(
 # Add peer rating and slopes
 ma_sim_m6 <- brm(
   formula = es | se(se) ~ 0 + Intercept + posthoc_sum + nmodels_std + 
-    fixed_similarity_std +  random_similarity_std + peer_rating_std +
+    fixed_sim_std +  random_sim_std + peer_rating_std +
     (1 + peer_rating_std | team) + (1 + peer_rating_std | reviewer), 
   family = gaussian, 
   data = sim_df,
@@ -124,6 +124,7 @@ ma_sim_m6 <- brm(
 # pp_check(ma_sim_m3, nsamples = 200)
 # pp_check(ma_sim_m4, nsamples = 200)
 # pp_check(ma_sim_m5, nsamples = 200)
+# pp_check(ma_sim_m6, nsamples = 200)
 
 # -----------------------------------------------------------------------------
 
@@ -133,11 +134,11 @@ ma_sim_m6 <- brm(
 # Plots -----------------------------------------------------------------------
 
 # Pooled effect and SE
-posterior_samples(ma_sim_m5, c("^b", "^sd")) %>% 
+posterior_samples(ma_sim_m6, c("^b", "^sd")) %>% 
   rename(smd = b_Intercept, tau = sd_team__Intercept) %>% 
   ggplot(., aes(x = smd, y = tau)) + 
   stat_density_2d(aes(fill = after_stat(level)), geom = "polygon") +
-    geom_point(aes(x = median(smd), y = median(tau)), pch = 21, fill = "white") + 
+    #geom_point(aes(x = median(smd), y = median(tau)), pch = 21, fill = "white") + 
     scale_fill_viridis_c(option = "D", end = 1) +
     labs(y = expression(tau), x = expression(italic("SMD"))) + 
     theme_minimal() + 
@@ -146,8 +147,9 @@ posterior_samples(ma_sim_m5, c("^b", "^sd")) %>%
 
 
 # Grouping variable variability (team, reviewer)
-posterior_samples(ma_sim_m5) %>% 
-  select(starts_with("sd")) %>% 
+posterior_samples(ma_sim_m6) %>% 
+  select(starts_with("sd"), -sd_team__peer_rating_std, 
+                            -sd_reviewer__peer_rating_std) %>% 
   gather(key, tau) %>% 
   mutate(key = str_remove(key, "sd_") %>% 
            str_remove(., "__Intercept")) %>% 
@@ -164,8 +166,8 @@ posterior_samples(ma_sim_m5) %>%
 
 
 # Plot effect of posthoc, nmodels, fixed_similarity, random_similarity
-posterior_samples(ma_sim_m5) %>% 
-  select(b_posthoc, b_nmodels, b_fixed_similarity, b_random_similarity) %>% 
+posterior_samples(ma_sim_m6) %>% 
+  select(b_posthoc_sum, b_nmodels_std, b_fixed_sim_std, b_random_sim_std) %>% 
   pivot_longer(cols = everything(), names_to = "parameter", 
     values_to = "estimate") %>% 
   ggplot(aes(x = estimate, y = parameter)) + 
@@ -190,11 +192,11 @@ posterior_samples(ma_sim_m5) %>%
 
 # Forrest plot of teams
 # Get draws for each study
-team_draws <- spread_draws(ma_sim_m5, r_team[Team,], b_Intercept) %>% 
+team_draws <- spread_draws(ma_sim_m6, r_team[Team,], b_Intercept) %>% 
   mutate(b_Intercept = r_team + b_Intercept)
 
 # Get draws for pooled effect
-pooled_effect_draws <- spread_draws(ma_sim_m5, b_Intercept) %>% 
+pooled_effect_draws <- spread_draws(ma_sim_m6, b_Intercept) %>% 
   mutate(Team = "Pooled Effect")
 
 # Combine it and clean up
@@ -234,7 +236,7 @@ forest_data %>%
                 ymin = -Inf, ymax = Inf), 
             fill = "#4A978A",
             alpha = 0.3) +
-  geom_vline(xintercept = fixef(ma_sim_m5)[1, 1], 
+  geom_vline(xintercept = fixef(ma_sim_m6)[1, 1], 
              color = "#40758B", size = 0.7, 
              lty = "dashed") +
   geom_pointinterval(data = forest_data_summary %>% 
