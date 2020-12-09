@@ -17,5 +17,6 @@ library("rstudioapi")
 library("betapart")
 library("tidybayes")
 library("patchwork")
+library("broom.mixed")
 
 # -----------------------------------------------------------------------------
