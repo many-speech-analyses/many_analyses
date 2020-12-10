@@ -208,10 +208,10 @@ INFORMATION ABOUT THE DATA SET AND EXP DESIGN
 The present project examines the extent to which subjective choices by different researchers analyzing a complex speech data set affect the reported results. We are further interested in which factors  affect researchers' final results. 
 
 # Methods (mostly copy-paste from Evo-RR)
-We are closely following the methodology proposed by Parker et al. (Stage 1 in-principle accepted).
+We are closely following the methodology proposed by Parker et al. (Stage 1 in-principle accepted) in terms of data collection. The analysis will substantially diverge from their approach (see §#.#)
 
 This project involves a series of steps (X-X): 
-First, we recruite independent groups of researchers to analyze the data.
+First, we recruit independent groups of researchers to analyze the data.
 Second, We give researchers access to the speech corpus and let them analyze the data as they see fit. 
 Third, we generate peer review ratings of the analyses (based on methods, not results).
 Forth, we evaluate the variation among the different analyses.
@@ -305,21 +305,21 @@ The text box will be prefaced with this prompt: “Please explain your choice to
 
 ## Step 4: Evaluate Variation
 Th initiating authors (SC, JC, TR) will conduct the analyses outlined in this section. 
-We will describe the variation in model specification in several ways:
-First, we will calculate summary statistics describing variation among analysis, including the nature and number of acoustic measures, the operationalization and the temporal domain of measurement, the nature and number of model parameters for both fixed and random effects [if applicable], the nature an reasoning behind inferential assessments, as well as the mean, standard deviation and range of effect sizes reported. 
+We will describe the variation in model specifications in several ways:
 
-We will summarize the variability in standardized effect sizes and predicted values of dependent variables among the individual analyses using standard random effects meta-analytic techniques. 
+First, we will calculate summary statistics describing variation among analysis, including the nature and number of acoustic measures (e.g. f0 or duration), the operationalization and the temporal domain of measurement (e.g. mean of an interval or value at specified point in time), the nature and number of model parameters for both fixed and random effects [if applicable], the nature an reasoning behind inferential assessments (e.g. dichotomous decision based on p-values, ordinal decision based on Bayes factor), as well as the mean, standard deviation and range of effect sizes reported. 
 We anticipate that the majority of statistical analyses will be expressible as a (generalized) linear regression model. 
 
 ADD FORMULA
 
-<!-- TR: SHOULD WE TRANSFORM ALL MODELS AS BAYESIAN MODELS TO QUANTIFY THE EFFECT SIZE AS A PROB DISTRIBUTION? IF SO NEED TO DESCRIBE HOW. -->
+Since teams will likely use outcome variable that substantially differ in their scales, we will standardize all reported effects by refitting all models with scaled outcome variables (the observed values subtracted from the mean divided by the standard deviation). 
 
-<!-- JC: I believe we can use their ES in our model to get a prob dist. of the pooled estimate. I don't think we need to transform their models. -->
-
+We will summarize the variability in standardized effect sizes and predicted values of dependent variables among the individual analyses using standard random effects meta-analytic techniques. 
 First, we will derive standardized effect sizes from each individual analysis. 
 Since we anticipate that researchers use multi-level linear regression models, common effect size measures such as Cohen's d are inappropriate. 
-In multi-level models the variance components are partitioned into multiple sources of variation (e.g. varying intercept of speakers and items, varying by-predictor slopes, etc.). 
+Effect sizes will be defined as the estimate(s) of the critical predictor(s) (i.e. critical according to the analysis teams' self-reported inferential criteria) divided by the standard error for the estimate(s).
+
+<!-- In multi-level models the variance components are partitioned into multiple sources of variation (e.g. varying intercept of speakers and items, varying by-predictor slopes, etc.). 
 We thus will take into account all of the variance sources of the models (Hedges, 2007) and derive the index $\delta_t$ (where t stands for “total” variance), which is calculated by the estimated difference between group means ($\beta$), divided by the square root of the sum of all variance components as formulated below:
 
 $$\delta_t = \frac{\beta}{\sqrt{\sum_{i=1}^{n} \sigma^2_{i}}}$$
@@ -334,15 +334,9 @@ RELEVANT: https://www.reddit.com/r/statistics/comments/fouwp9/q_effect_size_calc
 
 $$\delta_t = \frac{\beta}{\sqrt{\sigma^2_{i} + ... \sigma^2_{k}}}$$-->
 
-Variation in the resulting effect sizes can be due to many different sources, one of which is the model architecture and the specification of random effect structure. 
-Hypothetically, two analyst teams can arrive at two different effect sizes, even if they have made the exact same measurement, processed the data in the exact same way, and used the same predictor combination, but, crucially, differ in their random effect structure (e.g. one team assumes random intercepts only, the other team uses random slopes). 
-Thus, additionally, we will run all analyses with a prespecified maximal random effect structure for all predictors. 
+Upon extracting the standardized effect sizes and standard errors for each analysis, the initiating authors will then fit a cross-classified Bayesian meta-analysis on the analyst team data using the multilevel regression model described below: 
 
-<!-- TR: THIS HAS SOME PRACTICAL ISSUES, NEED TO DISCUSS ... ARE WE STILL DOING THIS? -->
-
-<!-- description of meta-analysis starts here --> 
-
-Upon calculating a standardized effect size and standard error for each analysis, the initiating authors will then fit a cross-classified Bayesian meta-analysis on the analyst team data using the multilevel regression model described below: 
+<!-- TR: need to change according to new process (not delta t anymore) -->
 
 $$
 \begin{aligned}
@@ -355,29 +349,54 @@ $$
 
 Effect size ($\delta_{t}$) will be the outcome variable.
 The likelihood of the outcome variable is assumed to be normally distributed.
-Analysis teams and reviewers will be included as group-level effects (i.e., random effects). 
+Analysis teams will be included as a group-level effect (i.e., random effect). 
 For all population-level parameters, the model will include regularizing, weakly informative priors (Gelman, 2017), which are normally distributed and centered at 0 with a standard deviation of 1. 
+
+<!-- TR: isn't an SD of 1 rather conservative. Also small sample size, maybe rather using cauchy for the thick tails? -->
+
 A cauchy prior set at 0 with scale 1 will be used for $\tau$. 
 We will fit the model with 4000 iterations (2000 warm-up) and Hamiltonian Monte-Carlo sampling of the posterior distribution is carried out using 4 chains distributed across 4 processing cores.
-The analysis will be conducted in R (R core team, 2020) and fit using `stan` (Stan, 2019) via the R package `brms` (Bürkner, 2019). 
+The analysis will be conducted in R (R core team, 2020) and fit using `stan` (Stan, 2019) via the R package `brms` (Bürkner, 2019). The code for the model can be found here: INSERT LINK. 
+We will quantify the extent to which the meta-analytic estimate is modulated by the following main predictors: The peer ratings of each analysis (numeric, 1-100) ... to be filled.
 
-We will assess the extent to which the meta-analytic estimate is modulated by the following predictors:
-The peer ratings of each analysis (numeric, 1-100), a measurement of the ‘uniqueness’ of the set of model parameters included in each analysis (see below, numeric), whether or not analysis teams have changed their analyses in a post hoc fashion (EXPLAIN ABOVE, binary), the number of analyses performed before the final model was performed (as self-estimated by the teamsm, numeric).
+As a second step, we will explore the extent to which deviations from the meta-analytic mean by individual effect sizes relate to a series of predictors (see below): The deviation score, which serves as the dependent variable in this analysis, will be the 
+
+<!--ecoRR: absolute value of the difference between the meta-analytic mean Zr (or y) and the individual Zr (or y) estimate for each analysis. We will use the Box-Cox transformation on the absolute values of deviation scores to achieve an approximately normal distribution (c.f. Fanelli and Ioannidis 2013, Fanelli et al. 2017: supplement). -->
+
+<!--TR: Question: Do we need to estimate the absolute deviation or is it useful to consider the raw deviation (stretching from negative to positive values). That gives you both the distance to the meta analytical estimate and the direction of that difference -->
+
+These analyses are secondary to our estimation of variation in effect sizes described above. We wish to quantify relationships among variables, but we have no a priori expectation of effect size and we will not make dichotomous decisions about statistical significance. 
+
+The following predictors will be used:
+
+First, we include a measure of the ‘uniqueness’ of individual analyses for
+- the set of predictor parameters,
+- the set of random effect parameters,
+- the acoustic measurement. 
+
 The measure of the uniqueness of the set of model parameters is assessed by the Sorensen's Similarity Index (SSI). The SSI is an index typically used in ecology research to compare species composition across sites. 
 For our purposes, we will treat variables as species and individual analyses as sites.
 In order to generate an SSI for each analysis team, we will calculate the average of all pairwise Sorensen's values for all pairs of analyses using the betapart package (Baselga et al. 2018) in R. 
 We achieve this using the following formula: 
 
-<!--TR: question: do we just want to look if the meta analytical estimate is modulated by our preidctors or do we want to look at the individuals teams deviations from the meta estimate are modulated by our predictors?--> 
-
-<!--old :The pooled estimate of the meta-analytic model will be used in a series of descriptive analyses that serve the purpose of describing how individual teams vary from each other.-->  
-
 $$\beta_{Sorensen} = \frac{(b+c)}{(2a+b+c)}$$
 
 where $a$ is the number of variables common to both models, $b$ is the number of variables that occur in the first model but not in the second and $c$ is the number of variables that occur in the second model but not in the first.  
 
-WRITE ABOUT HOW TO HANDLE GAMS
-<!--TR: maybe don't mention? --> 
+Second, we include a measure of conservativeness of the model specification defined by the number of random effect parameters.
+
+Third, we include the self-proclaimed number of post-hoc changes to teams' acoustic measurements and the self-estimated number of models that they ran prior to settling on their final model.
+
+Forth, we include the major acoustic dimension that has been measured to answer the research question. We will categorize each analysis into the following possible major acoustic dimensions: duration, amplitude, fundamental frequency, spectral properties  
+
+<!--TR: Stefano, do you think these four will cover possible ways to measure? We might want to define them too? dunno-->
+
+Fifth, we include the temporal window that the measurement is taken over defined by the target linguistic unit. We assume the following relevant linguistic units: segment, syllable, word, phrase.
+
+Sixth, we include the following demographic factors about both the analysis teams:
+- ...
+
+DESCRIBE HOW WE WILL LOOK AT THESE THINGS
 
 We will publicly archive all relevant data, code, and materials on the Open Science Framework (ADD LINK).
 Archived data will include the original data sets distributed to all analysts, any edited versions of the data analyzed by individual groups, and the data we analyze with our meta-analyses, which include the effect sizes derive from separate analyses, the statistics describing variation in model structure among analyst groups, and the anonymized answers to our surveys of analysts and peer reviewers.
