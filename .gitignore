@@ -1,4 +1,7 @@
-.DS_Store
+*.DS_Store
 
 /docs/RR_stage1_Intro-methods_20200208.docx
 .Rproj.user
+
+# Ignore Sublime Text files
+*.sublime-*
