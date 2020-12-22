@@ -148,8 +148,13 @@ In these studies the datasets were fixed and data collection or measurement coul
 
 However, in many fields the primary raw data are complex signals that need to be operationalized according to the research question.
 In social sciences, the raw observations correspond to human behavior, sometimes measured as a complex visual or acoustic signal.
+<<<<<<< HEAD
+Decisions about how to measure a theoretically construct related to that behavior or the underlying cognitive processes might interact with downstream decisions about statistical modelling and vice verse. 
+<!-- TR:maybe give a concrete example, how such an interaction would look like for speech data?-->
+=======
 Decisions about how to measure a theoretically construct related to that behavior or the underlying cognitive processes might interact with downstream decisions about statistical modelling and vice verse.
 <!-- TR:maybe give a concrete example, how such an interactionn would look like for speech data?-->
+>>>>>>> 4860d0ed0c2fc204883e1c150efb5749b4ef1669
 
 To understand how analytical flexibility manifests itself in a scenario where a complex decisions procedure is involved in operationalizing and measuring complex signals, the present paper looks at an experimentally elicited speech data set
 
