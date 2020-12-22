@@ -97,8 +97,8 @@ These researcher degrees of freedom are both a blessing and a curse at the same 
 They are a blessing because they afford us the opportunity to look at nature from different angles, which, in turn, allows us to make important discoveries and generate new hypothesis (e.g. Box 1976, Tukey 1977, de Groot 2014).
 They are a curse because idiosyncratic choices can lead to categorically different interpretations, which eventually find their way into the publication record where they are taken for granted (Simmons et al. 2011). <!-- taken for granted? -->
 Recent projects have shown that the variability between different data analysts is vast.
-This variability can lead independent researchers to draw vastly different conclusions about the same dataset (e.g. Silberzahn et al. 2018, Starns et al. 2019, Botvinik-Nezer et al., 2020).
-These projects, however, might still underestimate the extent to which analysts vary because data analysis is not merely restricted to statistical inference of datasets.
+This variability can lead independent researchers to draw vastly different conclusions about the same data set (e.g. Silberzahn et al. 2018, Starns et al. 2019, Botvinik-Nezer et al., 2020).
+These projects, however, might still underestimate the extent to which analysts vary because data analysis is not merely restricted to statistical inference of data sets.
 Human behavior is complex and offers many ways to be translated into numbers.
 This is particularly true for fields that draw conclusions about human behavior and cognition from multidimensional data like audio or video data.
 In fields working on human speech production, for example, researchers need to make numerous decisions about what to measure and how to measure it.
@@ -115,7 +115,7 @@ However, if these decisions during data analysis are not specified in advance, w
 This can be problematic because to err is human. <!-- I'd probably drop this. When we make unspecified decisions during data analysis we can stumble upon spurious results (most likely) as well as real results (less likely, still possible)... in other words it might not all be error... the issue is that we won't know the difference -->
 <!-- TR: But isn't the human bias the major issue in statistical misinterpretation? (It also leads naturally to the next paragraph.) -->
 
-We have evolved to filter the world in irrational ways (e.g., Tversky and Kahneman 1974), seeing coherent patterns in randomness (Brugger 2001), convincing ourselves of the validity of prior expectations (“I knew it”, Nickerson 1998), and perceiving events as being plausible in hindsight (“I knew it all along”, Fischhoff 1975). <!-- JC: If helpful we could also give a concrete common example here, like regarding forecasting the weather or something -->
+We have evolved to filter the world in irrational ways (e.g., Tversky and Kahneman 1974), seeing coherent patterns in randomness (Brugger 2001), convincing ourselves of the validity of prior expectations ("I knew it", Nickerson 1998), and perceiving events as being plausible in hindsight ("I knew it all along", Fischhoff 1975). <!-- JC: If helpful we could also give a concrete common example here, like regarding forecasting the weather or something -->
 <!-- TR: Generally a good idea, but I'd say we keep it crisp at that point. The take-home here is: Humans are biased. -->
 In connection with an academic incentive system that rewards certain discovery processes more than others (Sterling 1959, Koole & Lakens 2012), we often find ourselves exploring many possible analytical pipelines, but only reporting a select few.
 This issue is particularly amplified in fields in which the raw data lend themselves to many possible ways to measure (Roettger 2019).
@@ -144,12 +144,12 @@ Clinical
 Predictive models
 
 While these projects show a large degree of analytical flexibility with impactful consequences, they dealt with flexibility in inferential or computational modelling.
-In these studies the datasets were fixed and data collection or measurement could not be changed. <!-- JC: any particular reason to favor data table over dataset? --> <!-- TR: I think my reasoning was dataset can be data table or raw data. Data table is the numerical derivation of the raw data. Maybe not a useful distinction?-->
+In these studies the data sets were fixed and data collection or measurement could not be changed. <!-- JC: any particular reason to favor data table over data set? --> <!-- TR: I think my reasoning was data set can be data table or raw data. Data table is the numerical derivation of the raw data. Maybe not a useful distinction?-->
 
 However, in many fields the primary raw data are complex signals that need to be operationalized according to the research question.
 In social sciences, the raw observations correspond to human behavior, sometimes measured as a complex visual or acoustic signal.
 <<<<<<< HEAD
-Decisions about how to measure a theoretically construct related to that behavior or the underlying cognitive processes might interact with downstream decisions about statistical modelling and vice verse. 
+Decisions about how to measure a theoretically construct related to that behavior or the underlying cognitive processes might interact with downstream decisions about statistical modelling and vice verse.
 <!-- TR:maybe give a concrete example, how such an interaction would look like for speech data?-->
 =======
 Decisions about how to measure a theoretically construct related to that behavior or the underlying cognitive processes might interact with downstream decisions about statistical modelling and vice verse.
@@ -166,7 +166,7 @@ To understand how analytical flexibility manifests itself in a scenario where a 
 <!-- TODO: RELEVANCE OF SPEECH PRODUCTION RESEARCH FOR COGSCI, AI, etc. -->
 
 <!-- TR: I added a transition sentence -->
-Speech is a complex signal that is characterized by structurally different acoustic landmarks distributed throughout different temporal domains. 
+Speech is a complex signal that is characterized by structurally different acoustic landmarks distributed throughout different temporal domains.
 Thus, choosing how to measure the phenomenon of interest is an important and non-trivial analytical decision. Take for example the following sentence:
 
 
@@ -174,8 +174,8 @@ Thus, choosing how to measure the phenomenon of interest is an important and non
 
 "I hope Liz does not go to the grocery store tomorrow".
 
-Depending on the speaker's intention, this sentence can be said in different ways. 
-If, for instance, the speaker is worried about Liz mistakenly going to the grocery store tomorrow instead of today, the speaker might acoustically highlight the word tomorrow. 
+Depending on the speaker's intention, this sentence can be said in different ways.
+If, for instance, the speaker is worried about Liz mistakenly going to the grocery store tomorrow instead of today, the speaker might acoustically highlight the word tomorrow.
 If, on the other hand, the speaker is worried that Liz goes to a crowded place like the supermarket, they might acoustically highlight the word grocery store.
 
 <!-- Now, imagine we are interested in measuring the difference between that sentence and the sentence "Sheila says *Mat* is clever".
@@ -211,82 +211,105 @@ The present paper probes this garden of forking path in speech analysis. To prob
 
 ## The data set - The prosody of redundant modifiers
 
-Our data set was collected in order to answer the following research question: Do speakers acoustically modify utterances to signal atypical word combinations? (e.g. “a blue banana” vs. “a yellow banana”)?
-We are interested in the acoustic profile of referring expression.
+Our data set was collected in order to answer the following research question: Do speakers acoustically modify utterances to signal atypical word combinations? (e.g. *a blue banana* vs *a yellow banana*)?
+We are interested in the acoustic profile of referring expressions.
 Referring is one of the most basic and prevalent uses of language and one of the most widely researched areas in language science.
-It is an open question how speakers choose a referential expression when they want to refer to a specific entity like a banana.
-The context within which an entity occurs (i.e., with other non-fruits, other fruits, or other bananas) plays a large part in determining the choice of referential expression.
-Generally, speakers aim to be as informative as possible to uniquely establish reference to the intended object, but they are also resource efficient in that they avoid redundancy (Grice 1975).
+It is an open question how speakers choose a referring expression when they want to refer to a specific entity like a banana.
+The context within which an entity occurs (i.e., with other non-fruits, other fruits, or other bananas) plays a large part in determining the choice of referring expressions.
+Generally, speakers aim to be as informative as possible to uniquely establish reference to the intended object, but they are also resource-efficient in that they avoid redundancy (Grice 1975).
 Thus one would expect the use of a modifier, for example, only if it is necessary for disambiguation.
-For instance, one might use the adjective "yellow" to describe a banana in a situation in which there is a yellow and a less ripe green banana available, but not when there is only one banana to begin with.
+For instance, one might use the adjective *yellow* to describe a banana in a situation in which there is a yellow and a less ripe green banana available, but not when there is only one banana to begin with.
+
 Despite this coherent idea that speakers are both rational and efficient, there is much evidence that speakers are often over-informative: Speakers use referring expressions that are more specific than strictly necessary for the unambiguous identification of the intended referent (Sedivy 2003, Westerbeek et al. 2015, Rubio-Fernandez 2016), which has been argued to facilitate object identification and making communication between speakers and listeners more efficient (Arts et al. 2011, Paraboni et al. 2007, Rubio-Fernandez 2016).
 Recent findings suggest that the utility of a referring expression depends on how good it is for a listener (compared to other referring expressions) to identify a target object.
 For example, Degen et al. (2020) showed that modifiers that are less typical for a given referent (e.g. a blue banana) are more likely to be used in an over-informative scenario (e.g. when there is just one banana).
 This account, however, has mainly focused on content selection (Gatt et al. 2013), i.e. whether a certain referential expression is chosen or not, ignoring the fact that speech communication is much richer.
-Even looking at morphosyntactically identical expressions, speakers can modulate these expressions via suprasegmental acoustic properties like temporal and spectral modifications of the segments involved (e.g. Ladd 2008).
+
+Even looking at morphosyntactically identical expressions, speakers can modulate these via suprasegmental acoustic properties like temporal and spectral modifications of the segments involved (e.g. Ladd 2008).
 Most prominently, languages use intonation to signal discourse relationships between referents (among other functions).
-Intonation marks discourse-relevant referents for being new or given information to guide listeners’ interpretation of incoming messages.
+Intonation marks discourse-relevant referents for being new or given information to guide the listeners’ interpretation of incoming messages.
 In many languages, speakers can use particular pitch movements to signal whether a referent has already been mentioned and is therefore referred back to, or a referent is newly introduced into the discourse.
 Many languages use intonation in order to signal if a referent is contrasting with one or more alternatives that are relevant to the current discourse.
-Content selection aside, in a scenario in which a speaker wants to refer to a banana when there is also a pear on the table, the speaker would most likely produce a high rising pitch accent on ‘banana’ to indicate the contrastive nature of the *noun*.
-In a scenario in which the speaker wants to refer to a yellow banana when there is also a less ripe green banana on the table, the speaker would most likely produce a high rising pitch accent on ‘yellow’ to indicate the contrastive nature of the *modifier*. In addition to a pitch accent, elements that are new and/or contrastive are often produced with additional suprasegmental prominence, i.e. segments are hyperarticulated, resulting in longer, louder and more clearly articulated acoustic targets.
+Content selection aside, in a scenario in which a speaker wants to refer to a banana when there is also a pear on the table, the speaker would most likely produce a high rising pitch accent on *banana* to indicate the contrastive nature of the noun.
+In a scenario in which the speaker wants to refer to a yellow banana when there is also a less ripe green banana on the table, the speaker would most likely produce a high rising pitch accent on *yellow* to indicate the contrastive nature of the modifier.
+In addition to a pitch accent, elements that are new and/or contrastive are often produced with additional suprasegmental prominence, i.e. segments are hyperarticulated, resulting in longer, louder and more clearly articulated acoustic targets.
 
-INFORMATION ABOUT THE DATA SET AND EXP DESIGN
+<!-- TODO: INFORMATION ABOUT THE DATA SET AND EXP DESIGN -->
 
 ## Research questions
-The present project examines the extent to which subjective choices by different researchers analyzing a complex speech data set affect the reported results. We are further interested in which factors  affect researchers' final results.
+
+The present project examines the extent to which subjective choices by different researchers analyzing a complex speech data set affect the reported results.
+We are further interested in which factors affect the researchers' final results.
 
 # Methods (mostly copy-paste from Evo-RR)
-We are closely following the methodology proposed by Parker et al. (Stage 1 in-principle accepted) in terms of data collection. The analysis will substantially diverge from their approach (see §#.#)
+
+We are closely following the methodology proposed by Parker et al. (Stage 1 in-principle accepted) in terms of data collection.
+However, the analysis will substantially diverge from their approach (see §#.#)
 
 This project involves a series of steps (X-X):
-First, we recruit independent groups of researchers to analyze the data.
-Second, We give researchers access to the speech corpus and let them analyze the data as they see fit.
-Third, we generate peer review ratings of the analyses (based on methods, not results).
-Forth, we evaluate the variation among the different analyses.
-And finally, we collaboratively produce the final manuscript.
+
+1. We will recruit independent groups of researchers to analyze the data.
+2. We will give researchers access to the speech corpus and let them analyze the data as they see fit.
+3. We will ask reviewers to generate peer review ratings of the analyses based on methods (not results).
+4. We will evaluate the variation among the different analyses.
+5. Lastly, we will collaboratively produce the final manuscript.
+
 We estimate that this process, from the time of an in-principle acceptance of this Stage 1 Registered Report, will take XX months (Table X).
 The factor most likely to delay our time line is the rate of completion of the original set of analyses by independent groups of scientists.
 
 ## Step 1: Recruitment and Initial Survey of Analysts
-Initiating authors (SC, JC, TR) created a publicly available document providing a general description of the project (LINK) and a short prerecorded slide show that summarizes the study and research question in order to increase accesibilty to potential analysts (LINK).
+
+<!-- TODO: include materials link and mailing lists -->
+The initiating authors (SC, JC, TR) created a publicly available document providing a general description of the project (LINK) and a short prerecorded slide show that summarizes the study and research question in order to increase accessibility to potential analysts (LINK).
 The project will be advertised via Social Media, using mailing lists for linguistic and psychological societies (full scope of these lists is not fixed but will include LIST OF LISTS), and via word of mouth.
 The target population is active speech science researchers with a graduate degree (or currently studying for a graduate degree) in a relevant discipline.
 Researchers can choose to work independently or in a small team.
-For the sake of simplicity, we refer to single researcher or small teams as ‘analysis teams’.
+For the sake of simplicity, we refer to single researcher or small teams as "analysis teams".
 
-Recruitment for this project is ongoing but we aim for a minimum of XX analysis teams independently evaluating each dataset (see sample size justification below). <!-- TR: Big to-do point. We need to only justify a minimum sample size JC: added description (word for word) from ecology RR. Need to figure out what it means still and then put into our own words. -->
+Recruitment for this project is ongoing but we aim for a minimum of XX analysis teams independently evaluating each data set (see sample size justification below). <!-- TR: Big to-do point. We need to only justify a minimum sample size JC: added description (word for word) from ecology RR. Need to figure out what it means still and then put into our own words. -->
 We will simultaneously recruit volunteers to peer-review the analyses conducted by the other volunteers through the same channels.
 Our goal is to recruit a similar number of peer-reviewers and analysts, and to ask each peer reviewer to review a minimum of four analyses.
 If we are unable to recruit at least half the number of reviewers as analysis teams, we will ask analysts to serve also as reviewers (after they have completed their analyses).
 All analysts and reviewers will share co-authorship on this manuscript and will participate in the collaborative process of producing the final manuscript.
+<!-- TODO: add link to informed consent form -->
 All analysts will sign a consent (ethics) document (LINK).
 
 <!-- sample size info from Ecology RR -->
-We identified our minimum number of analyses per data set by considering the number of effects needed in a meta-analysis to generate an estimate of heterogeneity ($\tau^2$) with a 95% confidence interval that does not encompass zero.
-This minimum sample size is invariant regardless of $\tau^2$.
-This is because the same t-statistic value will be obtained by the same sample size regardless of variance ($\tau^2$).
-We see this by first examining the formula for the standard error, SE for variance, ($\tau^2$) or SE($\tau^2$) assuming normality in an underlying distribution of effect sizes (Knight 2000):
+<!-- SC: rephrased and expanded -->
+To identify the minimal sample size, we followed the method in [ECO RR].
+The aim of the meta-analysis is to obtain an estimate of heterogeneity ($\tau^2$) of the effect sizes reported by the analysis teams.
+Ideally, the 95% credible interval of $\tau^2$ should not include 0 (i.e. we want to be able to exclude the hypothesis that there is no heterogeneity, or, to put it differently, we want to ensure we obtain a *t*-statistic that would correspond to a *p*-value smaller than 0.05).
+Assuming that the underlying distribution of effect sizes is normal (Knight 2000), the standard error of $\tau^2$ can be calculated with the formula:
 
 $$SE(\tau^2) = \sqrt{\frac{2\tau^4}{(n-1)}}$$
 
-and then rearranging the above formula to show how the t-statistic is independent of $\tau^2$, as seen below.
+Plugging $SE(\tau^2)$ into the formula of the *t*-statistics shows that *t* will be the same regardless of $\tau^2$:
 
-$$t = \frac{\tau^2}{SE(\tau^2)} = \sqrt{\frac{(n-1)}{2}}$$
+$$t = \frac{\tau^2}{SE(\tau^2)} = \frac{\tau^2}{\sqrt{\frac{2\tau^4}{(n-1)}}} = \sqrt{\frac{(n-1)}{2}}$$
 
-We then find a minimum n = 12 according to this formula.
-<!-- We need to decide if we use this (I still don't understand it) -->
+In other words, the minimum sample size $n$ needed to exclude 0 from the 95% CI of $\tau^2$ is invariant regardless of the estimate of heterogeneity $\tau^2$.
+When $n = 12$ then $t_{12-1} = t_{11} = 2.3452$ and $p = 0.0388$.
+A minimal sample size of effect sizes of 12 would thus be sufficient to ensure enough statistical power.
 
+```{r t, eval=FALSE, include=FALSE}
+n = 12
+df = n - 1
+t <- sqrt((df)/2)
+pt(t, df, lower.tail = F) * 2
+```
 
 ## Step 2: Primary Data Analyses
 
-Analysis teams will register and answer a demographic and expertise survey (LINK). The survey collects information on the analysts current position and self-estimated breadth and level of statistical expertise.
+<!-- TODO: add link to demo survey -->
+The analysis teams will register and answer a demographic and expertise survey (LINK).
+The survey collects information on the analysts current position and self-estimated breadth and level of statistical expertise.
 We will then provide teams with the acoustic data set and request that they answer the following research question:
 
 Do speakers acoustically modify utterances to signal atypical word combinations?
 
+<!-- TODO: add link to analytical survey -->
 Once their analysis is complete, they will answer a structured survey (LINK), providing analysis technique, explanations of their analytical choices, quantitative results, and a statement describing their conclusions.
-They will also upload their analysis files (including the additionally derived data and text files that were used to extract and preprocess the acoustic data), their analysis code (if applicable), and a detailed journal-ready statistical methods section.
+They will also upload their analysis files (including the additionally derived data and text files that were used to extract and pre-process the acoustic data), their analysis code (if applicable), and a detailed journal-ready statistical methods section.
 
 ## Step 3: Peer Reviews of Analyses
 
@@ -301,38 +324,40 @@ Balancing the order in which reviewers see the analyses controls for order effec
 The process for a single reviewer will be as follows.
 First, the reviewer will receive a description of the methods of a single analysis.
 This will include the narrative methods section, the analysis team’s answers to our survey questions regarding their methods, including analysis code, and the data set.
+<!-- TODO: add link to peer review survey -->
 The reviewer will then be asked, in an online survey (LINK), to rate both the acoustic analysis and the statistical analysis on a scale of 0-100 based on these prompts: <!-- TR:Need flow chart here-->
 
-“Rate the overall appropriateness of the acoustic analysis to answer the research question with the available data. To help you calibrate your rating, please consider the following guidelines:
+"Rate the overall appropriateness of the acoustic analysis to answer the research question with the available data. To help you calibrate your rating, please consider the following guidelines:
 
 - 100. A perfect analysis with no conceivable improvements from the reviewer.
-- 75. An imperfect analysis but the needed changes are unlikely to dramatically alter final interpretation
-- 50. A flawed analysis likely to produce either an unreliable estimate of the relationship or an over-precise estimate of uncertainty
-- 25. A flawed analysis likely to produce an unreliable estimate of the relationship and an over-precise estimate of uncertainty
+- 75. An imperfect analysis but the needed changes are unlikely to dramatically alter final interpretation.
+- 50. A flawed analysis likely to produce either an unreliable estimate of the relationship or an over-precise estimate of uncertainty.
+- 25. A flawed analysis likely to produce an unreliable estimate of the relationship and an over-precise estimate of uncertainty.
 - 0. A dangerously misleading analysis, certain to produce both an estimate that is wrong and a substantially over-precise estimate of uncertainty that places undue confidence in the incorrect estimate.
 
 \*Please note that these values are meant to calibrate your ratings.
 We welcome ratings of any number between 0 and 100."
 
-After providing this rating, the reviewer will then be provided with a series of text boxes and the following prompts:
+After providing this rating, the reviewer will then be shown a series of text boxes and the following prompts:
 
-\noindent “Please explain your ratings of this analysis.
+\noindent "Please explain your ratings of this analysis.
 \noindent Please evaluate the selection of acoustic features.
 \noindent Please evaluate the measurement of acoustic features.
 \noindent Please evaluate the choice of statistical analysis type.
-\noindent Please evaluate the process of choosing variables for and structuring the statistical model.
+\noindent Please evaluate the process of choosing variables and structuring of the statistical model.
 \noindent Please evaluate the suitability of the variables included in (or excluded from) the statistical model.
 \noindent Please evaluate the suitability of the structure of the statistical model.
 \noindent Please evaluate choices to exclude or not exclude subsets of the data.
-\noindent Please evaluate any choices to transform data (or, if there were no transformations, but you think there should have been, please discuss that choice).”
+\noindent Please evaluate any choices to transform data (or, if there were no transformations, but you think there should have been, please discuss that choice)."
 
 After submitting this review, a methods section from a second analysis will then be made available to the reviewer.
 This same sequence will be followed until all analyses allocated to a given reviewer have been provided and reviewed.
-After providing the final review, the reviewer will be simultaneously provided with all four (or more) methods sections that reviewer has just completed reviewing, the option to revise their original ratings, and a text box to provide an explanation.
-The invitation to revise the original ratings will be as follows: “If, now that you have seen all the analyses you are reviewing, you wish to revise your ratings of any of these analyses, you may do so now.”
-The text box will be prefaced with this prompt: “Please explain your choice to revise (or not to revise) your ratings.”
+After providing the final review, the reviewer will be simultaneously presented with all four (or more) methods sections that reviewer has just completed reviewing, the option to revise their original ratings, and a text box to provide an explanation.
+The invitation to revise the original ratings will be as follows: "If, now that you have seen all the analyses you are reviewing, you wish to revise your ratings of any of these analyses, you may do so now."
+The text box will be prefaced with this prompt: "Please explain your choice to revise (or not to revise) your ratings."
 
 ## Step 4: Evaluate Variation
+
 Th initiating authors (SC, JC, TR) will conduct the analyses outlined in this section.
 We will describe the variation in model specifications in several ways:
 
@@ -349,7 +374,7 @@ Since we anticipate that researchers use multi-level linear regression models, c
 Effect sizes will be defined as the estimate(s) of the critical predictor(s) (i.e. critical according to the analysis teams' self-reported inferential criteria) divided by the standard error for the estimate(s).
 
 <!-- In multi-level models the variance components are partitioned into multiple sources of variation (e.g. varying intercept of speakers and items, varying by-predictor slopes, etc.).
-We thus will take into account all of the variance sources of the models (Hedges, 2007) and derive the index $\delta_t$ (where t stands for “total” variance), which is calculated by the estimated difference between group means ($\beta$), divided by the square root of the sum of all variance components as formulated below:
+We thus will take into account all of the variance sources of the models (Hedges, 2007) and derive the index $\delta_t$ (where t stands for "total" variance), which is calculated by the estimated difference between group means ($\beta$), divided by the square root of the sum of all variance components as formulated below:
 
 $$\delta_t = \frac{\beta}{\sqrt{\sum_{i=1}^{n} \sigma^2_{i}}}$$
 Where $_i$ refers to the individual variance components.
