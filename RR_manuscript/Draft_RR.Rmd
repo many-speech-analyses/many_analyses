@@ -160,15 +160,27 @@ To understand how analytical flexibility manifests itself in a scenario where a 
 
 <!-- TODO: RELEVANCE OF SPEECH PRODUCTION RESEARCH FOR COGSCI, AI, etc. -->
 
-One of the earliest analytical decisions a researcher has to make when conducting a study on speech production is choosing how to measure the phenomenon of interest, i.e. how to operationalize it.
-Take for example the following sentence: "Sheila says Pat is clever".
-Now, imagine we are interested in measuring the difference between that sentence and the sentence "Sheila says *Mat* is clever".
-How can we obtain a measure of dissimilarity between the first sound in *Pat* and the first sound in *Mat*?
-If we want to compare "Sheila says PAT is clever" to "Sheila says Pat is CLEVER", how do we quantify the difference between the two utterances?
-What if we are interested in how the argumentative nature of "Sheila says Pat is clever" and the expression of surprise in "Sheila says Pat is clever?!" are conveyed in speech?
-How do we choose what to measure and how to measure it so that we can answer our research question and test our hypotheses?
+<!-- TR: I added a transition sentence -->
+Speech is a complex signal that is characterized by structurally different acoustic landmarks distributed throughout different temporal domains. 
+Thus, choosing how to measure the phenomenon of interest is an important and non-trivial analytical decision. Take for example the following sentence:
+
+
+<!-- TR: I'd suggest an easier example (Sheila and Pat are both uncommon names, internationally speaking) and possibly a more relateable (possibly timely) example. Something about zoom meetings or sth maybe? Examples are super important to relate to the reader and lure them in. Here is my suggestion-->
+
+"I hope Liz does not go to the grocery store tomorrow".
+
+Depending on the speaker's intention, this sentence can be said in different ways. 
+If, for instance, the speaker is worried about Liz mistakenly going to the grocery store tomorrow instead of today, the speaker might acoustically highlight the word tomorrow. 
+If, on the other hand, the speaker is worried that Liz goes to a crowded place like the supermarket, they might acoustically highlight the word grocery store.
+
+<!-- Now, imagine we are interested in measuring the difference between that sentence and the sentence "Sheila says *Mat* is clever".
+How can we obtain a measure of dissimilarity between the first sound in *Pat* and the first sound in *Mat*? -->
+
+<!-- TR: Keep in mind that the research question is not about segmental phenomena. To relate to the question later, I'd suggest a prosodic measure, e.g.  -->
+
+If we want to compare the speech signal associated with these two intentions, how do we quantify the difference between them? What do we measure and how do we measure it?
 <!-- TODO: mention speech domains -->
-Given the continuous and transient nature of speech, identifying which speech features should be selected within which domain becomes a non-trivial task.
+Given the continuous and transient nature of speech, identifying which speech features should be selected within which temporal domain becomes a non-trivial task.
 Utterances stretch over hundreds of milliseconds and contain several levels of linguistically relevant units such as phrases, words, syllables, and individual sounds.
 The researcher is thus confronted with a considerable number of features and combinations thereof to choose from.
 
@@ -179,18 +191,18 @@ This voiced/voiceless contrast is manifested by many acoustic features which can
 Furthermore, correlates of the contrast can even be found away from the consonant, in temporally distant speech units.
 The initial /l/ of the English words *led* and *let* is affected by the voicing of the final consonant (/t, d/) (Hawkins & Nguyen, 2004).
 The multiplicity of phonetic cues grows exponentially if we look at larger temporal windows as is the case for suprasegmental aspects of speech.
-Studies investigating acoustic correlates of word stress (e.g. the difference between *insíght* and *íncite*) have been using a wide variety of measurements, including temporal characteristics (duration of certain segments or sub-segmental intervals), spectral characteristics (intensity, formants, and spectral tilt), and measurements related to fundamental frequency (f0) (e.g. Gordon & Roettger, 2017).
+For example, studies investigating acoustic correlates of word stress (e.g. the difference between *insíght* and *íncite*) have been using a wide variety of measurements, including temporal characteristics (duration of certain segments or sub-segmental intervals), spectral characteristics (intensity, formants, and spectral tilt), and measurements related to fundamental frequency (f0) (e.g. Gordon & Roettger, 2017).
 
-Moving onto the expression of higher-level functions like information structure and discourse pragmatics, the relevant acoustic cues can be distributed throughout even larger domains, such as phrases and whole sentences.
+Moving onto the expression of higher-level functions like information structure and discourse pragmatics, relevant acoustic cues can be distributed throughout even larger domains, such as phrases and whole utterances.
 Differences in position, shape, and alignment of pitch modulations over multiple locations within a sentence are correlated with differences in discourse functions (e.g. Niebuhr et al., 2011).
 The latter can also be expressed by global vs local pitch modulations, as well as acoustic information within the temporal or spectral domain (e.g. van Heuven & van Zanten 2005).
-Extra- and para-linguistic information, like speaker's intentions, levels of arousal or social identity, are also conveyed by broad-domain features, such as voice quality, speech rate, and rhythm.
+Extra- and para-linguistic information, like speaker's intentions, levels of arousal or social identity, are also conveyed by broad-domain features, such as voice quality, speech rate, and rhythm (REFs).
 
 When testing hypotheses on speech production data, researchers are faced with many choices and possibilities.
 The larger the functional domain (e.g. segments vs words vs utterances), the higher the number of conceivable operationalizations.
-Moreover, even the analysis of a single measure can be approached via an ever-increasing range of different statistical models, which further multiply the combinations of possible analytical choices.
 These decisions are usually made prior to any statistical analysis, but are at times revised a posteriori (i.e. after data collection and/or preliminary analyses) in light of unforeseen or surprising outcomes.
-To probe the variability in data analysis pipelines across independent researchers, we provided analytical teams with an experimentally elicited speech corpus and asked them to investigate acoustic differences related to a functional contrast that might be manifested across the whole utterance.
+These myriads of possible decisions are exponentiated by researcher degrees of freedom related to statistical analysis (e.g. Wicherts et al.). Even the analysis of a single measure can be approached via an ever-increasing range of different statistical models.
+The present paper probes this garden of forking path in speech analysis. To probe the variability in data analysis pipelines across independent researchers, we provided analytical teams with an experimentally elicited speech corpus and asked them to investigate acoustic differences related to a functional contrast that might be manifested across the whole utterance.
 
 ## The data set - The prosody of redundant modifiers
 
