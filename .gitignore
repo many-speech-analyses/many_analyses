@@ -1,5 +1,15 @@
 *.DS_Store
 
+# History files
+.Rhistory
+.Rapp.history
+
+# Session Data files
+.RData
+
+# User-specific files
+.Ruserdata
+
 /docs/RR_stage1_Intro-methods_20200208.docx
 .Rproj.user
 
