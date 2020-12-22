@@ -1,5 +1,5 @@
 ---
-title             : "Analytical choices for analyzing multidimensional behavior - many analyst test hypotheses about human speech."
+title             : "Analytical choices for analyzing multidimensional behavior - Many analysts test hypotheses about human speech."
 shorttitle        : "Many analysts - one speech data set"
 
 author:
@@ -88,6 +88,7 @@ knitr::opts_chunk$set(cache.extra = knitr::rand_seed)
 
 In order to effectively accumulate knowledge, science needs to (i) produce data that can be replicated using the original methods and (ii) arrive at robust conclusions substantiated by the data.
 In recent coordinated efforts to replicate published findings, the scientific disciplines have uncovered surprisingly low success rates for (i) [e.g., @open2015estimating; @camerer2018evaluating] leading to what is now referred to as the *replication crisis*.
+<!-- TODO: add refs for variable conclusions -->
 Beyond the difficulties of replicating scientific findings, a growing body of evidence suggests that the theoretical conclusions drawn from data are often variable even when researchers have access to reliable data (REFS).
 The latter situation has been referred to as the *inference crisis* (Rotello, Heit & Dubé 2015, Starns et al. 2019) and is, among other things, rooted in the inherent flexibility of data analysis (often referred to as researcher degrees of freedom: Simmons, Nelson, & Simonsohn, 2011, Gelman & Loken 2013).
 Data analysis involves many different steps, such as inspecting, organizing, transforming, and modeling the data, to name a few.
@@ -97,61 +98,70 @@ These researcher degrees of freedom are both a blessing and a curse at the same 
 They are a blessing because they afford us the opportunity to look at nature from different angles, which, in turn, allows us to make important discoveries and generate new hypothesis (e.g. Box 1976, Tukey 1977, de Groot 2014).
 They are a curse because idiosyncratic choices can lead to categorically different interpretations, which eventually find their way into the publication record where they are taken for granted (Simmons et al. 2011). <!-- taken for granted? -->
 Recent projects have shown that the variability between different data analysts is vast.
-This variability can lead independent researchers to draw vastly different conclusions about the same dataset (e.g. Silberzahn et al. 2018, Starns et al. 2019, Botvinik-Nezer et al., 2020).
-These projects, however, might still underestimate the extent to which analysts vary because data analysis is not merely restricted to statistical inference of datasets.
+This variability can lead independent researchers to draw vastly different conclusions about the same data set (e.g. Silberzahn et al. 2018, Starns et al. 2019, Botvinik-Nezer et al., 2020).
+These projects, however, might still underestimate the extent to which analysts vary because data analysis is not merely restricted to statistical inference of data sets.
 Human behavior is complex and offers many ways to be translated into numbers.
 This is particularly true for fields that draw conclusions about human behavior and cognition from multidimensional data like audio or video data.
 In fields working on human speech production, for example, researchers need to make numerous decisions about what to measure and how to measure it.
 This is not trivial given the temporal extension of the acoustic signal and its complex structural composition.
-Not only can decisions about measuring the signal influence downstream decisions about statistical modelling, but statistical results or modelling issues can also lead researchers to go back and revise earlier decisions about the measuring process itself.
+Not only can decisions about measuring the signal influence downstream decisions about statistical modeling, but statistical results or modeling issues can also lead researchers to go back and revise earlier decisions about the measuring process itself.
 
-In this article, we investigate the variability in analytic choices when many analyst teams analyze the same speech production data, a process that involves both decisions regarding the operationalization of a complex observed signal and decisions regarding the statistical modelling.
+In this article, we investigate the variability in analytic choices when many analyst teams analyze the same speech production data, a process that involves both decisions regarding the operationalization of a complex observed signal and decisions regarding the statistical modeling.
+<!-- TODO: include number of teams when known -->
 Specifically, we report the impact of the analytic pipeline on research results obtained by XX teams who gained access to the same set of acoustic recordings in order to answer the same research question.
 
 ## Researcher degrees of freedom
 
-Data analysis comes with many decisions like how to measure a given phenomenon or behavior, what data to submit to statistical modelling and which to exclude in the final analysis, what models to use or what inferential decision procedure to apply.
+Data analysis comes with many decisions like how to measure a given phenomenon or behavior, what data to submit to statistical modeling and which to exclude in the final analysis, what models to use or what inferential decision procedure to apply.
 However, if these decisions during data analysis are not specified in advance, we might stumble upon seemingly meaningful patterns in the data that are merely statistical flukes.
-This can be problematic because to err is human. <!-- I'd probably drop this. When we make unspecified decisions during data analysis we can stumble upon spurious results (most likely) as well as real results (less likely, still possible)... in other words it might not all be error... the issue is that we won't know the difference -->
+This can be problematic because humans show cognitive biases that can lead to erroneous inferences. <!-- I'd probably drop this. When we make unspecified decisions during data analysis we can stumble upon spurious results (most likely) as well as real results (less likely, still possible)... in other words it might not all be error... the issue is that we won't know the difference -->
 <!-- TR: But isn't the human bias the major issue in statistical misinterpretation? (It also leads naturally to the next paragraph.) -->
+<!-- SC: Rephrased the sentence to underline that the presence of cognitive biases is what creates the problem, rather than just not specifying decisions before hand. -->
 
 We have evolved to filter the world in irrational ways (e.g., Tversky and Kahneman 1974), seeing coherent patterns in randomness (Brugger 2001), convincing ourselves of the validity of prior expectations (“I knew it”, Nickerson 1998), and perceiving events as being plausible in hindsight (“I knew it all along”, Fischhoff 1975). <!-- JC: If helpful we could also give a concrete common example here, like regarding forecasting the weather or something -->
 <!-- TR: Generally a good idea, but I'd say we keep it crisp at that point. The take-home here is: Humans are biased. -->
 In connection with an academic incentive system that rewards certain discovery processes more than others (Sterling 1959, Koole & Lakens 2012), we often find ourselves exploring many possible analytical pipelines, but only reporting a select few.
 This issue is particularly amplified in fields in which the raw data lend themselves to many possible ways to measure (Roettger 2019).
-Combined with a wide variety of methodological and theoretical traditions as well as varying levels of statistical training across subfields, the inherent flexibility of data analysis might lead to a vast plurality of analytic approaches that can lead to different scientific conclusions
+Combined with a wide variety of methodological and theoretical traditions as well as varying levels of statistical training across subfields, the inherent flexibility of data analysis might lead to a vast plurality of analytic approaches that can lead to different scientific conclusions.
 Consequently, there might be many published papers that present overconfident interpretations of their data based on idiosyncratic analytic strategies (e.g. Simmons et al. 2011, Gelman & Loken 2013).
 These interpretations are either associated with an unknown amount of uncertainty or lend themselves to alternative interpretation if analyzed differently.
 However, instead of being critically evaluated, scientific results often remain unchallenged in the publication record.
-Despite recent efforts to improve transparency and reproducibility (REFS) and freely available and accessible infrastructures such as provided by the Open Science Framework (osf.io, ADD), critical reanalyses of published analytic strategies are still not very common because data sharing remains rare (Wicherts, Borsboom, Kats, & Molenaar, 2006, RECENT REF).
+<!-- TODO: add various references about transparency and repro -->
+Despite recent efforts to improve transparency and reproducibility (REFS) and freely available and accessible infrastructures such as provided by the Open Science Framework (osf.io, ADD), critical re-analyses of published analytic strategies are still not very common because data sharing remains rare (Wicherts, Borsboom, Kats, & Molenaar, 2006, RECENT REF).
 
 While this issue has been widely discussed both from a conceptual point of view (Simmons et al. 2011, Wagenmakers et al. 2012, Nosek and Lakens 2014) and its application in individual scientific fields (e.g. Wichert et al. 2015, Charles et al. 2019, Roettger 2019), there are still many unknowns regarding the extent of analytical plurality in practice.
 Recent collaborative attempts have started to shed light on how different analysts tackle the same data set and have revealed a large amount of variability.
 
 ## Crowdsourcing alternative analyses
-In a collaborative effort, Silberzahn et al. (2018) let twenty-nine independent analysis teams address the same research hypothesis
-Analytic approaches and consequently the results varied widely between teams.
+
+In a collaborative effort, Silberzahn et al. (2018) let twenty-nine independent analysis teams address the same research hypothesis.
+Analytical approaches and consequently the results varied widely between teams.
 Sixty-nine percent of the teams found support for the hypothesis, and 31% did not.
 Out of the 29 analytical strategies, there were 21 unique combinations of covariates.
 Importantly, the observed variability was neither predicted by the team's preconceptions about the phenomenon under investigation nor by peer ratings of the quality of their analyses.
 The authors results suggest that analytic plurality is a fact of life and not driven by different levels of expertise or bias.
 Similar crowd-sourced studies recruiting independent analyst teams showed similar results.
 
+<!-- TODO: sum up crowd-sourced studies from different disciplines -->
 SUM UP:
 Neuroscience
-Cognitive Modelling
+Cognitive modeling
 Clinical
 Predictive models
 
-While these projects show a large degree of analytical flexibility with impactful consequences, they dealt with flexibility in inferential or computational modelling.
-In these studies the datasets were fixed and data collection or measurement could not be changed. <!-- JC: any particular reason to favor data table over dataset? --> <!-- TR: I think my reasoning was dataset can be data table or raw data. Data table is the numerical derivation of the raw data. Maybe not a useful distinction?-->
+While these projects show a large degree of analytical flexibility with impactful consequences, they dealt with flexibility in inferential or computational modeling.
+In these studies the data sets were fixed and data collection or measurement could not be changed. <!-- JC: any particular reason to favor data table over data set? --> <!-- TR: I think my reasoning was data set can be data table or raw data. Data table is the numerical derivation of the raw data. Maybe not a useful distinction?-->
+<!-- SC: I like the distinction between data/data sets and data table. -->
 
 However, in many fields the primary raw data are complex signals that need to be operationalized according to the research question.
 In social sciences, the raw observations correspond to human behavior, sometimes measured as a complex visual or acoustic signal.
-Decisions about how to measure a theoretically construct related to that behavior or the underlying cognitive processes might interact with downstream decisions about statistical modelling and vice verse.
+Decisions about how to measure a theoretical construct related to that behavior or its underlying cognitive processes might interact with downstream decisions about statistical modeling and vice versa [@flake2019].
 <!-- TR:maybe give a concrete example, how such an interactionn would look like for speech data?-->
+<!-- SC: Added example from speech. Is it any good? -->
+For example, when working with speech data, a researcher has the option of extracting measurements from a particular point in time within an utterance or from a time interval, depending on which some statistical models will be more useful than others.
+In turn, different models will pick up different trends in the data, thus possibly producing diverging or even mutually exclusive results.
 
-To understand how analytical flexibility manifests itself in a scenario where a complex decisions procedure is involved in operationalizing and measuring complex signals, the present paper looks at an experimentally elicited speech data set
+To understand how analytical flexibility manifests itself in a scenario where a complex decisions procedure is involved in operationalizing and measuring complex signals, the present paper looks at an experimentally elicited speech data set.
 
 ## Operationalizing speech
 
@@ -161,7 +171,7 @@ To understand how analytical flexibility manifests itself in a scenario where a 
 <!-- TODO: RELEVANCE OF SPEECH PRODUCTION RESEARCH FOR COGSCI, AI, etc. -->
 
 <!-- TR: I added a transition sentence -->
-Speech is a complex signal that is characterized by structurally different acoustic landmarks distributed throughout different temporal domains. 
+Speech is a complex signal that is characterized by structurally different acoustic landmarks distributed throughout different temporal domains.
 Thus, choosing how to measure the phenomenon of interest is an important and non-trivial analytical decision. Take for example the following sentence:
 
 
@@ -169,9 +179,9 @@ Thus, choosing how to measure the phenomenon of interest is an important and non
 
 "I hope Liz does not go to the grocery store tomorrow".
 
-Depending on the speaker's intention, this sentence can be said in different ways. 
-If, for instance, the speaker is worried about Liz mistakenly going to the grocery store tomorrow instead of today, the speaker might acoustically highlight the word tomorrow. 
-If, on the other hand, the speaker is worried that Liz goes to a crowded place like the supermarket, they might acoustically highlight the word grocery store.
+Depending on the speaker's intention, this sentence can be said in different ways.
+If, for instance, the speaker is worried about Liz mistakenly going to the grocery store tomorrow instead of today, the speaker might acoustically highlight the word *tomorrow*.
+If, on the other hand, the speaker is worried that Liz goes to a crowded place like the supermarket, they might acoustically highlight the words *grocery store*.
 
 <!-- Now, imagine we are interested in measuring the difference between that sentence and the sentence "Sheila says *Mat* is clever".
 How can we obtain a measure of dissimilarity between the first sound in *Pat* and the first sound in *Mat*? -->
@@ -196,13 +206,15 @@ For example, studies investigating acoustic correlates of word stress (e.g. the 
 Moving onto the expression of higher-level functions like information structure and discourse pragmatics, relevant acoustic cues can be distributed throughout even larger domains, such as phrases and whole utterances.
 Differences in position, shape, and alignment of pitch modulations over multiple locations within a sentence are correlated with differences in discourse functions (e.g. Niebuhr et al., 2011).
 The latter can also be expressed by global vs local pitch modulations, as well as acoustic information within the temporal or spectral domain (e.g. van Heuven & van Zanten 2005).
-Extra- and para-linguistic information, like speaker's intentions, levels of arousal or social identity, are also conveyed by broad-domain features, such as voice quality, speech rate, and rhythm (REFs).
+Extra- and para-linguistic information, like speaker's intentions, levels of arousal or social identity, are also conveyed by broad-domain features, such as voice quality, rhythm, and intonation [@ogden2004; @foulkes2006; @white2009].
 
 When testing hypotheses on speech production data, researchers are faced with many choices and possibilities.
 The larger the functional domain (e.g. segments vs words vs utterances), the higher the number of conceivable operationalizations.
 These decisions are usually made prior to any statistical analysis, but are at times revised a posteriori (i.e. after data collection and/or preliminary analyses) in light of unforeseen or surprising outcomes.
-These myriads of possible decisions are exponentiated by researcher degrees of freedom related to statistical analysis (e.g. Wicherts et al.). Even the analysis of a single measure can be approached via an ever-increasing range of different statistical models.
-The present paper probes this garden of forking path in speech analysis. To probe the variability in data analysis pipelines across independent researchers, we provided analytical teams with an experimentally elicited speech corpus and asked them to investigate acoustic differences related to a functional contrast that might be manifested across the whole utterance.
+These myriads of possible decisions are exponentiated by researcher degrees of freedom related to statistical analysis (e.g. Wicherts et al.).
+Even the analysis of a single measure can be approached via an ever-increasing range of different statistical models.
+The present paper probes this garden of forking paths in the analysis of speech.
+To assess the variability in data analysis pipelines across independent researchers, we provided analytical teams with an experimentally elicited speech corpus and asked them to investigate acoustic differences related to a functional contrast that might be manifested across the whole utterance.
 
 ## The data set - The prosody of redundant modifiers
 
@@ -250,7 +262,7 @@ The target population is active speech science researchers with a graduate degre
 Researchers can choose to work independently or in a small team.
 For the sake of simplicity, we refer to single researcher or small teams as ‘analysis teams’.
 
-Recruitment for this project is ongoing but we aim for a minimum of XX analysis teams independently evaluating each dataset (see sample size justification below). <!-- TR: Big to-do point. We need to only justify a minimum sample size JC: added description (word for word) from ecology RR. Need to figure out what it means still and then put into our own words. -->
+Recruitment for this project is ongoing but we aim for a minimum of XX analysis teams independently evaluating each data set (see sample size justification below). <!-- TR: Big to-do point. We need to only justify a minimum sample size JC: added description (word for word) from ecology RR. Need to figure out what it means still and then put into our own words. -->
 We will simultaneously recruit volunteers to peer-review the analyses conducted by the other volunteers through the same channels.
 Our goal is to recruit a similar number of peer-reviewers and analysts, and to ask each peer reviewer to review a minimum of four analyses.
 If we are unable to recruit at least half the number of reviewers as analysis teams, we will ask analysts to serve also as reviewers (after they have completed their analyses).
