@@ -70,7 +70,9 @@ draft             : no
 
 documentclass     : "apa6"
 classoption       : "man"
-output            : papaja::apa6_pdf
+output:
+  papaja::apa6_pdf:
+    number_sections: true
 ---
 
 ```{r setup, include = FALSE}
@@ -200,7 +202,7 @@ For example, studies investigating acoustic correlates of word stress (e.g. the 
 Moving onto the expression of higher-level functions like information structure and discourse pragmatics, relevant acoustic cues can be distributed throughout even larger domains, such as phrases and whole utterances.
 Differences in position, shape, and alignment of pitch modulations over multiple locations within a sentence are correlated with differences in discourse functions (e.g. Niebuhr et al., 2011).
 The latter can also be expressed by global vs local pitch modulations, as well as acoustic information within the temporal or spectral domain (e.g. van Heuven & van Zanten 2005).
-Extra- and para-linguistic information, like speaker's intentions, levels of arousal or social identity, are also conveyed by broad-domain features, such as voice quality, rhythm, and intonation [@foulkes2006; @ogden2009; @white2009].
+Extra- and para-linguistic information, like speaker's intentions, levels of arousal or social identity, are also conveyed by broad-domain features, such as voice quality, rhythm, and intonation [@foulkes2006; @ogden2004; @white2009].
 
 When testing hypotheses on speech production data, researchers are faced with many choices and possibilities.
 The larger the functional domain (e.g. segments vs words vs utterances), the higher the number of conceivable operationalizations.
@@ -208,7 +210,7 @@ These decisions are usually made prior to any statistical analysis, but are at t
 These myriads of possible decisions are exponentiated by researcher degrees of freedom related to statistical analysis (e.g. Wicherts et al.).
 Even the analysis of a single measure can be approached via an ever-increasing range of different statistical models.
 The present paper probes this garden of forking paths in the analysis of speech.
-To assess the variability in data analysis pipelines across independent researchers, we provided analytical teams with an experimentally elicited speech corpus and asked them to investigate acoustic differences related to a functional contrast that might be manifested across the whole utterance.
+To assess the variability in data analysis pipelines across independent researchers, we provided the analysis teams with an experimentally elicited speech corpus and asked them to investigate acoustic differences related to a functional contrast that might be manifested across the whole utterance.
 
 ## The data set - The prosody of redundant modifiers
 
@@ -360,101 +362,127 @@ The text box will be prefaced with this prompt: "Please explain your choice to r
 ## Step 4: Evaluate Variation
 
 Th initiating authors (SC, JC, TR) will conduct the analyses outlined in this section.
-We will describe the variation in model specifications in several ways:
 
-First, we will calculate summary statistics describing variation among analysis, including the nature and number of acoustic measures (e.g. f0 or duration), the operationalization and the temporal domain of measurement (e.g. mean of an interval or value at specified point in time), the nature and number of model parameters for both fixed and random effects [if applicable], the nature an reasoning behind inferential assessments (e.g. dichotomous decision based on p-values, ordinal decision based on Bayes factor), as well as the mean, standard deviation and range of effect sizes reported.
+### Descriptive statistics
+
+We will calculate summary statistics describing variation among analyses, including the nature and number of acoustic measures (e.g. f0 or duration), the operationalization and the temporal domain of measurement (e.g. mean of an interval or value at specified point in time), the nature and number of model parameters for both fixed and random effects [if applicable], the nature and reasoning behind inferential assessments (e.g. dichotomous decision based on p-values, ordinal decision based on Bayes factor), as well as the mean, standard deviation and range of effect sizes reported.
 We anticipate that the majority of statistical analyses will be expressible as a (generalized) linear regression model.
 
-ADD FORMULA
+<!-- TODO: ADD FORMULA of linear regression model -->
+FORMULA
 
-Since teams will likely use outcome variable that substantially differ in their scales, we will standardize all reported effects by refitting all models with scaled outcome variables (the observed values subtracted from the mean divided by the standard deviation).
+### Meta-analytical estimation
 
-We will summarize the variability in standardized effect sizes and predicted values of dependent variables among the individual analyses using standard random effects meta-analytic techniques.
-First, we will derive standardized effect sizes from each individual analysis.
-Since we anticipate that researchers use multi-level linear regression models, common effect size measures such as Cohen's d are inappropriate.
-Effect sizes will be defined as the estimate(s) of the critical predictor(s) (i.e. critical according to the analysis teams' self-reported inferential criteria) divided by the standard error for the estimate(s).
+Standard random-effects meta-analytical techniques will be used to summarize the variability in effect sizes and predicted values of dependent variables among the individual analyses.
+We anticipate that researchers will use multi-level regression models, so that common effect size measures such as Cohen's $d$ would be inappropriate.
+<!-- SC: it would be good to decide on a clear terminology to refer to the individual original models, the individual models that we run (to refit the original models), and the meta-analytical model.  -->
+Since the outcome variables used by the analysis teams might substantially differ in their measurement scales (e.g, Hz for frequency vs ms for duration), we will standardize all reported effects by refitting each model with scaled outcome variables (the observed values subtracted from the mean divided by the standard deviation, i.e. *z*-scores) using a Bayesian multilevel model.
+The standardized effect size ($\eta_i$) of each analysis will be the estimated coefficient of the critical predictor (i.e. critical according to the analysis teams' self-reported inferential criteria).
+If multiple predictors within a single analysis have been reported as critical, each will be included in the meta-analytical model (described in details in the next paragraph).
+Moreover, to account for the degree of uncertainty around each effect size, which can differ between analyses, we will enter in the meta-analytical model the standard deviation of each effect size returned by each analysis' multilevel model, as the standard error of the effect size ($\text{se}_i$).
+This will enable us to fit a so-called "measurement-error" model, in which standardized effect sizes with smaller standard errors will affect the meta-analytical estimate more than effect sizes with bigger standard errors.
 
-<!-- In multi-level models the variance components are partitioned into multiple sources of variation (e.g. varying intercept of speakers and items, varying by-predictor slopes, etc.).
-We thus will take into account all of the variance sources of the models (Hedges, 2007) and derive the index $\delta_t$ (where t stands for "total" variance), which is calculated by the estimated difference between group means ($\beta$), divided by the square root of the sum of all variance components as formulated below:
-
-$$\delta_t = \frac{\beta}{\sqrt{\sum_{i=1}^{n} \sigma^2_{i}}}$$
-Where $_i$ refers to the individual variance components.
-
-<!-- TR: Do we still need standardized effect sizes? to compare shit or are we just going to compare their estimates? -->
-
-<!-- TR: CHECK IF THIS IS CORRECTLY EXPRESSED, NOT SURE ABOUT THE SUM SIGN...
-RELEVANT: https://www.reddit.com/r/statistics/comments/fouwp9/q_effect_size_calculation_for_brms_delta_t/ -->
-
-<!-- JC:I THINK IT LOOKS GOOD (MAKES SENSE), THOUGH THIS IS ALSO A POSSIBILITY:
-
-$$\delta_t = \frac{\beta}{\sqrt{\sigma^2_{i} + ... \sigma^2_{k}}}$$-->
-
-Upon extracting the standardized effect sizes and standard errors for each analysis, the initiating authors will then fit a cross-classified Bayesian meta-analysis on the analyst team data using the multilevel regression model described below:
+After the extraction of the standardized effect sizes $\eta_i$ and related standard error $\text{se}_i$ for each critical predictor of the individual analyses, the initiating authors will then fit a cross-classified Bayesian meta-analysis using the multilevel regression model described below:
 
 <!-- TR: need to change according to new process (not delta t anymore) -->
+<!-- SC: done! -->
 
 $$
 \begin{aligned}
-\delta_t & \sim \text{Normal}(\theta_i, \sigma_i = \text{se}_i) \\
-\theta_i     & \sim \text{Normal} (\mu, \tau) \\
-\mu          & \sim \text{Normal} (0, 1) \\
-\tau         & \sim \text{HalfCauchy} (0, 1)
+\eta_i   & \sim \text{Normal}(\mu_i, \sigma_i) \\
+\mu_i     & = \alpha + \alpha_{\text{team}[i]} + \beta_n\\
+\alpha  & \sim \text{Normal}(0, 1) \\
+\beta_n & \sim \text{Normal}(0, 1) \\
+\sigma_{\alpha_{\text{team}}} & \sim \text{HalfCauchy}(0, 1) \\
+\sigma_i  & = \text{se}_i
 \end{aligned}
 $$
 
-Effect size ($\delta_{t}$) will be the outcome variable.
-The likelihood of the outcome variable is assumed to be normally distributed.
-Analysis teams will be included as a group-level effect (i.e., random effect).
-For all population-level parameters, the model will include regularizing, weakly informative priors (Gelman, 2017), which are normally distributed and centered at 0 with a standard deviation of 1.
-
+The outcome variable will be the set of standardized effect sizes.
+The respective standard errors $\text{se}_i$ will be included to fit a measurement-error model.
+The likelihood of $\eta_i$ is assumed to be normally distributed (Knight 2000).
+The analysis teams will be included as a group-level effect (i.e., random effect).
+For each population-level parameter $\beta_n$ (i.e., the fixed effects, see below), the model will include regularizing, weakly informative priors (Gelman, 2017), which are normally distributed and centered at 0 with a standard deviation of 1.
 <!-- TR: isn't an SD of 1 rather conservative. Also small sample size, maybe rather using cauchy for the thick tails? -->
-
-A cauchy prior set at 0 with scale 1 will be used for $\tau$.
+<!-- SC: For the pop-level params I would stick to the Normal, or if we want to avoid problems with thick tails I'd go with a student-t. -->
 We will fit the model with 4000 iterations (2000 warm-up) and Hamiltonian Monte-Carlo sampling of the posterior distribution is carried out using 4 chains distributed across 4 processing cores.
-The analysis will be conducted in R (R core team, 2020) and fit using `stan` (Stan, 2019) via the R package `brms` (Bürkner, 2019). The code for the model can be found here: INSERT LINK.
-We will quantify the extent to which the meta-analytic estimate is modulated by the following main predictors: The peer ratings of each analysis (numeric, 1-100) ... to be filled.
+The analysis will be conducted in R (R core team, 2020) and fit using Stan (Stan Development Team, 2019) via the R package brms (Bürkner, 2019).
+<!-- TODO: add link to code of the meta-analytical model -->
+The code for the model can be found here: INSERT LINK.
 
-As a second step, we will explore the extent to which deviations from the meta-analytic mean by individual effect sizes relate to a series of predictors (see below): The deviation score, which serves as the dependent variable in this analysis, will be the
+<!-- TODO: list predictors in meta-analytical model -->
+We will quantify the extent to which the standardized effect sizes are modulated by the following population-level predictors:
 
+* The peer ratings of each analysis (numeric, 1-100).
+* ...
+
+<!-- From ?brms:brmsformula -->
+<!-- For families gaussian, student and skew_normal, it is possible to
+specify standard errors of the observations, thus allowing to perform
+meta-analysis. Suppose that the variable yi contains the effect sizes
+from the studies and sei the corresponding standard errors. Then,
+fixed and random effects meta-analyses can be conducted using the
+formulas yi | se(sei) ~ 1 and yi | se(sei) ~ 1 + (1|study),
+respectively, where study is a variable uniquely identifying every
+study. If desired, meta-regression can be performed via yi | se(sei) ~
+1 + mod1 + mod2 + (1|study) or  yi | se(sei) ~ 1 + mod1 + mod2 + (1 +
+mod1 + mod2|study), where mod1 and mod2 represent moderator variables.
+By default, the standard errors replace the parameter sigma. To model
+sigma in addition to the known standard errors, set argument sigma in
+function se to TRUE, for instance, yi | se(sei, sigma = TRUE) ~ 1. -->
+
+### Exploratory road map
+<!-- SC: change heading to your liking -->
+
+As a second step, we will explore the extent to which deviations from the meta-analytical mean by individual standardized effect sizes relate to a series of predictors (see below): The deviation score, which serves as the dependent variable in this analysis, will be the difference ($\delta_i$) between the meta-analytical mean ($\hat{\eta}$) and the individual standardized effect size of each analysis ($\eta_i$).
 <!--ecoRR: absolute value of the difference between the meta-analytic mean Zr (or y) and the individual Zr (or y) estimate for each analysis. We will use the Box-Cox transformation on the absolute values of deviation scores to achieve an approximately normal distribution (c.f. Fanelli and Ioannidis 2013, Fanelli et al. 2017: supplement). -->
-
 <!--TR: Question: Do we need to estimate the absolute deviation or is it useful to consider the raw deviation (stretching from negative to positive values). That gives you both the distance to the meta analytical estimate and the direction of that difference -->
+<!-- SC: I agree that using the raw deviation has the plus of knowing the sign of the difference. I updated the text above accordingly, but feel free to change it. -->
+These exploratory analyses are secondary to our estimation of variation in effect sizes described above.
+We wish to quantify relationships among variables, but we have no a priori expectation of effect size and we will not make dichotomous decisions about statistical significance.
+We will model the effect of the following predictors:
 
-These analyses are secondary to our estimation of variation in effect sizes described above. We wish to quantify relationships among variables, but we have no a priori expectation of effect size and we will not make dichotomous decisions about statistical significance.
+- *Measure of uniqueness* of individual analyses for the set of predictors in each model.
+- *Measure of conservativeness* of the model specification.
+- *Number of post-hoc changes to the acoustic measurements* the teams will report to have carried out.
+- *Number of models* the teams will report to have run.
+- *Major dimension* that has been measured to answer the research question.
+- *Temporal window* that the measurement is taken over.
+- *Demographic factors* of analysis teams and analysts.
 
-The following predictors will be used:
+The measure of uniqueness of predictors will be assessed by the Sørensen-Dice Index [SDI, @dice1945; @sorensen1948].
+The SDI is an index typically used in ecology research to compare species composition across sites.
+For our purposes, we will treat predictors as species and individual analyses as sites.
+The SDI for a pair of analyses $(X, Y)$ can be obtained using the following formula:
 
-First, we include a measure of the ‘uniqueness’ of individual analyses for
-- the set of predictor parameters,
-- the set of random effect parameters,
-- the acoustic measurement.
+<!-- SC: refactored the formula so it is closer to the original source -->
 
-The measure of the uniqueness of the set of model parameters is assessed by the Sorensen's Similarity Index (SSI). The SSI is an index typically used in ecology research to compare species composition across sites.
-For our purposes, we will treat variables as species and individual analyses as sites.
-In order to generate an SSI for each analysis team, we will calculate the average of all pairwise Sorensen's values for all pairs of analyses using the betapart package (Baselga et al. 2018) in R.
-We achieve this using the following formula:
+$$\text{SDI} = \frac{2|X \cap Y|}{|X|+|Y|}$$
 
-$$\beta_{Sorensen} = \frac{(b+c)}{(2a+b+c)}$$
+where $|X \cap Y|$ is the number of variables common to both models, and $|X|+|Y|$ is the sum of the number of variables that occur in each model.
 
-where $a$ is the number of variables common to both models, $b$ is the number of variables that occur in the first model but not in the second and $c$ is the number of variables that occur in the second model but not in the first.
+```{r sdi, eval=FALSE, include=FALSE}
+x <- c("a", "b", "c", "d")
+y <- c("b", "d", "e", "f")
+(2 * length(intersect(x,y))) / (length(x) + length(y))
+```
 
-Second, we include a measure of conservativeness of the model specification defined by the number of random effect parameters.
-
-Third, we include the self-proclaimed number of post-hoc changes to teams' acoustic measurements and the self-estimated number of models that they ran prior to settling on their final model.
-
-Forth, we include the major acoustic dimension that has been measured to answer the research question. We will categorize each analysis into the following possible major acoustic dimensions: duration, amplitude, fundamental frequency, spectral properties
-
+In order to generate a unique SDI for each analysis team, we will calculate the average of all pairwise SDIs for all pairs of analyses using the `beta.pair()` function in the betapart R package (Baselga et al. 2018).
+The major measurement dimension of each analysis will be categorized according to the following possible groups: duration, amplitude, fundamental frequency, other spectral properties (e.g. frequency center of gravity, harmonics difference, etc.), other measures (e.g. principal components, vowel dispersion, etc.)
 <!--TR: Stefano, do you think these four will cover possible ways to measure? We might want to define them too? dunno-->
+<!-- SC: I just added a "other measures" category for other things that are not strictly acoustic. -->
+The temporal window that the measurement is taken over is defined by the target linguistic unit.
+We assume the following relevant linguistic units: segment, syllable, word, phrase.
 
-Fifth, we include the temporal window that the measurement is taken over defined by the target linguistic unit. We assume the following relevant linguistic units: segment, syllable, word, phrase.
+We will include the following demographic factors about both the analysis teams:
 
-Sixth, we include the following demographic factors about both the analysis teams:
 - ...
 
-DESCRIBE HOW WE WILL LOOK AT THESE THINGS
+<!-- TODO: DESCRIBE HOW WE WILL LOOK AT demographics -->
 
-We will publicly archive all relevant data, code, and materials on the Open Science Framework (ADD LINK).
-Archived data will include the original data sets distributed to all analysts, any edited versions of the data analyzed by individual groups, and the data we analyze with our meta-analyses, which include the effect sizes derive from separate analyses, the statistics describing variation in model structure among analyst groups, and the anonymized answers to our surveys of analysts and peer reviewers.
+
+We will publicly archive all relevant data, code, and materials on the Open Science Framework (<https://osf.io/3bmcp/>).
+Archived data will include the original data sets distributed to all analysts, any edited versions of the data analyzed by individual groups, and the data we analyze with our meta-analyses, which include the effect sizes derived from separate analyses, the statistics describing variation in model structure among analysis teams, and the anonymized answers to our surveys of analysts and peer reviewers.
 Similarly, we will archive both the analysis code used for each individual analysis and the code from our meta-analyses.
 We will also archive copies of our survey instruments from analysts and peer reviewers.
 
