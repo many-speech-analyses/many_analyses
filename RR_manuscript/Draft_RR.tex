@@ -37,7 +37,7 @@
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
 \hypersetup{
-  pdftitle={Analytical choices for analyzing multidimensional behavior - many analyst test hypotheses about human speech.},
+  pdftitle={Analytical choices for analyzing multidimensional behavior - Many analysts test hypotheses about human speech.},
   pdfauthor={First Author\#, Second Author\#, \ldots\#, \& Last Author\#},
   pdflang={en-EN},
   pdfkeywords={crowdsourcing science, data analysis, scientific transparency, speech, acoustic analysis},
@@ -60,7 +60,7 @@
 \setlength{\emergencystretch}{3em} % prevent overfull lines
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
-\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\setcounter{secnumdepth}{5}
 % Make \paragraph and \subparagraph free-standing
 \ifx\paragraph\undefined\else
   \let\oldparagraph\paragraph
@@ -157,7 +157,7 @@
 \newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
 \newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
 
-\title{Analytical choices for analyzing multidimensional behavior - many analyst test hypotheses about human speech.}
+\title{Analytical choices for analyzing multidimensional behavior - Many analysts test hypotheses about human speech.}
 \author{First Author\textsuperscript{\#}, Second Author\textsuperscript{\#}, \ldots{}\textsuperscript{\#}, \& Last Author\textsuperscript{\#}}
 \date{}
 
@@ -217,26 +217,26 @@ Human behavior is complex and offers many ways to be translated into numbers.
 This is particularly true for fields that draw conclusions about human behavior and cognition from multidimensional data like audio or video data.
 In fields working on human speech production, for example, researchers need to make numerous decisions about what to measure and how to measure it.
 This is not trivial given the temporal extension of the acoustic signal and its complex structural composition.
-Not only can decisions about measuring the signal influence downstream decisions about statistical modelling, but statistical results or modelling issues can also lead researchers to go back and revise earlier decisions about the measuring process itself.
+Not only can decisions about measuring the signal influence downstream decisions about statistical modeling, but statistical results or modeling issues can also lead researchers to go back and revise earlier decisions about the measuring process itself.
 
-In this article, we investigate the variability in analytic choices when many analyst teams analyze the same speech production data, a process that involves both decisions regarding the operationalization of a complex observed signal and decisions regarding the statistical modelling.
+In this article, we investigate the variability in analytic choices when many analyst teams analyze the same speech production data, a process that involves both decisions regarding the operationalization of a complex observed signal and decisions regarding the statistical modeling.
 Specifically, we report the impact of the analytic pipeline on research results obtained by XX teams who gained access to the same set of acoustic recordings in order to answer the same research question.
 
 \hypertarget{researcher-degrees-of-freedom}{%
 \subsection{Researcher degrees of freedom}\label{researcher-degrees-of-freedom}}
 
-Data analysis comes with many decisions like how to measure a given phenomenon or behavior, what data to submit to statistical modelling and which to exclude in the final analysis, what models to use or what inferential decision procedure to apply.
+Data analysis comes with many decisions like how to measure a given phenomenon or behavior, what data to submit to statistical modeling and which to exclude in the final analysis, what models to use or what inferential decision procedure to apply.
 However, if these decisions during data analysis are not specified in advance, we might stumble upon seemingly meaningful patterns in the data that are merely statistical flukes.
-This can be problematic because to err is human.
+This can be problematic because humans show cognitive biases that can lead to erroneous inferences.
 
 We have evolved to filter the world in irrational ways (e.g., Tversky and Kahneman 1974), seeing coherent patterns in randomness (Brugger 2001), convincing ourselves of the validity of prior expectations (``I knew it,'' Nickerson 1998), and perceiving events as being plausible in hindsight (``I knew it all along,'' Fischhoff 1975).
 In connection with an academic incentive system that rewards certain discovery processes more than others (Sterling 1959, Koole \& Lakens 2012), we often find ourselves exploring many possible analytical pipelines, but only reporting a select few.
 This issue is particularly amplified in fields in which the raw data lend themselves to many possible ways to measure (Roettger 2019).
-Combined with a wide variety of methodological and theoretical traditions as well as varying levels of statistical training across subfields, the inherent flexibility of data analysis might lead to a vast plurality of analytic approaches that can lead to different scientific conclusions
+Combined with a wide variety of methodological and theoretical traditions as well as varying levels of statistical training across subfields, the inherent flexibility of data analysis might lead to a vast plurality of analytic approaches that can lead to different scientific conclusions.
 Consequently, there might be many published papers that present overconfident interpretations of their data based on idiosyncratic analytic strategies (e.g.~Simmons et al.~2011, Gelman \& Loken 2013).
 These interpretations are either associated with an unknown amount of uncertainty or lend themselves to alternative interpretation if analyzed differently.
 However, instead of being critically evaluated, scientific results often remain unchallenged in the publication record.
-Despite recent efforts to improve transparency and reproducibility (REFS) and freely available and accessible infrastructures such as provided by the Open Science Framework (osf.io, ADD), critical reanalyses of published analytic strategies are still not very common because data sharing remains rare (Wicherts, Borsboom, Kats, \& Molenaar, 2006, RECENT REF).
+Despite recent efforts to improve transparency and reproducibility (REFS) and freely available and accessible infrastructures such as provided by the Open Science Framework (osf.io, ADD), critical re-analyses of published analytic strategies are still not very common because data sharing remains rare (Wicherts, Borsboom, Kats, \& Molenaar, 2006, RECENT REF).
 
 While this issue has been widely discussed both from a conceptual point of view (Simmons et al.~2011, Wagenmakers et al.~2012, Nosek and Lakens 2014) and its application in individual scientific fields (e.g.~Wichert et al.~2015, Charles et al.~2019, Roettger 2019), there are still many unknowns regarding the extent of analytical plurality in practice.
 Recent collaborative attempts have started to shed light on how different analysts tackle the same data set and have revealed a large amount of variability.
@@ -244,8 +244,8 @@ Recent collaborative attempts have started to shed light on how different analys
 \hypertarget{crowdsourcing-alternative-analyses}{%
 \subsection{Crowdsourcing alternative analyses}\label{crowdsourcing-alternative-analyses}}
 
-In a collaborative effort, Silberzahn et al.~(2018) let twenty-nine independent analysis teams address the same research hypothesis
-Analytic approaches and consequently the results varied widely between teams.
+In a collaborative effort, Silberzahn et al.~(2018) let twenty-nine independent analysis teams address the same research hypothesis.
+Analytical approaches and consequently the results varied widely between teams.
 Sixty-nine percent of the teams found support for the hypothesis, and 31\% did not.
 Out of the 29 analytical strategies, there were 21 unique combinations of covariates.
 Importantly, the observed variability was neither predicted by the team's preconceptions about the phenomenon under investigation nor by peer ratings of the quality of their analyses.
@@ -254,22 +254,20 @@ Similar crowd-sourced studies recruiting independent analyst teams showed simila
 
 SUM UP:
 Neuroscience
-Cognitive Modelling
+Cognitive modeling
 Clinical
 Predictive models
 
-While these projects show a large degree of analytical flexibility with impactful consequences, they dealt with flexibility in inferential or computational modelling.
+While these projects show a large degree of analytical flexibility with impactful consequences, they dealt with flexibility in inferential or computational modeling.
 In these studies the data sets were fixed and data collection or measurement could not be changed.
 
 However, in many fields the primary raw data are complex signals that need to be operationalized according to the research question.
 In social sciences, the raw observations correspond to human behavior, sometimes measured as a complex visual or acoustic signal.
-\textless\textless\textless\textless\textless\textless\textless{} HEAD
-Decisions about how to measure a theoretically construct related to that behavior or the underlying cognitive processes might interact with downstream decisions about statistical modelling and vice verse.
-=======
-Decisions about how to measure a theoretically construct related to that behavior or the underlying cognitive processes might interact with downstream decisions about statistical modelling and vice verse.
-\textgreater\textgreater\textgreater\textgreater\textgreater\textgreater\textgreater{} 4860d0ed0c2fc204883e1c150efb5749b4ef1669
+Decisions about how to measure a theoretical construct related to that behavior or its underlying cognitive processes might interact with downstream decisions about statistical modeling and vice versa (Flake \& Fried, 2019).
+For example, when working with speech data, a researcher has the option of extracting measurements from a particular point in time within an utterance or from a time interval, depending on which some statistical models will be more useful than others.
+In turn, different models will pick up different trends in the data, thus possibly producing diverging or even mutually exclusive results.
 
-To understand how analytical flexibility manifests itself in a scenario where a complex decisions procedure is involved in operationalizing and measuring complex signals, the present paper looks at an experimentally elicited speech data set
+To understand how analytical flexibility manifests itself in a scenario where a complex decision procedure is involved in operationalizing and measuring complex signals, the present paper looks at an experimentally elicited speech data set.
 
 \hypertarget{operationalizing-speech}{%
 \subsection{Operationalizing speech}\label{operationalizing-speech}}
@@ -300,13 +298,15 @@ For example, studies investigating acoustic correlates of word stress (e.g.~the 
 Moving onto the expression of higher-level functions like information structure and discourse pragmatics, relevant acoustic cues can be distributed throughout even larger domains, such as phrases and whole utterances.
 Differences in position, shape, and alignment of pitch modulations over multiple locations within a sentence are correlated with differences in discourse functions (e.g.~Niebuhr et al., 2011).
 The latter can also be expressed by global vs local pitch modulations, as well as acoustic information within the temporal or spectral domain (e.g.~van Heuven \& van Zanten 2005).
-Extra- and para-linguistic information, like speaker's intentions, levels of arousal or social identity, are also conveyed by broad-domain features, such as voice quality, speech rate, and rhythm (REFs).
+Extra- and para-linguistic information, like speaker's intentions, levels of arousal or social identity, are also conveyed by broad-domain features, such as voice quality, rhythm, and intonation (Foulkes \& Docherty, 2006; Ogden, 2004; White, Payne, \& Mattys, 2009).
 
 When testing hypotheses on speech production data, researchers are faced with many choices and possibilities.
 The larger the functional domain (e.g.~segments vs words vs utterances), the higher the number of conceivable operationalizations.
 These decisions are usually made prior to any statistical analysis, but are at times revised a posteriori (i.e.~after data collection and/or preliminary analyses) in light of unforeseen or surprising outcomes.
-These myriads of possible decisions are exponentiated by researcher degrees of freedom related to statistical analysis (e.g.~Wicherts et al.). Even the analysis of a single measure can be approached via an ever-increasing range of different statistical models.
-The present paper probes this garden of forking path in speech analysis. To probe the variability in data analysis pipelines across independent researchers, we provided analytical teams with an experimentally elicited speech corpus and asked them to investigate acoustic differences related to a functional contrast that might be manifested across the whole utterance.
+These myriads of possible decisions are exponentiated by researcher degrees of freedom related to statistical analysis (e.g.~Wicherts et al.).
+Even the analysis of a single measure can be approached via an ever-increasing range of different statistical models.
+The present paper probes this garden of forking paths in the analysis of speech.
+To assess the variability in data analysis pipelines across independent researchers, we provided the analysis teams with an experimentally elicited speech corpus and asked them to investigate acoustic differences related to a functional contrast that might be manifested across the whole utterance.
 
 \hypertarget{the-data-set---the-prosody-of-redundant-modifiers}{%
 \subsection{The data set - The prosody of redundant modifiers}\label{the-data-set---the-prosody-of-redundant-modifiers}}
@@ -493,76 +493,108 @@ The text box will be prefaced with this prompt: ``Please explain your choice to 
 \subsection{Step 4: Evaluate Variation}\label{step-4-evaluate-variation}}
 
 Th initiating authors (SC, JC, TR) will conduct the analyses outlined in this section.
-We will describe the variation in model specifications in several ways:
 
-First, we will calculate summary statistics describing variation among analysis, including the nature and number of acoustic measures (e.g.~f0 or duration), the operationalization and the temporal domain of measurement (e.g.~mean of an interval or value at specified point in time), the nature and number of model parameters for both fixed and random effects {[}if applicable{]}, the nature an reasoning behind inferential assessments (e.g.~dichotomous decision based on p-values, ordinal decision based on Bayes factor), as well as the mean, standard deviation and range of effect sizes reported.
+\hypertarget{descriptive-statistics}{%
+\subsubsection{Descriptive statistics}\label{descriptive-statistics}}
+
+We will calculate summary statistics describing variation among analyses, including the nature and number of acoustic measures (e.g.~f0 or duration), the operationalization and the temporal domain of measurement (e.g.~mean of an interval or value at specified point in time), the nature and number of model parameters for both fixed and random effects {[}if applicable{]}, the nature and reasoning behind inferential assessments (e.g.~dichotomous decision based on p-values, ordinal decision based on Bayes factor), as well as the mean, standard deviation and range of effect sizes reported.
 We anticipate that the majority of statistical analyses will be expressible as a (generalized) linear regression model.
 
-ADD FORMULA
+FORMULA
 
-Since teams will likely use outcome variable that substantially differ in their scales, we will standardize all reported effects by refitting all models with scaled outcome variables (the observed values subtracted from the mean divided by the standard deviation).
+\hypertarget{meta-analytical-estimation}{%
+\subsubsection{Meta-analytical estimation}\label{meta-analytical-estimation}}
 
-We will summarize the variability in standardized effect sizes and predicted values of dependent variables among the individual analyses using standard random effects meta-analytic techniques.
-First, we will derive standardized effect sizes from each individual analysis.
-Since we anticipate that researchers use multi-level linear regression models, common effect size measures such as Cohen's d are inappropriate.
-Effect sizes will be defined as the estimate(s) of the critical predictor(s) (i.e.~critical according to the analysis teams' self-reported inferential criteria) divided by the standard error for the estimate(s).
+Standard random-effects meta-analytical techniques will be used to summarize the variability in effect sizes and predicted values of dependent variables among the individual analyses.
+We anticipate that researchers will use multi-level regression models, so that common effect size measures such as Cohen's \(d\) would be inappropriate.
+Since the outcome variables used by the analysis teams might substantially differ in their measurement scales (e.g, Hz for frequency vs ms for duration), we will standardize all reported effects by refitting each model with scaled outcome variables (the observed values subtracted from the mean divided by the standard deviation, i.e.~\emph{z}-scores) using a Bayesian multilevel model.
+The standardized effect size (\(\eta_i\)) of each analysis will be the estimated coefficient of the critical predictor (i.e.~critical according to the analysis teams' self-reported inferential criteria).
+If multiple predictors within a single analysis have been reported as critical, each will be included in the meta-analytical model (described in details in the next paragraph).
+Moreover, to account for the degree of uncertainty around each effect size, which can differ between analyses, we will enter in the meta-analytical model the standard deviation of each effect size returned by each analysis' multilevel model, as the standard error of the effect size (\(\text{se}_i\)).
+This will enable us to fit a so-called ``measurement-error'' model, in which standardized effect sizes with smaller standard errors will affect the meta-analytical estimate more than effect sizes with bigger standard errors.
 
-Upon extracting the standardized effect sizes and standard errors for each analysis, the initiating authors will then fit a cross-classified Bayesian meta-analysis on the analyst team data using the multilevel regression model described below:
+After the extraction of the standardized effect sizes \(\eta_i\) and related standard error \(\text{se}_i\) for each critical predictor of the individual analyses, the initiating authors will then fit a cross-classified Bayesian meta-analysis using the multilevel regression model described below:
 
 \[
 \begin{aligned}
-\delta_t & \sim \text{Normal}(\theta_i, \sigma_i = \text{se}_i) \\
-\theta_i     & \sim \text{Normal} (\mu, \tau) \\
-\mu          & \sim \text{Normal} (0, 1) \\
-\tau         & \sim \text{HalfCauchy} (0, 1)
+\eta_i   & \sim \text{Normal}(\mu_i, \sigma_i) \\
+\mu_i     & = \alpha + \alpha_{\text{team}[i]} + \beta_n\\
+\alpha  & \sim \text{Normal}(0, 1) \\
+\beta_n & \sim \text{Normal}(0, 1) \\
+\sigma_{\alpha_{\text{team}}} & \sim \text{HalfCauchy}(0, 1) \\
+\sigma_i  & = \text{se}_i
 \end{aligned}
 \]
 
-Effect size (\(\delta_{t}\)) will be the outcome variable.
-The likelihood of the outcome variable is assumed to be normally distributed.
-Analysis teams will be included as a group-level effect (i.e., random effect).
-For all population-level parameters, the model will include regularizing, weakly informative priors (Gelman, 2017), which are normally distributed and centered at 0 with a standard deviation of 1.
-
-A cauchy prior set at 0 with scale 1 will be used for \(\tau\).
+The outcome variable will be the set of standardized effect sizes.
+The respective standard errors \(\text{se}_i\) will be included to fit a measurement-error model.
+The likelihood of \(\eta_i\) is assumed to be normally distributed (Knight 2000).
+The analysis teams will be included as a group-level effect (i.e., random effect).
+For each population-level parameter \(\beta_n\) (i.e., the fixed effects, see below), the model will include regularizing, weakly informative priors (Gelman, 2017), which are normally distributed and centered at 0 with a standard deviation of 1.
 We will fit the model with 4000 iterations (2000 warm-up) and Hamiltonian Monte-Carlo sampling of the posterior distribution is carried out using 4 chains distributed across 4 processing cores.
-The analysis will be conducted in R (R core team, 2020) and fit using \texttt{stan} (Stan, 2019) via the R package \texttt{brms} (Bürkner, 2019). The code for the model can be found here: INSERT LINK.
-We will quantify the extent to which the meta-analytic estimate is modulated by the following main predictors: The peer ratings of each analysis (numeric, 1-100) \ldots{} to be filled.
+The analysis will be conducted in R (R core team, 2020) and fit using Stan (Stan Development Team, 2019) via the R package brms (Bürkner, 2019).
+The code for the model can be found here: INSERT LINK.
 
-As a second step, we will explore the extent to which deviations from the meta-analytic mean by individual effect sizes relate to a series of predictors (see below): The deviation score, which serves as the dependent variable in this analysis, will be the
+We will quantify the extent to which the standardized effect sizes are modulated by the following population-level predictors:
 
-These analyses are secondary to our estimation of variation in effect sizes described above. We wish to quantify relationships among variables, but we have no a priori expectation of effect size and we will not make dichotomous decisions about statistical significance.
+\begin{itemize}
+\tightlist
+\item
+  The peer ratings of each analysis (numeric, 1-100).
+\item
+  \ldots{}
+\end{itemize}
 
-The following predictors will be used:
+\hypertarget{exploratory-road-map}{%
+\subsubsection{Exploratory road map}\label{exploratory-road-map}}
 
-First, we include a measure of the `uniqueness' of individual analyses for
-- the set of predictor parameters,
-- the set of random effect parameters,
-- the acoustic measurement.
+As a second step, we will explore the extent to which deviations from the meta-analytical mean by individual standardized effect sizes relate to a series of predictors (see below): The deviation score, which serves as the dependent variable in this analysis, will be the difference (\(\delta_i\)) between the meta-analytical mean (\(\hat{\eta}\)) and the individual standardized effect size of each analysis (\(\eta_i\)).
+These exploratory analyses are secondary to our estimation of variation in effect sizes described above.
+We wish to quantify relationships among variables, but we have no a priori expectation of effect size and we will not make dichotomous decisions about statistical significance.
+We will model the effect of the following predictors:
 
-The measure of the uniqueness of the set of model parameters is assessed by the Sorensen's Similarity Index (SSI). The SSI is an index typically used in ecology research to compare species composition across sites.
-For our purposes, we will treat variables as species and individual analyses as sites.
-In order to generate an SSI for each analysis team, we will calculate the average of all pairwise Sorensen's values for all pairs of analyses using the betapart package (Baselga et al.~2018) in R.
-We achieve this using the following formula:
+\begin{itemize}
+\tightlist
+\item
+  \emph{Measure of uniqueness} of individual analyses for the set of predictors in each model.
+\item
+  \emph{Measure of conservativeness} of the model specification.
+\item
+  \emph{Number of post-hoc changes to the acoustic measurements} the teams will report to have carried out.
+\item
+  \emph{Number of models} the teams will report to have run.
+\item
+  \emph{Major dimension} that has been measured to answer the research question.
+\item
+  \emph{Temporal window} that the measurement is taken over.
+\item
+  \emph{Demographic factors} of analysis teams and analysts.
+\end{itemize}
 
-\[\beta_{Sorensen} = \frac{(b+c)}{(2a+b+c)}\]
+The measure of uniqueness of predictors will be assessed by the Sørensen-Dice Index (SDI, Dice, 1945; Sørensen, 1948).
+The SDI is an index typically used in ecology research to compare species composition across sites.
+For our purposes, we will treat predictors as species and individual analyses as sites.
+The SDI for a pair of analyses \((X, Y)\) can be obtained using the following formula:
 
-where \(a\) is the number of variables common to both models, \(b\) is the number of variables that occur in the first model but not in the second and \(c\) is the number of variables that occur in the second model but not in the first.
+\[\text{SDI} = \frac{2|X \cap Y|}{|X|+|Y|}\]
 
-Second, we include a measure of conservativeness of the model specification defined by the number of random effect parameters.
+where \(|X \cap Y|\) is the number of variables common to both models, and \(|X|+|Y|\) is the sum of the number of variables that occur in each model.
 
-Third, we include the self-proclaimed number of post-hoc changes to teams' acoustic measurements and the self-estimated number of models that they ran prior to settling on their final model.
+In order to generate a unique SDI for each analysis team, we will calculate the average of all pairwise SDIs for all pairs of analyses using the \texttt{beta.pair()} function in the betapart R package (Baselga et al.~2018).
+The major measurement dimension of each analysis will be categorized according to the following possible groups: duration, amplitude, fundamental frequency, other spectral properties (e.g.~frequency center of gravity, harmonics difference, etc.), other measures (e.g.~principal components, vowel dispersion, etc.)
+The temporal window that the measurement is taken over is defined by the target linguistic unit.
+We assume the following relevant linguistic units: segment, syllable, word, phrase.
 
-Forth, we include the major acoustic dimension that has been measured to answer the research question. We will categorize each analysis into the following possible major acoustic dimensions: duration, amplitude, fundamental frequency, spectral properties
+We will include the following demographic factors about both the analysis teams:
 
-Fifth, we include the temporal window that the measurement is taken over defined by the target linguistic unit. We assume the following relevant linguistic units: segment, syllable, word, phrase.
+\begin{itemize}
+\tightlist
+\item
+  \ldots{}
+\end{itemize}
 
-Sixth, we include the following demographic factors about both the analysis teams:
-- \ldots{}
-
-DESCRIBE HOW WE WILL LOOK AT THESE THINGS
-
-We will publicly archive all relevant data, code, and materials on the Open Science Framework (ADD LINK).
-Archived data will include the original data sets distributed to all analysts, any edited versions of the data analyzed by individual groups, and the data we analyze with our meta-analyses, which include the effect sizes derive from separate analyses, the statistics describing variation in model structure among analyst groups, and the anonymized answers to our surveys of analysts and peer reviewers.
+We will publicly archive all relevant data, code, and materials on the Open Science Framework (\url{https://osf.io/3bmcp/}).
+Archived data will include the original data sets distributed to all analysts, any edited versions of the data analyzed by individual groups, and the data we analyze with our meta-analyses, which include the effect sizes derived from separate analyses, the statistics describing variation in model structure among analysis teams, and the anonymized answers to our surveys of analysts and peer reviewers.
 Similarly, we will archive both the analysis code used for each individual analysis and the code from our meta-analyses.
 We will also archive copies of our survey instruments from analysts and peer reviewers.
 
@@ -591,8 +623,26 @@ Analysts and initiating authors will discuss the limitations, results, and impli
 \leavevmode\hypertarget{ref-camerer2018evaluating}{}%
 Camerer, C. F., Dreber, A., Holzmeister, F., Ho, T.-H., Huber, J., Johannesson, M., \ldots{} others. (2018). Evaluating the replicability of social science experiments in nature and science between 2010 and 2015. \emph{Nature Human Behaviour}, \emph{2}(9), 637--644. \url{https://doi.org/10.1038/s41562-018-0399-z}
 
+\leavevmode\hypertarget{ref-dice1945}{}%
+Dice, L. R. (1945). Measures of the amount of ecologic association between species. \emph{Ecology}, \emph{26}(3), 297--302.
+
+\leavevmode\hypertarget{ref-flake2019}{}%
+Flake, J. K., \& Fried, E. I. (2019). Measurement schmeasurement: Questionable measurement practices and how to avoid them. Pre-print available at PsyArXiv.
+
+\leavevmode\hypertarget{ref-foulkes2006}{}%
+Foulkes, P., \& Docherty, G. (2006). The social life of phonetics and phonology. \emph{Journal of Phonetics}, \emph{34}(4), 409--438.
+
+\leavevmode\hypertarget{ref-ogden2004}{}%
+Ogden, R. (2004). Non-modal voice quality and turn-taking in {F}innish. \emph{Sound Patterns in Interaction: Cross-Linguistic Studies from Conversation}, 29--62.
+
 \leavevmode\hypertarget{ref-open2015estimating}{}%
 Open Science Collaboration. (2015). Estimating the reproducibility of psychological science. \emph{Science}, \emph{349}(6251). \url{https://doi.org/10.1126/science.aac4716}
+
+\leavevmode\hypertarget{ref-sorensen1948}{}%
+Sørensen, T. (1948). A method of establishing groups of equal amplitude in plant sociology based on similarity of species and its application to analyses of the vegetation on {D}anish commons. \emph{Kongelige Danske Videnskabernes Selskab}, \emph{5}(4), 1--34.
+
+\leavevmode\hypertarget{ref-white2009}{}%
+White, L., Payne, E., \& Mattys, S. L. (2009). Rhythmic and prosodic contrast in {V}enetan and {S}icilian {I}talian. In M. Vigario, S. Frota, \& M. J. Freitas (Eds.), \emph{Phonetics and phonology: Interactions and interrelations} (pp. 137--158). Amsterdam: John Benjamins.
 
 \end{CSLReferences}
 
