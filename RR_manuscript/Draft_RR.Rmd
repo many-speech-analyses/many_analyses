@@ -73,6 +73,8 @@ classoption       : "man"
 output:
   papaja::apa6_pdf:
     number_sections: true
+header-includes:
+  - \usepackage{cleveref}
 ---
 
 ```{r setup, include = FALSE}
