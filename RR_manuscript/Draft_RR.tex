@@ -123,6 +123,7 @@
 
 \linenumbers
 \usepackage{csquotes}
+\usepackage{cleveref}
 \ifxetex
   % Load polyglossia as late as possible: uses bidi with RTL langages (e.g. Hebrew, Arabic)
   \usepackage{polyglossia}
@@ -383,19 +384,25 @@ All analysts and reviewers will share co-authorship on this manuscript and will 
 All analysts will sign a consent (ethics) document (LINK).
 
 To identify the minimal sample size, we followed the method in {[}ECO RR{]}.
-The aim of the meta-analysis is to obtain an estimate of heterogeneity (\(\tau^2\)) of the effect sizes reported by the analysis teams.
-Ideally, the 95\% credible interval of \(\tau^2\) should not include 0 (i.e.~we want to be able to exclude the hypothesis that there is no heterogeneity, or, to put it differently, we want to ensure we obtain a \emph{t}-statistic that would correspond to a \emph{p}-value smaller than 0.05).
+The aim of the meta-analysis is to obtain an estimate of heterogeneity of the effect sizes reported by the analysis teams (\(\tau^2\), i.e.~the variance \(\sigma^2_{\alpha_{\text{team}}}\), see \Cref{s:meta-est}).
+Ideally, the 95\% credible interval (CrI) of \(\tau^2\) should not include 0 (i.e.~the probability \(p\) that the 95\% CrI contains 0 should be less than 0.05).
+The probability \(p\) that a CrI interval does not include 0 is obtained via the \emph{t}-statistics:
+
+\[t = \frac{\tau^2}{SE(\tau^2)}\]
+
 Assuming that the underlying distribution of effect sizes is normal (Knight 2000), the standard error of \(\tau^2\) can be calculated with the formula:
 
 \[SE(\tau^2) = \sqrt{\frac{2\tau^4}{(n-1)}}\]
 
-Plugging \(SE(\tau^2)\) into the formula of the \emph{t}-statistics shows that \emph{t} will be the same regardless of \(\tau^2\):
+where \(n\) is the sample size.
+Since we know \(p\) and \(\tau^2\), we can calculate \(n\) such that \(p < 0.05\).
+Plugging \(SE(\tau^2)\) into the formula of the \emph{t}-statistics shows that, when \(n\) is fixed, \emph{t} (and hence \(p\)) will be the same regardless of \(\tau^2\):
 
 \[t = \frac{\tau^2}{SE(\tau^2)} = \frac{\tau^2}{\sqrt{\frac{2\tau^4}{(n-1)}}} = \sqrt{\frac{(n-1)}{2}}\]
 
-In other words, the minimum sample size \(n\) needed to exclude 0 from the 95\% CI of \(\tau^2\) is invariant regardless of the estimate of heterogeneity \(\tau^2\).
-When \(n = 12\) then \(t_{12-1} = t_{11} = 2.3452\) and \(p = 0.0388\).
-A minimal sample size of effect sizes of 12 would thus be sufficient to ensure enough statistical power.
+In other words, the minimum sample size \(n\) needed to exclude 0 from the 95\% CrI of \(\tau^2\) is invariant regardless of the estimate of heterogeneity \(\tau^2\).
+When \(n = 12\) then \(t_{(12-1)} = t_{(11)} = 2.3452\) and \(p = 0.0388\), which is below the 0.05 threshold, as required.
+In sum, a minimal sample of 12 effect sizes (i.e.~of 12 analysis teams) would thus be sufficient to exclude 0 from the 95\% CrI of \(\tau^2\).
 
 \hypertarget{step-2-primary-data-analyses}{%
 \subsection{Step 2: Primary Data Analyses}\label{step-2-primary-data-analyses}}
@@ -502,8 +509,8 @@ We anticipate that the majority of statistical analyses will be expressible as a
 
 FORMULA
 
-\hypertarget{meta-analytical-estimation}{%
-\subsubsection{Meta-analytical estimation}\label{meta-analytical-estimation}}
+\hypertarget{s:meta-est}{%
+\subsubsection{Meta-analytical estimation}\label{s:meta-est}}
 
 Standard random-effects meta-analytical techniques will be used to summarize the variability in effect sizes and predicted values of dependent variables among the individual analyses.
 We anticipate that researchers will use multi-level regression models, so that common effect size measures such as Cohen's \(d\) would be inappropriate.
