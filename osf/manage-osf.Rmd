@@ -1,0 +1,64 @@
+---
+title: "OSF management"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_knit$set(root.dir = here::here())
+library(tidyverse)
+library(osfr)
+```
+
+# Manage OSF with osfr
+
+This document contains the code used to manage the OSF repo with the [osfr](https://docs.ropensci.org/osfr/) package.
+
+# Retrieve OSF repo and components
+
+```{r retrieve}
+# Main repo "Many Speech Analysis": https://osf.io/3bmcp/
+osf_repo <- osf_retrieve_node("3bmcp")
+# Repo components
+osf_comps <- osf_ls_nodes(osf_repo)
+# Dataset & Materials component
+data_comp <- osf_comps %>% filter(name == "Dataset & Materials")
+```
+
+# List data_comp files
+
+```{r data_files}
+osf_ls_files(data_comp)
+```
+
+# Knit readme files
+
+We can knit the readme files (they are GitHub documents, i.e. `.Rmd` files that are converted to `.md` files upon knitting) by running `osf/knit-all.R`.
+
+------
+**NOTE**
+
+For some reason I can't get this file to knit the other Rmd files when knitted (I get an error).
+So for now we need to manually run the `osf/knit-all.R` script before uploading files to OSF.
+I asked on StackOverflow how to fix this: <https://stackoverflow.com/q/65505119/2804314>.
+
+------
+
+# Upload files to the OFS repo
+
+```{r readmes}
+# A loop would be better
+osf_upload(data_comp, path = "./osf/comps/dataset/README.md", conflicts = "overwrite", verbose = T)
+
+data_comp_files <- osf_ls_files(data_comp)
+
+materials <- data_comp_files %>% filter(name == "Materials")
+osf_upload(materials, path = "./osf/comps/dataset/materials/README.md", conflicts = "overwrite", verbose = T)
+
+raw <- data_comp_files %>% filter(name == "Raw data")
+osf_upload(raw, path = "./osf/comps/dataset/raw/README.md", conflicts = "overwrite", verbose = T)
+
+tgs <- data_comp_files %>% filter(name == "TextGrids")
+osf_upload(tgs, path = "./osf/comps/dataset/textgrids/README.md", conflicts = "overwrite", verbose = T)
+```
+

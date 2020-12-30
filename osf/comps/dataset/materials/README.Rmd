@@ -1,0 +1,36 @@
+---
+title: "Materials"
+output:
+  github_document:
+    html_preview: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_knit$set(root.dir = here::here())
+library(tidyverse)
+library(osfr)
+```
+
+Last update: `r Sys.Date()`
+
+# Overview
+
+This directory contains the images, trial lists, and the results from the norming study.
+
+```{r retrieve}
+# Main repo "Many Speech Analysis": https://osf.io/3bmcp/
+osf_repo <- osf_retrieve_node("3bmcp")
+# Repo components
+osf_comps <- osf_ls_nodes(osf_repo)
+# Dataset & Materials component
+data_comp <- osf_comps %>% filter(name == "Dataset & Materials")
+```
+
+```{r data_files, include=TRUE}
+osf_ls_files(data_comp, "Materials") %>%
+  select(name) %>%
+  filter(str_detect(name, ".*\\.md", negate = TRUE)) %>%
+  arrange(name)
+```
+
