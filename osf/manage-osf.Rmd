@@ -33,16 +33,16 @@ osf_ls_files(data_comp)
 
 # Knit readme files
 
-We can knit the readme files (they are GitHub documents, i.e. `.Rmd` files that are converted to `.md` files upon knitting) by running `osf/knit-all.R`.
+We can knit the readme files (they are GitHub documents, i.e. `.Rmd` files that are converted to `.md` files upon knitting).
 
-------
-**NOTE**
+```{r knit-all, message=FALSE, warning=FALSE}
+files <- list.files("./osf/comps", pattern = "[.]Rmd$", recursive = T, full.names = T)
 
-For some reason I can't get this file to knit the other Rmd files when knitted (I get an error).
-So for now we need to manually run the `osf/knit-all.R` script before uploading files to OSF.
-I asked on StackOverflow how to fix this: <https://stackoverflow.com/q/65505119/2804314>.
+for (f in files) {
+  xfun::Rscript_call(rmarkdown::render, list(f))
+}
+```
 
-------
 
 # Upload files to the OFS repo
 
@@ -60,5 +60,11 @@ osf_upload(raw, path = "./osf/comps/dataset/raw/README.md", conflicts = "overwri
 
 tgs <- data_comp_files %>% filter(name == "TextGrids")
 osf_upload(tgs, path = "./osf/comps/dataset/textgrids/README.md", conflicts = "overwrite", verbose = T)
+
+osf_rm(osf_ls_files(data_comp, "Materials/Norming results", pattern = "README.md"), check = FALSE)
+osf_upload(osf_ls_files(data_comp, "Materials", type = "folder", pattern = "Norm"), path = "./osf/comps/dataset/materials/norming-results/README.md", conflicts = "overwrite", verbose = T)
+
+osf_rm(osf_ls_files(data_comp, "Materials/Trial lists", pattern = "README.md"), check = FALSE)
+osf_upload(osf_ls_files(data_comp, "Materials", type = "folder", pattern = "Trial lists"), path = "./osf/comps/dataset/materials/trials/README.md", conflicts = "overwrite", verbose = T)
 ```
 
