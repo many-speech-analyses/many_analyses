@@ -499,8 +499,6 @@ Our rules for excluding data from our study are as follows.
 We will exclude from our synthesis any individual analysis submitted after we have completed peer review or those unaccompanied by analysis files that allow us to understand what the analysts did.
 We will also exclude any individual analysis that does not produce an outcome that can be interpreted as an answer to our primary question.
 
-We wish to quantify relationships among variables, but we have no a priori expectation of effect size and we will not make dichotomous decisions (such as statistical significance).
-
 ## Step 6: Collaborative Write-Up of Manuscript
 
 Analysts and initiating authors will discuss the limitations, results, and implications of the study and collaborate on writing the final manuscript for review as a stage-2 Registered Report.
