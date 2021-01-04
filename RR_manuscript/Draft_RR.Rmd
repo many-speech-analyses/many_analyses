@@ -80,6 +80,8 @@ header-includes:
 ```{r setup, include = FALSE}
 library("papaja")
 r_refs("r-references.bib")
+library(tidyverse)
+library(patchwork)
 ```
 
 ```{r analysis-preferences}
@@ -246,7 +248,7 @@ In addition to a pitch accent, elements that are new and/or contrastive are ofte
 The present project examines the extent to which subjective choices by different researchers analyzing a complex speech data set affect the reported results.
 We are further interested in which factors affect the researchers' final results.
 
-# Methods (mostly copy-paste from Evo-RR)
+# Methods
 
 We are closely following the methodology proposed by Parker et al. (Stage 1 in-principle accepted) in terms of data collection.
 However, the analysis will substantially diverge from their approach (see §#.#)
@@ -439,6 +441,75 @@ mod1 + mod2|study), where mod1 and mod2 represent moderator variables.
 By default, the standard errors replace the parameter sigma. To model
 sigma in addition to the known standard errors, set argument sigma in
 function se to TRUE, for instance, yi | se(sei, sigma = TRUE) ~ 1. -->
+
+Finally, we will assess whether the standardized effect sizes show bias, and, if so, whether the bias is positive or negative (i.e., whether there is a disproportional greater number of bigger or smaller effect sizes than the meta-analytical mean estimate).
+This will be achieved through inspection of funnel plots [@light1984; for a review see @egger1997; and @sterne2005; for a critique @lau2006].
+In brief, a funnel plot is a scatter plot of each standardized effect size with effect size on the *x*-axis and estimated error (i.e. standard deviation) on *y*-axis.
+In absence of bias, the points should be symmetrically distributed around the meta-analytical mean (see Figure \@ref(fig:funnel-plot)).
+A sign of possible bias is when there are more points which are farther from the meta-analytical mean on just one side.
+
+```{r funnel-plot, include=TRUE, fig.cap="Illustrations of funnel plots showing (a) no bias, (b) positive bias, and (c) negative bias in effect sizes. The vertical dashed line represents the meta-analitical mean.", fig.dim = c(6, 2)}
+meta_est <- 0
+
+datasets <- map(
+  c(0, 0.1, -0.1),
+  function(.x) {
+    set.seed(101)
+    sd <- runif(100, min = 1, max = 10)
+    est <- rnorm(length(sd), mean = meta_est, sd = 0.1*sd) + .x * sd
+    tibble(est, sd)
+  }
+)
+
+plots <- map(
+  datasets,
+  function(.x) {
+    ggplot(.x, aes(est, sd)) +
+      geom_vline(aes(xintercept = meta_est), linetype = "dashed") +
+      geom_point(colour = "black", size = 1, alpha = 0.5) +
+      scale_y_reverse() +
+      labs(est = element_blank(), sd = element_blank())  +
+      xlim(-3, 3) +
+      theme_minimal()
+  }
+)
+
+plots[[1]] + labs(title = "(a) no bias") +
+  plots[[2]] + labs(title = "(b) positive bias") +
+  plots[[3]] + labs(title = "(c) negative bias")
+```
+
+
+
+```{r funnel-calc, include=FALSE, eval=FALSE}
+# meta_bm is the meta-analytical Bayesian regression model
+meta_bm_est <- fixef(meta_bm)["Intercept","Estimate"
+meta_bm_q2.5 <- fixef(meta_bm)["Intercept","Q2.5"]
+meta_bm_q97.5 <- fixef(meta_bm)["Intercept","Q97.5"]
+
+# estimated_tbl contains the standardized effect sizes
+se_range <- seq(0, max(estimated_tbl$Est.Error), by = 0.001)
+
+ci <- tibble(
+  x_seq = se_range,
+  ci_lo = meta_ln_bm_est - 1.96 * se_range,
+  ci_up = meta_ln_bm_est + 1.96 * se_range
+)
+
+estimated_tbl %>%
+  ggplot(aes(Estimate, Est.Error)) +
+  geom_line(aes(y = x_seq, x = ci_up), data = ci) +
+  geom_line(aes(y = x_seq, x = ci_lo), data = ci) +
+  geom_vline(aes(xintercept = 0), colour = "grey") +
+  geom_vline(aes(xintercept = meta_ln_bm_est)) +
+  annotate(
+    "rect",
+    ymin = -Inf, ymax = Inf,
+    xmin = meta_bm_q2.5, xmax = meta_bm_q97.5,
+    alpha = 0.5, fill = "#a6cee3") +
+  geom_point(size = 3) +
+  scale_y_reverse()
+```
 
 ### Exploratory road map
 <!-- SC: change heading to your liking -->
