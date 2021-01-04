@@ -341,8 +341,8 @@ In addition to a pitch accent, elements that are new and/or contrastive are ofte
 The present project examines the extent to which subjective choices by different researchers analyzing a complex speech data set affect the reported results.
 We are further interested in which factors affect the researchers' final results.
 
-\hypertarget{methods-mostly-copy-paste-from-evo-rr}{%
-\section{Methods (mostly copy-paste from Evo-RR)}\label{methods-mostly-copy-paste-from-evo-rr}}
+\hypertarget{methods}{%
+\section{Methods}\label{methods}}
 
 We are closely following the methodology proposed by Parker et al.~(Stage 1 in-principle accepted) in terms of data collection.
 However, the analysis will substantially diverge from their approach (see §\#.\#)
@@ -552,6 +552,18 @@ We will quantify the extent to which the standardized effect sizes are modulated
   \ldots{}
 \end{itemize}
 
+Finally, we will assess whether the standardized effect sizes show bias, and, if so, whether the bias is positive or negative (i.e., whether there is a disproportional greater number of bigger or smaller effect sizes than the meta-analytical mean estimate).
+This will be achieved through inspection of funnel plots (Light \& Pillemer, 1984; for a review see Egger, Smith, Schneider, \& Minder, 1997; and Sterne, Becker, \& Egger, 2005; for a critique Lau, Ioannidis, Terrin, Schmid, \& Olkin, 2006).
+In brief, a funnel plot is a scatter plot of each standardized effect size with effect size on the \emph{x}-axis and estimated error (i.e.~standard deviation) on \emph{y}-axis.
+In absence of bias, the points should be symmetrically distributed around the meta-analytical mean (see Figure \ref{fig:funnel-plot}).
+A sign of possible bias is when there are more points which are farther from the meta-analytical mean on just one side.
+
+\begin{figure}
+\centering
+\includegraphics{Draft_RR_files/figure-latex/funnel-plot-1.pdf}
+\caption{\label{fig:funnel-plot}Illustrations of funnel plots showing (a) no bias, (b) positive bias, and (c) negative bias in effect sizes. The vertical dashed line represents the meta-analitical mean.}
+\end{figure}
+
 \hypertarget{exploratory-road-map}{%
 \subsubsection{Exploratory road map}\label{exploratory-road-map}}
 
@@ -575,6 +587,8 @@ We will model the effect of the following predictors:
 \item
   \emph{Temporal window} that the measurement is taken over.
 \item
+  \emph{Data exclusion}, whether data has been excluded or not.
+\item
   \emph{Demographic factors} of analysis teams and analysts.
 \end{itemize}
 
@@ -588,6 +602,7 @@ The SDI for a pair of analyses \((X, Y)\) can be obtained using the following fo
 where \(|X \cap Y|\) is the number of variables common to both models, and \(|X|+|Y|\) is the sum of the number of variables that occur in each model.
 
 In order to generate a unique SDI for each analysis team, we will calculate the average of all pairwise SDIs for all pairs of analyses using the \texttt{beta.pair()} function in the betapart R package (Baselga et al.~2018).
+
 The major measurement dimension of each analysis will be categorized according to the following possible groups: duration, amplitude, fundamental frequency, other spectral properties (e.g.~frequency center of gravity, harmonics difference, etc.), other measures (e.g.~principal components, vowel dispersion, etc.)
 The temporal window that the measurement is taken over is defined by the target linguistic unit.
 We assume the following relevant linguistic units: segment, syllable, word, phrase.
@@ -597,7 +612,9 @@ We will include the following demographic factors about both the analysis teams:
 \begin{itemize}
 \tightlist
 \item
-  \ldots{}
+  \emph{Research experience} as the elapsed time from PhD award (negative values will indicate that the person is a student or graduate student).
+\item
+  \emph{Initial belief} in the presence of an effect of atypical noun-adjective pairs on acoustics, as answered during the intake questionnaire.
 \end{itemize}
 
 We will publicly archive all relevant data, code, and materials on the Open Science Framework (\url{https://osf.io/3bmcp/}).
@@ -608,8 +625,6 @@ We will also archive copies of our survey instruments from analysts and peer rev
 Our rules for excluding data from our study are as follows.
 We will exclude from our synthesis any individual analysis submitted after we have completed peer review or those unaccompanied by analysis files that allow us to understand what the analysts did.
 We will also exclude any individual analysis that does not produce an outcome that can be interpreted as an answer to our primary question.
-
-We wish to quantify relationships among variables, but we have no a priori expectation of effect size and we will not make dichotomous decisions (such as statistical significance).
 
 \hypertarget{step-6-collaborative-write-up-of-manuscript}{%
 \subsection{Step 6: Collaborative Write-Up of Manuscript}\label{step-6-collaborative-write-up-of-manuscript}}
@@ -633,17 +648,29 @@ Camerer, C. F., Dreber, A., Holzmeister, F., Ho, T.-H., Huber, J., Johannesson, 
 \leavevmode\hypertarget{ref-dice1945}{}%
 Dice, L. R. (1945). Measures of the amount of ecologic association between species. \emph{Ecology}, \emph{26}(3), 297--302.
 
+\leavevmode\hypertarget{ref-egger1997}{}%
+Egger, M., Smith, G. D., Schneider, M., \& Minder, C. (1997). Bias in meta-analysis detected by a simple, graphical test. \emph{British Medical Journal}, \emph{315}, 629--634.
+
 \leavevmode\hypertarget{ref-flake2019}{}%
 Flake, J. K., \& Fried, E. I. (2019). Measurement schmeasurement: Questionable measurement practices and how to avoid them. Pre-print available at PsyArXiv.
 
 \leavevmode\hypertarget{ref-foulkes2006}{}%
 Foulkes, P., \& Docherty, G. (2006). The social life of phonetics and phonology. \emph{Journal of Phonetics}, \emph{34}(4), 409--438.
 
+\leavevmode\hypertarget{ref-lau2006}{}%
+Lau, J., Ioannidis, J. P. A., Terrin, N., Schmid, C. H., \& Olkin, I. (2006). The case of the misleading funnel plot. \emph{British Medical Journal}, \emph{333}(7568), 597--600.
+
+\leavevmode\hypertarget{ref-light1984}{}%
+Light, R. J., \& Pillemer, D. B. (1984). \emph{Summing up; the science of reviewing research}. Cambridge, MA (USA) Harvard Univ. Press.
+
 \leavevmode\hypertarget{ref-ogden2004}{}%
 Ogden, R. (2004). Non-modal voice quality and turn-taking in {F}innish. \emph{Sound Patterns in Interaction: Cross-Linguistic Studies from Conversation}, 29--62.
 
 \leavevmode\hypertarget{ref-open2015estimating}{}%
 Open Science Collaboration. (2015). Estimating the reproducibility of psychological science. \emph{Science}, \emph{349}(6251). \url{https://doi.org/10.1126/science.aac4716}
+
+\leavevmode\hypertarget{ref-sterne2005}{}%
+Sterne, J. A. C., Becker, B. J., \& Egger, M. (2005). The funnel plot. In H. R. Rothstein, A. J. Sutton, \& M. Borenstein (Eds.), \emph{Publication bias in meta-analysis: Prevention, assessment and adjustments} (pp. 75--98). Wiley Online Library.
 
 \leavevmode\hypertarget{ref-sorensen1948}{}%
 Sørensen, T. (1948). A method of establishing groups of equal amplitude in plant sociology based on similarity of species and its application to analyses of the vegetation on {D}anish commons. \emph{Kongelige Danske Videnskabernes Selskab}, \emph{5}(4), 1--34.
