@@ -457,6 +457,7 @@ We will model the effect of the following predictors:
 - *Number of models* the teams will report to have run.
 - *Major dimension* that has been measured to answer the research question.
 - *Temporal window* that the measurement is taken over.
+- *Data exclusion*, whether data has been excluded or not.
 - *Demographic factors* of analysis teams and analysts.
 
 The measure of uniqueness of predictors will be assessed by the Sørensen-Dice Index [SDI, @dice1945; @sorensen1948].
@@ -477,6 +478,7 @@ y <- c("b", "d", "e", "f")
 ```
 
 In order to generate a unique SDI for each analysis team, we will calculate the average of all pairwise SDIs for all pairs of analyses using the `beta.pair()` function in the betapart R package (Baselga et al. 2018).
+
 The major measurement dimension of each analysis will be categorized according to the following possible groups: duration, amplitude, fundamental frequency, other spectral properties (e.g. frequency center of gravity, harmonics difference, etc.), other measures (e.g. principal components, vowel dispersion, etc.)
 <!--TR: Stefano, do you think these four will cover possible ways to measure? We might want to define them too? dunno-->
 <!-- SC: I just added a "other measures" category for other things that are not strictly acoustic. -->
@@ -485,10 +487,10 @@ We assume the following relevant linguistic units: segment, syllable, word, phra
 
 We will include the following demographic factors about both the analysis teams:
 
-- ...
+- *Research experience* as the elapsed time from PhD award (negative values will indicate that the person is a student or graduate student).
+- *Initial belief* in the presence of an effect of atypical noun-adjective pairs on acoustics, as answered during the intake questionnaire.
 
 <!-- TODO: DESCRIBE HOW WE WILL LOOK AT demographics -->
-
 
 We will publicly archive all relevant data, code, and materials on the Open Science Framework (<https://osf.io/3bmcp/>).
 Archived data will include the original data sets distributed to all analysts, any edited versions of the data analyzed by individual groups, and the data we analyze with our meta-analyses, which include the effect sizes derived from separate analyses, the statistics describing variation in model structure among analysis teams, and the anonymized answers to our surveys of analysts and peer reviewers.
