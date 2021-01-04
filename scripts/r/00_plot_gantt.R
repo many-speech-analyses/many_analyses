@@ -23,13 +23,16 @@ source(here::here("scripts", "r", "00_libs.R"))
 # This is proof of concept, will change
 time_line_df <- tribble(
   ~'wp',                ~'activity',          ~'start_date',  ~'end_date',
-  "Investigative team", "Registered report",  "2020-09-16",   "2020-12-15",
-  "Investigative team", "Materials prep.",    "2020-09-16",   "2020-10-20",
-  "Investigative team", "Recruting",          "2020-12-15",   "2021-02-15",
-  "Investigative team", "Analyses",           "2021-06-16",   "2021-08-15",
-  "Investigative team", "Registered report",  "2021-08-16",   "2021-09-15",
-  "Data teams",         "Data processing",    "2021-02-15",   "2021-03-14",
-  "Data teams",         "Reporting",          "2021-05-14",   "2021-06-16"
+  "Initiating authors", "Recruiting",         "2021-02-01",   "2021-04-01",
+  "Analysis teams",     "Survey",             "2021-04-01",   "2021-04-15",
+  "Analysis teams",     "Analysis",           "2021-04-15",   "2021-06-15",
+  "Analysis teams",     "Post-Survey",        "2021-06-15",   "2021-06-30",
+  "Reviewer",           "Review Analyses",    "2021-07-01",   "2021-07-31",
+  "Initiating authors", "Final Analysis",     "2021-08-01",   "2021-08-30",
+  "Initiating authors", "Write-Up",           "2021-09-01",   "2021-10-15",
+  # hacky way of having three rows for all teams doing the write up
+  "Analysis teams",     "Write-Up ",          "2021-09-01",   "2021-10-15",
+  "Reviewer",           "Write-Up  ",         "2021-09-01",   "2021-10-15"
 )
 
 # "Spots" can be used to mark when things actually occur on expected timeline
@@ -56,10 +59,12 @@ p_project_timeline <- ganttrify(
   #spots = time_line_spots,
   by_date = TRUE,
   exact_date = TRUE,
+  colour_palette = c("#FDE624", "#1EA385", "#450D53"),
   size_text_relative = 1.2,
   month_number = FALSE,
   font_family = "Times"
-)
+) +
+  theme(axis.text.y = element_text(hjust = 0))
 
 
 devices        <- c('pdf', 'png')
