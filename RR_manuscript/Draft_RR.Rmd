@@ -92,13 +92,13 @@ Beyond the difficulties of replicating scientific findings, a growing body of ev
 The latter situation has been referred to as the *inference crisis* (Rotello, Heit & Dubé 2015, Starns et al. 2019) and is, among other things, rooted in the inherent flexibility of data analysis (often referred to as researcher degrees of freedom: Simmons, Nelson, & Simonsohn, 2011, Gelman & Loken 2013).
 Data analysis involves many different steps, such as inspecting, organizing, transforming, and modeling the data, to name a few.
 Along the way, different methodological and analytical choices need to be made, all of which may influence the final interpretation of the data.
-These researcher degrees of freedom are both a blessing and a curse at the same time.
+These researcher degrees of freedom are both a blessing and a curse.
 
 They are a blessing because they afford us the opportunity to look at nature from different angles, which, in turn, allows us to make important discoveries and generate new hypothesis (e.g. Box 1976, Tukey 1977, de Groot 2014).
-They are a curse because idiosyncratic choices can lead to categorically different interpretations, which eventually find their way into the publication record where they are taken for granted (Simmons et al. 2011). <!-- taken for granted? -->
+They are a curse because idiosyncratic choices can lead to categorically different interpretations, which eventually find their way into the publication record where they are taken for granted (Simmons et al. 2011).
 Recent projects have shown that the variability between different data analysts is vast.
-This variability can lead independent researchers to draw vastly different conclusions about the same data set (e.g. Silberzahn et al. 2018, Starns et al. 2019, Botvinik-Nezer et al., 2020).
-These projects, however, might still underestimate the extent to which analysts vary because data analysis is not merely restricted to statistical inference of data sets.
+This variability can lead independent researchers to draw different conclusions about the same data set as demonstrated by several projects crowd-sourcing analysis strategies (e.g. Silberzahn et al. 2018, Starns et al. 2019, Botvinik-Nezer et al., 2020). 
+These projects, however, might still underestimate the extent to which analysts vary because data analysis is not merely restricted to statistical inference.
 Human behavior is complex and offers many ways to be translated into numbers.
 This is particularly true for fields that draw conclusions about human behavior and cognition from multidimensional data like audio or video data.
 In fields working on human speech production, for example, researchers need to make numerous decisions about what to measure and how to measure it.
@@ -110,13 +110,12 @@ Specifically, we report the impact of the analytic pipeline on research results 
 
 ## Researcher degrees of freedom
 
-Data analysis comes with many decisions like how to measure a given phenomenon or behavior, what data to submit to statistical modeling and which to exclude in the final analysis, what models to use or what inferential decision procedure to apply.
+Data analysis comes with many decisions like how to measure a given phenomenon or behavior, what data to submit to statistical modeling and which to exclude in the final analysis, or what inferential decision procedure to apply.
 However, if these decisions during data analysis are not specified in advance, we might stumble upon seemingly meaningful patterns in the data that are merely statistical flukes.
 <!-- I'd probably drop this. When we make unspecified decisions during data analysis we can stumble upon spurious results (most likely) as well as real results (less likely, still possible)... in other words it might not all be error... the issue is that we won't know the difference -->
 <!-- TR: But isn't the human bias the major issue in statistical misinterpretation? (It also leads naturally to the next paragraph.) -->
 This can be problematic because humans show cognitive biases that can lead to erroneous inferences.
-
-We have evolved to filter the world in irrational ways (e.g., Tversky and Kahneman 1974), seeing coherent patterns in randomness (Brugger 2001), convincing ourselves of the validity of prior expectations ("I knew it", Nickerson 1998), and perceiving events as being plausible in hindsight ("I knew it all along", Fischhoff 1975). <!-- JC: If helpful we could also give a concrete common example here, like regarding forecasting the weather or something -->
+Humans filter the world in irrational ways (e.g., Tversky and Kahneman 1974), seeing coherent patterns in randomness (Brugger 2001), convincing themselves of the validity of prior expectations ("I knew it", Nickerson 1998), and perceiving events as being plausible in hindsight ("I knew it all along", Fischhoff 1975). <!-- JC: If helpful we could also give a concrete common example here, like regarding forecasting the weather or something -->
 <!-- TR: Generally a good idea, but I'd say we keep it crisp at that point. The take-home here is: Humans are biased. -->
 In connection with an academic incentive system that rewards certain discovery processes more than others (Sterling 1959, Koole & Lakens 2012), we often find ourselves exploring many possible analytical pipelines, but only reporting a select few.
 This issue is particularly amplified in fields in which the raw data lend themselves to many possible ways to measure (Roettger 2019).
@@ -151,27 +150,18 @@ In these studies the data sets were fixed and data collection or measurement cou
 However, in many fields the primary raw data are complex signals that need to be operationalized according to the research question.
 In social sciences, the raw observations correspond to human behavior, sometimes measured as a complex visual or acoustic signal.
 Decisions about how to measure a theoretical construct related to that behavior or its underlying cognitive processes might interact with downstream decisions about statistical modeling and vice versa [@flake2019].
-<!-- TR:maybe give a concrete example, how such an interaction would look like for speech data?-->
-For example, when working with speech data, a researcher has the option of extracting measurements from a particular point in time within an utterance or from a time interval, depending on which some statistical models will be more useful than others.
-In turn, different models will pick up different trends in the data, thus possibly producing diverging or even mutually exclusive results.
-
 To understand how analytical flexibility manifests itself in a scenario where a complex decision procedure is involved in operationalizing and measuring complex signals, the present paper looks at an experimentally elicited speech data set.
 
 ## Operationalizing speech
 
-<!-- TR:(copy pasted from RDF paper and slightly shortened by myself. I think its a good point of departure. Maybe one of your can try to rephrase it in your own words?)-->
-<!-- SC: Edited and rephrased -->
+Research on speech is at the heart of the cognitive sciences, informing psychological models of language, categorization, and memory, guiding methods for diagnosis and therapy of speech disorders, and facilitating advancement in automatic speech recognition and speech synthesis. One major challenge in the speech sciences is the mapping between communicative intentions and their physical manifestation.
 
-<!-- TODO: RELEVANCE OF SPEECH PRODUCTION RESEARCH FOR COGSCI, AI, etc. -->
-
-<!-- TR: I added a transition sentence -->
 Speech is a complex signal that is characterized by structurally different acoustic landmarks distributed throughout different temporal domains.
-Thus, choosing how to measure the phenomenon of interest is an important and non-trivial analytical decision. Take for example the following sentence:
-
+Thus, choosing how to measure a phenomenon of interest is an important and non-trivial analytical decision. Take for example the following sentence in 1:
 
 <!-- TR: I'd suggest an easier example (Sheila and Pat are both uncommon names, internationally speaking) and possibly a more relateable (possibly timely) example. Something about zoom meetings or sth maybe? Examples are super important to relate to the reader and lure them in. Here is my suggestion-->
 
-"I hope Liz does not go to the grocery store tomorrow".
+(1) "I hope Liz does not go to the grocery store tomorrow".
 
 Depending on the speaker's intention, this sentence can be said in different ways.
 If, for instance, the speaker is worried about Liz mistakenly going to the grocery store tomorrow instead of today, the speaker might acoustically highlight the word tomorrow.
@@ -184,31 +174,43 @@ How can we obtain a measure of dissimilarity between the first sound in *Pat* an
 
 If we want to compare the speech signal associated with these two intentions, how do we quantify the difference between them? What do we measure and how do we measure it?
 <!-- TODO: mention speech domains -->
-Given the continuous and transient nature of speech, identifying which speech features should be selected within which temporal domain becomes a non-trivial task.
+Given the continuous and transient nature of speech, identifying  speech parameters and temporal domain becomes a non-trivial task.
 Utterances stretch over hundreds of milliseconds and contain several levels of linguistically relevant units such as phrases, words, syllables, and individual sounds.
-The researcher is thus confronted with a considerable number of features and combinations thereof to choose from.
+The researcher is thus confronted with a considerable number of parameters and combinations thereof to choose from.
 
-Speech categories are inherently multidimensional and dynamic: they consist of a cluster of features that are modulated over time.
-The acoustic signatures of one category are usually asynchronous, i.e. they appear at different time points in the unfolding signal, and overlap with the signatures of other categories (e.g. Jongman et al., 2000; Lisker, 1986; Summerfield, 1984; Winter, 2014).
+<!-- TR: I changed features to parameters. Features is too close to phonological theory and will confuse some linguists, I believe. -->
+
+Speech categories are inherently multidimensional and dynamic: they consist of a cluster of parameters that are modulated over time.
+The acoustic parameters of one category are usually asynchronous, i.e. they appear at different time points in the unfolding signal, and overlap with parameters of other categories (e.g. Jongman et al., 2000; Lisker, 1986; Summerfield, 1984; Winter, 2014).
 A classical example is the distinction between voiced and voiceless stops in English (i.e. /b/ and /p/ in *bear* vs *pear*).
 This voiced/voiceless contrast is manifested by many acoustic features which can differ depending on several factors, such as position of the consonant in the word and surrounding sounds (Lisker, 1977).
 Furthermore, correlates of the contrast can even be found away from the consonant, in temporally distant speech units.
-The initial /l/ of the English words *led* and *let* is affected by the voicing of the final consonant (/t, d/) (Hawkins & Nguyen, 2004).
-The multiplicity of phonetic cues grows exponentially if we look at larger temporal windows as is the case for suprasegmental aspects of speech.
+For example, the initial /l/ of the English words *led* and *let* is affected by the voicing of the final consonant (/t, d/) (Hawkins & Nguyen, 2004).
+The multiplicity of phonetic cues grows exponentially if we look at larger temporal domains as is the case for suprasegmental aspects of speech.
 For example, studies investigating acoustic correlates of word stress (e.g. the difference between *insíght* and *íncite*) have been using a wide variety of measurements, including temporal characteristics (duration of certain segments or sub-segmental intervals), spectral characteristics (intensity, formants, and spectral tilt), and measurements related to fundamental frequency (f0) (e.g. Gordon & Roettger, 2017).
 
-Moving onto the expression of higher-level functions like information structure and discourse pragmatics, relevant acoustic cues can be distributed throughout even larger domains, such as phrases and whole utterances.
+Moving onto the expression of higher-level functions like information structure and discourse pragmatics, relevant acoustic cues can be distributed throughout even larger domains, such as phrases and whole utterances (e.g. Ladd 2008).
 Differences in position, shape, and alignment of pitch modulations over multiple locations within a sentence are correlated with differences in discourse functions (e.g. Niebuhr et al., 2011).
-The latter can also be expressed by global vs local pitch modulations, as well as acoustic information within the temporal or spectral domain (e.g. van Heuven & van Zanten 2005).
-Extra- and para-linguistic information, like speaker's intentions, levels of arousal or social identity, are also conveyed by broad-domain features, such as voice quality, rhythm, and intonation [@foulkes2006; @ogden2009; @white2009].
+The latter can also be expressed by global vs local pitch modulations (Haan 2002), as well as acoustic information within the temporal or spectral domain (e.g. van Heuven & van Zanten 2005).
+Extra-linguistic information, like speaker's intentions, levels of arousal or social identity, are also conveyed by broad-domain parameters, such as voice quality, rhythm, and pitch [@foulkes2006; @ogden2009; @white2009].
 
 When testing hypotheses on speech production data, researchers are faced with many choices and possibilities.
-The larger the functional domain (e.g. segments vs words vs utterances), the higher the number of conceivable operationalizations.
+The larger the functional domain (e.g. segments vs words vs utterances), the higher the number of conceivable operationalizations. 
+For example, when comparing two realization of example (1) (here repeated as 2), one of which is intended to signal emphasis on *tomorrow* and one of which emphasizes *grocery store*. 
+
+(2a) "I hope Liz does not go to the grocery store TOMORROW".
+(2b) "I hope Liz does not go to the GROCERY STORE tomorrow"
+
+Do we only compare the word *tomorrow* in 2a and 2b or also the word *grocery store* or do we measure utterance wide acoustic profiles? Do we measure the whole word? Or just the stressed syllable? 
+Do we measure average the domain or do we measure a specific point in time? Do we measure fundamental frequency or intensity? When looking at phrase-wide temporal domains, the number of possible analytical pipelines quickly explodes (see Figure x)
+
+<!-- TR: How about a plot like Figure 2 in my RDF paper: https://www.journal-labphon.org/articles/10.5334/labphon.147/ -->
+
 These decisions are usually made prior to any statistical analysis, but are at times revised a posteriori (i.e. after data collection and/or preliminary analyses) in light of unforeseen or surprising outcomes.
 These myriads of possible decisions are exponentiated by researcher degrees of freedom related to statistical analysis (e.g. Wicherts et al.).
-Even the analysis of a single measure can be approached via an ever-increasing range of different statistical models.
+Even the analysis of a single measure can be approached via an ever-increasing range of different statistical models (REFs).
 The present paper probes this garden of forking paths in the analysis of speech.
-To assess the variability in data analysis pipelines across independent researchers, we provided analytical teams with an experimentally elicited speech corpus and asked them to investigate acoustic differences related to a functional contrast that might be manifested across the whole utterance.
+To assess the variability in data analysis pipelines across independent researchers, we provided XX analytical teams with an experimentally elicited speech corpus and asked them to investigate acoustic differences related to a functional contrast that might be manifested across the whole utterance.
 
 ## The data set - The prosody of redundant modifiers
 
@@ -235,7 +237,8 @@ Content selection aside, in a scenario in which a speaker wants to refer to a ba
 In a scenario in which the speaker wants to refer to a yellow banana when there is also a less ripe green banana on the table, the speaker would most likely produce a high rising pitch accent on *yellow* to indicate the contrastive nature of the modifier.
 In addition to a pitch accent, elements that are new and/or contrastive are often produced with additional suprasegmental prominence, i.e. segments are hyperarticulated, resulting in longer, louder and more clearly articulated acoustic targets.
 
-<!-- TODO: INFORMATION ABOUT THE DATA SET AND EXP DESIGN -->
+<!-- TODO: INFORMATION ABOUT THE DATA SET AND EXP DESIGN + TRANSITION -->
+
 
 ## Research questions
 
