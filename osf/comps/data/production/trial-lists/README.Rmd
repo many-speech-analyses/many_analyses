@@ -1,5 +1,5 @@
 ---
-title: "Production experiment"
+title: "Trial lists of the production study"
 output:
   github_document:
     html_preview: false
@@ -41,7 +41,7 @@ data_comp <- osf_comps %>% filter(name == "Data")
 ```
 
 ```{r data_files, include=FALSE}
-osf_ls_files(data_comp, "exp-materials/experiment") %>%
+osf_ls_files(data_comp, "production/trial-lists") %>%
   select(name) %>%
   filter(str_detect(name, ".*\\.md", negate = TRUE)) %>%
   arrange(name)

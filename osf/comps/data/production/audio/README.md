@@ -1,11 +1,11 @@
-Data
+Audio and annotation files of the production study
 ================
 
 Last update: 2021-01-05
 
 # Overview
 
-This directory contains the files from the production experiment:
+This directory contains the files from the production study:
 
 -   `.wav` files with the participants’ recordings (one file per
     participant).

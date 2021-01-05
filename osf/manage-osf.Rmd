@@ -52,24 +52,41 @@ osf_upload(data_comp, path = "./osf/comps/data/README.md", conflicts = "overwrit
 
 data_comp_files <- osf_ls_files(data_comp)
 
-# data/data
-raw <- data_comp_files %>% filter(name == "data")
+# data/norming/
+raw <- data_comp_files %>% filter(name == "norming")
 
-osf_rm(osf_ls_files(data_comp, "data", pattern = "README.md"), check = FALSE)
-osf_upload(raw, path = "./osf/comps/data/data/README.md", conflicts = "overwrite", verbose = T)
+#### delete old readme ("overwrite" option fails)
+old_readme <- osf_ls_files(data_comp, "norming", pattern = "README.md")
+osf_rm(old_readme, check = FALSE)
 
-# data/exp-materials
-materials <- data_comp_files %>% filter(name == "exp-materials")
+#### upload new readme
+osf_upload(
+  raw,
+  path = "./osf/comps/data/norming/README.md",
+  conflicts = "overwrite", verbose = T)
 
-osf_rm(osf_ls_files(data_comp, "exp-materials", pattern = "README.md"), check = FALSE)
-osf_upload(materials, path = "./osf/comps/data/exp-materials/README.md", conflicts = "overwrite", verbose = T)
+# data/production/audio/
+#### delete old readme
+old_readme <- osf_ls_files(data_comp, "production/audio", pattern = "README.md")
+osf_rm(old_readme, check = FALSE)
 
-# data/exp-materials/norming
-osf_rm(osf_ls_files(data_comp, "exp-materials/norming", pattern = "README.md"), check = FALSE)
-osf_upload(osf_ls_files(data_comp, "exp-materials", pattern = "norming"), path = "./osf/comps/data/exp-materials/norming/README.md", conflicts = "overwrite", verbose = T)
+#### upload new readme
+audio <- osf_ls_files(data_comp, "production", pattern = "audio")
+osf_upload(
+  audio,
+  path = "./osf/comps/data/production/audio/README.md",
+  conflicts = "overwrite", verbose = T)
 
-# data/exp-materials/experiment
-osf_rm(osf_ls_files(data_comp, "exp-materials/experiment", pattern = "README.md"), check = FALSE)
-osf_upload(osf_ls_files(data_comp, "exp-materials", pattern = "experiment"), path = "./osf/comps/data/exp-materials/experiment/README.md", conflicts = "overwrite", verbose = T)
+# data/production/trial-lists
+#### delete old readme
+old_readme <- osf_ls_files(data_comp, "production/trial-lists", pattern = "README.md")
+osf_rm(old_readme, check = FALSE)
+
+#### upload new readme
+trials <- osf_ls_files(data_comp, "production", pattern = "trial-lists")
+osf_upload(
+  trials,
+  path = "./osf/comps/data/production/trial-lists/README.md",
+  conflicts = "overwrite", verbose = T)
 ```
 
