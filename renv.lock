@@ -380,6 +380,13 @@
       "Repository": "CRAN",
       "Hash": "ae55f5d7c02f0ab43c58dd050694f2b4"
     },
+    "crul": {
+      "Package": "crul",
+      "Version": "1.0.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "9c36cf228a33d1aafc2658ce3d422698"
+    },
     "cubelyr": {
       "Package": "cubelyr",
       "Version": "1.0.1",
@@ -679,6 +686,13 @@
       "Repository": "CRAN",
       "Hash": "6fdaa86d0700f8b3e92ee3c445a5a10d"
     },
+    "httpcode": {
+      "Package": "httpcode",
+      "Version": "0.3.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "13641a1c6d2cc98801b76764078e17ea"
+    },
     "httpuv": {
       "Package": "httpuv",
       "Version": "1.5.4",
@@ -875,6 +889,13 @@
       "Repository": "CRAN",
       "Hash": "94d378428bc227483a83ab1de21dce41"
     },
+    "memoise": {
+      "Package": "memoise",
+      "Version": "1.1.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "58baa74e4603fcfb9a94401c58c8f9b1"
+    },
     "mgcv": {
       "Package": "mgcv",
       "Version": "1.8-33",
@@ -972,6 +993,13 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "7e25ed8dc4f16eada2532a61107d0dc7"
+    },
+    "osfr": {
+      "Package": "osfr",
+      "Version": "0.2.8",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "446d64bb6df6b43f853e6e54eb740165"
     },
     "packrat": {
       "Package": "packrat",
@@ -1392,12 +1420,26 @@
       "Repository": "CRAN",
       "Hash": "ff73961a77fba606fbf944dc3468e5b9"
     },
+    "triebeard": {
+      "Package": "triebeard",
+      "Version": "0.3.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "847a9d113b78baca4a9a8639609ea228"
+    },
     "truncnorm": {
       "Package": "truncnorm",
       "Version": "1.0-8",
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "cc8b5bfa01c930ccb56d3051e515fbd8"
+    },
+    "urltools": {
+      "Package": "urltools",
+      "Version": "1.7.3",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "e86a704261a105f4703f653e05defa3e"
     },
     "utf8": {
       "Package": "utf8",
