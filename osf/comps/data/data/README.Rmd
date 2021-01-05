@@ -1,5 +1,5 @@
 ---
-title: "Raw data"
+title: "Data"
 output:
   github_document:
     html_preview: false
@@ -16,7 +16,12 @@ Last update: `r Sys.Date()`
 
 # Overview
 
-This directory contains `.wav` files of the participants’ production from the experiment.
+This directory contains the files from the production experiment:
+
+- `.wav` files with the participants' recordings (one file per participant).
+- `.TextGrid` (Praat) files with time-aligned annotation of the recordings (one file per participant, same names as `.wav`).
+
+<!-- TODO: ADD more info on annotation -->
 
 ```{r retrieve}
 # Main repo "Many Speech Analysis": https://osf.io/3bmcp/
@@ -24,11 +29,11 @@ osf_repo <- osf_retrieve_node("3bmcp")
 # Repo components
 osf_comps <- osf_ls_nodes(osf_repo)
 # Dataset & Materials component
-data_comp <- osf_comps %>% filter(name == "Dataset & Materials")
+data_comp <- osf_comps %>% filter(name == "Data")
 ```
 
-```{r data_files, include=TRUE}
-osf_ls_files(data_comp, "Raw data") %>%
+```{r data_files, include=FALSE}
+osf_ls_files(data_comp, "data") %>%
   select(name) %>%
   filter(str_detect(name, ".*\\.md", negate = TRUE)) %>%
   arrange(name)

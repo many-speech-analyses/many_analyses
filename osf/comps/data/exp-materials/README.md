@@ -1,16 +1,23 @@
-Materials
+Experiment materials
 ================
 
-Last update: 2020-12-31
+Last update: 2021-01-05
 
 # Overview
 
-This directory contains the images, trial lists, and the results from
-the norming study.
+This directory contains the files used for the norming study and for the
+production experiment:
 
-    ## # A tibble: 3 x 1
-    ##   name           
-    ##   <chr>          
-    ## 1 Images         
-    ## 2 Norming results
-    ## 3 Trial lists
+-   The `norming/` directory hosts the images of the objects with
+    modified color used in the norming study and the results (ratings)
+    of the study.
+-   The `experiment/` directory contains the randomization lists for
+    each participant in the production study.
+
+<!-- -->
+
+    ## # A tibble: 2 x 1
+    ##   name      
+    ##   <chr>     
+    ## 1 experiment
+    ## 2 norming

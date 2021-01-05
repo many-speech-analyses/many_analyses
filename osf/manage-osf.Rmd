@@ -22,7 +22,7 @@ osf_repo <- osf_retrieve_node("3bmcp")
 # Repo components
 osf_comps <- osf_ls_nodes(osf_repo)
 # Dataset & Materials component
-data_comp <- osf_comps %>% filter(name == "Dataset & Materials")
+data_comp <- osf_comps %>% filter(name == "Data")
 ```
 
 # List data_comp files
@@ -36,7 +36,7 @@ osf_ls_files(data_comp)
 We can knit the readme files (they are GitHub documents, i.e. `.Rmd` files that are converted to `.md` files upon knitting).
 
 ```{r knit-all, message=FALSE, warning=FALSE}
-files <- list.files("./osf/comps", pattern = "[.]Rmd$", recursive = T, full.names = T)
+files <- list.files("./osf/comps/data", pattern = "[.]Rmd$", recursive = T, full.names = T)
 
 for (f in files) {
   xfun::Rscript_call(rmarkdown::render, list(f))
@@ -48,23 +48,28 @@ for (f in files) {
 
 ```{r readmes}
 # A loop would be better
-osf_upload(data_comp, path = "./osf/comps/dataset/README.md", conflicts = "overwrite", verbose = T)
+osf_upload(data_comp, path = "./osf/comps/data/README.md", conflicts = "overwrite", verbose = T)
 
 data_comp_files <- osf_ls_files(data_comp)
 
-materials <- data_comp_files %>% filter(name == "Materials")
-osf_upload(materials, path = "./osf/comps/dataset/materials/README.md", conflicts = "overwrite", verbose = T)
+# data/data
+raw <- data_comp_files %>% filter(name == "data")
 
-raw <- data_comp_files %>% filter(name == "Raw data")
-osf_upload(raw, path = "./osf/comps/dataset/raw/README.md", conflicts = "overwrite", verbose = T)
+osf_rm(osf_ls_files(data_comp, "data", pattern = "README.md"), check = FALSE)
+osf_upload(raw, path = "./osf/comps/data/data/README.md", conflicts = "overwrite", verbose = T)
 
-tgs <- data_comp_files %>% filter(name == "TextGrids")
-osf_upload(tgs, path = "./osf/comps/dataset/textgrids/README.md", conflicts = "overwrite", verbose = T)
+# data/exp-materials
+materials <- data_comp_files %>% filter(name == "exp-materials")
 
-osf_rm(osf_ls_files(data_comp, "Materials/Norming results", pattern = "README.md"), check = FALSE)
-osf_upload(osf_ls_files(data_comp, "Materials", type = "folder", pattern = "Norm"), path = "./osf/comps/dataset/materials/norming-results/README.md", conflicts = "overwrite", verbose = T)
+osf_rm(osf_ls_files(data_comp, "exp-materials", pattern = "README.md"), check = FALSE)
+osf_upload(materials, path = "./osf/comps/data/exp-materials/README.md", conflicts = "overwrite", verbose = T)
 
-osf_rm(osf_ls_files(data_comp, "Materials/Trial lists", pattern = "README.md"), check = FALSE)
-osf_upload(osf_ls_files(data_comp, "Materials", type = "folder", pattern = "Trial lists"), path = "./osf/comps/dataset/materials/trials/README.md", conflicts = "overwrite", verbose = T)
+# data/exp-materials/norming
+osf_rm(osf_ls_files(data_comp, "exp-materials/norming", pattern = "README.md"), check = FALSE)
+osf_upload(osf_ls_files(data_comp, "exp-materials", pattern = "norming"), path = "./osf/comps/data/exp-materials/norming/README.md", conflicts = "overwrite", verbose = T)
+
+# data/exp-materials/experiment
+osf_rm(osf_ls_files(data_comp, "exp-materials/experiment", pattern = "README.md"), check = FALSE)
+osf_upload(osf_ls_files(data_comp, "exp-materials", pattern = "experiment"), path = "./osf/comps/data/exp-materials/experiment/README.md", conflicts = "overwrite", verbose = T)
 ```
 
