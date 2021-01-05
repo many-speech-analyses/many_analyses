@@ -209,11 +209,11 @@ data_comp &lt;- osf_comps %&gt;% filter(name == &quot;Data&quot;)</code></pre>
 <h1>List data_comp files</h1>
 <pre class="r"><code>osf_ls_files(data_comp)</code></pre>
 <pre><code>## # A tibble: 3 x 3
-##   name          id                       meta            
-##   &lt;chr&gt;         &lt;chr&gt;                    &lt;list&gt;          
-## 1 data          5f624fe71e8b9c02f1e91b82 &lt;named list [3]&gt;
-## 2 exp-materials 5f6250331e8b9c02e2e948c8 &lt;named list [3]&gt;
-## 3 README.md     5fd0d39a08ec9e007fb8efd3 &lt;named list [3]&gt;</code></pre>
+##   name       id                       meta            
+##   &lt;chr&gt;      &lt;chr&gt;                    &lt;list&gt;          
+## 1 production 5f624fe71e8b9c02f1e91b82 &lt;named list [3]&gt;
+## 2 README.md  5fd0d39a08ec9e007fb8efd3 &lt;named list [3]&gt;
+## 3 norming    5ff42e72e3acd1055a4a513d &lt;named list [3]&gt;</code></pre>
 </div>
 <div id="knit-readme-files" class="section level1">
 <h1>Knit readme files</h1>
@@ -237,11 +237,36 @@ osf_upload(data_comp, path = &quot;./osf/comps/data/README.md&quot;, conflicts =
 ## 1 README.md 5fd0d39a08ec9e007fb8efd3 &lt;named list [3]&gt;</code></pre>
 <pre class="r"><code>data_comp_files &lt;- osf_ls_files(data_comp)
 
-# data/data
-raw &lt;- data_comp_files %&gt;% filter(name == &quot;data&quot;)
+# data/norming/
+raw &lt;- data_comp_files %&gt;% filter(name == &quot;norming&quot;)
 
-osf_rm(osf_ls_files(data_comp, &quot;data&quot;, pattern = &quot;README.md&quot;), check = FALSE)
-osf_upload(raw, path = &quot;./osf/comps/data/data/README.md&quot;, conflicts = &quot;overwrite&quot;, verbose = T)</code></pre>
+#### delete old readme (&quot;overwrite&quot; option fails)
+old_readme &lt;- osf_ls_files(data_comp, &quot;norming&quot;, pattern = &quot;README.md&quot;)
+osf_rm(old_readme, check = FALSE)
+
+#### upload new readme
+osf_upload(
+  raw,
+  path = &quot;./osf/comps/data/norming/README.md&quot;,
+  conflicts = &quot;overwrite&quot;, verbose = T)</code></pre>
+<pre><code>## Searching for conflicting files on OSF</code></pre>
+<pre><code>## Uploading 1 new file(s) to OSF</code></pre>
+<pre><code>## Uploaded new file &#39;README.md&#39; to OSF</code></pre>
+<pre><code>## # A tibble: 1 x 3
+##   name      id                       meta            
+##   &lt;chr&gt;     &lt;chr&gt;                    &lt;list&gt;          
+## 1 README.md 5ff470b11e6d97055d2f9de8 &lt;named list [3]&gt;</code></pre>
+<pre class="r"><code># data/production/audio/
+#### delete old readme
+old_readme &lt;- osf_ls_files(data_comp, &quot;production/audio&quot;, pattern = &quot;README.md&quot;)
+osf_rm(old_readme, check = FALSE)
+
+#### upload new readme
+audio &lt;- osf_ls_files(data_comp, &quot;production&quot;, pattern = &quot;audio&quot;)
+osf_upload(
+  audio,
+  path = &quot;./osf/comps/data/production/audio/README.md&quot;,
+  conflicts = &quot;overwrite&quot;, verbose = T)</code></pre>
 <pre><code>## Searching for conflicting files on OSF</code></pre>
 <pre><code>## Retrieving 60 of 60 available items:</code></pre>
 <pre><code>## ..retrieved 10 items</code></pre>
@@ -256,32 +281,18 @@ osf_upload(raw, path = &quot;./osf/comps/data/data/README.md&quot;, conflicts = 
 <pre><code>## # A tibble: 1 x 3
 ##   name      id                       meta            
 ##   &lt;chr&gt;     &lt;chr&gt;                    &lt;list&gt;          
-## 1 README.md 5ff4476de9ccb90541aecfb4 &lt;named list [3]&gt;</code></pre>
-<pre class="r"><code># data/exp-materials
-materials &lt;- data_comp_files %&gt;% filter(name == &quot;exp-materials&quot;)
+## 1 README.md 5ff470c1e9ccb9055daed424 &lt;named list [3]&gt;</code></pre>
+<pre class="r"><code># data/production/trial-lists
+#### delete old readme
+old_readme &lt;- osf_ls_files(data_comp, &quot;production/trial-lists&quot;, pattern = &quot;README.md&quot;)
+osf_rm(old_readme, check = FALSE)
 
-osf_rm(osf_ls_files(data_comp, &quot;exp-materials&quot;, pattern = &quot;README.md&quot;), check = FALSE)
-osf_upload(materials, path = &quot;./osf/comps/data/exp-materials/README.md&quot;, conflicts = &quot;overwrite&quot;, verbose = T)</code></pre>
-<pre><code>## Searching for conflicting files on OSF</code></pre>
-<pre><code>## Uploading 1 new file(s) to OSF</code></pre>
-<pre><code>## Uploaded new file &#39;README.md&#39; to OSF</code></pre>
-<pre><code>## # A tibble: 1 x 3
-##   name      id                       meta            
-##   &lt;chr&gt;     &lt;chr&gt;                    &lt;list&gt;          
-## 1 README.md 5ff447731e6d9705382fbb1b &lt;named list [3]&gt;</code></pre>
-<pre class="r"><code># data/exp-materials/norming
-osf_rm(osf_ls_files(data_comp, &quot;exp-materials/norming&quot;, pattern = &quot;README.md&quot;), check = FALSE)
-osf_upload(osf_ls_files(data_comp, &quot;exp-materials&quot;, pattern = &quot;norming&quot;), path = &quot;./osf/comps/data/exp-materials/norming/README.md&quot;, conflicts = &quot;overwrite&quot;, verbose = T)</code></pre>
-<pre><code>## Searching for conflicting files on OSF</code></pre>
-<pre><code>## Uploading 1 new file(s) to OSF</code></pre>
-<pre><code>## Uploaded new file &#39;README.md&#39; to OSF</code></pre>
-<pre><code>## # A tibble: 1 x 3
-##   name      id                       meta            
-##   &lt;chr&gt;     &lt;chr&gt;                    &lt;list&gt;          
-## 1 README.md 5ff4477be3acd105674a6505 &lt;named list [3]&gt;</code></pre>
-<pre class="r"><code># data/exp-materials/experiment
-osf_rm(osf_ls_files(data_comp, &quot;exp-materials/experiment&quot;, pattern = &quot;README.md&quot;), check = FALSE)
-osf_upload(osf_ls_files(data_comp, &quot;exp-materials&quot;, pattern = &quot;experiment&quot;), path = &quot;./osf/comps/data/exp-materials/experiment/README.md&quot;, conflicts = &quot;overwrite&quot;, verbose = T)</code></pre>
+#### upload new readme
+trials &lt;- osf_ls_files(data_comp, &quot;production&quot;, pattern = &quot;trial-lists&quot;)
+osf_upload(
+  trials,
+  path = &quot;./osf/comps/data/production/trial-lists/README.md&quot;,
+  conflicts = &quot;overwrite&quot;, verbose = T)</code></pre>
 <pre><code>## Searching for conflicting files on OSF</code></pre>
 <pre><code>## Retrieving 30 of 30 available items:</code></pre>
 <pre><code>## ..retrieved 10 items</code></pre>
@@ -293,7 +304,7 @@ osf_upload(osf_ls_files(data_comp, &quot;exp-materials&quot;, pattern = &quot;ex
 <pre><code>## # A tibble: 1 x 3
 ##   name      id                       meta            
 ##   &lt;chr&gt;     &lt;chr&gt;                    &lt;list&gt;          
-## 1 README.md 5ff44787e9ccb90540aeceeb &lt;named list [3]&gt;</code></pre>
+## 1 README.md 5ff470d1e9ccb90555aece1c &lt;named list [3]&gt;</code></pre>
 </div>
 
 
