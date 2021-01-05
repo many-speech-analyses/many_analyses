@@ -384,7 +384,7 @@ FORMULA
 
 Standard random-effects meta-analytical techniques will be used to summarize the variability in effect sizes and predicted values of dependent variables among the individual analyses.
 We anticipate that researchers will use multi-level regression models, so that common effect size measures such as Cohen's $d$ would be inappropriate.
-<!-- SC: it would be good to decide on a clear terminology to refer to the individual original models, the individual models that we run (to refit the original models), and the meta-analytical model.  -->
+<!-- NOTE: (SC) it would be good to decide on a clear terminology to refer to the individual original models, the individual models that we run (to refit the original models), and the meta-analytical model.  -->
 Since the outcome variables used by the analysis teams might substantially differ in their measurement scales (e.g, Hz for frequency vs ms for duration), we will standardize all reported effects by refitting each model with scaled outcome variables (the observed values subtracted from the mean divided by the standard deviation, i.e. *z*-scores) using a Bayesian multilevel model.
 The standardized effect size ($\eta_i$) of each analysis will be the estimated coefficient of the critical predictor (i.e. critical according to the analysis teams' self-reported inferential criteria).
 If multiple predictors within a single analysis have been reported as critical, each will be included in the meta-analytical model (described in details in the next paragraph).
