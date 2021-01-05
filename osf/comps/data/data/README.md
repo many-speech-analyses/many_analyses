@@ -1,23 +1,15 @@
-Raw data
+Data
 ================
 
-Last update: 2020-12-31
+Last update: 2021-01-05
 
 # Overview
 
-This directory contains `.wav` files of the participants’ production
-from the experiment.
+This directory contains the files from the production experiment:
 
-    ## # A tibble: 10 x 1
-    ##    name  
-    ##    <chr> 
-    ##  1 AL.wav
-    ##  2 AS.wav
-    ##  3 CG.wav
-    ##  4 CH.wav
-    ##  5 CO.wav
-    ##  6 CT.wav
-    ##  7 EM.wav
-    ##  8 HA.wav
-    ##  9 HS.wav
-    ## 10 HW.wav
+-   `.wav` files with the participants’ recordings (one file per
+    participant).
+-   `.TextGrid` (Praat) files with time-aligned annotation of the
+    recordings (one file per participant, same names as `.wav`).
+
+<!-- TODO: ADD more info on annotation -->

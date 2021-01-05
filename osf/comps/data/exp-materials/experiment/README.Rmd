@@ -1,5 +1,5 @@
 ---
-title: "Norming results"
+title: "Production experiment"
 output:
   github_document:
     html_preview: false
@@ -16,7 +16,20 @@ Last update: `r Sys.Date()`
 
 # Overview
 
-This directory contains the results from the norming study.
+This directory contains one `.csv` file per participant from the production experiment with information about the trials (one row per trial).
+
+The files include the following columns:
+
+- `condition`: The condition of the trial (`NF` = noun focus, `AF` = adjective focus, `ANF` = adjective/noun focus).
+- `target_name`: Name of the target object.
+- `target_colour`: Color of the target object.
+- `competitor_name`: Name of the competitor object.
+- `competitor_colour`: Color of the competitor object.
+- `distractor1_name`: Name of the distractor 1.
+- `distractor1_colour`: Color of the distractor 1.
+- `distractor2_name`: Name of the distractor 2.
+- `distractor2_colour`: Color of the distractor 2.
+
 
 ```{r retrieve}
 # Main repo "Many Speech Analysis": https://osf.io/3bmcp/
@@ -24,11 +37,11 @@ osf_repo <- osf_retrieve_node("3bmcp")
 # Repo components
 osf_comps <- osf_ls_nodes(osf_repo)
 # Dataset & Materials component
-data_comp <- osf_comps %>% filter(name == "Dataset & Materials")
+data_comp <- osf_comps %>% filter(name == "Data")
 ```
 
-```{r data_files, include=TRUE}
-osf_ls_files(data_comp, "Materials/Norming results") %>%
+```{r data_files, include=FALSE}
+osf_ls_files(data_comp, "exp-materials/experiment") %>%
   select(name) %>%
   filter(str_detect(name, ".*\\.md", negate = TRUE)) %>%
   arrange(name)

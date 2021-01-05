@@ -1,23 +1,16 @@
-Trial lists
+Norming study
 ================
 
-Last update: 2020-12-31
+Last update: 2021-01-05
 
 # Overview
 
-This directory contains `.csv` files of the trial lists from the norming
-study.
+This directory contains the `images/` used in the norming study and the
+`results/` of the study (i.e. the typicality ratings for each
+image/object for each participant).
 
-    ## # A tibble: 10 x 1
-    ##    name  
-    ##    <chr> 
-    ##  1 AL.csv
-    ##  2 AS.csv
-    ##  3 CG.csv
-    ##  4 CH.csv
-    ##  5 CO.csv
-    ##  6 CT.csv
-    ##  7 EM.csv
-    ##  8 HA.csv
-    ##  9 HS.csv
-    ## 10 HW.csv
+    ## # A tibble: 2 x 1
+    ##   name   
+    ##   <chr>  
+    ## 1 images 
+    ## 2 results

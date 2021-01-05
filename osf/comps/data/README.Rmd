@@ -16,7 +16,10 @@ Last update: `r Sys.Date()`
 
 # Overview
 
-This directory contains 3 subdirectories: `Materials/`, `Raw data/`, and `TextGrids/`.
+This directory contains 2 subdirectories: `exp-materials/` and `data/`.
+
+Files and results of the norming study are in `exp-materials/`
+The `data` directory hosts the `.wav` and `.TextGrid` files from the production experiment.
 See the `README.md` files of each individual directory for more information about the contents.
 
 ```{r retrieve}
@@ -25,7 +28,7 @@ osf_repo <- osf_retrieve_node("3bmcp")
 # Repo components
 osf_comps <- osf_ls_nodes(osf_repo)
 # Dataset & Materials component
-data_comp <- osf_comps %>% filter(name == "Dataset & Materials")
+data_comp <- osf_comps %>% filter(name == "Data")
 ```
 
 ```{r data_files, include=TRUE}
