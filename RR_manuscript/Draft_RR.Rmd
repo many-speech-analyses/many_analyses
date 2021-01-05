@@ -103,7 +103,7 @@ These researcher degrees of freedom are both a blessing and a curse.
 They are a blessing because they afford us the opportunity to look at nature from different angles, which, in turn, allows us to make important discoveries and generate new hypothesis (e.g. Box 1976, Tukey 1977, de Groot 2014).
 They are a curse because idiosyncratic choices can lead to categorically different interpretations, which eventually find their way into the publication record where they are taken for granted (Simmons et al. 2011).
 Recent projects have shown that the variability between different data analysts is vast.
-This variability can lead independent researchers to draw different conclusions about the same data set as demonstrated by several projects crowd-sourcing analysis strategies (e.g. Silberzahn et al. 2018, Starns et al. 2019, Botvinik-Nezer et al., 2020). 
+This variability can lead independent researchers to draw different conclusions about the same data set as demonstrated by several projects crowd-sourcing analysis strategies (e.g. Silberzahn et al. 2018, Starns et al. 2019, Botvinik-Nezer et al., 2020).
 These projects, however, might still underestimate the extent to which analysts vary because data analysis is not merely restricted to statistical inference.
 Human behavior is complex and offers many ways to be translated into numbers.
 This is particularly true for fields that draw conclusions about human behavior and cognition from multidimensional data like audio or video data.
@@ -144,11 +144,7 @@ Importantly, the observed variability was neither predicted by the team's precon
 The authors results suggest that analytic plurality is a fact of life and not driven by different levels of expertise or bias.
 Similar crowd-sourced studies recruiting independent analyst teams showed similar results.
 
-SUM UP:
-Neuroscience
-Cognitive modeling
-Clinical
-Predictive models
+<!-- TODO: SUMUP neuroscience, cognitive modeling, clinical, predictive models -->
 
 While these projects show a large degree of analytical flexibility with impactful consequences, they dealt with flexibility in inferential or computational modeling.
 In these studies the data sets were fixed and data collection or measurement could not be changed. <!-- JC: any particular reason to favor data table over data set? --> <!-- TR: I think my reasoning was data set can be data table or raw data. Data table is the numerical derivation of the raw data. Maybe not a useful distinction?-->
@@ -179,8 +175,7 @@ How can we obtain a measure of dissimilarity between the first sound in *Pat* an
 <!-- TR: Keep in mind that the research question is not about segmental phenomena. To relate to the question later, I'd suggest a prosodic measure, e.g.  -->
 
 If we want to compare the speech signal associated with these two intentions, how do we quantify the difference between them? What do we measure and how do we measure it?
-<!-- TODO: mention speech domains -->
-Given the continuous and transient nature of speech, identifying  speech parameters and temporal domain becomes a non-trivial task.
+Given the continuous and transient nature of speech, identifying speech parameters and temporal domains becomes a non-trivial task.
 Utterances stretch over hundreds of milliseconds and contain several levels of linguistically relevant units such as phrases, words, syllables, and individual sounds.
 The researcher is thus confronted with a considerable number of parameters and combinations thereof to choose from.
 
@@ -201,13 +196,13 @@ The latter can also be expressed by global vs local pitch modulations (Haan 2002
 Extra-linguistic information, like speaker's intentions, levels of arousal or social identity, are also conveyed by broad-domain parameters, such as voice quality, rhythm, and pitch [@foulkes2006; @ogden2009; @white2009].
 
 When testing hypotheses on speech production data, researchers are faced with many choices and possibilities.
-The larger the functional domain (e.g. segments vs words vs utterances), the higher the number of conceivable operationalizations. 
-For example, when comparing two realization of example (1) (here repeated as 2), one of which is intended to signal emphasis on *tomorrow* and one of which emphasizes *grocery store*. 
+The larger the functional domain (e.g. segments vs words vs utterances), the higher the number of conceivable operationalizations.
+For example, when comparing two realization of example (1) (here repeated as 2), one of which is intended to signal emphasis on *tomorrow* and one of which emphasizes *grocery store*.
 
 (2a) "I hope Liz does not go to the grocery store TOMORROW".
 (2b) "I hope Liz does not go to the GROCERY STORE tomorrow"
 
-Do we only compare the word *tomorrow* in 2a and 2b or also the word *grocery store* or do we measure utterance wide acoustic profiles? Do we measure the whole word? Or just the stressed syllable? 
+Do we only compare the word *tomorrow* in 2a and 2b or also the word *grocery store* or do we measure utterance wide acoustic profiles? Do we measure the whole word? Or just the stressed syllable?
 Do we measure average the domain or do we measure a specific point in time? Do we measure fundamental frequency or intensity? When looking at phrase-wide temporal domains, the number of possible analytical pipelines quickly explodes (see Figure x)
 
 <!-- TR: How about a plot like Figure 2 in my RDF paper: https://www.journal-labphon.org/articles/10.5334/labphon.147/ -->
@@ -269,7 +264,7 @@ The factor most likely to delay our time line is the rate of completion of the o
 
 ## Step 1: Recruitment and Initial Survey of Analysts
 
-<!-- TODO: include materials link and mailing lists -->
+<!-- TODO: add materials link and mailing lists -->
 The initiating authors (SC, JC, TR) created a publicly available document providing a general description of the project (LINK) and a short prerecorded slide show that summarizes the study and research question in order to increase accessibility to potential analysts (LINK).
 The project will be advertised via Social Media, using mailing lists for linguistic and psychological societies (full scope of these lists is not fixed but will include LIST OF LISTS), and via word of mouth.
 The target population is active speech science researchers with a graduate degree (or currently studying for a graduate degree) in a relevant discipline.
@@ -286,7 +281,7 @@ All analysts will sign a consent (ethics) document (LINK).
 
 <!-- sample size info from Ecology RR -->
 <!-- SC: rephrased and expanded -->
-<!-- TODO: include citation to ECO RR -->
+<!-- TODO: add citation to ECO RR -->
 To identify the minimal sample size, we followed the method in [ECO RR].
 The aim of the meta-analysis is to obtain an estimate of heterogeneity of the effect sizes reported by the analysis teams ($\tau^2$, i.e. the variance $\sigma^2_{\alpha_{\text{team}}}$, see \Cref{s:meta-est}).
 Ideally, the 95% credible interval (CrI) of $\tau^2$ should not include 0 (i.e. the probability $p$ that the 95% CrI contains 0 should be less than 0.05).
@@ -382,7 +377,7 @@ Th initiating authors (SC, JC, TR) will conduct the analyses outlined in this se
 We will calculate summary statistics describing variation among analyses, including the nature and number of acoustic measures (e.g. f0 or duration), the operationalization and the temporal domain of measurement (e.g. mean of an interval or value at specified point in time), the nature and number of model parameters for both fixed and random effects [if applicable], the nature and reasoning behind inferential assessments (e.g. dichotomous decision based on p-values, ordinal decision based on Bayes factor), as well as the mean, standard deviation and range of effect sizes reported.
 We anticipate that the majority of statistical analyses will be expressible as a (generalized) linear regression model.
 
-<!-- TODO: ADD FORMULA of linear regression model -->
+<!-- TODO: ADD FORMULA of linear regression model to express majority of analysis -->
 FORMULA
 
 ### Meta-analytical estimation {#s:meta-est}
@@ -563,8 +558,6 @@ We will include the following demographic factors about both the analysis teams:
 
 - *Research experience* as the elapsed time from PhD award (negative values will indicate that the person is a student or graduate student).
 - *Initial belief* in the presence of an effect of atypical noun-adjective pairs on acoustics, as answered during the intake questionnaire.
-
-<!-- TODO: DESCRIBE HOW WE WILL LOOK AT demographics -->
 
 We will publicly archive all relevant data, code, and materials on the Open Science Framework (<https://osf.io/3bmcp/>).
 Archived data will include the original data sets distributed to all analysts, any edited versions of the data analyzed by individual groups, and the data we analyze with our meta-analyses, which include the effect sizes derived from separate analyses, the statistics describing variation in model structure among analysis teams, and the anonymized answers to our surveys of analysts and peer reviewers.
