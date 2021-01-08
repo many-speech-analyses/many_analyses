@@ -163,11 +163,11 @@ Thus, choosing how to measure a phenomenon of interest is an important and non-t
 
 <!-- TR: I'd suggest an easier example (Sheila and Pat are both uncommon names, internationally speaking) and possibly a more relateable (possibly timely) example. Something about zoom meetings or sth maybe? Examples are super important to relate to the reader and lure them in. Here is my suggestion-->
 
-(1) "I hope Liz does not go to the grocery store tomorrow".
+(1) "I can't bear another meeting on zoom."
 
 Depending on the speaker's intention, this sentence can be said in different ways.
-If, for instance, the speaker is worried about Liz mistakenly going to the grocery store tomorrow instead of today, the speaker might acoustically highlight the word tomorrow.
-If, on the other hand, the speaker is worried that Liz goes to a crowded place like the supermarket, they might acoustically highlight the word grocery store.
+If, for instance, the speaker is exhausted by all their meetings, the speaker might acoustically highlight the word "another" or "meeting".
+If, on the other hand, the speaker is just tired of video conferences, they might acoustically highlight the word "zoom".
 
 <!-- Now, imagine we are interested in measuring the difference between that sentence and the sentence "Sheila says *Mat* is clever".
 How can we obtain a measure of dissimilarity between the first sound in *Pat* and the first sound in *Mat*? -->
@@ -197,12 +197,12 @@ Extra-linguistic information, like speaker's intentions, levels of arousal or so
 
 When testing hypotheses on speech production data, researchers are faced with many choices and possibilities.
 The larger the functional domain (e.g. segments vs words vs utterances), the higher the number of conceivable operationalizations.
-For example, when comparing two realization of example (1) (here repeated as 2), one of which is intended to signal emphasis on *tomorrow* and one of which emphasizes *grocery store*.
+For example, when comparing two realization of example (1) (here repeated as 2), one of which is intended to signal emphasis on *another* and one of which emphasizes *zoom*.
 
-(2a) "I hope Liz does not go to the grocery store TOMORROW".
-(2b) "I hope Liz does not go to the GROCERY STORE tomorrow"
+(2a) "I can't bear ANOTHER meeting on zoom."
+(2b) "I can't bear another meeting on ZOOM."
 
-Do we only compare the word *tomorrow* in 2a and 2b or also the word *grocery store* or do we measure utterance wide acoustic profiles? Do we measure the whole word? Or just the stressed syllable?
+Do we only compare the word *another* in 2a and 2b or also the word *zoom* or do we measure utterance wide acoustic profiles? Do we measure the whole word? Or just the stressed syllable?
 Do we measure average the domain or do we measure a specific point in time? Do we measure fundamental frequency or intensity? When looking at phrase-wide temporal domains, the number of possible analytical pipelines quickly explodes (see Figure x)
 
 <!-- TR: How about a plot like Figure 2 in my RDF paper: https://www.journal-labphon.org/articles/10.5334/labphon.147/ -->
