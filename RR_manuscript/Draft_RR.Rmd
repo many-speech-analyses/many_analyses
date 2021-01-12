@@ -386,56 +386,49 @@ Th initiating authors (SC, JC, TR) will conduct the analyses outlined in this se
 
 ### Descriptive statistics
 
-We will calculate summary statistics describing variation among analyses, including the nature and number of acoustic measures (e.g. f0 or duration), the operationalization and the temporal domain of measurement (e.g. mean of an interval or value at specified point in time), the nature and number of model parameters for both fixed and random effects [if applicable], the nature and reasoning behind inferential assessments (e.g. dichotomous decision based on p-values, ordinal decision based on Bayes factor), as well as the mean, standard deviation and range of effect sizes reported.
-We anticipate that the majority of statistical analyses will be expressible as a (generalized) linear regression model.
-
-<!-- TODO: ADD FORMULA of linear regression model to express majority of analysis -->
-FORMULA
+We will calculate summary statistics describing variation among analyses, including (a) the nature and number of acoustic measures (e.g. f0 or duration), (b) the operationalization and the temporal domain of measurement (e.g. mean of an interval or value at specified point in time), (c) the nature and number of model parameters for both fixed and random effects [if applicable], (d) the nature and reasoning behind inferential assessments (e.g. dichotomous decision based on *p*-values, ordinal decision based on Bayes factor), as well as the (e) mean, (f) standard deviation and (g) range of the reported effect sizes.
 
 ### Meta-analytical estimation {#s:meta-est}
 
-Standard random-effects meta-analytical techniques will be used to summarize the variability in effect sizes and predicted values of dependent variables among the individual analyses.
-We anticipate that researchers will use multi-level regression models, so that common effect size measures such as Cohen's $d$ would be inappropriate.
+To summarize the variability in reported effect sized, we will follow Bayesian random-effects meta-analytical techniques.
+Based on the common practices currently in place within the field, we anticipate that researchers will use multi-level/hierarchical/random-effects regression models, so that common effect size measures such as Cohen's $d$ would be inappropriate.
 <!-- NOTE: (SC) it would be good to decide on a clear terminology to refer to the individual original models, the individual models that we run (to refit the original models), and the meta-analytical model.  -->
-Since the outcome variables used by the analysis teams might substantially differ in their measurement scales (e.g, Hz for frequency vs ms for duration), we will standardize all reported effects by refitting each model with scaled outcome variables (the observed values subtracted from the mean divided by the standard deviation, i.e. *z*-scores) using a Bayesian multilevel model.
-The standardized effect size ($\eta_i$) of each analysis will be the estimated coefficient of the critical predictor (i.e. critical according to the analysis teams' self-reported inferential criteria).
+<!-- NOTE: (SC) shouldn't we standardise all variables? -->
+Since the variables used by the analysis teams might substantially differ in their measurement scales (e.g, Hz for frequency vs ms for duration), we will standardize all reported effects by refitting each reported model with centered and scaled continuous variables (*z*-scores, i.e. the observed values subtracted from the mean divided by the standard deviation) and sum-coded factor variables [???].
+Each standardized (refitted) model will be fitted as a Bayesian regression model with Stan [@stan-development-team2020], RStan [@stan-development-team2020a], and brms [@burkner2017] in R [@r-core-team2020].
+For those reported models that were originally fitted within a frequentist approach, uniform distributions will be used as the priors of all parameters (with the restriction that only positive numbers will be included for scale parameters), making the standardized models in fact equivalent to the reported frequentist models.
+If a team has fitted Bayesian models, the same priors as reported by the team will be used in fitting the respective standardized model.
+
+The estimated coefficients of the critical predictors (i.e. critical according to the analysis teams' self-reported inferential criteria), as obtained from the standardized models, will be used as the standardized effect size ($\eta_i$) of each reported model.
 If multiple predictors within a single analysis have been reported as critical, each will be included in the meta-analytical model (described in details in the next paragraph).
-Moreover, to account for the degree of uncertainty around each effect size, which can differ between analyses, we will enter in the meta-analytical model the standard deviation of each effect size returned by each analysis' multilevel model, as the standard error of the effect size ($\text{se}_i$).
-This will enable us to fit a so-called "measurement-error" model, in which standardized effect sizes with smaller standard errors will affect the meta-analytical estimate more than effect sizes with bigger standard errors.
+Moreover, to account for the differing degree of uncertainty around each standardized effect size, we will use the standard deviation of each effect size returned by the standardized models as the standard error ($\text{se}_i$) of the effect size.
+This will enable us to fit a so-called "measurement-error" model, in which both the standardized effect sizes and their respective standard errors are entered in the the meta-analytical model.
+As a desired consequence, effect sizes with a greater standard error will be weighted less than those with a smaller standard error in the meta-analytical calculations.
 
-After the extraction of the standardized effect sizes $\eta_i$ and related standard error $\text{se}_i$ for each critical predictor of the individual analyses, the initiating authors will then fit a cross-classified Bayesian meta-analysis using the multilevel regression model described below:
-
-<!-- TR: need to change according to new process (not delta t anymore) -->
-<!-- SC: done! -->
+After having obtained the standardized effect sizes $\eta_i$ with related standard errors $\text{se}_i$, for each critical predictor of the individual reported analyses, the initiating authors will fit a Bayesian random-effects meta-analysis using the following multilevel regression model:
 
 $$
 \begin{aligned}
-\eta_i   & \sim \text{Normal}(\mu_i, \sigma_i) \\
-\mu_i     & = \alpha + \alpha_{\text{team}[i]} + \beta_n\\
-\alpha  & \sim \text{Normal}(0, 1) \\
-\beta_n & \sim \text{Normal}(0, 1) \\
+\eta_i      & \sim \text{Normal}(\mu_i, \sigma_i) \\
+\mu_i       & = \alpha + \alpha_{\text{team}[i]} \\
+\alpha      & \sim \text{Normal}(0, 1) \\
 \sigma_{\alpha_{\text{team}}} & \sim \text{HalfCauchy}(0, 1) \\
-\sigma_i  & = \text{se}_i
+\sigma_i    & = \text{se}_i
 \end{aligned}
 $$
 
-The outcome variable will be the set of standardized effect sizes.
-The respective standard errors $\text{se}_i$ will be included to fit a measurement-error model.
-The likelihood of $\eta_i$ is assumed to be normally distributed (Knight 2000).
-The analysis teams will be included as a group-level effect (i.e., random effect).
-For each population-level parameter $\beta_n$ (i.e., the fixed effects, see below), the model will include regularizing, weakly informative priors (Gelman, 2017), which are normally distributed and centered at 0 with a standard deviation of 1.
+The outcome variable will be the set of standardized effect sizes $\eta_i$.
+The likelihood of $\eta_i$ is assumed to correspond to a normal distribution (Knight 2000).
+The analysis teams will constitute the group-level effect (i.e., random effect, `(1 | team)`).
+The standard errors $\text{se}_i$ will be included as the standard deviation $\sigma_i$ of $\eta_i$ to fit a measurement-error model, as discussed above.
+We will use regularizing weakly-informative priors for the intercept $\alpha$ ($Normal(0, 1)$) and for the group-level standard deviation $\alpha_{\text{team}[i]}$ ($HalfCauchy(0, 1)$).
 <!-- TR: isn't an SD of 1 rather conservative. Also small sample size, maybe rather using cauchy for the thick tails? -->
 <!-- SC: For the pop-level params I would stick to the Normal, or if we want to avoid problems with thick tails I'd go with a student-t. -->
-We will fit the model with 4000 iterations (2000 warm-up) and Hamiltonian Monte-Carlo sampling of the posterior distribution is carried out using 4 chains distributed across 4 processing cores.
-The analysis will be conducted in R (R core team, 2020) and fit using Stan (Stan Development Team, 2019) via the R package brms (Bürkner, 2019).
+<!-- NOTE: (SC) we might not include pop-level parameters. -->
+We will fit this model with 4 chains of Hamiltonian Monte-Carlo sampling of the posterior distribution and 4000 iterations (2000 for warm-up) per chain, distributed across 4 processing cores.
+The analysis will be conducted in R [@r-core-team2020] and fit using Stan [@stan-development-team2020], RStan [@stan-development-team2020a], and brms [@burkner2017].
 <!-- TODO: add link to code of the meta-analytical model -->
-The code for the model can be found here: INSERT LINK.
-
-<!-- TODO: list predictors in meta-analytical model -->
-We will quantify the extent to which the standardized effect sizes are modulated by the following population-level predictors:
-
-* The peer ratings of each analysis (numeric, 1-100).
-* ...
+The code used to run the model can be found here: INSERT LINK.
 
 <!-- From ?brms:brmsformula -->
 <!-- For families gaussian, student and skew_normal, it is possible to
@@ -451,6 +444,8 @@ mod1 + mod2|study), where mod1 and mod2 represent moderator variables.
 By default, the standard errors replace the parameter sigma. To model
 sigma in addition to the known standard errors, set argument sigma in
 function se to TRUE, for instance, yi | se(sei, sigma = TRUE) ~ 1. -->
+
+<!-- TODO: explain how the MA model will be interpreted. -->
 
 Finally, we will assess whether the standardized effect sizes show bias, and, if so, whether the bias is positive or negative (i.e., whether there is a disproportional greater number of bigger or smaller effect sizes than the meta-analytical mean estimate).
 This will be achieved through inspection of funnel plots [@light1984; for a review see @egger1997; and @sterne2005; for a critique @lau2006].
@@ -521,10 +516,9 @@ estimated_tbl %>%
   scale_y_reverse()
 ```
 
-### Exploratory road map
-<!-- SC: change heading to your liking -->
+### Analytical factors affecting effect sizes
 
-As a second step, we will explore the extent to which deviations from the meta-analytical mean by individual standardized effect sizes relate to a series of predictors (see below): The deviation score, which serves as the dependent variable in this analysis, will be the difference ($\delta_i$) between the meta-analytical mean ($\hat{\eta}$) and the individual standardized effect size of each analysis ($\eta_i$).
+As a second step, we will explore the extent to which deviations from the meta-analytical mean by individual standardized effect sizes relate to a series of predictors (see below). The deviation score $\delta_i$, which serves as the dependent variable in this analysis, will be the difference between the meta-analytical mean ($\hat{\eta}$) and the individual standardized effect size of each analysis ($\eta_i$).
 <!--ecoRR: absolute value of the difference between the meta-analytic mean Zr (or y) and the individual Zr (or y) estimate for each analysis. We will use the Box-Cox transformation on the absolute values of deviation scores to achieve an approximately normal distribution (c.f. Fanelli and Ioannidis 2013, Fanelli et al. 2017: supplement). -->
 <!--TR: Question: Do we need to estimate the absolute deviation or is it useful to consider the raw deviation (stretching from negative to positive values). That gives you both the distance to the meta analytical estimate and the direction of that difference -->
 <!-- SC: I agree that using the raw deviation has the plus of knowing the sign of the difference. I updated the text above accordingly, but feel free to change it. -->
