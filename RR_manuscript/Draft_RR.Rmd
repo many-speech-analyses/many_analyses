@@ -206,7 +206,7 @@ For example, when comparing two realization of example (1) (here repeated as 2),
 
 ```{r forkingPaths, echo=FALSE, fig.cap="Illustrations of the analytical flexibility associated with acoustic analyses. (A) an example of multiple possible and justifiable decisions when comparing to utterances; (B) waveform and fundamental frequency (f0) track of two instances of utterances 2a and 2b. The words \"another is highlighted by the green box\"; (C) spectrogram and f0 track of the word another, exemplifying different operationalizations of differences in pitch", fig.dim = c(6, 2)}
 
-knitr::include_graphics("./RR_manuscript/img/ForkingPaths.png")
+knitr::include_graphics("./figs/ForkingPaths.png")
 
 ```
 
