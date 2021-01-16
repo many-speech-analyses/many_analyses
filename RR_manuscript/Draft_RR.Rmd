@@ -73,11 +73,13 @@ classoption       : "man"
 output:
   papaja::apa6_pdf:
     number_sections: true
+    latex_engine: xelatex
 header-includes:
   - \usepackage{cleveref}
 ---
 
 ```{r setup, include = FALSE}
+knitr::opts_knit$set(root.dir = here::here())
 library("papaja")
 r_refs("r-references.bib")
 library(tidyverse)
@@ -202,16 +204,16 @@ For example, when comparing two realization of example (1) (here repeated as 2),
 (2a) "I can't bear ANOTHER meeting on zoom."
 (2b) "I can't bear another meeting on ZOOM."
 
-```{r forkingPaths, echo=FALSE, fig.cap="Illustrations of the analytical flexibility associated with acoustic analyses. (A) an example of multiple possible and justifiable decisions when comparing to utterances; (B) waveform and fundamental frequency (f0) track of two instances of utterances 2a and 2b. The words "another is highlighted by the green box"; (C) spectrogram and f0 track of the word another, exemplifying different operationalizations of differences in pitch", fig.dim = c(6, 2)}
+```{r forkingPaths, echo=FALSE, fig.cap="Illustrations of the analytical flexibility associated with acoustic analyses. (A) an example of multiple possible and justifiable decisions when comparing to utterances; (B) waveform and fundamental frequency (f0) track of two instances of utterances 2a and 2b. The words \"another is highlighted by the green box\"; (C) spectrogram and f0 track of the word another, exemplifying different operationalizations of differences in pitch", fig.dim = c(6, 2)}
 
-knitr::include_graphics("/RR_manuscript/Draft_RR_files/figure-latex/ForkingPaths.png")
+knitr::include_graphics("./RR_manuscript/img/ForkingPaths.png")
 
 ```
 
 <!-- TR: Insertion does not work yet, gotta dash. Also the following paragraph is just a draft for now -->
 
 Do we only compare the word *another* in 2a and 2b or also the word *zoom* or do we measure utterance wide acoustic profiles? Do we measure the whole word? Or just the stressed syllable?
-Do we average the domain or do we measure a specific point in time? Do we measure fundamental frequency or intensity? When looking at phrase-wide temporal domains, the number of possible analytical pipelines quickly explodes. This plurality of analytical paths is illustrated in figure X. When comparing two utterance such as 2a and 2b, there are many things to consider. Even if we know that we want to compare fundamental frequency of only the word *another* across utterances 2a and 2b, there are still many decisions to be made, all of which can be justified. Fopr example, we could measure f0 at specific points in time like the onset of the window, the offset, the midpoint. We could also measure the value or time of the minimum or maximum f0 value. We could summarise f0 across the entire window and extract the mean, median or standard deviation of f0. And the garden of forking paths does not stop here. In Figure X, we went with a specific option to automatically calculate f0, INSERT SOME EXAMPLES OF PITCH TRACKING OPTIONS. Moreover, knowing that theses estimates are somewhat noisy, we could smooth these contours to different degrees, automatically or manually remove estimates that are off, etc. 
+Do we average the domain or do we measure a specific point in time? Do we measure fundamental frequency or intensity? When looking at phrase-wide temporal domains, the number of possible analytical pipelines quickly explodes. This plurality of analytical paths is illustrated in figure X. When comparing two utterance such as 2a and 2b, there are many things to consider. Even if we know that we want to compare fundamental frequency of only the word *another* across utterances 2a and 2b, there are still many decisions to be made, all of which can be justified. Fopr example, we could measure f0 at specific points in time like the onset of the window, the offset, the midpoint. We could also measure the value or time of the minimum or maximum f0 value. We could summarise f0 across the entire window and extract the mean, median or standard deviation of f0. And the garden of forking paths does not stop here. In Figure X, we went with a specific option to automatically calculate f0, INSERT SOME EXAMPLES OF PITCH TRACKING OPTIONS. Moreover, knowing that theses estimates are somewhat noisy, we could smooth these contours to different degrees, automatically or manually remove estimates that are off, etc.
 
 These decisions are usually made prior to any statistical analysis, but are at times revised a posteriori (i.e. after data collection and/or preliminary analyses) in light of unforeseen or surprising outcomes.
 These myriads of possible decisions are exponentiated by researcher degrees of freedom related to statistical analysis (e.g. Wicherts et al.).
