@@ -4,7 +4,7 @@
 %
 \documentclass[
   english,
-  man]{apa6}
+  man,floatsintext]{apa6}
 \usepackage{amsmath,amssymb}
 \usepackage{lmodern}
 \usepackage{ifxetex,ifluatex}
@@ -113,17 +113,15 @@
 \makeatother
 \shorttitle{Many analysts - one speech data set}
 \keywords{crowdsourcing science, data analysis, scientific transparency, speech, acoustic analysis\newline\indent Word count: X}
-\DeclareDelayedFloatFlavor{ThreePartTable}{table}
-\DeclareDelayedFloatFlavor{lltable}{table}
-\DeclareDelayedFloatFlavor*{longtable}{table}
-\makeatletter
-\renewcommand{\efloat@iwrite}[1]{\immediate\expandafter\protected@write\csname efloat@post#1\endcsname{}}
-\makeatother
 \usepackage{lineno}
 
 \linenumbers
 \usepackage{csquotes}
 \usepackage{cleveref}
+\usepackage{changes}
+\definechangesauthor[name={Stefano Coretta}, color=red]{SC}
+\definechangesauthor[name={Timo Röttger}, color=blue]{TR}
+\definechangesauthor[name={Joseph Casillas}, color=orange]{JC}
 \ifxetex
   % Load polyglossia as late as possible: uses bidi with RTL langages (e.g. Hebrew, Arabic)
   \usepackage{polyglossia}
@@ -305,8 +303,16 @@ For example, when comparing two realization of example (1) (here repeated as 2),
 (2a) ``I can't bear ANOTHER meeting on zoom.''
 (2b) ``I can't bear another meeting on ZOOM.''
 
+In text ref to Figure \ref{fig:forkingPaths}
+
+
+
+\begin{figure}
+\includegraphics[width=1\linewidth]{/Users/stefano/repos/many_analyses/figs/ForkingPaths} \caption{Illustrations of the analytical flexibility associated with acoustic analyses. (A) an example of multiple possible and justifiable decisions when comparing to utterances; (B) waveform and fundamental frequency (f0) track of two instances of utterances 2a and 2b. The words ``another is highlighted by the green box'\,'; (C) spectrogram and f0 track of the word another, exemplifying different operationalizations of differences in pitch.}\label{fig:forkingPaths}
+\end{figure}
+
 Do we only compare the word \emph{another} in 2a and 2b or also the word \emph{zoom} or do we measure utterance wide acoustic profiles? Do we measure the whole word? Or just the stressed syllable?
-Do we measure average the domain or do we measure a specific point in time? Do we measure fundamental frequency or intensity? When looking at phrase-wide temporal domains, the number of possible analytical pipelines quickly explodes (see Figure x)
+Do we average the domain or do we measure a specific point in time? Do we measure fundamental frequency or intensity? When looking at phrase-wide temporal domains, the number of possible analytical pipelines quickly explodes. This plurality of analytical paths is illustrated in figure X. When comparing two utterance such as 2a and 2b, there are many things to consider. Even if we know that we want to compare fundamental frequency of only the word \emph{another} across utterances 2a and 2b, there are still many decisions to be made, all of which can be justified. Fopr example, we could measure f0 at specific points in time like the onset of the window, the offset, the midpoint. We could also measure the value or time of the minimum or maximum f0 value. We could summarise f0 across the entire window and extract the mean, median or standard deviation of f0. And the garden of forking paths does not stop here. In Figure X, we went with a specific option to automatically calculate f0, INSERT SOME EXAMPLES OF PITCH TRACKING OPTIONS. Moreover, knowing that theses estimates are somewhat noisy, we could smooth these contours to different degrees, automatically or manually remove estimates that are off, etc.
 
 These decisions are usually made prior to any statistical analysis, but are at times revised a posteriori (i.e.~after data collection and/or preliminary analyses) in light of unforeseen or surprising outcomes.
 These myriads of possible decisions are exponentiated by researcher degrees of freedom related to statistical analysis (e.g.~Wicherts et al.).
@@ -516,7 +522,8 @@ We will calculate summary statistics describing variation among analyses, includ
 
 To summarize the variability in reported effect sized, we will follow Bayesian random-effects meta-analytical techniques.
 Based on the common practices currently in place within the field, we anticipate that researchers will use multi-level/hierarchical/random-effects regression models, so that common effect size measures such as Cohen's \(d\) would be inappropriate.
-Since the variables used by the analysis teams might substantially differ in their measurement scales (e.g, Hz for frequency vs ms for duration), we will standardize all reported effects by refitting each reported model with centered and scaled continuous variables (\emph{z}-scores, i.e.~the observed values subtracted from the mean divided by the standard deviation) and sum-coded factor variables {[}???{]}.
+Since the variables used by the analysis teams might substantially differ in their measurement scales (e.g, Hz for frequency vs ms for duration), we will standardize all reported effects by refitting each reported model with centered and scaled continuous variables (\emph{z}-scores, i.e.~the observed values subtracted from the mean divided by the standard deviation) and sum-coded factor variables.
+\highlight[id=SC, comment = {Is this sentence good?}]{Factor-level ordering} for each factor variable will be decided on a model-by-model basis, depending on which levels were compared by the team.
 Each standardized (refitted) model will be fitted as a Bayesian regression model with Stan (Stan Development Team, 2020b), RStan (Stan Development Team, 2020a), and brms (Bürkner, 2017) in R (R Core Team, 2020).
 For those reported models that were originally fitted within a frequentist approach, uniform distributions will be used as the priors of all parameters (with the restriction that only positive numbers will be included for scale parameters), making the standardized models in fact equivalent to the reported frequentist models.
 If a team has fitted Bayesian models, the same priors as reported by the team will be used in fitting the respective standardized model.
@@ -527,7 +534,7 @@ Moreover, to account for the differing degree of uncertainty around each standar
 This will enable us to fit a so-called ``measurement-error'' model, in which both the standardized effect sizes and their respective standard errors are entered in the the meta-analytical model.
 As a desired consequence, effect sizes with a greater standard error will be weighted less than those with a smaller standard error in the meta-analytical calculations.
 
-After having obtained the standardized effect sizes \(\eta_i\) with related standard errors \(\text{se}_i\), for each critical predictor of the individual reported analyses, the initiating authors will fit a Bayesian random-effects meta-analysis using the following multilevel regression model:
+After having obtained the standardized effect sizes \(\eta_i\) with related standard errors \(\text{se}_i\), for each critical predictor of the individual reported analyses, the initiating authors will fit a Bayesian random-effects meta-analysis using the following multilevel (intercept-only) regression model:
 
 \[
 \begin{aligned}
@@ -544,9 +551,14 @@ The likelihood of \(\eta_i\) is assumed to correspond to a normal distribution (
 The analysis teams will constitute the group-level effect (i.e., random effect, \texttt{(1\ \textbar{}\ team)}).
 The standard errors \(\text{se}_i\) will be included as the standard deviation \(\sigma_i\) of \(\eta_i\) to fit a measurement-error model, as discussed above.
 We will use regularizing weakly-informative priors for the intercept \(\alpha\) (\(Normal(0, 1)\)) and for the group-level standard deviation \(\alpha_{\text{team}[i]}\) (\(HalfCauchy(0, 1)\)).
-We will fit this model with 4 chains of Hamiltonian Monte-Carlo sampling of the posterior distribution and 4000 iterations (2000 for warm-up) per chain, distributed across 4 processing cores.
+We will fit this model with 4 chains of Hamiltonian Monte-Carlo sampling for the estimation of the joint posterior distribution, using the No U-Turn Sampler (NUTS) as implemented in Stan, and 4000 iterations (2000 for warm-up) per chain, distributed across 4 processing cores.
+\highlight[id=SC, comment = {This ok?}]{In case of issues from divergent transitions} in the sampling, we will increase \texttt{adapt\_delta}, \texttt{tree\_depth}, and the number of iterations in this order until there are no divergent transitions.
 The analysis will be conducted in R (R Core Team, 2020) and fit using Stan (Stan Development Team, 2020b), RStan (Stan Development Team, 2020a), and brms (Bürkner, 2017).
 The code used to run the model can be found here: INSERT LINK.
+
+The posterior probability of the population-level intercept \(\alpha\) will give us an estimate of the range of probable values of the standardized effect size \(\hat{\eta}\).
+This posterior probability will also form the basis \highlight[id=SC, comment = {A lot of "of"s...}]{of} the investigation of the effect of a set of analytical and demographic factors, detailed in Section \ref{ana-factors}.
+Crucially, the posterior probability of \(\sigma_{\alpha_{\text{team}}}\) (the standard deviation of the the group-level effect of team) will allow us to quantify the degree of variation between teams on a standardized scale.
 
 Finally, we will assess whether the standardized effect sizes show bias, and, if so, whether the bias is positive or negative (i.e., whether there is a disproportional greater number of bigger or smaller effect sizes than the meta-analytical mean estimate).
 This will be achieved through inspection of funnel plots (Light \& Pillemer, 1984; for a review see Egger, Smith, Schneider, \& Minder, 1997; and Sterne, Becker, \& Egger, 2005; for a critique Lau, Ioannidis, Terrin, Schmid, \& Olkin, 2006).
@@ -560,13 +572,13 @@ A sign of possible bias is when there are more points which are farther from the
 \caption{\label{fig:funnel-plot}Illustrations of funnel plots showing (a) no bias, (b) positive bias, and (c) negative bias in effect sizes. The vertical dashed line represents the meta-analitical mean.}
 \end{figure}
 
-\hypertarget{analytical-factors-affecting-effect-sizes}{%
-\subsubsection{Analytical factors affecting effect sizes}\label{analytical-factors-affecting-effect-sizes}}
+\hypertarget{ana-factors}{%
+\subsubsection{Analytical and demographic factors affecting effect sizes}\label{ana-factors}}
 
-As a second step, we will explore the extent to which deviations from the meta-analytical mean by individual standardized effect sizes relate to a series of predictors (see below). The deviation score \(\delta_i\), which serves as the dependent variable in this analysis, will be the difference between the meta-analytical mean (\(\hat{\eta}\)) and the individual standardized effect size of each analysis (\(\eta_i\)).
-These exploratory analyses are secondary to our estimation of variation in effect sizes described above.
-We wish to quantify relationships among variables, but we have no a priori expectation of effect size and we will not make dichotomous decisions about statistical significance.
-We will model the effect of the following predictors:
+As a second step, we will investigate the extent to which deviations from the meta-analytical mean by individual standardized effect sizes relate to a series of predictors related to analytical and demographic factors (see below). The deviation score \(\delta_i\), which serves as the dependent variable in this analysis, will be the \highlight[id=SC, comment = {We might wanna fit a me model. See minutes.}]{difference between the meta-analytical mean} (\(\hat{\eta}\)) and the individual standardized effect size of each analysis (\(\eta_i\)).
+We will fit a single Bayesian regression model with \(\delta_i\) as the outcome variable, and the analytical and demographic factors described in the following paragraphs as predictors.
+
+\textbf{Analytical factors}. We will model the effect of the following predictors related to the analytical characteristics of each team's reported analysis:
 
 \begin{itemize}
 \tightlist
@@ -584,8 +596,6 @@ We will model the effect of the following predictors:
   \emph{Temporal window} that the measurement is taken over.
 \item
   \emph{Data exclusion}, whether data has been excluded or not.
-\item
-  \emph{Demographic factors} of analysis teams and analysts.
 \end{itemize}
 
 The measure of uniqueness of predictors will be assessed by the Sørensen-Dice Index (SDI, Dice, 1945; Sørensen, 1948).
@@ -603,7 +613,7 @@ The major measurement dimension of each analysis will be categorized according t
 The temporal window that the measurement is taken over is defined by the target linguistic unit.
 We assume the following relevant linguistic units: segment, syllable, word, phrase.
 
-We will include the following demographic factors about both the analysis teams:
+\textbf{Demographic factors}. We will include the following demographic factors about the \highlight[id=SC, comment = {How do we do this, since we will have a score per individual rather than per team?}]{analysis} teams:
 
 \begin{itemize}
 \tightlist
