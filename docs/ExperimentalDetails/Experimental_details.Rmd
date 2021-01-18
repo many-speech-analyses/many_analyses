@@ -5,12 +5,15 @@ date: "9/17/2020"
 output:
   pdf_document:
     number_sections: true
+    keep_tex: true
+header-includes:
+  - \usepackage{expex}
+  - \lingset{everygla=,everyglpreamble=\it}
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, fig.pos = "tbp")
 options(tinytex.verbose = TRUE)
-
 ```
 
 
@@ -62,9 +65,17 @@ The participants were asked to instruct the experimenter to move the cube onto o
 Each test trial consisted of two parts. 
 The 'trigger' instruction and the 'test' instruction. 
 After the preview of all images was displayed for 1500 ms, the competitor object was visually highlighted by an arrow, and a ‘trigger’ instruction was orthographically presented below the cube (see Figure #):
- 
-\noindent “Du sollst den Würfel auf der grünen Sonnenbrille ablegen.”  
-\noindent *engl. 'You have to put the cube on top of the green sunglasses.'*
+
+```{=latex}
+\ex \begingl
+\glpreamble Du sollst den Würfel auf der grünen Sonnenbrille ablegen.//
+\gla du sollst den würfel auf der grünen sonnenbrille ablegen.//
+\glb you have.to the cube on the green sunglasses put//
+\glft `You have to put the cube on top of the green sunglasses.'//
+\endgl \xe
+```
+
+
  
 ```{r image1, echo = FALSE, fig.align="center", out.width = "60%", fig.cap = "Example screen at the beginning of a trials. The discourse setting trigger sentence is displayed in the middle below the cube. The participants have to instruct the experimenter to move the cube on top of the green sunglasses (indicated by an arrow)."}
 
@@ -77,8 +88,15 @@ The trial proceeded when the experimenter has moved the cube onto the respective
 The sentence and the arrow disappeared. 
 Subsequently, the target object was visually highlighted by an arrow and the test instruction was presented containing the target object (see Figure #):
 
-\noindent “Und jetzt sollst du den Würfel auf der grünen Avokado ablegen.”  
-\noindent *engl. 'And now, you have to put the cube on top of the green avocado.'*
+```{=latex}
+\ex \begingl
+\glpreamble Und jetzt sollst du den Würfel auf der grünen Avokado ablegen.//
+\gla und jetzt sollst du den würfel auf der grünen avokado ablegen//
+\glb and now have.to you the cube on the green avocado put//
+\glft `And now, you have to put the cube on top of the green avocado.'//
+\endgl \xe
+```
+
 
 ```{r image2, echo = FALSE, fig.align="center", out.width = "60%", fig.cap = "Example screen after the trigger sentence. The target sentence is displayed in the middle of the screen. Now, participants have to instruct the experimenter to move the cube on top of the green avocado (indicated by an arrow)."}
 
