@@ -2,7 +2,9 @@
 title: "Methodological Details - Blue Bananas"
 author: ""
 date: "9/17/2020"
-output: pdf_document
+output:
+  pdf_document:
+    number_sections: true
 ---
 
 ```{r setup, include=FALSE}
@@ -12,18 +14,18 @@ options(tinytex.verbose = TRUE)
 ```
 
 
-## 1. Research Questions
+# Research Questions
 
 This study investigates whether speakers modify the speech signal to signal atypical referents? 
 Concretely, we ask whether the suprasegmental profile of an utterance with an atypical referent like "blue banana" is different from one with a typical referent such as "yellow banana". 
 
-## 2. Participants
+# Participants
 
 Thirty native German speakers participated in this study. 
 All participants grew up in a monolingual environment and were recruited from the population living in the broad Cologne area with normal or corrected-to-normal vision and normal hearing. 
 Participants were paid for their participation.
 
-## 3. Procedure
+# Procedure
 
 In this production study, participants interacted with the experimenter. 
 Participants had to verbally instruct the experimenter to select a specified target object out of four visually presented objects. 
@@ -100,11 +102,13 @@ Each trial occurred two times per participants, yielding a total of 70 trials pe
 
 The experimental program (implemented as a browser-based application) is available here: [https://github.com/SBRitter/fruits-production](https://github.com/SBRitter/fruits-production).
 
-## Additional Information {#adds}
+\appendix
+
+# Additional Information {#adds}
 
 Here we specify in detail, how stimuli were selected for the above described production study.
 
-### A.1 Selection of stimuli superset
+## Selection of stimuli superset
 
 The selection of stimuli was informed by a norming study for which we selected twenty fruits or vegetables (henceforth: FOODs) and four other referents (henceforth: NON-FOODs). 
 Selection criteria were mainly informed by visual discriminability and phonemic composition, such that nouns denoting our objects were supposed to contain few voiceless segments. 
@@ -137,7 +141,7 @@ We used the following FOODs: apricot, avocado, banana, beans, carrot, cherry, cu
 
 We used the following NON-FOODs: clothespin, paper clip, socks, sunglasses.
 
-### A.2 The norming study
+## The norming study
 
 One-hundred German native speakers participated in a norming study using the crowd sourcing platform [Prolific]](https://www.prolific.ac). 
 We presented all objects in different colors to our participants. 
@@ -145,7 +149,7 @@ FOODs came in 5 colors per object, NON-FOODs came in all nine colors.
 Participants were instructed to rate how typical they think the color for each object was, using a smooth slider ranging from 1 to 100 (see javascript for the experimental design here: [https://github.com/stelaseldano/colour-typicality-norming](https://github.com/stelaseldano/colour-typicality-norming). 
 The results of the norming study can be retrieved here: [https://osf.io/znpg5/](https://osf.io/znpg5/).
 
-### A.3 Selection of experimental stimuli
+## Selection of experimental stimuli
 
 The norming ratings were subsequently used to select appropriate stimuli for the production study according to the following procedure:
 
@@ -211,7 +215,7 @@ Within each given trial, the distractors did neither share color nor object iden
 Overall, the sets of target, competitors and distractors are combined such that all five colors occurred equally often throughout the experiment (= 28 times).
 
 
-## A.4 Randomization
+# Randomization
 
 For each trial, targets, competitors, and distractors are chosen in a randomized way, fulfilling the following requirements:
 
