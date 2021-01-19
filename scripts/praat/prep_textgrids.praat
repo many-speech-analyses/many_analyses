@@ -109,6 +109,15 @@ for tg from 1 to tgs_no
         Insert boundary: phones, int_start + fraction * p
       endfor
 
+      phones_int = Get interval at time: phones, int_start
+
+      phones_labels$# = {"u", "n", "d", "j", "e", "tz", "t", "s", "o", "l", "s", "t",
+        ... "d", "u", "d", "e", "n", "w", "ü", "r", "f", "l", "au", "f", "D", "E", "T"}
+
+      for f from 0 to 27 - 1
+        Set interval text: phones, phones_int + f, phones_labels$# [f + 1]
+      endfor
+
       # Update index of trial-lists
       q += 1
     endif
