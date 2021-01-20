@@ -11,9 +11,10 @@ jobs:
     runs-on: ubuntu-latest
     name: Assign to Project
     steps:
-    - name: Assign minutes to Meetings project
+    - name: Assign issues with `meetings` label to project 2
       uses: srggrs/assign-one-project-github-action@1.2.0
-      if: contains(github.event.issue.labels.*.name, 'meetings')
+      if: |
+        contains(github.event.issue.labels.*.name, 'meetings')
       with:
         project: 'https://github.com/jvcasillas/many_analyses/projects/2'
         column_name: 'Current'
