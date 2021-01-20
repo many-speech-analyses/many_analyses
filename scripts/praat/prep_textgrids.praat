@@ -69,20 +69,23 @@ for tg from 1 to tgs_no
       selectObject(colours)
       col_row = Search column: "colour", colour$
       col_phones = Get value: col_row, "n_phones"
+      colour_infl$ = Get value: col_row, "inflected"
+      colour_ipa$ = Get value: col_row, "ipa"
 
       selectObject(trials)
       name$ = Get value: q, "target_name"
       selectObject(objects)
       target_row = Search column: "object", name$
       target_phones = Get value: target_row, "n_phones"
+      target_det$ = Get value: target_row, "det"
+      target_ipa$ = Get value: target_row, "ipa"
 
       selectObject(trials)
       # Number of phones in the frame sentence
-      total_ints = 3 + 4 + 5 + 2 + 3 + 5 + 3 + 3  + col_phones + target_phones + 6
+      total_ints = 3 + 4 + 5 + 2 + 3 + 5 + 3 + 3 + col_phones + target_phones + 6
       fraction = int_dur / total_ints
 
-      # TODO: Need to get the article DET (changes depending on gender).
-      words_labels$# = {"und", "jetzt", "sollst", "du", "den", "würfel", "auf", "DET", colour$, name$, "ablegen"}
+      words_labels$# = {"und", "jetzt", "sollst", "du", "den", "würfel", "auf", target_det$, colour_infl$, name$, "ablegen"}
 
       selectObject(this_tg)
 
@@ -92,11 +95,11 @@ for tg from 1 to tgs_no
       Insert boundary: words, int_start + fraction * (3 + 4 + 5)
       Insert boundary: words, int_start + fraction * (3 + 4 + 5 + 2)
       Insert boundary: words, int_start + fraction * (3 + 4 + 5 + 2 + 3)
-      Insert boundary: words, int_start + fraction * (3 + 4 + 5 + 2 + 3 + 4)
-      Insert boundary: words, int_start + fraction * (3 + 4 + 5 + 2 + 3 + 4 + 3)
-      Insert boundary: words, int_start + fraction * (3 + 4 + 5 + 2 + 3 + 4 + 3 + 3)
-      Insert boundary: words, int_start + fraction * (3 + 4 + 5 + 2 + 3 + 4 + 3 + 3 + col_phones)
-      Insert boundary: words, int_start + fraction * (3 + 4 + 5 + 2 + 3 + 4 + 3 + 3 + col_phones + target_phones)
+      Insert boundary: words, int_start + fraction * (3 + 4 + 5 + 2 + 3 + 5)
+      Insert boundary: words, int_start + fraction * (3 + 4 + 5 + 2 + 3 + 5 + 3)
+      Insert boundary: words, int_start + fraction * (3 + 4 + 5 + 2 + 3 + 5 + 3 + 3)
+      Insert boundary: words, int_start + fraction * (3 + 4 + 5 + 2 + 3 + 5 + 3 + 3 + col_phones)
+      Insert boundary: words, int_start + fraction * (3 + 4 + 5 + 2 + 3 + 5 + 3 + 3 + col_phones + target_phones)
       # Insert boundary: words, int_start + fraction * 6
 
       words_int = Get interval at time: words, int_start
@@ -112,10 +115,44 @@ for tg from 1 to tgs_no
       phones_int = Get interval at time: phones, int_start
 
       phones_labels$# = {"u", "n", "d", "j", "e", "tz", "t", "s", "o", "l", "s", "t",
-        ... "d", "u", "d", "e", "n", "w", "ü", "r", "f", "l", "au", "f", "D", "E", "T"}
+        ... "d", "u", "d", "e", "n", "w", "ü", "r", "f", "l", "a", "u", "f"}
 
-      for f from 0 to 27 - 1
+      # Number of phones in "und jetzt solst du den Würfel auf"
+      n_und_auf = 25
+
+      for f from 0 to n_und_auf - 1
         Set interval text: phones, phones_int + f, phones_labels$# [f + 1]
+      endfor
+
+      phones_int += n_und_auf
+      for f from 1 to 3
+        Set interval text: phones, phones_int + f - 1, mid$(target_det$, f, 1)
+      endfor
+
+      phones_int += 3
+      for f from 1 to col_phones
+        Set interval text: phones, phones_int + f - 1, mid$(colour_ipa$, f, 1)
+      endfor
+
+      phones_int += col_phones
+      for f from 1 to target_phones
+        this_phone$ = mid$(target_ipa$, f, 1)
+        if this_phone$ == "A"
+          this_phone$ = "aː"
+        elif this_phone$ == "Q"
+          this_phone$ = "øː"
+        elif this_phone$ == "Z"
+          this_phone$ = "dz"
+        elif this_phone$ == "O"
+          this_phone$ = "oː"
+        endif
+        Set interval text: phones, phones_int + f - 1, this_phone$
+      endfor
+
+      phones_int += target_phones
+      ablegen$# = { "a", "b", "l", "eː", "g", "n" }
+      for f from 1 to 6
+        Set interval text: phones, phones_int + f - 1, ablegen$# [f]
       endfor
 
       # Update index of trial-lists

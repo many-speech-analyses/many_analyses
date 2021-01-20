@@ -1,6 +1,6 @@
-colour,colour_en,n_phones
-gelb,yellow,5
-gruen,green,5
-rot,red,4
-orange,orange,8
-braun,brown,5
+colour,colour_en,n_phones,inflected,ipa
+gelb,yellow,5,gelben,gelbn
+gruen,green,5,gruenen,grünn
+rot,red,4,roten,rotn
+orange,orange,6,orangen,oranʒn
+braun,brown,5,braunen,braunn
