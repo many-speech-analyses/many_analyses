@@ -1,3 +1,18 @@
+#####################################################################
+# prep_textgrids.praat
+#####################################################################
+# This script enhances the annotation/segmentation of the production
+# study TextGrids. The following information is included:
+#   - condition (NF, AF, ANF)
+#   - word-level segmentation
+#   - phone-level segmentation
+#   - trial number
+#   - notes
+#
+# The "notes" tier (tier 5) has "error" as label if that token is
+# an error and should be discarded.
+#####################################################################
+
 data_tg$ = "../../data/textgrids"
 data_trials$ = "../../data/trial-lists"
 datasets$ = "../../data/dataset"
@@ -29,17 +44,20 @@ for tg from 1 to tgs_no
   # Duplicate tier "Condition" to position 2
   Duplicate tier: 1, 2, "words"
   Duplicate tier: 1, 3, "phones"
-  Duplicate tier: 1, 5, "trial"
+  Duplicate tier: 1, 4, "trial"
+  Duplicate tier: 1, 5, "notes"
   # Numeric index of tiers.
   condition = 1
   words = 2
   phones = 3
-  note = 4
-  trial = 5
+  note = 6
+  trial = 4
+  notes = 5
   # Remove text from intervals in Words.
   # The second and third arguments (1, 0) mean from first to last interval.
   Replace interval texts: words, 1, 0, ".*", "", "Regular Expressions"
   Replace interval texts: trial, 1, 0, ".*", "", "Regular Expressions"
+  Replace interval texts: notes, 1, 0, ".*", "", "Regular Expressions"
 
   # Now the TextGrid has the following tiers:
   # - Condition
@@ -59,10 +77,17 @@ for tg from 1 to tgs_no
       # Set trial number.
       Set interval text: trial, int, string$(q)
 
-      # Split interval in 11 (there are 11 words in the stimulus utterance).
       int_start = Get start time of interval: condition, int
       int_end = Get end time of interval: condition, int
       int_dur = int_end - int_start
+      int_mid = int_start + (int_dur / 2)
+
+      note_int = Get interval at time: note, int_mid
+      the_note$ = Get label of interval: note, note_int
+
+      if the_note$ != ""
+        Set interval text: notes, int, the_note$
+      endif
 
       selectObject(trials)
       colour$ = Get value: q, "target_colour"
@@ -82,7 +107,16 @@ for tg from 1 to tgs_no
 
       selectObject(trials)
       # Number of phones in the frame sentence
-      total_ints = 3 + 4 + 5 + 2 + 3 + 5 + 3 + 3 + col_phones + target_phones + 6
+      und = 3
+      jetzt = 4
+      sollst = 5
+      du = 2
+      den = 3
+      wurfel = 6
+      auf = 2
+      det = 3
+      ablegen = 7
+      total_ints = und + jetzt + sollst + du + den + wurfel + auf + det + col_phones + target_phones + ablegen
       fraction = int_dur / total_ints
 
       words_labels$# = {"und", "jetzt", "sollst", "du", "den", "würfel", "auf", target_det$, colour_infl$, name$, "ablegen"}
@@ -90,16 +124,16 @@ for tg from 1 to tgs_no
       selectObject(this_tg)
 
       # I am sure there is a more elegant way.
-      Insert boundary: words, int_start + fraction * 3
-      Insert boundary: words, int_start + fraction * (3 + 4)
-      Insert boundary: words, int_start + fraction * (3 + 4 + 5)
-      Insert boundary: words, int_start + fraction * (3 + 4 + 5 + 2)
-      Insert boundary: words, int_start + fraction * (3 + 4 + 5 + 2 + 3)
-      Insert boundary: words, int_start + fraction * (3 + 4 + 5 + 2 + 3 + 5)
-      Insert boundary: words, int_start + fraction * (3 + 4 + 5 + 2 + 3 + 5 + 3)
-      Insert boundary: words, int_start + fraction * (3 + 4 + 5 + 2 + 3 + 5 + 3 + 3)
-      Insert boundary: words, int_start + fraction * (3 + 4 + 5 + 2 + 3 + 5 + 3 + 3 + col_phones)
-      Insert boundary: words, int_start + fraction * (3 + 4 + 5 + 2 + 3 + 5 + 3 + 3 + col_phones + target_phones)
+      Insert boundary: words, int_start + fraction * und
+      Insert boundary: words, int_start + fraction * (und + jetzt)
+      Insert boundary: words, int_start + fraction * (und + jetzt + sollst)
+      Insert boundary: words, int_start + fraction * (und + jetzt + sollst + du)
+      Insert boundary: words, int_start + fraction * (und + jetzt + sollst + du + den)
+      Insert boundary: words, int_start + fraction * (und + jetzt + sollst + du + den + wurfel)
+      Insert boundary: words, int_start + fraction * (und + jetzt + sollst + du + den + wurfel + auf)
+      Insert boundary: words, int_start + fraction * (und + jetzt + sollst + du + den + wurfel + auf + det)
+      Insert boundary: words, int_start + fraction * (und + jetzt + sollst + du + den + wurfel + auf + det + col_phones)
+      Insert boundary: words, int_start + fraction * (und + jetzt + sollst + du + den + wurfel + auf + det + col_phones + target_phones)
       # Insert boundary: words, int_start + fraction * 6
 
       words_int = Get interval at time: words, int_start
@@ -115,10 +149,10 @@ for tg from 1 to tgs_no
       phones_int = Get interval at time: phones, int_start
 
       phones_labels$# = {"u", "n", "d", "j", "e", "tz", "t", "s", "o", "l", "s", "t",
-        ... "d", "u", "d", "e", "n", "w", "ü", "r", "f", "l", "a", "u", "f"}
+        ... "d", "u", "d", "e", "n", "w", "ü", "r", "f", "ə", "l", "aʊ", "f"}
 
       # Number of phones in "und jetzt solst du den Würfel auf"
-      n_und_auf = 25
+      n_und_auf = und + jetzt + sollst + du + den + wurfel + auf
 
       for f from 0 to n_und_auf - 1
         Set interval text: phones, phones_int + f, phones_labels$# [f + 1]
@@ -131,7 +165,11 @@ for tg from 1 to tgs_no
 
       phones_int += 3
       for f from 1 to col_phones
-        Set interval text: phones, phones_int + f - 1, mid$(colour_ipa$, f, 1)
+        this_phone$ = mid$(colour_ipa$, f, 1)
+        if this_phone$ == "U"
+          this_phone$ = "aʊ"
+        endif
+        Set interval text: phones, phones_int + f - 1, this_phone$
       endfor
 
       phones_int += col_phones
@@ -145,13 +183,15 @@ for tg from 1 to tgs_no
           this_phone$ = "dz"
         elif this_phone$ == "O"
           this_phone$ = "oː"
+        elif this_phone$ == "U"
+          this_phone$ = "aʊ"
         endif
         Set interval text: phones, phones_int + f - 1, this_phone$
       endfor
 
       phones_int += target_phones
-      ablegen$# = { "a", "b", "l", "eː", "g", "n" }
-      for f from 1 to 6
+      ablegen$# = { "a", "b", "l", "eː", "g", "ə", "n" }
+      for f from 1 to ablegen
         Set interval text: phones, phones_int + f - 1, ablegen$# [f]
       endfor
 
@@ -159,5 +199,10 @@ for tg from 1 to tgs_no
       q += 1
     endif
   endfor
+
+  selectObject(this_tg)
+  Remove tier: 6
+
+  Save as text file: "../../osf/comps/data/production/audio/'speaker$'.TextGrid"
 
 endfor
