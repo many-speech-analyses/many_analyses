@@ -137,22 +137,24 @@ Recent collaborative attempts have started to shed light on how different analys
 ## Crowdsourcing alternative analyses
 
 In a collaborative effort, Silberzahn et al. (2018) let twenty-nine independent analysis teams address the same research hypothesis.
-Analytical approaches and consequently the results varied widely between teams.
+Analytical approaches and scientific conclusions varied widely between teams.
 Sixty-nine percent of the teams found support for the hypothesis, and 31% did not.
 Out of the 29 analytical strategies, there were 21 unique combinations of covariates.
 Importantly, the observed variability was neither predicted by the team's preconceptions about the phenomenon under investigation nor by peer ratings of the quality of their analyses.
 The authors results suggest that analytic plurality is a fact of life and not driven by different levels of expertise or bias.
-Similar crowd-sourced studies recruiting independent analyst teams showed similar results.
-
-<!-- TODO: SUMUP neuroscience, cognitive modeling, clinical, predictive models -->
+Similar crowd-sourced studies recruiting independent analyst teams showed similar results: 
+Both Dulith et al. (2019) ad Starns et al. (2019) investigated analysts choices when inferring theoretical constructs based on the same data set using computational models.
+Both studies reveal vastly different modeling strategies, even though scientific conclusions were similar across analysis teams (see also Parker et al. (accepted) on analytical flexibility in ecology and Botvinik-Nezer et al. (2020) on neuroimaging data).
+Bastiaansen et al. (2019) crowdsourced clinical recommendations based on data analysis of an individual patient. 
+Results suggests that analysis team differed substantially regarding decisions related to both the statistical analysis of the data set and the theoretical rationale behind interpreting the statistical results, indicating that there are multiple layers for degrees of freedom that interact with each other.
 
 While these projects show a large degree of analytical flexibility with impactful consequences, they dealt with flexibility in inferential or computational modeling.
-In these studies the data sets were fixed and data collection or measurement could not be changed. <!-- JC: any particular reason to favor data table over data set? --> <!-- TR: I think my reasoning was data set can be data table or raw data. Data table is the numerical derivation of the raw data. Maybe not a useful distinction?-->
-
+In these studies the data sets were fixed and data collection or measurement could not be changed. 
 However, in many fields the primary raw data are complex signals that need to be operationalized according to the research question.
 In social sciences, the raw observations correspond to human behavior, sometimes measured as a complex visual or acoustic signal.
 Decisions about how to measure a theoretical construct related to that behavior or its underlying cognitive processes might interact with downstream decisions about statistical modeling and vice versa [@flake2019].
-To understand how analytical flexibility manifests itself in a scenario where a complex decision procedure is involved in operationalizing and measuring complex signals, the present paper looks at an experimentally elicited speech data set.
+
+To add to our understanding of how analytical flexibility manifests itself in a scenario where a complex decision procedure is involved in operationalizing and measuring complex signals, the present paper looks at an experimentally elicited speech data set.
 
 ## Operationalizing speech
 
