@@ -4,9 +4,9 @@
 %
 \documentclass[
   english,
-  man,floatsintext]{apa6}
+  man]{apa6}
+\usepackage{amsmath,amssymb}
 \usepackage{lmodern}
-\usepackage{amssymb,amsmath}
 \usepackage{ifxetex,ifluatex}
 \ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
   \usepackage[T1]{fontenc}
@@ -44,7 +44,7 @@
   hidelinks,
   pdfcreator={LaTeX via pandoc}}
 \urlstyle{same} % disable monospaced font for URLs
-\usepackage{graphicx,grffile}
+\usepackage{graphicx}
 \makeatletter
 \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
 \def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
@@ -113,6 +113,12 @@
 \makeatother
 \shorttitle{Many analysts - one speech data set}
 \keywords{crowdsourcing science, data analysis, scientific transparency, speech, acoustic analysis\newline\indent Word count: X}
+\DeclareDelayedFloatFlavor{ThreePartTable}{table}
+\DeclareDelayedFloatFlavor{lltable}{table}
+\DeclareDelayedFloatFlavor*{longtable}{table}
+\makeatletter
+\renewcommand{\efloat@iwrite}[1]{\immediate\expandafter\protected@write\csname efloat@post#1\endcsname{}}
+\makeatother
 \usepackage{lineno}
 
 \linenumbers
@@ -123,8 +129,34 @@
   \usepackage{polyglossia}
   \setmainlanguage[]{english}
 \else
-  \usepackage[shorthands=off,main=english]{babel}
+  \usepackage[main=english]{babel}
+% get rid of language-specific shorthands (see #6817):
+\let\LanguageShortHands\languageshorthands
+\def\languageshorthands#1{}
 \fi
+\ifluatex
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newenvironment{CSLReferences}[2] % #1 hanging-ident, #2 entry spacing
+ {% don't indent paragraphs
+  \setlength{\parindent}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1 \everypar{\setlength{\hangindent}{\cslhangindent}}\ignorespaces\fi
+  % set entry spacing
+  \ifnum #2 > 0
+  \setlength{\parskip}{#2\baselineskip}
+  \fi
+ }%
+ {}
+\usepackage{calc}
+\newcommand{\CSLBlock}[1]{#1\hfill\break}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
 
 \title{Analytical choices for analyzing multidimensional behavior - Many analysts test hypotheses about human speech.}
 \author{First Author\textsuperscript{\#}, Second Author\textsuperscript{\#}, \ldots{}\textsuperscript{\#}, \& Last Author\textsuperscript{\#}}
@@ -170,17 +202,17 @@ Two or three sentences to provide a \textbf{broader perspective}, readily compre
 \section{Introduction}\label{introduction}}
 
 In order to effectively accumulate knowledge, science needs to (i) produce data that can be replicated using the original methods and (ii) arrive at robust conclusions substantiated by the data.
-In recent coordinated efforts to replicate published findings, the scientific disciplines have uncovered surprisingly low success rates for (i) (e.g., Open Science Collaboration, 2015; Camerer et al., 2018) leading to what is now referred to as the \emph{replication crisis}.
+In recent coordinated efforts to replicate published findings, the scientific disciplines have uncovered surprisingly low success rates for (i) (Camerer et al., 2018; e.g., Open Science Collaboration, 2015) leading to what is now referred to as the \emph{replication crisis}.
 Beyond the difficulties of replicating scientific findings, a growing body of evidence suggests that the theoretical conclusions drawn from data are often variable even when researchers have access to reliable data (REFS).
-The latter situation has been referred to as the \emph{inference crisis} (Rotello, Heit, \& Dubé, 2015; Starns et al., 2019) and is, among other things, rooted in the inherent flexibility of data analysis (often referred to as researcher degrees of freedom: Simmons, Nelson, \& Simonsohn, 2011; Gelman \& Loken, 2014).
+The latter situation has been referred to as the \emph{inference crisis} (Rotello, Heit \& Dubé 2015, Starns et al.~2019) and is, among other things, rooted in the inherent flexibility of data analysis (often referred to as researcher degrees of freedom: Simmons, Nelson, \& Simonsohn, 2011, Gelman \& Loken 2013).
 Data analysis involves many different steps, such as inspecting, organizing, transforming, and modeling the data, to name a few.
 Along the way, different methodological and analytical choices need to be made, all of which may influence the final interpretation of the data.
 These researcher degrees of freedom are both a blessing and a curse.
 
-They are a blessing because they afford us the opportunity to look at nature from different angles, which, in turn, allows us to make important discoveries and generate new hypothesis (e.g., Box, 1976; De Groot, 2014; Tukey, 1977).
-They are a curse because idiosyncratic choices can lead to categorically different interpretations, which eventually find their way into the publication record where they are taken for granted (Simmons et al., 2011).
+They are a blessing because they afford us the opportunity to look at nature from different angles, which, in turn, allows us to make important discoveries and generate new hypothesis (e.g.~Box 1976, Tukey 1977, de Groot 2014).
+They are a curse because idiosyncratic choices can lead to categorically different interpretations, which eventually find their way into the publication record where they are taken for granted (Simmons et al.~2011).
 Recent projects have shown that the variability between different data analysts is vast.
-This variability can lead independent researchers to draw different conclusions about the same data set as demonstrated by several projects crowd-sourcing analysis strategies (e.g., Silberzahn et al., 2018; Botvinik-Nezer et al., 2020; Starns et al., 2019).
+This variability can lead independent researchers to draw different conclusions about the same data set as demonstrated by several projects crowd-sourcing analysis strategies (e.g.~Silberzahn et al.~2018, Starns et al.~2019, Botvinik-Nezer et al., 2020).
 These projects, however, might still underestimate the extent to which analysts vary because data analysis is not merely restricted to statistical inference.
 Human behavior is complex and offers many ways to be translated into numbers.
 This is particularly true for fields that draw conclusions about human behavior and cognition from multidimensional data like audio or video data.
@@ -197,22 +229,22 @@ Specifically, we report the impact of the analytic pipeline on research results 
 Data analysis comes with many decisions like how to measure a given phenomenon or behavior, what data to submit to statistical modeling and which to exclude in the final analysis, or what inferential decision procedure to apply.
 However, if these decisions during data analysis are not specified in advance, we might stumble upon seemingly meaningful patterns in the data that are merely statistical flukes.
 This can be problematic because humans show cognitive biases that can lead to erroneous inferences.
-Humans filter the world in irrational ways (e.g., Tversky \& Kahneman, 1974), seeing coherent patterns in randomness (Brugger 2001), convincing themselves of the validity of prior expectations (``I knew it'', Nickerson, 1998), and perceiving events as being plausible in hindsight (``I knew it all along'', Fischhoff, 1975).
-In connection with an academic incentive system that rewards certain discovery processes more than others (Koole \& Lakens, 2012; Sterling, 1959), we often find ourselves exploring many possible analytical pipelines, but only reporting a select few.
-This issue is particularly amplified in fields in which the raw data lend themselves to many possible ways to measure (Roettger, 2019).
+Humans filter the world in irrational ways (e.g., Tversky and Kahneman 1974), seeing coherent patterns in randomness (Brugger 2001), convincing themselves of the validity of prior expectations (``I knew it,'' Nickerson 1998), and perceiving events as being plausible in hindsight (``I knew it all along,'' Fischhoff 1975).
+In connection with an academic incentive system that rewards certain discovery processes more than others (Sterling 1959, Koole \& Lakens 2012), we often find ourselves exploring many possible analytical pipelines, but only reporting a select few.
+This issue is particularly amplified in fields in which the raw data lend themselves to many possible ways to measure (Roettger 2019).
 Combined with a wide variety of methodological and theoretical traditions as well as varying levels of statistical training across subfields, the inherent flexibility of data analysis might lead to a vast plurality of analytic approaches that can lead to different scientific conclusions.
-Consequently, there might be many published papers that present overconfident interpretations of their data based on idiosyncratic analytic strategies (e.g., Simmons et al., 2011; Gelman \& Loken, 2014).
+Consequently, there might be many published papers that present overconfident interpretations of their data based on idiosyncratic analytic strategies (e.g.~Simmons et al.~2011, Gelman \& Loken 2013).
 These interpretations are either associated with an unknown amount of uncertainty or lend themselves to alternative interpretation if analyzed differently.
 However, instead of being critically evaluated, scientific results often remain unchallenged in the publication record.
-Despite recent efforts to improve transparency and reproducibility (REFS) and freely available and accessible infrastructures such as provided by the Open Science Framework (osf.io, ADD), critical re-analyses of published analytic strategies are still not very common because data sharing remains rare (Wicherts, Borsboom, Kats, \& Molenaar, 2006).
+Despite recent efforts to improve transparency and reproducibility (REFS) and freely available and accessible infrastructures such as provided by the Open Science Framework (osf.io, ADD), critical re-analyses of published analytic strategies are still not very common because data sharing remains rare (Wicherts, Borsboom, Kats, \& Molenaar, 2006, RECENT REF).
 
-While this issue has been widely discussed both from a conceptual point of view (Nosek \& Lakens, 2014; Simmons et al., 2011; Wagenmakers, Wetzels, Borsboom, Maas, \& Kievit, 2012) and its application in individual scientific fields (e.g.~Wichert et al.~2015, Charles et al.~2019, Roettger, 2019), there are still many unknowns regarding the extent of analytical plurality in practice.
+While this issue has been widely discussed both from a conceptual point of view (Simmons et al.~2011, Wagenmakers et al.~2012, Nosek and Lakens 2014) and its application in individual scientific fields (e.g.~Wichert et al.~2015, Charles et al.~2019, Roettger 2019), there are still many unknowns regarding the extent of analytical plurality in practice.
 Recent collaborative attempts have started to shed light on how different analysts tackle the same data set and have revealed a large amount of variability.
 
 \hypertarget{crowdsourcing-alternative-analyses}{%
 \subsection{Crowdsourcing alternative analyses}\label{crowdsourcing-alternative-analyses}}
 
-In a collaborative effort, Silberzahn et al. (2018) let twenty-nine independent analysis teams address the same research hypothesis.
+In a collaborative effort, Silberzahn et al.~(2018) let twenty-nine independent analysis teams address the same research hypothesis.
 Analytical approaches and consequently the results varied widely between teams.
 Sixty-nine percent of the teams found support for the hypothesis, and 31\% did not.
 Out of the 29 analytical strategies, there were 21 unique combinations of covariates.
@@ -240,12 +272,12 @@ Thus, choosing how to measure a phenomenon of interest is an important and non-t
 \def\labelenumi{(\arabic{enumi})}
 \tightlist
 \item
-  \enquote{I can't bear another meeting on zoom.}
+  ``I can't bear another meeting on zoom.''
 \end{enumerate}
 
 Depending on the speaker's intention, this sentence can be said in different ways.
-If, for instance, the speaker is exhausted by all their meetings, the speaker might acoustically highlight the word \enquote{another} or \enquote{meeting}.
-If, on the other hand, the speaker is just tired of video conferences, they might acoustically highlight the word \enquote{zoom}.
+If, for instance, the speaker is exhausted by all their meetings, the speaker might acoustically highlight the word ``another'' or ``meeting.''
+If, on the other hand, the speaker is just tired of video conferences, they might acoustically highlight the word ``zoom.''
 
 If we want to compare the speech signal associated with these two intentions, how do we quantify the difference between them? What do we measure and how do we measure it?
 Given the continuous and transient nature of speech, identifying speech parameters and temporal domains becomes a non-trivial task.
@@ -253,50 +285,31 @@ Utterances stretch over hundreds of milliseconds and contain several levels of l
 The researcher is thus confronted with a considerable number of parameters and combinations thereof to choose from.
 
 Speech categories are inherently multidimensional and dynamic: they consist of a cluster of parameters that are modulated over time.
-The acoustic parameters of one category are usually asynchronous, i.e.~they appear at different time points in the unfolding signal, and overlap with parameters of other categories (e.g., Jongman, Wayland, \& Wong, 2000; Lisker, 1986; Summerfield, 1984; Winter, 2014).
+The acoustic parameters of one category are usually asynchronous, i.e.~they appear at different time points in the unfolding signal, and overlap with parameters of other categories (e.g.~Jongman et al., 2000; Lisker, 1986; Summerfield, 1984; Winter, 2014).
 A classical example is the distinction between voiced and voiceless stops in English (i.e.~/b/ and /p/ in \emph{bear} vs \emph{pear}).
 This voiced/voiceless contrast is manifested by many acoustic features which can differ depending on several factors, such as position of the consonant in the word and surrounding sounds (Lisker, 1977).
 Furthermore, correlates of the contrast can even be found away from the consonant, in temporally distant speech units.
 For example, the initial /l/ of the English words \emph{led} and \emph{let} is affected by the voicing of the final consonant (/t, d/) (Hawkins \& Nguyen, 2004).
 The multiplicity of phonetic cues grows exponentially if we look at larger temporal domains as is the case for suprasegmental aspects of speech.
-For example, studies investigating acoustic correlates of word stress (e.g.~the difference between \emph{insíght} and \emph{íncite}) have been using a wide variety of measurements, including temporal characteristics (duration of certain segments or sub-segmental intervals), spectral characteristics (intensity, formants, and spectral tilt), and measurements related to fundamental frequency (f0) (e.g., Gordon \& Roettger, 2017).
+For example, studies investigating acoustic correlates of word stress (e.g.~the difference between \emph{insíght} and \emph{íncite}) have been using a wide variety of measurements, including temporal characteristics (duration of certain segments or sub-segmental intervals), spectral characteristics (intensity, formants, and spectral tilt), and measurements related to fundamental frequency (f0) (e.g.~Gordon \& Roettger, 2017).
 
-Moving onto the expression of higher-level functions like information structure and discourse pragmatics, relevant acoustic cues can be distributed throughout even larger domains, such as phrases and whole utterances (e.g., Ladd, 2008).
+Moving onto the expression of higher-level functions like information structure and discourse pragmatics, relevant acoustic cues can be distributed throughout even larger domains, such as phrases and whole utterances (e.g.~Ladd 2008).
 Differences in position, shape, and alignment of pitch modulations over multiple locations within a sentence are correlated with differences in discourse functions (e.g.~Niebuhr et al., 2011).
-The latter can also be expressed by global vs local pitch modulations (Haan 2002), as well as acoustic information within the temporal or spectral domain (e.g., Van Heuven \& Van Zanten, 2005).
-Extra-linguistic information, like speaker's intentions, levels of arousal or social identity, are also conveyed by broad-domain parameters, such as voice quality, rhythm, and pitch (Foulkes \& Docherty, 2006; Ogden, 2004; White, Payne, \& Mattys, 2009).
+The latter can also be expressed by global vs local pitch modulations (Haan 2002), as well as acoustic information within the temporal or spectral domain (e.g.~van Heuven \& van Zanten 2005).
+Extra-linguistic information, like speaker's intentions, levels of arousal or social identity, are also conveyed by broad-domain parameters, such as voice quality, rhythm, and pitch (Foulkes \& Docherty, 2006; Ogden, 2009; White, Payne, \& Mattys, 2009).
 
 When testing hypotheses on speech production data, researchers are faced with many choices and possibilities.
 The larger the functional domain (e.g.~segments vs words vs utterances), the higher the number of conceivable operationalizations.
 For example, when comparing two realization of example (1) (here repeated as 2), one of which is intended to signal emphasis on \emph{another} and one of which emphasizes \emph{zoom}.
 
-(2a) \enquote{I can't bear ANOTHER meeting on zoom.}\\
-(2b) \enquote{I can't bear another meeting on ZOOM.}
-
-In text ref to Figure \ref{fig:forkingPaths}
-
-
-
-\begin{figure}
-\includegraphics[width=1\linewidth]{/Users/casillas/academia/research/in_progress/many_analyses/figs/ForkingPaths} \caption{Illustrations of the analytical flexibility associated with acoustic analyses. (A) an example of multiple possible and justifiable decisions when comparing to utterances; (B) waveform and fundamental frequency (f0) track of two instances of utterances 2a and 2b. The words ``another is highlighted by the green box''; (C) spectrogram and f0 track of the word another, exemplifying different operationalizations of differences in pitch.}\label{fig:forkingPaths}
-\end{figure}
+(2a) ``I can't bear ANOTHER meeting on zoom.''
+(2b) ``I can't bear another meeting on ZOOM.''
 
 Do we only compare the word \emph{another} in 2a and 2b or also the word \emph{zoom} or do we measure utterance wide acoustic profiles? Do we measure the whole word? Or just the stressed syllable?
-Do we average the domain or do we measure a specific point in time?
-Do we measure fundamental frequency or intensity?
-When looking at phrase-wide temporal domains, the number of possible analytical pipelines quickly explodes.
-This plurality of analytical paths is illustrated in figure X.
-When comparing two utterance such as 2a and 2b, there are many things to consider.
-Even if we know that we want to compare fundamental frequency of only the word \emph{another} across utterances 2a and 2b, there are still many decisions to be made, all of which can be justified.
-For example, we could measure f0 at specific points in time like the onset of the window, the offset, the midpoint.
-We could also measure the value or time of the minimum or maximum f0 value.
-We could summarise f0 across the entire window and extract the mean, median or standard deviation of f0.
-And the garden of forking paths does not stop here.
-In Figure X, we went with a specific option to automatically calculate f0, INSERT SOME EXAMPLES OF PITCH TRACKING OPTIONS.
-Moreover, knowing that theses estimates are somewhat noisy, we could smooth these contours to different degrees, automatically or manually remove estimates that are off, etc.
+Do we measure average the domain or do we measure a specific point in time? Do we measure fundamental frequency or intensity? When looking at phrase-wide temporal domains, the number of possible analytical pipelines quickly explodes (see Figure x)
 
 These decisions are usually made prior to any statistical analysis, but are at times revised a posteriori (i.e.~after data collection and/or preliminary analyses) in light of unforeseen or surprising outcomes.
-These myriads of possible decisions are exponentiated by researcher degrees of freedom related to statistical analysis (e.g.~Wicherts et al.~????).
+These myriads of possible decisions are exponentiated by researcher degrees of freedom related to statistical analysis (e.g.~Wicherts et al.).
 Even the analysis of a single measure can be approached via an ever-increasing range of different statistical models (REFs).
 The present paper probes this garden of forking paths in the analysis of speech.
 To assess the variability in data analysis pipelines across independent researchers, we provided XX analytical teams with an experimentally elicited speech corpus and asked them to investigate acoustic differences related to a functional contrast that might be manifested across the whole utterance.
@@ -309,16 +322,16 @@ We are interested in the acoustic profile of referring expressions.
 Referring is one of the most basic and prevalent uses of language and one of the most widely researched areas in language science.
 It is an open question how speakers choose a referring expression when they want to refer to a specific entity like a banana.
 The context within which an entity occurs (i.e., with other non-fruits, other fruits, or other bananas) plays a large part in determining the choice of referring expressions.
-Generally, speakers aim to be as informative as possible to uniquely establish reference to the intended object, but they are also resource-efficient in that they avoid redundancy (Grice, 1975).
+Generally, speakers aim to be as informative as possible to uniquely establish reference to the intended object, but they are also resource-efficient in that they avoid redundancy (Grice 1975).
 Thus one would expect the use of a modifier, for example, only if it is necessary for disambiguation.
 For instance, one might use the adjective \emph{yellow} to describe a banana in a situation in which there is a yellow and a less ripe green banana available, but not when there is only one banana to begin with.
 
-Despite this coherent idea that speakers are both rational and efficient, there is much evidence that speakers are often over-informative: Speakers use referring expressions that are more specific than strictly necessary for the unambiguous identification of the intended referent (Rubio-Fernández, 2016; Sedivy, 2003; Westerbeek, Koolen, \& Maes, 2015), which has been argued to facilitate object identification and making communication between speakers and listeners more efficient (Arts, Maes, Noordman, \& Jansen, 2011; Paraboni, Van Deemter, \& Masthoff, 2007; Rubio-Fernández, 2016).
+Despite this coherent idea that speakers are both rational and efficient, there is much evidence that speakers are often over-informative: Speakers use referring expressions that are more specific than strictly necessary for the unambiguous identification of the intended referent (Sedivy 2003, Westerbeek et al.~2015, Rubio-Fernandez 2016), which has been argued to facilitate object identification and making communication between speakers and listeners more efficient (Arts et al.~2011, Paraboni et al.~2007, Rubio-Fernandez 2016).
 Recent findings suggest that the utility of a referring expression depends on how good it is for a listener (compared to other referring expressions) to identify a target object.
-For example, Degen, Hawkins, Graf, Kreiss, and Goodman (2020) showed that modifiers that are less typical for a given referent (e.g.~a blue banana) are more likely to be used in an over-informative scenario (e.g.~when there is just one banana).
-This account, however, has mainly focused on content selection (Gatt, Gompel, Deemter, \& Krahmer, 2013), i.e.~whether a certain referential expression is chosen or not, ignoring the fact that speech communication is much richer.
+For example, Degen et al.~(2020) showed that modifiers that are less typical for a given referent (e.g.~a blue banana) are more likely to be used in an over-informative scenario (e.g.~when there is just one banana).
+This account, however, has mainly focused on content selection (Gatt et al.~2013), i.e.~whether a certain referential expression is chosen or not, ignoring the fact that speech communication is much richer.
 
-Even looking at morphosyntactically identical expressions, speakers can modulate these via suprasegmental acoustic properties like temporal and spectral modifications of the segments involved (e.g., Ladd, 2008).
+Even looking at morphosyntactically identical expressions, speakers can modulate these via suprasegmental acoustic properties like temporal and spectral modifications of the segments involved (e.g.~Ladd 2008).
 Most prominently, languages use intonation to signal discourse relationships between referents (among other functions).
 Intonation marks discourse-relevant referents for being new or given information to guide the listeners' interpretation of incoming messages.
 In many languages, speakers can use particular pitch movements to signal whether a referent has already been mentioned and is therefore referred back to, or a referent is newly introduced into the discourse.
@@ -366,7 +379,7 @@ The initiating authors (SC, JC, TR) created a publicly available document provid
 The project will be advertised via Social Media, using mailing lists for linguistic and psychological societies (full scope of these lists is not fixed but will include LIST OF LISTS), and via word of mouth.
 The target population is active speech science researchers with a graduate degree (or currently studying for a graduate degree) in a relevant discipline.
 Researchers can choose to work independently or in a small team.
-For the sake of simplicity, we refer to single researcher or small teams as \enquote{analysis teams}.
+For the sake of simplicity, we refer to single researcher or small teams as ``analysis teams.''
 
 Recruitment for this project is ongoing but we aim for a minimum of XX analysis teams independently evaluating each data set (see sample size justification below).
 We will simultaneously recruit volunteers to peer-review the analyses conducted by the other volunteers through the same channels.
@@ -382,7 +395,7 @@ The probability \(p\) that a CrI interval does not include 0 is obtained via the
 
 \[t = \frac{\tau^2}{SE(\tau^2)}\]
 
-Assuming that the underlying distribution of effect sizes is normal (Knight, 2000), the standard error of \(\tau^2\) can be calculated with the formula:
+Assuming that the underlying distribution of effect sizes is normal (Knight 2000), the standard error of \(\tau^2\) can be calculated with the formula:
 
 \[SE(\tau^2) = \sqrt{\frac{2\tau^4}{(n-1)}}\]
 
@@ -472,7 +485,7 @@ We welcome ratings of any number between 0 and 100."
 
 After providing this rating, the reviewer will then be shown a series of text boxes and the following prompts:
 
-\noindent \enquote{Please explain your ratings of this analysis.
+\noindent ``Please explain your ratings of this analysis.
 \noindent Please evaluate the selection of acoustic features.
 \noindent Please evaluate the measurement of acoustic features.
 \noindent Please evaluate the choice of statistical analysis type.
@@ -480,13 +493,13 @@ After providing this rating, the reviewer will then be shown a series of text bo
 \noindent Please evaluate the suitability of the variables included in (or excluded from) the statistical model.
 \noindent Please evaluate the suitability of the structure of the statistical model.
 \noindent Please evaluate choices to exclude or not exclude subsets of the data.
-\noindent Please evaluate any choices to transform data (or, if there were no transformations, but you think there should have been, please discuss that choice).}
+\noindent Please evaluate any choices to transform data (or, if there were no transformations, but you think there should have been, please discuss that choice).''
 
 After submitting this review, a methods section from a second analysis will then be made available to the reviewer.
 This same sequence will be followed until all analyses allocated to a given reviewer have been provided and reviewed.
 After providing the final review, the reviewer will be simultaneously presented with all four (or more) methods sections that reviewer has just completed reviewing, the option to revise their original ratings, and a text box to provide an explanation.
-The invitation to revise the original ratings will be as follows: \enquote{If, now that you have seen all the analyses you are reviewing, you wish to revise your ratings of any of these analyses, you may do so now.}
-The text box will be prefaced with this prompt: \enquote{Please explain your choice to revise (or not to revise) your ratings.}
+The invitation to revise the original ratings will be as follows: ``If, now that you have seen all the analyses you are reviewing, you wish to revise your ratings of any of these analyses, you may do so now.''
+The text box will be prefaced with this prompt: ``Please explain your choice to revise (or not to revise) your ratings.''
 
 \hypertarget{step-4-evaluate-variation}{%
 \subsection{Step 4: Evaluate Variation}\label{step-4-evaluate-variation}}
@@ -496,53 +509,44 @@ Th initiating authors (SC, JC, TR) will conduct the analyses outlined in this se
 \hypertarget{descriptive-statistics}{%
 \subsubsection{Descriptive statistics}\label{descriptive-statistics}}
 
-We will calculate summary statistics describing variation among analyses, including the nature and number of acoustic measures (e.g.~f0 or duration), the operationalization and the temporal domain of measurement (e.g.~mean of an interval or value at specified point in time), the nature and number of model parameters for both fixed and random effects {[}if applicable{]}, the nature and reasoning behind inferential assessments (e.g.~dichotomous decision based on p-values, ordinal decision based on Bayes factor), as well as the mean, standard deviation and range of effect sizes reported.
-We anticipate that the majority of statistical analyses will be expressible as a (generalized) linear regression model.
-
-FORMULA
+We will calculate summary statistics describing variation among analyses, including (a) the nature and number of acoustic measures (e.g.~f0 or duration), (b) the operationalization and the temporal domain of measurement (e.g.~mean of an interval or value at specified point in time), (c) the nature and number of model parameters for both fixed and random effects {[}if applicable{]}, (d) the nature and reasoning behind inferential assessments (e.g.~dichotomous decision based on \emph{p}-values, ordinal decision based on Bayes factor), as well as the (e) mean, (f) standard deviation and (g) range of the reported effect sizes.
 
 \hypertarget{s:meta-est}{%
 \subsubsection{Meta-analytical estimation}\label{s:meta-est}}
 
-Standard random-effects meta-analytical techniques will be used to summarize the variability in effect sizes and predicted values of dependent variables among the individual analyses.
-We anticipate that researchers will use multi-level regression models, so that common effect size measures such as Cohen's \(d\) would be inappropriate.
-Since the outcome variables used by the analysis teams might substantially differ in their measurement scales (e.g, Hz for frequency vs ms for duration), we will standardize all reported effects by refitting each model with scaled outcome variables (the observed values subtracted from the mean divided by the standard deviation, i.e.~\emph{z}-scores) using a Bayesian multilevel model.
-The standardized effect size (\(\eta_i\)) of each analysis will be the estimated coefficient of the critical predictor (i.e.~critical according to the analysis teams' self-reported inferential criteria).
-If multiple predictors within a single analysis have been reported as critical, each will be included in the meta-analytical model (described in details in the next paragraph).
-Moreover, to account for the degree of uncertainty around each effect size, which can differ between analyses, we will enter in the meta-analytical model the standard deviation of each effect size returned by each analysis' multilevel model, as the standard error of the effect size (\(\text{se}_i\)).
-This will enable us to fit a so-called \enquote{measurement-error} model, in which standardized effect sizes with smaller standard errors will affect the meta-analytical estimate more than effect sizes with bigger standard errors.
+To summarize the variability in reported effect sized, we will follow Bayesian random-effects meta-analytical techniques.
+Based on the common practices currently in place within the field, we anticipate that researchers will use multi-level/hierarchical/random-effects regression models, so that common effect size measures such as Cohen's \(d\) would be inappropriate.
+Since the variables used by the analysis teams might substantially differ in their measurement scales (e.g, Hz for frequency vs ms for duration), we will standardize all reported effects by refitting each reported model with centered and scaled continuous variables (\emph{z}-scores, i.e.~the observed values subtracted from the mean divided by the standard deviation) and sum-coded factor variables {[}???{]}.
+Each standardized (refitted) model will be fitted as a Bayesian regression model with Stan (Stan Development Team, 2020b), RStan (Stan Development Team, 2020a), and brms (Bürkner, 2017) in R (R Core Team, 2020).
+For those reported models that were originally fitted within a frequentist approach, uniform distributions will be used as the priors of all parameters (with the restriction that only positive numbers will be included for scale parameters), making the standardized models in fact equivalent to the reported frequentist models.
+If a team has fitted Bayesian models, the same priors as reported by the team will be used in fitting the respective standardized model.
 
-After the extraction of the standardized effect sizes \(\eta_i\) and related standard error \(\text{se}_i\) for each critical predictor of the individual analyses, the initiating authors will then fit a cross-classified Bayesian meta-analysis using the multilevel regression model described below:
+The estimated coefficients of the critical predictors (i.e.~critical according to the analysis teams' self-reported inferential criteria), as obtained from the standardized models, will be used as the standardized effect size (\(\eta_i\)) of each reported model.
+If multiple predictors within a single analysis have been reported as critical, each will be included in the meta-analytical model (described in details in the next paragraph).
+Moreover, to account for the differing degree of uncertainty around each standardized effect size, we will use the standard deviation of each effect size returned by the standardized models as the standard error (\(\text{se}_i\)) of the effect size.
+This will enable us to fit a so-called ``measurement-error'' model, in which both the standardized effect sizes and their respective standard errors are entered in the the meta-analytical model.
+As a desired consequence, effect sizes with a greater standard error will be weighted less than those with a smaller standard error in the meta-analytical calculations.
+
+After having obtained the standardized effect sizes \(\eta_i\) with related standard errors \(\text{se}_i\), for each critical predictor of the individual reported analyses, the initiating authors will fit a Bayesian random-effects meta-analysis using the following multilevel regression model:
 
 \[
 \begin{aligned}
-\eta_i   & \sim \text{Normal}(\mu_i, \sigma_i) \\
-\mu_i     & = \alpha + \alpha_{\text{team}[i]} + \beta_n\\
-\alpha  & \sim \text{Normal}(0, 1) \\
-\beta_n & \sim \text{Normal}(0, 1) \\
+\eta_i      & \sim \text{Normal}(\mu_i, \sigma_i) \\
+\mu_i       & = \alpha + \alpha_{\text{team}[i]} \\
+\alpha      & \sim \text{Normal}(0, 1) \\
 \sigma_{\alpha_{\text{team}}} & \sim \text{HalfCauchy}(0, 1) \\
-\sigma_i  & = \text{se}_i
+\sigma_i    & = \text{se}_i
 \end{aligned}
 \]
 
-The outcome variable will be the set of standardized effect sizes.
-The respective standard errors \(\text{se}_i\) will be included to fit a measurement-error model.
-The likelihood of \(\eta_i\) is assumed to be normally distributed (Knight, 2000).
-The analysis teams will be included as a group-level effect (i.e., random effect).
-For each population-level parameter \(\beta_n\) (i.e., the fixed effects, see below), the model will include regularizing, weakly informative priors (Gelman, Simpson, \& Betancourt, 2017), which are normally distributed and centered at 0 with a standard deviation of 1.
-We will fit the model with 4000 iterations (2000 warm-up) and Hamiltonian Monte-Carlo sampling of the posterior distribution is carried out using 4 chains distributed across 4 processing cores.
-The analysis will be conducted in R (R Core Team, 2020) and fit using Stan (Stan Development Team, 2019) via the R package brms (Bürkner, 2018).
-The code for the model can be found here: INSERT LINK.
-
-We will quantify the extent to which the standardized effect sizes are modulated by the following population-level predictors:
-
-\begin{itemize}
-\tightlist
-\item
-  The peer ratings of each analysis (numeric, 1-100).
-\item
-  \ldots{}
-\end{itemize}
+The outcome variable will be the set of standardized effect sizes \(\eta_i\).
+The likelihood of \(\eta_i\) is assumed to correspond to a normal distribution (Knight 2000).
+The analysis teams will constitute the group-level effect (i.e., random effect, \texttt{(1\ \textbar{}\ team)}).
+The standard errors \(\text{se}_i\) will be included as the standard deviation \(\sigma_i\) of \(\eta_i\) to fit a measurement-error model, as discussed above.
+We will use regularizing weakly-informative priors for the intercept \(\alpha\) (\(Normal(0, 1)\)) and for the group-level standard deviation \(\alpha_{\text{team}[i]}\) (\(HalfCauchy(0, 1)\)).
+We will fit this model with 4 chains of Hamiltonian Monte-Carlo sampling of the posterior distribution and 4000 iterations (2000 for warm-up) per chain, distributed across 4 processing cores.
+The analysis will be conducted in R (R Core Team, 2020) and fit using Stan (Stan Development Team, 2020b), RStan (Stan Development Team, 2020a), and brms (Bürkner, 2017).
+The code used to run the model can be found here: INSERT LINK.
 
 Finally, we will assess whether the standardized effect sizes show bias, and, if so, whether the bias is positive or negative (i.e., whether there is a disproportional greater number of bigger or smaller effect sizes than the meta-analytical mean estimate).
 This will be achieved through inspection of funnel plots (Light \& Pillemer, 1984; for a review see Egger, Smith, Schneider, \& Minder, 1997; and Sterne, Becker, \& Egger, 2005; for a critique Lau, Ioannidis, Terrin, Schmid, \& Olkin, 2006).
@@ -556,10 +560,10 @@ A sign of possible bias is when there are more points which are farther from the
 \caption{\label{fig:funnel-plot}Illustrations of funnel plots showing (a) no bias, (b) positive bias, and (c) negative bias in effect sizes. The vertical dashed line represents the meta-analitical mean.}
 \end{figure}
 
-\hypertarget{exploratory-road-map}{%
-\subsubsection{Exploratory road map}\label{exploratory-road-map}}
+\hypertarget{analytical-factors-affecting-effect-sizes}{%
+\subsubsection{Analytical factors affecting effect sizes}\label{analytical-factors-affecting-effect-sizes}}
 
-As a second step, we will explore the extent to which deviations from the meta-analytical mean by individual standardized effect sizes relate to a series of predictors (see below): The deviation score, which serves as the dependent variable in this analysis, will be the difference (\(\delta_i\)) between the meta-analytical mean (\(\hat{\eta}\)) and the individual standardized effect size of each analysis (\(\eta_i\)).
+As a second step, we will explore the extent to which deviations from the meta-analytical mean by individual standardized effect sizes relate to a series of predictors (see below). The deviation score \(\delta_i\), which serves as the dependent variable in this analysis, will be the difference between the meta-analytical mean (\(\hat{\eta}\)) and the individual standardized effect size of each analysis (\(\eta_i\)).
 These exploratory analyses are secondary to our estimation of variation in effect sizes described above.
 We wish to quantify relationships among variables, but we have no a priori expectation of effect size and we will not make dichotomous decisions about statistical significance.
 We will model the effect of the following predictors:
@@ -633,26 +637,12 @@ Analysts and initiating authors will discuss the limitations, results, and impli
 \setlength{\leftskip}{0.5in}
 
 \hypertarget{refs}{}
-\leavevmode\hypertarget{ref-arts2011overspecification}{}%
-Arts, A., Maes, A., Noordman, L. G., \& Jansen, C. (2011). Overspecification in written instruction. \emph{Linguistics}, \emph{49}(3), 555--574.
-
-\leavevmode\hypertarget{ref-botvinik2020variability}{}%
-Botvinik-Nezer, R., Holzmeister, F., Camerer, C. F., Dreber, A., Huber, J., Johannesson, M., \ldots{} others. (2020). Variability in the analysis of a single neuroimaging dataset by many teams. \emph{Nature}, 1--7.
-
-\leavevmode\hypertarget{ref-box1976science}{}%
-Box, G. E. (1976). Science and statistics. \emph{Journal of the American Statistical Association}, \emph{71}(356), 791--799.
-
-\leavevmode\hypertarget{ref-brms}{}%
-Bürkner, P.-C. (2018). Advanced Bayesian multilevel modeling with the R package brms. \emph{The R Journal}, \emph{10}(1), 395--411. \url{https://doi.org/10.32614/RJ-2018-017}
+\begin{CSLReferences}{1}{0}
+\leavevmode\hypertarget{ref-burkner2017}{}%
+Bürkner, P.-C. (2017). Brms: An {R} package for {B}ayesian multilevel models using {S}tan. \emph{Journal of Statistical Software}, \emph{80}(1), 1--28.
 
 \leavevmode\hypertarget{ref-camerer2018evaluating}{}%
 Camerer, C. F., Dreber, A., Holzmeister, F., Ho, T.-H., Huber, J., Johannesson, M., \ldots{} others. (2018). Evaluating the replicability of social science experiments in nature and science between 2010 and 2015. \emph{Nature Human Behaviour}, \emph{2}(9), 637--644. \url{https://doi.org/10.1038/s41562-018-0399-z}
-
-\leavevmode\hypertarget{ref-degen2020redundancy}{}%
-Degen, J., Hawkins, R. D., Graf, C., Kreiss, E., \& Goodman, N. D. (2020). When redundancy is useful: A bayesian approach to ``overinformative'' referring expressions. \emph{Psychological Review}.
-
-\leavevmode\hypertarget{ref-de2014thought}{}%
-De Groot, A. D. (2014). \emph{Thought and choice in chess} (Vol. 4). Walter de Gruyter GmbH \& Co KG.
 
 \leavevmode\hypertarget{ref-dice1945}{}%
 Dice, L. R. (1945). Measures of the amount of ecologic association between species. \emph{Ecology}, \emph{26}(3), 297--302.
@@ -660,44 +650,11 @@ Dice, L. R. (1945). Measures of the amount of ecologic association between speci
 \leavevmode\hypertarget{ref-egger1997}{}%
 Egger, M., Smith, G. D., Schneider, M., \& Minder, C. (1997). Bias in meta-analysis detected by a simple, graphical test. \emph{British Medical Journal}, \emph{315}, 629--634.
 
-\leavevmode\hypertarget{ref-fischhoff1975hindsight}{}%
-Fischhoff, B. (1975). Hindsight is not equal to foresight: The effect of outcome knowledge on judgment under uncertainty. \emph{Journal of Experimental Psychology: Human Perception and Performance}, \emph{1}(3), 288.
-
 \leavevmode\hypertarget{ref-flake2019}{}%
 Flake, J. K., \& Fried, E. I. (2019). Measurement schmeasurement: Questionable measurement practices and how to avoid them. Pre-print available at PsyArXiv.
 
 \leavevmode\hypertarget{ref-foulkes2006}{}%
 Foulkes, P., \& Docherty, G. (2006). The social life of phonetics and phonology. \emph{Journal of Phonetics}, \emph{34}(4), 409--438.
-
-\leavevmode\hypertarget{ref-gatt2013we}{}%
-Gatt, A., Gompel, R. P. van, Deemter, K. van, \& Krahmer, E. (2013). Are we bayesian referring expression generators. In. Cognitive Science Society.
-
-\leavevmode\hypertarget{ref-gelman2014statistical}{}%
-Gelman, A., \& Loken, E. (2014). The statistical crisis in science: Data-dependent analysis--a" garden of forking paths"--explains why many statistically significant comparisons don't hold up. \emph{American Scientist}, \emph{102}(6), 460--466.
-
-\leavevmode\hypertarget{ref-Gelman_2017}{}%
-Gelman, A., Simpson, D., \& Betancourt, M. (2017). The prior can often only be understood in the context of the likelihood. \emph{Entropy}, \emph{19}(10), 1--13. \url{https://doi.org/10.3390/e19100555}
-
-\leavevmode\hypertarget{ref-gordon2017acoustic}{}%
-Gordon, M., \& Roettger, T. (2017). Acoustic correlates of word stress: A cross-linguistic survey. \emph{Linguistics Vanguard}, \emph{3}(1), 1--11.
-
-\leavevmode\hypertarget{ref-grice1975logic}{}%
-Grice, H. P. (1975). Logic and conversation. In \emph{Speech acts} (pp. 41--58). Brill.
-
-\leavevmode\hypertarget{ref-hawkins2004influence}{}%
-Hawkins, S., \& Nguyen, N. (2004). Influence of syllable-coda voicing on the acoustic properties of syllable-onset /l/ in English. \emph{Journal of Phonetics}, \emph{32}(2), 199--231.
-
-\leavevmode\hypertarget{ref-jongman2000acoustic}{}%
-Jongman, A., Wayland, R., \& Wong, S. (2000). Acoustic characteristics of english fricatives. \emph{The Journal of the Acoustical Society of America}, \emph{108}(3), 1252--1263.
-
-\leavevmode\hypertarget{ref-knight2000}{}%
-Knight, K. (2000). \emph{Mathematical statistics}. Chapman; Hall, New York.
-
-\leavevmode\hypertarget{ref-koole2012rewarding}{}%
-Koole, S. L., \& Lakens, D. (2012). Rewarding replications: A sure and simple way to improve psychological science. \emph{Perspectives on Psychological Science}, \emph{7}(6), 608--614.
-
-\leavevmode\hypertarget{ref-ladd2008intonational}{}%
-Ladd, D. R. (2008). \emph{Intonational phonology}. Cambridge University Press.
 
 \leavevmode\hypertarget{ref-lau2006}{}%
 Lau, J., Ioannidis, J. P. A., Terrin, N., Schmid, C. H., \& Olkin, I. (2006). The case of the misleading funnel plot. \emph{British Medical Journal}, \emph{333}(7568), 597--600.
@@ -705,86 +662,31 @@ Lau, J., Ioannidis, J. P. A., Terrin, N., Schmid, C. H., \& Olkin, I. (2006). Th
 \leavevmode\hypertarget{ref-light1984}{}%
 Light, R. J., \& Pillemer, D. B. (1984). \emph{Summing up; the science of reviewing research}. Cambridge, MA (USA) Harvard Univ. Press.
 
-\leavevmode\hypertarget{ref-lisker1977rapid}{}%
-Lisker, L. (1977). Rapid versus rabid: A catalogue of acoustic features that may cue the distinction. \emph{The Journal of the Acoustical Society of America}, \emph{62}(S1), S77--S78.
-
-\leavevmode\hypertarget{ref-lisker1986voicing}{}%
-Lisker, L. (1986). ``Voicing'' in English: A catalogue of acoustic features signaling /b/ versus /p/ in trochees. \emph{Language and Speech}, \emph{29}(1), 3--11.
-
-\leavevmode\hypertarget{ref-nickerson1998confirmation}{}%
-Nickerson, R. S. (1998). Confirmation bias: A ubiquitous phenomenon in many guises. \emph{Review of General Psychology}, \emph{2}(2), 175--220.
-
-\leavevmode\hypertarget{ref-nosek2014method}{}%
-Nosek, B. A., \& Lakens, D. (2014). A method to increase the credibility of published results. \emph{Social Psychology}, \emph{45}(3), 137--141.
-
-\leavevmode\hypertarget{ref-ogden2004}{}%
-Ogden, R. (2004). Non-modal voice quality and turn-taking in Finnish. \emph{Sound Patterns in Interaction: Cross-Linguistic Studies from Conversation}, 29--62.
+\leavevmode\hypertarget{ref-ogden2009}{}%
+Ogden, R. (2009). \emph{An introduction to {E}nglish phonetics}. Edinburgh University Press.
 
 \leavevmode\hypertarget{ref-open2015estimating}{}%
 Open Science Collaboration. (2015). Estimating the reproducibility of psychological science. \emph{Science}, \emph{349}(6251). \url{https://doi.org/10.1126/science.aac4716}
 
-\leavevmode\hypertarget{ref-paraboni2007generating}{}%
-Paraboni, I., Van Deemter, K., \& Masthoff, J. (2007). Generating referring expressions: Making referents easy to identify. \emph{Computational Linguistics}, \emph{33}(2), 229--254.
+\leavevmode\hypertarget{ref-r-core-team2020}{}%
+R Core Team. (2020). R: A language and environment for statistical computing. R Foundation for Statistical Computing, Vienna, Austria.
 
-\leavevmode\hypertarget{ref-R-base}{}%
-R Core Team. (2020). \emph{R: A language and environment for statistical computing}. Vienna, Austria: R Foundation for Statistical Computing. Retrieved from \url{https://www.R-project.org/}
+\leavevmode\hypertarget{ref-stan-development-team2020a}{}%
+Stan Development Team. (2020a). RStan: The r interface to stan. R package version 2.21.2.
 
-\leavevmode\hypertarget{ref-roettger2019researcher}{}%
-Roettger, T. B. (2019). Researcher degrees of freedom in phonetic research. \emph{Laboratory Phonology: Journal of the Association for Laboratory Phonology}, \emph{10}(1).
-
-\leavevmode\hypertarget{ref-rotello2015more}{}%
-Rotello, C. M., Heit, E., \& Dubé, C. (2015). When more data steer us wrong: Replications with the wrong dependent measure perpetuate erroneous conclusions. \emph{Psychonomic Bulletin \& Review}, \emph{22}(4), 944--954.
-
-\leavevmode\hypertarget{ref-rubio2016redundant}{}%
-Rubio-Fernández, P. (2016). How redundant are redundant color adjectives? An efficiency-based analysis of color overspecification. \emph{Frontiers in Psychology}, \emph{7}, 153.
-
-\leavevmode\hypertarget{ref-sedivy2003pragmatic}{}%
-Sedivy, J. C. (2003). Pragmatic versus form-based accounts of referential contrast: Evidence for effects of informativity expectations. \emph{Journal of Psycholinguistic Research}, \emph{32}(1), 3--23.
-
-\leavevmode\hypertarget{ref-silberzahn2018many}{}%
-Silberzahn, R., Uhlmann, E. L., Martin, D. P., Anselmi, P., Aust, F., Awtrey, E., \ldots{} others. (2018). Many analysts, one data set: Making transparent how variations in analytic choices affect results. \emph{Advances in Methods and Practices in Psychological Science}, \emph{1}(3), 337--356.
-
-\leavevmode\hypertarget{ref-simmons2011false}{}%
-Simmons, J. P., Nelson, L. D., \& Simonsohn, U. (2011). False-positive psychology: Undisclosed flexibility in data collection and analysis allows presenting anything as significant. \emph{Psychological Science}, \emph{22}(11), 1359--1366.
-
-\leavevmode\hypertarget{ref-stan}{}%
-Stan Development Team. (2019). Stan modeling language users guide and reference manual (Version 2.18.0). Stan Development Team. Retrieved from \url{http://mc-stan.org}
-
-\leavevmode\hypertarget{ref-starns2019assessing}{}%
-Starns, J. J., Cataldo, A. M., Rotello, C. M., Annis, J., Aschenbrenner, A., Bröder, A., \ldots{} Wilson, J. (2019). Assessing theoretical conclusions with blinded inference to investigate a potential inference crisis. \emph{Advances in Methods and Practices in Psychological Science}, \emph{2}(4), 335--349.
-
-\leavevmode\hypertarget{ref-sterling1959publication}{}%
-Sterling, T. D. (1959). Publication decisions and their possible effects on inferences drawn from tests of significance---or vice versa. \emph{Journal of the American Statistical Association}, \emph{54}(285), 30--34.
+\leavevmode\hypertarget{ref-stan-development-team2020}{}%
+Stan Development Team. (2020b). Stan modeling language users guide and reference manual, 2.25.
 
 \leavevmode\hypertarget{ref-sterne2005}{}%
 Sterne, J. A. C., Becker, B. J., \& Egger, M. (2005). The funnel plot. In H. R. Rothstein, A. J. Sutton, \& M. Borenstein (Eds.), \emph{Publication bias in meta-analysis: Prevention, assessment and adjustments} (pp. 75--98). Wiley Online Library.
 
 \leavevmode\hypertarget{ref-sorensen1948}{}%
-Sørensen, T. (1948). A method of establishing groups of equal amplitude in plant sociology based on similarity of species and its application to analyses of the vegetation on Danish commons. \emph{Kongelige Danske Videnskabernes Selskab}, \emph{5}(4), 1--34.
-
-\leavevmode\hypertarget{ref-tukey1977exploratory}{}%
-Tukey, J. W. (1977). \emph{Exploratory data analysis} (Vol. 2). Reading, MA.
-
-\leavevmode\hypertarget{ref-tversky1974judgment}{}%
-Tversky, A., \& Kahneman, D. (1974). Judgment under uncertainty: Heuristics and biases. \emph{Science}, \emph{185}(4157), 1124--1131.
-
-\leavevmode\hypertarget{ref-van2005speech}{}%
-Van Heuven, V. J., \& Van Zanten, E. (2005). Speech rate as a secondary prosodic characteristic of polarity questions in three languages. \emph{Speech Communication}, \emph{47}(1-2), 87--99.
-
-\leavevmode\hypertarget{ref-wagenmakers2012agenda}{}%
-Wagenmakers, E.-J., Wetzels, R., Borsboom, D., Maas, H. L. van der, \& Kievit, R. A. (2012). An agenda for purely confirmatory research. \emph{Perspectives on Psychological Science}, \emph{7}(6), 632--638.
-
-\leavevmode\hypertarget{ref-westerbeek2015stored}{}%
-Westerbeek, H., Koolen, R., \& Maes, A. (2015). Stored object knowledge and the production of referring expressions: The case of color typicality. \emph{Frontiers in Psychology}, \emph{6}, 935.
+Sørensen, T. (1948). A method of establishing groups of equal amplitude in plant sociology based on similarity of species and its application to analyses of the vegetation on {D}anish commons. \emph{Kongelige Danske Videnskabernes Selskab}, \emph{5}(4), 1--34.
 
 \leavevmode\hypertarget{ref-white2009}{}%
-White, L., Payne, E., \& Mattys, S. L. (2009). Rhythmic and prosodic contrast in Venetan and Sicilian Italian. In M. Vigario, S. Frota, \& M. J. Freitas (Eds.), \emph{Phonetics and phonology: Interactions and interrelations} (pp. 137--158). Amsterdam: John Benjamins.
+White, L., Payne, E., \& Mattys, S. L. (2009). Rhythmic and prosodic contrast in {V}enetan and {S}icilian {I}talian. In M. Vigario, S. Frota, \& M. J. Freitas (Eds.), \emph{Phonetics and phonology: Interactions and interrelations} (pp. 137--158). Amsterdam: John Benjamins.
 
-\leavevmode\hypertarget{ref-wicherts2006poor}{}%
-Wicherts, J. M., Borsboom, D., Kats, J., \& Molenaar, D. (2006). The poor availability of psychological research data for reanalysis. \emph{American Psychologist}, \emph{61}(7), 726.
-
-\leavevmode\hypertarget{ref-winter2014spoken}{}%
-Winter, B. (2014). Spoken language achieves robustness and evolvability by exploiting degeneracy and neutrality. \emph{BioEssays}, \emph{36}(10), 960--967.
+\end{CSLReferences}
 
 \endgroup
 
