@@ -88,12 +88,12 @@ library("papaja")
 r_refs("r-references.bib")
 library(tidyverse)
 library(patchwork)
+library(brms)
+library(extraDistr)
 ```
 
 ```{r analysis-preferences}
-# Seed for random number generation
-set.seed(42)
-knitr::opts_chunk$set(cache.extra = knitr::rand_seed)
+my_seed <- 115116106
 ```
 
 # Introduction
@@ -464,6 +464,36 @@ The posterior probability of the population-level intercept $\alpha$ will give u
 This posterior probability will also form the basis \highlight[id=SC, comment = {A lot of "of"s...}]{of} the investigation of the effect of a set of analytical and demographic factors, detailed in Section \@ref(ana-factors).
 Crucially, the posterior probability of $\sigma_{\alpha_{\text{team}}}$ (the standard deviation of the the group-level effect of team) will allow us to quantify the degree of variation between teams on a standardized scale.
 
+```{r meta-bm}
+set.seed(my_seed)
+n <- 12
+eta <- rnorm(n, 1, 0.5)
+se <- rhcauchy(n, 0.1)
+team <- letters[1:n]
+
+eta_tbl <- tibble(
+  eta,
+  se,
+  team
+)
+
+priors <- c(
+  prior(normal(0, 1), class = Intercept),
+  prior(cauchy(0, 1), class = sd)
+)
+
+meta_bm <- brm(
+  eta | se(se) ~
+    (1 | team),
+  data = eta_tbl,
+  prior = priors,
+  chain = 1,
+  seed = my_seed,
+  file = here::here("RR_manuscript", "cache", "meta_bm")
+)
+```
+
+
 Finally, we will assess whether the standardized effect sizes show bias, and, if so, whether the bias is positive or negative (i.e., whether there is a disproportional greater number of bigger or smaller effect sizes than the meta-analytical mean estimate).
 This will be achieved through inspection of funnel plots [@light1984; for a review see @egger1997; and @sterne2005; for a critique @lau2006].
 In brief, a funnel plot is a scatter plot of each standardized effect size with effect size on the *x*-axis and estimated error (i.e. standard deviation) on *y*-axis.
@@ -535,7 +565,8 @@ estimated_tbl %>%
 
 ### Analytical and demographic factors affecting effect sizes {#ana-factors}
 
-As a second step, we will investigate the extent to which deviations from the meta-analytical mean by individual standardized effect sizes relate to a series of predictors related to analytical and demographic factors (see below). The deviation score $\delta_i$, which serves as the dependent variable in this analysis, will be the \highlight[id=SC, comment = {We might wanna fit a me model. See minutes.}]{difference between the meta-analytical mean} ($\hat{\eta}$) and the individual standardized effect size of each analysis ($\eta_i$).
+As a second step, we will investigate the extent to which deviations from the meta-analytical mean by individual standardized effect sizes relate to a series of predictors related to analytical and demographic factors (see below).
+The deviation score $\delta_i$, which serves as the dependent variable in this analysis, will be the \highlight[id=SC, comment = {We might wanna fit a me model. See minutes.}]{difference between the meta-analytical mean} ($\hat{\eta}$) and the individual standardized effect size of each analysis ($\eta_i$).
 <!--TR: Question: Do we need to estimate the absolute deviation or is it useful to consider the raw deviation (stretching from negative to positive values). That gives you both the distance to the meta analytical estimate and the direction of that difference -->
 <!-- SC: I agree that using the raw deviation has the plus of knowing the sign of the difference. I updated the text above accordingly, but feel free to change it. -->
 We will fit a single Bayesian regression model with $\delta_i$ as the outcome variable, and the analytical and demographic factors described in the following paragraphs as predictors.

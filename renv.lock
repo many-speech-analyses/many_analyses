@@ -471,6 +471,13 @@
       "Repository": "CRAN",
       "Hash": "ec8ca05cffcc70569eaaad8469d2a3a7"
     },
+    "extraDistr": {
+      "Package": "extraDistr",
+      "Version": "1.9.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "9e29370a0dd450a33826a4932d3fa16d"
+    },
     "fansi": {
       "Package": "fansi",
       "Version": "0.4.1",
@@ -1012,8 +1019,8 @@
       "Package": "papaja",
       "Version": "0.1.0.9997",
       "Source": "GitHub",
-      "Remotes": "tidymodels/broom",
       "RemoteType": "github",
+      "Remotes": "tidymodels/broom",
       "RemoteHost": "api.github.com",
       "RemoteRepo": "papaja",
       "RemoteUsername": "crsh",
