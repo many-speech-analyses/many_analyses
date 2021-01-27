@@ -127,7 +127,7 @@ However, if these decisions during data analysis are not specified in advance, w
 <!-- I'd probably drop this. When we make unspecified decisions during data analysis we can stumble upon spurious results (most likely) as well as real results (less likely, still possible)... in other words it might not all be error... the issue is that we won't know the difference -->
 <!-- TR: But isn't the human bias the major issue in statistical misinterpretation? (It also leads naturally to the next paragraph.) -->
 This can be problematic because humans show cognitive biases that can lead to erroneous inferences.
-Humans filter the world in irrational ways [e.g., @tversky1974judgment], seeing coherent patterns in randomness (Brugger 2001), convincing themselves of the validity of prior expectations ["I knew it", @nickerson1998confirmation], and perceiving events as being plausible in hindsight ["I knew it all along", @fischhoff1975hindsight]. <!-- JC: If helpful we could also give a concrete common example here, like regarding forecasting the weather or something -->
+Humans filter the world in irrational ways [e.g., @tversky1974judgment], seeing coherent patterns in randomness [@brugger2001], convincing themselves of the validity of prior expectations ["I knew it", @nickerson1998confirmation], and perceiving events as being plausible in hindsight ["I knew it all along", @fischhoff1975hindsight]. <!-- JC: If helpful we could also give a concrete common example here, like regarding forecasting the weather or something -->
 <!-- TR: Generally a good idea, but I'd say we keep it crisp at that point. The take-home here is: Humans are biased. -->
 In connection with an academic incentive system that rewards certain discovery processes more than others [@sterling1959publication; @koole2012rewarding], we often find ourselves exploring many possible analytical pipelines, but only reporting a select few.
 This issue is particularly amplified in fields in which the raw data lend themselves to many possible ways to measure [@roettger2019researcher].
@@ -198,7 +198,7 @@ For example, studies investigating acoustic correlates of word stress (e.g. the 
 
 Moving onto the expression of higher-level functions like information structure and discourse pragmatics, relevant acoustic cues can be distributed throughout even larger domains, such as phrases and whole utterances [e.g., @ladd2008intonational].
 Differences in position, shape, and alignment of pitch modulations over multiple locations within a sentence are correlated with differences in discourse functions (e.g. Niebuhr et al., 2011).
-The latter can also be expressed by global vs local pitch modulations (Haan 2002), as well as acoustic information within the temporal or spectral domain [e.g., @van2005speech].
+The latter can also be expressed by global vs local pitch modulations [@heuven2002], as well as acoustic information within the temporal or spectral domain [e.g., @van2005speech].
 Extra-linguistic information, like speaker's intentions, levels of arousal or social identity, are also conveyed by broad-domain parameters, such as voice quality, rhythm, and pitch [@foulkes2006; @ogden2004; @white2009].
 
 When testing hypotheses on speech production data, researchers are faced with many choices and possibilities.
@@ -235,7 +235,7 @@ In Figure X, we went with a specific option to automatically calculate f0, INSER
 Moreover, knowing that theses estimates are somewhat noisy, we could smooth these contours to different degrees, automatically or manually remove estimates that are off, etc.
 
 These decisions are usually made prior to any statistical analysis, but are at times revised a posteriori (i.e. after data collection and/or preliminary analyses) in light of unforeseen or surprising outcomes.
-These myriads of possible decisions are exponentiated by researcher degrees of freedom related to statistical analysis (e.g. Wicherts et al. ????). <!-- year needed -->
+These myriads of possible decisions are exponentiated by researcher degrees of freedom related to statistical analysis [e.g. wicherts2016].
 Even the analysis of a single measure can be approached via an ever-increasing range of different statistical models (REFs).
 The present paper probes this garden of forking paths in the analysis of speech.
 To assess the variability in data analysis pipelines across independent researchers, we provided XX analytical teams with an experimentally elicited speech corpus and asked them to investigate acoustic differences related to a functional contrast that might be manifested across the whole utterance.
@@ -410,7 +410,7 @@ Based on the common practices currently in place within the field, we anticipate
 <!-- NOTE: (SC) it would be good to decide on a clear terminology to refer to the individual original models, the individual models that we run (to refit the original models), and the meta-analytical model.  -->
 Since the variables used by the analysis teams might substantially differ in their measurement scales (e.g, Hz for frequency vs ms for duration), we will standardize all reported effects by refitting each reported model with centered and scaled continuous variables (*z*-scores, i.e. the observed values subtracted from the mean divided by the standard deviation) and sum-coded factor variables.
 \highlight[id=SC, comment = {Is this sentence good?}]{Factor-level ordering} for each factor variable will be decided on a model-by-model basis, depending on which levels were compared by the team.
-Each standardized (refitted) model will be fitted as a Bayesian regression model with Stan [@stan-development-team2020], RStan [@stan-development-team2020a], and brms [@burkner2017] in R [@r-core-team2020].
+Each standardized (refitted) model will be fitted as a Bayesian regression model with Stan [@stan2021], RStan [@stan2020a], and brms [@burkner2017] in R [@R-base].
 For those reported models that were originally fitted within a frequentist approach, uniform distributions will be used as the priors of all parameters (with the restriction that only positive numbers will be included for scale parameters), making the standardized models in fact equivalent to the reported frequentist models.
 If a team has fitted Bayesian models, the same priors as reported by the team will be used in fitting the respective standardized model.
 
@@ -441,7 +441,7 @@ We will use regularizing weakly-informative priors for the intercept $\alpha$ ($
 <!-- SC: For the pop-level params I would stick to the Normal, or if we want to avoid problems with thick tails I'd go with a student-t. -->
 We will fit this model with 4 chains of Hamiltonian Monte-Carlo sampling for the estimation of the joint posterior distribution, using the No U-Turn Sampler (NUTS) as implemented in Stan, and 4000 iterations (2000 for warm-up) per chain, distributed across 4 processing cores.
 \highlight[id=SC, comment = {This ok?}]{In case of issues from divergent transitions} in the sampling, we will increase `adapt_delta`, `tree_depth`, and the number of iterations in this order until there are no divergent transitions.
-The analysis will be conducted in R [@r-core-team2020] and fit using Stan [@stan-development-team2020], RStan [@stan-development-team2020a], and brms [@burkner2017].
+The analysis will be conducted in R [@R-base] and fit using Stan [@stan2021], RStan [@stan2020a], and brms [@burkner2017].
 <!-- TODO: add link to code of the meta-analytical model -->
 The code used to run the model can be found here: INSERT LINK.
 
