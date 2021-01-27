@@ -205,12 +205,12 @@ When testing hypotheses on speech production data, researchers are faced with ma
 The larger the functional domain (e.g. segments vs words vs utterances), the higher the number of conceivable operationalizations.
 For example, when comparing two realization of example (1) (here repeated as 2), one of which is intended to signal emphasis on *another* and one of which emphasizes *zoom*.
 
-(2a) "I can't bear ANOTHER meeting on zoom."  
+(2a) "I can't bear ANOTHER meeting on zoom."
 (2b) "I can't bear another meeting on ZOOM."
 
 In text ref to Figure \@ref(fig:forkingPaths)
 
-(ref:forkingPaths) Illustrations of the analytical flexibility associated with acoustic analyses. (A) an example of multiple possible and justifiable decisions when comparing to utterances; (B) waveform and fundamental frequency (f0) track of two instances of utterances 2a and 2b. The words ``another is highlighted by the green box''; (C) spectrogram and f0 track of the word another, exemplifying different operationalizations of differences in pitch.
+(ref:forkingPaths) Illustrations of the analytical flexibility associated with acoustic analyses. (A) an example of multiple possible and justifiable decisions when comparing to utterances; (B) waveform and fundamental frequency (f0) track of two instances of utterances 2a and 2b. The words "another is highlighted by the green box"; (C) spectrogram and f0 track of the word another, exemplifying different operationalizations of differences in pitch.
 
 ```{r 'forkingPaths', echo=FALSE, fig.cap="(ref:forkingPaths)", out.width="100%"}
 
@@ -221,17 +221,17 @@ knitr::include_graphics(here::here("figs", "ForkingPaths.png"))
 <!-- TR: Insertion does not work yet, gotta dash. Also the following paragraph is just a draft for now -->
 
 Do we only compare the word *another* in 2a and 2b or also the word *zoom* or do we measure utterance wide acoustic profiles? Do we measure the whole word? Or just the stressed syllable?
-Do we average the domain or do we measure a specific point in time? 
-Do we measure fundamental frequency or intensity? 
-When looking at phrase-wide temporal domains, the number of possible analytical pipelines quickly explodes. 
-This plurality of analytical paths is illustrated in figure X. 
-When comparing two utterance such as 2a and 2b, there are many things to consider. 
-Even if we know that we want to compare fundamental frequency of only the word *another* across utterances 2a and 2b, there are still many decisions to be made, all of which can be justified. 
-For example, we could measure f0 at specific points in time like the onset of the window, the offset, the midpoint. 
-We could also measure the value or time of the minimum or maximum f0 value. 
-We could summarise f0 across the entire window and extract the mean, median or standard deviation of f0. 
-And the garden of forking paths does not stop here. 
-In Figure X, we went with a specific option to automatically calculate f0, INSERT SOME EXAMPLES OF PITCH TRACKING OPTIONS. 
+Do we average the domain or do we measure a specific point in time?
+Do we measure fundamental frequency or intensity?
+When looking at phrase-wide temporal domains, the number of possible analytical pipelines quickly explodes.
+This plurality of analytical paths is illustrated in figure X.
+When comparing two utterance such as 2a and 2b, there are many things to consider.
+Even if we know that we want to compare fundamental frequency of only the word *another* across utterances 2a and 2b, there are still many decisions to be made, all of which can be justified.
+For example, we could measure f0 at specific points in time like the onset of the window, the offset, the midpoint.
+We could also measure the value or time of the minimum or maximum f0 value.
+We could summarise f0 across the entire window and extract the mean, median or standard deviation of f0.
+And the garden of forking paths does not stop here.
+In Figure X, we went with a specific option to automatically calculate f0, INSERT SOME EXAMPLES OF PITCH TRACKING OPTIONS.
 Moreover, knowing that theses estimates are somewhat noisy, we could smooth these contours to different degrees, automatically or manually remove estimates that are off, etc.
 
 These decisions are usually made prior to any statistical analysis, but are at times revised a posteriori (i.e. after data collection and/or preliminary analyses) in light of unforeseen or surprising outcomes.
@@ -310,7 +310,7 @@ All analysts will sign a consent (ethics) document (LINK).
 <!-- SC: rephrased and expanded -->
 <!-- TODO: add citation to ECO RR -->
 To identify the minimal sample size, we followed the method in [ECO RR].
-The aim of the meta-analysis is to obtain an estimate of heterogeneity of the effect sizes reported by the analysis teams ($\tau^2$, i.e. the variance $\sigma^2_{\alpha_{\text{team}}}$, see \Cref{s:meta-est}).
+The aim of the meta-analysis is to obtain an estimate of heterogeneity of the effect sizes reported by the analysis teams ($\tau^2$, i.e. the variance $\sigma^2_{\alpha_{\text{t}}}$, see \Cref{s:meta-est}).
 Ideally, the 95% credible interval (CrI) of $\tau^2$ should not include 0 (i.e. the probability $p$ that the 95% CrI contains 0 should be less than 0.05).
 The probability $p$ that a CrI interval does not include 0 is obtained via the *t*-statistics:
 
@@ -425,9 +425,9 @@ After having obtained the standardized effect sizes $\eta_i$ with related standa
 $$
 \begin{aligned}
 \eta_i      & \sim \text{Normal}(\mu_i, \sigma_i) \\
-\mu_i       & = \alpha + \alpha_{\text{team}[i]} \\
+\mu_i       & = \alpha + \alpha_{\text{t}[i]} \\
 \alpha      & \sim \text{Normal}(0, 1) \\
-\sigma_{\alpha_{\text{team}}} & \sim \text{HalfCauchy}(0, 1) \\
+\sigma_{\alpha_{\text{t}}} & \sim \text{HalfCauchy}(0, 1) \\
 \sigma_i    & = \text{se}_i
 \end{aligned}
 $$
@@ -436,7 +436,7 @@ The outcome variable will be the set of standardized effect sizes $\eta_i$.
 The likelihood of $\eta_i$ is assumed to correspond to a normal distribution [@knight2000].
 The analysis teams will constitute the group-level effect (i.e., random effect, `(1 | team)`).
 The standard errors $\text{se}_i$ will be included as the standard deviation $\sigma_i$ of $\eta_i$ to fit a measurement-error model, as discussed above.
-We will use regularizing weakly-informative priors for the intercept $\alpha$ ($Normal(0, 1)$) and for the group-level standard deviation $\alpha_{\text{team}[i]}$ ($HalfCauchy(0, 1)$).
+We will use regularizing weakly-informative priors for the intercept $\alpha$ ($Normal(0, 1)$) and for the group-level standard deviation $\alpha_{\text{t}[i]}$ ($HalfCauchy(0, 1)$).
 <!-- TR: isn't an SD of 1 rather conservative. Also small sample size, maybe rather using cauchy for the thick tails? -->
 <!-- SC: For the pop-level params I would stick to the Normal, or if we want to avoid problems with thick tails I'd go with a student-t. -->
 We will fit this model with 4 chains of Hamiltonian Monte-Carlo sampling for the estimation of the joint posterior distribution, using the No U-Turn Sampler (NUTS) as implemented in Stan, and 4000 iterations (2000 for warm-up) per chain, distributed across 4 processing cores.
@@ -462,7 +462,7 @@ function se to TRUE, for instance, yi | se(sei, sigma = TRUE) ~ 1. -->
 
 The posterior probability of the population-level intercept $\alpha$ will give us an estimate of the range of probable values of the standardized effect size $\hat{\eta}$.
 This posterior probability will also form the basis \highlight[id=SC, comment = {A lot of "of"s...}]{of} the investigation of the effect of a set of analytical and demographic factors, detailed in Section \@ref(ana-factors).
-Crucially, the posterior probability of $\sigma_{\alpha_{\text{team}}}$ (the standard deviation of the the group-level effect of team) will allow us to quantify the degree of variation between teams on a standardized scale.
+Crucially, the posterior probability of $\sigma_{\alpha_{\text{t}}}$ (the standard deviation of the the group-level effect of team) will allow us to quantify the degree of variation between teams on a standardized scale.
 
 ```{r meta-bm}
 set.seed(my_seed)
@@ -566,32 +566,55 @@ estimated_tbl %>%
 ### Analytical and demographic factors affecting effect sizes {#ana-factors}
 
 As a second step, we will investigate the extent to which deviations from the meta-analytical mean by individual standardized effect sizes relate to a series of predictors related to analytical and demographic factors (see below).
-The deviation score $\delta_i$, which serves as the dependent variable in this analysis, will be the \highlight[id=SC, comment = {We might wanna fit a me model. See minutes.}]{difference between the meta-analytical mean} ($\hat{\eta}$) and the individual standardized effect size of each analysis ($\eta_i$).
+We will fit a single Bayesian regression model with each team's group-level coefficient $\alpha_{\text{t}[i]}$ as the outcome variable, and the analytical and demographic factors described below as predictors.
+The coefficient $\alpha_{\text{t}[i]}$ can be interpreted as the deviation score of the team's $\eta_i$ from the meta-analytical mean, allowing us to determine potential effects of analytical and demographic factors on how the teams deviate from the meta-analytical mean.
+Since each $\alpha_{\text{t}[i]}$ comes with uncertainty, quantified by its standard deviation $\sigma_{\alpha_{\text{t}[i]}}$, we will fit a measurement-error model, as we did in the meta-analytical model above.
+The formula of the model is the following (see the description of the predictors below for the meaning of acronyms):
+
+$$
+\begin{aligned}
+\alpha_{\text{t}[i]}      & \sim \text{Normal}(\mu_{\alpha_{t[i]}}, \sigma_i) \\
+\mu_{\alpha_{t[i]}}       & = \iota + \upsilon_u\cdot uniq_i + \upsilon_c\cdot cons_i + \upsilon_p\cdot phoc_i + \upsilon_m\cdot modn_i + \upsilon_d\cdot mdim_i + \upsilon_w\cdot twin_i + \upsilon_e\cdot excl_i \\
+ & \qquad\qquad +\upsilon_{xp}\cdot rexp_i + \upsilon_{be}\cdot belf_i  \\
+\iota      & \sim \text{Normal}(0, 1) \\
+\upsilon_{[\ldots]} & \sim \text{Normal}(0,1) \\
+resp_i & \sim \text{Normal}(\mu_{resp_i}, \sigma_{resp_i}) \\
+belf_i & \sim \text{Normal}(\mu_{belf_i}, \sigma_{belf_i}) \\
+\sigma_i    & = \sigma_{\alpha_{t[i]}}
+\end{aligned}
+$$
+
+The likelihood of $\alpha_{t[i]}$ is a normal distribution.
+The mean is based on the overall intercept $i$ and on the $\upsilon$ coefficient of each predictor.
+The numeric predictors will be centered and scaled and the categorical predictors will be sum coded.
+As the prior for $i$ and $\upsilon$ we will use a normal distribution with mean 0 and standard deviation 1.
+<!-- TODO: add explanation of me() predictors resp and belf -->
+
 <!--TR: Question: Do we need to estimate the absolute deviation or is it useful to consider the raw deviation (stretching from negative to positive values). That gives you both the distance to the meta analytical estimate and the direction of that difference -->
 <!-- SC: I agree that using the raw deviation has the plus of knowing the sign of the difference. I updated the text above accordingly, but feel free to change it. -->
-We will fit a single Bayesian regression model with $\delta_i$ as the outcome variable, and the analytical and demographic factors described in the following paragraphs as predictors.
+
 <!-- TODO: add brm info on factors analysis model -->
 
 **Analytical factors**. We will model the effect of the following predictors related to the analytical characteristics of each team's reported analysis:
 
-- *Measure of uniqueness* of individual analyses for the set of predictors in each model.
-- *Measure of conservativeness* of the model specification.
-- *Number of post-hoc changes to the acoustic measurements* the teams will report to have carried out.
-- *Number of models* the teams will report to have run.
-- *Major dimension* that has been measured to answer the research question.
-- *Temporal window* that the measurement is taken over.
-- *Data exclusion*, whether data has been excluded or not.
+- *Measure of uniqueness* [numeric] of individual analyses for the set of predictors in each model ($uniq_i$).
+- *Measure of conservativeness* [numeric] of the model specification, as the number of random/group-level effects included ($cons_i$).
+- *Number of post-hoc changes to the acoustic measurements* [numeric] the teams will report to have carried out ($phoc_i$).
+- *Number of models* [numeric] the teams will report to have run ($modn_i$).
+- *Major dimension* [categorical] that has been measured to answer the research question ($mdim_i$).
+- *Temporal window* [categorical] that the measurement is taken over ($twin_i$).
+- *Data exclusion*, [categorical] whether data has been excluded or not ($excl_i$).
 
 The measure of uniqueness of predictors will be assessed by the Sørensen-Dice Index [SDI, @dice1945; @sorensen1948].
 The SDI is an index typically used in ecology research to compare species composition across sites.
 For our purposes, we will treat predictors as species and individual analyses as sites.
-The SDI for a pair of analyses $(X, Y)$ can be obtained using the following formula:
+For each pair of analyses $(X, Y)$, the SDI will be obtained using the following formula:
 
 <!-- SC: refactored the formula so it is closer to the original source -->
 
 $$\text{SDI} = \frac{2|X \cap Y|}{|X|+|Y|}$$
 
-where $|X \cap Y|$ is the number of variables common to both models, and $|X|+|Y|$ is the sum of the number of variables that occur in each model.
+where $|X \cap Y|$ is the number of variables common to both models in the pair, and $|X|+|Y|$ is the sum of the number of variables that occur in each model.
 
 
 ```{r sdi, eval=FALSE, include=FALSE}
@@ -600,20 +623,22 @@ y <- c("b", "d", "e", "f")
 (2 * length(intersect(x,y))) / (length(x) + length(y))
 ```
 
-In order to generate a unique SDI for each analysis team, we will calculate the average of all pairwise SDIs for all pairs of analyses using the `beta.pair()` function in the betapart R package (Baselga et al. 2018).
+In order to generate a unique SDI for each analysis team, we will calculate the average of all pairwise SDIs for all pairs of analyses using the `beta.pair()` function in the betapart R package [@baselga2020].
 
-The major measurement dimension of each analysis will be categorized according to the following possible groups: duration, amplitude, fundamental frequency, other spectral properties (e.g. frequency center of gravity, harmonics difference, etc.), other measures (e.g. principal components, vowel dispersion, etc.)
+The major measurement dimension of each analysis will be categorized according to the following possible groups: *duration*, *amplitude*, *fundamental frequency*, *other spectral properties* (e.g. frequency center of gravity, harmonics difference, etc.), *other measures* (e.g. principal components, vowel dispersion, etc.)
 <!--TR: Stefano, do you think these four will cover possible ways to measure? We might want to define them too? dunno-->
 <!-- SC: I just added a "other measures" category for other things that are not strictly acoustic. -->
 The temporal window that the measurement is taken over is defined by the target linguistic unit.
-We assume the following relevant linguistic units: segment, syllable, word, phrase.
+We assume the following relevant linguistic units: *segment*, *syllable*, *word*, *phrase*.
 
 <!-- TODO: explain how the demographic factors will be entered in the factors analysis -->
 
-**Demographic factors**. We will include the following demographic factors about the \highlight[id=SC, comment = {How do we do this, since we will have a score per individual rather than per team?}]{analysis} teams:
+**Demographic factors**. We will include the following demographic factors about the teams:
 
-- *Research experience* as the elapsed time from PhD award (negative values will indicate that the person is a student or graduate student).
-- *Initial belief* in the presence of an effect of atypical noun-adjective pairs on acoustics, as answered during the intake questionnaire.
+- *Research experience* [numeric] as the elapsed time from PhD award. Negative values will indicate that the person is a student or graduate studens ($rexp_i$).
+- *Initial belief* [numeric] in the presence of an effect of atypical noun-adjective pairs on acoustics, as answered during the intake questionnaire ($belf_i$).
+
+
 
 We will publicly archive all relevant data, code, and materials on the Open Science Framework (<https://osf.io/3bmcp/>).
 Archived data will include the original data sets distributed to all analysts, any edited versions of the data analyzed by individual groups, and the data we analyze with our meta-analyses, which include the effect sizes derived from separate analyses, the statistics describing variation in model structure among analysis teams, and the anonymized answers to our surveys of analysts and peer reviewers.
