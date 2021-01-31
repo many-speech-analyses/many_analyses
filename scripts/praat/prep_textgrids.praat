@@ -13,6 +13,8 @@
 # an error and should be discarded.
 #####################################################################
 
+include split.proc.praat
+
 data_tg$ = "../../data/textgrids"
 data_trials$ = "../../data/trial-lists"
 datasets$ = "../../data/dataset"
@@ -163,30 +165,18 @@ for tg from 1 to tgs_no
         Set interval text: phones, phones_int + f - 1, mid$(target_det$, f, 1)
       endfor
 
+      @split (".", colour_ipa$)
+
       phones_int += 3
       for f from 1 to col_phones
-        this_phone$ = mid$(colour_ipa$, f, 1)
-        if this_phone$ == "U"
-          this_phone$ = "aʊ"
-        endif
-        Set interval text: phones, phones_int + f - 1, this_phone$
+        Set interval text: phones, phones_int + f - 1, split.array$[f]
       endfor
+
+      @split (".", target_ipa$)
 
       phones_int += col_phones
       for f from 1 to target_phones
-        this_phone$ = mid$(target_ipa$, f, 1)
-        if this_phone$ == "A"
-          this_phone$ = "aː"
-        elif this_phone$ == "Q"
-          this_phone$ = "øː"
-        elif this_phone$ == "Z"
-          this_phone$ = "dz"
-        elif this_phone$ == "O"
-          this_phone$ = "oː"
-        elif this_phone$ == "U"
-          this_phone$ = "aʊ"
-        endif
-        Set interval text: phones, phones_int + f - 1, this_phone$
+        Set interval text: phones, phones_int + f - 1, split.array$[f]
       endfor
 
       phones_int += target_phones
@@ -203,6 +193,6 @@ for tg from 1 to tgs_no
   selectObject(this_tg)
   Remove tier: 6
 
-  Save as text file: "../../osf/comps/data/production/audio/'speaker$'.TextGrid"
+  Save as text file: "../../osf/data/production/audio/'speaker$'.TextGrid"
 
 endfor
