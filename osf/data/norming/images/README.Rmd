@@ -1,0 +1,20 @@
+---
+title: "Images of the norming study"
+output:
+  github_document:
+    html_preview: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_knit$set(root.dir = here::here())
+library(tidyverse)
+library(osfr)
+```
+
+Last update: `r Sys.Date()`
+
+# Overview
+
+Here you can find the images used in the norming experiment as `.png` files.
+File naming follows this convention: `object_color.png`, where `object` is the name of the object/food, and `color` is the color.

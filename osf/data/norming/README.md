@@ -1,7 +1,7 @@
 Norming study
 ================
 
-Last update: 2021-01-05
+Last update: 2021-01-31
 
 # Overview
 
@@ -30,4 +30,4 @@ The `tipicality.csv` file has the following columns:
     ##   name   
     ##   <chr>  
     ## 1 images 
-    ## 2 results
+    ## 2 ratings

@@ -31,28 +31,33 @@ data_comp <- osf_comps %>% filter(name == "Data")
 osf_ls_files(data_comp)
 ```
 
-# Knit readme files
+# Readme files
+
+## Knit Readmes
 
 We can knit the readme files (they are GitHub documents, i.e. `.Rmd` files that are converted to `.md` files upon knitting).
 
 ```{r knit-all, message=FALSE, warning=FALSE}
-files <- list.files("./osf/comps/data", pattern = "[.]Rmd$", recursive = T, full.names = T)
+files <- list.files("./osf/data", pattern = "[.]Rmd$", recursive = T, full.names = T)
 
 for (f in files) {
   xfun::Rscript_call(rmarkdown::render, list(f))
 }
 ```
 
-
-# Upload files to the OFS repo
+## Upload Readmes to the OFS repo
 
 ```{r readmes}
 # A loop would be better
-osf_upload(data_comp, path = "./osf/comps/data/README.md", conflicts = "overwrite", verbose = T)
+
+# data/ ----
+osf_upload(data_comp, path = "./osf/data/README.md", conflicts = "overwrite", verbose = T)
 
 data_comp_files <- osf_ls_files(data_comp)
 
-# data/norming/
+
+
+# data/norming/ ----
 raw <- data_comp_files %>% filter(name == "norming")
 
 #### delete old readme ("overwrite" option fails)
@@ -62,31 +67,72 @@ osf_rm(old_readme, check = FALSE)
 #### upload new readme
 osf_upload(
   raw,
-  path = "./osf/comps/data/norming/README.md",
+  path = "./osf/data/norming/README.md",
   conflicts = "overwrite", verbose = T)
 
-# data/production/audio/
+
+
+# data/norming/images/ ----
 #### delete old readme
-old_readme <- osf_ls_files(data_comp, "production/audio", pattern = "README.md")
+old_readme <- osf_ls_files(data_comp, "norming/images/", pattern = "README.md")
 osf_rm(old_readme, check = FALSE)
 
 #### upload new readme
-audio <- osf_ls_files(data_comp, "production", pattern = "audio")
+audio <- osf_ls_files(data_comp, "norming", pattern = "images")
 osf_upload(
   audio,
-  path = "./osf/comps/data/production/audio/README.md",
+  path = "./osf/data/norming/images/README.md",
   conflicts = "overwrite", verbose = T)
 
-# data/production/trial-lists
+
+
+# data/production/audio/ ----
 #### delete old readme
-old_readme <- osf_ls_files(data_comp, "production/trial-lists", pattern = "README.md")
-osf_rm(old_readme, check = FALSE)
+# old_readme <- osf_ls_files(data_comp, "production/audio", pattern = "README.md")
+# osf_rm(old_readme, check = FALSE)
+# 
+# #### upload new readme
+# audio <- osf_ls_files(data_comp, "production", pattern = "audio")
+# osf_upload(
+#   audio,
+#   path = "./osf/data/production/audio/README.md",
+#   conflicts = "overwrite", verbose = T)
 
-#### upload new readme
-trials <- osf_ls_files(data_comp, "production", pattern = "trial-lists")
-osf_upload(
-  trials,
-  path = "./osf/comps/data/production/trial-lists/README.md",
-  conflicts = "overwrite", verbose = T)
+
+
+# data/production/trial-lists ----
+#### delete old readme
+# old_readme <- osf_ls_files(data_comp, "production/trial-lists", pattern = "README.md")
+# osf_rm(old_readme, check = FALSE)
+# 
+# #### upload new readme
+# trials <- osf_ls_files(data_comp, "production", pattern = "trial-lists")
+# osf_upload(
+#   trials,
+#   path = "./osf/data/production/trial-lists/README.md",
+#   conflicts = "overwrite", verbose = T)
 ```
 
+# TextGrids
+
+```{r textgrids, eval=FALSE}
+audio <- osf_ls_files(data_comp, "production", pattern = "audio")
+
+# delete old tgs
+old_tgs <- osf_ls_files(audio, pattern = ".TextGrid", n_max = Inf)
+
+for (file in 2:nrow(old_tgs)) {
+  osf_rm(old_tgs[file,], check = FALSE)
+}
+
+# upload new tgs
+new_tgs <- list.files("./osf/data/production/audio/", ".TextGrid", full.names = TRUE)
+
+for (tg in new_tgs) {
+  osf_upload(
+    audio,
+    path = tg,
+    conflicts = "overwrite", verbose = T
+  )
+}
+```

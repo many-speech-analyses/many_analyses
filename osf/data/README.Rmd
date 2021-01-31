@@ -22,7 +22,9 @@ For an overview, see the [wiki](https://osf.io/rdtx5/wiki/home/).
 There are 2 subdirectories:
 
 - The `norming/` directory holds the files of the norming study.
-- The `production/` directory contains the `.wav` and `.TextGrid` files from the production experiment.
+- The `production/` directory contains two subdirectories:
+  - `audio/`: with `.wav` and `.TextGrid` files from the production experiment.
+  - `trial-lists/`: with `.csv` files with info on the trials from the production experiment.
 
 See the `README.md` files of each individual directory for more information about the contents.
 
@@ -31,7 +33,7 @@ See the `README.md` files of each individual directory for more information abou
 osf_repo <- osf_retrieve_node("3bmcp")
 # Repo components
 osf_comps <- osf_ls_nodes(osf_repo)
-# Dataset & Materials component
+# Data component
 data_comp <- osf_comps %>% filter(name == "Data")
 ```
 

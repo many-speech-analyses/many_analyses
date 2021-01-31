@@ -215,19 +215,23 @@ data_comp &lt;- osf_comps %&gt;% filter(name == &quot;Data&quot;)</code></pre>
 ## 2 README.md  5fd0d39a08ec9e007fb8efd3 &lt;named list [3]&gt;
 ## 3 norming    5ff42e72e3acd1055a4a513d &lt;named list [3]&gt;</code></pre>
 </div>
-<div id="knit-readme-files" class="section level1">
-<h1>Knit readme files</h1>
+<div id="readme-files" class="section level1">
+<h1>Readme files</h1>
+<div id="knit-readmes" class="section level2">
+<h2>Knit Readmes</h2>
 <p>We can knit the readme files (they are GitHub documents, i.e. <code>.Rmd</code> files that are converted to <code>.md</code> files upon knitting).</p>
-<pre class="r"><code>files &lt;- list.files(&quot;./osf/comps/data&quot;, pattern = &quot;[.]Rmd$&quot;, recursive = T, full.names = T)
+<pre class="r"><code>files &lt;- list.files(&quot;./osf/data&quot;, pattern = &quot;[.]Rmd$&quot;, recursive = T, full.names = T)
 
 for (f in files) {
   xfun::Rscript_call(rmarkdown::render, list(f))
 }</code></pre>
 </div>
-<div id="upload-files-to-the-ofs-repo" class="section level1">
-<h1>Upload files to the OFS repo</h1>
+<div id="upload-readmes-to-the-ofs-repo" class="section level2">
+<h2>Upload Readmes to the OFS repo</h2>
 <pre class="r"><code># A loop would be better
-osf_upload(data_comp, path = &quot;./osf/comps/data/README.md&quot;, conflicts = &quot;overwrite&quot;, verbose = T)</code></pre>
+
+# data/ ----
+osf_upload(data_comp, path = &quot;./osf/data/README.md&quot;, conflicts = &quot;overwrite&quot;, verbose = T)</code></pre>
 <pre><code>## Searching for conflicting files on OSF</code></pre>
 <pre><code>## Updating 1 existing file(s) on OSF</code></pre>
 <pre><code>## Uploaded new version of &#39;README.md&#39; to OSF</code></pre>
@@ -237,7 +241,9 @@ osf_upload(data_comp, path = &quot;./osf/comps/data/README.md&quot;, conflicts =
 ## 1 README.md 5fd0d39a08ec9e007fb8efd3 &lt;named list [3]&gt;</code></pre>
 <pre class="r"><code>data_comp_files &lt;- osf_ls_files(data_comp)
 
-# data/norming/
+
+
+# data/norming/ ----
 raw &lt;- data_comp_files %&gt;% filter(name == &quot;norming&quot;)
 
 #### delete old readme (&quot;overwrite&quot; option fails)
@@ -247,7 +253,7 @@ osf_rm(old_readme, check = FALSE)
 #### upload new readme
 osf_upload(
   raw,
-  path = &quot;./osf/comps/data/norming/README.md&quot;,
+  path = &quot;./osf/data/norming/README.md&quot;,
   conflicts = &quot;overwrite&quot;, verbose = T)</code></pre>
 <pre><code>## Searching for conflicting files on OSF</code></pre>
 <pre><code>## Uploading 1 new file(s) to OSF</code></pre>
@@ -255,56 +261,89 @@ osf_upload(
 <pre><code>## # A tibble: 1 x 3
 ##   name      id                       meta            
 ##   &lt;chr&gt;     &lt;chr&gt;                    &lt;list&gt;          
-## 1 README.md 5ff470b11e6d97055d2f9de8 &lt;named list [3]&gt;</code></pre>
-<pre class="r"><code># data/production/audio/
+## 1 README.md 6016ed87dd2225044d589fac &lt;named list [3]&gt;</code></pre>
+<pre class="r"><code># data/norming/images/ ----
 #### delete old readme
-old_readme &lt;- osf_ls_files(data_comp, &quot;production/audio&quot;, pattern = &quot;README.md&quot;)
+old_readme &lt;- osf_ls_files(data_comp, &quot;norming/images/&quot;, pattern = &quot;README.md&quot;)
 osf_rm(old_readme, check = FALSE)
 
 #### upload new readme
-audio &lt;- osf_ls_files(data_comp, &quot;production&quot;, pattern = &quot;audio&quot;)
+audio &lt;- osf_ls_files(data_comp, &quot;norming&quot;, pattern = &quot;images&quot;)
 osf_upload(
   audio,
-  path = &quot;./osf/comps/data/production/audio/README.md&quot;,
+  path = &quot;./osf/data/norming/images/README.md&quot;,
   conflicts = &quot;overwrite&quot;, verbose = T)</code></pre>
 <pre><code>## Searching for conflicting files on OSF</code></pre>
-<pre><code>## Retrieving 60 of 60 available items:</code></pre>
+<pre><code>## Retrieving 134 of 134 available items:</code></pre>
 <pre><code>## ..retrieved 10 items</code></pre>
 <pre><code>## ..retrieved 20 items</code></pre>
 <pre><code>## ..retrieved 30 items</code></pre>
 <pre><code>## ..retrieved 40 items</code></pre>
 <pre><code>## ..retrieved 50 items</code></pre>
 <pre><code>## ..retrieved 60 items</code></pre>
+<pre><code>## ..retrieved 70 items</code></pre>
+<pre><code>## ..retrieved 80 items</code></pre>
+<pre><code>## ..retrieved 90 items</code></pre>
+<pre><code>## ..retrieved 100 items</code></pre>
+<pre><code>## ..retrieved 110 items</code></pre>
+<pre><code>## ..retrieved 120 items</code></pre>
+<pre><code>## ..retrieved 130 items</code></pre>
+<pre><code>## ..retrieved 134 items</code></pre>
 <pre><code>## ..done</code></pre>
 <pre><code>## Uploading 1 new file(s) to OSF</code></pre>
 <pre><code>## Uploaded new file &#39;README.md&#39; to OSF</code></pre>
 <pre><code>## # A tibble: 1 x 3
 ##   name      id                       meta            
 ##   &lt;chr&gt;     &lt;chr&gt;                    &lt;list&gt;          
-## 1 README.md 5ff470c1e9ccb9055daed424 &lt;named list [3]&gt;</code></pre>
-<pre class="r"><code># data/production/trial-lists
+## 1 README.md 6016edb0c5784b046cd03457 &lt;named list [3]&gt;</code></pre>
+<pre class="r"><code># data/production/audio/ ----
 #### delete old readme
-old_readme &lt;- osf_ls_files(data_comp, &quot;production/trial-lists&quot;, pattern = &quot;README.md&quot;)
-osf_rm(old_readme, check = FALSE)
+# old_readme &lt;- osf_ls_files(data_comp, &quot;production/audio&quot;, pattern = &quot;README.md&quot;)
+# osf_rm(old_readme, check = FALSE)
+# 
+# #### upload new readme
+# audio &lt;- osf_ls_files(data_comp, &quot;production&quot;, pattern = &quot;audio&quot;)
+# osf_upload(
+#   audio,
+#   path = &quot;./osf/data/production/audio/README.md&quot;,
+#   conflicts = &quot;overwrite&quot;, verbose = T)
 
-#### upload new readme
-trials &lt;- osf_ls_files(data_comp, &quot;production&quot;, pattern = &quot;trial-lists&quot;)
-osf_upload(
-  trials,
-  path = &quot;./osf/comps/data/production/trial-lists/README.md&quot;,
-  conflicts = &quot;overwrite&quot;, verbose = T)</code></pre>
-<pre><code>## Searching for conflicting files on OSF</code></pre>
-<pre><code>## Retrieving 30 of 30 available items:</code></pre>
-<pre><code>## ..retrieved 10 items</code></pre>
-<pre><code>## ..retrieved 20 items</code></pre>
-<pre><code>## ..retrieved 30 items</code></pre>
-<pre><code>## ..done</code></pre>
-<pre><code>## Uploading 1 new file(s) to OSF</code></pre>
-<pre><code>## Uploaded new file &#39;README.md&#39; to OSF</code></pre>
-<pre><code>## # A tibble: 1 x 3
-##   name      id                       meta            
-##   &lt;chr&gt;     &lt;chr&gt;                    &lt;list&gt;          
-## 1 README.md 5ff470d1e9ccb90555aece1c &lt;named list [3]&gt;</code></pre>
+
+
+# data/production/trial-lists ----
+#### delete old readme
+# old_readme &lt;- osf_ls_files(data_comp, &quot;production/trial-lists&quot;, pattern = &quot;README.md&quot;)
+# osf_rm(old_readme, check = FALSE)
+# 
+# #### upload new readme
+# trials &lt;- osf_ls_files(data_comp, &quot;production&quot;, pattern = &quot;trial-lists&quot;)
+# osf_upload(
+#   trials,
+#   path = &quot;./osf/data/production/trial-lists/README.md&quot;,
+#   conflicts = &quot;overwrite&quot;, verbose = T)</code></pre>
+</div>
+</div>
+<div id="textgrids" class="section level1">
+<h1>TextGrids</h1>
+<pre class="r"><code>audio &lt;- osf_ls_files(data_comp, &quot;production&quot;, pattern = &quot;audio&quot;)
+
+# delete old tgs
+old_tgs &lt;- osf_ls_files(audio, pattern = &quot;.TextGrid&quot;, n_max = Inf)
+
+for (file in 2:nrow(old_tgs)) {
+  osf_rm(old_tgs[file,], check = FALSE)
+}
+
+# upload new tgs
+new_tgs &lt;- list.files(&quot;./osf/data/production/audio/&quot;, &quot;.TextGrid&quot;, full.names = TRUE)
+
+for (tg in new_tgs) {
+  osf_upload(
+    audio,
+    path = tg,
+    conflicts = &quot;overwrite&quot;, verbose = T
+  )
+}</code></pre>
 </div>
 
 
