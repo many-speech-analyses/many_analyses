@@ -121,7 +121,7 @@ audio <- osf_ls_files(data_comp, "production", pattern = "audio")
 # delete old tgs
 old_tgs <- osf_ls_files(audio, pattern = ".TextGrid", n_max = Inf)
 
-for (file in 2:nrow(old_tgs)) {
+for (file in 1:nrow(old_tgs)) {
   osf_rm(old_tgs[file,], check = FALSE)
 }
 
@@ -136,3 +136,46 @@ for (tg in new_tgs) {
   )
 }
 ```
+
+# Trial lists
+
+```{r tlists}
+tlists <- list.files("./data/trial-lists", ".csv", full.names = TRUE)
+typ <- read_csv("./data/dataset/typicality.csv")
+
+for (tlist in tlists) {
+  speaker <- str_sub(tlist, 20, 21)
+  tbl <- read_csv(tlist) %>%
+    mutate(
+      speaker = speaker,
+      trial = row_number()
+    ) %>%
+    left_join(y = typ) %>%
+    select(speaker, trial, condition, typicality, everything())
+  
+  write_csv(tbl, file = paste0("./osf/data/production/trial-lists/", speaker, ".csv"))
+}
+```
+
+```{r tlists-upload}
+trials <- osf_ls_files(data_comp, "production", pattern = "trial-lists")
+
+# delete old trials
+old_trials <- osf_ls_files(trials, pattern = ".csv", n_max = Inf)
+
+for (file in 1:nrow(old_trials)) {
+  osf_rm(old_trials[file,], check = FALSE)
+}
+
+# upload new trials
+new_trials <- list.files("./osf/data/production/trial-lists/", ".csv", full.names = TRUE)
+
+for (trial in new_trials) {
+  osf_upload(
+    trials,
+    path = trial,
+    conflicts = "overwrite", verbose = T
+  )
+}
+```
+
