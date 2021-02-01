@@ -1,0 +1,16 @@
+target_name,target_colour,typicality
+Kirsche,gelb,atypical
+Moehre,gruen,atypical
+Gurke,rot,atypical
+Trauben,orange,atypical
+Paprika,braun,atypical
+Erbsen,gelb,medium
+Tomate,gruen,medium
+Aprikose,rot,medium
+Kartoffeln,orange,medium
+Banane,braun,medium
+Zitrone,gelb,typical
+Bohnen,gruen,typical
+Erdbeere,rot,typical
+Mandarine,orange,typical
+Walnuss,braun,typical
