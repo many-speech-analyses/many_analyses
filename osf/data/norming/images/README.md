@@ -1,7 +1,7 @@
 Images of the norming study
 ================
 
-Last update: 2021-01-31
+Last update: 2021-02-02
 
 # Overview
 

@@ -13,6 +13,8 @@
 # an error and should be discarded.
 #####################################################################
 
+writeInfoLine: "Job started..."
+
 include split.proc.praat
 
 data_tg$ = "../../data/textgrids"
@@ -36,6 +38,8 @@ for tg from 1 to tgs_no
   speaker$ = tg_path$ - ".TextGrid"
   trials = Read Table from comma-separated file: "'data_trials$'/'speaker$'.csv"
   selectObject(this_tg)
+
+  appendInfoLine: "---Speaker 'speaker$'."
 
   # Remove tiers "Syllable", "Vowel_modifier", "Vowel_noun"
   Remove tier: 2

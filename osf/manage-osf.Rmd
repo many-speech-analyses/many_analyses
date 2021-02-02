@@ -8,6 +8,7 @@ knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_knit$set(root.dir = here::here())
 library(tidyverse)
 library(osfr)
+library(speakr)
 ```
 
 # Manage OSF with osfr
@@ -33,11 +34,9 @@ osf_ls_files(data_comp)
 
 # Readme files
 
-## Knit Readmes
-
 We can knit the readme files (they are GitHub documents, i.e. `.Rmd` files that are converted to `.md` files upon knitting).
 
-```{r knit-all, message=FALSE, warning=FALSE}
+```{r knit-readmes, message=FALSE, warning=FALSE}
 files <- list.files("./osf/data", pattern = "[.]Rmd$", recursive = T, full.names = T)
 
 for (f in files) {
@@ -45,9 +44,8 @@ for (f in files) {
 }
 ```
 
-## Upload Readmes to the OFS repo
 
-```{r readmes}
+```{r upload-readmes}
 # A loop would be better
 
 # data/ ----
@@ -113,31 +111,111 @@ osf_upload(
 #   conflicts = "overwrite", verbose = T)
 ```
 
-# TextGrids
+# Norming study
 
-```{r textgrids, eval=FALSE}
+```{r ratings}
+ratings <- read_csv("./data/dataset/ratings.csv") %>%
+  mutate(
+    # Fix wrong encoding
+    object = str_replace(object, "W�_scheklammer", "Waescheklammer"),
+    object = str_replace(object, "M̦hre", "Moehre"),
+    # Humanise subject ids
+    subject_id = as.numeric(as.factor(`prolific id`))
+  ) %>%
+  select(subject_id, object, colour, typicality) %>%
+  arrange(subject_id, object, colour) %>%
+  mutate(
+    object_en = case_when(
+      object == "Ananas" ~ "pineapple",
+      object == "Aprikose" ~ "apricot",
+      object == "Aubergine" ~ "aubergine",
+      object == "Avocado" ~ "avocado",
+      object == "Banane" ~ "banana",
+      object == "Birne" ~ "pear",
+      object == "Bohnen" ~ "beans",
+      object == "Bueroklammer" ~ "paper.clip",
+      object == "Erbsen" ~ "peas",
+      object == "Erdbeere" ~ "strawberry",
+      object == "Gurke" ~ "cucumber",
+      object == "Kartoffeln" ~ "potatoes",
+      object == "Kirsche" ~ "cherry",
+      object == "Mandarine" ~ "mandarine",
+      object == "Moehre" ~ "carrots",
+      object == "Paprika" ~ "pepper",
+      object == "Socken" ~ "socks",
+      object == "Sonnenbrille" ~ "suglasses",
+      object == "Tomate" ~ "tomato",
+      object == "Trauben" ~ "grapes",
+      object == "Waescheklammer" ~ "clothes.peg",
+      object == "Walnuss" ~ "walnut",
+      object == "Zitrone" ~ "lemon",
+      object == "Zucchini" ~ "courgettes"
+    ),
+    colour_en = case_when(
+      colour == "blau" ~ "blue",
+      colour == "braun" ~ "brown",
+      colour == "gelb" ~ "yellow",
+      colour == "grau" ~ "gray",
+      colour == "gruen" ~ "green",
+      colour == "lila" ~ "lilac",
+      colour == "orange" ~ "orange",
+      colour == "rot" ~ "red",
+      colour == "schwarz" ~ "black"
+    )
+  )
+
+write_csv(ratings, "./osf/data/norming/ratings/ratings.csv")
+
+ratings_summary <- ratings %>%
+  group_by(object, colour, object_en, colour_en) %>%
+  summarise(
+    typ_mean = mean(typicality),
+    typ_sd = sd(typicality),
+    typ_median = median(typicality),
+    .groups = "drop"
+  )
+
+write_csv(ratings_summary, "./osf/data/norming/ratings/ratings_summary.csv")
+```
+
+```{r ratings-upload}
+rats <- osf_ls_files(data_comp, "norming", pattern = "ratings")
+
+# delete old tgs
+osf_rm(rats, check = FALSE)
+osf_mkdir(data_comp, "norming/ratings")
+
+# upload new tgs
+new_ratings <- list.files("./osf/data/norming/ratings", ".csv", full.names = TRUE)
+
+rats <- osf_ls_files(data_comp, "norming", pattern = "ratings")
+osf_upload(rats, new_ratings, conflicts = "overwrite", verbose = T, progress = T)
+```
+
+
+# Production study
+
+## TextGrids
+
+```{r textgrids}
+praat_run("./scripts/praat/prep_textgrids.praat")
+```
+
+```{r textgrids-upload}
 audio <- osf_ls_files(data_comp, "production", pattern = "audio")
 
 # delete old tgs
-old_tgs <- osf_ls_files(audio, pattern = ".TextGrid", n_max = Inf)
-
-for (file in 1:nrow(old_tgs)) {
-  osf_rm(old_tgs[file,], check = FALSE)
-}
+osf_rm(audio, check = FALSE)
+osf_mkdir(data_comp, "production/audio")
 
 # upload new tgs
-new_tgs <- list.files("./osf/data/production/audio/", ".TextGrid", full.names = TRUE)
+new_tgs <- list.files("./osf/data/production/audio", ".TextGrid", full.names = TRUE)
 
-for (tg in new_tgs) {
-  osf_upload(
-    audio,
-    path = tg,
-    conflicts = "overwrite", verbose = T
-  )
-}
+audio <- osf_ls_files(data_comp, "production", pattern = "audio")
+osf_upload(audio, new_tgs, conflicts = "overwrite", verbose = T, progress = T)
 ```
 
-# Trial lists
+## Trial lists
 
 ```{r tlists}
 tlists <- list.files("./data/trial-lists", ".csv", full.names = TRUE)
@@ -151,7 +229,8 @@ for (tlist in tlists) {
       trial = row_number()
     ) %>%
     left_join(y = typ) %>%
-    select(speaker, trial, condition, typicality, everything())
+    select(speaker, trial, condition, typicality, everything()) %>%
+    left_join(y = ratings_summary, by = c("target_name" = "object", "target_colour" = "colour"))
   
   write_csv(tbl, file = paste0("./osf/data/production/trial-lists/", speaker, ".csv"))
 }
