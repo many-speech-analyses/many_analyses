@@ -565,8 +565,10 @@ estimated_tbl %>%
 
 ### Analytical and demographic factors affecting effect sizes {#ana-factors}
 
-As a second step, we will investigate the extent to which deviations from the meta-analytical mean by individual standardized effect sizes relate to a series of predictors related to analytical and demographic factors (see below).
-We will fit a single Bayesian regression model with each team's group-level coefficient $\alpha_{\text{t}[i]}$ as the outcome variable, and the analytical and demographic factors described below as predictors.
+As a second step, we will investigate (a) the extent to which the individual standardized effect sizes are affected by a series of predictors related to analytical and demographic factors (see below); and (b) the extent to which deviations from the meta-analytical mean by the individual standardized effect sizes relate to those same predictors.
+We will fit two Bayesian regression models, one for (a) and one for (b).
+<!-- TODO: check if stand. effect sizes and deviations are equivalent. -->
+with each team's group-level coefficient $\alpha_{\text{t}[i]}$ as the outcome variable, and the analytical and demographic factors described below as predictors.
 The coefficient $\alpha_{\text{t}[i]}$ can be interpreted as the deviation score of the team's $\eta_i$ from the meta-analytical mean, allowing us to determine potential effects of analytical and demographic factors on how the teams deviate from the meta-analytical mean.
 Since each $\alpha_{\text{t}[i]}$ comes with uncertainty, quantified by its standard deviation $\sigma_{\alpha_{\text{t}[i]}}$, we will fit a measurement-error model, as we did in the meta-analytical model above.
 The formula of the model is the following (see the description of the predictors below for the meaning of acronyms):
@@ -574,8 +576,9 @@ The formula of the model is the following (see the description of the predictors
 $$
 \begin{aligned}
 \alpha_{\text{t}[i]}      & \sim \text{Normal}(\mu_{\alpha_{t[i]}}, \sigma_i) \\
-\mu_{\alpha_{t[i]}}       & = \iota + \upsilon_u\cdot uniq_i + \upsilon_c\cdot cons_i + \upsilon_p\cdot phoc_i + \upsilon_m\cdot modn_i + \upsilon_d\cdot mdim_i + \upsilon_w\cdot twin_i + \upsilon_e\cdot excl_i \\
- & \qquad\qquad +\upsilon_{xp}\cdot rexp_i + \upsilon_{be}\cdot belf_i  \\
+\mu_{\alpha_{t[i]}}       & = \iota + \upsilon_u\cdot uniq_i + \upsilon_c\cdot cons_i + \upsilon_p\cdot phoc_i + \upsilon_m\cdot modn_i \\
+ & \qquad + \upsilon_d\cdot mdim_i + \upsilon_w\cdot twin_i + \upsilon_e\cdot excl_i \\
+ & \qquad + \upsilon_{xp}\cdot rexp_i + \upsilon_{be}\cdot belf_i  \\
 \iota      & \sim \text{Normal}(0, 1) \\
 \upsilon_{[\ldots]} & \sim \text{Normal}(0,1) \\
 resp_i & \sim \text{Normal}(\mu_{resp_i}, \sigma_{resp_i}) \\
