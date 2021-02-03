@@ -535,7 +535,7 @@ plots[[1]] + labs(title = "(a) no bias") +
 
 ```{r funnel-calc, include=FALSE, eval=FALSE}
 # meta_bm is the meta-analytical Bayesian regression model
-meta_bm_est <- fixef(meta_bm)["Intercept","Estimate"
+meta_bm_est <- fixef(meta_bm)["Intercept","Estimate"]
 meta_bm_q2.5 <- fixef(meta_bm)["Intercept","Q2.5"]
 meta_bm_q97.5 <- fixef(meta_bm)["Intercept","Q97.5"]
 
