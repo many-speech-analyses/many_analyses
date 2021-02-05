@@ -1,0 +1,108 @@
+---
+title: "Perspective simulation"
+date: "`r Sys.Date()`"
+output:
+  rmdformats::downcute:
+    toc_depth: 3
+    number_sections: yes
+    use_bookdown: yes
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_knit$set(root.dir = here::here())
+library(rmdformats)
+library(tidyverse)
+library(patchwork)
+library(brms)
+library(extraDistr)
+my_seed <- 115116106
+```
+
+# Meta-analysis
+
+## Simulate data set
+
+We first simulate a dataset (`eta_tbl`) of standardised effect sizes.
+Each team ($n = 12$) contributes a standardized effect size $\eta_i$, with respective standard error $\text{se}_i$.
+The $\eta_i$ is randomly sampled from a $Normal(1, 0.5)$ distribution, while $\text{se}_i$ from a $HalfCauchy(0, 0.1)$.
+
+```{r eta-tbl}
+set.seed(my_seed)
+
+# Number of teams, each team contributes one effect size
+n <- 12
+# standardized effect size
+eta <- rnorm(n, 1, 0.5)
+# standard error of the standardised effect size
+se <- rhcauchy(n, 0.1)
+# label each team
+team <- letters[1:n]
+
+# put together in a tibble
+eta_tbl <- tibble(
+  eta,
+  se,
+  team
+)
+```
+
+## Model priors
+
+In the meta-analytical model, we will use the following priors:
+
+<!-- TODO: need to discuss prior for sd -->
+
+- A $Normal(0, 1)$ distribution for the prior of the intercept.
+- A $HalfCauchy(0, 0.01)$ distribution for the prior of the intercept standard deviation.
+
+```{r meta-priors}
+priors <- c(
+  prior(normal(0, 1), class = Intercept),
+  prior(cauchy(0, 0.01), class = sd)
+)
+```
+
+### Prior predictive checks
+
+```{r prior-predictive}
+meta_bm_ppred <- brm(
+  eta | se(se) ~
+    (1 | team),
+  data = eta_tbl,
+  prior = priors,
+  sample_prior = "only",
+  chain = 1,
+  seed = my_seed,
+  file = "./models/sim/meta_bm_ppred"
+)
+```
+
+```{r ppred-samples}
+ppred_samples <- posterior_samples(meta_bm_ppred)
+glimpse(ppred_samples)
+```
+
+## Meta-analytical model
+
+```{r meta-bm}
+meta_bm <- brm(
+  eta | se(se) ~
+    (1 | team),
+  data = eta_tbl,
+  prior = priors,
+  chain = 1,
+  seed = my_seed,
+  file = "./models/sim/meta_bm"
+)
+```
+
+```{r meta-bm-summary}
+meta_bm
+```
+
+```{r plot-meta-bm}
+plot(meta_bm)
+```
+
