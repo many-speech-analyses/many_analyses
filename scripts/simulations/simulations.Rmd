@@ -17,18 +17,41 @@ library(tidyverse)
 library(patchwork)
 library(brms)
 library(extraDistr)
+library(betapart)
+library(summarytools)
 my_seed <- 115116106
 ```
 
 # Meta-analysis
 
-## Simulate data set
+## Simulate data
 
 We first simulate a dataset (`eta_tbl`) of standardised effect sizes.
 Each team ($n = 12$) contributes a standardized effect size $\eta_i$, with respective standard error $\text{se}_i$.
+
+### Helper functions
+
+```{r helpers}
+at_least <- function(x) {
+  if (1 %in% x) {x} else {sample(c(1, 0, 0, 0, 0))}
+}
+
+sdi_mean <- function(preds) {
+  bpair <- tibble::tibble(preds) %>% tidyr::unnest_wider(preds, names_sep = ".") %>%
+    as.matrix() %>%
+    betapart::beta.pair(.)
+  sdim <- as.matrix(bpair$beta.sor)
+  diag(sdim) <- NA
+  rowSums(sdim, na.rm = T) / length(preds)
+}
+```
+
+
+### Tibble
+
 The $\eta_i$ is randomly sampled from a $Normal(1, 0.5)$ distribution, while $\text{se}_i$ from a $HalfCauchy(0, 0.1)$.
 
-```{r eta-tbl}
+```{r sim-data}
 set.seed(my_seed)
 
 # Number of teams, each team contributes one effect size
@@ -40,11 +63,46 @@ se <- rhcauchy(n, 0.1)
 # label each team
 team <- letters[1:n]
 
+# pop-level predictors
+pop_pred <- lapply(replicate(n, list(rbinom(5, 1, 0.5))), at_least)
+# group-level predictors
+group_pred <- lapply(replicate(n, list(rbinom(5, 1, 0.5))), at_least)
+# number of post-hoc changes to the measures
+phoc_n <- rpois(n, 1)
+# number of models run
+mod_n <- sample(1:5, n, replace = T)
+# major dimension
+mdim <- sample(c("duration", "amplitude", "f0", "spectral", "other"), n, TRUE)
+# temporal window
+twin <- sample(c("segment", "syllable", "word", "phrase"), n, T)
+# was data excluded?
+excl <- rbinom(n, 1, 0.5)
+
+# research experience as years from PhD
+exp <- replicate(n, sample(-3:20, sample(1:10, 1), replace = T))
+# prior belief in the research hypothesis
+belf <- lapply(lengths(exp), function(.x) rbinom(.x, 1, 0.5))
+```
+
+```{r eta-tbl}
 # put together in a tibble
 eta_tbl <- tibble(
   eta,
   se,
-  team
+  team,
+  pop_pred,
+  pop_n = map(pop_pred, sum),
+  group_pred,
+  group_n = map(group_pred, sum),
+  pop_sdi = sdi_mean(pop_pred),
+  group_sdi = sdi_mean(group_pred),
+  phoc_n,
+  mod_n,
+  mdim,
+  twin,
+  excl,
+  exp,
+  belf
 )
 ```
 
@@ -104,5 +162,12 @@ meta_bm
 
 ```{r plot-meta-bm}
 plot(meta_bm)
+```
+
+# Simulated data summary
+
+```{r dfsummary}
+# seems dfSummary() does not support list columns
+dfSummary(eta_tbl %>% select(-where(is.list)))
 ```
 
