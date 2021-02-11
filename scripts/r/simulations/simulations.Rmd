@@ -14,17 +14,17 @@ knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_knit$set(root.dir = here::here())
 library(rmdformats)
 library(tidyverse)
+theme_set(theme_light())
 library(patchwork)
 library(brms)
 library(extraDistr)
+library(HDInterval)
 library(betapart)
 library(summarytools)
 my_seed <- 115116106
 ```
 
-# Meta-analysis
-
-## Simulate data
+# Simulate data
 
 We first simulate a dataset (`eta_tbl`) of standardised effect sizes.
 Each team ($n = 12$) contributes a standardized effect size $\eta_i$, with respective standard error $\text{se}_i$.
@@ -49,7 +49,7 @@ sdi_mean <- function(preds) {
 
 ### Tibble
 
-The $\eta_i$ is randomly sampled from a $Normal(1, 0.5)$ distribution, while $\text{se}_i$ from a $HalfCauchy(0, 0.1)$.
+The $\eta_i$ is randomly sampled from a $Normal(1, 0.5)$ distribution, while $\text{se}_i$ from a $HalfCauchy(0, 0.15)$.
 
 ```{r sim-data}
 set.seed(my_seed)
@@ -59,7 +59,7 @@ n <- 12
 # standardized effect size
 eta <- rnorm(n, 1, 0.5)
 # standard error of the standardised effect size
-se <- rhcauchy(n, 0.1)
+se <- rhcauchy(n, 0.15)
 # label each team
 team <- letters[1:n]
 
@@ -106,19 +106,45 @@ eta_tbl <- tibble(
 )
 ```
 
+# Meta-analytical model
+
+## Model formula
+
+$$
+\begin{aligned}
+\eta_i      & \sim \text{Normal}(\mu_i, \sigma_i) \\
+\mu_i       & = \alpha + \alpha_{\text{t}[i]} \\
+\alpha      & \sim \text{Normal}(0, 1) \\
+\sigma_{\alpha_{\text{t}}} & \sim \text{HalfCauchy}(0, 1) \\
+\sigma_i    & = \text{se}_i
+\end{aligned}
+$$
+
 ## Model priors
 
 In the meta-analytical model, we will use the following priors:
 
-<!-- TODO: need to discuss prior for sd -->
-
 - A $Normal(0, 1)$ distribution for the prior of the intercept.
-- A $HalfCauchy(0, 0.01)$ distribution for the prior of the intercept standard deviation.
+- A $HalfCauchy(0, 1)$ distribution for the prior of the teams' intercept standard deviation.
+
+```{r sd-prior}
+tibble(
+  x = seq(0, 10, by = 0.05),
+  density = dhcauchy(x, 1)
+) %>%
+  ggplot(aes(x, density)) +
+  geom_area(fill = "#325756", alpha = 0.9) +
+  labs(
+    title = "HalfCauchy(0, 1)",
+    x = "teams' intercept standard deviation"
+  )
+```
+
 
 ```{r meta-priors}
 priors <- c(
   prior(normal(0, 1), class = Intercept),
-  prior(cauchy(0, 0.01), class = sd)
+  prior(cauchy(0, 1), class = sd)
 )
 ```
 
@@ -131,15 +157,32 @@ meta_bm_ppred <- brm(
   data = eta_tbl,
   prior = priors,
   sample_prior = "only",
-  chain = 1,
+  chain = 4,
   seed = my_seed,
   file = "./models/sim/meta_bm_ppred"
 )
+
+ppred_samples <- posterior_samples(meta_bm_ppred) %>%
+  rename(intercept = b_Intercept, `group-level SD` = sd_team__Intercept)
 ```
 
-```{r ppred-samples}
-ppred_samples <- posterior_samples(meta_bm_ppred)
-glimpse(ppred_samples)
+```{r ppred-posts}
+ppred_samples %>%
+  pivot_longer(intercept:`group-level SD`, names_to = "term") %>%
+  mutate(term = factor(term, levels = c("intercept", "group-level SD"))) %>%
+  ggplot(aes(value)) +
+  geom_density(colour = NA, fill = "#325756", alpha = 0.9, bw = 0.4) +
+  facet_wrap(~ term, scales = "free")
+```
+
+```{r ppred-joint-post}
+ppred_samples %>%
+  select(intercept, `r_team[a,Intercept]`:`r_team[l,Intercept]`) %>%
+  pivot_longer(-intercept, names_to = "team") %>%
+  mutate(eta = intercept + value) %>%
+  ggplot(aes(eta)) +
+  geom_density(colour = NA, fill = "#325756", alpha = 0.9, bw = 0.4) +
+  xlim(-7, 7)
 ```
 
 ## Meta-analytical model
@@ -150,7 +193,7 @@ meta_bm <- brm(
     (1 | team),
   data = eta_tbl,
   prior = priors,
-  chain = 1,
+  chain = 4,
   seed = my_seed,
   file = "./models/sim/meta_bm"
 )
@@ -164,10 +207,4 @@ meta_bm
 plot(meta_bm)
 ```
 
-# Simulated data summary
-
-```{r dfsummary}
-# seems dfSummary() does not support list columns
-dfSummary(eta_tbl %>% select(-where(is.list)))
-```
 
