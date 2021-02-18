@@ -450,7 +450,7 @@ Balancing the order in which reviewers see the analyses controls for order effec
 The process for a single reviewer will be as follows.
 First, the reviewer will receive a description of the methods of a single analysis.
 This will include the narrative methods section, the analysis team's answers to our survey questions regarding their methods, including analysis code, and the data set.
-The reviewer will then be asked, in an online survey (LINK), to rate both the acoustic analysis and the statistical analysis on a scale of 0-100 based on these prompts:
+The reviewer will then be asked, in an online survey (LINK), to rate both the acoustic analysis and the statistical analysis on a scale of 0-100 based on the following criteria:
 
 "Rate the overall appropriateness of the acoustic analysis to answer the research question with the available data. To help you calibrate your rating, please consider the following guidelines:
 
@@ -586,8 +586,9 @@ A sign of possible bias is when there are more points which are farther from the
 \hypertarget{ana-factors}{%
 \subsubsection{Analytical and demographic factors affecting effect sizes}\label{ana-factors}}
 
-As a second step, we will investigate the extent to which deviations from the meta-analytical mean by individual standardized effect sizes relate to a series of predictors related to analytical and demographic factors (see below).
-We will fit a single Bayesian regression model with each team's group-level coefficient \(\alpha_{\text{t}[i]}\) as the outcome variable, and the analytical and demographic factors described below as predictors.
+As a second step, we will investigate (a) the extent to which the individual standardized effect sizes are affected by a series of predictors related to analytical and demographic factors (see below); and (b) the extent to which deviations from the meta-analytical mean by the individual standardized effect sizes relate to those same predictors.
+We will fit two Bayesian regression models, one for (a) and one for (b).
+with each team's group-level coefficient \(\alpha_{\text{t}[i]}\) as the outcome variable, and the analytical and demographic factors described below as predictors.
 The coefficient \(\alpha_{\text{t}[i]}\) can be interpreted as the deviation score of the team's \(\eta_i\) from the meta-analytical mean, allowing us to determine potential effects of analytical and demographic factors on how the teams deviate from the meta-analytical mean.
 Since each \(\alpha_{\text{t}[i]}\) comes with uncertainty, quantified by its standard deviation \(\sigma_{\alpha_{\text{t}[i]}}\), we will fit a measurement-error model, as we did in the meta-analytical model above.
 The formula of the model is the following (see the description of the predictors below for the meaning of acronyms):
@@ -595,8 +596,9 @@ The formula of the model is the following (see the description of the predictors
 \[
 \begin{aligned}
 \alpha_{\text{t}[i]}      & \sim \text{Normal}(\mu_{\alpha_{t[i]}}, \sigma_i) \\
-\mu_{\alpha_{t[i]}}       & = \iota + \upsilon_u\cdot uniq_i + \upsilon_c\cdot cons_i + \upsilon_p\cdot phoc_i + \upsilon_m\cdot modn_i + \upsilon_d\cdot mdim_i + \upsilon_w\cdot twin_i + \upsilon_e\cdot excl_i \\
- & \qquad\qquad +\upsilon_{xp}\cdot rexp_i + \upsilon_{be}\cdot belf_i  \\
+\mu_{\alpha_{t[i]}}       & = \iota + \upsilon_u\cdot uniq_i + \upsilon_c\cdot cons_i + \upsilon_p\cdot phoc_i + \upsilon_m\cdot modn_i \\
+ & \qquad + \upsilon_d\cdot mdim_i + \upsilon_w\cdot twin_i + \upsilon_e\cdot excl_i \\
+ & \qquad + \upsilon_{xp}\cdot rexp_i + \upsilon_{be}\cdot belf_i  \\
 \iota      & \sim \text{Normal}(0, 1) \\
 \upsilon_{[\ldots]} & \sim \text{Normal}(0,1) \\
 resp_i & \sim \text{Normal}(\mu_{resp_i}, \sigma_{resp_i}) \\
@@ -628,6 +630,8 @@ As the prior for \(i\) and \(\upsilon\) we will use a normal distribution with m
   \emph{Temporal window} {[}categorical{]} that the measurement is taken over (\(twin_i\)).
 \item
   \emph{Data exclusion}, {[}categorical{]} whether data has been excluded or not (\(excl_i\)).
+\item
+  \emph{Average peer-review rating} {[}numeric{]}, as the mean of the peer-review ratings for each analysis.
 \end{itemize}
 
 The measure of uniqueness of predictors will be assessed by the Sørensen-Dice Index (SDI, Dice, 1945; Sørensen, 1948).
@@ -644,6 +648,8 @@ In order to generate a unique SDI for each analysis team, we will calculate the 
 The major measurement dimension of each analysis will be categorized according to the following possible groups: \emph{duration}, \emph{amplitude}, \emph{fundamental frequency}, \emph{other spectral properties} (e.g.~frequency center of gravity, harmonics difference, etc.), \emph{other measures} (e.g.~principal components, vowel dispersion, etc.)
 The temporal window that the measurement is taken over is defined by the target linguistic unit.
 We assume the following relevant linguistic units: \emph{segment}, \emph{syllable}, \emph{word}, \emph{phrase}.
+Since each analysis will receive more than one peer-review rating, we will calculate the mean rating and its standard deviation for each.
+These will be entered in the model formula with a measurement-error term (\texttt{me(mean,\ sd)} in brms).
 
 \textbf{Demographic factors}. We will include the following demographic factors about the teams:
 
