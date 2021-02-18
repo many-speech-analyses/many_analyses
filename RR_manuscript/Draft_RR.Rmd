@@ -67,25 +67,26 @@ footnotelist      : no
 linenumbers       : yes
 mask              : no
 draft             : no
-
-documentclass     : "apa6"
-classoption       : "man"
 output:
-  papaja::apa6_pdf:
+  bookdown::pdf_document2:
     number_sections: true
     latex_engine: xelatex
+    keep_tex: true
+geometry: margin=4cm
+fontsize: 12pt
 header-includes:
   - \usepackage{cleveref}
+  - \setlength{\marginparwidth}{2cm}
   - \usepackage{changes}
   - \definechangesauthor[name={Stefano Coretta}, color=red]{SC}
   - \definechangesauthor[name={Timo Röttger}, color=blue]{TR}
   - \definechangesauthor[name={Joseph Casillas}, color=orange]{JC}
 ---
 
-```{r setup, include = FALSE}
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
 knitr::opts_knit$set(root.dir = here::here())
-library("papaja")
-r_refs("r-references.bib")
+
 library(tidyverse)
 library(patchwork)
 library(brms)
