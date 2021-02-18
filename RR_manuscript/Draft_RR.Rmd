@@ -364,7 +364,7 @@ The process for a single reviewer will be as follows.
 First, the reviewer will receive a description of the methods of a single analysis.
 This will include the narrative methods section, the analysis team’s answers to our survey questions regarding their methods, including analysis code, and the data set.
 <!-- TODO: add link to peer review survey -->
-The reviewer will then be asked, in an online survey (LINK), to rate both the acoustic analysis and the statistical analysis on a scale of 0-100 based on these prompts: <!-- TR:Need flow chart here-->
+The reviewer will then be asked, in an online survey (LINK), to rate both the acoustic analysis and the statistical analysis on a scale of 0-100 based on the following criteria: <!-- TR:Need flow chart here-->
 
 "Rate the overall appropriateness of the acoustic analysis to answer the research question with the available data. To help you calibrate your rating, please consider the following guidelines:
 
@@ -607,6 +607,7 @@ As the prior for $i$ and $\upsilon$ we will use a normal distribution with mean 
 - *Major dimension* [categorical] that has been measured to answer the research question ($mdim_i$).
 - *Temporal window* [categorical] that the measurement is taken over ($twin_i$).
 - *Data exclusion*, [categorical] whether data has been excluded or not ($excl_i$).
+- *Average peer-review rating* [numeric], as the mean of the peer-review ratings for each analysis.
 
 The measure of uniqueness of predictors will be assessed by the Sørensen-Dice Index [SDI, @dice1945; @sorensen1948].
 The SDI is an index typically used in ecology research to compare species composition across sites.
@@ -633,6 +634,8 @@ The major measurement dimension of each analysis will be categorized according t
 <!-- SC: I just added a "other measures" category for other things that are not strictly acoustic. -->
 The temporal window that the measurement is taken over is defined by the target linguistic unit.
 We assume the following relevant linguistic units: *segment*, *syllable*, *word*, *phrase*.
+Since each analysis will receive more than one peer-review rating, we will calculate the mean rating and its standard deviation for each.
+These will be entered in the model formula with a measurement-error term (`me(mean, sd)` in brms).
 
 <!-- TODO: explain how the demographic factors will be entered in the factors analysis -->
 
