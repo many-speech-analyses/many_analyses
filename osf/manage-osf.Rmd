@@ -230,6 +230,7 @@ for (tlist in tlists) {
     ) %>%
     left_join(y = typ) %>%
     select(speaker, trial, condition, typicality, everything()) %>%
+    mutate(typicality = ifelse(condition == "NF", typicality, NA)) %>%
     left_join(y = ratings_summary, by = c("target_name" = "object", "target_colour" = "colour"))
   
   write_csv(tbl, file = paste0("./osf/data/production/trial-lists/", speaker, ".csv"))
