@@ -20,7 +20,7 @@ library(brms)
 library(extraDistr)
 library(HDInterval)
 library(betapart)
-library(summarytools)
+# library(summarytools)
 my_seed <- 115116106
 ```
 
@@ -77,6 +77,8 @@ mdim <- sample(c("duration", "amplitude", "f0", "spectral", "other"), n, TRUE)
 twin <- sample(c("segment", "syllable", "word", "phrase"), n, T)
 # was data excluded?
 excl <- rbinom(n, 1, 0.5)
+# reviewers' ratings
+rating <- replicate(n, sample(0:100, sample(3:4, 1), replace = T))
 
 # research experience as years from PhD
 exp <- replicate(n, sample(-3:20, sample(1:10, 1), replace = T))
@@ -101,8 +103,25 @@ eta_tbl <- tibble(
   mdim,
   twin,
   excl,
+  rating,
   exp,
-  belf
+  belf,
+  rating_mean = unlist(map(rating, mean)),
+  rating_sd = unlist(map(rating, sd)),
+  exp_mean = unlist(map(exp, mean)),
+  exp_sd = unlist(map(exp, sd)),
+  belf_mean = unlist(map(belf, mean)),
+  belf_sd = unlist(map(belf, sd))
+) %>%
+  mutate(
+  # need the following in cases where score = 0
+  rating_mean = ifelse(rating_mean == 0, 0.01, rating_mean),
+  exp_mean = ifelse(exp_mean == 0, 0.01, exp_mean),
+  belf_mean = ifelse(belf_mean == 0, 0.01, belf_mean),
+  # need the following in cases where there only one person in the team
+  rating_sd = ifelse(is.na(rating_sd) | rating_sd == 0, 0.01, rating_sd),
+  exp_sd = ifelse(is.na(exp_sd) | exp_sd == 0, 0.01, exp_sd),
+  belf_sd = ifelse(is.na(belf_sd) | belf_sd == 0, 0.01, belf_sd)
 )
 ```
 
@@ -195,6 +214,7 @@ meta_bm <- brm(
   prior = priors,
   chain = 4,
   seed = my_seed,
+  cores = 4,
   file = "./models/sim/meta_bm"
 )
 ```
@@ -207,4 +227,38 @@ meta_bm
 plot(meta_bm)
 ```
 
+# Factors analysis model
+
+```{r factors-priors}
+factors_priors <- c(
+  prior(normal(0, 1), class = Intercept),
+  prior(normal(0, 1), class = b),
+  prior(normal(0, 1), class = meanme),
+  prior(cauchy(0, 1), class = sdme),
+  prior(lkj(2), class = corme)
+)
+```
+
+```{r factors-bm}
+factors_bm <- brm(
+  eta | se(se) ~
+    pop_sdi +
+    phoc_n +
+    mod_n +
+    mdim +
+    twin +
+    excl +
+    me(rating_mean, rating_sd) +
+    me(exp_mean, exp_sd) +
+    me(belf_mean, belf_sd),
+  data = eta_tbl,
+  prior = factors_priors,
+  chain = 4,
+  iter = 4000,
+  control = list(max_treedepth = 15),
+  seed = my_seed,
+  cores = 4,
+  file = "./models/sim/factors_bm"
+)
+```
 
