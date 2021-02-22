@@ -241,10 +241,10 @@ Even the analysis of a single measure can be approached via an ever-increasing r
 The present paper probes this garden of forking paths in the analysis of speech.
 To assess the variability in data analysis pipelines across independent researchers, we provided XX analytical teams with an experimentally elicited speech corpus and asked them to investigate acoustic differences related to a functional contrast that might be manifested across the whole utterance.
 
-## The data set - The prosody of redundant modifiers
+## The data set: The acoustic properties of redundant modifiers
 
-Our data set was collected in order to answer the following research question: Do speakers acoustically modify utterances to signal atypical word combinations? (e.g. *a blue banana* vs *a yellow banana*)?
-We are interested in the acoustic profile of referring expressions.
+Our data set was collected in order to answer the following research question: Do speakers acoustically modify utterances to signal atypical word combinations (e.g. the atypical *a blue banana* vs the typical *a yellow banana*)?
+More specifically, we are interested in the acoustic profile of referring expressions made up of a noun and an adjective modifier.
 Referring is one of the most basic and prevalent uses of language and one of the most widely researched areas in language science.
 It is an open question how speakers choose a referring expression when they want to refer to a specific entity like a banana.
 The context within which an entity occurs (i.e., with other non-fruits, other fruits, or other bananas) plays a large part in determining the choice of referring expressions.
