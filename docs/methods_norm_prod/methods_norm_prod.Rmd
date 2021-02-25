@@ -1,12 +1,14 @@
 ---
-title: "Production study: Methodological details"
+title: "Methodological details of the norming and production studies"
 author: ""
 date: "9/17/2020"
 output:
   bookdown::pdf_document2:
     number_sections: true
     keep_tex: true
+fontsize: 12pt
 header-includes:
+  - \renewcommand{\familydefault}{\sfdefault}
   - \usepackage{expex}
   - \lingset{everygla=,everyglpreamble=\it}
   - \usepackage[export]{adjustbox}
@@ -14,178 +16,29 @@ header-includes:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, fig.pos = "tbp")
+knitr::opts_knit$set(root.dir = here::here())
+library(here)
 options(tinytex.verbose = TRUE)
 ```
 
 # Overview
 
-This document describes the methodological details of the production study, which generated the data your team will analyze for the *Many Speech Analyses* project.
+This document describes the methodological details of the norming study and the production study that generated the data your team will analyze for the *Many Speech Analyses* project.
 
-<!-- TODO: link to OSF wiki for overview of the norming and production studies -->
-Although the details of the norming study (run prior to the production study, see OSF Wiki) might not be directly relevant for your analysis, we provide an outline of the norming study methods in Appendix \@ref(norming) for context.
-
-# Research question
-
-This study investigated whether speakers modify speech to signal atypical referents.
+The norming study was run to obtain ratings on the typicality of color/object combinations used to create the experimental categories manipulated in the production study.
+The production study then investigated whether speakers modify speech to signal the (a)typicality of the color/object combinations.
 Concretely, we asked whether the acoustic profile of an utterance with an atypical referent like *blue banana* is different from one with a typical referent such as *yellow banana*.
 
-# Participants
+<!-- TODO: link to OSF wiki for overview of the norming and production studies -->
 
-Thirty native German speakers participated in this study.
-All participants grew up in a monolingual environment and were recruited from the population living in the broad Cologne area with normal or corrected-to-normal vision and normal hearing.
-Participants were paid for their participation.
+# Norming study
 
-# Procedure
-
-In this production study, participants interacted with the experimenter in German.
-Participants were seated in front of a computer screen.
-The experimenter sat at the opposite side of the table in front of another computer screen.
-The participants and the experimenter could not see each other nor each others' screens.
-The participants had to verbally instruct the experimenter to select a specified target object out of four visually presented objects.
-The non-target objects differed from the target with respect to their color, their identity, or both.
-Objects were referred to using noun phrases that consist of a modifier denoting color and a modified object (e.g. *Gelbe Zitrone* 'yellow lemon', *Rote Gurke* 'red cucumber', *Rote Socken* 'red socks').
-These color-object combinations differed with respect to their typicality.
-The color-object combinations were either typical (e.g. *Orangene Mandarine* 'orange mandarin'), medium typical (e.g. *Grüne Tomate* 'green tomato'), or atypical (e.g. *Gelbe Kirsche* 'yellow cherry').
-The typicality rating of each color-object combination was established, prior to the production experiment, with a norming study (see Appendix \@ref(norming) for details).
-Figure \@ref(fig:image0) illustrates combination typicality for a banana, a tomato, and an apricot.
-
-```{r image0, echo = FALSE, fig.align="center", out.width = "60%", fig.cap = "Three examples for typical, medium typical and atypical combinations of colour and object."}
-
-knitr::include_graphics("typicality_examples.png")
-
-```
-
-The experiment consisted of two phases: a familiarization phase and a test phase.
-
-In a familiarization phase, participants saw the picture of one object per trial.
-In order to advance to the next trial, participants had to read out loud the corresponding color-object combination.
-During this phase, participants had to name all atypical color-object targets that we used in the test phase of the experiment alongside their typical counterparts.
-For example, one of the experimental targets was a red banana (atypical).
-The participants were presented with the picture of both a red banana (atypical) and a yellow banana (typical).
-This familiarization phase was included in order to ensure that participants could relate typical and atypical color-object combinations to each other.
-
-After the familiarization phase, the participants entered the test phase.
-On each trial in the test phase, the subjects first saw four colored objects in the top left, top right, bottom left, and bottom right of the screen, respectively.
-One of the object served as the target; another served as the competitor; and the remaining two served as unrelated distractors.
-The position of the visual stimuli was randomized for each trial and each participant (see Appendix \@ref(random)).
-In the center of the screen, a black cube was displayed, which could be moved by the experimenter.
-The participants were asked to instruct the experimenter to move the cube on top of one of the four depicted object.
-
-```{r image1, echo = FALSE, fig.align="center", out.width = "60%", fig.cap = "Test trial: Example screen of a trigger instruction. The trigger instruction is displayed in the middle below the cube. Here, the participants have to instruct the experimenter to move the cube on top of the green sunglasses (indicated by an arrow).", out.extra="frame"}
-
-knitr::include_graphics("sample_experiment_screen_competitor.png")
-
-```
-
-Each test trial consisted of two parts.
-The trigger instruction and the test instruction.
-After the preview of all images was displayed for 1500 ms, the competitor object was visually highlighted by an arrow, and a trigger instruction was presented in writing below the cube (see Figure \@ref(fig:image1)).
-The trigger instruction was constituted by the frame sentence *Du sollst den Würfel auf X ablegen*.
-*X* was one of the adjective-noun combinations.
-
-For example, the subjects saw the following sentence:
-
-```{=latex}
-\ex \begingl
-\glpreamble Du sollst den Würfel auf der grünen Sonnenbrille ablegen.//
-\gla du sollst den würfel auf der grünen sonnenbrille ablegen.//
-\glb you have.to the cube on the green sunglasses put//
-\glft `You have to put the cube on top of the green sunglasses.'//
-\endgl \xe
-```
-
-The trigger instruction was supposed to create a discourse context, such that both the color and the competitor object were introduced as background information into the discourse (in this example: *green* and *sunglasses*).
-The trial proceeded when the experimenter has moved the cube onto the respective referent, at which point the sentence and the arrow would disappear.
-
-Subsequently, the target object was visually highlighted by an arrow and the test instruction containing the target object was presented (see Figure \@ref(fig:image2)).
-This time the frame sentence was *Und jetzt sollst du den Würfel auf X ablegen*, where *X* was again an adjective-noun combination.
-To continue the example above, the subject would see the following test instruction:
-
-```{=latex}
-\ex \begingl
-\glpreamble Und jetzt sollst du den Würfel auf der grünen Avokado ablegen.//
-\gla und jetzt sollst du den würfel auf der grünen avokado ablegen//
-\glb and now have.to you the cube on the green avocado put//
-\glft `And now, you have to put the cube on top of the green avocado.'//
-\endgl \xe
-```
-
-
-```{r image2, echo = FALSE, fig.align="center", out.width = "60%", fig.cap = "Test trial: Example screen of the test instruction. The target sentence is displayed in the middle of the screen. Now, participants have to instruct the experimenter to move the cube on top of the green avocado (indicated by an arrow).", out.extra="frame"}
-
-knitr::include_graphics("sample_experiment_screen_target.png")
-
-```
-
-The trial was completed and the next trial initiated as soon as the experimenter had moved the cube to the target referent.
-There was a 3000 ms inter stimulus interval between trials (grey screen).
-In both competitor and target sub sequences, the arrow was displayed with a lag of 1000 ms and the target sentence with a lag of 1500 ms in order to give participants sufficient time to glance at all referents before they were able to identify the relevant object and the instructions.
-
-Using the trigger instruction to set up the discourse context enabled us to manipulate the focus structure of the target sentence.
-If the color of the competitor and the target are of the same object type but differed in color (e.g. *yellow banana* vs *blue banana*), the color adjective was discourse-pragmatically focused (henceforth the Adjective Focus (AF) condition).
-If the objects differed but their color did not (e.g. *yellow banana* vs *yellow tomato*), the noun was in focus (henceforth the Noun Focus (NF) condition).
-If both the color and the object differed (e.g. *yellow banana* vs *blue tomato*), the whole noun phrase was in focus (henceforth the Adjective/Noun Focus (ANF) condition).
-
-There were 15 NF trials, 10 AF and 10 ANF trials each.
-Each trial occurred two times per participants, yielding a total of 70 trials per participant.
-
-The program (implemented as a browser-based application) used for the experiment is available at the following link: <https://github.com/SBRitter/fruits-production>.
-
-
-
-
-\appendix
-
-# Randomization {#random}
-
-In the production study, the combination of target/competitor/distractors were randomized in each trial.
-Randomization was restricted to satisfy the following criteria, depending on the condition.
-
-- NF-Condition:
-  - Color of Target = Color of Competitor.
-  - Object of Target != Object of Competitor.
-
-- AF-Condition:
-  - Color of Target != Color of Competitor.
-  - Object of Target = Object of Competitor.
-
-- DF-Condition:
-  - Color of Target != Color of Competitor.
-  - Object of Target != Object of Competitor.
-
-- Distractors, all conditions:
-  - Both distractors have to differ in color and object identity from both target and competitor.
-
-The competitor and distractors were matched iteratively to a target.
-One competitor could only be used twice or a third time if all other competitors that were left had been considered and proved inappropriate.
-<!-- NOTE: (SC) I don't understand this bit. Need clarification. -->
-
-The set of four objects (quadruple) was formed separately for each of the three focus conditions.
-After the three lists had been compiled, they were merged.
-The sequence of quadruples was randomized such that the following requirements were met:
-
-- The target color of one quadruple must not be equal to the competitor color of the following quadruple in order to avoid a contrastive focus on the next competitor noun.
-- The target object of one quadruple must not be equal to the competitor object of the following quadruple to avoid a contrastive focus on the next competitor adjective.
-- The list can have the same experimental condition in adjacent trials only in maximally 12% of all cases.
-
-Following these criteria, one randomized list for each subject was produced.
-The list was then copied and merged with the first list in order to ensure that each unique trial occurs twice during one recording session.
-<!-- NOTE: (SC) Which first list? -->
-In case the copy-and-merge procedure led to violation of any of the criteria described above, the first trial of the repetition list was shuffled until the criteria were met.
-
-The python code for the randomization is available at the following link: <https://github.com/SBRitter/fruits-randomization>.
-
-
-
-
-# Norming study {#norming}
-
-Here we specify in detail the selection of the stimuli for the production study.
+Here we specify in detail the selection of the stimuli used in the production study.
 
 ## Selection of stimuli superset
 
-The selection of stimuli was informed by a norming study for which we have chosen twenty fruits or vegetables (henceforth: FOODs) and four other referents (henceforth: NON-FOODs).
-Selection criteria were mainly informed by visual discriminability and phonemic composition, such that nouns denoting our objects were supposed to contain as few voiceless segments as possible.
+The selection of stimuli was informed by a norming study for which twenty fruits or vegetables (henceforth: FOODs) and four other referents (henceforth: NON-FOODs) were chosen.
+Selection criteria were mainly informed by visual discriminability and phonemic composition, such that nouns denoting objects were supposed to contain as few voiceless segments as possible.
 
 For each of the FOODs and NON-FOODs, we created colored versions by image manipulation using [Gimp](http://www.gimp.org).
 Images of all individual objects were collected from internet databases containing copyright-free high-resolution images (e.g. [Pixabay](https://pixabay.com)).
@@ -285,3 +138,143 @@ The distractors were either FOODS that were neither used as targets nor as compe
 Within each given trial, the distractors did not share color nor object identity with neither the target nor the competitor.
 
 Overall, the sets of target, competitors and distractors were combined such that all five colors occurred equally often throughout the experiment (i.e. 28 times).
+
+# Production study
+
+## Participants
+
+Thirty native German speakers participated in this study.
+All participants grew up in a monolingual environment and were recruited from the population living in the broad Cologne area with normal or corrected-to-normal vision and normal hearing.
+Participants were paid for their participation.
+
+## Procedure
+
+In this production study, participants interacted with the experimenter in German.
+Participants were seated in front of a computer screen.
+The experimenter sat at the opposite side of the table in front of another computer screen.
+The participants and the experimenter could not see each other nor each others' screens.
+The participants had to verbally instruct the experimenter to select a specified target object out of four visually presented objects.
+The non-target objects differed from the target with respect to their color, their identity, or both.
+Objects were referred to using noun phrases that consist of a modifier denoting color and a modified object (e.g. *Gelbe Zitrone* 'yellow lemon', *Rote Gurke* 'red cucumber', *Rote Socken* 'red socks').
+These color-object combinations differed with respect to their typicality.
+The color-object combinations were either typical (e.g. *Orangene Mandarine* 'orange mandarin'), medium typical (e.g. *Grüne Tomate* 'green tomato'), or atypical (e.g. *Gelbe Kirsche* 'yellow cherry').
+Figure \@ref(fig:image0) illustrates combination typicality for a banana, a tomato, and an apricot.
+
+```{r image0, echo = FALSE, fig.align="center", out.width = "60%", fig.cap = "Three examples for typical, medium typical and atypical combinations of colour and object."}
+knitr::include_graphics(here("figs", "typicality_examples.png"))
+```
+
+The experiment consisted of two phases: a familiarization phase and a test phase.
+
+In a familiarization phase, participants saw the picture of one object per trial.
+In order to advance to the next trial, participants had to read out loud the corresponding color-object combination.
+During this phase, participants had to name all atypical color-object targets that we used in the test phase of the experiment alongside their typical counterparts.
+For example, one of the experimental targets was a red banana (atypical).
+The participants were presented with the picture of both a red banana (atypical) and a yellow banana (typical).
+This familiarization phase was included in order to ensure that participants could relate typical and atypical color-object combinations to each other.
+
+After the familiarization phase, the participants entered the test phase.
+On each trial in the test phase, the subjects first saw four colored objects in the top left, top right, bottom left, and bottom right of the screen, respectively.
+One of the object served as the target; another served as the competitor; and the remaining two served as unrelated distractors.
+The position of the visual stimuli was randomized for each trial and each participant (see Appendix \@ref(random)).
+In the center of the screen, a black cube was displayed, which could be moved by the experimenter.
+The participants were asked to instruct the experimenter to move the cube on top of one of the four depicted object.
+
+```{r image1, echo = FALSE, fig.align="center", out.width = "60%", fig.cap = "Test trial: Example screen of a trigger instruction. The trigger instruction is displayed in the middle below the cube. Here, the participants have to instruct the experimenter to move the cube on top of the green sunglasses (indicated by an arrow).", out.extra="frame"}
+knitr::include_graphics(here("figs", "sample_experiment_screen_competitor.png"))
+```
+
+Each test trial consisted of two parts.
+The trigger instruction and the test instruction.
+After the preview of all images was displayed for 1500 ms, the competitor object was visually highlighted by an arrow, and a trigger instruction was presented in writing below the cube (see Figure \@ref(fig:image1)).
+The trigger instruction was constituted by the frame sentence *Du sollst den Würfel auf X ablegen*.
+*X* was one of the adjective-noun combinations.
+
+For example, the subjects saw the following sentence:
+
+```{=latex}
+\ex \begingl
+\glpreamble Du sollst den Würfel auf der grünen Sonnenbrille ablegen.//
+\gla du sollst den würfel auf der grünen sonnenbrille ablegen.//
+\glb you have.to the cube on the green sunglasses put//
+\glft `You have to put the cube on top of the green sunglasses.'//
+\endgl \xe
+```
+
+The trigger instruction was supposed to create a discourse context, such that both the color and the competitor object were introduced as background information into the discourse (in this example: *green* and *sunglasses*).
+The trial proceeded when the experimenter has moved the cube onto the respective referent, at which point the sentence and the arrow would disappear.
+
+Subsequently, the target object was visually highlighted by an arrow and the test instruction containing the target object was presented (see Figure \@ref(fig:image2)).
+This time the frame sentence was *Und jetzt sollst du den Würfel auf X ablegen*, where *X* was again an adjective-noun combination.
+To continue the example above, the subject would see the following test instruction:
+
+```{=latex}
+\ex \begingl
+\glpreamble Und jetzt sollst du den Würfel auf der grünen Avokado ablegen.//
+\gla und jetzt sollst du den würfel auf der grünen avokado ablegen//
+\glb and now have.to you the cube on the green avocado put//
+\glft `And now, you have to put the cube on top of the green avocado.'//
+\endgl \xe
+```
+
+
+```{r image2, echo = FALSE, fig.align="center", out.width = "60%", fig.cap = "Test trial: Example screen of the test instruction. The target sentence is displayed in the middle of the screen. Now, participants have to instruct the experimenter to move the cube on top of the green avocado (indicated by an arrow).", out.extra="frame"}
+knitr::include_graphics(here("figs", "sample_experiment_screen_target.png"))
+```
+
+The trial was completed and the next trial initiated as soon as the experimenter had moved the cube to the target referent.
+There was a 3000 ms inter stimulus interval between trials (grey screen).
+In both competitor and target sub sequences, the arrow was displayed with a lag of 1000 ms and the target sentence with a lag of 1500 ms in order to give participants sufficient time to glance at all referents before they were able to identify the relevant object and the instructions.
+
+Using the trigger instruction to set up the discourse context enabled us to manipulate the focus structure of the target sentence.
+If the color of the competitor and the target are of the same object type but differed in color (e.g. *yellow banana* vs *blue banana*), the color adjective was discourse-pragmatically focused (henceforth the Adjective Focus (AF) condition).
+If the objects differed but their color did not (e.g. *yellow banana* vs *yellow tomato*), the noun was in focus (henceforth the Noun Focus (NF) condition).
+If both the color and the object differed (e.g. *yellow banana* vs *blue tomato*), the whole noun phrase was in focus (henceforth the Adjective/Noun Focus (ANF) condition).
+
+There were 15 NF trials, 10 AF and 10 ANF trials each.
+Each trial occurred two times per participants, yielding a total of 70 trials per participant.
+
+The program (implemented as a browser-based application) used for the experiment is available at the following link: <https://github.com/SBRitter/fruits-production>.
+
+
+\appendix
+
+# Randomization {#random}
+
+In the production study, the combination of target/competitor/distractors were randomized in each trial.
+Randomization was restricted to satisfy the following criteria, depending on the condition.
+
+- NF-Condition:
+  - Color of Target = Color of Competitor.
+  - Object of Target != Object of Competitor.
+
+- AF-Condition:
+  - Color of Target != Color of Competitor.
+  - Object of Target = Object of Competitor.
+
+- DF-Condition:
+  - Color of Target != Color of Competitor.
+  - Object of Target != Object of Competitor.
+
+- Distractors, all conditions:
+  - Both distractors have to differ in color and object identity from both target and competitor.
+
+The competitor and distractors were matched iteratively to a target.
+One competitor could only be used twice or a third time if all other competitors that were left had been considered and proved inappropriate.
+<!-- NOTE: (SC) I don't understand this bit. Need clarification. -->
+
+The set of four objects (quadruple) was formed separately for each of the three focus conditions.
+After the three lists had been compiled, they were merged.
+The sequence of quadruples was randomized such that the following requirements were met:
+
+- The target color of one quadruple must not be equal to the competitor color of the following quadruple in order to avoid a contrastive focus on the next competitor noun.
+- The target object of one quadruple must not be equal to the competitor object of the following quadruple to avoid a contrastive focus on the next competitor adjective.
+- The list can have the same experimental condition in adjacent trials only in maximally 12% of all cases.
+
+Following these criteria, one randomized list for each subject was produced.
+The list was then copied and merged with the first list in order to ensure that each unique trial occurs twice during one recording session.
+<!-- NOTE: (SC) Which first list? -->
+In case the copy-and-merge procedure led to violation of any of the criteria described above, the first trial of the repetition list was shuffled until the criteria were met.
+
+The python code for the randomization is available at the following link: <https://github.com/SBRitter/fruits-randomization>.
+

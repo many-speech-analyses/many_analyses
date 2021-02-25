@@ -6,6 +6,7 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_knit$set(root.dir = here::here())
+library(here)
 library(tidyverse)
 library(osfr)
 library(speakr)
@@ -109,6 +110,14 @@ osf_upload(
 #   trials,
 #   path = "./osf/data/production/trial-lists/README.md",
 #   conflicts = "overwrite", verbose = T)
+```
+
+# PDF of norming and production methods
+
+```{r pdf-methods}
+file.copy("./docs/methods_norm_prod/methods_norm_prod.pdf", "./osf/data/", overwrite = T)
+
+osf_upload(data_comp, path = "./osf/data/methods_norm_prod.pdf", conflicts = "overwrite", verbose = T)
 ```
 
 # Norming study
