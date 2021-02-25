@@ -23,16 +23,6 @@
   \usepackage[]{microtype}
   \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
 }{}
-\makeatletter
-\@ifundefined{KOMAClassName}{% if non-KOMA class
-  \IfFileExists{parskip.sty}{%
-    \usepackage{parskip}
-  }{% else
-    \setlength{\parindent}{0pt}
-    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
-}{% if KOMA class
-  \KOMAoptions{parskip=half}}
-\makeatother
 \usepackage{xcolor}
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
@@ -261,11 +251,11 @@ Even the analysis of a single measure can be approached via an ever-increasing r
 The present paper probes this garden of forking paths in the analysis of speech.
 To assess the variability in data analysis pipelines across independent researchers, we provided XX analytical teams with an experimentally elicited speech corpus and asked them to investigate acoustic differences related to a functional contrast that might be manifested across the whole utterance.
 
-\hypertarget{the-data-set---the-prosody-of-redundant-modifiers}{%
-\subsection{The data set - The prosody of redundant modifiers}\label{the-data-set---the-prosody-of-redundant-modifiers}}
+\hypertarget{the-data-set-the-acoustic-properties-of-redundant-modifiers}{%
+\subsection{The data set: The acoustic properties of redundant modifiers}\label{the-data-set-the-acoustic-properties-of-redundant-modifiers}}
 
-Our data set was collected in order to answer the following research question: Do speakers acoustically modify utterances to signal atypical word combinations? (e.g.~\emph{a blue banana} vs \emph{a yellow banana})?
-We are interested in the acoustic profile of referring expressions.
+Our data set was collected in order to answer the following research question: Do speakers acoustically modify utterances to signal atypical word combinations (e.g.~the atypical \emph{a blue banana} vs the typical \emph{a yellow banana})?
+More specifically, we are interested in the acoustic profile of referring expressions made up of a noun and an adjective modifier.
 Referring is one of the most basic and prevalent uses of language and one of the most widely researched areas in language science.
 It is an open question how speakers choose a referring expression when they want to refer to a specific entity like a banana.
 The context within which an entity occurs (i.e., with other non-fruits, other fruits, or other bananas) plays a large part in determining the choice of referring expressions.
@@ -286,6 +276,29 @@ Many languages use intonation in order to signal if a referent is contrasting wi
 Content selection aside, in a scenario in which a speaker wants to refer to a banana when there is also a pear on the table, the speaker would most likely produce a high rising pitch accent on \emph{banana} to indicate the contrastive nature of the noun.
 In a scenario in which the speaker wants to refer to a yellow banana when there is also a less ripe green banana on the table, the speaker would most likely produce a high rising pitch accent on \emph{yellow} to indicate the contrastive nature of the modifier.
 In addition to a pitch accent, elements that are new and/or contrastive are often produced with additional suprasegmental prominence, i.e.~segments are hyperarticulated, resulting in longer, louder and more clearly articulated acoustic targets.
+
+To answer the question of whether speakers modify speech to signal atypical referents, thirty native German speakers were recorded in a speech production study while interacting with a confederate (one of the experimenters).
+The participants had to verbally instruct the confederate to select a specified target object out of four object presented on a screen.
+The subject and confederate were seated at the opposite sides of a table, each facing one of two mirrored computer screens.
+The participant and the experimenter could not see each other nor each others' screens.
+After a familiarisation phase (see XXX), the subject first saw four colored objects in the top left, top right, bottom left, and bottom right corners of the screen.
+One of the objects served as the target, another as the competitor, and the remaining two objects served as distractors.
+Objects were referred to using noun phrases consisting of an adjective modifier denoting color and a modified object (e.g.~\emph{Gelbe Zitrone} `yellow lemon,' \emph{Rote Gurke} `red cucumber,' \emph{Rote Socken} `red socks').
+
+In the center of the screen, a black cube was displayed, which could be moved by the experimenter.
+The participant would read a sentence prompt out loud (\emph{Du sollst den Würfel auf der ablegen} `You have to put the cube on top of the ') to instruct the experimenter to drag the cube on top of one of the four depicted objects (the \emph{competitor}) using the mouse.
+After the experimenter had moved the cube as instructed, the subject would read another sentence prompt (\emph{Und jetzt sollst du den Würfel auf der ablegen} `And now, you have to put the cube on top of the ') instructing the experimenter to move the cube on top of a different object (the \emph{target}).
+
+The two sentence prompts were used to create a focus contrast between the competitor and the target object.
+If the competitor and target objects differed but their color did not (e.g.~\emph{yellow banana} vs \emph{yellow tomato}), the noun was in focus (the Noun Focus condition, NF).
+If the the objects were the same object but differed in color (e.g.~\emph{yellow banana} vs \emph{blue banana}), the color adjective was discourse-pragmatically focused (the Adjective Focus condition, AF).
+If both the color and the object differed (e.g.~\emph{yellow banana} vs \emph{blue tomato}), the whole noun phrase was in focus (the Adjective/Noun Focus condition, ANF).
+The NF condition constituted the experimentally relevant condition, while the AF and ANF conditions acted as fillers.
+The color-object combinations in the Noun Focus (NF) condition were manipulated with respect to their typicality.
+The combinations were either typical (e.g.~\emph{Orangene Mandarine} `orange mandarin'), medium typical (e.g.~\emph{Grüne Tomate} `green tomato'), or atypical (e.g.~\emph{Gelbe Kirsche} `yellow cherry').
+The typicality rating of each color-object combination was established, prior to the production experiment, with a norming study (see Appendix XXX for details).
+Each participant went through 15 NF trials, 10 AF and 10 ANF trials.
+Each trial was repeated twice, yielding a total of 70 trials (\((15 \times 10 \times 10) \times 2\)) per participant and a grand-total of 2100 observations (\(70 \times 30\) participants), of which 900 (\(15 \times 2 \times 30\) participants) were the experimentally relevant trials.
 
 \hypertarget{research-questions}{%
 \subsection{Research questions}\label{research-questions}}
@@ -377,12 +390,31 @@ Reviewers will evaluate the methods of each of their assigned analyses one at a 
 The sequences will be systematically assigned so that, if possible, each analysis is allocated to each position in the sequence for at least one reviewer.
 For instance, if each reviewer is assigned four analyses to review, then each analysis will be the first analysis assigned to at least one reviewer, the second analysis assigned to another reviewer, the third analysis assigned to yet another reviewer, and the fourth analysis assigned to a fourth reviewer.
 Balancing the order in which reviewers see the analyses controls for order effects, e.g.~a reviewer might be less critical of the first methods section they read than the last.
+
 The process for a single reviewer will be as follows.
 First, the reviewer will receive a description of the methods of a single analysis.
-This will include the narrative methods section, the analysis team's answers to our survey questions regarding their methods, including analysis code, and the data set.
-The reviewer will then be asked, in an online survey (LINK), to rate both the acoustic analysis and the statistical analysis on a scale of 0-100 based on the following criteria:
+This will include the narrative methods section, the analysis team's answers to our survey questions regarding their methods, including analysis code and the data set.
+The reviewer will then be asked in an online survey (LINK) to rate both the acoustic and the statistical analyses on several criteria, using a scale of 0-100:
 
-"Rate the overall appropriateness of the acoustic analysis to answer the research question with the available data. To help you calibrate your rating, please consider the following guidelines:
+\begin{itemize}
+\tightlist
+\item
+  Overall appropriateness of the acoustic analysis.
+\item
+  Overall appropriateness of the statistical analysis.
+\item
+  Choice of statistical analysis type.
+\item
+  Model variables choice.
+\item
+  Model specification.
+\item
+  Data exclusion.
+\item
+  Data transformation.
+\end{itemize}
+
+To help reviewers calibrate their rating, they will be given the following guidelines:
 
 \begin{itemize}
 \item
@@ -427,26 +459,11 @@ The reviewer will then be asked, in an online survey (LINK), to rate both the ac
   \end{enumerate}
 \end{itemize}
 
-*Please note that these values are meant to calibrate your ratings.
-We welcome ratings of any number between 0 and 100."
+Furthermore, the reviewer will be given the option to include further comments in a text box.
 
-After providing this rating, the reviewer will then be shown a series of text boxes and the following prompts:
-
-\noindent ``Please explain your ratings of this analysis.
-\noindent Please evaluate the selection of acoustic features.
-\noindent Please evaluate the measurement of acoustic features.
-\noindent Please evaluate the choice of statistical analysis type.
-\noindent Please evaluate the process of choosing variables and structuring of the statistical model.
-\noindent Please evaluate the suitability of the variables included in (or excluded from) the statistical model.
-\noindent Please evaluate the suitability of the structure of the statistical model.
-\noindent Please evaluate choices to exclude or not exclude subsets of the data.
-\noindent Please evaluate any choices to transform data (or, if there were no transformations, but you think there should have been, please discuss that choice).''
-
-After submitting this review, a methods section from a second analysis will then be made available to the reviewer.
+After submitting the review, a methods section from a second analysis will then be made available to the reviewer.
 This same sequence will be followed until all analyses allocated to a given reviewer have been provided and reviewed.
-After providing the final review, the reviewer will be simultaneously presented with all four (or more) methods sections that reviewer has just completed reviewing, the option to revise their original ratings, and a text box to provide an explanation.
-The invitation to revise the original ratings will be as follows: ``If, now that you have seen all the analyses you are reviewing, you wish to revise your ratings of any of these analyses, you may do so now.''
-The text box will be prefaced with this prompt: ``Please explain your choice to revise (or not to revise) your ratings.''
+After providing the final review, the reviewer will be simultaneously presented with all four (or more) methods sections that the reviewer has just completed reviewing, the option to revise their original ratings, and a text box to provide for an explanation.
 
 \hypertarget{step-4-evaluate-variation}{%
 \subsection{Step 4: Evaluate Variation}\label{step-4-evaluate-variation}}

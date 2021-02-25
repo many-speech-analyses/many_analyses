@@ -74,6 +74,7 @@ output:
     keep_tex: true
 geometry: margin=4cm
 fontsize: 12pt
+indent: true
 header-includes:
   - \usepackage{cleveref}
   - \setlength{\marginparwidth}{2cm}
@@ -267,7 +268,28 @@ In a scenario in which the speaker wants to refer to a yellow banana when there 
 In addition to a pitch accent, elements that are new and/or contrastive are often produced with additional suprasegmental prominence, i.e. segments are hyperarticulated, resulting in longer, louder and more clearly articulated acoustic targets.
 
 <!-- TODO: INFORMATION ABOUT THE DATA SET AND EXP DESIGN + TRANSITION -->
+To answer the question of whether speakers modify speech to signal atypical referents, thirty native German speakers were recorded in a speech production study while interacting with a confederate (one of the experimenters).
+The participants had to verbally instruct the confederate to select a specified target object out of four object presented on a screen.
+The subject and confederate were seated at the opposite sides of a table, each facing one of two mirrored computer screens.
+The participant and the experimenter could not see each other nor each others' screens.
+After a familiarisation phase (see XXX), the subject first saw four colored objects in the top left, top right, bottom left, and bottom right corners of the screen.
+One of the objects served as the target, another as the competitor, and the remaining two objects served as distractors.
+Objects were referred to using noun phrases consisting of an adjective modifier denoting color and a modified object (e.g. *Gelbe Zitrone* 'yellow lemon', *Rote Gurke* 'red cucumber', *Rote Socken* 'red socks').
 
+In the center of the screen, a black cube was displayed, which could be moved by the experimenter.
+The participant would read a sentence prompt out loud (*Du sollst den Würfel auf der <COLOR OBJECT> ablegen* 'You have to put the cube on top of the <COLOR OBJECT>') to instruct the experimenter to drag the cube on top of one of the four depicted objects (the *competitor*) using the mouse.
+After the experimenter had moved the cube as instructed, the subject would read another sentence prompt (*Und jetzt sollst du den Würfel auf der <COLOR OBJECT> ablegen* 'And now, you have to put the cube on top of the <COLOR OBJECT>') instructing the experimenter to move the cube on top of a different object (the *target*).
+
+The two sentence prompts were used to create a focus contrast between the competitor and the target object.
+If the competitor and target objects differed but their color did not (e.g. *yellow banana* vs *yellow tomato*), the noun was in focus (the Noun Focus condition, NF).
+If the the objects were the same object but differed in color (e.g. *yellow banana* vs *blue banana*), the color adjective was discourse-pragmatically focused (the Adjective Focus condition, AF).
+If both the color and the object differed (e.g. *yellow banana* vs *blue tomato*), the whole noun phrase was in focus (the Adjective/Noun Focus condition, ANF).
+The NF condition constituted the experimentally relevant condition, while the AF and ANF conditions acted as fillers.
+The color-object combinations in the Noun Focus (NF) condition were manipulated with respect to their typicality.
+The combinations were either typical (e.g. *Orangene Mandarine* 'orange mandarin'), medium typical (e.g. *Grüne Tomate* 'green tomato'), or atypical (e.g. *Gelbe Kirsche* 'yellow cherry').
+The typicality rating of each color-object combination was established, prior to the production experiment, with a norming study (see Appendix XXX for details).
+Each participant went through 15 NF trials, 10 AF and 10 ANF trials.
+Each trial was repeated twice, yielding a total of 70 trials ($(15 \times 10 \times 10) \times 2$) per participant and a grand-total of 2100 observations ($70 \times 30$ participants), of which 900 ($15 \times 2 \times 30$ participants) were the experimentally relevant trials.
 
 ## Research questions
 
@@ -361,40 +383,37 @@ Reviewers will evaluate the methods of each of their assigned analyses one at a 
 The sequences will be systematically assigned so that, if possible, each analysis is allocated to each position in the sequence for at least one reviewer.
 For instance, if each reviewer is assigned four analyses to review, then each analysis will be the first analysis assigned to at least one reviewer, the second analysis assigned to another reviewer, the third analysis assigned to yet another reviewer, and the fourth analysis assigned to a fourth reviewer.
 Balancing the order in which reviewers see the analyses controls for order effects, e.g. a reviewer might be less critical of the first methods section they read than the last.
+
 The process for a single reviewer will be as follows.
 First, the reviewer will receive a description of the methods of a single analysis.
-This will include the narrative methods section, the analysis team’s answers to our survey questions regarding their methods, including analysis code, and the data set.
+This will include the narrative methods section, the analysis team’s answers to our survey questions regarding their methods, including analysis code and the data set.
 <!-- TODO: add link to peer review survey -->
-The reviewer will then be asked, in an online survey (LINK), to rate both the acoustic analysis and the statistical analysis on a scale of 0-100 based on the following criteria: <!-- TR:Need flow chart here-->
+The reviewer will then be asked in an online survey (LINK) to rate both the acoustic and the statistical analyses on several criteria, using a scale of 0-100:
+<!-- TR:Need flow chart here-->
 
-"Rate the overall appropriateness of the acoustic analysis to answer the research question with the available data. To help you calibrate your rating, please consider the following guidelines:
+* Overall appropriateness of the acoustic analysis.
+* Overall appropriateness of the statistical analysis.
+* Choice of statistical analysis type.
+* Model variables choice.
+* Model specification.
+* Data exclusion.
+* Data transformation.
 
-- 100. A perfect analysis with no conceivable improvements from the reviewer.
-- 75. An imperfect analysis but the needed changes are unlikely to dramatically alter final interpretation.
-- 50. A flawed analysis likely to produce either an unreliable estimate of the relationship or an over-precise estimate of uncertainty.
-- 25. A flawed analysis likely to produce an unreliable estimate of the relationship and an over-precise estimate of uncertainty.
-- 0. A dangerously misleading analysis, certain to produce both an estimate that is wrong and a substantially over-precise estimate of uncertainty that places undue confidence in the incorrect estimate.
+To help reviewers calibrate their rating, they will be given the following guidelines:
 
-\*Please note that these values are meant to calibrate your ratings.
-We welcome ratings of any number between 0 and 100."
+* 100. A perfect analysis with no conceivable improvements from the reviewer.
+* 75. An imperfect analysis but the needed changes are unlikely to dramatically alter final interpretation.
+* 50. A flawed analysis likely to produce either an unreliable estimate of the relationship or an over-precise estimate of uncertainty.
+* 25. A flawed analysis likely to produce an unreliable estimate of the relationship and an over-precise estimate of uncertainty.
+* 0. A dangerously misleading analysis, certain to produce both an estimate that is wrong and a substantially over-precise estimate of uncertainty that places undue confidence in the incorrect estimate.
 
-After providing this rating, the reviewer will then be shown a series of text boxes and the following prompts:
+Furthermore, the reviewer will be given the option to include further comments in a text box.
 
-\noindent "Please explain your ratings of this analysis.
-\noindent Please evaluate the selection of acoustic features.
-\noindent Please evaluate the measurement of acoustic features.
-\noindent Please evaluate the choice of statistical analysis type.
-\noindent Please evaluate the process of choosing variables and structuring of the statistical model.
-\noindent Please evaluate the suitability of the variables included in (or excluded from) the statistical model.
-\noindent Please evaluate the suitability of the structure of the statistical model.
-\noindent Please evaluate choices to exclude or not exclude subsets of the data.
-\noindent Please evaluate any choices to transform data (or, if there were no transformations, but you think there should have been, please discuss that choice)."
-
-After submitting this review, a methods section from a second analysis will then be made available to the reviewer.
+After submitting the review, a methods section from a second analysis will then be made available to the reviewer.
 This same sequence will be followed until all analyses allocated to a given reviewer have been provided and reviewed.
-After providing the final review, the reviewer will be simultaneously presented with all four (or more) methods sections that reviewer has just completed reviewing, the option to revise their original ratings, and a text box to provide an explanation.
-The invitation to revise the original ratings will be as follows: "If, now that you have seen all the analyses you are reviewing, you wish to revise your ratings of any of these analyses, you may do so now."
-The text box will be prefaced with this prompt: "Please explain your choice to revise (or not to revise) your ratings."
+After providing the final review, the reviewer will be simultaneously presented with all four (or more) methods sections that the reviewer has just completed reviewing, the option to revise their original ratings, and a text box to provide for an explanation.
+<!-- The invitation to revise the original ratings will be as follows: "If, now that you have seen all the analyses you are reviewing, you wish to revise your ratings of any of these analyses, you may do so now."
+The text box will be prefaced with this prompt: "Please explain your choice to revise (or not to revise) your ratings." -->
 
 ## Step 4: Evaluate Variation
 
