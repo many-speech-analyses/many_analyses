@@ -484,36 +484,6 @@ The posterior probability of the population-level intercept $\alpha$ will give u
 This posterior probability will also form the basis \highlight[id=SC, comment = {A lot of "of"s...}]{of} the investigation of the effect of a set of analytical and demographic factors, detailed in Section \@ref(ana-factors).
 Crucially, the posterior probability of $\sigma_{\alpha_{\text{t}}}$ (the standard deviation of the the group-level effect of team) will allow us to quantify the degree of variation between teams on a standardized scale.
 
-```{r meta-bm}
-set.seed(my_seed)
-n <- 12
-eta <- rnorm(n, 1, 0.5)
-se <- rhcauchy(n, 0.1)
-team <- letters[1:n]
-
-eta_tbl <- tibble(
-  eta,
-  se,
-  team
-)
-
-priors <- c(
-  prior(normal(0, 1), class = Intercept),
-  prior(cauchy(0, 1), class = sd)
-)
-
-meta_bm <- brm(
-  eta | se(se) ~
-    (1 | team),
-  data = eta_tbl,
-  prior = priors,
-  chain = 1,
-  seed = my_seed,
-  file = here::here("RR_manuscript", "cache", "meta_bm")
-)
-```
-
-
 Finally, we will assess whether the standardized effect sizes show bias, and, if so, whether the bias is positive or negative (i.e., whether there is a disproportional greater number of bigger or smaller effect sizes than the meta-analytical mean estimate).
 This will be achieved through inspection of funnel plots [@light1984; for a review see @egger1997; and @sterne2005; for a critique @lau2006].
 In brief, a funnel plot is a scatter plot of each standardized effect size with effect size on the *x*-axis and estimated error (i.e. standard deviation) on *y*-axis.
