@@ -204,7 +204,7 @@ ppred_samples %>%
   xlim(-7, 7)
 ```
 
-## Meta-analytical model
+## Run
 
 ```{r meta-bm}
 meta_bm <- brm(
@@ -229,6 +229,26 @@ plot(meta_bm)
 
 # Factors analysis model
 
+## Model formula
+
+$$
+\begin{aligned}
+\alpha_{\text{t}[i]}      & \sim \text{Normal}(\mu_{\alpha_{t[i]}}, \sigma_i) \\
+\mu_{\alpha_{t[i]}}       & = \beta + \upsilon_u\cdot uniq_i + \upsilon_c\cdot cons_i + \upsilon_p\cdot phoc_i + \upsilon_m\cdot modn_i \\
+ & \qquad + \upsilon_d\cdot mdim_i + \upsilon_w\cdot twin_i + \upsilon_e\cdot excl_i \\
+ & \qquad + \upsilon_r\cdot rat_i + \\
+ & \qquad + \upsilon_{xp}\cdot rexp_i + \upsilon_{be}\cdot belf_i  \\
+\iota      & \sim \text{Normal}(0, 1) \\
+\upsilon_{[\ldots]} & \sim \text{Normal}(0,1) \\
+rat_i & \sim \text{Normal}(\mu_{rat_i}, \sigma_{rat_i}) \\
+resp_i & \sim \text{Normal}(\mu_{resp_i}, \sigma_{resp_i}) \\
+belf_i & \sim \text{Normal}(\mu_{belf_i}, \sigma_{belf_i}) \\
+\sigma_i    & = \sigma_{\alpha_{t[i]}}
+\end{aligned}
+$$
+
+## Model priors
+
 ```{r factors-priors}
 factors_priors <- c(
   prior(normal(0, 1), class = Intercept),
@@ -238,6 +258,9 @@ factors_priors <- c(
   prior(lkj(2), class = corme)
 )
 ```
+
+
+## Run
 
 ```{r factors-bm}
 factors_bm <- brm(

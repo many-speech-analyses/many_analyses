@@ -440,26 +440,15 @@ Moreover, to account for the differing degree of uncertainty around each standar
 This will enable us to fit a so-called "measurement-error" model, in which both the standardized effect sizes and their respective standard errors are entered in the the meta-analytical model.
 As a desired consequence, effect sizes with a greater standard error will be weighted less than those with a smaller standard error in the meta-analytical calculations.
 
-After having obtained the standardized effect sizes $\eta_i$ with related standard errors $\text{se}_i$, for each critical predictor of the individual reported analyses, the initiating authors will fit a Bayesian random-effects meta-analysis using the following multilevel (intercept-only) regression model:
-
-$$
-\begin{aligned}
-\eta_i      & \sim \text{Normal}(\mu_i, \sigma_i) \\
-\mu_i       & = \alpha + \alpha_{\text{t}[i]} \\
-\alpha      & \sim \text{Normal}(0, 1) \\
-\sigma_{\alpha_{\text{t}}} & \sim \text{HalfCauchy}(0, 1) \\
-\sigma_i    & = \text{se}_i
-\end{aligned}
-$$
-
+After having obtained the standardized effect sizes $\eta_i$ with related standard errors $\text{se}_i$, for each critical predictor of the individual reported analyses, the initiating authors will fit a Bayesian random-effects meta-analysis using a multilevel (intercept-only) regression model, as described in the following.
 The outcome variable will be the set of standardized effect sizes $\eta_i$.
 The likelihood of $\eta_i$ is assumed to correspond to a normal distribution [@knight2000].
-The analysis teams will constitute the group-level effect (i.e., random effect, `(1 | team)`).
+The analysis teams will be entered as a group-level effect (i.e., random effect, `(1 | team)`).
 The standard errors $\text{se}_i$ will be included as the standard deviation $\sigma_i$ of $\eta_i$ to fit a measurement-error model, as discussed above.
 We will use regularizing weakly-informative priors for the intercept $\alpha$ ($Normal(0, 1)$) and for the group-level standard deviation $\alpha_{\text{t}[i]}$ ($HalfCauchy(0, 1)$).
 <!-- TR: isn't an SD of 1 rather conservative. Also small sample size, maybe rather using cauchy for the thick tails? -->
 <!-- SC: For the pop-level params I would stick to the Normal, or if we want to avoid problems with thick tails I'd go with a student-t. -->
-We will fit this model with 4 chains of Hamiltonian Monte-Carlo sampling for the estimation of the joint posterior distribution, using the No U-Turn Sampler (NUTS) as implemented in Stan, and 4000 iterations (2000 for warm-up) per chain, distributed across 4 processing cores.
+We will fit this model with 4 chains of Hamiltonian Monte-Carlo sampling for the estimation of the joint posterior distribution, using the No U-Turn Sampler (NUTS) as implemented in Stan [@stan2021], and 4000 iterations (2000 for warm-up) per chain, distributed across 4 processing cores.
 \highlight[id=SC, comment = {This ok?}]{In case of issues from divergent transitions} in the sampling, we will increase `adapt_delta`, `tree_depth`, and the number of iterations in this order until there are no divergent transitions.
 The analysis will be conducted in R [@R-base] and fit using Stan [@stan2021], RStan [@stan2020a], and brms [@burkner2017].
 <!-- TODO: add link to code of the meta-analytical model -->
@@ -490,7 +479,7 @@ In brief, a funnel plot is a scatter plot of each standardized effect size with 
 In absence of bias, the points should be symmetrically distributed around the meta-analytical mean (see Figure \@ref(fig:funnel-plot)).
 A sign of possible bias is when there are more points which are farther from the meta-analytical mean on just one side.
 
-```{r funnel-plot, include=TRUE, fig.cap="Illustrations of funnel plots showing (a) no bias, (b) positive bias, and (c) negative bias in effect sizes. The vertical dashed line represents the meta-analitical mean.", fig.dim = c(6, 2)}
+```{r funnel-plot, include=TRUE, fig.cap="Illustrations of funnel plots showing (a) no bias, (b) positive bias, and (c) negative bias in effect sizes. The vertical dashed line represents the meta-analytical mean.", fig.dim = c(6, 2)}
 meta_est <- 0
 
 datasets <- map(
@@ -561,24 +550,9 @@ We will fit two Bayesian regression models, one for (a) and one for (b).
 with each team's group-level coefficient $\alpha_{\text{t}[i]}$ as the outcome variable, and the analytical and demographic factors described below as predictors.
 The coefficient $\alpha_{\text{t}[i]}$ can be interpreted as the deviation score of the team's $\eta_i$ from the meta-analytical mean, allowing us to determine potential effects of analytical and demographic factors on how the teams deviate from the meta-analytical mean.
 Since each $\alpha_{\text{t}[i]}$ comes with uncertainty, quantified by its standard deviation $\sigma_{\alpha_{\text{t}[i]}}$, we will fit a measurement-error model, as we did in the meta-analytical model above.
-The formula of the model is the following (see the description of the predictors below for the meaning of acronyms):
 
-$$
-\begin{aligned}
-\alpha_{\text{t}[i]}      & \sim \text{Normal}(\mu_{\alpha_{t[i]}}, \sigma_i) \\
-\mu_{\alpha_{t[i]}}       & = \iota + \upsilon_u\cdot uniq_i + \upsilon_c\cdot cons_i + \upsilon_p\cdot phoc_i + \upsilon_m\cdot modn_i \\
- & \qquad + \upsilon_d\cdot mdim_i + \upsilon_w\cdot twin_i + \upsilon_e\cdot excl_i \\
- & \qquad + \upsilon_{xp}\cdot rexp_i + \upsilon_{be}\cdot belf_i  \\
-\iota      & \sim \text{Normal}(0, 1) \\
-\upsilon_{[\ldots]} & \sim \text{Normal}(0,1) \\
-resp_i & \sim \text{Normal}(\mu_{resp_i}, \sigma_{resp_i}) \\
-belf_i & \sim \text{Normal}(\mu_{belf_i}, \sigma_{belf_i}) \\
-\sigma_i    & = \sigma_{\alpha_{t[i]}}
-\end{aligned}
-$$
-
-The likelihood of $\alpha_{t[i]}$ is a normal distribution.
-The mean is based on the overall intercept $i$ and on the $\upsilon$ coefficient of each predictor.
+A normal distribution will be used as the likelihood of $\alpha_{t[i]}$.
+The mean of $\alpha_{t[i]}$ is modelled on the basis of the overall intercept $\beta$ and on the coefficients $\upsilon_n$ of each predictor.
 The numeric predictors will be centered and scaled and the categorical predictors will be sum coded.
 As the prior for $i$ and $\upsilon$ we will use a normal distribution with mean 0 and standard deviation 1.
 <!-- TODO: add explanation of me() predictors resp and belf -->
