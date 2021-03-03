@@ -150,9 +150,13 @@ Sixty-nine percent of the teams found support for the hypothesis, and 31% did no
 Out of the 29 analytical strategies, there were 21 unique combinations of covariates.
 Importantly, the observed variability was neither predicted by the team's preconceptions about the phenomenon under investigation nor by peer ratings of the quality of their analyses.
 The authors results suggest that analytic plurality is a fact of life and not driven by different levels of expertise or bias.
-Similar crowd-sourced studies recruiting independent analyst teams showed similar results.
 
-<!-- TODO: SUMUP neuroscience, cognitive modeling, clinical, predictive models -->
+Similar crowd-sourced studies recruiting independent analyst teams showed similar results.
+Both @dutilh2019 ad @starns2019 investigated analysts choices when inferring theoretical constructs based on the same data set using computational models.
+<!-- TODO: Parker et al. bib info -->
+Both studies reveal vastly different modeling strategies, even though scientific conclusions were similar across analysis teams [see also Parker et al. (accepted) on analytical flexibility in ecology and @botvinik-nezer2020 on neuroimaging data].
+@bastiaansen2020 crowdsourced clinical recommendations based on data analysis of an individual patient.
+Results suggests that analysis team differed substantially regarding decisions related to both the statistical analysis of the data set and the theoretical rationale behind interpreting the statistical results, indicating that there are multiple layers for degrees of freedom that interact with each other.
 
 While these projects show a large degree of analytical flexibility with impactful consequences, they dealt with flexibility in inferential or computational modeling.
 In these studies the data sets were fixed and data collection or measurement could not be changed. <!-- JC: any particular reason to favor data table over data set? --> <!-- TR: I think my reasoning was data set can be data table or raw data. Data table is the numerical derivation of the raw data. Maybe not a useful distinction?-->
@@ -167,9 +171,7 @@ To understand how analytical flexibility manifests itself in a scenario where a 
 Research on speech is at the heart of the cognitive sciences, informing psychological models of language, categorization, and memory, guiding methods for diagnosis and therapy of speech disorders, and facilitating advancement in automatic speech recognition and speech synthesis. One major challenge in the speech sciences is the mapping between communicative intentions and their physical manifestation.
 
 Speech is a complex signal that is characterized by structurally different acoustic landmarks distributed throughout different temporal domains.
-Thus, choosing how to measure a phenomenon of interest is an important and non-trivial analytical decision. Take for example the following sentence in 1:
-
-<!-- TR: I'd suggest an easier example (Sheila and Pat are both uncommon names, internationally speaking) and possibly a more relateable (possibly timely) example. Something about zoom meetings or sth maybe? Examples are super important to relate to the reader and lure them in. Here is my suggestion-->
+Thus, choosing how to measure a phenomenon of interest is an important and non-trivial analytical decision. Take for example the following sentence in 1.
 
 (1) "I can't bear another meeting on zoom."
 
@@ -177,17 +179,10 @@ Depending on the speaker's intention, this sentence can be said in different way
 If, for instance, the speaker is exhausted by all their meetings, the speaker might acoustically highlight the word "another" or "meeting".
 If, on the other hand, the speaker is just tired of video conferences, they might acoustically highlight the word "zoom".
 
-<!-- Now, imagine we are interested in measuring the difference between that sentence and the sentence "Sheila says *Mat* is clever".
-How can we obtain a measure of dissimilarity between the first sound in *Pat* and the first sound in *Mat*? -->
-
-<!-- TR: Keep in mind that the research question is not about segmental phenomena. To relate to the question later, I'd suggest a prosodic measure, e.g.  -->
-
 If we want to compare the speech signal associated with these two intentions, how do we quantify the difference between them? What do we measure and how do we measure it?
 Given the continuous and transient nature of speech, identifying speech parameters and temporal domains becomes a non-trivial task.
 Utterances stretch over hundreds of milliseconds and contain several levels of linguistically relevant units such as phrases, words, syllables, and individual sounds.
 The researcher is thus confronted with a considerable number of parameters and combinations thereof to choose from.
-
-<!-- TR: I changed features to parameters. Features is too close to phonological theory and will confuse some linguists, I believe. -->
 
 Speech categories are inherently multidimensional and dynamic: they consist of a cluster of parameters that are modulated over time.
 The acoustic parameters of one category are usually asynchronous, i.e. they appear at different time points in the unfolding signal, and overlap with parameters of other categories [e.g., @jongman2000acoustic; @lisker1986voicing; Summerfield, 1984; @winter2014spoken].
@@ -208,9 +203,8 @@ The larger the functional domain (e.g. segments vs words vs utterances), the hig
 For example, when comparing two realization of example (1) (here repeated as 2), one of which is intended to signal emphasis on *another* and one of which emphasizes *zoom*.
 
 (2a) "I can't bear ANOTHER meeting on zoom."
-(2b) "I can't bear another meeting on ZOOM."
 
-In text ref to Figure \@ref(fig:forkingPaths)
+(2b) "I can't bear another meeting on ZOOM."
 
 (ref:forkingPaths) Illustrations of the analytical flexibility associated with acoustic analyses. (A) an example of multiple possible and justifiable decisions when comparing to utterances; (B) waveform and fundamental frequency (f0) track of two instances of utterances 2a and 2b. The words "another is highlighted by the green box"; (C) spectrogram and f0 track of the word another, exemplifying different operationalizations of differences in pitch.
 
@@ -219,8 +213,6 @@ In text ref to Figure \@ref(fig:forkingPaths)
 knitr::include_graphics(here::here("figs", "ForkingPaths.png"))
 
 ```
-
-<!-- TR: Insertion does not work yet, gotta dash. Also the following paragraph is just a draft for now -->
 
 Do we only compare the word *another* in 2a and 2b or also the word *zoom* or do we measure utterance wide acoustic profiles? Do we measure the whole word? Or just the stressed syllable?
 Do we average the domain or do we measure a specific point in time?
@@ -233,11 +225,13 @@ For example, we could measure f0 at specific points in time like the onset of th
 We could also measure the value or time of the minimum or maximum f0 value.
 We could summarise f0 across the entire window and extract the mean, median or standard deviation of f0.
 And the garden of forking paths does not stop here.
-In Figure X, we went with a specific option to automatically calculate f0, INSERT SOME EXAMPLES OF PITCH TRACKING OPTIONS.
+<!-- TODO: add examples of pitch tracking options -->
+In \highlight[id=SC, comment = {The figure text is quite small. Probably better to change to a longer rather then wider layout.}]{Figure} \@ref(fig:forkingPaths), we went with a specific option to automatically calculate f0, INSERT SOME EXAMPLES OF PITCH TRACKING OPTIONS.
 Moreover, knowing that theses estimates are somewhat noisy, we could smooth these contours to different degrees, automatically or manually remove estimates that are off, etc.
 
 These decisions are usually made prior to any statistical analysis, but are at times revised a posteriori (i.e. after data collection and/or preliminary analyses) in light of unforeseen or surprising outcomes.
 These myriads of possible decisions are exponentiated by researcher degrees of freedom related to statistical analysis [e.g. wicherts2016].
+<!-- TODO: references to range of statistical models -->
 Even the analysis of a single measure can be approached via an ever-increasing range of different statistical models (REFs).
 The present paper probes this garden of forking paths in the analysis of speech.
 To assess the variability in data analysis pipelines across independent researchers, we provided XX analytical teams with an experimentally elicited speech corpus and asked them to investigate acoustic differences related to a functional contrast that might be manifested across the whole utterance.
@@ -267,7 +261,6 @@ Content selection aside, in a scenario in which a speaker wants to refer to a ba
 In a scenario in which the speaker wants to refer to a yellow banana when there is also a less ripe green banana on the table, the speaker would most likely produce a high rising pitch accent on *yellow* to indicate the contrastive nature of the modifier.
 In addition to a pitch accent, elements that are new and/or contrastive are often produced with additional suprasegmental prominence, i.e. segments are hyperarticulated, resulting in longer, louder and more clearly articulated acoustic targets.
 
-<!-- TODO: INFORMATION ABOUT THE DATA SET AND EXP DESIGN + TRANSITION -->
 To answer the question of whether speakers modify speech to signal atypical referents, thirty native German speakers were recorded in a speech production study while interacting with a confederate (one of the experimenters).
 The participants had to verbally instruct the confederate to select a specified target object out of four object presented on a screen.
 The subject and confederate were seated at the opposite sides of a table, each facing one of two mirrored computer screens.
@@ -279,6 +272,7 @@ Objects were referred to using noun phrases consisting of an adjective modifier 
 In the center of the screen, a black cube was displayed, which could be moved by the experimenter.
 The participant would read a sentence prompt out loud (*Du sollst den Würfel auf der <COLOR OBJECT> ablegen* 'You have to put the cube on top of the <COLOR OBJECT>') to instruct the experimenter to drag the cube on top of one of the four depicted objects (the *competitor*) using the mouse.
 After the experimenter had moved the cube as instructed, the subject would read another sentence prompt (*Und jetzt sollst du den Würfel auf der <COLOR OBJECT> ablegen* 'And now, you have to put the cube on top of the <COLOR OBJECT>') instructing the experimenter to move the cube on top of a different object (the *target*).
+The audio of this second utterance in the trial was recorded.
 
 The two sentence prompts were used to create a focus contrast between the competitor and the target object.
 If the competitor and target objects differed but their color did not (e.g. *yellow banana* vs *yellow tomato*), the noun was in focus (the Noun Focus condition, NF).
@@ -288,12 +282,14 @@ The NF condition constituted the experimentally relevant condition, while the AF
 The color-object combinations in the Noun Focus (NF) condition were manipulated with respect to their typicality.
 The combinations were either typical (e.g. *Orangene Mandarine* 'orange mandarin'), medium typical (e.g. *Grüne Tomate* 'green tomato'), or atypical (e.g. *Gelbe Kirsche* 'yellow cherry').
 The typicality rating of each color-object combination was established, prior to the production experiment, with a norming study (see Appendix XXX for details).
+
 Each participant went through 15 NF trials, 10 AF and 10 ANF trials.
 Each trial was repeated twice, yielding a total of 70 trials ($(15 \times 10 \times 10) \times 2$) per participant and a grand-total of 2100 observations ($70 \times 30$ participants), of which 900 ($15 \times 2 \times 30$ participants) were the experimentally relevant trials.
+The recordings of the second sentence prompt of each trial make up the speech dataset given to the analysis teams.
 
 ## Research questions
 
-The present project examines the extent to which subjective choices by different researchers analyzing a complex speech data set affect the reported results.
+The present study examines the extent to which subjective choices by different researchers analyzing a complex speech data set affect the reported results.
 We are further interested in which factors affect the researchers' final results.
 
 # Methods
@@ -407,15 +403,14 @@ To help reviewers calibrate their rating, they will be given the following guide
 * 25. A flawed analysis likely to produce an unreliable estimate of the relationship and an over-precise estimate of uncertainty.
 * 0. A dangerously misleading analysis, certain to produce both an estimate that is wrong and a substantially over-precise estimate of uncertainty that places undue confidence in the incorrect estimate.
 
-Furthermore, the reviewer will be given the option to include further comments in a text box.
+Furthermore, the reviewers will be given the option to include further comments in a text box.
 
 After submitting the review, a methods section from a second analysis will then be made available to the reviewer.
 This same sequence will be followed until all analyses allocated to a given reviewer have been provided and reviewed.
 After providing the final review, the reviewer will be simultaneously presented with all four (or more) methods sections that the reviewer has just completed reviewing, the option to revise their original ratings, and a text box to provide for an explanation.
-<!-- The invitation to revise the original ratings will be as follows: "If, now that you have seen all the analyses you are reviewing, you wish to revise your ratings of any of these analyses, you may do so now."
-The text box will be prefaced with this prompt: "Please explain your choice to revise (or not to revise) your ratings." -->
 
-## Step 4: Evaluate Variation
+
+## Step 4: Evaluate variation
 
 Th initiating authors (SC, JC, TR) will conduct the analyses outlined in this section.
 

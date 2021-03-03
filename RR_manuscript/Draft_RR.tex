@@ -122,7 +122,7 @@ Two or three sentences to provide a \textbf{broader perspective}, readily compre
 In order to effectively accumulate knowledge, science needs to (i) produce data that can be replicated using the original methods and (ii) arrive at robust conclusions substantiated by the data.
 In recent coordinated efforts to replicate published findings, the scientific disciplines have uncovered surprisingly low success rates for (i) (e.g., Open Science Collaboration 2015; Camerer et al. 2018) leading to what is now referred to as the \emph{replication crisis}.
 Beyond the difficulties of replicating scientific findings, a growing body of evidence suggests that the theoretical conclusions drawn from data are often variable even when researchers have access to reliable data (REFS).
-The latter situation has been referred to as the \emph{inference crisis} (Rotello, Heit, and Dubé 2015; Starns et al. 2019) and is, among other things, rooted in the inherent flexibility of data analysis (often referred to as researcher degrees of freedom: Simmons, Nelson, and Simonsohn 2011; Gelman and Loken 2014).
+The latter situation has been referred to as the \emph{inference crisis} (Rotello, Heit, and Dubé 2015; Jeffrey J. Starns et al. 2019b) and is, among other things, rooted in the inherent flexibility of data analysis (often referred to as researcher degrees of freedom: Simmons, Nelson, and Simonsohn 2011; Gelman and Loken 2014).
 Data analysis involves many different steps, such as inspecting, organizing, transforming, and modeling the data, to name a few.
 Along the way, different methodological and analytical choices need to be made, all of which may influence the final interpretation of the data.
 These researcher degrees of freedom are both a blessing and a curse.
@@ -130,7 +130,7 @@ These researcher degrees of freedom are both a blessing and a curse.
 They are a blessing because they afford us the opportunity to look at nature from different angles, which, in turn, allows us to make important discoveries and generate new hypothesis (e.g., Box 1976; Tukey 1977; De Groot 2014).
 They are a curse because idiosyncratic choices can lead to categorically different interpretations, which eventually find their way into the publication record where they are taken for granted (Simmons, Nelson, and Simonsohn 2011).
 Recent projects have shown that the variability between different data analysts is vast.
-This variability can lead independent researchers to draw different conclusions about the same data set as demonstrated by several projects crowd-sourcing analysis strategies (e.g., Silberzahn et al. 2018; Starns et al. 2019; Botvinik-Nezer et al. 2020).
+This variability can lead independent researchers to draw different conclusions about the same data set as demonstrated by several projects crowd-sourcing analysis strategies (e.g., Silberzahn et al. 2018; Jeffrey J. Starns et al. 2019b; Botvinik-Nezer et al. 2020b).
 These projects, however, might still underestimate the extent to which analysts vary because data analysis is not merely restricted to statistical inference.
 Human behavior is complex and offers many ways to be translated into numbers.
 This is particularly true for fields that draw conclusions about human behavior and cognition from multidimensional data like audio or video data.
@@ -168,7 +168,12 @@ Sixty-nine percent of the teams found support for the hypothesis, and 31\% did n
 Out of the 29 analytical strategies, there were 21 unique combinations of covariates.
 Importantly, the observed variability was neither predicted by the team's preconceptions about the phenomenon under investigation nor by peer ratings of the quality of their analyses.
 The authors results suggest that analytic plurality is a fact of life and not driven by different levels of expertise or bias.
+
 Similar crowd-sourced studies recruiting independent analyst teams showed similar results.
+Both Dutilh et al. (2019) ad Jeffrey J. Starns et al. (2019a) investigated analysts choices when inferring theoretical constructs based on the same data set using computational models.
+Both studies reveal vastly different modeling strategies, even though scientific conclusions were similar across analysis teams (see also Parker et al.~(accepted) on analytical flexibility in ecology and Botvinik-Nezer et al. 2020a on neuroimaging data).
+Bastiaansen et al. (2020) crowdsourced clinical recommendations based on data analysis of an individual patient.
+Results suggests that analysis team differed substantially regarding decisions related to both the statistical analysis of the data set and the theoretical rationale behind interpreting the statistical results, indicating that there are multiple layers for degrees of freedom that interact with each other.
 
 While these projects show a large degree of analytical flexibility with impactful consequences, they dealt with flexibility in inferential or computational modeling.
 In these studies the data sets were fixed and data collection or measurement could not be changed.
@@ -184,7 +189,7 @@ To understand how analytical flexibility manifests itself in a scenario where a 
 Research on speech is at the heart of the cognitive sciences, informing psychological models of language, categorization, and memory, guiding methods for diagnosis and therapy of speech disorders, and facilitating advancement in automatic speech recognition and speech synthesis. One major challenge in the speech sciences is the mapping between communicative intentions and their physical manifestation.
 
 Speech is a complex signal that is characterized by structurally different acoustic landmarks distributed throughout different temporal domains.
-Thus, choosing how to measure a phenomenon of interest is an important and non-trivial analytical decision. Take for example the following sentence in 1:
+Thus, choosing how to measure a phenomenon of interest is an important and non-trivial analytical decision. Take for example the following sentence in 1.
 
 \begin{enumerate}
 \def\labelenumi{(\arabic{enumi})}
@@ -221,9 +226,8 @@ The larger the functional domain (e.g.~segments vs words vs utterances), the hig
 For example, when comparing two realization of example (1) (here repeated as 2), one of which is intended to signal emphasis on \emph{another} and one of which emphasizes \emph{zoom}.
 
 (2a) ``I can't bear ANOTHER meeting on zoom.''
-(2b) ``I can't bear another meeting on ZOOM.''
 
-In text ref to Figure \ref{fig:forkingPaths}
+(2b) ``I can't bear another meeting on ZOOM.''
 
 
 
@@ -242,7 +246,7 @@ For example, we could measure f0 at specific points in time like the onset of th
 We could also measure the value or time of the minimum or maximum f0 value.
 We could summarise f0 across the entire window and extract the mean, median or standard deviation of f0.
 And the garden of forking paths does not stop here.
-In Figure X, we went with a specific option to automatically calculate f0, INSERT SOME EXAMPLES OF PITCH TRACKING OPTIONS.
+In \highlight[id=SC, comment = {The figure text is quite small. Probably better to change to a longer rather then wider layout.}]{Figure} \ref{fig:forkingPaths}, we went with a specific option to automatically calculate f0, INSERT SOME EXAMPLES OF PITCH TRACKING OPTIONS.
 Moreover, knowing that theses estimates are somewhat noisy, we could smooth these contours to different degrees, automatically or manually remove estimates that are off, etc.
 
 These decisions are usually made prior to any statistical analysis, but are at times revised a posteriori (i.e.~after data collection and/or preliminary analyses) in light of unforeseen or surprising outcomes.
@@ -288,6 +292,7 @@ Objects were referred to using noun phrases consisting of an adjective modifier 
 In the center of the screen, a black cube was displayed, which could be moved by the experimenter.
 The participant would read a sentence prompt out loud (\emph{Du sollst den Würfel auf der ablegen} `You have to put the cube on top of the ') to instruct the experimenter to drag the cube on top of one of the four depicted objects (the \emph{competitor}) using the mouse.
 After the experimenter had moved the cube as instructed, the subject would read another sentence prompt (\emph{Und jetzt sollst du den Würfel auf der ablegen} `And now, you have to put the cube on top of the ') instructing the experimenter to move the cube on top of a different object (the \emph{target}).
+The audio of this second utterance in the trial was recorded.
 
 The two sentence prompts were used to create a focus contrast between the competitor and the target object.
 If the competitor and target objects differed but their color did not (e.g.~\emph{yellow banana} vs \emph{yellow tomato}), the noun was in focus (the Noun Focus condition, NF).
@@ -297,13 +302,15 @@ The NF condition constituted the experimentally relevant condition, while the AF
 The color-object combinations in the Noun Focus (NF) condition were manipulated with respect to their typicality.
 The combinations were either typical (e.g.~\emph{Orangene Mandarine} `orange mandarin'), medium typical (e.g.~\emph{Grüne Tomate} `green tomato'), or atypical (e.g.~\emph{Gelbe Kirsche} `yellow cherry').
 The typicality rating of each color-object combination was established, prior to the production experiment, with a norming study (see Appendix XXX for details).
+
 Each participant went through 15 NF trials, 10 AF and 10 ANF trials.
 Each trial was repeated twice, yielding a total of 70 trials (\((15 \times 10 \times 10) \times 2\)) per participant and a grand-total of 2100 observations (\(70 \times 30\) participants), of which 900 (\(15 \times 2 \times 30\) participants) were the experimentally relevant trials.
+The recordings of the second sentence prompt of each trial make up the speech dataset given to the analysis teams.
 
 \hypertarget{research-questions}{%
 \subsection{Research questions}\label{research-questions}}
 
-The present project examines the extent to which subjective choices by different researchers analyzing a complex speech data set affect the reported results.
+The present study examines the extent to which subjective choices by different researchers analyzing a complex speech data set affect the reported results.
 We are further interested in which factors affect the researchers' final results.
 
 \hypertarget{methods}{%
@@ -459,14 +466,14 @@ To help reviewers calibrate their rating, they will be given the following guide
   \end{enumerate}
 \end{itemize}
 
-Furthermore, the reviewer will be given the option to include further comments in a text box.
+Furthermore, the reviewers will be given the option to include further comments in a text box.
 
 After submitting the review, a methods section from a second analysis will then be made available to the reviewer.
 This same sequence will be followed until all analyses allocated to a given reviewer have been provided and reviewed.
 After providing the final review, the reviewer will be simultaneously presented with all four (or more) methods sections that the reviewer has just completed reviewing, the option to revise their original ratings, and a text box to provide for an explanation.
 
 \hypertarget{step-4-evaluate-variation}{%
-\subsection{Step 4: Evaluate Variation}\label{step-4-evaluate-variation}}
+\subsection{Step 4: Evaluate variation}\label{step-4-evaluate-variation}}
 
 Th initiating authors (SC, JC, TR) will conduct the analyses outlined in this section.
 
@@ -492,24 +499,13 @@ Moreover, to account for the differing degree of uncertainty around each standar
 This will enable us to fit a so-called ``measurement-error'' model, in which both the standardized effect sizes and their respective standard errors are entered in the the meta-analytical model.
 As a desired consequence, effect sizes with a greater standard error will be weighted less than those with a smaller standard error in the meta-analytical calculations.
 
-After having obtained the standardized effect sizes \(\eta_i\) with related standard errors \(\text{se}_i\), for each critical predictor of the individual reported analyses, the initiating authors will fit a Bayesian random-effects meta-analysis using the following multilevel (intercept-only) regression model:
-
-\[
-\begin{aligned}
-\eta_i      & \sim \text{Normal}(\mu_i, \sigma_i) \\
-\mu_i       & = \alpha + \alpha_{\text{t}[i]} \\
-\alpha      & \sim \text{Normal}(0, 1) \\
-\sigma_{\alpha_{\text{t}}} & \sim \text{HalfCauchy}(0, 1) \\
-\sigma_i    & = \text{se}_i
-\end{aligned}
-\]
-
+After having obtained the standardized effect sizes \(\eta_i\) with related standard errors \(\text{se}_i\), for each critical predictor of the individual reported analyses, the initiating authors will fit a Bayesian random-effects meta-analysis using a multilevel (intercept-only) regression model, as described in the following.
 The outcome variable will be the set of standardized effect sizes \(\eta_i\).
 The likelihood of \(\eta_i\) is assumed to correspond to a normal distribution (Knight 2000).
-The analysis teams will constitute the group-level effect (i.e., random effect, \texttt{(1\ \textbar{}\ team)}).
+The analysis teams will be entered as a group-level effect (i.e., random effect, \texttt{(1\ \textbar{}\ team)}).
 The standard errors \(\text{se}_i\) will be included as the standard deviation \(\sigma_i\) of \(\eta_i\) to fit a measurement-error model, as discussed above.
 We will use regularizing weakly-informative priors for the intercept \(\alpha\) (\(Normal(0, 1)\)) and for the group-level standard deviation \(\alpha_{\text{t}[i]}\) (\(HalfCauchy(0, 1)\)).
-We will fit this model with 4 chains of Hamiltonian Monte-Carlo sampling for the estimation of the joint posterior distribution, using the No U-Turn Sampler (NUTS) as implemented in Stan, and 4000 iterations (2000 for warm-up) per chain, distributed across 4 processing cores.
+We will fit this model with 4 chains of Hamiltonian Monte-Carlo sampling for the estimation of the joint posterior distribution, using the No U-Turn Sampler (NUTS) as implemented in Stan (Stan Development Team 2021), and 4000 iterations (2000 for warm-up) per chain, distributed across 4 processing cores.
 \highlight[id=SC, comment = {This ok?}]{In case of issues from divergent transitions} in the sampling, we will increase \texttt{adapt\_delta}, \texttt{tree\_depth}, and the number of iterations in this order until there are no divergent transitions.
 The analysis will be conducted in R (R Core Team 2020) and fit using Stan (Stan Development Team 2021), RStan (Stan Development Team 2020), and brms (Bürkner 2017).
 The code used to run the model can be found here: INSERT LINK.
@@ -527,7 +523,7 @@ A sign of possible bias is when there are more points which are farther from the
 \begin{figure}
 \centering
 \includegraphics{Draft_RR_files/figure-latex/funnel-plot-1.pdf}
-\caption{\label{fig:funnel-plot}Illustrations of funnel plots showing (a) no bias, (b) positive bias, and (c) negative bias in effect sizes. The vertical dashed line represents the meta-analitical mean.}
+\caption{\label{fig:funnel-plot}Illustrations of funnel plots showing (a) no bias, (b) positive bias, and (c) negative bias in effect sizes. The vertical dashed line represents the meta-analytical mean.}
 \end{figure}
 
 \hypertarget{ana-factors}{%
@@ -538,24 +534,9 @@ We will fit two Bayesian regression models, one for (a) and one for (b).
 with each team's group-level coefficient \(\alpha_{\text{t}[i]}\) as the outcome variable, and the analytical and demographic factors described below as predictors.
 The coefficient \(\alpha_{\text{t}[i]}\) can be interpreted as the deviation score of the team's \(\eta_i\) from the meta-analytical mean, allowing us to determine potential effects of analytical and demographic factors on how the teams deviate from the meta-analytical mean.
 Since each \(\alpha_{\text{t}[i]}\) comes with uncertainty, quantified by its standard deviation \(\sigma_{\alpha_{\text{t}[i]}}\), we will fit a measurement-error model, as we did in the meta-analytical model above.
-The formula of the model is the following (see the description of the predictors below for the meaning of acronyms):
 
-\[
-\begin{aligned}
-\alpha_{\text{t}[i]}      & \sim \text{Normal}(\mu_{\alpha_{t[i]}}, \sigma_i) \\
-\mu_{\alpha_{t[i]}}       & = \iota + \upsilon_u\cdot uniq_i + \upsilon_c\cdot cons_i + \upsilon_p\cdot phoc_i + \upsilon_m\cdot modn_i \\
- & \qquad + \upsilon_d\cdot mdim_i + \upsilon_w\cdot twin_i + \upsilon_e\cdot excl_i \\
- & \qquad + \upsilon_{xp}\cdot rexp_i + \upsilon_{be}\cdot belf_i  \\
-\iota      & \sim \text{Normal}(0, 1) \\
-\upsilon_{[\ldots]} & \sim \text{Normal}(0,1) \\
-resp_i & \sim \text{Normal}(\mu_{resp_i}, \sigma_{resp_i}) \\
-belf_i & \sim \text{Normal}(\mu_{belf_i}, \sigma_{belf_i}) \\
-\sigma_i    & = \sigma_{\alpha_{t[i]}}
-\end{aligned}
-\]
-
-The likelihood of \(\alpha_{t[i]}\) is a normal distribution.
-The mean is based on the overall intercept \(i\) and on the \(\upsilon\) coefficient of each predictor.
+A normal distribution will be used as the likelihood of \(\alpha_{t[i]}\).
+The mean of \(\alpha_{t[i]}\) is modelled on the basis of the overall intercept \(\beta\) and on the coefficients \(\upsilon_n\) of each predictor.
 The numeric predictors will be centered and scaled and the categorical predictors will be sum coded.
 As the prior for \(i\) and \(\upsilon\) we will use a normal distribution with mean 0 and standard deviation 1.
 
@@ -639,8 +620,14 @@ Arts, Anja, Alfons Maes, Leo GM Noordman, and Carel Jansen. 2011. {``Overspecifi
 \leavevmode\hypertarget{ref-baselga2020}{}%
 Baselga, Andres, David Orme, Sebastien Villeger, Julien De Bortoli, Fabien Leprieur, and Maxime Logez. 2020. {``{b}etapart: Partitioning Beta Diversity into Turnover and Nestedness Components.''} \url{https://CRAN.R-project.org/package=betapart}.
 
+\leavevmode\hypertarget{ref-bastiaansen2020}{}%
+Bastiaansen, Jojanneke A., Yoram K. Kunkels, Frank J. Blaauw, Steven M. Boker, Eva Ceulemans, Meng Chen, Sy-Miin Chow, et al. 2020. {``Time to Get Personal? The Impact of Researchers Choices on the Selection of Treatment Targets Using the Experience Sampling Methodology.''} \emph{Journal of Psychosomatic Research} 137: 110211.
+
+\leavevmode\hypertarget{ref-botvinik-nezer2020}{}%
+Botvinik-Nezer, Rotem, Felix Holzmeister, Colin F. Camerer, Anna Dreber, Juergen Huber, Magnus Johannesson, Michael Kirchler, et al. 2020a. {``Variability in the Analysis of a Single Neuroimaging Dataset by Many Teams.''} \emph{Nature} 582 (7810): 84--88.
+
 \leavevmode\hypertarget{ref-botvinik2020variability}{}%
-Botvinik-Nezer, Rotem, Felix Holzmeister, Colin F Camerer, Anna Dreber, Juergen Huber, Magnus Johannesson, Michael Kirchler, et al. 2020. {``Variability in the Analysis of a Single Neuroimaging Dataset by Many Teams.''} \emph{Nature}, 1--7.
+Botvinik-Nezer, Rotem, Felix Holzmeister, Colin F Camerer, Anna Dreber, Juergen Huber, Magnus Johannesson, Michael Kirchler, et al. 2020b. {``Variability in the Analysis of a Single Neuroimaging Dataset by Many Teams.''} \emph{Nature}, 1--7.
 
 \leavevmode\hypertarget{ref-box1976science}{}%
 Box, George EP. 1976. {``Science and Statistics.''} \emph{Journal of the American Statistical Association} 71 (356): 791--99.
@@ -662,6 +649,9 @@ Degen, Judith, Robert D Hawkins, Caroline Graf, Elisa Kreiss, and Noah D Goodman
 
 \leavevmode\hypertarget{ref-dice1945}{}%
 Dice, Lee Raymond. 1945. {``Measures of the Amount of Ecologic Association Between Species.''} \emph{Ecology} 26 (3): 297--302.
+
+\leavevmode\hypertarget{ref-dutilh2019}{}%
+Dutilh, Gilles, Jeffrey Annis, Scott D. Brown, Peter Cassey, Nathan J. Evans, Raoul Grasman, Guy E. Hawkins, et al. 2019. {``The Quality of Response Time Data Inference: A Blinded, Collaborative Assessment of the Validity of Cognitive Models.''} \emph{Psychonomic Bulletin \& Review} 26 (4): 1051--69.
 
 \leavevmode\hypertarget{ref-egger1997}{}%
 Egger, Matthias, George Davey Smith, Martin Schneider, and Christoph Minder. 1997. {``Bias in Meta-Analysis Detected by a Simple, Graphical Test.''} \emph{British Medical Journal} 315: 629--34.
@@ -756,11 +746,14 @@ Stan Development Team. 2020. {``{RStan}: The {R} Interface to {Stan}.''} \url{ht
 \leavevmode\hypertarget{ref-stan2021}{}%
 ---------. 2021. {``Stan Modeling Language Users Guide and Reference Manual, V2.26.0.''} \url{http://mc-stan.org/}.
 
+\leavevmode\hypertarget{ref-starns2019}{}%
+Starns, Jeffrey J., Andrea M. Cataldo, Caren M. Rotello, Jeffrey Annis, Andrew Aschenbrenner, Arndt Bröder, Gregory Cox, et al. 2019a. {``Assessing Theoretical Conclusions with Blinded Inference to Investigate a Potential Inference Crisis.''} \emph{Advances in Methods and Practices in Psychological Science} 2 (4): 335--49.
+
 \leavevmode\hypertarget{ref-starns2019assessing}{}%
-Starns, Jeffrey J, Andrea M Cataldo, Caren M Rotello, Jeffrey Annis, Andrew Aschenbrenner, Arndt Bröder, Gregory Cox, et al. 2019. {``Assessing Theoretical Conclusions with Blinded Inference to Investigate a Potential Inference Crisis.''} \emph{Advances in Methods and Practices in Psychological Science} 2 (4): 335--49.
+Starns, Jeffrey J, Andrea M Cataldo, Caren M Rotello, Jeffrey Annis, Andrew Aschenbrenner, Arndt Bröder, Gregory Cox, et al. 2019b. {``Assessing Theoretical Conclusions with Blinded Inference to Investigate a Potential Inference Crisis.''} \emph{Advances in Methods and Practices in Psychological Science} 2 (4): 335--49.
 
 \leavevmode\hypertarget{ref-sterling1959publication}{}%
-Sterling, Theodore D. 1959. {``Publication Decisions and Their Possible Effects on Inferences Drawn from Tests of Significance---or Vice Versa.''} \emph{Journal of the American Statistical Association} 54 (285): 30--34.
+Sterling, Theodore D. 1959. {``Publication Decisions and Their Possible Effects on Inferences Drawn from Tests of Significance--or Vice Versa.''} \emph{Journal of the American Statistical Association} 54 (285): 30--34.
 
 \leavevmode\hypertarget{ref-sterne2005}{}%
 Sterne, Jonathan A. C., Betsy Jane Becker, and Matthias Egger. 2005. {``The Funnel Plot.''} In \emph{Publication Bias in Meta-Analysis: Prevention, Assessment and Adjustments}, edited by Hannah R. Rothstein, Alexander J. Sutton, and Michael Borenstein, 75--98. Wiley Online Library.
