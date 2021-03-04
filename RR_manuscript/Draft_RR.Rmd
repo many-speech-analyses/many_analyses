@@ -173,7 +173,7 @@ In those social sciences concerned with communication, human behaviour is someti
 This added complexity introduces further fork junctions in the research pipe-line, thus increasing yet again analytical flexibility.
 The present study looks at experimentally elicited speech data to understand how this flexibility manifests itself in a scenario where complex decision procedures are involved in the operationalization and measuring of complex signals.
 
-## Operationalizing speech
+## Operationalizing speech {#s:operspeech}
 
 Research on speech is at the heart of the cognitive sciences, informing psychological models of language, categorization, and memory, guiding methods for diagnosis and therapy of speech disorders, and facilitating advancement in automatic speech recognition and speech synthesis.
 One major challenge in the speech sciences is the mapping between communicative intentions (the unobserved behavior) and their physical manifestation (the observed behaviour).
@@ -250,8 +250,7 @@ To assess the variability in data analysis pipelines across independent research
 
 ## The data set: The acoustic properties of redundant modifiers
 
-Our data set was collected in order to answer the following research question: Do speakers acoustically modify utterances to signal atypical word combinations (e.g. the atypical *a blue banana* vs the typical *a yellow banana*)?
-More specifically, we are interested in the acoustic profile of referring expressions made up of a noun and an adjective modifier.
+The data set given to the analysis teams comes from a study that investigated whether speakers acoustically modify utterances to signal typicality of noun/adjective combinations in referring expressions such as  *a blue banana* (atypical) vs *a yellow banana* (typical).
 Referring is one of the most basic and prevalent uses of language and one of the most widely researched areas in language science.
 It is an open question how speakers choose a referring expression when they want to refer to a specific entity like a banana.
 The context within which an entity occurs (i.e., with other non-fruits, other fruits, or other bananas) plays a large part in determining the choice of referring expressions.
@@ -297,39 +296,45 @@ The typicality rating of each color-object combination was established, prior to
 
 Each participant went through 15 NF trials, 10 AF and 10 ANF trials.
 Each trial was repeated twice, yielding a total of 70 trials ($(15 \times 10 \times 10) \times 2$) per participant and a grand-total of 2100 observations ($70 \times 30$ participants), of which 900 ($15 \times 2 \times 30$ participants) were the experimentally relevant trials.
-The recordings of the second sentence prompt of each trial make up the speech dataset given to the analysis teams.
+The recordings of the second sentence prompt of each trial make up the speech data set given to the analysis teams.
+The teams were asked to answer the same questions as the study that generated the data set: *Do speakers acoustically modify utterances to signal atypical word combinations in referring expressions?*
+\comment[id=SC]{Need transition here.}
 
 ## Research questions
 
-The present study examines the extent to which subjective choices by different researchers analyzing a complex speech data set affect the reported results.
-We are further interested in which factors affect the researchers' final results.
+The present study examines the extent to which subjective choices by different researchers analyzing the same speech data set affect the reported results.
+As outlined in Section \@ref(s:operspeech), researchers are faced with a large set of analytical choices when investigating a multidimensional signal such as speech.
+Not only must they choose appropriate statistical models and inferential criteria, but also identify relevant measures and their operationalisation and transformation, and the temporal domain(s) from within which these measures are to be taken.
+\highlight[id=SC, comment={I need help completing this sentence...}]{The ... makes up the ideal testing ground for ...}
+We will take on a meta-analytical approach to assess (i) the variability of the reported effects, and (ii) and how analytical and demographic factors affect the researchers' final results.
 
 # Methods
 
 We are closely following the methodology proposed by Parker et al. (Stage 1 in-principle accepted) in terms of data collection.
 However, the analysis will substantially diverge from their approach (see §#.#)
 
-This project involves a series of steps (X-X):
+This project involves the following five phases:
 
-1. We will recruit independent groups of researchers to analyze the data.
-2. We will give researchers access to the speech corpus and let them analyze the data as they see fit.
-3. We will ask reviewers to generate peer review ratings of the analyses based on methods (not results).
-4. We will evaluate the variation among the different analyses.
-5. Lastly, we will collaboratively produce the final manuscript.
+1. \textsc{Recruitment}: We will recruit independent groups of researchers to analyze the data.
+2. \textsc{Team Analysis}: We will give researchers access to the speech corpus and let them analyze the data as they see fit.
+3. \textsc{Review}: We will ask reviewers to generate peer review ratings of the analyses based on methods (not results).
+4. \textsc{Meta-analysis}: We will evaluate the variation among the different analyses.
+5. \textsc{Write-up}: Lastly, we will collaboratively produce the final manuscript.
 
-We estimate that this process, from the time of an in-principle acceptance of this Stage 1 Registered Report, will take XX months (Table X).
-The factor most likely to delay our time line is the rate of completion of the original set of analyses by independent groups of scientists.
+<!-- TODO: project timeline -->
+We estimate that this process, from the time of an in-principle acceptance of this Stage 1 Registered Report to the end of Phase 5, will take \highlight{XX months (Table X).}
+The factor most likely to delay our time line is the rate of completion of the original set of analyses by independent analysis teams.
 
-## Step 1: Recruitment and Initial Survey of Analysts
+## Phase 1: Recruitment of analysts and initial survey
 
 <!-- TODO: add materials link and mailing lists -->
-The initiating authors (SC, JC, TR) created a publicly available document providing a general description of the project (LINK) and a short prerecorded slide show that summarizes the study and research question in order to increase accessibility to potential analysts (LINK).
-The project will be advertised via Social Media, using mailing lists for linguistic and psychological societies (full scope of these lists is not fixed but will include LIST OF LISTS), and via word of mouth.
-The target population is active speech science researchers with a graduate degree (or currently studying for a graduate degree) in a relevant discipline.
+The initiating authors (SC, JC, TR) created an online landing page providing a general description of the project (LINK) and a short pre-recorded slide show that summarizes the study and research question (LINK).
+The project will be advertised via social media, using mailing lists for linguistic and psychological societies (full scope of these lists is not fixed but will include \highlight{LIST OF LISTS}, and via word of mouth.
+The target population is active speech science researchers with a graduate/doctoral degree (or currently studying for a graduate/doctoral degree) in a relevant discipline.
 Researchers can choose to work independently or in a small team.
-For the sake of simplicity, we refer to single researcher or small teams as "analysis teams".
+For the sake of simplicity, we will refer to single researcher or small teams as "analysis teams".
 
-Recruitment for this project is ongoing but we aim for a minimum of XX analysis teams independently evaluating each data set (see sample size justification below).
+Recruitment for this project is ongoing but we aim for a minimum of 12 analysis teams independently evaluating each data set (see sample size justification below).
 We will simultaneously recruit volunteers to peer-review the analyses conducted by the other volunteers through the same channels.
 Our goal is to recruit a similar number of peer-reviewers and analysts, and to ask each peer reviewer to review a minimum of four analyses.
 If we are unable to recruit at least half the number of reviewers as analysis teams, we will ask analysts to serve also as reviewers (after they have completed their analyses).
@@ -338,7 +343,7 @@ All analysts and reviewers will share co-authorship on this manuscript and will 
 All analysts will sign a consent (ethics) document (LINK).
 
 <!-- TODO: add citation to ECO RR -->
-To identify the minimal sample size, we followed the method in [ECO RR].
+To identify the minimal sample size, we followed the method in \highlight{[ECO RR]}.
 The aim of the meta-analysis is to obtain an estimate of heterogeneity of the effect sizes reported by the analysis teams ($\tau^2$, i.e. the variance $\sigma^2_{\alpha_{\text{t}}}$, see \Cref{s:meta-est}).
 Ideally, the 95% credible interval (CrI) of $\tau^2$ should not include 0 (i.e. the probability $p$ that the 95% CrI contains 0 should be less than 0.05).
 The probability $p$ that a CrI interval does not include 0 is obtained via the *t*-statistics:
@@ -366,7 +371,7 @@ t <- sqrt((df)/2)
 pt(t, df, lower.tail = F) * 2
 ```
 
-## Step 2: Primary Data Analyses
+## Phase 2: Primary Data Analyses
 
 <!-- TODO: add link to demo survey -->
 The analysis teams will register and answer a demographic and expertise survey (LINK).
@@ -379,7 +384,7 @@ Do speakers acoustically modify utterances to signal atypical word combinations?
 Once their analysis is complete, they will answer a structured survey (LINK), providing analysis technique, explanations of their analytical choices, quantitative results, and a statement describing their conclusions.
 They will also upload their analysis files (including the additionally derived data and text files that were used to extract and pre-process the acoustic data), their analysis code (if applicable), and a detailed journal-ready statistical methods section.
 
-## Step 3: Peer Reviews of Analyses
+## Phase 3: Peer Reviews of Analyses
 
 At a minimum, each analysis will be evaluated by four different reviewers, and each volunteer peer-reviewer will be randomly assigned to methods sections from at least four analyst teams (the exact number will depend on the number of analysis teams and peer reviewers recruited).
 Each peer reviewer will register and answer a demographic and expertise survey identical to that asked of the analysts.
@@ -409,7 +414,7 @@ This same sequence will be followed until all analyses allocated to a given revi
 After providing the final review, the reviewer will be simultaneously presented with all four (or more) methods sections that the reviewer has just completed reviewing, the option to revise their original ratings, and a text box to provide for an explanation.
 
 
-## Step 4: Evaluate variation
+## Phase 4: Evaluate variation
 
 Th initiating authors (SC, JC, TR) will conduct the analyses outlined in this section.
 
@@ -601,7 +606,7 @@ Our rules for excluding data from our study are as follows.
 We will exclude from our synthesis any individual analysis submitted after we have completed peer review or those unaccompanied by analysis files that allow us to understand what the analysts did.
 We will also exclude any individual analysis that does not produce an outcome that can be interpreted as an answer to our primary question.
 
-## Step 6: Collaborative Write-Up of Manuscript
+## Phase 6: Collaborative Write-Up of Manuscript
 
 Analysts and initiating authors will discuss the limitations, results, and implications of the study and collaborate on writing the final manuscript for review as a stage-2 Registered Report.
 

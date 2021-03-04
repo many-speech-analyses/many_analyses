@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.999992 (TeX Live 2020) (preloaded format=xelatex 2021.2.25)  4 MAR 2021 14:21
+This is XeTeX, Version 3.14159265-2.6-0.999992 (TeX Live 2020) (preloaded format=xelatex 2021.2.25)  4 MAR 2021 18:05
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1370,7 +1370,13 @@ LaTeX Warning: Marginpar on page 8 moved.
 File: /Users/ste/repos/many_analyses/figs/ForkingPaths.png Graphic file (type b
 mp)
 </Users/ste/repos/many_analyses/figs/ForkingPaths.png>
-[8] [9] [10] [11] [12] [13] [14] [15] [16] [17]
+[8] [9] [10] [11]
+Underfull \hbox (badness 2626) in paragraph at lines 353--354
+[]\TU/lmr/m/sc/12 Write-up\TU/lmr/m/n/12 : Lastly, we will collaboratively prod
+uce the final
+ []
+
+[12] [13] [14] [15] [16] [17]
 File: Draft_RR_files/figure-latex/funnel-plot-1.pdf Graphic file (type pdf)
 <use Draft_RR_files/figure-latex/funnel-plot-1.pdf>
 [18] [19]
@@ -1378,43 +1384,43 @@ File: Draft_RR_files/figure-latex/funnel-plot-1.pdf Graphic file (type pdf)
 LaTeX Warning: Marginpar on page 20 moved.
 
 [20] [21]
-Underfull \hbox (badness 1132) in paragraph at lines 635--637
+Underfull \hbox (badness 1132) in paragraph at lines 639--641
  [][]\TU/lmr/m/n/12 Camerer, Colin F, Anna Dreber, Felix Holzmeister, Teck-Hua
  []
 
 
-Underfull \hbox (badness 3108) in paragraph at lines 635--637
+Underfull \hbox (badness 3108) in paragraph at lines 639--641
  \TU/lmr/m/n/12 Ho, Jürgen Huber, Magnus Johannesson, Michael Kirch-
  []
 
 
-Underfull \hbox (badness 2042) in paragraph at lines 635--637
+Underfull \hbox (badness 2042) in paragraph at lines 639--641
  \TU/lmr/m/n/12 ler, et al. 2018. “Evaluating the Replicability of So-
  []
 
 
-Underfull \hbox (badness 2753) in paragraph at lines 635--637
+Underfull \hbox (badness 2753) in paragraph at lines 639--641
  \TU/lmr/m/n/12 cial Science Experiments in Nature and Science Between
  []
 
 [22]
-Underfull \hbox (badness 2277) in paragraph at lines 656--658
+Underfull \hbox (badness 2277) in paragraph at lines 660--662
  [][]\TU/lmr/m/n/12 Flake, Jessica Kay, and Eiko I. Fried. 2020. “Measure-
  []
 
 
-Underfull \hbox (badness 5908) in paragraph at lines 656--658
+Underfull \hbox (badness 5908) in paragraph at lines 660--662
  \TU/lmr/m/n/12 ment Schmeasurement: Questionable Measurement Prac-
  []
 
 
-Underfull \hbox (badness 2573) in paragraph at lines 656--658
+Underfull \hbox (badness 2573) in paragraph at lines 660--662
  \TU/lmr/m/n/12 tices and How to Avoid Them.” \TU/lmr/m/it/12 Advances in Metho
 ds
  []
 
 
-Underfull \hbox (badness 5050) in paragraph at lines 656--658
+Underfull \hbox (badness 5050) in paragraph at lines 660--662
  \TU/lmr/m/it/12 and Practices in Psychological Science \TU/lmr/m/n/12 3 (4): 4
 56–65.
  []
@@ -1428,14 +1434,14 @@ Underfull \hbox (badness 5050) in paragraph at lines 656--658
 
 [27] (./Draft_RR.aux)
 Package rerunfilecheck Info: File `Draft_RR.out' has not changed.
-(rerunfilecheck)             Checksum: B768587CC497338446522A70B64BB659;2690.
+(rerunfilecheck)             Checksum: 68CAA20414317E32BD348011C39D894D;2715.
  ) 
 Here is how much of TeX's memory you used:
- 29384 strings out of 478931
- 576484 string characters out of 5866460
- 1072649 words of memory out of 5000000
- 48736 multiletter control sequences out of 15000+600000
- 409989 words of font info for 82 fonts, out of 8000000 for 9000
+ 29404 strings out of 478931
+ 576948 string characters out of 5866460
+ 1084226 words of memory out of 5000000
+ 48754 multiletter control sequences out of 15000+600000
+ 409997 words of font info for 83 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  117i,8n,122p,688b,985s stack positions out of 5000i,500n,10000p,200000b,80000s
 
