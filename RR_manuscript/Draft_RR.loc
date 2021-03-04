@@ -1,4 +1,18 @@
+\ChangesListline {highlight}{Highlighted}{REFS}{2}
+\ChangesListline {highlight}{Highlighted\nobreakspace {}(JC)}{However, if these decisions}{3}
+\ChangesListline {comment}{Commented\nobreakspace {}(TR)}{But isn't the human bias the major issue in statistical misinterpretation? (It also leads naturally to the next paragraph.)}{3}
+\ChangesListline {comment}{Commented\nobreakspace {}(JC)}{If helpful we could also give a concrete common example here, like regarding forecasting the weather or something}{3}
+\ChangesListline {comment}{Commented\nobreakspace {}(TR)}{Generally a good idea, but I'd say we keep it crisp at that point. The take-home here is: Humans are biased.}{3}
+\ChangesListline {comment}{Commented\nobreakspace {}(JC)}{any particular reason to favor data table over data set?}{5}
+\ChangesListline {comment}{Commented\nobreakspace {}(TR)}{I think my reasoning was data set can be data table or raw data. Data table is the numerical derivation of the raw data. Maybe not a useful distinction?}{5}
 \ChangesListline {highlight}{Highlighted\nobreakspace {}(SC)}{Figure}{8}
+\ChangesListline {comment}{Commented}{add examples of pitch tracking options}{8}
+\ChangesListline {highlight}{Highlighted}{REFs}{8}
+\ChangesListline {comment}{Commented\nobreakspace {}(SC)}{This needs a smother transition.}{8}
+\ChangesListline {highlight}{Highlighted\nobreakspace {}(SC)}{techniques}{16}
 \ChangesListline {highlight}{Highlighted\nobreakspace {}(SC)}{Factor-level ordering}{16}
 \ChangesListline {highlight}{Highlighted\nobreakspace {}(SC)}{In case of issues from divergent transitions}{17}
-\ChangesListline {highlight}{Highlighted\nobreakspace {}(SC)}{of}{17}
+\ChangesListline {highlight}{Highlighted\nobreakspace {}(SC)}{of}{18}
+\ChangesListline {highlight}{Highlighted\nobreakspace {}(SC)}{formula}{19}
+\ChangesListline {comment}{Commented\nobreakspace {}(TR)}{Stefano, do you think these four will cover possible ways to measure? We might want to define them too? dunno}{20}
+\ChangesListline {comment}{Commented\nobreakspace {}(SC)}{I just added a "other measures" category for other things that are not strictly acoustic.}{20}
