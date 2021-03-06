@@ -100,10 +100,10 @@ my_seed <- 115116106
 
 # Introduction
 
-In order to effectively accumulate knowledge, science needs (i) to produce data that can be replicated using the original methods and (ii) to arrive at robust conclusions substantiated by the data.
-In recent coordinated efforts to replicate published findings, the scientific disciplines have uncovered surprisingly low success rates in replication attempts [e.g., @open2015estimating; @camerer2018evaluating] leading to what is now referred to as the *replication crisis*.
+In order to effectively accumulate knowledge, science needs to (i) produce data that can be replicated using the original methods and (ii) arrive at robust conclusions substantiated by the data.
+In recent coordinated efforts to replicate published findings, scientific disciplines have uncovered surprisingly low success rates [e.g., @open2015estimating; @camerer2018evaluating] leading to what is now referred to as the *replication crisis*.
 <!-- TODO: add refs about variable conclusions from reliable data -->
-Beyond the difficulties of replicating scientific findings, a growing body of evidence suggests that the theoretical conclusions drawn from data are often variable even when researchers have access to reliable data (\highlight{REFS}).
+Beyond the difficulties of replicating scientific findings, a growing body of evidence suggests that the theoretical conclusions drawn from data are often variable even when researchers have access to reliable data.
 The latter situation has been referred to as the *inference crisis* [@rotello2015more; @starns2019assessing] and is, among other things, rooted in the inherent flexibility of data analysis [often referred to as researcher degrees of freedom: @simmons2011false; @gelman2014statistical].
 Data analysis involves many different steps, such as inspecting, organizing, transforming, and modeling the data, to name a few.
 Along the way, different methodological and analytical choices need to be made, all of which may influence the final interpretation of the data.
@@ -111,36 +111,35 @@ These researcher degrees of freedom are both a blessing and a curse.
 
 They are a blessing because they afford us the opportunity to look at nature from different angles, which, in turn, allows us to make important discoveries and generate new hypothesis [e.g., @box1976science; @tukey1977exploratory; @de2014thought].
 They are a curse because idiosyncratic choices can lead to categorically different interpretations, which eventually find their way into the publication record where they are taken for granted [@simmons2011false].
-Recent projects have shown that the variability between different data analysts is vast.
-This variability can lead independent researchers to draw different conclusions about the same data set as demonstrated by several projects crowd-sourcing analysis strategies [e.g., @silberzahn2018many; @starns2019assessing; @botvinik2020variability].
-These projects, however, might still underestimate the extent to which analysts vary because data analysis is not merely restricted to statistical inference.
+Recent projects have shown that the variability between different data analysts is vast and can lead independent researchers to draw different conclusions from the same data set [e.g., @silberzahn2018many; @starns2019assessing; @botvinik2020variability].
+These studies, however, might still underestimate the extent to which analysts vary because data analysis is not merely restricted to statistical inference.
 Human behavior is complex and offers many ways to be translated into numbers.
 This is particularly true for fields that draw conclusions about human behavior and cognition from multidimensional data like audio or video data.
 In fields working on human speech production, for example, researchers need to make numerous decisions about what to measure and how to measure it.
 This is not trivial, given the temporal extension of the acoustic signal and its complex structural composition.
 Not only can decisions about measuring the signal influence downstream decisions about statistical modeling, but statistical results or modeling issues can also lead researchers to go back and revise earlier decisions about the measuring process itself.
 
-In this article, we investigate the variability in analytic choices when many analyst teams analyze the same speech production data, a process that involves both decisions regarding the operationalization of a complex observed signal and decisions regarding the statistical modeling.
+In this article, we will investigate the variability in analytic choices when many analyst teams analyze the same speech production data set, a process that involves both decisions regarding the operationalization of a complex  signal and decisions regarding the statistical analysis.
 <!-- TODO: include number of teams when known -->
-Specifically, we report the impact of the analytic pipeline on research results obtained by XX teams who gained access to the same set of acoustic recordings in order to answer the same research question.
+Specifically, we will report the impact of analytic decision on research results obtained by a minimum of 12 teams who will gain access to the same set of acoustic recordings in order to answer the same research question.
+<!-- TODO: check tense throughout, should be future tense -->
 
 ## Researcher degrees of freedom
 
 Data analysis comes with many decisions like how to measure a given phenomenon or behavior, what data to submit to statistical modeling and which to exclude in the final analysis, or what inferential decision procedure to apply.
-\highlight[id=JC, comment = {I'd probably drop this. When we make unspecified decisions during data analysis we can stumble upon spurious results (most likely) as well as real results (less likely, still possible)... in other words it might not all be error... the issue is that we won't know the difference}]{However, if these decisions} during data analysis are not specified in advance, we might stumble upon seemingly meaningful patterns in the data that are merely statistical flukes.\comment[id=TR]{But isn't the human bias the major issue in statistical misinterpretation? (It also leads naturally to the next paragraph.)}
 This can be problematic because humans show cognitive biases that can lead to erroneous inferences.
 Humans filter the world in irrational ways [e.g., @tversky1974judgment], seeing coherent patterns in randomness [@brugger2001], convincing themselves of the validity of prior expectations ["I knew it", @nickerson1998confirmation], and perceiving events as being plausible in hindsight ["I knew it all along", @fischhoff1975hindsight].
-\comment[id=JC]{If helpful we could also give a concrete common example here, like regarding forecasting the weather or something}
-\comment[id=TR]{Generally a good idea, but I'd say we keep it crisp at that point. The take-home here is: Humans are biased.}
 In connection with an academic incentive system that rewards certain discovery processes more than others [@sterling1959publication; @koole2012rewarding], we often find ourselves exploring many possible analytical pipelines, but only reporting a select few.
 This issue is particularly amplified in fields in which the raw data lend themselves to many possible ways to measure [@roettger2019researcher].
 Combined with a wide variety of methodological and theoretical traditions as well as varying levels of statistical training across subfields, the inherent flexibility of data analysis might lead to a vast plurality of analytic approaches that can lead to different scientific conclusions.
 Consequently, there might be many published papers that present overconfident interpretations of their data based on idiosyncratic analytic strategies [e.g., @simmons2011false; @gelman2014statistical].
 These interpretations are either associated with an unknown amount of uncertainty or lend themselves to alternative interpretation if analyzed differently.
 However, instead of being critically evaluated, scientific results often remain unchallenged in the publication record.
-Despite recent efforts to improve transparency and reproducibility (REFS) and freely available and accessible infrastructures such as provided by the Open Science Framework (osf.io, ADD), critical re-analyses of published analytic strategies are still not very common because data sharing remains rare [@wicherts2006poor].
+Despite recent efforts to improve transparency and reproducibility [e.g. miguel2014promoting; @klein2018practical] and freely available and accessible infrastructures such as provided by the Open Science Framework (osf.io), critical re-analyses of published analytic strategies are still not very common because data sharing remains rare [@wicherts2006poor].
 
-While this issue has been widely discussed both from a conceptual point of view [@simmons2011false; @wagenmakers2012agenda; @nosek2014method] and its application in individual scientific fields [e.g. Wichert et al. 2015, Charles et al. 2019, @roettger2019researcher], there are still many unknowns regarding the extent of analytical plurality in practice.
+While analytical flexibility has been widely discussed both from a conceptual point of view [@simmons2011false; @wagenmakers2012agenda; @nosek2014method] and its application in individual scientific fields [e.g. Wichert et al. 2015, Charles et al. 2019, @roettger2019researcher], there are still many unknowns regarding the extent of analytical plurality in practice.
+<!-- TODO: add refs for wichert et al. 2015, Charles et al. 2019 -->
+
 Recent collaborative attempts have started to shed light on how different analysts tackle the same data set and have revealed a large amount of variability.
 
 ## Crowdsourcing alternative analyses
@@ -152,26 +151,27 @@ Out of the 29 analytical strategies, there were 21 unique combinations of covari
 Importantly, the observed variability was neither predicted by the team's preconceptions about the phenomenon under investigation nor by peer ratings of the quality of their analyses.
 The authors results suggest that analytic plurality is a fact of life and not driven by different levels of expertise or bias.
 
-Similar crowd-sourced studies recruiting independent analyst teams showed similar results.
-Both @dutilh2019 ad @starns2019 investigated analysts choices when inferring theoretical constructs based on the same data set using computational models.
+Several other recent studies corroborated this analytical flexibility across different disciplines.
+Both @dutilh2019 ad @starns2019 investigated analysts' choices when inferring theoretical constructs based on the same data set using computational models.
 <!-- TODO: Parker et al. bib info -->
-Both studies reveal vastly different modeling strategies, even though scientific conclusions were similar across analysis teams [see also Parker et al. (accepted) on analytical flexibility in ecology and @botvinik-nezer2020 on neuroimaging data].
-@bastiaansen2020 crowdsourced clinical recommendations based on data analysis of an individual patient.
-Results suggests that analysis team differed substantially regarding decisions related to both the statistical analysis of the data set and the theoretical rationale behind interpreting the statistical results, indicating that there are multiple layers for degrees of freedom that interact with each other.
+Both studies revealed vastly different modeling strategies, even though scientific conclusions were similar across analysis teams [see also Parker et al. (accepted) on analytical flexibility in ecology and @botvinik-nezer2020 on neuroimaging data].
+@bastiaansen2020 crowdsourced clinical recommendations based on analyses of an individual patient.
+Results suggests that analysts differed substantially regarding decisions related to both the statistical analysis of the data and the theoretical rationale behind interpreting the statistical results.
 
-While these projects show a large degree of analytical flexibility with impactful consequences, they dealt with flexibility in inferential or computational modeling.
-In these studies the data sets were fixed and data collection or measurement could not be changed.\comment[id=JC]{any particular reason to favor data table over data set?}\comment[id=TR]{I think my reasoning was data set can be data table or raw data. Data table is the numerical derivation of the raw data. Maybe not a useful distinction?}
+While these studies attested a large degree of analytical flexibility with possibly impactful consequences, they only investigated analytical decisions related to inferential statistics or the architecture of computational models.
+In these studies the data sets were fixed and data collection or measurement could not be changed.
 
-However, in many fields the primary raw data are complex signals that need to be operationalized in light of the research question.
-This is especially true in the social sciences, where the subject of investigation corresponds to observable and unobservable human behavior.
+However, in many fields the primary raw data are complex signals that need to be operationalized relative to a theoretically motivated research question.
+This is especially true in the social sciences, where the phenomenon under investigation corresponds to both observable and unobservable human behavior.
 Decisions about how to measure a theoretical construct related to such behavior or its underlying cognitive processes might interact with downstream decisions about statistical modeling and vice versa.
-For example, @flake2020 discuss the cascading impact different practices can have on several components of psychometric research.
+For example, @flake2020 discuss the cascading impact that different practices can have on psychometric research.
 The authors highlight, among others, the following degrees of freedom in the choice and development of measures: definition of the theoretical construct, justification of the selected measure, description of the measure and of how it maps onto the construct, response coding and related transformations, and post-hoc modifications to the chosen measure.
 Taken together, these aspects alone exponentially increase the combinations of possible analytical choices, and hence flexibility in research outcomes.
 
 In those social sciences concerned with communication, human behaviour is sometimes measured as a complex visual or acoustic signal.
-This added complexity introduces further fork junctions in the research pipe-line, thus increasing yet again analytical flexibility.
-The present study looks at experimentally elicited speech data to understand how this flexibility manifests itself in a scenario where complex decision procedures are involved in the operationalization and measuring of complex signals.
+<!-- TODO: check BE vs. AE -->
+This added complexity introduces further fork junctions in the research pipe-line, and in turn further increases analytical flexibility.
+The present study looks at experimentally elicited speech production data in order to understand how this flexibility manifests itself in a scenario where complex decision procedures are involved in the operationalization and measuring of complex signals.
 
 ## Operationalizing speech {#s:operspeech}
 
@@ -185,19 +185,20 @@ Take for example the following sentence in (1).
 (1) "I can't bear another meeting on Zoom."
 
 Depending on the speaker's intention, this sentence can be said in different ways.
-If, for instance, the speaker is exhausted by all their meetings, the speaker might acoustically highlight the word *another* or *meeting*.
-If, on the other hand, the speaker is just tired of video conferences, they might acoustically highlight the word *Zoom*.
+If, for instance, the speaker is exhausted by all their meetings, the speaker might acoustically highlight the word *another* or *meeting* to contrast it with other, more pleasant activities.
+If, on the other hand, the speaker is just tired of video conferences, as opposed to say face-to-face meetings, they might acoustically highlight the word *Zoom*.
 
 If we decide to compare the speech signal associated with these two intentions, how can we quantify the difference between them?
 Given their physical manifestation (speech), what do we measure and how do we measure it?
 Because of the continuous and transient nature of speech, identifying speech parameters and temporal domains within which to measure those parameters becomes a non-trivial task.
-Utterances stretch over hundreds of milliseconds and contain several levels of linguistically relevant units such as phrases, words, syllables, and individual sounds.
+Utterances stretch over several thousand milliseconds and contain different levels of linguistically relevant units such as phrases, words, syllables, and individual sounds.
 The researcher is thus confronted with a considerable number of parameters and combinations thereof to choose from.
 
-Speech categories are inherently multidimensional and dynamic: they consist of a cluster of parameters that are modulated over time.
-The acoustic parameters of one category are usually asynchronous, i.e. they appear at different time points in the unfolding signal, and overlap with parameters of other categories [e.g., @jongman2000acoustic; @lisker1986voicing; Summerfield, 1984; @winter2014spoken].
+Speech categories are inherently multidimensional and dynamic: they consist of clusters of parameters that are modulated over time.
+The acoustic parameters of one category are usually asynchronous, i.e. they appear at different time points in the unfolding signal, and overlap with parameters of other categories [e.g. @jongman2000acoustic; @lisker1986voicing; Summerfield, 1984; @winter2014spoken].
+<!-- TODO: add summerfield ref-->
 A classical example is the distinction between voiced and voiceless stops in English (i.e. /b/ and /p/ in *bear* vs *pear*).
-This voiced/voiceless contrast is manifested by many acoustic features which can differ depending on several factors, such as position of the consonant in the word and surrounding sounds [@lisker1977rapid].
+This lexical contrast is manifested by many acoustic features which can differ depending on several factors, such as position of the consonant in the word and surrounding sounds [@lisker1977rapid].
 Furthermore, correlates of the contrast can even be found away from the consonant, in temporally distant speech units.
 For example, the initial /l/ of the English words *led* and *let* is affected by the voicing of the final consonant (/t, d/) [@hawkins2004influence].
 
@@ -219,7 +220,7 @@ For example, several decisions have to be made when comparing the two realizatio
 Do we compare only the word *another* in (2a) and (2b), or also the word *zoom*?
 Do we measure utterance-wide acoustic profiles, whole words, or just the stressed syllables?
 Do we average across the chosen time domain or do we measure a specific point in time?
-Do we measure fundamental frequency, intensity, something else?
+Do we measure fundamental frequency, intensity, or something else?
 
 When looking at phrase-level temporal domains, the number of possible analytical pipelines quickly explodes.
 This plurality of analytical paths is illustrated in Figure \@ref(fig:forkingPaths).
@@ -227,14 +228,14 @@ When comparing two utterance such as (2a) and (2b), there are many things to con
 Even if we have decided to compare fundamental frequency (f0) of only the word *another* across the two utterances, there are still many choices to be made, all of which need to be justified.
 For example, we could measure f0 at specific points in time like the onset of the window, the offset, or the midpoint.
 We could also measure the value or time of the minimum or maximum f0 value.
-We could summarise f0 across the entire window and extract the mean, median or standard deviation of f0.
+We could summarise f0 across the entire window and extract the mean, median or standard deviation of f0, all of which have been used to analyse speech data [see @gordon2017acoustic].
 And the garden of forking paths does not stop here.
 <!-- TODO: add examples of pitch tracking options -->
-In \highlight[id=SC, comment = {The figure text is quite small. Probably better to change to a longer rather then wider layout.}]{Figure} \@ref(fig:forkingPaths), we went with a specific option to automatically calculate f0, INSERT SOME EXAMPLES OF PITCH TRACKING OPTIONS.\comment{add examples of pitch tracking options}
+In \highlight[id=SC, comment = {The figure text is quite small. Probably better to change to a longer rather then wider layout.}][id=TR, comment = {Better now?}]{Figure} \@ref(fig:forkingPaths), we went with a specific option to automatically calculate f0, INSERT SOME EXAMPLES OF PITCH TRACKING OPTIONS.\comment{add examples of pitch tracking options}
 Moreover, knowing that the signals and the measures thereof can be noisy, we could smooth these using one algorithm and degree over others, or remove values that substantially deviate from surrounding values or expectations, either manually or automatically, and so on.
 
 <!-- FIGURE -->
-(ref:forkingPaths) Illustrations of the analytical flexibility associated with acoustic analyses. (A) an example of multiple possible and justifiable decisions when comparing to utterances; (B) waveform and fundamental frequency (f0) track of two instances of utterances 2a and 2b. The words "another is highlighted by the green box"; (C) spectrogram and f0 track of the word another, exemplifying different operationalizations of differences in pitch.
+(ref:forkingPaths) Illustrations of the analytical flexibility associated with acoustic analyses. (A) an example of multiple possible and justifiable decisions when comparing two utterances; (B) waveform and fundamental frequency (f0) track of two instances of utterances 2a and 2b. The words "another is highlighted by the green box"; (C) spectrogram and f0 track of the word another, exemplifying different operationalizations of differences in pitch.
 
 ```{r 'forkingPaths', echo=FALSE, fig.cap="(ref:forkingPaths)", out.width="100%"}
 knitr::include_graphics(here::here("figs", "ForkingPaths.png"))
@@ -242,15 +243,12 @@ knitr::include_graphics(here::here("figs", "ForkingPaths.png"))
 <!-- END:FIGURE -->
 
 These decisions are usually made prior to any statistical analysis, but are at times revised a posteriori (i.e. after data collection and/or preliminary analyses) in light of unforeseen or surprising outcomes.
-These myriads of possible decisions are exponentiated by researcher degrees of freedom related to statistical analysis [e.g. @wicherts2016].
-<!-- TODO: references to range of statistical models -->
-Even the analysis of a single measure can be approached via an ever-increasing range of different statistical models (\highlight{REFs}).
+These myriads of possible decisions are exponentiated by those researcher degrees of freedom related to statistical analysis [e.g. @wicherts2016].
+In sum, speech data are complex physical signals that constitutes an as of yet unappreciated amount of analytical flexibility when choosing measures and operationalizing underlying theoretical constructs.
 The present paper probes this garden of forking paths in the analysis of speech.
-To assess the variability in data analysis pipelines across independent researchers, we provided XX analytical teams with an experimentally elicited speech corpus and asked them to investigate acoustic differences related to a functional contrast that might be manifested across the whole utterance.\comment[id=SC]{This needs a smother transition.}
+To assess the variability in data analysis pipelines across independent researchers, we will provide analytical teams with an experimentally elicited speech production data set. The study aimed at investigating whether speakers acoustically modify utterances to signal unexpected referring expressions. In the following, we will shortly introduce the research question of the original study.
 
-## The data set: The acoustic properties of redundant modifiers
-
-The data set given to the analysis teams comes from a study that investigated whether speakers acoustically modify utterances to signal typicality of noun/adjective combinations in referring expressions such as  *a blue banana* (atypical) vs *a yellow banana* (typical).
+## The data set: The acoustic properties of atypical modifiers
 Referring is one of the most basic and prevalent uses of language and one of the most widely researched areas in language science.
 It is an open question how speakers choose a referring expression when they want to refer to a specific entity like a banana.
 The context within which an entity occurs (i.e., with other non-fruits, other fruits, or other bananas) plays a large part in determining the choice of referring expressions.
@@ -258,62 +256,65 @@ Generally, speakers aim to be as informative as possible to uniquely establish r
 Thus one would expect the use of a modifier, for example, only if it is necessary for disambiguation.
 For instance, one might use the adjective *yellow* to describe a banana in a situation in which there is a yellow and a less ripe green banana available, but not when there is only one banana to begin with.
 
-Despite this coherent idea that speakers are both rational and efficient, there is much evidence that speakers are often over-informative: Speakers use referring expressions that are more specific than strictly necessary for the unambiguous identification of the intended referent [@sedivy2003pragmatic; @westerbeek2015stored; @rubio2016redundant], which has been argued to facilitate object identification and making communication between speakers and listeners more efficient [@arts2011overspecification; @paraboni2007generating; @rubio2016redundant].
+Despite the coherent idea that speakers are both rational and efficient, there is much evidence that speakers are often over-informative: Speakers use referring expressions that are more specific than strictly necessary for the unambiguous identification of the intended referent [@sedivy2003pragmatic; @westerbeek2015stored; @rubio2016redundant], which has been argued to facilitate object identification and making communication between speakers and listeners more efficient [@arts2011overspecification; @paraboni2007generating; @rubio2016redundant].
 Recent findings suggest that the utility of a referring expression depends on how good it is for a listener (compared to other referring expressions) to identify a target object.
 For example, @degen2020redundancy showed that modifiers that are less typical for a given referent (e.g. a blue banana) are more likely to be used in an over-informative scenario (e.g. when there is just one banana).
 This account, however, has mainly focused on content selection [@gatt2013we], i.e. whether a certain referential expression is chosen or not, ignoring the fact that speech communication is much richer.
 
-Even looking at morphosyntactically identical expressions, speakers can modulate these via suprasegmental acoustic properties like temporal and spectral modifications of the segments involved [e.g., @ladd2008intonational].
+Even looking at morphosyntactically identical expressions, speakers can modulate utterances via suprasegmental acoustic properties like temporal and spectral modifications of the segments involved [e.g., @ladd2008intonational].
 Most prominently, languages use intonation to signal discourse relationships between referents (among other functions).
-Intonation marks discourse-relevant referents for being new or given information to guide the listeners’ interpretation of incoming messages.
-In many languages, speakers can use particular pitch movements to signal whether a referent has already been mentioned and is therefore referred back to, or a referent is newly introduced into the discourse.
-Many languages use intonation in order to signal if a referent is contrasting with one or more alternatives that are relevant to the current discourse.
-Content selection aside, in a scenario in which a speaker wants to refer to a banana when there is also a pear on the table, the speaker would most likely produce a high rising pitch accent on *banana* to indicate the contrastive nature of the noun.
-In a scenario in which the speaker wants to refer to a yellow banana when there is also a less ripe green banana on the table, the speaker would most likely produce a high rising pitch accent on *yellow* to indicate the contrastive nature of the modifier.
-In addition to a pitch accent, elements that are new and/or contrastive are often produced with additional suprasegmental prominence, i.e. segments are hyperarticulated, resulting in longer, louder and more clearly articulated acoustic targets.
+Intonation marks discourse-relevant referents for being new or given information to guide the listeners’ interpretation of incoming messages. 
+Beyond structuring information relative to the discourse, a few studies suggested that speakers might use intonation to signal atypical lexical combinations [e.g. dimitrova2008prosodic; dimitrova2009did]. 
+Referential expressions such as *blue banana* were produced with greater prosodic prominence than more typical referent such as *yellow banana*.
+If true, these findings are in line with the idea of resource-efficient, rational language users who modulate their speech in order to facilitate listeners' comprehension process.
+However, the original conclusions of above studies were based on small (n=10), unjustified sample sizes. 
+Moreover, the data is not available, and the statistical analysis uses anti-conservative co-variance structures, lending reasonable doubt on the original conclusions.
 
-To answer the question of whether speakers modify speech to signal atypical referents, thirty native German speakers were recorded in a speech production study while interacting with a confederate (one of the experimenters).
+<!-- QUESTION: ask people if they have ever heard of these papers? -->
+
+To further illuminate the question of whether speakers modify speech to signal atypical referents, we recorded thirty native German speakers interacting with a confederate (one of the experimenters) in a referential game.
 The participants had to verbally instruct the confederate to select a specified target object out of four object presented on a screen.
 The subject and confederate were seated at the opposite sides of a table, each facing one of two mirrored computer screens.
 The participant and the experimenter could not see each other nor each others' screens.
 After a familiarisation phase (see XXX), the subject first saw four colored objects in the top left, top right, bottom left, and bottom right corners of the screen.
+
+<!-- TODO: see XXX, what do we refer to here? -->
+
 One of the objects served as the target, another as the competitor, and the remaining two objects served as distractors.
 Objects were referred to using noun phrases consisting of an adjective modifier denoting color and a modified object (e.g. *Gelbe Zitrone* 'yellow lemon', *Rote Gurke* 'red cucumber', *Rote Socken* 'red socks').
+
+<!-- QUESTION: add pictures? -->
 
 In the center of the screen, a black cube was displayed, which could be moved by the experimenter.
 The participant would read a sentence prompt out loud (*Du sollst den Würfel auf der <COLOR OBJECT> ablegen* 'You have to put the cube on top of the <COLOR OBJECT>') to instruct the experimenter to drag the cube on top of one of the four depicted objects (the *competitor*) using the mouse.
 After the experimenter had moved the cube as instructed, the subject would read another sentence prompt (*Und jetzt sollst du den Würfel auf der <COLOR OBJECT> ablegen* 'And now, you have to put the cube on top of the <COLOR OBJECT>') instructing the experimenter to move the cube on top of a different object (the *target*).
-The audio of this second utterance in the trial was recorded.
+The second utterance in the trial was the critical trial for analysis.
 
 The two sentence prompts were used to create a focus contrast between the competitor and the target object.
-If the competitor and target objects differed but their color did not (e.g. *yellow banana* vs *yellow tomato*), the noun was in focus (the Noun Focus condition, NF).
-If the the objects were the same object but differed in color (e.g. *yellow banana* vs *blue banana*), the color adjective was discourse-pragmatically focused (the Adjective Focus condition, AF).
-If both the color and the object differed (e.g. *yellow banana* vs *blue tomato*), the whole noun phrase was in focus (the Adjective/Noun Focus condition, ANF).
+If the competitor and target objects differed but their color did not (e.g. *yellow banana* vs *yellow tomato*), the noun was discourse-pragmatically focused (the Noun Focus condition, NF).
+If the objects were the same but differed in color (e.g. *yellow banana* vs *blue banana*), the color adjective was discourse-pragmatically focused (the Adjective Focus condition, AF).
+If both the color and the object differed (e.g. *yellow banana* vs *blue tomato*), the whole noun phrase was discourse-pragmatically focused (the Adjective/Noun Focus condition, ANF).
 The NF condition constituted the experimentally relevant condition, while the AF and ANF conditions acted as fillers.
 The color-object combinations in the Noun Focus (NF) condition were manipulated with respect to their typicality.
-The combinations were either typical (e.g. *Orangene Mandarine* 'orange mandarin'), medium typical (e.g. *Grüne Tomate* 'green tomato'), or atypical (e.g. *Gelbe Kirsche* 'yellow cherry').
-The typicality rating of each color-object combination was established, prior to the production experiment, with a norming study (see Appendix XXX for details).
+The combinations were either typical (e.g. *orange mandarin*), medium typical (e.g. *greem tomato* ), or atypical (e.g. *yellow cherry*), as established by a norming study that was conducted prior to the production experiment (see Appendix XXX for details).
 
-Each participant went through 15 NF trials, 10 AF and 10 ANF trials.
-Each trial was repeated twice, yielding a total of 70 trials ($(15 \times 10 \times 10) \times 2$) per participant and a grand-total of 2100 observations ($70 \times 30$ participants), of which 900 ($15 \times 2 \times 30$ participants) were the experimentally relevant trials.
-The recordings of the second sentence prompt of each trial make up the speech data set given to the analysis teams.
-The teams were asked to answer the same questions as the study that generated the data set: *Do speakers acoustically modify utterances to signal atypical word combinations in referring expressions?*
+<!-- TODO: Appendix and stuff -->
+
+Each participant responded to 15 critical trials (NF condition).
+Each trial was repeated twice, yielding a total of 30 trials per participant and a grand-total 900 ($15 \times 2 \times 30$ participants) spoken utterances.
+All analysis teams will be given access to the entire data set and will be instructed to answer the following research question: *Do speakers acoustically modify utterances to signal atypical word combinations in referring expressions?*
 \comment[id=SC]{Need transition here.}
 
-## Research questions
-
-The present study examines the extent to which subjective choices by different researchers analyzing the same speech data set affect the reported results.
-As outlined in Section \@ref(s:operspeech), researchers are faced with a large set of analytical choices when investigating a multidimensional signal such as speech.
-Not only must they choose appropriate statistical models and inferential criteria, but also identify relevant measures and their operationalisation and transformation, and the temporal domain(s) from within which these measures are to be taken.
-\highlight[id=SC, comment={I need help completing this sentence...}]{The ... makes up the ideal testing ground for ...}
+# Methods
+As outlined in Section \@ref(s:operspeech), researchers are faced with a large amount of analytical choices when analyzing a multidimensional signal such as speech.
+Analyst must identify relevant measurements as well as temporal domain(s) from within which these measures are to be taken, operationalize and possibly transform those measures, before submitting them to statistical models, which have to be chosen alongside inferential criteria.
+The complexity of speech data constitutes the ideal testing ground to assess the upper bound of analytical flexibility that social science might face across disciplines.
 We will take on a meta-analytical approach to assess (i) the variability of the reported effects, and (ii) and how analytical and demographic factors affect the researchers' final results.
 
-# Methods
+<!-- QUESTION: wanna meditate over the term demographic-->
 
-We are closely following the methodology proposed by Parker et al. (Stage 1 in-principle accepted) in terms of data collection.
-However, the analysis will substantially diverge from their approach (see §#.#)
-
-This project involves the following five phases:
+We are closely following the data collection procedure proposed by Parker et al. (Stage 1 in-principle accepted).
+The project involves the following five phases:
 
 1. \textsc{Recruitment}: We will recruit independent groups of researchers to analyze the data.
 2. \textsc{Team Analysis}: We will give researchers access to the speech corpus and let them analyze the data as they see fit.
@@ -329,40 +330,45 @@ The factor most likely to delay our time line is the rate of completion of the o
 
 <!-- TODO: add materials link and mailing lists -->
 The initiating authors (SC, JC, TR) created an online landing page providing a general description of the project (LINK) and a short pre-recorded slide show that summarizes the study and research question (LINK).
-The project will be advertised via social media, using mailing lists for linguistic and psychological societies (full scope of these lists is not fixed but will include \highlight{LIST OF LISTS}, and via word of mouth.
-The target population is active speech science researchers with a graduate/doctoral degree (or currently studying for a graduate/doctoral degree) in a relevant discipline.
+The project will be advertised via social media, using mailing lists for linguistic and psychological societies, and via word of mouth.
+The target population comprises active speech science researchers with a graduate/doctoral degree (or currently studying for a graduate/doctoral degree) in relevant disciplines.
 Researchers can choose to work independently or in a small team.
 For the sake of simplicity, we will refer to single researcher or small teams as "analysis teams".
 
 Recruitment for this project is ongoing but we aim for a minimum of 12 analysis teams independently evaluating each data set (see sample size justification below).
+
+<!-- QUESTION: How to frame this sentence. It is not ongoing. Alternatively: "Recruitment for this project will commence as soon as the present Registered Report is in-principle accepted.-->
+
 We will simultaneously recruit volunteers to peer-review the analyses conducted by the other volunteers through the same channels.
 Our goal is to recruit a similar number of peer-reviewers and analysts, and to ask each peer reviewer to review a minimum of four analyses.
 If we are unable to recruit at least half the number of reviewers as analysis teams, we will ask analysts to serve also as reviewers (after they have completed their analyses).
 All analysts and reviewers will share co-authorship on this manuscript and will participate in the collaborative process of producing the final manuscript.
 <!-- TODO: add link to informed consent form -->
 All analysts will sign a consent (ethics) document (LINK).
+<!-- TODO: add information about what this consent form does -->
 
 <!-- TODO: add citation to ECO RR -->
-To identify the minimal sample size, we followed the method in \highlight{[ECO RR]}.
+To identify the minimal sample size, we followed the method in Parker et al. \highlight{[ECO RR]}.
 The aim of the meta-analysis is to obtain an estimate of heterogeneity of the effect sizes reported by the analysis teams ($\tau^2$, i.e. the variance $\sigma^2_{\alpha_{\text{t}}}$, see \Cref{s:meta-est}).
-Ideally, the 95% credible interval (CrI) of $\tau^2$ should not include 0 (i.e. the probability $p$ that the 95% CrI contains 0 should be less than 0.05).
+In short, the minimal sample size is considered the number of analysis teams needed to allow an estimation of heterogeneity. 
+We consider a posterior distribution of $\tau^2$, for which the 95% credible interval (CrI) does not include 0 as sufficient (i.e. the probability $p$ that the 95% CrI contains 0 should be less than 0.05).
+<!-- QUESTION: the sentence in brackets looks wrong, this would be true for confidence intervals right? -->
 The probability $p$ that a CrI interval does not include 0 is obtained via the *t*-statistics:
 
 $$t = \frac{\tau^2}{SE(\tau^2)}$$
 
-Assuming that the underlying distribution of effect sizes is normal [@knight2000], the standard error of $\tau^2$ can be calculated with the formula:
+Assuming that the underlying distribution of effect sizes is normal [@knight2000], the standard error of $\tau^2$ can be calculated with the following formula:
 
 $$SE(\tau^2) = \sqrt{\frac{2\tau^4}{(n-1)}}$$
 
 where $n$ is the sample size.
 Since we know $p$ and $\tau^2$, we can calculate $n$ such that $p < 0.05$.
-Plugging $SE(\tau^2)$ into the formula of the *t*-statistics shows that, when $n$ is fixed, *t* (and hence $p$) will be the same regardless of $\tau^2$:
+Inserting $SE(\tau^2)$ into the formula of the *t*-statistics shows that, when $n$ is fixed, *t* (and hence $p$) will be the same regardless of $\tau^2$:
 
 $$t = \frac{\tau^2}{SE(\tau^2)} = \frac{\tau^2}{\sqrt{\frac{2\tau^4}{(n-1)}}} = \sqrt{\frac{(n-1)}{2}}$$
 
 In other words, the minimum sample size $n$ needed to exclude 0 from the 95% CrI of $\tau^2$ is invariant regardless of the estimate of heterogeneity $\tau^2$.
-When $n = 12$ then $t_{(12-1)} = t_{(11)} = 2.3452$ and $p = 0.0388$, which is below the 0.05 threshold, as required.
-In sum, a minimal sample of 12 effect sizes (i.e. of 12 analysis teams) would thus be sufficient to exclude 0 from the 95% CrI of $\tau^2$.
+When $n = 12$ then $t_{(12-1)} = t_{(11)} = 2.3452$ and $p = 0.0388$, which we consider sufficiently unlikely.
 
 ```{r t, eval=FALSE, include=FALSE}
 n = 12
@@ -370,6 +376,8 @@ df = n - 1
 t <- sqrt((df)/2)
 pt(t, df, lower.tail = F) * 2
 ```
+
+<!-- QUESTION: Should we double check that with some folks? -->
 
 ## Phase 2: Primary Data Analyses
 
