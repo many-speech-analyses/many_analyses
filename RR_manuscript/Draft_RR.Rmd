@@ -384,29 +384,28 @@ pt(t, df, lower.tail = F) * 2
 <!-- TODO: add link to demo survey -->
 The analysis teams will register and answer a demographic and expertise survey (LINK).
 The survey collects information on the analysts current position and self-estimated breadth and level of statistical expertise.
+<!-- QUESTION: should the survey ask for expertise in their acoustic skills? -->
 We will then provide teams with the acoustic data set and request that they answer the following research question:
+<!-- TODO: Link dataset here -->
 
 Do speakers acoustically modify utterances to signal atypical word combinations?
 
 <!-- TODO: add link to analytical survey -->
-Once their analysis is complete, they will answer a structured survey (LINK), providing analysis technique, explanations of their analytical choices, quantitative results, and a statement describing their conclusions.
+Once their analysis is complete, they will answer a structured survey (LINK), providing information about their analysis technique, an explanations of their analytical choices, their quantitative results, and a statement describing their conclusions.
 They will also upload their analysis files (including the additionally derived data and text files that were used to extract and pre-process the acoustic data), their analysis code (if applicable), and a detailed journal-ready statistical methods section.
 
-## Phase 3: Peer Reviews of Analyses
+## Phase 3: Peer Review of Analyses
 
-At a minimum, each analysis will be evaluated by four different reviewers, and each volunteer peer-reviewer will be randomly assigned to methods sections from at least four analyst teams (the exact number will depend on the number of analysis teams and peer reviewers recruited).
+At a minimum, each analysis will be evaluated by four different reviewers, and each volunteer peer-reviewer will be randomly assigned to analyses from at least four analyst teams (the exact number will depend on the number of analysis teams and peer reviewers recruited).
 Each peer reviewer will register and answer a demographic and expertise survey identical to that asked of the analysts.
 Reviewers will evaluate the methods of each of their assigned analyses one at a time in a sequence determined by the initiating authors.
 The sequences will be systematically assigned so that, if possible, each analysis is allocated to each position in the sequence for at least one reviewer.
-For instance, if each reviewer is assigned four analyses to review, then each analysis will be the first analysis assigned to at least one reviewer, the second analysis assigned to another reviewer, the third analysis assigned to yet another reviewer, and the fourth analysis assigned to a fourth reviewer.
-Balancing the order in which reviewers see the analyses controls for order effects, e.g. a reviewer might be less critical of the first methods section they read than the last.
 
 The process for a single reviewer will be as follows.
 First, the reviewer will receive a description of the methods of a single analysis.
 This will include the narrative methods section, the analysis team’s answers to our survey questions regarding their methods, including analysis code and the data set.
 <!-- TODO: add link to peer review survey -->
-The reviewer will then be asked in an online survey (LINK) to rate both the acoustic and the statistical analyses and to provide an overall rating, using a scale of 0-100.
-<!-- TR:Need flow chart here-->
+The reviewer will then be asked in an online survey (LINK) to rate both the acoustic and the statistical analyses and to provide an overall rating, using a scale of 0-100, respectively.
 To help reviewers calibrate their rating, they will be given the following guidelines:
 
 * 100. A perfect analysis with no conceivable improvements from the reviewer.
@@ -422,20 +421,22 @@ This same sequence will be followed until all analyses allocated to a given revi
 After providing the final review, the reviewer will be simultaneously presented with all four (or more) methods sections that the reviewer has just completed reviewing, the option to revise their original ratings, and a text box to provide for an explanation.
 
 
-## Phase 4: Evaluate variation
+## Phase 4: Evaluating variation
 
 Th initiating authors (SC, JC, TR) will conduct the analyses outlined in this section.
 
 ### Descriptive statistics
 
 We will calculate summary statistics describing variation among analyses, including (a) the nature and number of acoustic measures (e.g. f0 or duration), (b) the operationalization and the temporal domain of measurement (e.g. mean of an interval or value at specified point in time), (c) the nature and number of model parameters for both fixed and random effects [if applicable], (d) the nature and reasoning behind inferential assessments (e.g. dichotomous decision based on *p*-values, ordinal decision based on Bayes factor), as well as the (e) mean, (f) standard deviation and (g) range of the reported effect sizes.
+<!-- QUESTION: range of the standardized effect sizes, right? -->
 
 ### Meta-analytical estimation {#s:meta-est}
 
 To summarize the variability in reported effect sized, we will follow Bayesian random-effects meta-analytical \highlight[id=SC, comment={It would be good to decide on a clear terminology to refer to the individual original models, the individual models that we run (to refit the original models), and the meta-analytical model}]{techniques}.
 Based on the common practices currently in place within the field, we anticipate that researchers will use multi-level/hierarchical/random-effects regression models, so that common effect size measures such as Cohen's $d$ would be inappropriate.
-Since the variables used by the analysis teams might substantially differ in their measurement scales (e.g, Hz for frequency vs ms for duration), we will standardize all reported effects by refitting each reported model with centered and scaled continuous variables (*z*-scores, i.e. the observed values subtracted from the mean divided by the standard deviation) and sum-coded factor variables.
+Since the variables used by the analysis teams might substantially differ in their measurement scales (e.g, Herz for frequency vs milliseconds for duration), we will standardize all reported effects by refitting each reported model with centered and scaled continuous variables (*z*-scores, i.e. the observed values subtracted from the mean divided by the standard deviation) and sum-coded factor variables.
 \highlight[id=SC, comment = {Is this sentence good?}]{Factor-level ordering} for each factor variable will be decided on a model-by-model basis, depending on which levels were compared by the team.
+<!-- TR: don't know what you mean tbh -->
 Each standardized (refitted) model will be fitted as a Bayesian regression model with Stan [@stan2021], RStan [@stan2020a], and brms [@burkner2017] in R [@R-base].
 For those reported models that were originally fitted within a frequentist approach, uniform distributions will be used as the priors of all parameters (with the restriction that only positive numbers will be included for scale parameters), making the standardized models in fact equivalent to the reported frequentist models.
 If a team has fitted Bayesian models, the same priors as reported by the team will be used in fitting the respective standardized model.
@@ -443,17 +444,17 @@ If a team has fitted Bayesian models, the same priors as reported by the team wi
 The estimated coefficients of the critical predictors (i.e. critical according to the analysis teams' self-reported inferential criteria), as obtained from the standardized models, will be used as the standardized effect size ($\eta_i$) of each reported model.
 If multiple predictors within a single analysis have been reported as critical, each will be included in the meta-analytical model (described in details in the next paragraph).
 Moreover, to account for the differing degree of uncertainty around each standardized effect size, we will use the standard deviation of each effect size returned by the standardized models as the standard error ($\text{se}_i$) of the effect size.
-This will enable us to fit a so-called "measurement-error" model, in which both the standardized effect sizes and their respective standard errors are entered in the the meta-analytical model.
+This will enable us to fit a so-called "measurement-error" model, in which both the standardized effect sizes and their respective standard errors are entered in the meta-analytical model.
 As a desired consequence, effect sizes with a greater standard error will be weighted less than those with a smaller standard error in the meta-analytical calculations.
 
-After having obtained the standardized effect sizes $\eta_i$ with related standard errors $\text{se}_i$, for each critical predictor of the individual reported analyses, the initiating authors will fit a Bayesian random-effects meta-analysis using a multilevel (intercept-only) regression model, as described in the following.
+After having obtained the standardized effect sizes $\eta_i$ with related standard errors $\text{se}_i$, for each critical predictor of the individual reported analyses, we will fit a Bayesian random-effects meta-analysis using a multilevel (intercept-only) regression model, as described in the following.
 The outcome variable will be the set of standardized effect sizes $\eta_i$.
 The likelihood of $\eta_i$ is assumed to correspond to a normal distribution [@knight2000].
 The analysis teams will be entered as a group-level effect (i.e., random effect, `(1 | team)`).
 The standard errors $\text{se}_i$ will be included as the standard deviation $\sigma_i$ of $\eta_i$ to fit a measurement-error model, as discussed above.
 We will use regularizing weakly-informative priors for the intercept $\alpha$ ($Normal(0, 1)$) and for the group-level standard deviation $\alpha_{\text{t}[i]}$ ($HalfCauchy(0, 1)$).
 We will fit this model with 4 chains of Hamiltonian Monte-Carlo sampling for the estimation of the joint posterior distribution, using the No U-Turn Sampler (NUTS) as implemented in Stan [@stan2021], and 4000 iterations (2000 for warm-up) per chain, distributed across 4 processing cores.
-\highlight[id=SC, comment = {This ok?}]{In case of issues from divergent transitions} in the sampling, we will increase `adapt_delta`, `tree_depth`, and the number of iterations in this order until there are no divergent transitions.
+In case of divergent transitions, we will increase `adapt_delta`, `tree_depth`, and the number of iterations in this order until there we obtain a model fit with no divergent transitions.
 The analysis will be conducted in R [@R-base] and fit using Stan [@stan2021], RStan [@stan2020a], and brms [@burkner2017].
 <!-- TODO: add link to code of the meta-analytical model -->
 The code used to run the model can be found here: INSERT LINK.
@@ -473,14 +474,15 @@ By default, the standard errors replace the parameter sigma. To model
 sigma in addition to the known standard errors, set argument sigma in
 function se to TRUE, for instance, yi | se(sei, sigma = TRUE) ~ 1. -->
 
-The posterior probability of the population-level intercept $\alpha$ will give us an estimate of the range of probable values of the standardized effect size $\hat{\eta}$.
-This posterior probability will also form the basis \highlight[id=SC, comment = {A lot of "of"s...}]{of} the investigation of the effect of a set of analytical and demographic factors, detailed in Section \@ref(ana-factors).
-Crucially, the posterior probability of $\sigma_{\alpha_{\text{t}}}$ (the standard deviation of the the group-level effect of team) will allow us to quantify the degree of variation between teams on a standardized scale.
+The posterior probability of the population-level intercept $\alpha$ will allow us to estimate the range of probable values of the standardized effect size $\hat{\eta}$.
+The posterior probability will further allow us to investigate the effect of a set of analytical and demographic predictors, detailed in Section \@ref(ana-factors).
+Crucially, the posterior probability of $\sigma_{\alpha_{\text{t}}}$ (the standard deviation of the group-level effect of team) will allow us to quantify the degree of variation between teams on a standardized scale.
 
 Finally, we will assess whether the standardized effect sizes show bias, and, if so, whether the bias is positive or negative (i.e., whether there is a disproportional greater number of bigger or smaller effect sizes than the meta-analytical mean estimate).
 This will be achieved through inspection of funnel plots [@light1984; for a review see @egger1997; and @sterne2005; for a critique @lau2006].
 In brief, a funnel plot is a scatter plot of each standardized effect size with effect size on the *x*-axis and estimated error (i.e. standard deviation) on *y*-axis.
 In absence of bias, the points should be symmetrically distributed around the meta-analytical mean (see Figure \@ref(fig:funnel-plot)).
+<!-- QUESTION: do we need the plot? Since there is no crisp operationalization of what we call publication bias and what we call unbiased, I wonder whether we could get rid of the plots -->
 A sign of possible bias is when there are more points which are farther from the meta-analytical mean on just one side.
 
 ```{r funnel-plot, include=TRUE, fig.cap="Illustrations of funnel plots showing (a) no bias, (b) positive bias, and (c) negative bias in effect sizes. The vertical dashed line represents the meta-analytical mean.", fig.dim = c(6, 2)}
@@ -546,8 +548,8 @@ estimated_tbl %>%
   scale_y_reverse()
 ```
 
-### Analytical and demographic factors affecting effect sizes {#ana-factors}
-
+### Analytical and demographic predictors affecting effect sizes {#ana-factors}
+<!-- TR: I think we should use the term predictors. Factors is really ambiguous -->
 As a second step, we will investigate (a) the extent to which the individual standardized effect sizes are affected by a series of predictors related to analytical and demographic factors (see below); and (b) the extent to which deviations from the meta-analytical mean by the individual standardized effect sizes relate to those same predictors.
 We will fit two Bayesian regression models, one for (a) and one for (b).
 <!-- TODO: check if stand. effect sizes and deviations are equivalent. -->
@@ -555,7 +557,7 @@ with each team's group-level coefficient $\alpha_{\text{t}[i]}$ as the outcome v
 The coefficient $\alpha_{\text{t}[i]}$ can be interpreted as the deviation score of the team's $\eta_i$ from the meta-analytical mean, allowing us to determine potential effects of analytical and demographic factors on how the teams deviate from the meta-analytical mean.
 Since each $\alpha_{\text{t}[i]}$ comes with uncertainty, quantified by its standard deviation $\sigma_{\alpha_{\text{t}[i]}}$, we will fit a measurement-error model, as we did in the meta-analytical model above.
 
-A normal distribution will be used as the likelihood of $\alpha_{t[i]}$.
+A normal distribution will be used as the likelihood function of $\alpha_{t[i]}$.
 The mean of $\alpha_{t[i]}$ is modelled on the basis of the overall intercept $\beta$ and on the coefficients $\upsilon_n$ of each predictor.
 The numeric predictors will be centered and scaled and the categorical predictors will be sum coded.
 As the prior for $i$ and $\upsilon$ we will use a normal distribution with mean 0 and standard deviation 1.
@@ -563,7 +565,7 @@ As the prior for $i$ and $\upsilon$ we will use a normal distribution with mean 
 
 <!-- TODO: add brm info on factors analysis model -->
 
-**Analytical factors**. We will model the effect of the following predictors related to the analytical characteristics of each team's reported analysis:
+**Analytical factors**. We will estimate the influence of the following predictors related to the analytical characteristics of each team's reported analysis:
 
 - *Measure of uniqueness* [numeric] of individual analyses for the set of predictors in each model ($uniq_i$).
 - *Measure of conservativeness* [numeric] of the model specification, as the number of random/group-level effects included ($cons_i$).
@@ -572,12 +574,14 @@ As the prior for $i$ and $\upsilon$ we will use a normal distribution with mean 
 - *Major dimension* [categorical] that has been measured to answer the research question ($mdim_i$).
 - *Temporal window* [categorical] that the measurement is taken over ($twin_i$).
 - *Data exclusion*, [categorical] whether data has been excluded or not ($excl_i$).
+<!-- QUESTION: this is a little weird to me. Binary for data exclusion or not.-->
 - *Average peer-review rating* [numeric], as the mean of the peer-review ratings for each analysis.
+<!-- QUESTION: Just overall? or do we feed in the scales for stats vs. acoustics?-->
 
-The measure of uniqueness of predictors will be assessed by the Sørensen-Dice Index [SDI, @dice1945; @sorensen1948].
+Following Parker et al. (in principle accepted), the measure of uniqueness of predictors will be assessed by the Sørensen-Dice Index [SDI, @dice1945; @sorensen1948].
 The SDI is an index typically used in ecology research to compare species composition across sites.
 For our purposes, we will treat predictors as species and individual analyses as sites.
-For each pair of analyses $(X, Y)$, the SDI will be obtained using the following \highlight[id=SC, comment={refactored the formula so it is closer to the original source}]{formula}:
+For each pair of analyses $(X, Y)$, the SDI will be obtained using the following formula:
 
 $$\text{SDI} = \frac{2|X \cap Y|}{|X|+|Y|}$$
 
@@ -592,25 +596,26 @@ y <- c("b", "d", "e", "f")
 
 In order to generate a unique SDI for each analysis team, we will calculate the average of all pairwise SDIs for all pairs of analyses using the `beta.pair()` function in the betapart R package [@baselga2020].
 
-The major measurement dimension of each analysis will be categorized according to the following possible groups: *duration*, *amplitude*, *fundamental frequency*, *other spectral properties* (e.g. frequency center of gravity, harmonics difference, etc.), *other measures* (e.g. principal components, vowel dispersion, etc.)\comment[id=TR]{Stefano, do you think these four will cover possible ways to measure? We might want to define them too? dunno}\comment[id=SC]{I just added a "other measures" category for other things that are not strictly acoustic.}
+The major measurement dimension of each analysis will be categorized according to the following possible groups: *duration*, *amplitude*, *fundamental frequency*, *other spectral properties* (e.g. frequency, center of gravity, harmonics difference, etc.), *other measures* (e.g. principal components, vowel dispersion, etc.).
 The temporal window that the measurement is taken over is defined by the target linguistic unit.
 We assume the following relevant linguistic units: *segment*, *syllable*, *word*, *phrase*.
 Since each analysis will receive more than one peer-review rating, we will calculate the mean rating and its standard deviation for each.
-These will be entered in the model formula with a measurement-error term (`me(mean, sd)` in brms).
+These will be entered in the model formula as a measurement-error term (`me(mean, sd)` in brms).
 
 <!-- TODO: explain how the demographic factors will be entered in the factors analysis -->
 
 **Demographic factors**. We will include the following demographic factors about the teams:
+<!-- QUESTION: Would like to discuss the term demographic here-->
 
-- *Research experience* [numeric] as the elapsed time from PhD award. Negative values will indicate that the person is a student or graduate studens ($rexp_i$).
+- *Research experience* [numeric] as the elapsed time from receiving the PhD. Negative values will indicate that the person is a student or graduate studens ($rexp_i$).
 - *Initial belief* [numeric] in the presence of an effect of atypical noun-adjective pairs on acoustics, as answered during the intake questionnaire ($belf_i$).
 
-We will publicly archive all relevant data, code, and materials on the Open Science Framework (<https://osf.io/3bmcp/>).
+### Data managment {#ana-archive}
+All relevantdata, code, and materials will be publicly archived on the Open Science Framework (<https://osf.io/3bmcp/>).
 Archived data will include the original data sets distributed to all analysts, any edited versions of the data analyzed by individual groups, and the data we analyze with our meta-analyses, which include the effect sizes derived from separate analyses, the statistics describing variation in model structure among analysis teams, and the anonymized answers to our surveys of analysts and peer reviewers.
 Similarly, we will archive both the analysis code used for each individual analysis and the code from our meta-analyses.
 We will also archive copies of our survey instruments from analysts and peer reviewers.
 
-Our rules for excluding data from our study are as follows.
 We will exclude from our synthesis any individual analysis submitted after we have completed peer review or those unaccompanied by analysis files that allow us to understand what the analysts did.
 We will also exclude any individual analysis that does not produce an outcome that can be interpreted as an answer to our primary question.
 
