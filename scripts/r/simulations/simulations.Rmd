@@ -1,11 +1,13 @@
 ---
-title: "Perspective simulation"
+title: "Prospective simulation"
 date: "`r Sys.Date()`"
 output:
   rmdformats::downcute:
     toc_depth: 3
     number_sections: yes
     use_bookdown: yes
+bibliography: "`r here::here('./RR_manuscript/other_refs.bib')`"
+cls: unified-style-sheet-for-linguistics.csl
 ---
 
 
@@ -27,9 +29,15 @@ my_seed <- 115116106
 # Simulate data
 
 We first simulate a dataset (`eta_tbl`) of standardised effect sizes.
-Each team ($n = 12$) contributes a standardized effect size $\eta_i$, with respective standard error $\text{se}_i$.
+Each team ($n = 12$) contributes one standardized effect size $\eta_i$, with respective standard error $\text{se}_i$.
 
-### Helper functions
+## Helper functions
+
+Let's create helper functions:
+
+* `at_least()` ensures that there is at least a `1` when sampling for predictors (= there must be at least one predictor in the model).
+
+* `sdi_mean()` calculates the mean SDI for the pop-level and group-level predictions.
 
 ```{r helpers}
 at_least <- function(x) {
@@ -47,9 +55,10 @@ sdi_mean <- function(preds) {
 ```
 
 
-### Tibble
+## Tibble
 
 The $\eta_i$ is randomly sampled from a $Normal(1, 0.5)$ distribution, while $\text{se}_i$ from a $HalfCauchy(0, 0.15)$.
+See comments in code for the other variables.
 
 ```{r sim-data}
 set.seed(my_seed)
@@ -86,6 +95,8 @@ exp <- replicate(n, sample(-3:20, sample(1:10, 1), replace = T))
 belf <- lapply(lengths(exp), function(.x) rbinom(.x, 1, 0.5))
 ```
 
+We can now put the tibble together.
+
 ```{r eta-tbl}
 # put together in a tibble
 eta_tbl <- tibble(
@@ -114,20 +125,36 @@ eta_tbl <- tibble(
   belf_sd = unlist(map(belf, sd))
 ) %>%
   mutate(
-  # need the following in cases where score = 0
-  rating_mean = ifelse(rating_mean == 0, 0.01, rating_mean),
-  exp_mean = ifelse(exp_mean == 0, 0.01, exp_mean),
-  belf_mean = ifelse(belf_mean == 0, 0.01, belf_mean),
-  # need the following in cases where there only one person in the team
-  rating_sd = ifelse(is.na(rating_sd) | rating_sd == 0, 0.01, rating_sd),
-  exp_sd = ifelse(is.na(exp_sd) | exp_sd == 0, 0.01, exp_sd),
-  belf_sd = ifelse(is.na(belf_sd) | belf_sd == 0, 0.01, belf_sd)
-)
+    # need the following in cases where score = 0
+    rating_mean = ifelse(rating_mean == 0, 0.01, rating_mean),
+    exp_mean = ifelse(exp_mean == 0, 0.01, exp_mean),
+    belf_mean = ifelse(belf_mean == 0, 0.01, belf_mean),
+    # need the following in cases where there is only one person in the team
+    rating_sd = ifelse(is.na(rating_sd) | rating_sd == 0, 0.01, rating_sd),
+    exp_sd = ifelse(is.na(exp_sd) | exp_sd == 0, 0.01, exp_sd),
+    belf_sd = ifelse(is.na(belf_sd) | belf_sd == 0, 0.01, belf_sd)
+  )
 ```
 
 # Meta-analytical model
 
+**See paper for more details.**
+
+To summarize the variability in reported effect sized, we will follow Bayesian random-effects meta-analytical techniques.
+Since the variables used by the analysis teams might substantially differ in their measurement scales (e.g, Hz for frequency vs ms for duration), we will standardize all reported effects by refitting each reported model with centered and scaled continuous variables (*z*-scores, i.e. the observed values subtracted from the mean divided by the standard deviation) and sum-coded factor variables.
+
 ## Model formula
+
+The estimated coefficients of the critical predictors (i.e. critical according to the analysis teams' self-reported inferential criteria), as obtained from the standardized models, will be used as the standardized effect size ($\eta_i$) of each reported model.
+If multiple predictors within a single analysis have been reported as critical, each will be included in the meta-analytical model (described in details in the next paragraph).
+Moreover, to account for the differing degree of uncertainty around each standardized effect size, we will use the standard deviation of each effect size returned by the standardized models as the standard error ($\text{se}_i$) of the effect size.
+
+After having obtained the standardized effect sizes $\eta_i$ with related standard errors $\text{se}_i$, for each critical predictor of the individual reported analyses, the initiating authors will fit a Bayesian random-effects meta-analysis using a multilevel (intercept-only) regression model, as described in the following.
+The outcome variable will be the set of standardized effect sizes $\eta_i$.
+The likelihood of $\eta_i$ is assumed to correspond to a normal distribution [@knight2000].
+The analysis teams will be entered as a group-level effect (i.e., random effect, `(1 | team)`).
+The standard errors $\text{se}_i$ will be included as the standard deviation $\sigma_i$ of $\eta_i$ to fit a measurement-error model, as discussed above.
+We will use regularizing weakly-informative priors for the intercept $\alpha$ ($Normal(0, 1)$) and for the group-level standard deviation $\alpha_{\text{t}[i]}$ ($HalfCauchy(0, 1)$).
 
 $$
 \begin{aligned}
@@ -141,7 +168,7 @@ $$
 
 ## Model priors
 
-In the meta-analytical model, we will use the following priors:
+For the meta-analytical model, we will use the following priors:
 
 - A $Normal(0, 1)$ distribution for the prior of the intercept.
 - A $HalfCauchy(0, 1)$ distribution for the prior of the teams' intercept standard deviation.
@@ -194,7 +221,7 @@ ppred_samples %>%
   facet_wrap(~ term, scales = "free")
 ```
 
-```{r ppred-joint-post}
+```{r ppred-joint-post, message=FALSE, warning=FALSE}
 ppred_samples %>%
   select(intercept, `r_team[a,Intercept]`:`r_team[l,Intercept]`) %>%
   pivot_longer(-intercept, names_to = "team") %>%
@@ -285,3 +312,4 @@ factors_bm <- brm(
 )
 ```
 
+# References
