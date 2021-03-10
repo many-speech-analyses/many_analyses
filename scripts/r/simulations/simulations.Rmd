@@ -196,7 +196,10 @@ priors <- c(
 
 ### Prior predictive checks
 
+Prior predictive checks are run to assess the goodness of the prior specification before model fitting.
+
 ```{r prior-predictive}
+# run checks
 meta_bm_ppred <- brm(
   eta | se(se) ~
     (1 | team),
@@ -208,18 +211,35 @@ meta_bm_ppred <- brm(
   file = "./models/sim/meta_bm_ppred"
 )
 
+# get samples
 ppred_samples <- posterior_samples(meta_bm_ppred) %>%
   rename(intercept = b_Intercept, `group-level SD` = sd_team__Intercept)
 ```
 
-```{r ppred-posts}
-ppred_samples %>%
+Let's plot the prior probability distributions of the intercept and the standard deviation.
+
+```{r ppred-posts, message=FALSE, warning=FALSE}
+ppred_long <- ppred_samples %>%
   pivot_longer(intercept:`group-level SD`, names_to = "term") %>%
-  mutate(term = factor(term, levels = c("intercept", "group-level SD"))) %>%
+  mutate(term = factor(term, levels = c("intercept", "group-level SD")))
+  
+int <- ppred_long %>%
+  filter(term == "intercept") %>%
   ggplot(aes(value)) +
   geom_density(colour = NA, fill = "#325756", alpha = 0.9, bw = 0.4) +
-  facet_wrap(~ term, scales = "free")
+  labs(title = "Intercept")
+
+sd <- ppred_long %>%
+  filter(term == "group-level SD") %>%
+  ggplot(aes(value)) +
+  geom_density(colour = NA, fill = "#325756", alpha = 0.9, bw = 1) +
+  xlim(0, 25) +
+  labs(title = "Group-level SD")
+
+int + sd
 ```
+
+And the joint prior probability distribution.
 
 ```{r ppred-joint-post, message=FALSE, warning=FALSE}
 ppred_samples %>%
@@ -232,6 +252,8 @@ ppred_samples %>%
 ```
 
 ## Run
+
+The following code fits the meta-analytical model to the simulated data.
 
 ```{r meta-bm}
 meta_bm <- brm(
