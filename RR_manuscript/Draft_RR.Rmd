@@ -135,7 +135,7 @@ Combined with a wide variety of methodological and theoretical traditions as wel
 Consequently, there might be many published papers that present overconfident interpretations of their data based on idiosyncratic analytic strategies [e.g., @simmons2011false; @gelman2014statistical].
 These interpretations are either associated with an unknown amount of uncertainty or lend themselves to alternative interpretation if analyzed differently.
 However, instead of being critically evaluated, scientific results often remain unchallenged in the publication record.
-Despite recent efforts to improve transparency and reproducibility [e.g. miguel2014promoting; @klein2018practical] and the advent of freely available and accessible infrastructures, such as those provided by the Open Science Framework (osf.io), critical re-analyses of published analytic strategies are still uncommon because data sharing remains rare [@wicherts2006poor].
+Despite recent efforts to improve transparency and reproducibility [e.g. @miguel2014promoting; @klein2018practical] and the advent of freely available and accessible infrastructures, such as those provided by the Open Science Framework (osf.io), critical re-analyses of published analytic strategies are still uncommon because data sharing remains rare [@wicherts2006poor].
 
 Analytical flexibility has been widely discussed from a conceptual point of view [@simmons2011false; @wagenmakers2012agenda; @nosek2014method] and in regard to its application in individual scientific fields [e.g. Wichert et al. 2015, Charles et al. 2019, @roettger2019researcher], notwithstanding, there are still many unknowns regarding the extent of analytical plurality in practice.
 <!-- TODO: add refs for wichert et al. 2015, Charles et al. 2019... are we certain this isn't @wicherts2016? (JVC) -->
@@ -151,7 +151,7 @@ Importantly, the observed variability was neither predicted by the team's precon
 The authors results suggest that analytic plurality may be an inevitable byproduct of the scientific process and not necessarily driven by different levels of expertise nor bias.
 
 Several other recent studies corroborated this analytical flexibility across different disciplines.
-Both @dutilh2019 ad @starns2019 investigated analysts' choices when inferring theoretical constructs based on the same data set using computational models.
+Both @dutilh2019 ad @starns2019assessing investigated analysts' choices when inferring theoretical constructs based on the same data set using computational models.
 <!-- TODO: Parker et al. bib info -->
 Both studies revealed vastly different modeling strategies, even though scientific conclusions were similar across analysis teams [see also Parker et al. (accepted) on analytical flexibility in ecology and @botvinik-nezer2020 on neuroimaging data].
 @bastiaansen2020 crowdsourced clinical recommendations based on analyses of an individual patient.
@@ -180,7 +180,9 @@ Speech is a complex signal that is characterized by structurally different acous
 Thus, choosing how to measure a phenomenon of interest is an important and non-trivial analytical decision.
 Take for example the following sentence in (1).
 
+\vspace{1em}
 (1) "I can't bear another meeting on Zoom."
+\vspace{1em}
 
 Depending on the speaker's intention, this sentence can be said in different ways.
 If, for instance, the speaker is exhausted by all their meetings, the speaker might acoustically highlight the word *another* or *meeting* to contrast it with other, more pleasant activities.
@@ -193,7 +195,7 @@ Utterances stretch over several thousand milliseconds and contain different leve
 The researcher is thus confronted with a considerable number of parameters and combinations thereof to choose from.
 
 Speech categories are inherently multidimensional and dynamic: they consist of clusters of parameters that are modulated over time.
-The acoustic parameters of one category are usually asynchronous, i.e. they appear at different time points in the unfolding signal, and overlap with parameters of other categories [e.g. @jongman2000acoustic; @lisker1986voicing; Summerfield, 1984; @winter2014spoken].
+The acoustic parameters of one category are usually asynchronous, i.e. they appear at different time points in the unfolding signal, and overlap with parameters of other categories [e.g. @jongman2000acoustic; @lisker1986voicing; @summerfield1984; @winter2014spoken].
 <!-- TODO: add summerfield ref-->
 A classical example is the distinction between voiced and voiceless stops in English (i.e. /b/ and /p/ in *bear* vs *pear*).
 This lexical contrast is manifested by many acoustic features which can differ depending on several factors, such as position of the consonant in the word and surrounding sounds [@lisker1977rapid]. <!-- why not "phonological contrast"? --> 
@@ -211,9 +213,13 @@ In short, when testing hypotheses on speech production data, researchers are fac
 The larger the functional domain (e.g. segments vs words vs utterances), the higher the number of conceivable operationalizations.
 For example, several decisions have to be made when comparing the two realization of the sentence in (1), one of which is intended to signal emphasis on *another* and one of which emphasizes *zoom*.
 
+\vspace{1em}
+
 (2a) I can't bear *ANOTHER* meeting on zoom.
 
 (2b) I can't bear another meeting on *ZOOM*.
+
+\vspace{1em}
 
 Do we compare only the word *another* in (2a) and (2b), or also the word *zoom*?
 Do we measure utterance-wide acoustic profiles, whole words, or just the stressed syllables?
@@ -229,7 +235,8 @@ We could also measure the value or time of the minimum or maximum f0 value.
 We could summarize f0 across the entire window and extract the mean, median or standard deviation of f0, all of which have been used to analyze speech data [see @gordon2017acoustic].
 And the garden of forking paths does not stop here.
 <!-- TODO: add examples of pitch tracking options -->
-Figure \@ref(fig:forkingPaths) \highlight[id=SC, comment = {The figure text is quite small. Probably better to change to a longer rather then wider layout.}]\highlight[id=TR, comment = {Better now?}], illustrates a specific option to automatically calculate f0\highlight[id=TR, comment = {add examples of pitch tracking options}.
+<!-- NOTE: (TR) is the figure better now? -->
+Figure \@ref(fig:forkingPaths), illustrates a specific option to automatically calculate f0.
 Knowing that the signals and the measures thereof can be noisy, another option would be to smooth them using one algorithm and degree over others, or remove values that substantially deviate from surrounding values or expectations, either manually or automatically, and so on. <!-- Im having a bit of trouble with this sentence. I tried to fix it and now I am realizing I don't quite follow (JVC) --> 
 
 <!-- FIGURE -->
@@ -433,11 +440,13 @@ We will calculate summary statistics describing variation among analyses, includ
 
 ### Meta-analytical estimation {#s:meta-est}
 
-We will summarize the variability in reported effect sizes using Bayesian meta-analytic \highlight[id=SC, comment={It would be good to decide on a clear terminology to refer to the individual original models, the individual models that we run (to refit the original models), and the meta-analytical model}]{techniques}.
+<!-- NOTE: (SC) t would be good to decide on a clear terminology to refer to the individual original models, the individual models that we run (to refit the original models), and the meta-analytical model -->
+We will summarize the variability in reported effect sizes using Bayesian meta-analytic techniques.
 Based on the common practices currently in place within the field, we anticipate that researchers will use multi-level/hierarchical/random-effects regression models, thus common measurements of effect size, such as Cohen's $d$, may be inappropriate.
 Since the variables used by the analysis teams might substantially differ in their measurement scales (e.g, Hertz for frequency vs milliseconds for duration), we will standardize all reported effects by refitting each reported model with centered and scaled continuous variables (*z*-scores, i.e. the observed values subtracted from the mean divided by the standard deviation) and sum-coded factor variables.
-\highlight[id=SC, comment = {Is this sentence good?}]{Factor-level ordering} for each categorical variable will mirror that of the original analyses.
-<!-- TR: don't know what you mean tbh; JVC: I get what you're saying, essentially we will keep the levels of their categorical variables the same when we refit the models, right? I changed it so that it says that. Change if wrong. -->
+Factor-level ordering for each categorical variable will mirror that of the original analyses.
+<!-- NOTE: TR: don't know what you mean tbh -->
+<!-- NOTE: JVC: I get what you're saying, essentially we will keep the levels of their categorical variables the same when we refit the models, right? I changed it so that it says that. Change if wrong. -->
 Each standardized (refitted) model will be fitted as a Bayesian regression model with Stan [@stan2021], RStan [@stan2020a], and brms [@burkner2017] in R [@R-base].
 For those reported models that were originally fitted within a frequentist approach, uniform distributions will be used as the priors of all parameters (with the restriction that only positive numbers will be included for scale parameters), making the standardized models in fact equivalent to the reported frequentist models.
 If a team has fitted Bayesian models, the same priors as reported by the team will be used in fitting the respective standardized model.
