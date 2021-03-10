@@ -102,7 +102,7 @@ my_seed <- 115116106
 
 In order to effectively accumulate knowledge, science needs to (i) produce data that can be replicated using the original methods and (ii) arrive at robust conclusions substantiated by the data.
 In recent coordinated efforts to replicate published findings, scientific disciplines have uncovered surprisingly low success rates [e.g., @open2015estimating; @camerer2018evaluating] leading to what is now referred to as the *replication crisis*.
-<!-- TODO: add refs about variable conclusions from reliable data -->
+<!-- TODO: add REFS about variable conclusions from reliable data -->
 Beyond the difficulties of replicating scientific findings, a growing body of evidence suggests that the theoretical conclusions drawn from data are often variable even when researchers have access to reliable data.
 The latter situation has been referred to as the *inference crisis* [@rotello2015more; @starns2019assessing] and is, among other things, rooted in the inherent flexibility of data analysis [often referred to as researcher degrees of freedom: @simmons2011false; @gelman2014statistical].
 Data analysis involves many different steps, such as inspecting, organizing, transforming, and modeling the data, to name a few.
@@ -120,7 +120,7 @@ This is not trivial, given the temporal extension of the acoustic signal and its
 Not only can decisions about measuring the signal influence downstream decisions about statistical modeling, but statistical results or modeling issues can also lead researchers to go back and revise earlier decisions about the measuring process itself.
 
 In this article, we will investigate the variability in analytic choices when many analyst teams analyze the same speech production data set, a process that involves both decisions regarding the operationalization of a complex  signal and decisions regarding the statistical analysis.
-<!-- TODO: include number of teams when known -->
+<!-- TODO: LATER include number of teams when known -->
 Specifically, we will report the impact of analytic decision making on research results obtained by a minimum of 12 teams who will gain access to the same set of acoustic recordings in order to answer the same research question.
 <!-- TODO: check tense throughout, should be future tense -->
 
@@ -130,7 +130,6 @@ Data analysis comes with many decisions, like how to measure a given phenomenon 
 This can be problematic because humans show cognitive biases that can lead to erroneous inferences.
 Humans filter the world in irrational ways [e.g., @tversky1974judgment], seeing coherent patterns in randomness [@brugger2001], convincing themselves of the validity of prior expectations ["I knew it", @nickerson1998confirmation], and perceiving events as being plausible in hindsight ["I knew it all along", @fischhoff1975hindsight].
 In conjunction with an academic incentive system that rewards certain discovery processes more than others [@sterling1959publication; @koole2012rewarding], we often find ourselves exploring many possible analytical pipelines, but only reporting a select few.
-<!-- NOTE: (JVC) in connection with = referring to; in conjunction with = together, coupled with. I think we want the later, but change if I'm mistaken -->
 This issue is particularly amplified in fields in which the raw data lend themselves to many possible ways of being measured [@roettger2019researcher].
 Combined with a wide variety of methodological and theoretical traditions as well as varying levels of statistical training across subfields, the inherent flexibility of data analysis might lead to a vast plurality of analytic approaches that can lead to different scientific conclusions.
 Consequently, there might be many published papers that present overconfident interpretations of their data based on idiosyncratic analytic strategies [e.g., @simmons2011false; @gelman2014statistical].
@@ -138,8 +137,8 @@ These interpretations are either associated with an unknown amount of uncertaint
 However, instead of being critically evaluated, scientific results often remain unchallenged in the publication record.
 Despite recent efforts to improve transparency and reproducibility [e.g. @miguel2014promoting; @klein2018practical] and the advent of freely available and accessible infrastructures, such as those provided by the Open Science Framework (osf.io), critical re-analyses of published analytic strategies are still uncommon because data sharing remains rare [@wicherts2006poor].
 
-Analytical flexibility has been widely discussed from a conceptual point of view [@simmons2011false; @wagenmakers2012agenda; @nosek2014method] and in regard to its application in individual scientific fields [e.g. Wichert et al. 2015, Charles et al. 2019, @roettger2019researcher], notwithstanding, there are still many unknowns regarding the extent of analytical plurality in practice.
-<!-- TODO: add refs for wichert et al. 2015, Charles et al. 2019... are we certain this isn't @wicherts2016? (JVC) -->
+Analytical flexibility has been widely discussed from a conceptual point of view [@simmons2011false; @wagenmakers2012agenda; @nosek2014method] and in regard to its application in individual scientific fields [e.g. @wicherts2016, Charles et al. 2019, @roettger2019researcher], notwithstanding, there are still many unknowns regarding the extent of analytical plurality in practice.
+<!-- TODO: add REFS Charles et al. 2019 -->
 Recent collaborative attempts have started to shed light on how different analysts tackle the same data set and have revealed a large amount of variability.
 <!-- NOTE: (?) I think this should be part of the previous paragraph. -->
 
@@ -154,7 +153,7 @@ The authors results suggest that analytic plurality may be an inevitable byprodu
 
 Several other recent studies corroborated this analytical flexibility across different disciplines.
 Both @dutilh2019 ad @starns2019assessing investigated analysts' choices when inferring theoretical constructs based on the same data set using computational models.
-<!-- TODO: Parker et al. bib info -->
+<!-- TODO: Parker et al. (ECO) REFS -->
 Both studies revealed vastly different modeling strategies, even though scientific conclusions were similar across analysis teams [see also Parker et al. (accepted) on analytical flexibility in ecology and @botvinik-nezer2020 on neuroimaging data].
 @bastiaansen2020 crowdsourced clinical recommendations based on analyses of an individual patient.
 Results suggests that analysts differed substantially regarding decisions related to both the statistical analysis of the data and the theoretical rationale behind interpreting the statistical results.
@@ -198,7 +197,7 @@ The researcher is thus confronted with a considerable number of parameters and c
 
 Speech categories are inherently multidimensional and dynamic: they consist of clusters of parameters that are modulated over time.
 The acoustic parameters of one category are usually asynchronous, i.e. they appear at different time points in the unfolding signal, and overlap with parameters of other categories [e.g. @jongman2000acoustic; @lisker1986voicing; @summerfield1984; @winter2014spoken].
-<!-- TODO: add summerfield ref-->
+<!-- TODO: add summerfield REFS-->
 A classical example is the distinction between voiced and voiceless stops in English (i.e. /b/ and /p/ in *bear* vs *pear*).
 This lexical contrast is manifested by many acoustic features which can differ depending on several factors, such as position of the consonant in the word and surrounding sounds [@lisker1977rapid]. <!-- NOTE: (?) why not "phonological contrast"? -->
 Furthermore, correlates of the contrast can even be found away from the consonant, in temporally distant speech units.
@@ -228,18 +227,17 @@ Do we measure utterance-wide acoustic profiles, whole words, or just the stresse
 Do we average across the chosen time domain or do we measure a specific point in time?
 Do we measure fundamental frequency, intensity, or something else?
 
-When looking at phrase-level temporal domains, the number of possible analytical pipelines increases exponentially. <!-- NOTE: (JVC) this is hyperbole, but seems (possibly) more appropriate than "explodes" -->
+When looking at phrase-level temporal domains, the number of possible analytical pipelines increases exponentially.
 This plurality of analytical paths is illustrated in Figure \@ref(fig:forkingPaths).
-<!-- When comparing two utterances such as (2a) and (2b), there are many things to consider.  NOTE: (JVC) (I think we can do without this sentence.) -->
 Even if we have decided to compare fundamental frequency (f0) of only the word *another* across the two utterances, there are still many choices to be made, all of which need to be justified.
 For example, we could measure f0 at specific points in time like the onset of the window, the offset, or the midpoint.
 We could also measure the value or time of the minimum or maximum f0 value.
 We could summarize f0 across the entire window and extract the mean, median or standard deviation of f0, all of which have been used to analyze speech data [see @gordon2017acoustic].
 And the garden of forking paths does not stop here.
 <!-- TODO: add examples of pitch tracking options -->
-<!-- NOTE: (TR) is the figure better now? -->
 Figure \@ref(fig:forkingPaths), illustrates a specific option to automatically calculate f0.
-Knowing that the signals and the measures thereof can be noisy, another option would be to smooth them using one algorithm and degree over others, or remove values that substantially deviate from surrounding values or expectations, either manually or automatically, and so on. <!-- NOTE: (JVC) Im having a bit of trouble with this sentence. I tried to fix it and now I am realizing I don't quite follow (JVC) -->
+Knowing that the signals and the measures thereof can be noisy, another option would be to smooth them using one algorithm and degree over others, or remove values that substantially deviate from surrounding values or expectations, either manually or automatically, and so on.
+<!-- NOTE: (JVC) Im having a bit of trouble with this sentence. I tried to fix it and now I am realizing I don't quite follow (JVC) -->
 
 <!-- FIGURE -->
 (ref:forkingPaths) Illustrations of the analytical flexibility associated with acoustic analyses. (A) an example of multiple possible and justifiable decisions when comparing two utterances; (B) waveform and fundamental frequency (f0) track of two instances of utterances 2a and 2b. The words "another is highlighted by the green box"; (C) spectrogram and f0 track of the word another, exemplifying different operationalizations of differences in pitch.
@@ -277,23 +275,21 @@ Intonation marks discourse-relevant referents for being new or given information
 Beyond structuring information relative to the discourse, a few studies suggested that speakers might use intonation to signal atypical lexical combinations [e.g. dimitrova2008prosodic; dimitrova2009did].
 Referential expressions such as *blue banana* were produced with greater prosodic prominence than more typical referent such as *yellow banana*.
 If true, these findings are in line with the idea of resource-efficient, rational language users who modulate their speech in order to facilitate listeners' comprehension process.
-However, the original conclusions of above studies were based on small (n=10), unjustified sample sizes.
-Moreover, the data is not available, and the statistical analysis used anti-conservative co-variance structures, leaving reason to doubt the original conclusions. <!-- NOTE: (JVC) "lending doubt on" sounded a bit weird to me (JVC) -->
+However, the original conclusions of above studies were based on small (N = 10), unjustified sample sizes.
+Moreover, the data is not available, and the statistical analysis used anti-conservative co-variance structures, leaving reason to doubt the original conclusions.
 
-<!-- QUESTION: ask people if they have ever heard of these papers? -->
+<!-- TODO: ask people if they have ever heard of these papers -->
 
 To further illuminate the question of whether speakers modify speech to signal atypical referents, we recorded thirty native German speakers interacting with a confederate (one of the experimenters) in a referential game.
 The participants had to verbally instruct the confederate to select a specified target object out of four object presented on a screen.
 The subject and confederate were seated at the opposite sides of a table, each facing one of two mirrored computer screens.
 The participant and the experimenter could not see each other nor each others' screens.
+<!-- TODO: add ref to experiment procedure figure in (see XXX) -->
 After a familiarization phase (see XXX), the subject first saw four colored objects in the top left, top right, bottom left, and bottom right corners of the screen.
-
-<!-- TODO: see XXX, what do we refer to here? Are we going to include an image? -->
-
 One of the objects served as the target, another as the competitor, and the remaining two objects served as distractors.
 Objects were referred to using noun phrases consisting of an adjective modifier denoting color and a modified object (e.g. *Gelbe Zitrone* 'yellow lemon', *Rote Gurke* 'red cucumber', *Rote Socken* 'red socks').
 
-<!-- QUESTION: add pictures? -->
+<!-- TODO: add experiment procedure figure -->
 
 In the center of the screen, a black cube was displayed, which could be moved by the experimenter.
 The participant would read a sentence prompt out loud (*Du sollst den Würfel auf der <COLOR OBJECT> ablegen* 'You have to put the cube on top of the <COLOR OBJECT>') to instruct the experimenter to drag the cube on top of one of the four depicted objects (the *competitor*) using the mouse.
@@ -313,7 +309,6 @@ The combinations were either typical (e.g. *orange mandarin*), medium typical (e
 Each participant responded to 15 critical trials (NF condition).
 Each trial was repeated twice, yielding a total of 30 trials per participant and a grand-total 900 ($15 \times 2 \times 30$ participants) spoken utterances.
 All analysis teams will be given access to the entire data set and will be instructed to answer the following research question: *Do speakers acoustically modify utterances to signal atypical word combinations in referring expressions?*
-\comment[id=SC]{Need transition here.}
 
 # Methods
 
@@ -321,8 +316,6 @@ As outlined in Section \@ref(s:operspeech), researchers are faced with a large a
 Analysts must identify and operationalize relevant measurements, as well as the temporal domain(s) from which these measurements are to be taken, and then possibly transform said measurements before submitting them to statistical models, which must be chosen alongside inferential criteria.
 The complexity of speech data constitutes the ideal testing ground to assess the upper bound of analytical flexibility that social science might face across disciplines.
 We will employ a meta-analytic approach to assess (i) the variability of the reported effects, and (ii) and how analytic and demographic factors affect the researchers' final results.
-
-<!-- QUESTION: wanna meditate over the term demographic (add analytic vs. analytical too)-->
 
 We are closely following the data collection procedure proposed by Parker et al. (Stage 1 in-principle accepted).
 The project involves the following five phases:
@@ -339,31 +332,27 @@ The factor most likely to delay our time line is the rate of completion of the o
 
 ## Phase 1: Recruitment of analysts and initial survey
 
-<!-- TODO: add materials link and mailing lists -->
+<!-- TODO: add materials LINK and mailing lists -->
 The initiating authors (SC, JC, TR) created an online landing page providing a general description of the project [https://many-speech-analyses.github.io](https://many-speech-analyses.github.io) and a short pre-recorded slide show that summarizes the study and research question (LINK). <!-- NOTE: same as above, or OSF -->
 The project will be advertised via social media, using mailing lists for linguistic and psychological societies, and via word of mouth.
 The target population comprises active speech science researchers with a graduate/doctoral degree (or currently studying for a graduate/doctoral degree) in relevant disciplines.
 Researchers can choose to work independently or in a small team.
 For the sake of simplicity, we will refer to single researcher or small teams as "analysis teams".
-
 Recruitment for this project will commence upon receiving in-principle acceptance; we aim for a minimum of 12 analysis teams independently evaluating each data set (see sample size justification below).
-
-<!-- QUESTION: How to frame this sentence. It is not ongoing. Alternatively: "Recruitment for this project will commence as soon as the present Registered Report is in-principle accepted. (This seems good to me. added) -->
 
 We will simultaneously recruit volunteers to peer-review the analyses conducted by the other volunteers through the same channels.
 Our goal is to recruit a similar number of peer-reviewers and analysts, and to ask each peer reviewer to review a minimum of four analyses.
 If we are unable to recruit at least half the number of reviewers as analysis teams, we will ask analysts to serve also as reviewers (after they have completed their analyses).
 All analysts and reviewers will share co-authorship on this manuscript and will participate in the collaborative process of producing the final manuscript.
-<!-- TODO: add link to informed consent form -->
+<!-- TODO: add LINK to informed consent form -->
 All analysts will sign a consent (ethics) document (LINK).
 <!-- TODO: add information about what this consent form does -->
 
-<!-- TODO: add citation to ECO RR -->
+<!-- TODO: Parker et al. (ECO) REFS -->
 Following Parker et al. \highlight{[ECO RR]}, we identified a minimal sample size that would provide an estimate of heterogeneity of the effect sizes reported by the analysis teams ($\tau^2$, i.e. the variance $\sigma^2_{\alpha_{\text{t}}}$, see \Cref{s:meta-est}).
 In short, the minimal sample size is considered the number of analysis teams needed to allow an estimation of heterogeneity.
-We consider a posterior distribution of $\tau^2$, for which the 95% credible interval (CrI) does not include 0 as sufficient (i.e. the probability $p$ that the 95% CrI contains 0 should be less than 0.05).
-<!-- QUESTION: the sentence in brackets looks wrong, this would be true for confidence intervals right? -->
-The probability $p$ that a CrI interval does not include 0 is obtained via the *t*-statistic:
+We consider a posterior distribution of $\tau^2$, for which the 95% credible interval (CrI) does not include 0 as sufficient.
+The probability $Pr$ that a CrI interval does not include 0 is obtained via the *t*-statistic:
 
 $$t = \frac{\tau^2}{SE(\tau^2)}$$
 
@@ -372,8 +361,8 @@ Assuming that the underlying distribution of effect sizes is normal [@knight2000
 $$SE(\tau^2) = \sqrt{\frac{2\tau^4}{(n-1)}}$$
 
 where $n$ is the sample size.
-Given $p$ and $\tau^2$, we can calculate $n$ such that $p < 0.05$.
-Inserting $SE(\tau^2)$ into the formula for the *t*-statistic shows that, when $n$ is fixed, *t* (and hence $p$) will be the same regardless of $\tau^2$:
+Given $Pr$ and $\tau^2$, we can calculate $n$ such that $p < 0.05$.
+Inserting $SE(\tau^2)$ into the formula for the *t*-statistic shows that, when $n$ is fixed, *t* (and hence $Pr$) will be the same regardless of $\tau^2$:
 
 $$t = \frac{\tau^2}{SE(\tau^2)} = \frac{\tau^2}{\sqrt{\frac{2\tau^4}{(n-1)}}} = \sqrt{\frac{(n-1)}{2}}$$
 
@@ -387,20 +376,20 @@ t <- sqrt((df)/2)
 pt(t, df, lower.tail = F) * 2
 ```
 
-<!-- QUESTION: Should we double check that with some folks? -->
+<!-- TODO: double check with BN if sample size justification is correct -->
+
 
 ## Phase 2: Primary Data Analyses
 
-<!-- TODO: add link to demo survey -->
+<!-- TODO: add LINK to demo survey -->
 The analysis teams will register and answer a demographic and expertise survey (LINK).
-The survey collects information on the analysts current position and self-estimated breadth and level of statistical expertise.
-<!-- QUESTION: should the survey ask for expertise in their acoustic skills? -->
+The survey collects information on the analysts current position and self-estimated breadth and level of statistical expertise and acoustic analysis skills.
 We will then provide teams with the acoustic data set and request that they answer the following research question:
-<!-- TODO: Link dataset here -->
+<!-- TODO: LINK dataset here -->
 
 Do speakers acoustically modify utterances to signal atypical word combinations?
 
-<!-- TODO: add link to analytical survey -->
+<!-- TODO: add LINK to analytical survey -->
 Once their analysis is complete, they will answer a structured survey (LINK), providing information about their analysis technique, an explanation of their analytical choices, their quantitative results, and a statement describing their conclusions.
 They will also upload their analysis files (including the additionally derived data and text files that were used to extract and pre-process the acoustic data), their analysis code (if applicable), and a detailed journal-ready statistical methods section.
 
@@ -414,7 +403,7 @@ The sequences will be systematically assigned so that, if possible, each analysi
 The process for a single reviewer will be as follows.
 First, the reviewer will receive a description of the methods of a single analysis.
 This will include the narrative methods section, the analysis team's answers to our survey questions regarding their methods, including analysis code and the data set.
-<!-- TODO: add link to peer review survey -->
+<!-- TODO: add LINK to peer review survey -->
 The reviewer will then be asked in an online survey (LINK) to rate both the acoustic and the statistical analyses and to provide an overall rating, using a scale of 0-100, respectively.
 To help reviewers calibrate their rating, they will be given the following guidelines:
 
@@ -437,8 +426,7 @@ Th initiating authors (SC, JC, TR) will conduct the analyses outlined in this se
 
 ### Descriptive statistics
 
-We will calculate summary statistics describing variation among analyses, including (a) the nature and number of acoustic measures (e.g. f0 or duration), (b) the operationalization and the temporal domain of measurement (e.g. mean of an interval or value at specified point in time), (c) the nature and number of model parameters for both fixed and random effects [if applicable], (d) the nature and reasoning behind inferential assessments (e.g. dichotomous decision based on *p*-values, ordinal decision based on a Bayes factor), as well as the (e) mean, (f) standard deviation and (g) range of the reported effect sizes.
-<!-- QUESTION: range of the standardized effect sizes, right? -->
+We will calculate summary statistics describing variation among analyses, including (a) the nature and number of acoustic measures (e.g. f0 or duration), (b) the operationalization and the temporal domain of measurement (e.g. mean of an interval or value at specified point in time), (c) the nature and number of model parameters for both fixed and random effects (if applicable), (d) the nature and reasoning behind inferential assessments (e.g. dichotomous decision based on *p*-values, ordinal decision based on a Bayes factor), as well as the (e) mean, (f) standard deviation and (g) range of the standardizes effect sizes (see \@ref(s:meta-est) for the standardization procedure).
 
 ### Meta-analytical estimation {#s:meta-est}
 
@@ -447,8 +435,6 @@ We will summarize the variability in reported effect sizes using Bayesian meta-a
 Based on the common practices currently in place within the field, we anticipate that researchers will use multi-level/hierarchical/random-effects regression models, thus common measurements of effect size, such as Cohen's $d$, may be inappropriate.
 Since the variables used by the analysis teams might substantially differ in their measurement scales (e.g, Hertz for frequency vs milliseconds for duration), we will standardize all reported effects by refitting each reported model with centered and scaled continuous variables (*z*-scores, i.e. the observed values subtracted from the mean divided by the standard deviation) and sum-coded factor variables.
 Factor-level ordering for each categorical variable will mirror that of the original analyses.
-<!-- NOTE: TR: don't know what you mean tbh -->
-<!-- NOTE: JVC: I get what you're saying, essentially we will keep the levels of their categorical variables the same when we refit the models, right? I changed it so that it says that. Change if wrong. -->
 Each standardized (refitted) model will be fitted as a Bayesian regression model with Stan [@stan2021], RStan [@stan2020a], and brms [@burkner2017] in R [@R-base].
 For those reported models that were originally fitted within a frequentist approach, uniform distributions will be used as the priors of all parameters (with the restriction that only positive numbers will be included for scale parameters), making the standardized models in fact equivalent to the reported frequentist models.
 If a team has fitted Bayesian models, the same priors as reported by the team will be used in fitting the respective standardized model.
@@ -468,7 +454,7 @@ We will use regularizing weakly-informative priors for the intercept $\alpha$ ($
 We will fit this model with 4 chains of Hamiltonian Monte-Carlo sampling for the estimation of the joint posterior distribution, using the No U-Turn Sampler (NUTS) as implemented in Stan [@stan2021], and 4000 iterations (2000 for warm-up) per chain, distributed across 4 processing cores.
 In case of divergent transitions, we will increase `adapt_delta`, `tree_depth`, and the number of iterations in this order until we obtain a model fit with no divergent transitions.
 The analysis will be conducted in R [@R-base] and fit using Stan [@stan2021], RStan [@stan2020a], and brms [@burkner2017].
-<!-- TODO: add link to code of the meta-analytical model -->
+<!-- TODO: add LINK to code of the meta-analytical model -->
 The code used to run the model can be found here: INSERT LINK.
 
 <!-- From ?brms:brmsformula -->
@@ -490,14 +476,12 @@ The posterior distribution of the population-level intercept $\alpha$ will allow
 The posterior distribution will further allow us to investigate the effect of a set of analytic and demographic predictors, detailed in Section \@ref(ana-factors).
 Crucially, the posterior distribution of $\sigma_{\alpha_{\text{t}}}$ (the standard deviation of the group-level effect of team) will allow us to quantify the degree of variation between teams on a standardized scale.
 
-<!-- NOTE: I understand "posterior probability" to refer to a point estimate, i.e., the posterior probability that B > 0 = some value between 0 and 1. I may be mistaken, but I think you are referring to the posterior distribution in the above paragraph -->
-
 Finally, we will assess whether the standardized effect sizes show bias, and, if so, whether the bias is positive or negative (i.e., whether there is a disproportionately greater number of bigger or smaller effect sizes than the meta-analytic point estimate of the pooled effect). <!-- in case we want to use the median -->
 This will be achieved through inspection of funnel plots [@light1984; for a review see @egger1997; and @sterne2005; for a critique @lau2006].
 In brief, a funnel plot is a scatter plot of each standardized effect size with effect size on the *x*-axis and estimated error (i.e. standard deviation) on *y*-axis.
 In absence of bias, the points should be symmetrically distributed around the meta-analytic point estimate of the pooled effect (see Figure \@ref(fig:funnel-plot)).
-<!-- QUESTION: do we need the plot? Since there is no crisp operationalization of what we call publication bias and what we call unbiased, I wonder whether we could get rid of the plots -->
 A sign of possible bias is when there are more points which are farther from the meta-analytic point estimate on just one side.
+<!-- NOTE: We are gonna keep the funnel plots at least for Stage 1 review, because it is easier to understand how this works. -->
 
 <!-- NOTE: I keep changing meta-analytical to meta-analytic (the -cal sounds weird to me). My unscientific google searching shows that people use both, but meta-analytic is much more common (nearly 4 million hits vs. 500k) -->
 <!-- NOTE: (SC) I tend to use analytical to mean "related to analysis" and "analytic" in opposition to "synthetic" (from their use in logic and linguistics) but I am flex as long as we are consistent. -->
@@ -584,16 +568,15 @@ As the prior for $i$ and $\upsilon$ we will use a normal distribution with mean 
 
 **Analytical factors**. We will estimate the influence of the following predictors related to the analytical characteristics of each team's reported analysis:
 
+<!-- NOTE: We dropped data exclusion -->
 - *Measure of uniqueness* [numeric] of individual analyses for the set of predictors in each model ($uniq_i$).
 - *Measure of conservativeness* [numeric] of the model specification, as the number of random/group-level effects included ($cons_i$).
 - *Number of post-hoc changes to the acoustic measurements* [numeric] the teams will report to have carried out ($phoc_i$).
 - *Number of models* [numeric] the teams will report to have run ($modn_i$).
 - *Major dimension* [categorical] that has been measured to answer the research question ($mdim_i$).
 - *Temporal window* [categorical] that the measurement is taken over ($twin_i$).
-- *Data exclusion*, [categorical] whether data has been excluded or not ($excl_i$).
-<!-- QUESTION: this is a little weird to me. Binary for data exclusion or not.-->
 - *Average peer-review rating* [numeric], as the mean of the peer-review ratings for each analysis.
-<!-- QUESTION: Just overall? or do we feed in the scales for stats vs. acoustics?-->
+<!-- NOTE: We decided to use just the overall rating -->
 
 Following Parker et al. (in principle accepted), the measure of uniqueness of predictors will be assessed by the Sørensen-Dice Index [SDI, @dice1945; @sorensen1948].
 The SDI is an index typically used in ecology research to compare species composition across sites.
@@ -622,7 +605,6 @@ These will be entered in the model formula as a measurement-error term (`me(mean
 <!-- TODO: explain how the demographic factors will be entered in the factors analysis -->
 
 **Demographic factors**. We will include the following demographic factors about the teams:
-<!-- QUESTION: Would like to discuss the term demographic here-->
 
 - *Research experience* [numeric] as the elapsed time from receiving the PhD. Negative values will indicate that the person is a student or graduate studens ($rexp_i$).
 - *Initial belief* [numeric] in the presence of an effect of atypical noun-adjective pairs on acoustics, as answered during the intake questionnaire ($belf_i$).

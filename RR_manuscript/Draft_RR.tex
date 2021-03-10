@@ -154,7 +154,7 @@ These interpretations are either associated with an unknown amount of uncertaint
 However, instead of being critically evaluated, scientific results often remain unchallenged in the publication record.
 Despite recent efforts to improve transparency and reproducibility (e.g. Miguel et al. 2014; Klein et al. 2018) and the advent of freely available and accessible infrastructures, such as those provided by the Open Science Framework (osf.io), critical re-analyses of published analytic strategies are still uncommon because data sharing remains rare (Wicherts et al. 2006).
 
-Analytical flexibility has been widely discussed from a conceptual point of view (Simmons, Nelson, and Simonsohn 2011; Wagenmakers et al. 2012; Nosek and Lakens 2014) and in regard to its application in individual scientific fields (e.g.~Wichert et al.~2015, Charles et al.~2019, Roettger 2019), notwithstanding, there are still many unknowns regarding the extent of analytical plurality in practice.
+Analytical flexibility has been widely discussed from a conceptual point of view (Simmons, Nelson, and Simonsohn 2011; Wagenmakers et al. 2012; Nosek and Lakens 2014) and in regard to its application in individual scientific fields Roettger (2019), notwithstanding, there are still many unknowns regarding the extent of analytical plurality in practice.
 Recent collaborative attempts have started to shed light on how different analysts tackle the same data set and have revealed a large amount of variability.
 
 \hypertarget{crowdsourcing-alternative-analyses}{%
@@ -293,7 +293,7 @@ Intonation marks discourse-relevant referents for being new or given information
 Beyond structuring information relative to the discourse, a few studies suggested that speakers might use intonation to signal atypical lexical combinations {[}e.g.~dimitrova2008prosodic; dimitrova2009did{]}.
 Referential expressions such as \emph{blue banana} were produced with greater prosodic prominence than more typical referent such as \emph{yellow banana}.
 If true, these findings are in line with the idea of resource-efficient, rational language users who modulate their speech in order to facilitate listeners' comprehension process.
-However, the original conclusions of above studies were based on small (n=10), unjustified sample sizes.
+However, the original conclusions of above studies were based on small (N = 10), unjustified sample sizes.
 Moreover, the data is not available, and the statistical analysis used anti-conservative co-variance structures, leaving reason to doubt the original conclusions.
 
 To further illuminate the question of whether speakers modify speech to signal atypical referents, we recorded thirty native German speakers interacting with a confederate (one of the experimenters) in a referential game.
@@ -301,7 +301,6 @@ The participants had to verbally instruct the confederate to select a specified 
 The subject and confederate were seated at the opposite sides of a table, each facing one of two mirrored computer screens.
 The participant and the experimenter could not see each other nor each others' screens.
 After a familiarization phase (see XXX), the subject first saw four colored objects in the top left, top right, bottom left, and bottom right corners of the screen.
-
 One of the objects served as the target, another as the competitor, and the remaining two objects served as distractors.
 Objects were referred to using noun phrases consisting of an adjective modifier denoting color and a modified object (e.g.~\emph{Gelbe Zitrone} `yellow lemon,' \emph{Rote Gurke} `red cucumber,' \emph{Rote Socken} `red socks').
 
@@ -321,7 +320,6 @@ The combinations were either typical (e.g.~\emph{orange mandarin}), medium typic
 Each participant responded to 15 critical trials (NF condition).
 Each trial was repeated twice, yielding a total of 30 trials per participant and a grand-total 900 (\(15 \times 2 \times 30\) participants) spoken utterances.
 All analysis teams will be given access to the entire data set and will be instructed to answer the following research question: \emph{Do speakers acoustically modify utterances to signal atypical word combinations in referring expressions?}
-\comment[id=SC]{Need transition here.}
 
 \hypertarget{methods}{%
 \section{Methods}\label{methods}}
@@ -360,7 +358,6 @@ The project will be advertised via social media, using mailing lists for linguis
 The target population comprises active speech science researchers with a graduate/doctoral degree (or currently studying for a graduate/doctoral degree) in relevant disciplines.
 Researchers can choose to work independently or in a small team.
 For the sake of simplicity, we will refer to single researcher or small teams as ``analysis teams.''
-
 Recruitment for this project will commence upon receiving in-principle acceptance; we aim for a minimum of 12 analysis teams independently evaluating each data set (see sample size justification below).
 
 We will simultaneously recruit volunteers to peer-review the analyses conducted by the other volunteers through the same channels.
@@ -371,8 +368,8 @@ All analysts will sign a consent (ethics) document (LINK).
 
 Following Parker et al.~\highlight{[ECO RR]}, we identified a minimal sample size that would provide an estimate of heterogeneity of the effect sizes reported by the analysis teams (\(\tau^2\), i.e.~the variance \(\sigma^2_{\alpha_{\text{t}}}\), see \Cref{s:meta-est}).
 In short, the minimal sample size is considered the number of analysis teams needed to allow an estimation of heterogeneity.
-We consider a posterior distribution of \(\tau^2\), for which the 95\% credible interval (CrI) does not include 0 as sufficient (i.e.~the probability \(p\) that the 95\% CrI contains 0 should be less than 0.05).
-The probability \(p\) that a CrI interval does not include 0 is obtained via the \emph{t}-statistic:
+We consider a posterior distribution of \(\tau^2\), for which the 95\% credible interval (CrI) does not include 0 as sufficient.
+The probability \(Pr\) that a CrI interval does not include 0 is obtained via the \emph{t}-statistic:
 
 \[t = \frac{\tau^2}{SE(\tau^2)}\]
 
@@ -381,8 +378,8 @@ Assuming that the underlying distribution of effect sizes is normal (Knight 2000
 \[SE(\tau^2) = \sqrt{\frac{2\tau^4}{(n-1)}}\]
 
 where \(n\) is the sample size.
-Given \(p\) and \(\tau^2\), we can calculate \(n\) such that \(p < 0.05\).
-Inserting \(SE(\tau^2)\) into the formula for the \emph{t}-statistic shows that, when \(n\) is fixed, \emph{t} (and hence \(p\)) will be the same regardless of \(\tau^2\):
+Given \(Pr\) and \(\tau^2\), we can calculate \(n\) such that \(p < 0.05\).
+Inserting \(SE(\tau^2)\) into the formula for the \emph{t}-statistic shows that, when \(n\) is fixed, \emph{t} (and hence \(Pr\)) will be the same regardless of \(\tau^2\):
 
 \[t = \frac{\tau^2}{SE(\tau^2)} = \frac{\tau^2}{\sqrt{\frac{2\tau^4}{(n-1)}}} = \sqrt{\frac{(n-1)}{2}}\]
 
@@ -393,7 +390,7 @@ When \(n = 12\) then \(t_{(12-1)} = t_{(11)} = 2.3452\) and \(p = 0.0388\), whic
 \subsection{Phase 2: Primary Data Analyses}\label{phase-2-primary-data-analyses}}
 
 The analysis teams will register and answer a demographic and expertise survey (LINK).
-The survey collects information on the analysts current position and self-estimated breadth and level of statistical expertise.
+The survey collects information on the analysts current position and self-estimated breadth and level of statistical expertise and acoustic analysis skills.
 We will then provide teams with the acoustic data set and request that they answer the following research question:
 
 Do speakers acoustically modify utterances to signal atypical word combinations?
@@ -472,7 +469,7 @@ Th initiating authors (SC, JC, TR) will conduct the analyses outlined in this se
 \hypertarget{descriptive-statistics}{%
 \subsubsection{Descriptive statistics}\label{descriptive-statistics}}
 
-We will calculate summary statistics describing variation among analyses, including (a) the nature and number of acoustic measures (e.g.~f0 or duration), (b) the operationalization and the temporal domain of measurement (e.g.~mean of an interval or value at specified point in time), (c) the nature and number of model parameters for both fixed and random effects {[}if applicable{]}, (d) the nature and reasoning behind inferential assessments (e.g.~dichotomous decision based on \emph{p}-values, ordinal decision based on a Bayes factor), as well as the (e) mean, (f) standard deviation and (g) range of the reported effect sizes.
+We will calculate summary statistics describing variation among analyses, including (a) the nature and number of acoustic measures (e.g.~f0 or duration), (b) the operationalization and the temporal domain of measurement (e.g.~mean of an interval or value at specified point in time), (c) the nature and number of model parameters for both fixed and random effects (if applicable), (d) the nature and reasoning behind inferential assessments (e.g.~dichotomous decision based on \emph{p}-values, ordinal decision based on a Bayes factor), as well as the (e) mean, (f) standard deviation and (g) range of the standardizes effect sizes (see \ref{s:meta-est} for the standardization procedure).
 
 \hypertarget{s:meta-est}{%
 \subsubsection{Meta-analytical estimation}\label{s:meta-est}}
@@ -548,8 +545,6 @@ As the prior for \(i\) and \(\upsilon\) we will use a normal distribution with m
   \emph{Major dimension} {[}categorical{]} that has been measured to answer the research question (\(mdim_i\)).
 \item
   \emph{Temporal window} {[}categorical{]} that the measurement is taken over (\(twin_i\)).
-\item
-  \emph{Data exclusion}, {[}categorical{]} whether data has been excluded or not (\(excl_i\)).
 \item
   \emph{Average peer-review rating} {[}numeric{]}, as the mean of the peer-review ratings for each analysis.
 \end{itemize}
