@@ -196,8 +196,7 @@ Utterances stretch over several thousand milliseconds and contain different leve
 The researcher is thus confronted with a considerable number of parameters and combinations thereof to choose from.
 
 Speech categories are inherently multidimensional and dynamic: they consist of clusters of parameters that are modulated over time.
-The acoustic parameters of one category are usually asynchronous, i.e. they appear at different time points in the unfolding signal, and overlap with parameters of other categories [e.g. @jongman2000acoustic; @lisker1986voicing; @summerfield1984; @winter2014spoken].
-<!-- TODO: add summerfield REFS-->
+The acoustic parameters of one category are usually asynchronous, i.e. they appear at different time points in the unfolding signal, and overlap with parameters of other categories [e.g. @jongman2000acoustic; @lisker1986voicing; @summerfield1981articulatory; @winter2014spoken].
 A classical example is the distinction between voiced and voiceless stops in English (i.e. /b/ and /p/ in *bear* vs *pear*).
 This lexical contrast is manifested by many acoustic features which can differ depending on several factors, such as position of the consonant in the word and surrounding sounds [@lisker1977rapid]. <!-- NOTE: (?) why not "phonological contrast"? -->
 Furthermore, correlates of the contrast can even be found away from the consonant, in temporally distant speech units.
