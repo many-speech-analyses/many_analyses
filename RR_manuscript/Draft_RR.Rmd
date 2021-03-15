@@ -550,20 +550,8 @@ estimated_tbl %>%
 
 ### Analytical and demographic predictors affecting effect sizes {#ana-factors}
 <!-- NOTE: (TR) I think we should use the term predictors. Factors is really ambiguous -->
-As a second step, we will investigate (a) the extent to which the individual standardized effect sizes are affected by a series of predictors related to analytical and demographic factors (see below); and (b) the extent to which deviations from the meta-analytic point estimate by the individual standardized effect sizes relate to those same predictors.
+As a second step, we will investigate (a) the extent to which the individual standardized effect sizes are affected by a series of predictors related to analytical and demographic factors (see below); and (b) the extent to which deviations from the meta-analytic estimate by the individual standardized effect sizes relate to those same predictors.
 We will fit two Bayesian regression models, one for (a) and one for (b).
-<!-- TODO: check if stand. effect sizes and deviations are equivalent. -->
-with each team's group-level coefficient $\alpha_{\text{t}[i]}$ as the outcome variable, and the analytical and demographic factors described below as predictors.
-The coefficient $\alpha_{\text{t}[i]}$ can be interpreted as the deviation score of the team's $\eta_i$ from the meta-analytic point estimate, allowing us to determine potential effects of analytical and demographic factors on how the teams deviate from the meta-analytic mean.
-Since each $\alpha_{\text{t}[i]}$ comes with uncertainty, quantified by its standard deviation $\sigma_{\alpha_{\text{t}[i]}}$, we will fit a measurement-error model, as we did in the meta-analytic model above.
-
-A normal distribution will be used as the likelihood function of $\alpha_{t[i]}$.
-The mean of $\alpha_{t[i]}$ is modeled on the basis of the overall intercept $\beta$ and on the coefficients $\upsilon_n$ of each predictor.
-The numeric predictors will be centered and scaled and the categorical predictors will be sum coded.
-As the prior for $i$ and $\upsilon$ we will use a normal distribution with mean 0 and standard deviation 1.
-<!-- TODO: add explanation of me() predictors resp and belf -->
-
-<!-- TODO: add brm info on factors analysis model -->
 
 **Analytical factors**. We will estimate the influence of the following predictors related to the analytical characteristics of each team's reported analysis:
 
@@ -608,7 +596,20 @@ These will be entered in the model formula as a measurement-error term (`me(mean
 - *Research experience* [numeric] as the elapsed time from receiving the PhD. Negative values will indicate that the person is a student or graduate studens ($rexp_i$).
 - *Initial belief* [numeric] in the presence of an effect of atypical noun-adjective pairs on acoustics, as answered during the intake questionnaire ($belf_i$).
 
-### Data managment {#ana-archive}
+
+**Models specification**. The models for (a) and (b) from above will be fitted as measurement-error models, both with the same predictors as detailed in the preceding paragraphs.
+The outcome variable of model (a) will be the standardized effect sizes, while that of model (b) the deviation of these from the meta-analytical effect size.
+The deviation of the standardized effects will be calculated as the difference of the standardized effect sizes from the meta-analytical point estimate.
+The measure of uncertainty of the effect deviation will be calculated as the joint standard deviation by taking the square root of the joint variance $Var(\eta_i) + Var(\hat{\eta}) + 2Cov(\eta_i, \hat{\eta})$.
+
+<!-- TODO: add brm info on factors analysis model -->
+A normal distribution will be used as the likelihood function of $\alpha_{t[i]}$.
+The mean of $\alpha_{t[i]}$ is modeled on the basis of the overall intercept $\beta$ and on the coefficients $\upsilon_n$ of each predictor.
+The numeric predictors will be centered and scaled and the categorical predictors will be sum coded.
+As the prior for $i$ and $\upsilon$ we will use a normal distribution with mean 0 and standard deviation 1.
+<!-- TODO: add explanation of me() predictors resp and belf -->
+
+### Data management {#ana-archive}
 
 All relevant data, code, and materials will be publicly archived on the Open Science Framework (<https://osf.io/3bmcp/>).
 Archived data will include the original data sets distributed to all analysts, any edited versions of the data analyzed by individual groups, and the data we analyze with our meta-analyses, which include the effect sizes derived from separate analyses, the statistics describing variation in model structure among analysis teams, and the anonymized answers to our surveys of analysts and peer reviewers.
