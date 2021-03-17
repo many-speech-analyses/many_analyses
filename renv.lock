@@ -1271,6 +1271,13 @@
       "Repository": "CRAN",
       "Hash": "97def703420c8ab10d8f0e6c72101e02"
     },
+    "ragg": {
+      "Package": "ragg",
+      "Version": "1.1.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "4e0557cb2fddc4b9ef3f6679c60a3f4a"
+    },
     "rainbow": {
       "Package": "rainbow",
       "Version": "3.6",
@@ -1565,12 +1572,26 @@
       "Repository": "CRAN",
       "Hash": "b227d13e29222b4574486cfcbde077fa"
     },
+    "systemfonts": {
+      "Package": "systemfonts",
+      "Version": "1.0.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "6e899d7c097698d50ec87b1d8e65f246"
+    },
     "testthat": {
       "Package": "testthat",
       "Version": "3.0.1",
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "17826764cb92d8b5aae6619896e5a161"
+    },
+    "textshaping": {
+      "Package": "textshaping",
+      "Version": "0.3.3",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "fff317575e7191e2d077292309bed575"
     },
     "threejs": {
       "Package": "threejs",
