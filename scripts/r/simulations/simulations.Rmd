@@ -27,7 +27,7 @@ my_seed <- 115116106
 ```
 
 ```{r include=FALSE}
-dir.create("./models/sim/", F)
+dir.create("./models/sim/", F, recursive = T)
 ```
 
 # Simulate data
