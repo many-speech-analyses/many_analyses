@@ -26,6 +26,10 @@ library(betapart)
 my_seed <- 115116106
 ```
 
+```{r include=FALSE}
+dir.create("./models/sim/", F)
+```
+
 # Simulate data
 
 We first simulate a dataset (`eta_tbl`) of standardised effect sizes.
