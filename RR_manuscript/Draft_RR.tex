@@ -518,10 +518,9 @@ A sign of possible bias is when there are more points which are farther from the
 \hypertarget{ana-factors}{%
 \subsubsection{Analytical and demographic predictors affecting effect sizes}\label{ana-factors}}
 
-As a second step, we will investigate (a) the extent to which the individual standardized effect sizes are affected by a series of predictors related to analytical and demographic factors (see below); and (b) the extent to which deviations from the meta-analytic estimate by the individual standardized effect sizes relate to those same predictors.
-We will fit two Bayesian regression models, one for (a) and one for (b).
+As a second step, we will investigate the extent to which the individual standardized effect sizes are affected by a series of predictors related to analytical and researcher-related factors.
 
-\textbf{Analytical factors}. We will estimate the influence of the following predictors related to the analytical characteristics of each team's reported analysis:
+\textbf{Analytical predictors}. We will estimate the influence of the following predictors related to the analytical characteristics of each team's reported analysis:
 
 \begin{itemize}
 \tightlist
@@ -558,7 +557,7 @@ We assume the following relevant linguistic units: \emph{segment}, \emph{syllabl
 Since each analysis will receive more than one peer-review rating, we will calculate the mean rating and its standard deviation for each.
 These will be entered in the model formula as a measurement-error term (\texttt{me(mean,\ sd)} in brms).
 
-\textbf{Demographic factors}. We will include the following demographic factors about the teams:
+\textbf{Researcher-related factors}. We will include the following predictors about the teams:
 
 \begin{itemize}
 \tightlist
@@ -568,10 +567,8 @@ These will be entered in the model formula as a measurement-error term (\texttt{
   \emph{Initial belief} {[}numeric{]} in the presence of an effect of atypical noun-adjective pairs on acoustics, as answered during the intake questionnaire (\(belf_i\)).
 \end{itemize}
 
-\textbf{Models specification}. The models for (a) and (b) from above will be fitted as measurement-error models, both with the same predictors as detailed in the preceding paragraphs.
-The outcome variable of model (a) will be the standardized effect sizes, while that of model (b) the deviation of these from the meta-analytical effect size.
-The deviation of the standardized effects will be calculated as the difference of the standardized effect sizes from the meta-analytical point estimate.
-The measure of uncertainty of the effect deviation will be calculated as the joint standard deviation by taking the square root of the joint variance \(Var(\eta_i) + Var(\hat{\eta}) + 2Cov(\eta_i, \hat{\eta})\).
+\textbf{Model specification}. The model will be fitted as measurement-error models, with the predictors detailed in the preceding paragraphs.
+The outcome variable of the model will be the standardized effect sizes.
 
 A normal distribution will be used as the likelihood function of \(\alpha_{t[i]}\).
 The mean of \(\alpha_{t[i]}\) is modeled on the basis of the overall intercept \(\beta\) and on the coefficients \(\upsilon_n\) of each predictor.
