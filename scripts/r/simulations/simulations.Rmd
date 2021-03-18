@@ -322,7 +322,6 @@ predictors_bm <- brm(
     mod_n +
     mdim +
     twin +
-    excl +
     me(rating_mean, rating_sd) +
     me(exp_mean, exp_sd) +
     me(belf_mean, belf_sd),
