@@ -550,10 +550,9 @@ estimated_tbl %>%
 
 ### Analytical and demographic predictors affecting effect sizes {#ana-factors}
 <!-- NOTE: (TR) I think we should use the term predictors. Factors is really ambiguous -->
-As a second step, we will investigate (a) the extent to which the individual standardized effect sizes are affected by a series of predictors related to analytical and demographic factors (see below); and (b) the extent to which deviations from the meta-analytic estimate by the individual standardized effect sizes relate to those same predictors.
-We will fit two Bayesian regression models, one for (a) and one for (b).
+As a second step, we will investigate the extent to which the individual standardized effect sizes are affected by a series of predictors related to analytical and researcher-related factors.
 
-**Analytical factors**. We will estimate the influence of the following predictors related to the analytical characteristics of each team's reported analysis:
+**Analytical predictors**. We will estimate the influence of the following predictors related to the analytical characteristics of each team's reported analysis:
 
 <!-- NOTE: We dropped data exclusion -->
 - *Measure of uniqueness* [numeric] of individual analyses for the set of predictors in each model ($uniq_i$).
@@ -591,16 +590,13 @@ These will be entered in the model formula as a measurement-error term (`me(mean
 
 <!-- TODO: explain how the demographic factors will be entered in the factors analysis -->
 
-**Demographic factors**. We will include the following demographic factors about the teams:
+**Researcher-related factors**. We will include the following predictors about the teams:
 
 - *Research experience* [numeric] as the elapsed time from receiving the PhD. Negative values will indicate that the person is a student or graduate studens ($rexp_i$).
 - *Initial belief* [numeric] in the presence of an effect of atypical noun-adjective pairs on acoustics, as answered during the intake questionnaire ($belf_i$).
 
-
-**Models specification**. The models for (a) and (b) from above will be fitted as measurement-error models, both with the same predictors as detailed in the preceding paragraphs.
-The outcome variable of model (a) will be the standardized effect sizes, while that of model (b) the deviation of these from the meta-analytical effect size.
-The deviation of the standardized effects will be calculated as the difference of the standardized effect sizes from the meta-analytical point estimate.
-The measure of uncertainty of the effect deviation will be calculated as the joint standard deviation by taking the square root of the joint variance $Var(\eta_i) + Var(\hat{\eta}) + 2Cov(\eta_i, \hat{\eta})$.
+**Model specification**. The model will be fitted as measurement-error models, with the predictors detailed in the preceding paragraphs.
+The outcome variable of the model will be the standardized effect sizes.
 
 <!-- TODO: add brm info on factors analysis model -->
 A normal distribution will be used as the likelihood function of $\alpha_{t[i]}$.

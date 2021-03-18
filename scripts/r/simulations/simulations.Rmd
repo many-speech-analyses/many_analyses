@@ -84,8 +84,6 @@ mod_n <- sample(1:5, n, replace = T)
 mdim <- sample(c("duration", "amplitude", "f0", "spectral", "other"), n, TRUE)
 # temporal window
 twin <- sample(c("segment", "syllable", "word", "phrase"), n, T)
-# was data excluded?
-excl <- rbinom(n, 1, 0.5)
 # reviewers' ratings
 rating <- replicate(n, sample(0:100, sample(3:4, 1), replace = T))
 
@@ -113,7 +111,6 @@ eta_tbl <- tibble(
   mod_n,
   mdim,
   twin,
-  excl,
   rating,
   exp,
   belf,
@@ -276,7 +273,10 @@ meta_bm
 plot(meta_bm)
 ```
 
-# Factors analysis model
+# Analytic and researchers' predictors model
+
+As a second step, we will investigate the extent to which the individual standardized effect sizes are affected by a series of predictors related to analytical and researcher-related factors.
+
 
 ## Model formula
 
@@ -284,7 +284,7 @@ $$
 \begin{aligned}
 \alpha_{\text{t}[i]}      & \sim \text{Normal}(\mu_{\alpha_{t[i]}}, \sigma_i) \\
 \mu_{\alpha_{t[i]}}       & = \beta + \upsilon_u\cdot uniq_i + \upsilon_c\cdot cons_i + \upsilon_p\cdot phoc_i + \upsilon_m\cdot modn_i \\
- & \qquad + \upsilon_d\cdot mdim_i + \upsilon_w\cdot twin_i + \upsilon_e\cdot excl_i \\
+ & \qquad + \upsilon_d\cdot mdim_i + \upsilon_w\cdot twin_i \\
  & \qquad + \upsilon_r\cdot rat_i + \\
  & \qquad + \upsilon_{xp}\cdot rexp_i + \upsilon_{be}\cdot belf_i  \\
 \iota      & \sim \text{Normal}(0, 1) \\
@@ -298,8 +298,8 @@ $$
 
 ## Model priors
 
-```{r factors-priors}
-factors_priors <- c(
+```{r preds-priors}
+preds_priors <- c(
   prior(normal(0, 1), class = Intercept),
   prior(normal(0, 1), class = b),
   prior(normal(0, 1), class = meanme),
@@ -308,11 +308,10 @@ factors_priors <- c(
 )
 ```
 
-
 ## Run
 
-```{r factors-bm}
-factors_bm <- brm(
+```{r predictors-bm}
+predictors_bm <- brm(
   eta | se(se) ~
     pop_sdi +
     phoc_n +
@@ -324,13 +323,13 @@ factors_bm <- brm(
     me(exp_mean, exp_sd) +
     me(belf_mean, belf_sd),
   data = eta_tbl,
-  prior = factors_priors,
+  prior = preds_priors,
   chain = 4,
   iter = 4000,
   control = list(max_treedepth = 15),
   seed = my_seed,
   cores = 4,
-  file = "./models/sim/factors_bm"
+  file = "./models/sim/predictors_bm"
 )
 ```
 
