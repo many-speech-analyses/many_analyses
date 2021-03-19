@@ -125,20 +125,21 @@ Data analysis comes with many decisions, like how to measure a given phenomenon 
 This can be problematic because humans show cognitive biases that can lead to erroneous inferences.
 Humans filter the world in irrational ways [e.g., @tversky1974judgment], seeing coherent patterns in randomness [@brugger2001], convincing themselves of the validity of prior expectations ["I knew it", @nickerson1998confirmation], and perceiving events as being plausible in hindsight ["I knew it all along", @fischhoff1975hindsight].
 In conjunction with an academic incentive system that rewards certain discovery processes more than others [@sterling1959publication; @koole2012rewarding], we often find ourselves exploring many possible analytic pipelines, but only reporting a select few.
+
 This issue is particularly amplified in fields in which the raw data lend themselves to many possible ways of being measured [@roettger2019researcher].
 Combined with a wide variety of methodological and theoretical traditions as well as varying levels of statistical training across subfields, the inherent flexibility of data analysis might lead to a vast plurality of analytic approaches that can lead to different scientific conclusions.
-Consequently, there might be many published papers that present overconfident interpretations of their data based on idiosyncratic analytic strategies [e.g., @simmons2011false; @gelman2014statistical].
-These interpretations are either associated with an unknown amount of uncertainty or lend themselves to alternative interpretation if analyzed differently.
+Analytic flexibility has been widely discussed from a conceptual point of view [@simmons2011false; @wagenmakers2012agenda; @nosek2014method] and in regard to its application in individual scientific fields [e.g. @wicherts2016; @charles2019; @roettger2019researcher].
+This notwithstanding, there are still many unknowns regarding the extent of analytic plurality in practice.
+
+Consequently, it is likely that a good part of published papers present overconfident interpretations of data and statistical results based on idiosyncratic analytic strategies [e.g., @simmons2011false; @gelman2014statistical].
+These interpretations, and the conclusions that derive from them, are thus associated with an unknown degree of uncertainty (dependent on the strength of evidence provided) and with an unknown degree of generalisability (dependent on the chosen analysis).
+Moreover, the same data could lead to very different conclusions depending on the analytic path taken by the researcher.
 However, instead of being critically evaluated, scientific results often remain unchallenged in the publication record.
 Despite recent efforts to improve transparency and reproducibility [e.g. @miguel2014promoting; @klein2018practical] and the advent of freely available and accessible infrastructures, such as those provided by the Open Science Framework (osf.io), critical re-analyses of published analytic strategies are still uncommon because data sharing remains rare [@wicherts2006poor].
 
-Analytic flexibility has been widely discussed from a conceptual point of view [@simmons2011false; @wagenmakers2012agenda; @nosek2014method] and in regard to its application in individual scientific fields [e.g. @wicherts2016, Charles et al. 2019, @roettger2019researcher], notwithstanding, there are still many unknowns regarding the extent of analytic plurality in practice.
-<!-- TODO: add REFS Charles et al. 2019 -->
-Recent collaborative attempts have started to shed light on how different analysts tackle the same data set and have revealed a large amount of variability.
-<!-- NOTE: (?) I think this should be part of the previous paragraph. -->
-
 ## Crowdsourcing alternative analyses
 
+Recent collaborative attempts have started to shed light on how different analysts tackle the same data set and have revealed a large amount of variability.
 In a collaborative effort, @silberzahn2018many let twenty-nine independent analysis teams address the same research hypothesis.
 Analytic approaches and consequently the results varied widely between teams.
 Sixty-nine percent of the teams found support for the hypothesis, and 31% did not.
@@ -249,7 +250,7 @@ To assess the variability in data analysis pipelines across independent research
 The study aimed at investigating whether speakers acoustically modify utterances to signal unexpected referring expressions.
 In the following, we will shortly introduce the research question of the original study.
 
-## The data set: The acoustic properties of atypical modifiers
+## The data set: The acoustic properties of atypical modifiers {#s:dataset}
 
 Referring is one of the most basic and prevalent uses of language and one of the most widely researched areas in language science.
 It is an open question how speakers choose a referring expression when they want to refer to a specific entity like a banana.
@@ -274,8 +275,9 @@ Moreover, the data is not available, and the statistical analysis used anti-cons
 
 <!-- TODO: ask people if they have ever heard of these papers -->
 
-To further illuminate the question of whether speakers modify speech to signal atypical referents, we recorded thirty native German speakers interacting with a confederate (one of the experimenters) in a referential game.
+To further illuminate the question of whether speakers modify speech to signal atypical referents, thirty native German speakers were recorded while interacting with a confederate (one of the experimenters) in a referential game.
 The participants had to verbally instruct the confederate to select a specified target object out of four object presented on a screen.
+\Cref{f:procedural-timeline}
 The subject and confederate were seated at the opposite sides of a table, each facing one of two mirrored computer screens.
 The participant and the experimenter could not see each other nor each others' screens.
 <!-- TODO: add ref to experiment procedure figure in (see XXX) -->
@@ -283,7 +285,14 @@ After a familiarization phase (see XXX), the subject first saw four colored obje
 One of the objects served as the target, another as the competitor, and the remaining two objects served as distractors.
 Objects were referred to using noun phrases consisting of an adjective modifier denoting color and a modified object (e.g. *Gelbe Zitrone* 'yellow lemon', *Rote Gurke* 'red cucumber', *Rote Socken* 'red socks').
 
-<!-- TODO: add experiment procedure figure -->
+
+<!-- FIGURE -->
+(ref:procedural) Experimental procedure timeline.
+
+```{r 'procedural', echo=FALSE, fig.cap="(ref:procedural)", out.width="100%"}
+knitr::include_graphics(here::here("figs", "procedure_plot.png"))
+```
+<!-- END: FIGURE -->
 
 In the center of the screen, a black cube was displayed, which could be moved by the experimenter.
 The participant would read a sentence prompt out loud (*Du sollst den Würfel auf der <COLOR OBJECT> ablegen* 'You have to put the cube on top of the <COLOR OBJECT>') to instruct the experimenter to drag the cube on top of one of the four depicted objects (the *competitor*) using the mouse.
@@ -370,18 +379,14 @@ t <- sqrt((df)/2)
 pt(t, df, lower.tail = F) * 2
 ```
 
-<!-- TODO: double check with BN if sample size justification is correct -->
-
-
 ## Phase 2: Primary Data Analyses
 
-<!-- TODO: add LINK to demo survey -->
+<!-- TODO: add LINK to survey -->
 The analysis teams will register and answer a demographic and expertise survey (LINK).
 The survey collects information on the analysts current position and self-estimated breadth and level of statistical expertise and acoustic analysis skills.
-We will then provide teams with the acoustic data set and request that they answer the following research question:
-<!-- TODO: LINK dataset here -->
-
-Do speakers acoustically modify utterances to signal atypical word combinations?
+We will then request that they answer the question: *Do speakers acoustically modify utterances to signal atypical word combinations?*
+To do so, they will be given the data generated by the experiment described in \Cref{s:dataset}.
+The data will include the audio recordings with corresponding time-aligned transcriptions in the form of Praat TextGrid files.^[See <https://osf.io/rdtx5/?view_only=66989a3bbe034e188846e23f84913ffe>. Due to storage caps on the OSF, we will make the audio files available on <https://eudat.eu/catalogue/B2SHARE> in due course.]
 
 <!-- TODO: add LINK to analytic survey -->
 Once their analysis is complete, they will answer a structured survey (LINK), providing information about their analysis technique, an explanation of their analytic choices, their quantitative results, and a statement describing their conclusions.

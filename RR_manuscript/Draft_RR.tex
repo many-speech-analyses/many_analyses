@@ -142,19 +142,22 @@ Data analysis comes with many decisions, like how to measure a given phenomenon 
 This can be problematic because humans show cognitive biases that can lead to erroneous inferences.
 Humans filter the world in irrational ways (e.g., Tversky and Kahneman 1974), seeing coherent patterns in randomness (Brugger 2001), convincing themselves of the validity of prior expectations ({``I knew it,''} Nickerson 1998), and perceiving events as being plausible in hindsight ({``I knew it all along,''} Fischhoff 1975).
 In conjunction with an academic incentive system that rewards certain discovery processes more than others (Sterling 1959; Koole and Lakens 2012), we often find ourselves exploring many possible analytic pipelines, but only reporting a select few.
+
 This issue is particularly amplified in fields in which the raw data lend themselves to many possible ways of being measured (Roettger 2019).
 Combined with a wide variety of methodological and theoretical traditions as well as varying levels of statistical training across subfields, the inherent flexibility of data analysis might lead to a vast plurality of analytic approaches that can lead to different scientific conclusions.
-Consequently, there might be many published papers that present overconfident interpretations of their data based on idiosyncratic analytic strategies (e.g., Simmons, Nelson, and Simonsohn 2011; Gelman and Loken 2014).
-These interpretations are either associated with an unknown amount of uncertainty or lend themselves to alternative interpretation if analyzed differently.
+Analytic flexibility has been widely discussed from a conceptual point of view (Simmons, Nelson, and Simonsohn 2011; Wagenmakers et al. 2012; Nosek and Lakens 2014) and in regard to its application in individual scientific fields (e.g. Wicherts et al. 2016; Charles et al. 2019; Roettger 2019).
+This notwithstanding, there are still many unknowns regarding the extent of analytic plurality in practice.
+
+Consequently, it is likely that a good part of published papers present overconfident interpretations of data and statistical results based on idiosyncratic analytic strategies (e.g., Simmons, Nelson, and Simonsohn 2011; Gelman and Loken 2014).
+These interpretations, and the conclusions that derive from them, are thus associated with an unknown degree of uncertainty (dependent on the strength of evidence provided) and with an unknown degree of generalisability (dependent on the chosen analysis).
+Moreover, the same data could lead to very different conclusions depending on the analytic path taken by the researcher.
 However, instead of being critically evaluated, scientific results often remain unchallenged in the publication record.
 Despite recent efforts to improve transparency and reproducibility (e.g. Miguel et al. 2014; Klein et al. 2018) and the advent of freely available and accessible infrastructures, such as those provided by the Open Science Framework (osf.io), critical re-analyses of published analytic strategies are still uncommon because data sharing remains rare (Wicherts et al. 2006).
-
-Analytic flexibility has been widely discussed from a conceptual point of view (Simmons, Nelson, and Simonsohn 2011; Wagenmakers et al. 2012; Nosek and Lakens 2014) and in regard to its application in individual scientific fields Roettger (2019), notwithstanding, there are still many unknowns regarding the extent of analytic plurality in practice.
-Recent collaborative attempts have started to shed light on how different analysts tackle the same data set and have revealed a large amount of variability.
 
 \hypertarget{crowdsourcing-alternative-analyses}{%
 \subsection{Crowdsourcing alternative analyses}\label{crowdsourcing-alternative-analyses}}
 
+Recent collaborative attempts have started to shed light on how different analysts tackle the same data set and have revealed a large amount of variability.
 In a collaborative effort, Silberzahn et al. (2018) let twenty-nine independent analysis teams address the same research hypothesis.
 Analytic approaches and consequently the results varied widely between teams.
 Sixty-nine percent of the teams found support for the hypothesis, and 31\% did not.
@@ -267,8 +270,8 @@ To assess the variability in data analysis pipelines across independent research
 The study aimed at investigating whether speakers acoustically modify utterances to signal unexpected referring expressions.
 In the following, we will shortly introduce the research question of the original study.
 
-\hypertarget{the-data-set-the-acoustic-properties-of-atypical-modifiers}{%
-\subsection{The data set: The acoustic properties of atypical modifiers}\label{the-data-set-the-acoustic-properties-of-atypical-modifiers}}
+\hypertarget{s:dataset}{%
+\subsection{The data set: The acoustic properties of atypical modifiers}\label{s:dataset}}
 
 Referring is one of the most basic and prevalent uses of language and one of the most widely researched areas in language science.
 It is an open question how speakers choose a referring expression when they want to refer to a specific entity like a banana.
@@ -291,13 +294,20 @@ If true, these findings are in line with the idea of resource-efficient, rationa
 However, the original conclusions of above studies were based on small (N = 10), unjustified sample sizes.
 Moreover, the data is not available, and the statistical analysis used anti-conservative co-variance structures, leaving reason to doubt the original conclusions.
 
-To further illuminate the question of whether speakers modify speech to signal atypical referents, we recorded thirty native German speakers interacting with a confederate (one of the experimenters) in a referential game.
+To further illuminate the question of whether speakers modify speech to signal atypical referents, thirty native German speakers were recorded while interacting with a confederate (one of the experimenters) in a referential game.
 The participants had to verbally instruct the confederate to select a specified target object out of four object presented on a screen.
+\Cref{f:procedural-timeline}
 The subject and confederate were seated at the opposite sides of a table, each facing one of two mirrored computer screens.
 The participant and the experimenter could not see each other nor each others' screens.
 After a familiarization phase (see XXX), the subject first saw four colored objects in the top left, top right, bottom left, and bottom right corners of the screen.
 One of the objects served as the target, another as the competitor, and the remaining two objects served as distractors.
 Objects were referred to using noun phrases consisting of an adjective modifier denoting color and a modified object (e.g.~\emph{Gelbe Zitrone} `yellow lemon,' \emph{Rote Gurke} `red cucumber,' \emph{Rote Socken} `red socks').
+
+
+
+\begin{figure}
+\includegraphics[width=1\linewidth]{/Users/ste/repos/many_analyses/figs/procedure_plot} \caption{Experimental procedure timeline.}\label{fig:procedural}
+\end{figure}
 
 In the center of the screen, a black cube was displayed, which could be moved by the experimenter.
 The participant would read a sentence prompt out loud (\emph{Du sollst den Würfel auf der ablegen} `You have to put the cube on top of the ') to instruct the experimenter to drag the cube on top of one of the four depicted objects (the \emph{competitor}) using the mouse.
@@ -386,9 +396,9 @@ When \(n = 12\) then \(t_{(12-1)} = t_{(11)} = 2.3452\) and \(p = 0.0388\), whic
 
 The analysis teams will register and answer a demographic and expertise survey (LINK).
 The survey collects information on the analysts current position and self-estimated breadth and level of statistical expertise and acoustic analysis skills.
-We will then provide teams with the acoustic data set and request that they answer the following research question:
-
-Do speakers acoustically modify utterances to signal atypical word combinations?
+We will then request that they answer the question: \emph{Do speakers acoustically modify utterances to signal atypical word combinations?}
+To do so, they will be given the data generated by the experiment described in \Cref{s:dataset}.
+The data will include the audio recordings with corresponding time-aligned transcriptions in the form of Praat TextGrid files.\footnote{See \url{https://osf.io/rdtx5/?view_only=66989a3bbe034e188846e23f84913ffe}. Due to storage caps on the OSF, we will make the audio files available on \url{https://eudat.eu/catalogue/B2SHARE} in due course.}
 
 Once their analysis is complete, they will answer a structured survey (LINK), providing information about their analysis technique, an explanation of their analytic choices, their quantitative results, and a statement describing their conclusions.
 They will also upload their analysis files (including the additionally derived data and text files that were used to extract and pre-process the acoustic data), their analysis code (if applicable), and a detailed journal-ready statistical methods section.
@@ -623,6 +633,9 @@ Bürkner, Paul-Christian. 2017. {``{brms}: An {R} Package for {Bayesian} Multile
 
 \leavevmode\vadjust pre{\hypertarget{ref-camerer2018evaluating}{}}%
 Camerer, Colin F, Anna Dreber, Felix Holzmeister, Teck-Hua Ho, Jürgen Huber, Magnus Johannesson, Michael Kirchler, et al. 2018. {``Evaluating the Replicability of Social Science Experiments in Nature and Science Between 2010 and 2015.''} \emph{Nature Human Behaviour} 2 (9): 637--44. \url{https://doi.org/10.1038/s41562-018-0399-z}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-charles2019}{}}%
+Charles, Sarah J., James E. Bartlett, Kyle J. Messick, Thomas J. Coleman, and Alex Uzdavines. 2019. {``Researcher Degrees of Freedom in the Psychology of Religion.''} \emph{The International Journal for the Psychology of Religion} 29 (4): 230--45.
 
 \leavevmode\vadjust pre{\hypertarget{ref-open2015estimating}{}}%
 Collaboration, Open Science. 2015. {``Estimating the Reproducibility of Psychological Science.''} \emph{Science} 349 (6251). \url{https://doi.org/10.1126/science.aac4716}.
