@@ -149,8 +149,8 @@ The authors results suggest that analytic plurality may be an inevitable byprodu
 
 Several other recent studies corroborated this analytic flexibility across different disciplines.
 Both @dutilh2019 ad @starns2019assessing investigated analysts' choices when inferring theoretical constructs based on the same data set using computational models.
-<!-- TODO: Parker et al. (ECO) REFS -->
-Both studies revealed vastly different modeling strategies, even though scientific conclusions were similar across analysis teams [see also Parker et al. (accepted) on analytic flexibility in ecology and @botvinik-nezer2020 on neuroimaging data].
+
+Both studies revealed vastly different modeling strategies, even though scientific conclusions were similar across analysis teams [see also @Parker2020 on analytic flexibility in ecology and @botvinik-nezer2020 on neuroimaging data].
 @bastiaansen2020 crowdsourced clinical recommendations based on analyses of an individual patient.
 Results suggests that analysts differed substantially regarding decisions related to both the statistical analysis of the data and the theoretical rationale behind interpreting the statistical results.
 
@@ -349,10 +349,8 @@ If we are unable to recruit at least half the number of reviewers as analysis te
 All analysts and reviewers will share co-authorship on this manuscript and will participate in the collaborative process of producing the final manuscript.
 <!-- TODO: add LINK to informed consent form -->
 All analysts will sign a consent (ethics) document (LINK).
-<!-- TODO: add information about what this consent form does -->
 
-<!-- TODO: Parker et al. (ECO) REFS -->
-Following Parker et al. [ECO RR], we identified a minimal sample size that would provide an estimate of heterogeneity of the effect sizes reported by the analysis teams ($\tau^2$, i.e. the variance $\sigma^2_{\alpha_{\text{t}}}$, see \Cref{s:meta-est}).
+Following Parker et al. [@Parker2020], we identified a minimal sample size that would provide an estimate of heterogeneity of the effect sizes reported by the analysis teams ($\tau^2$, i.e. the variance $\sigma^2_{\alpha_{\text{t}}}$, see \Cref{s:meta-est}).
 In short, the minimal sample size is considered the number of analysis teams needed to allow an estimation of heterogeneity.
 We consider a posterior distribution of $\tau^2$, for which the 95% credible interval (CrI) does not include 0 as sufficient.
 The probability $Pr$ that a CrI interval does not include 0 is obtained via the *t*-statistic:
