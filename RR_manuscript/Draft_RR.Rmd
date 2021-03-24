@@ -97,7 +97,6 @@ my_seed <- 115116106
 
 In order to effectively accumulate knowledge, science needs to (i) produce data that can be replicated using the original methods and (ii) arrive at robust conclusions substantiated by the data.
 In recent coordinated efforts to replicate published findings, scientific disciplines have uncovered surprisingly low success rates [e.g., @open2015estimating; @camerer2018evaluating] leading to what is now referred to as the *replication crisis*.
-<!-- TODO: add REFS about variable conclusions from reliable data -->
 Beyond the difficulties of replicating scientific findings, a growing body of evidence suggests that the theoretical conclusions drawn from data are often variable even when researchers have access to reliable data.
 The latter situation has been referred to as the *inference crisis* [@rotello2015more; @starns2019assessing] and is, among other things, rooted in the inherent flexibility of data analysis [often referred to as researcher degrees of freedom: @simmons2011false; @gelman2014statistical].
 Data analysis involves many different steps, such as inspecting, organizing, transforming, and modeling the data, to name a few.
@@ -229,7 +228,6 @@ For example, we could measure f0 at specific points in time like the onset of th
 We could also measure the value or time of the minimum or maximum f0 value.
 We could summarize f0 across the entire window and extract the mean, median or standard deviation of f0, all of which have been used to analyze speech data [see @gordon2017acoustic].
 And the garden of forking paths does not stop here.
-<!-- TODO: add examples of pitch tracking options -->
 Figure \@ref(fig:forkingPaths), illustrates a specific option to automatically calculate f0.
 Knowing that the signals and the measures thereof can be noisy, another option would be to smooth them using one algorithm and degree over others, or remove values that substantially deviate from surrounding values or expectations, either manually or automatically, and so on.
 <!-- NOTE: (JVC) Im having a bit of trouble with this sentence. I tried to fix it and now I am realizing I don't quite follow (JVC) -->
@@ -273,14 +271,11 @@ If true, these findings are in line with the idea of resource-efficient, rationa
 However, the original conclusions of above studies were based on small (N = 10), unjustified sample sizes.
 Moreover, the data is not available, and the statistical analysis used anti-conservative co-variance structures, leaving reason to doubt the original conclusions.
 
-<!-- TODO: ask people if they have ever heard of these papers -->
-
 To further illuminate the question of whether speakers modify speech to signal atypical referents, thirty native German speakers were recorded while interacting with a confederate (one of the experimenters) in a referential game.
 The participants had to verbally instruct the confederate to select a specified target object out of four object presented on a screen.
 \Cref{f:procedural-timeline}
 The subject and confederate were seated at the opposite sides of a table, each facing one of two mirrored computer screens.
 The participant and the experimenter could not see each other nor each others' screens.
-<!-- TODO: add ref to experiment procedure figure in (see XXX) -->
 After a familiarization phase (see XXX), the subject first saw four colored objects in the top left, top right, bottom left, and bottom right corners of the screen.
 One of the objects served as the target, another as the competitor, and the remaining two objects served as distractors.
 Objects were referred to using noun phrases consisting of an adjective modifier denoting color and a modified object (e.g. *Gelbe Zitrone* 'yellow lemon', *Rote Gurke* 'red cucumber', *Rote Socken* 'red socks').
