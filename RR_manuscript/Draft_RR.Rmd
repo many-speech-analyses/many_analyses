@@ -287,7 +287,7 @@ Objects were referred to using noun phrases consisting of an adjective modifier 
 
 
 <!-- FIGURE -->
-(ref:procedural) Experimental procedure timeline.
+(ref:procedural) Experimental procedure - The upper row illustrates the trial sequence for the speaker (participant) and the lower row illustrates the trial sequence for the confederate. After a preview of 1500ms the speaker sees an arrow indicating one of the referent (b). Reading the orthographic instructions out loud, the speaker gives the confederate verbal instructions onto which referent they should drag the cube (c). The confederate, in turn, drags the black cube onto the target referent (d). Both the arrow and the orthographic instruction disappear from the speaker's screen and a new referent is indicated by an arrow on the same display alongside a new orthographic instruction (e). The speaker gives the confederate verbal instructions (f) which the confederate follows by dragging the cube onto the next referent (g).
 
 ```{r 'procedural', echo=FALSE, fig.cap="(ref:procedural)", out.width="100%"}
 knitr::include_graphics(here::here("figs", "procedure_plot.png"))
