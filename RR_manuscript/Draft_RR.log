@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.999992 (TeX Live 2020) (preloaded format=xelatex 2021.3.10)  19 MAR 2021 13:25
+This is XeTeX, Version 3.14159265-2.6-0.999992 (TeX Live 2020) (preloaded format=xelatex 2021.3.10)  24 MAR 2021 13:54
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -888,11 +888,11 @@ uce the final
 
 [13] [14]
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 5.0pt on input line 401.
+(Font)              scaled to size 5.0pt on input line 397.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 5.00046pt on input line 401.
+(Font)              scaled to size 5.00046pt on input line 397.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 4.99947pt on input line 401.
+(Font)              scaled to size 4.99947pt on input line 397.
 [15] [16] [17] [18]
 File: Draft_RR_files/figure-latex/funnel-plot-1.pdf Graphic file (type pdf)
 <use Draft_RR_files/figure-latex/funnel-plot-1.pdf>
@@ -928,10 +928,10 @@ Package rerunfilecheck Info: File `Draft_RR.out' has not changed.
 Here is how much of TeX's memory you used:
  19292 strings out of 478931
  354123 string characters out of 5866460
- 843774 words of memory out of 5000000
+ 845774 words of memory out of 5000000
  38865 multiletter control sequences out of 15000+600000
  410866 words of font info for 89 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 98i,8n,122p,728b,475s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 98i,8n,122p,728b,478s stack positions out of 5000i,500n,10000p,200000b,80000s
 
 Output written on Draft_RR.pdf (28 pages).
