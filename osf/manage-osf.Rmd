@@ -16,111 +16,28 @@ library(speakr)
 
 This document contains the code used to manage the OSF repo with the [osfr](https://docs.ropensci.org/osfr/) package.
 
-# Retrieve OSF repo and components
+# Retrieve OSF Data component
 
 ```{r retrieve}
 # Main repo "Many Speech Analysis": https://osf.io/3bmcp/
-osf_repo <- osf_retrieve_node("3bmcp")
-# Repo components
-osf_comps <- osf_ls_nodes(osf_repo)
-# Dataset & Materials component
-data_comp <- osf_comps %>% filter(name == "Data")
+osf_data <- osf_retrieve_node("5agn9")
 ```
 
-# List data_comp files
+# Prepare files
 
-```{r data_files}
-osf_ls_files(data_comp)
-```
-
-# Readme files
+## Readme files
 
 We can knit the readme files (they are GitHub documents, i.e. `.Rmd` files that are converted to `.md` files upon knitting).
 
 ```{r knit-readmes, message=FALSE, warning=FALSE}
-files <- list.files("./osf/data", pattern = "[.]Rmd$", recursive = T, full.names = T)
+readme_rmds <- list.files("./osf/data", pattern = "[.]Rmd$", recursive = T, full.names = T)
 
-for (f in files) {
+for (f in readme_rmds) {
   xfun::Rscript_call(rmarkdown::render, list(f))
 }
 ```
 
-
-```{r upload-readmes}
-# A loop would be better
-
-# data/ ----
-osf_upload(data_comp, path = "./osf/data/README.md", conflicts = "overwrite", verbose = T)
-
-data_comp_files <- osf_ls_files(data_comp)
-
-
-
-# data/norming/ ----
-raw <- data_comp_files %>% filter(name == "norming")
-
-#### delete old readme ("overwrite" option fails)
-old_readme <- osf_ls_files(data_comp, "norming", pattern = "README.md")
-osf_rm(old_readme, check = FALSE)
-
-#### upload new readme
-osf_upload(
-  raw,
-  path = "./osf/data/norming/README.md",
-  conflicts = "overwrite", verbose = T)
-
-
-
-# data/norming/images/ ----
-#### delete old readme
-old_readme <- osf_ls_files(data_comp, "norming/images/", pattern = "README.md")
-osf_rm(old_readme, check = FALSE)
-
-#### upload new readme
-audio <- osf_ls_files(data_comp, "norming", pattern = "images")
-osf_upload(
-  audio,
-  path = "./osf/data/norming/images/README.md",
-  conflicts = "overwrite", verbose = T)
-
-
-
-# data/production/audio/ ----
-#### delete old readme
-# old_readme <- osf_ls_files(data_comp, "production/audio", pattern = "README.md")
-# osf_rm(old_readme, check = FALSE)
-# 
-# #### upload new readme
-# audio <- osf_ls_files(data_comp, "production", pattern = "audio")
-# osf_upload(
-#   audio,
-#   path = "./osf/data/production/audio/README.md",
-#   conflicts = "overwrite", verbose = T)
-
-
-
-# data/production/trial-lists ----
-#### delete old readme
-# old_readme <- osf_ls_files(data_comp, "production/trial-lists", pattern = "README.md")
-# osf_rm(old_readme, check = FALSE)
-# 
-# #### upload new readme
-# trials <- osf_ls_files(data_comp, "production", pattern = "trial-lists")
-# osf_upload(
-#   trials,
-#   path = "./osf/data/production/trial-lists/README.md",
-#   conflicts = "overwrite", verbose = T)
-```
-
-# PDF of norming and production methods
-
-```{r pdf-methods}
-file.copy("./docs/methods_norm_prod/methods_norm_prod.pdf", "./osf/data/", overwrite = T)
-
-osf_upload(data_comp, path = "./osf/data/methods_norm_prod.pdf", conflicts = "overwrite", verbose = T)
-```
-
-# Norming study
+## Norming study
 
 ```{r ratings}
 ratings <- read_csv("./data/dataset/ratings.csv") %>%
@@ -187,44 +104,11 @@ ratings_summary <- ratings %>%
 write_csv(ratings_summary, "./osf/data/norming/ratings/ratings_summary.csv")
 ```
 
-```{r ratings-upload}
-rats <- osf_ls_files(data_comp, "norming", pattern = "ratings")
-
-# delete old tgs
-osf_rm(rats, check = FALSE)
-osf_mkdir(data_comp, "norming/ratings")
-
-# upload new tgs
-new_ratings <- list.files("./osf/data/norming/ratings", ".csv", full.names = TRUE)
-
-rats <- osf_ls_files(data_comp, "norming", pattern = "ratings")
-osf_upload(rats, new_ratings, conflicts = "overwrite", verbose = T, progress = T)
-```
-
-
-# Production study
-
-## TextGrids
+## Production study
 
 ```{r textgrids}
 praat_run("./scripts/praat/prep_textgrids.praat")
 ```
-
-```{r textgrids-upload}
-audio <- osf_ls_files(data_comp, "production", pattern = "audio")
-
-# delete old tgs
-osf_rm(audio, check = FALSE)
-osf_mkdir(data_comp, "production/audio")
-
-# upload new tgs
-new_tgs <- list.files("./osf/data/production/audio", ".TextGrid", full.names = TRUE)
-
-audio <- osf_ls_files(data_comp, "production", pattern = "audio")
-osf_upload(audio, new_tgs, conflicts = "overwrite", verbose = T, progress = T)
-```
-
-## Trial lists
 
 ```{r tlists}
 tlists <- list.files("./data/trial-lists", ".csv", full.names = TRUE)
@@ -246,25 +130,12 @@ for (tlist in tlists) {
 }
 ```
 
-```{r tlists-upload}
-trials <- osf_ls_files(data_comp, "production", pattern = "trial-lists")
+# Upload files
 
-# delete old trials
-old_trials <- osf_ls_files(trials, pattern = ".csv", n_max = Inf)
-
-for (file in 1:nrow(old_trials)) {
-  osf_rm(old_trials[file,], check = FALSE)
-}
-
-# upload new trials
-new_trials <- list.files("./osf/data/production/trial-lists/", ".csv", full.names = TRUE)
-
-for (trial in new_trials) {
-  osf_upload(
-    trials,
-    path = trial,
-    conflicts = "overwrite", verbose = T
-  )
-}
+```{r upload-files, eval=FALSE}
+osf_upload(osf_data, path = "./osf/data/norming", recurse = T, verbose = T)
+osf_upload(osf_data, path = "./osf/data/production", recurse = T, verbose = T)
+osf_upload(osf_data, path = "./osf/data/README.md", recurse = T, verbose = T)
+osf_upload(osf_data, path = "./osf/data/methods_norm_prod.pdf", recurse = T, verbose = T)
 ```
 
