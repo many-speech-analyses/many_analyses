@@ -114,7 +114,7 @@ This is not trivial, given the temporal extension of the acoustic signal and its
 Not only can decisions about measuring the signal influence downstream decisions about statistical modeling, but statistical results or modeling issues can also lead researchers to go back and revise earlier decisions about the measuring process itself.
 
 In this article, we will investigate the variability in analytic choices when many analyst teams analyze the same speech production data set, a process that involves both decisions regarding the operationalization of a complex  signal and decisions regarding the statistical analysis.
-<!-- TODO: LATER include number of teams when known -->
+<!-- TODOLATER: include number of teams when known -->
 Specifically, we will report the impact of analytic decision making on research results obtained by a minimum of 12 teams who will gain access to the same set of acoustic recordings in order to answer the same research question.
 <!-- TODO: check tense throughout, should be future tense -->
 
@@ -193,7 +193,7 @@ The researcher is thus confronted with a considerable number of parameters and c
 Speech categories are inherently multidimensional and dynamic: they consist of clusters of parameters that are modulated over time.
 The acoustic parameters of one category are usually asynchronous, i.e. they appear at different time points in the unfolding signal, and overlap with parameters of other categories [e.g. @jongman2000acoustic; @lisker1986voicing; @summerfield1981articulatory; @winter2014spoken].
 A classical example is the distinction between voiced and voiceless stops in English (i.e. /b/ and /p/ in *bear* vs *pear*).
-This lexical contrast is manifested by many acoustic features which can differ depending on several factors, such as position of the consonant in the word and surrounding sounds [@lisker1977rapid]. <!-- NOTE: (?) why not "phonological contrast"? -->
+This lexical contrast is manifested by many acoustic features which can differ depending on several factors, such as position of the consonant in the word and surrounding sounds [@lisker1977rapid].
 Furthermore, correlates of the contrast can even be found away from the consonant, in temporally distant speech units.
 For example, the initial /l/ of the English words *led* and *let* is affected by the voicing of the final consonant (/t, d/) [@hawkins2004influence].
 
@@ -228,9 +228,8 @@ For example, we could measure f0 at specific points in time like the onset of th
 We could also measure the value or time of the minimum or maximum f0 value.
 We could summarize f0 across the entire window and extract the mean, median or standard deviation of f0, all of which have been used to analyze speech data [see @gordon2017acoustic].
 And the garden of forking paths does not stop here.
-Figure \@ref(fig:forkingPaths), illustrates a specific option to automatically calculate f0.
-Knowing that the signals and the measures thereof can be noisy, another option would be to smooth them using one algorithm and degree over others, or remove values that substantially deviate from surrounding values or expectations, either manually or automatically, and so on.
-<!-- NOTE: (JVC) Im having a bit of trouble with this sentence. I tried to fix it and now I am realizing I don't quite follow (JVC) -->
+Figure \@ref(fig:forkingPaths), illustrates one specific procedure to automatically calculate f0.
+However, another options would be to filter the audio signal, to smooth the extracted f0 signal, to remove values that substantially deviate from surrounding values or expectations, either manually or automatically, and so on.
 
 <!-- FIGURE -->
 (ref:forkingPaths) Illustrations of the analytic flexibility associated with acoustic analyses. (A) an example of multiple possible and justifiable decisions when comparing two utterances; (B) waveform and fundamental frequency (f0) track of two instances of utterances 2a and 2b. The words "another is highlighted by the green box"; (C) spectrogram and f0 track of the word another, exemplifying different operationalizations of differences in pitch.
@@ -240,7 +239,7 @@ knitr::include_graphics(here::here("figs", "ForkingPaths.png"))
 ```
 <!-- END:FIGURE -->
 
-These decisions are usually made prior to any statistical analysis, but are at times revised a posteriori (i.e. after data collection and/or preliminary analyses) in light of unforeseen or surprising outcomes.
+These decisions are intended to be made prior to any statistical analysis, but are at times revised a posteriori (i.e. after data collection and/or preliminary analyses) in light of unforeseen or surprising outcomes.
 These myriads of possible decisions are exponentiated by those researcher degrees of freedom related to statistical analysis [e.g. @wicherts2016].
 In sum, speech data are complex physical signals that constitutes an as of yet unappreciated amount of analytic flexibility when choosing measures and operationalizing underlying theoretical constructs.
 The present paper probes this garden of forking paths in the analysis of speech.
@@ -300,9 +299,7 @@ If the objects were the same but differed in color (e.g. *yellow banana* vs *blu
 If both the color and the object differed (e.g. *yellow banana* vs *blue tomato*), the whole noun phrase was discourse-pragmatically focused (the Adjective/Noun Focus condition, ANF).
 The NF condition constituted the experimentally relevant condition, while the AF and ANF conditions acted as fillers.
 The color-object combinations in the Noun Focus (NF) condition were manipulated with respect to their typicality.
-The combinations were either typical (e.g. *orange mandarin*), medium typical (e.g. *greem tomato* ), or atypical (e.g. *yellow cherry*), as established by a norming study that was conducted prior to the production experiment (see Appendix XXX for details).
-
-<!-- TODO: Appendix and stuff -->
+The combinations were either typical (e.g. *orange mandarin*), medium typical (e.g. *greem tomato* ), or atypical (e.g. *yellow cherry*), as established by a norming study that was conducted prior to the production experiment (see HERE^[Temporary link: <https://osf.io/5agn9/?view_only=3429acfd8eae4f0aafe2e17ad5b0983f>]).
 
 Each participant responded to 15 critical trials (NF condition).
 Each trial was repeated twice, yielding a total of 30 trials per participant and a grand-total 900 ($15 \times 2 \times 30$ participants) spoken utterances.
@@ -324,14 +321,12 @@ The project involves the following five phases:
 4. \textsc{Meta-analysis}: We will evaluate the variation among the different analyses.
 5. \textsc{Write-up}: Lastly, we will collaboratively produce the final manuscript.
 
-<!-- TODO: project timeline -->
-We estimate that this process, from the time of an in-principle acceptance of this Stage 1 Registered Report to the end of Phase 5, will take XX months (Table X).
+We estimate that this process, from the time of an in-principle acceptance of this Stage 1 Registered Report to the end of Phase 5, will take nine months.
 The factor most likely to delay our time line is the rate of completion of the original set of analyses by independent analysis teams.
 
 ## Phase 1: Recruitment of analysts and initial survey
 
-<!-- TODO: add materials LINK and mailing lists -->
-The initiating authors (SC, JC, TR) created an online landing page providing a general description of the project [https://many-speech-analyses.github.io](https://many-speech-analyses.github.io) and a short pre-recorded slide show that summarizes the study and research question (LINK). <!-- NOTE: same as above, or OSF -->
+The initiating authors (SC, JC, TR) created an online landing page providing a general description of the project and a short pre-recorded slide show that summarizes the study and research question (<https://many-speech-analyses.github.io>).
 The project will be advertised via social media, using mailing lists for linguistic and psychological societies, and via word of mouth.
 The target population comprises active speech science researchers with a graduate/doctoral degree (or currently studying for a graduate/doctoral degree) in relevant disciplines.
 Researchers can choose to work independently or in a small team.
@@ -342,8 +337,7 @@ We will simultaneously recruit volunteers to peer-review the analyses conducted 
 Our goal is to recruit a similar number of peer-reviewers and analysts, and to ask each peer reviewer to review a minimum of four analyses.
 If we are unable to recruit at least half the number of reviewers as analysis teams, we will ask analysts to serve also as reviewers (after they have completed their analyses).
 All analysts and reviewers will share co-authorship on this manuscript and will participate in the collaborative process of producing the final manuscript.
-<!-- TODO: add LINK to informed consent form -->
-All analysts will sign a consent (ethics) document (LINK).
+
 
 Following Parker et al. [@Parker2020], we identified a minimal sample size that would provide an estimate of heterogeneity of the effect sizes reported by the analysis teams ($\tau^2$, i.e. the variance $\sigma^2_{\alpha_{\text{t}}}$, see \Cref{s:meta-est}).
 In short, the minimal sample size is considered the number of analysis teams needed to allow an estimation of heterogeneity.
@@ -374,11 +368,12 @@ pt(t, df, lower.tail = F) * 2
 
 ## Phase 2: Primary Data Analyses
 
-The analysis teams will register and answer a demographic and expertise questionnaire (`intake_form.pdf`).^[PDF versions of all the questionnaires mentioned in this paper are available at <https://github.com/many-speech-analyses/many_analyses/tree/master/docs/questionnaires>.]
+The analysis teams will register and answer a demographic and expertise questionnaire (`intake_form.pdf`).
+PDF versions of all the questionnaires used in this study are available at LINK^[Temporary link: <https://osf.io/h6z8w/?view_only=3457f2b01a5f4435b3d917eb7b5134e8>.].
 The questionnaire collects information on the analysts current position and self-estimated breadth and level of statistical expertise and acoustic analysis skills.
 We will then request that they answer the question: *Do speakers acoustically modify utterances to signal atypical word combinations?*
 To do so, they will be given the data generated by the experiment described in \Cref{s:dataset}.
-The data will include the audio recordings with corresponding time-aligned transcriptions in the form of Praat TextGrid files.^[See <https://osf.io/rdtx5/?view_only=66989a3bbe034e188846e23f84913ffe>. Due to storage caps on the OSF, we will make the audio files available on <https://eudat.eu/catalogue/B2SHARE> in due course.]
+The data will include the audio recordings with corresponding time-aligned transcriptions in the form of Praat TextGrid files (LINK^[Temporary link: <https://osf.io/5agn9/?view_only=3429acfd8eae4f0aafe2e17ad5b0983f>]).
 
 Once their analysis is complete, they will answer a structured questionnaire (`analytical_quest.pdf`), providing information about their analysis technique, an explanation of their analytic choices, their quantitative results, and a statement describing their conclusions.
 They will also upload their analysis files (including the additionally derived data and text files that were used to extract and pre-process the acoustic data), their analysis code (if applicable), and a detailed journal-ready statistical methods section.
@@ -419,7 +414,6 @@ We will calculate summary statistics describing variation among analyses, includ
 
 ### Meta-analytic estimation {#s:meta-est}
 
-<!-- NOTE: (SC) t would be good to decide on a clear terminology to refer to the individual original models, the individual models that we run (to refit the original models), and the meta-analytic model -->
 We will summarize the variability in reported effect sizes using Bayesian meta-analytic techniques.
 Based on the common practices currently in place within the field, we anticipate that researchers will use multi-level/hierarchical/random-effects regression models, thus common measurements of effect size, such as Cohen's $d$, may be inappropriate.
 Since the variables used by the analysis teams might substantially differ in their measurement scales (e.g, Hertz for frequency vs milliseconds for duration), we will standardize all reported effects by refitting each reported model with centered and scaled continuous variables (*z*-scores, i.e. the observed values subtracted from the mean divided by the standard deviation) and sum-coded factor variables.
@@ -443,7 +437,7 @@ We will use regularizing weakly-informative priors for the intercept $\alpha$ ($
 We will fit this model with 4 chains of Hamiltonian Monte-Carlo sampling for the estimation of the joint posterior distribution, using the No U-Turn Sampler (NUTS) as implemented in Stan [@stan2021], and 4000 iterations (2000 for warm-up) per chain, distributed across 4 processing cores.
 In case of divergent transitions, we will increase `adapt_delta`, `tree_depth`, and the number of iterations in this order until we obtain a model fit with no divergent transitions.
 The analysis will be conducted in R [@R-base] and fit using Stan [@stan2021], RStan [@stan2020a], and brms [@burkner2017].
-<!-- TODO: add LINK to code of the meta-analytic model -->
+<!-- TODO: add LINK to code of the meta-analytic model: add to landing page in non-linked page -->
 The code used to run the model can be found here: INSERT LINK.
 
 <!-- From ?brms:brmsformula -->
@@ -462,7 +456,7 @@ sigma in addition to the known standard errors, set argument sigma in
 function se to TRUE, for instance, yi | se(sei, sigma = TRUE) ~ 1. -->
 
 The posterior distribution of the population-level intercept $\alpha$ will allow us to estimate the range of probable values of the standardized effect size $\hat{\eta}$.
-The posterior distribution will further allow us to investigate the effect of a set of analytic and demographic predictors, detailed in Section \@ref(ana-factors).
+The posterior distribution will further allow us to investigate the effect of a set of analytic and demographic predictors, detailed in Section \@ref(anares-preds).
 Crucially, the posterior distribution of $\sigma_{\alpha_{\text{t}}}$ (the standard deviation of the group-level effect of team) will allow us to quantify the degree of variation between teams on a standardized scale.
 
 Finally, we will assess whether the standardized effect sizes show bias, and, if so, whether the bias is positive or negative (i.e., whether there is a disproportionately greater number of bigger or smaller effect sizes than the meta-analytic point estimate of the pooled effect). <!-- in case we want to use the median -->
@@ -471,9 +465,6 @@ In brief, a funnel plot is a scatter plot of each standardized effect size with 
 In absence of bias, the points should be symmetrically distributed around the meta-analytic point estimate of the pooled effect (see Figure \@ref(fig:funnel-plot)).
 A sign of possible bias is when there are more points which are farther from the meta-analytic point estimate on just one side.
 <!-- NOTE: We are gonna keep the funnel plots at least for Stage 1 review, because it is easier to understand how this works. -->
-
-<!-- NOTE: I keep changing meta-analytic to meta-analytic (the -cal sounds weird to me). My unscientific google searching shows that people use both, but meta-analytic is much more common (nearly 4 million hits vs. 500k) -->
-<!-- NOTE: (SC) I tend to use analytic to mean "related to analysis" and "analytic" in opposition to "synthetic" (from their use in logic and linguistics) but I am flex as long as we are consistent. -->
 
 ```{r funnel-plot, include=TRUE, fig.cap="Illustrations of funnel plots showing (a) no bias, (b) positive bias, and (c) negative bias in effect sizes. The vertical dashed line represents the meta-analytic mean.", fig.dim = c(6, 2)}
 meta_est <- 0
@@ -538,8 +529,8 @@ estimated_tbl %>%
   scale_y_reverse()
 ```
 
-### Analytic and demographic predictors affecting effect sizes {#ana-factors}
-<!-- NOTE: (TR) I think we should use the term predictors. Factors is really ambiguous -->
+### Analytic and researcher-related predictors affecting effect sizes {#anares-preds}
+
 As a second step, we will investigate the extent to which the individual standardized effect sizes are affected by a series of predictors related to analytic and researcher-related factors.
 
 **Analytic predictors**. We will estimate the influence of the following predictors related to the analytic characteristics of each team's reported analysis:
@@ -551,8 +542,7 @@ As a second step, we will investigate the extent to which the individual standar
 - *Number of models* [numeric] the teams will report to have run ($modn_i$).
 - *Major dimension* [categorical] that has been measured to answer the research question ($mdim_i$).
 - *Temporal window* [categorical] that the measurement is taken over ($twin_i$).
-- *Average peer-review rating* [numeric], as the mean of the peer-review ratings for each analysis.
-<!-- NOTE: We decided to use just the overall rating -->
+- *Average peer-review rating* [numeric], as the mean of the overall peer-review ratings for each analysis.
 
 Following Parker et al. (in principle accepted), the measure of uniqueness of predictors will be assessed by the Sørensen-Dice Index [SDI, @dice1945; @sorensen1948].
 The SDI is an index typically used in ecology research to compare species composition across sites.
@@ -578,22 +568,24 @@ We assume the following relevant linguistic units: *segment*, *syllable*, *word*
 Since each analysis will receive more than one peer-review rating, we will calculate the mean rating and its standard deviation for each.
 These will be entered in the model formula as a measurement-error term (`me(mean, sd)` in brms).
 
-<!-- TODO: explain how the demographic factors will be entered in the factors analysis -->
-
-**Researcher-related factors**. We will include the following predictors about the teams:
+**Researcher-related factors**. We will also include the following predictors:
 
 - *Research experience* [numeric] as the elapsed time from receiving the PhD. Negative values will indicate that the person is a student or graduate studens ($rexp_i$).
 - *Initial belief* [numeric] in the presence of an effect of atypical noun-adjective pairs on acoustics, as answered during the intake questionnaire ($belf_i$).
 
-**Model specification**. The model will be fitted as measurement-error models, with the predictors detailed in the preceding paragraphs.
-The outcome variable of the model will be the standardized effect sizes.
+Since we will obtain scores for each member in the analytic teams, we will calculate the team mean and standard deviation for each predictor.
+These will be entered in the model formula as a measurement-error term (`me(mean, sd)` in brms).
 
-<!-- TODO: add brm info on factors analysis model -->
+**Model specification**. The model will be fitted as a measurement-error model, with the predictors detailed in the preceding paragraphs.
+The outcome variable of the model will be the standardized effect sizes and related standard deviation.
+
 A normal distribution will be used as the likelihood function of $\alpha_{t[i]}$.
-The mean of $\alpha_{t[i]}$ is modeled on the basis of the overall intercept $\beta$ and on the coefficients $\upsilon_n$ of each predictor.
+The mean of $\alpha_{t[i]}$ is modeled on the basis of the overall intercept $\beta$ and on the coefficients of each predictor.
 The numeric predictors will be centered and scaled and the categorical predictors will be sum coded.
-As the prior for $i$ and $\upsilon$ we will use a normal distribution with mean 0 and standard deviation 1.
-<!-- TODO: add explanation of me() predictors resp and belf -->
+As the prior for the intercept and the predictors we will use a normal distribution with mean 0 and standard deviation 1.
+The model will be run with the same settings as with the meta-analytic model.
+<!-- TODO: add LINK to code of the predictors model: add to landing page in non-linked page -->
+The code used to run the model can be found here: INSERT LINK.
 
 ### Data management {#ana-archive}
 
@@ -608,6 +600,8 @@ We will also exclude any individual analysis that does not produce an outcome th
 ## Phase 6: Collaborative Write-Up of Manuscript
 
 Analysts and initiating authors will discuss the limitations, results, and implications of the study and collaborate on writing the final manuscript for review as a stage-2 Registered Report.
+
+<!-- TODO: add glossary -->
 
 \newpage
 
