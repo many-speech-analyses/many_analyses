@@ -310,9 +310,9 @@ All analysis teams will be given access to the entire data set and will be instr
 As outlined in Section \@ref(s:operspeech), researchers are faced with a large amount of analytic choices when analyzing a multidimensional signal such as speech.
 Analysts must identify and operationalize relevant measurements, as well as the temporal domain(s) from which these measurements are to be taken, and then possibly transform said measurements before submitting them to statistical models, which must be chosen alongside inferential criteria.
 The complexity of speech data constitutes the ideal testing ground to assess the upper bound of analytic flexibility that social science might face across disciplines.
-We will employ a meta-analytic approach to assess (i) the variability of the reported effects, and (ii) and how analytic and demographic factors affect the researchers' final results.
+We will employ a meta-analytic approach to assess (i) the variability of the reported effects, and (ii) and how analytic and research-related predictors affect the researchers' final results.
 
-We are closely following the data collection procedure proposed by Parker et al. (Stage 1 in-principle accepted).
+We are closely following the data collection procedure proposed by @Parker2020.
 The project involves the following five phases:
 
 1. \textsc{Recruitment}: We will recruit independent groups of researchers to analyze the data.
@@ -331,40 +331,18 @@ The project will be advertised via social media, using mailing lists for linguis
 The target population comprises active speech science researchers with a graduate/doctoral degree (or currently studying for a graduate/doctoral degree) in relevant disciplines.
 Researchers can choose to work independently or in a small team.
 For the sake of simplicity, we will refer to single researcher or small teams as "analysis teams".
-Recruitment for this project will commence upon receiving in-principle acceptance; we aim for a minimum of 12 analysis teams independently evaluating each data set (see sample size justification below).
+Recruitment for this project will commence upon receiving in-principle acceptance.
+As outlined above, our aim is to assess the variability of the reported effects and how these are affected by a set of predictors, rather than the meta-analytical estimate *per se*.
+Given the scarcity of previous meta-analytical studies that directly investigate researcher's degrees of freedom, as reviewed in the introduction, it is not possible for us to establish a well-grounded minimal sample size.
+Thus, we aim to recruit as many teams as possible, within the resource and time limits of the project.
 
 We will simultaneously recruit volunteers to peer-review the analyses conducted by the other volunteers through the same channels.
 Our goal is to recruit a similar number of peer-reviewers and analysts, and to ask each peer reviewer to review a minimum of four analyses.
 If we are unable to recruit at least half the number of reviewers as analysis teams, we will ask analysts to serve also as reviewers (after they have completed their analyses).
+
 All analysts and reviewers will share co-authorship on this manuscript and will participate in the collaborative process of producing the final manuscript.
+Informed consent will be obtained as part of the intake form.
 
-
-Following Parker et al. [@Parker2020], we identified a minimal sample size that would provide an estimate of heterogeneity of the effect sizes reported by the analysis teams ($\tau^2$, i.e. the variance $\sigma^2_{\alpha_{\text{t}}}$, see \Cref{s:meta-est}).
-In short, the minimal sample size is considered the number of analysis teams needed to allow an estimation of heterogeneity.
-We consider a posterior distribution of $\tau^2$, for which the 95% credible interval (CrI) does not include 0 as sufficient.
-The probability $Pr$ that a CrI interval does not include 0 is obtained via the *t*-statistic:
-
-$$t = \frac{\tau^2}{SE(\tau^2)}$$
-
-Assuming that the underlying distribution of effect sizes is normal [@knight2000], the standard error of $\tau^2$ can be calculated with the following formula:
-
-$$SE(\tau^2) = \sqrt{\frac{2\tau^4}{(n-1)}}$$
-
-where $n$ is the sample size.
-Given $Pr$ and $\tau^2$, we can calculate $n$ such that $p < 0.05$.
-Inserting $SE(\tau^2)$ into the formula for the *t*-statistic shows that, when $n$ is fixed, *t* (and hence $Pr$) will be the same regardless of $\tau^2$:
-
-$$t = \frac{\tau^2}{SE(\tau^2)} = \frac{\tau^2}{\sqrt{\frac{2\tau^4}{(n-1)}}} = \sqrt{\frac{(n-1)}{2}}$$
-
-In other words, the minimum sample size $n$ needed to exclude 0 from the 95% CrI of $\tau^2$ is invariant regardless of the estimate of heterogeneity $\tau^2$.
-When $n = 12$ then $t_{(12-1)} = t_{(11)} = 2.3452$ and $p = 0.0388$, which we consider sufficiently unlikely.
-
-```{r t, eval=FALSE, include=FALSE}
-n = 12
-df = n - 1
-t <- sqrt((df)/2)
-pt(t, df, lower.tail = F) * 2
-```
 
 ## Phase 2: Primary Data Analyses
 
@@ -456,7 +434,7 @@ sigma in addition to the known standard errors, set argument sigma in
 function se to TRUE, for instance, yi | se(sei, sigma = TRUE) ~ 1. -->
 
 The posterior distribution of the population-level intercept $\alpha$ will allow us to estimate the range of probable values of the standardized effect size $\hat{\eta}$.
-The posterior distribution will further allow us to investigate the effect of a set of analytic and demographic predictors, detailed in Section \@ref(anares-preds).
+The posterior distribution will further allow us to investigate the effect of a set of analytic and researcher-related predictors, detailed in Section \@ref(anares-preds).
 Crucially, the posterior distribution of $\sigma_{\alpha_{\text{t}}}$ (the standard deviation of the group-level effect of team) will allow us to quantify the degree of variation between teams on a standardized scale.
 
 Finally, we will assess whether the standardized effect sizes show bias, and, if so, whether the bias is positive or negative (i.e., whether there is a disproportionately greater number of bigger or smaller effect sizes than the meta-analytic point estimate of the pooled effect). <!-- in case we want to use the median -->
@@ -544,7 +522,7 @@ As a second step, we will investigate the extent to which the individual standar
 - *Temporal window* [categorical] that the measurement is taken over ($twin_i$).
 - *Average peer-review rating* [numeric], as the mean of the overall peer-review ratings for each analysis.
 
-Following Parker et al. (in principle accepted), the measure of uniqueness of predictors will be assessed by the Sørensen-Dice Index [SDI, @dice1945; @sorensen1948].
+Following @Parker2020, the measure of uniqueness of predictors will be assessed by the Sørensen-Dice Index [SDI, @dice1945; @sorensen1948].
 The SDI is an index typically used in ecology research to compare species composition across sites.
 For our purposes, we will treat predictors as species and individual analyses as sites.
 For each pair of analyses $(X, Y)$, the SDI will be obtained using the following formula:
