@@ -366,10 +366,10 @@ Researchers can choose to work independently or in a small team.
 For the sake of simplicity, we will refer to single researcher or small teams as ``analysis teams.''
 Recruitment for this project will commence upon receiving in-principle acceptance.
 As outlined above, our aim is to assess the variability of the reported effects and how these are affected by a set of predictors, rather than the meta-analytical estimate \emph{per se}.
-Given the scarcity of previous meta-analytical studies that directly investigate researcher's degrees of freedom, as reviewed in the introduction, it is not possible for us to establish a well-grounded minimal sample size.
+Given the scarcity of previous meta-analytical studies that directly investigate researcher's degrees of freedom, as reviewed in the introduction, we are not able to establish a properly-grounded minimal sample size.
 Thus, we aim to recruit as many teams as possible, within the resource and time limits of the project.
 
-We will simultaneously recruit volunteers to peer-review the analyses conducted by the other volunteers through the same channels.
+We will simultaneously recruit volunteers to peer-review the analyses conducted by the analysis teams through the same channels.
 Our goal is to recruit a similar number of peer-reviewers and analysts, and to ask each peer reviewer to review a minimum of four analyses.
 If we are unable to recruit at least half the number of reviewers as analysis teams, we will ask analysts to serve also as reviewers (after they have completed their analyses).
 
@@ -465,7 +465,9 @@ We will calculate summary statistics describing variation among analyses, includ
 \hypertarget{s:meta-est}{%
 \subsubsection{Meta-analytic estimation}\label{s:meta-est}}
 
-We will summarize the variability in reported effect sizes using Bayesian meta-analytic techniques.
+We will investigate the variability in reported effect sizes using Bayesian meta-analytic techniques.
+As the measure of variability, we will take the estimated group-level standard deviation (\(\sigma_{\alpha_{\text{t}}}\) below), where group refers to the analytical teams.
+
 Based on the common practices currently in place within the field, we anticipate that researchers will use multi-level/hierarchical/random-effects regression models, thus common measurements of effect size, such as Cohen's \(d\), may be inappropriate.
 Since the variables used by the analysis teams might substantially differ in their measurement scales (e.g, Hertz for frequency vs milliseconds for duration), we will standardize all reported effects by refitting each reported model with centered and scaled continuous variables (\emph{z}-scores, i.e.~the observed values subtracted from the mean divided by the standard deviation) and sum-coded factor variables.
 Factor-level ordering for each categorical variable will mirror that of the original analyses.
@@ -484,7 +486,7 @@ The outcome variable will be the set of standardized effect sizes \(\eta_i\).
 The likelihood of \(\eta_i\) is assumed to correspond to a normal distribution (Knight 2000).
 The analysis teams will be entered as a group-level effect (i.e., random effect, \texttt{(1\ \textbar{}\ team)}).
 The standard errors \(\text{se}_i\) will be included as the standard deviation \(\sigma_i\) of \(\eta_i\) to fit a measurement-error model, as discussed above.
-We will use regularizing weakly-informative priors for the intercept \(\alpha\) (\(Normal(0, 1)\)) and for the group-level standard deviation \(\alpha_{\text{t}[i]}\) (\(HalfCauchy(0, 1)\)).
+We will use regularizing weakly-informative priors for the intercept \(\alpha\) (\(Normal(0, 1)\)) and for the group-level standard deviation \(\sigma_{\alpha_{\text{t}}}\) (\(HalfCauchy(0, 1)\)).
 We will fit this model with 4 chains of Hamiltonian Monte-Carlo sampling for the estimation of the joint posterior distribution, using the No U-Turn Sampler (NUTS) as implemented in Stan (Team 2021), and 4000 iterations (2000 for warm-up) per chain, distributed across 4 processing cores.
 In case of divergent transitions, we will increase \texttt{adapt\_delta}, \texttt{tree\_depth}, and the number of iterations in this order until we obtain a model fit with no divergent transitions.
 The analysis will be conducted in R (R Core Team 2020) and fit using Stan (Team 2021), RStan (Team 2020), and brms (Bürkner 2017).
@@ -494,22 +496,10 @@ The posterior distribution of the population-level intercept \(\alpha\) will all
 The posterior distribution will further allow us to investigate the effect of a set of analytic and researcher-related predictors, detailed in Section \ref{anares-preds}.
 Crucially, the posterior distribution of \(\sigma_{\alpha_{\text{t}}}\) (the standard deviation of the group-level effect of team) will allow us to quantify the degree of variation between teams on a standardized scale.
 
-Finally, we will assess whether the standardized effect sizes show bias, and, if so, whether the bias is positive or negative (i.e., whether there is a disproportionately greater number of bigger or smaller effect sizes than the meta-analytic point estimate of the pooled effect).
-This will be achieved through inspection of funnel plots (Light and Pillemer 1984; for a review see Egger et al. 1997; and Sterne, Becker, and Egger 2005; for a critique Lau et al. 2006).
-In brief, a funnel plot is a scatter plot of each standardized effect size with effect size on the \emph{x}-axis and estimated error (i.e.~standard deviation) on \emph{y}-axis.
-In absence of bias, the points should be symmetrically distributed around the meta-analytic point estimate of the pooled effect (see Figure \ref{fig:funnel-plot}).
-A sign of possible bias is when there are more points which are farther from the meta-analytic point estimate on just one side.
-
-\begin{figure}
-\centering
-\includegraphics{Draft_RR_files/figure-latex/funnel-plot-1.pdf}
-\caption{\label{fig:funnel-plot}Illustrations of funnel plots showing (a) no bias, (b) positive bias, and (c) negative bias in effect sizes. The vertical dashed line represents the meta-analytic mean.}
-\end{figure}
-
 \hypertarget{anares-preds}{%
 \subsubsection{Analytic and researcher-related predictors affecting effect sizes}\label{anares-preds}}
 
-As a second step, we will investigate the extent to which the individual standardized effect sizes are affected by a series of predictors related to analytic and researcher-related factors.
+As a second step, we will investigate the extent to which the individual standardized effect sizes are affected by a series of analytic and researcher-related predictors.
 
 \textbf{Analytic predictors}. We will estimate the influence of the following predictors related to the analytic characteristics of each team's reported analysis:
 
@@ -643,9 +633,6 @@ Dice, Lee Raymond. 1945. {``Measures of the Amount of Ecologic Association Betwe
 \leavevmode\vadjust pre{\hypertarget{ref-dutilh2019}{}}%
 Dutilh, Gilles, Jeffrey Annis, Scott D. Brown, Peter Cassey, Nathan J. Evans, Raoul Grasman, Guy E. Hawkins, et al. 2019. {``The Quality of Response Time Data Inference: A Blinded, Collaborative Assessment of the Validity of Cognitive Models.''} \emph{Psychonomic Bulletin \& Review} 26 (4): 1051--69.
 
-\leavevmode\vadjust pre{\hypertarget{ref-egger1997}{}}%
-Egger, Matthias, George Davey Smith, Martin Schneider, and Christoph Minder. 1997. {``Bias in Meta-Analysis Detected by a Simple, Graphical Test.''} \emph{British Medical Journal} 315: 629--34.
-
 \leavevmode\vadjust pre{\hypertarget{ref-fischhoff1975hindsight}{}}%
 Fischhoff, Baruch. 1975. {``Hindsight Is Not Equal to Foresight: The Effect of Outcome Knowledge on Judgment Under Uncertainty.''} \emph{Journal of Experimental Psychology: Human Perception and Performance} 1 (3): 288.
 
@@ -684,12 +671,6 @@ Koole, Sander L, and Daniël Lakens. 2012. {``Rewarding Replications: A Sure and
 
 \leavevmode\vadjust pre{\hypertarget{ref-ladd2008intonational}{}}%
 Ladd, D Robert. 2008. \emph{Intonational Phonology}. Cambridge University Press.
-
-\leavevmode\vadjust pre{\hypertarget{ref-lau2006}{}}%
-Lau, Joseph, John P. A. Ioannidis, Norma Terrin, Christopher H. Schmid, and Ingram Olkin. 2006. {``The Case of the Misleading Funnel Plot.''} \emph{British Medical Journal} 333 (7568): 597--600.
-
-\leavevmode\vadjust pre{\hypertarget{ref-light1984}{}}%
-Light, Richard J., and David B. Pillemer. 1984. \emph{Summing up; the Science of Reviewing Research}. Cambridge, MA (USA) Harvard Univ. Press.
 
 \leavevmode\vadjust pre{\hypertarget{ref-lisker1977rapid}{}}%
 Lisker, Leigh. 1977. {``Rapid Versus Rabid: A Catalogue of Acoustic Features That May Cue the Distinction.''} \emph{The Journal of the Acoustical Society of America} 62 (S1): S77--78.
@@ -741,9 +722,6 @@ Starns, Jeffrey J., Andrea M. Cataldo, Caren M. Rotello, Jeffrey Annis, Andrew A
 
 \leavevmode\vadjust pre{\hypertarget{ref-sterling1959publication}{}}%
 Sterling, Theodore D. 1959. {``Publication Decisions and Their Possible Effects on Inferences Drawn from Tests of Significance--or Vice Versa.''} \emph{Journal of the American Statistical Association} 54 (285): 30--34.
-
-\leavevmode\vadjust pre{\hypertarget{ref-sterne2005}{}}%
-Sterne, Jonathan A. C., Betsy Jane Becker, and Matthias Egger. 2005. {``The Funnel Plot.''} In \emph{Publication Bias in Meta-Analysis: Prevention, Assessment and Adjustments}, edited by Hannah R. Rothstein, Alexander J. Sutton, and Michael Borenstein, 75--98. Wiley Online Library.
 
 \leavevmode\vadjust pre{\hypertarget{ref-summerfield1981articulatory}{}}%
 Summerfield, Quentin. 1981. {``Articulatory Rate and Perceptual Constancy in Phonetic Perception.''} \emph{Journal of Experimental Psychology: Human Perception and Performance} 7 (5): 1074.
