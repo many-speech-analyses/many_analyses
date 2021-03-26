@@ -333,10 +333,10 @@ Researchers can choose to work independently or in a small team.
 For the sake of simplicity, we will refer to single researcher or small teams as "analysis teams".
 Recruitment for this project will commence upon receiving in-principle acceptance.
 As outlined above, our aim is to assess the variability of the reported effects and how these are affected by a set of predictors, rather than the meta-analytical estimate *per se*.
-Given the scarcity of previous meta-analytical studies that directly investigate researcher's degrees of freedom, as reviewed in the introduction, it is not possible for us to establish a well-grounded minimal sample size.
+Given the scarcity of previous meta-analytical studies that directly investigate researcher's degrees of freedom, as reviewed in the introduction, we are not able to establish a properly-grounded minimal sample size.
 Thus, we aim to recruit as many teams as possible, within the resource and time limits of the project.
 
-We will simultaneously recruit volunteers to peer-review the analyses conducted by the other volunteers through the same channels.
+We will simultaneously recruit volunteers to peer-review the analyses conducted by the analysis teams through the same channels.
 Our goal is to recruit a similar number of peer-reviewers and analysts, and to ask each peer reviewer to review a minimum of four analyses.
 If we are unable to recruit at least half the number of reviewers as analysis teams, we will ask analysts to serve also as reviewers (after they have completed their analyses).
 
@@ -392,7 +392,9 @@ We will calculate summary statistics describing variation among analyses, includ
 
 ### Meta-analytic estimation {#s:meta-est}
 
-We will summarize the variability in reported effect sizes using Bayesian meta-analytic techniques.
+We will investigate the variability in reported effect sizes using Bayesian meta-analytic techniques.
+As the measure of variability, we will take the estimated group-level standard deviation ($\sigma_{\alpha_{\text{t}}}$ below), where group refers to the analytical teams.
+
 Based on the common practices currently in place within the field, we anticipate that researchers will use multi-level/hierarchical/random-effects regression models, thus common measurements of effect size, such as Cohen's $d$, may be inappropriate.
 Since the variables used by the analysis teams might substantially differ in their measurement scales (e.g, Hertz for frequency vs milliseconds for duration), we will standardize all reported effects by refitting each reported model with centered and scaled continuous variables (*z*-scores, i.e. the observed values subtracted from the mean divided by the standard deviation) and sum-coded factor variables.
 Factor-level ordering for each categorical variable will mirror that of the original analyses.
@@ -411,7 +413,7 @@ The outcome variable will be the set of standardized effect sizes $\eta_i$.
 The likelihood of $\eta_i$ is assumed to correspond to a normal distribution [@knight2000].
 The analysis teams will be entered as a group-level effect (i.e., random effect, `(1 | team)`).
 The standard errors $\text{se}_i$ will be included as the standard deviation $\sigma_i$ of $\eta_i$ to fit a measurement-error model, as discussed above.
-We will use regularizing weakly-informative priors for the intercept $\alpha$ ($Normal(0, 1)$) and for the group-level standard deviation $\alpha_{\text{t}[i]}$ ($HalfCauchy(0, 1)$).
+We will use regularizing weakly-informative priors for the intercept $\alpha$ ($Normal(0, 1)$) and for the group-level standard deviation $\sigma_{\alpha_{\text{t}}}$ ($HalfCauchy(0, 1)$).
 We will fit this model with 4 chains of Hamiltonian Monte-Carlo sampling for the estimation of the joint posterior distribution, using the No U-Turn Sampler (NUTS) as implemented in Stan [@stan2021], and 4000 iterations (2000 for warm-up) per chain, distributed across 4 processing cores.
 In case of divergent transitions, we will increase `adapt_delta`, `tree_depth`, and the number of iterations in this order until we obtain a model fit with no divergent transitions.
 The analysis will be conducted in R [@R-base] and fit using Stan [@stan2021], RStan [@stan2020a], and brms [@burkner2017].
@@ -437,79 +439,10 @@ The posterior distribution of the population-level intercept $\alpha$ will allow
 The posterior distribution will further allow us to investigate the effect of a set of analytic and researcher-related predictors, detailed in Section \@ref(anares-preds).
 Crucially, the posterior distribution of $\sigma_{\alpha_{\text{t}}}$ (the standard deviation of the group-level effect of team) will allow us to quantify the degree of variation between teams on a standardized scale.
 
-Finally, we will assess whether the standardized effect sizes show bias, and, if so, whether the bias is positive or negative (i.e., whether there is a disproportionately greater number of bigger or smaller effect sizes than the meta-analytic point estimate of the pooled effect). <!-- in case we want to use the median -->
-This will be achieved through inspection of funnel plots [@light1984; for a review see @egger1997; and @sterne2005; for a critique @lau2006].
-In brief, a funnel plot is a scatter plot of each standardized effect size with effect size on the *x*-axis and estimated error (i.e. standard deviation) on *y*-axis.
-In absence of bias, the points should be symmetrically distributed around the meta-analytic point estimate of the pooled effect (see Figure \@ref(fig:funnel-plot)).
-A sign of possible bias is when there are more points which are farther from the meta-analytic point estimate on just one side.
-<!-- NOTE: We are gonna keep the funnel plots at least for Stage 1 review, because it is easier to understand how this works. -->
-
-```{r funnel-plot, include=TRUE, fig.cap="Illustrations of funnel plots showing (a) no bias, (b) positive bias, and (c) negative bias in effect sizes. The vertical dashed line represents the meta-analytic mean.", fig.dim = c(6, 2)}
-meta_est <- 0
-
-datasets <- map(
-  c(0, 0.1, -0.1),
-  function(.x) {
-    set.seed(101)
-    sd <- runif(100, min = 1, max = 10)
-    est <- rnorm(length(sd), mean = meta_est, sd = 0.1*sd) + .x * sd
-    tibble(est, sd)
-  }
-)
-
-plots <- map(
-  datasets,
-  function(.x) {
-    ggplot(.x, aes(est, sd)) +
-      geom_vline(aes(xintercept = meta_est), linetype = "dashed") +
-      geom_point(colour = "black", size = 1, alpha = 0.5) +
-      scale_y_reverse() +
-      labs(est = element_blank(), sd = element_blank())  +
-      xlim(-3, 3) +
-      theme_minimal()
-  }
-)
-
-plots[[1]] + labs(title = "(a) no bias") +
-  plots[[2]] + labs(title = "(b) positive bias") +
-  plots[[3]] + labs(title = "(c) negative bias")
-```
-
-
-
-```{r funnel-calc, include=FALSE, eval=FALSE}
-# meta_bm is the meta-analytic Bayesian regression model
-meta_bm_est <- fixef(meta_bm)["Intercept","Estimate"]
-meta_bm_q2.5 <- fixef(meta_bm)["Intercept","Q2.5"]
-meta_bm_q97.5 <- fixef(meta_bm)["Intercept","Q97.5"]
-
-# estimated_tbl contains the standardized effect sizes
-se_range <- seq(0, max(estimated_tbl$Est.Error), by = 0.001)
-
-ci <- tibble(
-  x_seq = se_range,
-  ci_lo = meta_ln_bm_est - 1.96 * se_range,
-  ci_up = meta_ln_bm_est + 1.96 * se_range
-)
-
-estimated_tbl %>%
-  ggplot(aes(Estimate, Est.Error)) +
-  geom_line(aes(y = x_seq, x = ci_up), data = ci) +
-  geom_line(aes(y = x_seq, x = ci_lo), data = ci) +
-  geom_vline(aes(xintercept = 0), colour = "grey") +
-  geom_vline(aes(xintercept = meta_ln_bm_est)) +
-  annotate(
-    "rect",
-    ymin = -Inf, ymax = Inf,
-    xmin = meta_bm_q2.5, xmax = meta_bm_q97.5,
-    alpha = 0.5, fill = "#a6cee3") +
-  geom_point(size = 3) +
-  scale_y_reverse()
-```
 
 ### Analytic and researcher-related predictors affecting effect sizes {#anares-preds}
 
-As a second step, we will investigate the extent to which the individual standardized effect sizes are affected by a series of predictors related to analytic and researcher-related factors.
+As a second step, we will investigate the extent to which the individual standardized effect sizes are affected by a series of analytic and researcher-related predictors.
 
 **Analytic predictors**. We will estimate the influence of the following predictors related to the analytic characteristics of each team's reported analysis:
 
