@@ -344,5 +344,9 @@ predictors_bm <- brm(
 )
 ```
 
+```{r preds-summary}
+predictors_bm
+```
+
 
 # References
