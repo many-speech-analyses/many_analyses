@@ -1,88 +1,40 @@
 ---
-title             : "Analytic choices for analyzing multidimensional behavior - Many analysts test hypotheses about human speech."
-shorttitle        : "Many analysts - one speech data set"
-
+title: "Analytic choices for analyzing multidimensional behavior: Many analysts test hypotheses about human speech"
+runninghead: "Many analysts, one speech data set"
 author:
-  - name          : "First Author"
-    affiliation   : "#"
-    corresponding : yes    # Define only one corresponding author
-    address       : "Postal address"
-    email         : "my@email.com"
-    role:         # Contributorship roles (e.g., CRediT, https://casrai.org/credit/)
-      - Conceptualization
-      - Writing - Original Draft Preparation
-      - Writing - Review & Editing
-  - name          : "Second Author"
-    affiliation   : "#"
-    role:
-      - Writing - Review & Editing
-  - name          : "..."
-    affiliation   : "#"
-    role:
-      - Writing - Review & Editing
-  - name          : "Last Author"
-    affiliation   : "#"
-    role:
-      - Writing - Review & Editing
-
-affiliation:
-  - id            : "1"
-    institution   : "#"
-  - id            : "..."
-    institution   : "..."
-
-authornote: |
-  Add complete departmental affiliations for each author here. Each new line herein must be indented, like this line.
-
-  Enter author note here.
-
-abstract: |
-  One or two sentences providing a **basic introduction** to the field,  comprehensible to a scientist in any discipline.
-
-  Two to three sentences of **more detailed background**, comprehensible  to scientists in related disciplines.
-
-  One sentence clearly stating the **general problem** being addressed by  this particular study.
-
-  One sentence summarizing the main result (with the words "**here we show**" or their equivalent).
-
-  Two or three sentences explaining what the **main result** reveals in direct comparison to what was thought to be the case previously, or how the  main result adds to previous knowledge.
-
-  One or two sentences to put the results into a more **general context**.
-
-  Two or three sentences to provide a **broader perspective**, readily comprehensible to a scientist in any discipline.
-
-  <!-- https://tinyurl.com/ybremelq -->
-
-keywords          : "crowdsourcing science, data analysis, scientific transparency, speech, acoustic analysis"
-wordcount         : "X"
-
-bibliography      :
-  - "r-references.bib"
-  - "other_refs.bib"
-
-floatsintext      : yes
-figurelist        : no
-tablelist         : no
-footnotelist      : no
-linenumbers       : yes
-mask              : no
-draft             : no
+- name: Stefano Coretta*
+  num: 1
+- name: Timo Roettger
+  num: 2
+- name: Joseph V. Casillas
+  num: 3
+address:
+- num: 1
+  org: Institute of Phonetics and Speech Processing, Ludwig-Maximilian University Munich, Germany.
+- num: 2
+  org: Department of Applied Things, University B, City B, Country B
+- num: 3
+  org: Very Important Stuff Committee, Institute C, City C, Country C
+corrauth: "Stefano coretta."
+email: "s.coretta@lmu.de"
+abstract: "TBA"
+keywords: "crowdsourcing science, data analysis, scientific transparency, speech, acoustic analysis"
+classoption:
+  - Review
+  - times
+bibliography: references
+bibliographystyle: sageh
 output:
-  bookdown::pdf_document2:
-    number_sections: true
-    latex_engine: xelatex
-    keep_tex: true
-geometry: margin=4cm
-fontsize: 12pt
-indent: true
-header-includes:
-  - \usepackage{cleveref}
+  bookdown::pdf_book:
+    base_format: rticles::sage_article
+    keep_tex: yes
+    includes:
+      in_header: preamble.tex
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 knitr::opts_knit$set(root.dir = here::here())
-
 library(tidyverse)
 library(patchwork)
 library(brms)
@@ -272,7 +224,7 @@ Moreover, the data is not available, and the statistical analysis used anti-cons
 
 To further illuminate the question of whether speakers modify speech to signal atypical referents, thirty native German speakers were recorded while interacting with a confederate (one of the experimenters) in a referential game.
 The participants had to verbally instruct the confederate to select a specified target object out of four object presented on a screen.
-\Cref{f:procedural-timeline}
+Figure \@ref(fig:procedural) shows the experimental procedure time-line.
 The subject and confederate were seated at the opposite sides of a table, each facing one of two mirrored computer screens.
 The participant and the experimenter could not see each other nor each others' screens.
 After a familiarization phase (see XXX), the subject first saw four colored objects in the top left, top right, bottom left, and bottom right corners of the screen.
@@ -281,7 +233,7 @@ Objects were referred to using noun phrases consisting of an adjective modifier 
 
 
 <!-- FIGURE -->
-(ref:procedural) Experimental procedure - The upper row illustrates the trial sequence for the speaker (participant) and the lower row illustrates the trial sequence for the confederate. After a preview of 1500ms the speaker sees an arrow indicating one of the referent (b). Reading the orthographic instructions out loud, the speaker gives the confederate verbal instructions onto which referent they should drag the cube (c). The confederate, in turn, drags the black cube onto the target referent (d). Both the arrow and the orthographic instruction disappear from the speaker's screen and a new referent is indicated by an arrow on the same display alongside a new orthographic instruction (e). The speaker gives the confederate verbal instructions (f) which the confederate follows by dragging the cube onto the next referent (g).
+(ref:procedural) Experimental procedure. The upper row illustrates the trial sequence for the speaker (participant) and the lower row illustrates the trial sequence for the confederate. After a preview of 1500ms the speaker sees an arrow indicating one of the referent (b). Reading the orthographic instructions out loud, the speaker gives the confederate verbal instructions onto which referent they should drag the cube (c). The confederate, in turn, drags the black cube onto the target referent (d). Both the arrow and the orthographic instruction disappear from the speaker's screen and a new referent is indicated by an arrow on the same display alongside a new orthographic instruction (e). The speaker gives the confederate verbal instructions (f) which the confederate follows by dragging the cube onto the next referent (g).
 
 ```{r 'procedural', echo=FALSE, fig.cap="(ref:procedural)", out.width="100%"}
 knitr::include_graphics(here::here("figs", "procedure_plot.png"))
@@ -307,7 +259,7 @@ All analysis teams will be given access to the entire data set and will be instr
 
 # Methods
 
-As outlined in Section \@ref(s:operspeech), researchers are faced with a large amount of analytic choices when analyzing a multidimensional signal such as speech.
+As outlined in Section [Operationalizing speech](#s:operspeech), researchers are faced with a large amount of analytic choices when analyzing a multidimensional signal such as speech.
 Analysts must identify and operationalize relevant measurements, as well as the temporal domain(s) from which these measurements are to be taken, and then possibly transform said measurements before submitting them to statistical models, which must be chosen alongside inferential criteria.
 The complexity of speech data constitutes the ideal testing ground to assess the upper bound of analytic flexibility that social science might face across disciplines.
 We will employ a meta-analytic approach to assess (i) the variability of the reported effects, and (ii) and how analytic and research-related predictors affect the researchers' final results.
@@ -330,7 +282,7 @@ The initiating authors (SC, JC, TR) created an online landing page providing a g
 The project will be advertised via social media, using mailing lists for linguistic and psychological societies, and via word of mouth.
 The target population comprises active speech science researchers with a graduate/doctoral degree (or currently studying for a graduate/doctoral degree) in relevant disciplines.
 Researchers can choose to work independently or in a small team.
-For the sake of simplicity, we will refer to single researcher or small teams as "analysis teams".
+For the sake of simplicity, we will refer to single researcher or small teams as \textsc{analysis teams}.
 Recruitment for this project will commence upon receiving in-principle acceptance.
 As outlined above, our aim is to assess the variability of the reported effects and how these are affected by a set of predictors, rather than the meta-analytical estimate *per se*.
 Given the scarcity of previous meta-analytical studies that directly investigate researcher's degrees of freedom, as reviewed in the introduction, we are not able to establish a properly-grounded minimal sample size.
@@ -350,7 +302,7 @@ The analysis teams will register and answer a demographic and expertise question
 PDF versions of all the questionnaires used in this study are available at LINK^[Temporary link: <https://osf.io/h6z8w/?view_only=3457f2b01a5f4435b3d917eb7b5134e8>.].
 The questionnaire collects information on the analysts current position and self-estimated breadth and level of statistical expertise and acoustic analysis skills.
 We will then request that they answer the question: *Do speakers acoustically modify utterances to signal atypical word combinations?*
-To do so, they will be given the data generated by the experiment described in \Cref{s:dataset}.
+To do so, they will be given the data generated by the experiment described in Section [The data set](#s:dataset).
 The data will include the audio recordings with corresponding time-aligned transcriptions in the form of Praat TextGrid files (LINK^[Temporary link: <https://osf.io/5agn9/?view_only=3429acfd8eae4f0aafe2e17ad5b0983f>]).
 
 Once their analysis is complete, they will answer a structured questionnaire (`analytical_quest.pdf`), providing information about their analysis technique, an explanation of their analytic choices, their quantitative results, and a statement describing their conclusions.
@@ -388,27 +340,27 @@ Th initiating authors (SC, JC, TR) will conduct the analyses outlined in this se
 
 ### Descriptive statistics
 
-We will calculate summary statistics describing variation among analyses, including (a) the nature and number of acoustic measures (e.g. f0 or duration), (b) the operationalization and the temporal domain of measurement (e.g. mean of an interval or value at specified point in time), (c) the nature and number of model parameters for both fixed and random effects (if applicable), (d) the nature and reasoning behind inferential assessments (e.g. dichotomous decision based on *p*-values, ordinal decision based on a Bayes factor), as well as the (e) mean, (f) standard deviation and (g) range of the standardizes effect sizes (see \@ref(s:meta-est) for the standardization procedure).
+We will calculate summary statistics describing variation among analyses, including (a) the nature and number of acoustic measures (e.g. f0 or duration), (b) the operationalization and the temporal domain of measurement (e.g. mean of an interval or value at specified point in time), (c) the nature and number of model parameters for both fixed and random effects (if applicable), (d) the nature and reasoning behind inferential assessments (e.g. dichotomous decision based on *p*-values, ordinal decision based on a Bayes factor), as well as the (e) mean, (f) standard deviation and (g) range of the standardizes effect sizes (see the next section for the standardization procedure).
 
 ### Meta-analytic estimation {#s:meta-est}
 
-We will investigate the variability in reported effect sizes using Bayesian meta-analytic techniques.
-As the measure of variability, we will take the estimated group-level standard deviation ($\sigma_{\alpha_{\text{t}}}$ below), where group refers to the analytical teams.
+We will investigate the variability in \textsc{reported effect sizes} using Bayesian meta-analytic techniques.
+As the measure of variability, we will take the meta-analytic \textsc{group-level standard deviation} ($\sigma_{\alpha_{\text{t}}}$, see below), where group refers to the analytical teams.
 
 Based on the common practices currently in place within the field, we anticipate that researchers will use multi-level/hierarchical/random-effects regression models, thus common measurements of effect size, such as Cohen's $d$, may be inappropriate.
-Since the variables used by the analysis teams might substantially differ in their measurement scales (e.g, Hertz for frequency vs milliseconds for duration), we will standardize all reported effects by refitting each reported model with centered and scaled continuous variables (*z*-scores, i.e. the observed values subtracted from the mean divided by the standard deviation) and sum-coded factor variables.
+Since the variables used by the analysis teams might substantially differ in their measurement scales (e.g, Hertz for frequency vs milliseconds for duration), we will standardize all reported effects by refitting each \textsc{reported model} with centered and scaled continuous variables (*z*-scores, i.e. the observed values subtracted from the mean divided by the standard deviation) and sum-coded factor variables.
 Factor-level ordering for each categorical variable will mirror that of the original analyses.
-Each standardized (refitted) model will be fitted as a Bayesian regression model with Stan [@stan2021], RStan [@stan2020a], and brms [@burkner2017] in R [@R-base].
+Each \textsc{standardized model} will be fitted as a Bayesian regression model with Stan [@stan2021], RStan [@stan2020a], and brms [@burkner2017] in R [@R-base].
 For those reported models that were originally fitted within a frequentist approach, uniform distributions will be used as the priors of all parameters (with the restriction that only positive numbers will be included for scale parameters), making the standardized models in fact equivalent to the reported frequentist models.
 If a team has fitted Bayesian models, the same priors as reported by the team will be used in fitting the respective standardized model.
 
-The estimated coefficients of the critical predictors (i.e. critical according to the analysis teams' self-reported inferential criteria), as obtained from the standardized models, will be used as the standardized effect size ($\eta_i$) of each reported model.
+The coefficients of the critical predictors (i.e. critical according to the analysis teams' self-reported inferential criteria) obtained from the standardized models will be used as the \textsc{standardized effect size} ($\eta_i$) of each reported model.
 If multiple predictors within a single analysis have been reported as critical, each will be included in the meta-analytic model (described in details in the next paragraph).
-Moreover, to account for the differing degree of uncertainty around each standardized effect size, we will use the standard deviation of each effect size returned by the standardized models as the standard error ($\text{se}_i$) of the effect size.
+Moreover, to account for the differing degree of uncertainty around each standardized effect size, we will use the standard deviation of each effect size returned by the standardized models as the \textsc{standardized standard error} ($\text{se}_i$).
 This will enable us to fit a so-called "measurement-error" model, in which both the standardized effect sizes and their respective standard errors are entered in the meta-analytic model.
 As a desired consequence, effect sizes with a greater standard error will be weighted less than those with a smaller standard error in the meta-analytic calculations.
 
-After having obtained the standardized effect sizes $\eta_i$ with related standard errors $\text{se}_i$, for each critical predictor of the individual reported analyses, we will fit a Bayesian random-effects meta-analysis using a multilevel (intercept-only) regression model.
+After having obtained the standardized effect sizes $\eta_i$ with related standard errors $\text{se}_i$, for each critical predictor of the individual reported analyses, we will fit a \textsc{Bayesian random-effects meta-analysis} using a multilevel (intercept-only) regression model.
 The outcome variable will be the set of standardized effect sizes $\eta_i$.
 The likelihood of $\eta_i$ is assumed to correspond to a normal distribution [@knight2000].
 The analysis teams will be entered as a group-level effect (i.e., random effect, `(1 | team)`).
@@ -436,24 +388,24 @@ sigma in addition to the known standard errors, set argument sigma in
 function se to TRUE, for instance, yi | se(sei, sigma = TRUE) ~ 1. -->
 
 The posterior distribution of the population-level intercept $\alpha$ will allow us to estimate the range of probable values of the standardized effect size $\hat{\eta}$.
-The posterior distribution will further allow us to investigate the effect of a set of analytic and researcher-related predictors, detailed in Section \@ref(anares-preds).
+The posterior distribution will further allow us to investigate the effect of a set of analytic and researcher-related predictors, detailed in the next section.
 Crucially, the posterior distribution of $\sigma_{\alpha_{\text{t}}}$ (the standard deviation of the group-level effect of team) will allow us to quantify the degree of variation between teams on a standardized scale.
 
 
 ### Analytic and researcher-related predictors affecting effect sizes {#anares-preds}
 
-As a second step, we will investigate the extent to which the individual standardized effect sizes are affected by a series of analytic and researcher-related predictors.
+As a second step, we will investigate the extent to which the individual standardized effect sizes are affected by a series of \textsc{analytic and researcher-related predictors}.
 
 **Analytic predictors**. We will estimate the influence of the following predictors related to the analytic characteristics of each team's reported analysis:
 
 <!-- NOTE: We dropped data exclusion -->
-- *Measure of uniqueness* [numeric] of individual analyses for the set of predictors in each model ($uniq_i$).
-- *Measure of conservativeness* [numeric] of the model specification, as the number of random/group-level effects included ($cons_i$).
-- *Number of post-hoc changes to the acoustic measurements* [numeric] the teams will report to have carried out ($phoc_i$).
-- *Number of models* [numeric] the teams will report to have run ($modn_i$).
-- *Major dimension* [categorical] that has been measured to answer the research question ($mdim_i$).
-- *Temporal window* [categorical] that the measurement is taken over ($twin_i$).
-- *Average peer-review rating* [numeric], as the mean of the overall peer-review ratings for each analysis.
+- *Measure of uniqueness* of individual analyses for the set of predictors in each model [numeric].
+- *Measure of conservativeness* of the model specification, as the number of random/group-level effects included [numeric].
+- *Number of post-hoc changes to the acoustic measurements* the teams will report to have carried out [numeric].
+- *Number of models* the teams will report to have run [numeric].
+- *Major dimension* that has been measured to answer the research question [categorical].
+- *Temporal window* that the measurement is taken over [categorical].
+- *Average peer-review rating*, as the mean of the overall peer-review ratings for each analysis [numeric].
 
 Following @Parker2020, the measure of uniqueness of predictors will be assessed by the Sørensen-Dice Index [SDI, @dice1945; @sorensen1948].
 The SDI is an index typically used in ecology research to compare species composition across sites.
@@ -481,8 +433,8 @@ These will be entered in the model formula as a measurement-error term (`me(mean
 
 **Researcher-related factors**. We will also include the following predictors:
 
-- *Research experience* [numeric] as the elapsed time from receiving the PhD. Negative values will indicate that the person is a student or graduate studens ($rexp_i$).
-- *Initial belief* [numeric] in the presence of an effect of atypical noun-adjective pairs on acoustics, as answered during the intake questionnaire ($belf_i$).
+- *Research experience* as the elapsed time from receiving the PhD. Negative values will indicate that the person is a student or graduate studens [numeric].
+- *Initial belief* in the presence of an effect of atypical noun-adjective pairs on acoustics, as answered during the intake questionnaire [numeric].
 
 Since we will obtain scores for each member in the analytic teams, we will calculate the team mean and standard deviation for each predictor.
 These will be entered in the model formula as a measurement-error term (`me(mean, sd)` in brms).
@@ -514,13 +466,15 @@ Analysts and initiating authors will discuss the limitations, results, and impli
 
 <!-- TODO: add glossary -->
 
-\newpage
+\appendix
 
-# References
+# Glossary
 
-\begingroup
-\setlength{\parindent}{-0.5in}
-\setlength{\leftskip}{0.5in}
-
-<div id="refs" custom-style="Bibliography"></div>
-\endgroup
+- **Analysis team**: team of analysts or single analyst.
+- **Reported effect sizes**: effect sizes reported by each analysis team.
+- **Standardized model**: Bayesian refit of the team's model.
+- **Standardized effect sizes**: ($\eta_i$) effect sizes returned by the standardised models.
+- **Standardized standard error**: ($\text{se}_i$) standard deviation of the standardized effect sizes.
+- **Bayesian random-effects meta-analysis** and **meta-analytic model**: multilevel intercept-only regression model for meta-analysis.
+- **Meta-analytic group-level standard deviation**: ($\sigma_{\alpha_{\text{t}}}$) group-level standard deviation returned by the meta-analytic model.
+- **Analytic and researcher-related predictors**: predictors used in model XX.
