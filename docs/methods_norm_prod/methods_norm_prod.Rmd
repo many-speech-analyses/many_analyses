@@ -1,7 +1,6 @@
 ---
 title: "Methodological details of the norming and production studies"
 author: ""
-date: "9/17/2020"
 output:
   bookdown::pdf_document2:
     number_sections: true
@@ -23,7 +22,7 @@ options(tinytex.verbose = TRUE)
 
 # Overview
 
-This document describes the methodological details of the norming study and the production study that generated the data your team will analyze for the *Many Speech Analyses* project.
+This document describes the methodological details of the norming and the production studies that generated the data your team will analyze for the *Many Speech Analyses* project.
 
 The norming study was run to obtain ratings on the typicality of color/object combinations used to create the experimental categories manipulated in the production study.
 The production study then investigated whether speakers modify speech to signal the (a)typicality of the color/object combinations.
