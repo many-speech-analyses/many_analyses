@@ -196,8 +196,8 @@ These myriads of possible decisions are multiplied by those researcher degrees o
 In sum, speech data is made of complex physical signals that generates an as-of-yet unappreciated amount of analytic flexibility in the choice of measures and operationalizations.
 The present paper probes this garden of forking paths in the analysis of speech.
 To assess the variability in data analysis pipelines across independent researchers, we provided analytic teams with an experimentally elicited speech production data set.
-The unpublished study we took the data from aimed at investigating whether speakers acoustically modify utterances to signal unexpected referring expressions.
-In the following section we introduce the research question and the experimental procedure of said study, and we describe the dataset as it was given to the analysts.
+The data set derives from the unpublished research project *Prosodic encoding of redundant referring expressions*, which set out to investigate whether speakers acoustically modify utterances to signal unexpected referring expressions.
+In the following section we introduce the research question and the experimental procedure of said project, and we describe the resulting data set as used in the current study.
 
 ## The data set: The acoustic properties of atypical modifiers {#s:dataset}
 
@@ -250,7 +250,7 @@ If the objects are the same but differ in color (e.g. *yellow banana* vs *blue b
 If both the color and the object differ (e.g. *yellow banana* vs *blue tomato*), the narrow focus is on the whole noun phrase (the Adjective/Noun Focus condition, ANF).
 The NF condition constituted the experimentally relevant condition, while the AF and ANF conditions acted as fillers.
 Crucially, the color-object combinations in the Noun Focus (NF) condition were manipulated with respect to their typicality.
-The combinations were either typical (e.g. *orange mandarin*), medium typical (e.g. *green tomato*), or atypical (e.g. *yellow cherry*), as established by a norming study that was conducted prior to the production experiment just described.^[A detailed description of the norming study, with a more in-depth description of this production study can be found in `methods_norm_prod.pdf` at (temporary link) <https://osf.io/5agn9/?view_only=3429acfd8eae4f0aafe2e17ad5b0983f>]
+The combinations were either typical (e.g. *orange mandarin*), medium typical (e.g. *green tomato*), or atypical (e.g. *yellow cherry*), as established by a norming study that was conducted prior to the production experiment just described.^[A detailed description of the norming and production studies from the *Prosodic encoding of redundant referring expressions* project, which was given to the analysts with the data set, can be found in `methods_norm_prod.pdf` at (temporary link) <https://osf.io/5agn9/?view_only=3429acfd8eae4f0aafe2e17ad5b0983f>]
 Each subject produced 15 critical trials (NF condition).
 Each trial was repeated twice, yielding a total of 30 trials per participant and a grand-total of 900 ($15 \times 2 \times 30$ participants) spoken utterances.
 
