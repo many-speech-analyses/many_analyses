@@ -1,12 +1,12 @@
 ---
-title: "Prospective simulation"
+title: "Analytic choices for analyzing multidimensional behavior: Many analysts test hypotheses about human speech --- Prospective simulations"
 date: "`r Sys.Date()`"
 output:
   rmdformats::downcute:
     toc_depth: 3
     number_sections: yes
     use_bookdown: yes
-bibliography: "`r here::here('./RR_manuscript/other_refs.bib')`"
+bibliography: "`r here::here('./RR_manuscript/references.bib')`"
 cls: unified-style-sheet-for-linguistics.csl
 ---
 
@@ -289,14 +289,24 @@ As a second step, we will investigate the extent to which the individual standar
 
 ## Model formula
 
+- `uniqueness_i`: *Measure of uniqueness* of individual analyses for the set of predictors in each model [numeric].
+- `conservativeness_i`: *Measure of conservativeness* of the model specification, as the number of random/group-level effects included [numeric].
+- `posthoc_i`: *Number of post-hoc changes to the acoustic measurements* the teams will report to have carried out [numeric].
+- `numModels_i`: *Number of models* the teams will report to have run [numeric].
+- `majorDimension_i`: *Major dimension* that has been measured to answer the research question [categorical].
+- `timeWindow_i`: *Temporal window* that the measurement is taken over [categorical].
+- `PRrating_i`: *Average peer-review rating*, as the mean of the overall peer-review ratings for each analysis [numeric].
+- `resExpirience_i`: *Research experience* as the elapsed time from receiving the PhD. Negative values will indicate that the person is a student or graduate studens [numeric].
+- `initialBelief_i`: *Initial belief* in the presence of an effect of atypical noun-adjective pairs on acoustics, as answered during the intake questionnaire [numeric].
+
 $$
 \begin{aligned}
 \alpha_{\text{t}[i]}      & \sim \text{Normal}(\mu_{\alpha_{t[i]}}, \sigma_i) \\
 \mu_{\alpha_{t[i]}}       & = \beta + \upsilon_u\cdot uniqueness_i + \upsilon_c\cdot conservativeness_i \\
  & \qquad + \upsilon_p\cdot posthoc_i + \upsilon_m\cdot numModels_i \\
- & \qquad + \upsilon_d\cdot mearuredDimension_i + \upsilon_w\cdot timeWindow_i \\
+ & \qquad + \upsilon_d\cdot majorDimension_i + \upsilon_w\cdot timeWindow_i \\
  & \qquad + \upsilon_r\cdot PRrating_i + \\
- & \qquad + \upsilon_{xp}\cdot resExpirience_i + \upsilon_{be}\cdot priorBelief_i  \\
+ & \qquad + \upsilon_{xp}\cdot resExpirience_i + \upsilon_{be}\cdot initialBelief_i  \\
 \iota      & \sim \text{Normal}(0, 1) \\
 \upsilon_{[\ldots]} & \sim \text{Normal}(0,1) \\
 rat_i & \sim \text{Normal}(\mu_{rat_i}, \sigma_{rat_i}) \\
@@ -348,5 +358,8 @@ predictors_bm <- brm(
 predictors_bm
 ```
 
+```{r plot-preds-bm}
+plot(predictors_bm, ask = FALSE)
+```
 
 # References
