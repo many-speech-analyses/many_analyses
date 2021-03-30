@@ -14,10 +14,10 @@ address:
 - num: 2
   org: Department of Applied Things, University B, City B, Country B
 - num: 3
-  org: Very Important Stuff Committee, Institute C, City C, Country C
+  org: Department of Linguistics and Scandinavian Studies, University of Oslo, Oslo, Norway
 corrauth: "Stefano Coretta"
 email: "s.coretta@lmu.de"
-abstract: "Recent efforts to replicate published findings have uncovered surprisingly low success rates (the replication crisis) and variability in the conclusions drawn by different researchers based on the same data (the inference crisis). Theses have highlighted the large degree of analytic flexibility of data analysis (the so-called researcher degrees of freedom). Even greater flexibility is to be expected in fields in which the primary data lend themselves to a variety of possible operationalizations. The multidimensional nature of speech constitutes an ideal testing ground for assessing variability in analytic approaches and outcomes that derives not only from aspects of statistical modelling but also from decisions regarding how to quantify a particular phenomenon. For this study, we gave the same speech dataset to N teams of researchers and asked them to answer the same research question. [Results TBA]"
+abstract: "Recent efforts to replicate published findings have uncovered surprisingly low success rates across disciplines. Moreover, several studies have highlighted the large degree of analytic flexibility in data analysis which can lead to substantially different conclusions based on the same data set. Thus, researchers have expressed their concerns that these researcher degrees of freedom might can facilitate bias and can lead to claims that do not stand the test of time. Even greater flexibility is to be expected in fields in which the primary data lend themselves to a variety of possible operationalizations. The multidimensional, temporally extended nature of speech constitutes an ideal testing ground for assessing variability in analytic approaches that derives not only from aspects of statistical modelling but also from decisions regarding the quantification of the measured behavior. In the present study, we will give the same speech production dataset to N teams of researchers and will ask them to answer the same research question. Using Bayesian meta analytical tools, we will quantify this variability and relate it to predictors related to the analysts and their analyses."
 keywords: "crowdsourcing science, data analysis, scientific transparency, speech, acoustic analysis"
 classoption:
   - Review
