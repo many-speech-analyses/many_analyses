@@ -15,7 +15,7 @@ address:
   org: Department of Applied Things, University B, City B, Country B
 - num: 3
   org: Very Important Stuff Committee, Institute C, City C, Country C
-corrauth: "Stefano Coretta."
+corrauth: "Stefano Coretta"
 email: "s.coretta@lmu.de"
 abstract: "TBA"
 keywords: "crowdsourcing science, data analysis, scientific transparency, speech, acoustic analysis"
@@ -68,7 +68,6 @@ Not only can decisions about measuring the signal influence downstream decisions
 In this article, we investigate the variability in analytic choices when many analyst teams analyze the same speech production data set, a process that involves both decisions regarding the operationalization of a complex  signal and decisions regarding the statistical analysis.
 <!-- TODOLATER: include number of teams when known -->
 Specifically, we discuss the impact of analytic decision making on research results obtained by N teams who had access to the same set of acoustic recordings in order to answer the same research question.
-<!-- TODO: check tense throughout, should be future tense -->
 
 ## Researcher degrees of freedom
 
@@ -262,34 +261,34 @@ For the present study, N analysis teams were given access to the entire data set
 As outlined in Section [Operationalizing speech](#s:operspeech), researchers are faced with a large amount of analytic choices when analyzing a multidimensional signal such as speech.
 Analysts must identify and operationalize relevant measurements, as well as the temporal domain(s) from which these measurements are to be taken, and then possibly transform said measurements before submitting them to statistical models, which must be chosen alongside inferential criteria.
 The complexity of speech data constitutes the ideal testing ground to assess the upper bound of analytic flexibility that social science might face across disciplines.
-We will employ a meta-analytic approach to assess (i) the variability of the reported effects, and (ii) and how analytic and research-related predictors affect the researchers' final results.
+We will employ a meta-analytic approach to assess (i) the variability of the reported effects, and (ii) how analytic and researcher-related predictors affect the final results.
 
-We are closely following the data collection procedure proposed by @Parker2020.
+In this study, we are follow the data collection procedure proposed by @Parker2020.
 The project involves the following five phases:
 
 1. \textsc{Recruitment}: We will recruit independent groups of researchers to analyze the data.
 2. \textsc{Team Analysis}: We will give researchers access to the speech corpus and let them analyze the data as they see fit.
-3. \textsc{Review}: We will ask reviewers to generate peer review ratings of the analyses based on methods (not results).
-4. \textsc{Meta-analysis}: We will evaluate the variation among the different analyses.
+3. \textsc{Review}: We will ask reviewers to generate peer-review ratings of the analyses based on methods (not results).
+4. \textsc{Meta-analysis}: We will evaluate variability among the different analyses and how different predictors affect the outcomes.
 5. \textsc{Write-up}: Lastly, we will collaboratively produce the final manuscript.
 
 We estimate that this process, from the time of an in-principle acceptance of this Stage 1 Registered Report to the end of Phase 5, will take nine months.
-The factor most likely to delay our time line is the rate of completion of the original set of analyses by independent analysis teams.
+The factor most likely to delay our time-line is the rate of completion of the original set of analyses by independent analysis teams.
 
 ## Phase 1: Recruitment of analysts and initial survey
 
-The initiating authors (SC, JC, TR) created an online landing page providing a general description of the project and a short pre-recorded slide show that summarizes the study and research question (<https://many-speech-analyses.github.io>).
-The project will be advertised via social media, using mailing lists for linguistic and psychological societies, and via word of mouth.
+An online landing page will provide a general description of the project, including a short pre-recorded slide-show that summarizes the data set and research question (<https://many-speech-analyses.github.io>).
+The project will be advertised via social media, using mailing lists for linguistic and psychological societies, and via word of mouth.^[Terms in small caps in this and later sections are included with their definition in the glossary at the end of the paper for the reader's convenience.]
 The target population comprises active speech science researchers with a graduate/doctoral degree (or currently studying for a graduate/doctoral degree) in relevant disciplines.
 Researchers can choose to work independently or in a small team.
-For the sake of simplicity, we will refer to single researcher or small teams as \textsc{analysis teams}.
+For the sake of simplicity, we will refer both to a single researcher and teams as \textsc{analysis teams}.
 Recruitment for this project will commence upon receiving in-principle acceptance.
-As outlined above, our aim is to assess the variability of the reported effects and how these are affected by a set of predictors, rather than the meta-analytical estimate *per se*.
-Given the scarcity of previous meta-analytical studies that directly investigate researcher's degrees of freedom, as reviewed in the introduction, we are not able to establish a properly-grounded minimal sample size.
+As outlined above, our aim is to assess the variability of the reported effects and how these are affected by a set of predictors, rather than the meta-analytic estimate of the investigated effect *per se*.
+Given the scarcity of previous meta-analytic studies that directly investigate researcher's degrees of freedom, as reviewed in the introduction, we are not able to establish a properly-grounded minimal sample size.
 Thus, we aim to recruit as many teams as possible, within the resource and time limits of the project.
 
 We will simultaneously recruit volunteers to peer-review the analyses conducted by the analysis teams through the same channels.
-Our goal is to recruit a similar number of peer-reviewers and analysts, and to ask each peer reviewer to review a minimum of four analyses.
+Our goal is to recruit a similar number of peer-reviewers and analysts, and to ask each peer-reviewer to review a minimum of four analyses.
 If we are unable to recruit at least half the number of reviewers as analysis teams, we will ask analysts to serve also as reviewers (after they have completed their analyses).
 
 All analysts and reviewers will share co-authorship on this manuscript and will participate in the collaborative process of producing the final manuscript.
@@ -298,26 +297,26 @@ Informed consent will be obtained as part of the intake form.
 
 ## Phase 2: Primary Data Analyses
 
-The analysis teams will register and answer a demographic and expertise questionnaire (`intake_form.pdf`).
+The analysis teams will register for participation and each of the analysts individually will answer a demographic and expertise questionnaire (`intake_form.pdf`).
 PDF versions of all the questionnaires used in this study are available at LINK^[Temporary link: <https://osf.io/h6z8w/?view_only=3457f2b01a5f4435b3d917eb7b5134e8>.].
 The questionnaire collects information on the analysts current position and self-estimated breadth and level of statistical expertise and acoustic analysis skills.
 We will then request that they answer the question: *Do speakers acoustically modify utterances to signal atypical word combinations?*
 To do so, they will be given the data generated by the experiment described in Section [The data set](#s:dataset).
 The data will include the audio recordings with corresponding time-aligned transcriptions in the form of Praat TextGrid files (LINK^[Temporary link: <https://osf.io/5agn9/?view_only=3429acfd8eae4f0aafe2e17ad5b0983f>]).
 
-Once their analysis is complete, they will answer a structured questionnaire (`analytical_quest.pdf`), providing information about their analysis technique, an explanation of their analytic choices, their quantitative results, and a statement describing their conclusions.
+Once their analysis is complete, they will answer a structured questionnaire (`analytic_quest.pdf`), providing information about their analysis technique, an explanation of their analytic choices, their quantitative results, and a statement describing their conclusions.
 They will also upload their analysis files (including the additionally derived data and text files that were used to extract and pre-process the acoustic data), their analysis code (if applicable), and a detailed journal-ready statistical methods section.
 
 ## Phase 3: Peer Review of Analyses
 
-At a minimum, each analysis will be evaluated by four different reviewers, and each volunteer peer-reviewer will be randomly assigned to analyses from at least four analyst teams (the exact number will depend on the number of analysis teams and peer reviewers recruited).
-Each peer reviewer will register and answer a demographic and expertise questionnaire identical to that asked of the analysts.
+At a minimum, each analysis will be evaluated by four different reviewers, and each peer-reviewer will be randomly assigned to analyses from at least four analysis teams (the exact number will depend on the number of analysis teams and peer-reviewers recruited).
+Each peer-reviewer will register and answer a demographic and expertise questionnaire identical to that asked of the analysts.
 Reviewers will evaluate the methods of each of their assigned analyses one at a time in a sequence determined by the initiating authors.
 The sequences will be systematically assigned so that, if possible, each analysis is allocated to each position in the sequence for at least one reviewer.
 
 The process for a single reviewer will be as follows.
 First, the reviewer will receive a description of the methods of a single analysis.
-This will include the narrative methods section, the analysis team's answers to our survey questions regarding their methods, including analysis code and the data set.
+This will include the narrative methods section, the analysis team's answers to the questionnaire regarding their methods, including analysis code and the data set.
 The reviewer will then be asked in an online questionnaire (`peer_review_quest.pdf`) to rate both the acoustic and the statistical analyses and to provide an overall rating, using a scale of 0-100, respectively.
 To help reviewers calibrate their rating, they will be given the following guidelines:
 
@@ -336,7 +335,7 @@ After providing the final review, the reviewer will be simultaneously presented 
 
 ## Phase 4: Evaluating variation
 
-Th initiating authors (SC, JC, TR) will conduct the analyses outlined in this section.
+The initiating authors (SC, JC, TR) will conduct the analyses outlined in this section.
 
 ### Descriptive statistics
 
@@ -345,9 +344,9 @@ We will calculate summary statistics describing variation among analyses, includ
 ### Meta-analytic estimation {#s:meta-est}
 
 We will investigate the variability in \textsc{reported effect sizes} using Bayesian meta-analytic techniques.
-As the measure of variability, we will take the meta-analytic \textsc{group-level standard deviation} ($\sigma_{\alpha_{\text{t}}}$, see below), where group refers to the analytical teams.
+As the measure of variability, we will take the meta-analytic \textsc{group-level standard deviation} ($\sigma_{\alpha_{\text{t}}}$, see below), where the groups are the analysis teams.
 
-Based on the common practices currently in place within the field, we anticipate that researchers will use multi-level/hierarchical/random-effects regression models, thus common measurements of effect size, such as Cohen's $d$, may be inappropriate.
+Based on the common practices currently in place within the field, we anticipate that researchers will use multi-level/hierarchical/mixed-effects regression models, thus common measurements of effect size, such as Cohen's $d$, may be inappropriate.
 Since the variables used by the analysis teams might substantially differ in their measurement scales (e.g, Hertz for frequency vs milliseconds for duration), we will standardize all reported effects by refitting each \textsc{reported model} with centered and scaled continuous variables (*z*-scores, i.e. the observed values subtracted from the mean divided by the standard deviation) and sum-coded factor variables.
 Factor-level ordering for each categorical variable will mirror that of the original analyses.
 Each \textsc{standardized model} will be fitted as a Bayesian regression model with Stan [@stan2021], RStan [@stan2020a], and brms [@burkner2017] in R [@R-base].
@@ -356,21 +355,20 @@ If a team has fitted Bayesian models, the same priors as reported by the team wi
 
 The coefficients of the critical predictors (i.e. critical according to the analysis teams' self-reported inferential criteria) obtained from the standardized models will be used as the \textsc{standardized effect size} ($\eta_i$) of each reported model.
 If multiple predictors within a single analysis have been reported as critical, each will be included in the meta-analytic model (described in details in the next paragraph).
-Moreover, to account for the differing degree of uncertainty around each standardized effect size, we will use the standard deviation of each effect size returned by the standardized models as the \textsc{standardized standard error} ($\text{se}_i$).
+Moreover, to account for the differing degree of uncertainty around each standardized effect size, we will use the standard deviation of each standardized effect size as the \textsc{standardized standard error} ($\text{se}_i$).
 This will enable us to fit a so-called "measurement-error" model, in which both the standardized effect sizes and their respective standard errors are entered in the meta-analytic model.
 As a desired consequence, effect sizes with a greater standard error will be weighted less than those with a smaller standard error in the meta-analytic calculations.
 
-After having obtained the standardized effect sizes $\eta_i$ with related standard errors $\text{se}_i$, for each critical predictor of the individual reported analyses, we will fit a \textsc{Bayesian random-effects meta-analysis} using a multilevel (intercept-only) regression model.
+After having obtained the standardized effect sizes $\eta_i$ with related standard errors $\text{se}_i$, for each critical predictor of the individual reported model, we will fit a \textsc{Bayesian random-effects meta-analysis} using a multilevel (intercept-only) regression model.
 The outcome variable will be the set of standardized effect sizes $\eta_i$.
 The likelihood of $\eta_i$ is assumed to correspond to a normal distribution [@knight2000].
-The analysis teams will be entered as a group-level effect (i.e., random effect, `(1 | team)`).
-The standard errors $\text{se}_i$ will be included as the standard deviation $\sigma_i$ of $\eta_i$ to fit a measurement-error model, as discussed above.
+The analysis teams will be entered as a group-level effect (i.e., `(1 | team)`, called *random effect* in the frequentist literature).
+The standard errors $\text{se}_i$ will be included as the standard deviation of $\eta_i$ to fit a measurement-error model, as discussed above.
 We will use regularizing weakly-informative priors for the intercept $\alpha$ ($Normal(0, 1)$) and for the group-level standard deviation $\sigma_{\alpha_{\text{t}}}$ ($HalfCauchy(0, 1)$).
 We will fit this model with 4 chains of Hamiltonian Monte-Carlo sampling for the estimation of the joint posterior distribution, using the No U-Turn Sampler (NUTS) as implemented in Stan [@stan2021], and 4000 iterations (2000 for warm-up) per chain, distributed across 4 processing cores.
 In case of divergent transitions, we will increase `adapt_delta`, `tree_depth`, and the number of iterations in this order until we obtain a model fit with no divergent transitions.
 The analysis will be conducted in R [@R-base] and fit using Stan [@stan2021], RStan [@stan2020a], and brms [@burkner2017].
-<!-- TODO: add LINK to code of the meta-analytic model: add to landing page in non-linked page -->
-The code used to run the model can be found here: INSERT LINK.
+The code used to run the model can be found at <https://many-speech-analyses.github.io/suppl/simulations.html>.
 
 <!-- From ?brms:brmsformula -->
 <!-- For families gaussian, student and skew_normal, it is possible to
@@ -389,7 +387,7 @@ function se to TRUE, for instance, yi | se(sei, sigma = TRUE) ~ 1. -->
 
 The posterior distribution of the population-level intercept $\alpha$ will allow us to estimate the range of probable values of the standardized effect size $\hat{\eta}$.
 The posterior distribution will further allow us to investigate the effect of a set of analytic and researcher-related predictors, detailed in the next section.
-Crucially, the posterior distribution of $\sigma_{\alpha_{\text{t}}}$ (the standard deviation of the group-level effect of team) will allow us to quantify the degree of variation between teams on a standardized scale.
+Crucially, the posterior distribution of the [group-level standard deviation](.smallcaps) $\sigma_{\alpha_{\text{t}}}$ (i.e. the standard deviation of the group-level effect of team) will allow us to quantify the degree of variation between the teams' analyses on a standardized scale.
 
 
 ### Analytic and researcher-related predictors affecting effect sizes {#anares-preds}
@@ -447,15 +445,14 @@ The mean of $\alpha_{t[i]}$ is modeled on the basis of the overall intercept $\b
 The numeric predictors will be centered and scaled and the categorical predictors will be sum coded.
 As the prior for the intercept and the predictors we will use a normal distribution with mean 0 and standard deviation 1.
 The model will be run with the same settings as with the meta-analytic model.
-<!-- TODO: add LINK to code of the predictors model: add to landing page in non-linked page -->
-The code used to run the model can be found here: INSERT LINK.
+The code used to run the model can be found at <https://many-speech-analyses.github.io/suppl/simulations.html>.
 
 ### Data management {#ana-archive}
 
-All relevant data, code, and materials will be publicly archived on the Open Science Framework (<https://osf.io/3bmcp/>).
-Archived data will include the original data sets distributed to all analysts, any edited versions of the data analyzed by individual groups, and the data we analyze with our meta-analyses, which include the effect sizes derived from separate analyses, the statistics describing variation in model structure among analysis teams, and the anonymized answers to our questionnaires of analysts and peer reviewers.
+All relevant data, code, and materials will be publicly archived on the Open Science Framework (<https://osf.io/3bmcp/>).^[Link for peer-review: <https://osf.io/3bmcp/?view_only=4f00dff704d742d493870f9f3d68e432>.]
+Archived data will include the original data set distributed to all analysts, any edited versions of the data analyzed by individual teams, and the data we analyze with our meta-analyses, which include the standardized effect sizes, the statistics describing variation in model structure among analysis teams, and the anonymized answers to our questionnaires of analysts and peer-reviewers.
 Similarly, we will archive both the analysis code used for each individual analysis and the code from our meta-analyses.
-We will also archive copies of our survey instruments from analysts and peer reviewers.
+We will also archive copies of our survey instruments from analysts and peer-reviewers.
 
 We will exclude from our synthesis any individual analysis submitted after we have completed peer review or those unaccompanied by analysis files that allow us to understand what the analysts did.
 We will also exclude any individual analysis that does not produce an outcome that can be interpreted as an answer to our primary question.
@@ -463,8 +460,6 @@ We will also exclude any individual analysis that does not produce an outcome th
 ## Phase 6: Collaborative Write-Up of Manuscript
 
 Analysts and initiating authors will discuss the limitations, results, and implications of the study and collaborate on writing the final manuscript for review as a stage-2 Registered Report.
-
-<!-- TODO: add glossary -->
 
 \appendix
 
@@ -476,5 +471,5 @@ Analysts and initiating authors will discuss the limitations, results, and impli
 - **Standardized effect sizes**: ($\eta_i$) effect sizes returned by the standardised models.
 - **Standardized standard error**: ($\text{se}_i$) standard deviation of the standardized effect sizes.
 - **Bayesian random-effects meta-analysis** and **meta-analytic model**: multilevel intercept-only regression model for meta-analysis.
-- **Meta-analytic group-level standard deviation**: ($\sigma_{\alpha_{\text{t}}}$) group-level standard deviation returned by the meta-analytic model.
-- **Analytic and researcher-related predictors**: predictors used in model XX.
+- **Meta-analytic group-level standard deviation**: ($\sigma_{\alpha_{\text{t}}}$) standard deviation of the group-level effect of team returned by the meta-analytic model.
+- **Analytic and researcher-related predictors**: predictors used in the model that assess the effect of analytic and researcher-related factors on the standardized effects.
