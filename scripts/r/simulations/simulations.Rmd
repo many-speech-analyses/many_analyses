@@ -26,7 +26,7 @@ library(betapart)
 my_seed <- 115116106
 ```
 
-```{r include=FALSE}
+```{r create-dir, include=FALSE}
 dir.create("./models/sim/", F, recursive = T)
 ```
 
@@ -110,7 +110,6 @@ eta_tbl <- tibble(
   group_pred,
   group_n = map(group_pred, sum),
   pop_sdi = sdi_mean(pop_pred),
-  group_sdi = sdi_mean(group_pred),
   phoc_n,
   mod_n,
   mdim,
@@ -139,7 +138,7 @@ eta_tbl <- tibble(
 
 # Meta-analytical model
 
-**See paper for more details.**
+**See paper for details.**
 
 To summarize the variability in reported effect sized, we will follow Bayesian random-effects meta-analytical techniques.
 Since the variables used by the analysis teams might substantially differ in their measurement scales (e.g, Hz for frequency vs ms for duration), we will standardize all reported effects by refitting each reported model with centered and scaled continuous variables (*z*-scores, i.e. the observed values subtracted from the mean divided by the standard deviation) and sum-coded factor variables.
@@ -155,7 +154,7 @@ The outcome variable will be the set of standardized effect sizes $\eta_i$.
 The likelihood of $\eta_i$ is assumed to correspond to a normal distribution [@knight2000].
 The analysis teams will be entered as a group-level effect (i.e., random effect, `(1 | team)`).
 The standard errors $\text{se}_i$ will be included as the standard deviation $\sigma_i$ of $\eta_i$ to fit a measurement-error model, as discussed above.
-We will use regularizing weakly-informative priors for the intercept $\alpha$ ($Normal(0, 1)$) and for the group-level standard deviation $\alpha_{\text{t}[i]}$ ($HalfCauchy(0, 1)$).
+We will use regularizing weakly-informative priors for the intercept  ($Normal(0, 1)$) and for the group-level standard deviation $\sigma_{\alpha_{\text{t}}}$ ($HalfCauchy(0, 1)$).
 
 $$
 \begin{aligned}
@@ -167,12 +166,17 @@ $$
 \end{aligned}
 $$
 
+
 ## Model priors
 
 For the meta-analytical model, we will use the following priors:
 
-- A $Normal(0, 1)$ distribution for the prior of the intercept.
-- A $HalfCauchy(0, 1)$ distribution for the prior of the teams' intercept standard deviation.
+- A $Normal(0, 1)$ distribution for the prior of the intercept $\alpha$.
+- A $HalfCauchy(0, 1)$ distribution for the prior of the teams' intercept standard deviation $\sigma_{\alpha_{\text{t}}}$.
+
+The following graph illustrates the density function of $HalfCauchy(0, 1)$.
+The long tail ensures that values of $\sigma_{\alpha_{\text{t}}}$ greater than 5 be possible but less probable.
+This is desirable since the effect sizes are standardized (i.e. they should in principle be within a [-3, +3] range).
 
 ```{r sd-prior}
 tibble(
@@ -183,7 +187,7 @@ tibble(
   geom_area(fill = "#325756", alpha = 0.9) +
   labs(
     title = "HalfCauchy(0, 1)",
-    x = "teams' intercept standard deviation"
+    x = "Teams' intercept standard deviation"
   )
 ```
 
@@ -197,7 +201,7 @@ priors <- c(
 
 ### Prior predictive checks
 
-Prior predictive checks are run to assess the goodness of the prior specification before model fitting.
+We run prior predictive checks to assess the goodness of the prior specification before model fitting.
 
 ```{r prior-predictive}
 # run checks
@@ -217,7 +221,7 @@ ppred_samples <- posterior_samples(meta_bm_ppred) %>%
   rename(intercept = b_Intercept, `group-level SD` = sd_team__Intercept)
 ```
 
-Let's plot the prior probability distributions of the intercept and the standard deviation.
+We can now inspect the prior probability distributions of the intercept and the standard deviation.
 
 ```{r ppred-posts, message=FALSE, warning=FALSE}
 ppred_long <- ppred_samples %>%
@@ -269,7 +273,7 @@ meta_bm <- brm(
 )
 ```
 
-```{r meta-bm-summary}
+```{r meta-bm-summary, cache=TRUE}
 meta_bm
 ```
 
@@ -277,20 +281,22 @@ meta_bm
 plot(meta_bm)
 ```
 
-# Analytic and researchers' predictors model
+The degree of variability among the team's reported effects is within the range [0.41, 1.14] in SD units at 95% probability.
+
+# Analytic and researcher-related predictors model
 
 As a second step, we will investigate the extent to which the individual standardized effect sizes are affected by a series of predictors related to analytical and researcher-related factors.
-
 
 ## Model formula
 
 $$
 \begin{aligned}
 \alpha_{\text{t}[i]}      & \sim \text{Normal}(\mu_{\alpha_{t[i]}}, \sigma_i) \\
-\mu_{\alpha_{t[i]}}       & = \beta + \upsilon_u\cdot uniq_i + \upsilon_c\cdot cons_i + \upsilon_p\cdot phoc_i + \upsilon_m\cdot modn_i \\
- & \qquad + \upsilon_d\cdot mdim_i + \upsilon_w\cdot twin_i \\
- & \qquad + \upsilon_r\cdot rat_i + \\
- & \qquad + \upsilon_{xp}\cdot rexp_i + \upsilon_{be}\cdot belf_i  \\
+\mu_{\alpha_{t[i]}}       & = \beta + \upsilon_u\cdot uniqueness_i + \upsilon_c\cdot conservativeness_i \\
+ & \qquad + \upsilon_p\cdot posthoc_i + \upsilon_m\cdot numModels_i \\
+ & \qquad + \upsilon_d\cdot mearuredDimension_i + \upsilon_w\cdot timeWindow_i \\
+ & \qquad + \upsilon_r\cdot PRrating_i + \\
+ & \qquad + \upsilon_{xp}\cdot resExpirience_i + \upsilon_{be}\cdot priorBelief_i  \\
 \iota      & \sim \text{Normal}(0, 1) \\
 \upsilon_{[\ldots]} & \sim \text{Normal}(0,1) \\
 rat_i & \sim \text{Normal}(\mu_{rat_i}, \sigma_{rat_i}) \\
@@ -301,6 +307,8 @@ belf_i & \sim \text{Normal}(\mu_{belf_i}, \sigma_{belf_i}) \\
 $$
 
 ## Model priors
+
+Weakly-informative regularising priors.
 
 ```{r preds-priors}
 preds_priors <- c(
@@ -328,12 +336,16 @@ predictors_bm <- brm(
   data = eta_tbl,
   prior = preds_priors,
   chain = 4,
-  iter = 4000,
-  control = list(max_treedepth = 15),
+  iter = 8000,
+  control = list(adapt_delta = 0.9999, max_treedepth = 15),
   seed = my_seed,
   cores = 4,
   file = "./models/sim/predictors_bm"
 )
+```
+
+```{r preds-summary}
+predictors_bm
 ```
 
 
