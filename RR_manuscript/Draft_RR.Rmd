@@ -4,9 +4,9 @@ runninghead: "Many analysts, one speech data set"
 author:
 - name: Stefano Coretta*
   num: 1
-- name: Timo Roettger
-  num: 2
 - name: Joseph V. Casillas
+  num: 2
+- name: Timo Roettger
   num: 3
 address:
 - num: 1
@@ -17,7 +17,7 @@ address:
   org: Very Important Stuff Committee, Institute C, City C, Country C
 corrauth: "Stefano Coretta"
 email: "s.coretta@lmu.de"
-abstract: "TBA"
+abstract: "Recent efforts to replicate published findings have uncovered surprisingly low success rates (the replication crisis) and variability in the conclusions drawn by different researchers based on the same data (the inference crisis). Theses have highlighted the large degree of analytic flexibility of data analysis (the so-called researcher degrees of freedom). Even greater flexibility is to be expected in fields in which the primary data lend themselves to a variety of possible operationalizations. The multidimensional nature of speech constitutes an ideal testing ground for assessing variability in analytic approaches and outcomes that derives not only from aspects of statistical modelling but also from decisions regarding how to quantify a particular phenomenon. For this study, we gave the same speech dataset to N teams of researchers and asked them to answer the same research question. [Results TBA]"
 keywords: "crowdsourcing science, data analysis, scientific transparency, speech, acoustic analysis"
 classoption:
   - Review
