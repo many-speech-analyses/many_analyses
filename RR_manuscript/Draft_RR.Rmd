@@ -6,7 +6,7 @@ author:
   num: 1
 - name: Joseph V. Casillas
   num: 2
-- name: Timo Roettger
+- name: Timo B. Roettger
   num: 3
 address:
 - num: 1
@@ -77,7 +77,7 @@ Humans filter the world in irrational ways [e.g., @tversky1974judgment], seeing 
 In conjunction with an academic incentive system that rewards certain discovery processes more than others [@sterling1959publication; @koole2012rewarding], we often find ourselves exploring many possible analytic pipelines, but only reporting a selected few.
 
 This issue is particularly amplified in fields in which the raw data lend themselves to many possible ways of being measured [@roettger2019researcher].
-Combined with a wide variety of methodological and theoretical traditions as well as varying levels of statistical training across subfields, the inherent flexibility of data analysis might lead to a vast plurality of analytic approaches that can lead to different scientific conclusions.
+Combined with a wide variety of methodological and theoretical traditions as well as varying levels of statistical training across subfields, the inherent flexibility of data analysis might lead to a vast plurality of analytic approaches that can lead to different scientific conclusions [@roettger2019emergent].
 Analytic flexibility has been widely discussed from a conceptual point of view [@simmons2011false; @wagenmakers2012agenda; @nosek2014method] and in regard to its application in individual scientific fields [e.g. @wicherts2016; @charles2019; @roettger2019researcher].
 This notwithstanding, there are still many unknowns regarding the extent of analytic plurality in practice.
 
@@ -98,7 +98,7 @@ Importantly, the observed variability was neither predicted by the team's precon
 The authors results suggest that analytic plurality may be an inevitable byproduct of the scientific process and not necessarily driven by different levels of expertise nor bias.
 
 Several other recent studies corroborated this analytic flexibility across different disciplines.
-@dutilh2019 ad @starns2019assessing investigated analysts' choices when inferring theoretical constructs based on the same data set using computational models.
+@dutilh2019 and @starns2019assessing investigated analysts' choices when inferring theoretical constructs based on the same data set using computational models.
 Both studies revealed vastly different modeling strategies, even though scientific conclusions were similar across analysis teams [see also @Parker2020 on analytic flexibility in ecology; and @botvinik-nezer2020 on neuroimaging data].
 @bastiaansen2020 crowdsourced clinical recommendations based on analyses of an individual patient.
 Results suggests that analysts differed substantially regarding decisions related to both the statistical analysis of the data and the theoretical rationale behind interpreting the statistical results.
@@ -131,7 +131,7 @@ Take for example the following sentence in (1).
 \vspace{1em}
 
 Depending on the speaker's intention, this sentence can be said in different ways.
-For instance, if the speaker is exhausted by all their meetings, they might acoustically highlight the word *another* or *meeting* to contrast it with other, more pleasant activities.
+For instance, if the speaker is exhausted by all their meetings, they might acoustically highlight the word *another* or *meeting* to contrast it with more pleasant activities.
 If, on the other hand, the speaker is just tired of video conferences, as opposed to say face-to-face meetings, they might acoustically highlight the word *Zoom*.
 
 If we decide to compare the speech signal associated with these two intentions, how can we quantify the difference between them?
@@ -147,10 +147,10 @@ This lexical contrast is manifested by many acoustic features which can differ d
 Furthermore, correlates of the contrast can even be found away from the consonant, in temporally distant speech units.
 For example, the initial /l/ of the English words *led* and *let* is affected by the voicing of the final consonant (/t, d/) [@hawkins2004influence].
 
-The multiplicity of phonetic cues grows exponentially if we look at larger temporal domains as is the case for suprasegmental aspects of speech.
+The multiplicity of phonetic measurements grows exponentially if we look at larger temporal domains as is the case for suprasegmental aspects of speech.
 For example, studies investigating acoustic correlates of word stress (e.g. the difference between *ínsight* and *incíte*) have been using a wide variety of measurements, including temporal characteristics (duration of certain segments or sub-segmental intervals), spectral characteristics (intensity, formants, and spectral tilt), and measurements related to fundamental frequency (f0) [e.g., @gordon2017acoustic].
 Moving on to the expression of higher-level functions, like information structure and discourse pragmatics, relevant acoustic cues can be distributed throughout even larger domains, such as phrases and whole utterances [e.g., @ladd2008intonational].
-Differences in position, shape, and alignment of pitch modulations over multiple locations within a sentence are correlated with differences in discourse functions (e.g. Niebuhr et al., 2011).
+Differences in position, shape, and alignment of pitch modulations over multiple locations within a sentence are correlated with differences in discourse functions [e.g., @niebuhr2011there].
 The latter can also be expressed by global vs local pitch modulations [@heuven2002], as well as acoustic information within the temporal or spectral domain [e.g., @van2005speech].
 Extra-linguistic information, like the speaker's intentions, levels of emotional arousal or social identity, are also conveyed by broad-domain parameters, such as voice quality, rhythm, and pitch [@foulkes2006; @ogden2004; @white2009].
 
@@ -175,7 +175,7 @@ Do we measure fundamental frequency, intensity, or something else?
 (ref:forkingPaths) Illustration of the analytic flexibility associated with acoustic analyses. (A) An example of multiple possible and justifiable decisions when comparing two utterances; (B) Waveform and fundamental frequency (f0) track of the utterances *I can't bear ANOTHER meeting on Zoom* and *I can't bear another meeting on ZOOM*. The green boxes mark the word *another* in both sentences; (C) Spectrogram and f0 track of the word *another*, exemplifying possible operationalizations of differences in f0.
 
 ```{r 'forkingPaths', echo=FALSE, fig.cap="(ref:forkingPaths)", out.width="100%"}
-knitr::include_graphics(here::here("figs", "ForkingPaths.png"))
+knitr::include_graphics(here::here("figs", "ForkingPaths.tiff"))
 ```
 <!-- END:FIGURE -->
 
@@ -190,7 +190,7 @@ We could summarize f0 across the entire window and extract the mean, median or s
 But the journey in the garden of analytic paths goes on.
 Other important operationalization steps could involve filtering the audio signal, smoothing the extracted f0 track, removing values that substantially deviate from surrounding values or expectations, either manually or automatically, and so on.
 
-These decisions are intended to be made prior to any statistical analysis, but are at times revised a posteriori (i.e. after data collection and/or preliminary analyses) in light of unforeseen or surprising outcomes.
+These decisions are intended to be made prior to any statistical analysis, but are at times revised a posteriori in light of unforeseen or surprising outcomes (i.e. after data collection and/or preliminary analyses).
 These myriads of possible decisions are multiplied by those researcher degrees of freedom related to statistical analysis [e.g. @wicherts2016].
 In sum, speech data is made of complex physical signals that generates an as-of-yet unappreciated amount of analytic flexibility in the choice of measures and operationalizations.
 The present paper probes this garden of forking paths in the analysis of speech.
@@ -223,7 +223,7 @@ However, the above studies are based on a rather small sample size (10 participa
 
 To further illuminate the question of whether speakers modify speech to signal atypical referents, and overcome some of the limitations of previous work, thirty native German speakers were recorded in a production study while interacting with a confederate (one of the experimenters) in a referential game.
 The participants had to verbally instruct the confederate to select a specified target object out of four objects presented on a screen.
-The subject and confederate were seated at the opposite sides of a table, each facing one of two mirrored computer screens.
+The subject and confederate were seated at the opposite sides of a table, each facing one of two computer screens.
 The participant and the experimenter could not see each other nor each others' screens.
 Figure \@ref(fig:procedural) shows the experimental procedure time-line.
 After a familiarization phase, the subject first saw four colored objects in the top left, top right, bottom left, and bottom right corners of the screen.
@@ -244,16 +244,16 @@ After the experimenter had moved the cube as instructed, the subject would read 
 The second utterance in the trial was the critical trial for analysis.
 
 The two sentence prompts were used to create a focus contrast between the competitor and the target object.
-If the competitor and target objects differ but their color did not (e.g. *yellow banana* vs *yellow tomato*), the narrow focus is on the noun (the Noun Focus condition, NF).
-If the objects are the same but differ in color (e.g. *yellow banana* vs *blue banana*), the narrow focus is on the color adjective (the Adjective Focus condition, AF).
-If both the color and the object differ (e.g. *yellow banana* vs *blue tomato*), the narrow focus is on the whole noun phrase (the Adjective/Noun Focus condition, ANF).
+If the competitor and target objects differ but their color did not (e.g. *yellow banana* vs *yellow tomato*), the noun is in focus (the Noun Focus condition, NF).
+If the objects are the same but differ in color (e.g. *yellow banana* vs *blue banana*), the color adjective is in focus (the Adjective Focus condition, AF).
+If both the color and the object differ (e.g. *yellow banana* vs *blue tomato*), the the whole noun phrase is in focus (the Adjective/Noun Focus condition, ANF).
 The NF condition constituted the experimentally relevant condition, while the AF and ANF conditions acted as fillers.
 Crucially, the color-object combinations in the Noun Focus (NF) condition were manipulated with respect to their typicality.
 The combinations were either typical (e.g. *orange mandarin*), medium typical (e.g. *green tomato*), or atypical (e.g. *yellow cherry*), as established by a norming study that was conducted prior to the production experiment just described.^[A detailed description of the norming and production studies from the *Prosodic encoding of redundant referring expressions* project, which was given to the analysts with the data set, can be found in `methods_norm_prod.pdf` at (temporary link) <https://osf.io/5agn9/?view_only=3429acfd8eae4f0aafe2e17ad5b0983f>]
 Each subject produced 15 critical trials (NF condition).
 Each trial was repeated twice, yielding a total of 30 trials per participant and a grand-total of 900 ($15 \times 2 \times 30$ participants) spoken utterances.
 
-For the present study, N analysis teams were given access to the entire data set generated by the production study and were instructed to answer the following research question: *Do speakers acoustically modify utterances to signal atypical word combinations in referring expressions?*
+For the present study, N analysis teams will receive access to the entire data set generated by the production study and will be instructed to answer the following research question: *Do speakers acoustically modify utterances to signal atypical word combinations in referring expressions?*
 ...
 
 # Methods
@@ -263,14 +263,14 @@ Analysts must identify and operationalize relevant measurements, as well as the 
 The complexity of speech data constitutes the ideal testing ground to assess the upper bound of analytic flexibility that social science might face across disciplines.
 We will employ a meta-analytic approach to assess (i) the variability of the reported effects, and (ii) how analytic and researcher-related predictors affect the final results.
 
-In this study, we are follow the data collection procedure proposed by @Parker2020.
+In this study, we will follow the data collection procedure proposed by @Parker2020.
 The project involves the following five phases:
 
-1. \textsc{Recruitment}: We will recruit independent groups of researchers to analyze the data.
+1. \textsc{Recruitment}: We will recruit independent groups of researchers to analyze the data and review data analyses.
 2. \textsc{Team Analysis}: We will give researchers access to the speech corpus and let them analyze the data as they see fit.
 3. \textsc{Review}: We will ask reviewers to generate peer-review ratings of the analyses based on methods (not results).
 4. \textsc{Meta-analysis}: We will evaluate variability among the different analyses and how different predictors affect the outcomes.
-5. \textsc{Write-up}: Lastly, we will collaboratively produce the final manuscript.
+5. \textsc{Write-up}: We will collaboratively produce the final manuscript.
 
 We estimate that this process, from the time of an in-principle acceptance of this Stage 1 Registered Report to the end of Phase 5, will take nine months.
 The factor most likely to delay our time-line is the rate of completion of the original set of analyses by independent analysis teams.
@@ -305,7 +305,7 @@ To do so, they will be given the data generated by the experiment described in S
 The data will include the audio recordings with corresponding time-aligned transcriptions in the form of Praat TextGrid files (LINK^[Temporary link: <https://osf.io/5agn9/?view_only=3429acfd8eae4f0aafe2e17ad5b0983f>]).
 
 Once their analysis is complete, they will answer a structured questionnaire (`analytic_quest.pdf`), providing information about their analysis technique, an explanation of their analytic choices, their quantitative results, and a statement describing their conclusions.
-They will also upload their analysis files (including the additionally derived data and text files that were used to extract and pre-process the acoustic data), their analysis code (if applicable), and a detailed journal-ready statistical methods section.
+They will also upload their analysis files (including the additionally derived data and text files that were used to extract and pre-process the acoustic data), their analysis code (if applicable), and a detailed journal-ready analysis section.
 
 ## Phase 3: Peer Review of Analyses
 
@@ -335,7 +335,7 @@ After providing the final review, the reviewer will be simultaneously presented 
 
 ## Phase 4: Evaluating variation
 
-The initiating authors (SC, JC, TR) will conduct the analyses outlined in this section.
+The initiating authors (SC, JC, TR) will conduct the analyses outlined in this section. We will not conduct confirmatory tests of any a priori hypotheses. We consider our analysis exploratory.
 
 ### Descriptive statistics
 
@@ -346,7 +346,7 @@ We will calculate summary statistics describing variation among analyses, includ
 We will investigate the variability in \textsc{reported effect sizes} using Bayesian meta-analytic techniques.
 As the measure of variability, we will take the meta-analytic \textsc{group-level standard deviation} ($\sigma_{\alpha_{\text{t}}}$, see below), where the groups are the analysis teams.
 
-Based on the common practices currently in place within the field, we anticipate that researchers will use multi-level/hierarchical/mixed-effects regression models, thus common measurements of effect size, such as Cohen's $d$, may be inappropriate.
+Based on the common practices currently in place within the field, we anticipate that researchers will use multilevel regression models, thus common measurements of effect size, such as Cohen's $d$, may be inappropriate.
 Since the variables used by the analysis teams might substantially differ in their measurement scales (e.g, Hertz for frequency vs milliseconds for duration), we will standardize all reported effects by refitting each \textsc{reported model} with centered and scaled continuous variables (*z*-scores, i.e. the observed values subtracted from the mean divided by the standard deviation) and sum-coded factor variables.
 Factor-level ordering for each categorical variable will mirror that of the original analyses.
 Each \textsc{standardized model} will be fitted as a Bayesian regression model with Stan [@stan2021], RStan [@stan2020a], and brms [@burkner2017] in R [@R-base].
@@ -367,7 +367,6 @@ The standard errors $\text{se}_i$ will be included as the standard deviation of 
 We will use regularizing weakly-informative priors for the intercept $\alpha$ ($Normal(0, 1)$) and for the group-level standard deviation $\sigma_{\alpha_{\text{t}}}$ ($HalfCauchy(0, 1)$).
 We will fit this model with 4 chains of Hamiltonian Monte-Carlo sampling for the estimation of the joint posterior distribution, using the No U-Turn Sampler (NUTS) as implemented in Stan [@stan2021], and 4000 iterations (2000 for warm-up) per chain, distributed across 4 processing cores.
 In case of divergent transitions, we will increase `adapt_delta`, `tree_depth`, and the number of iterations in this order until we obtain a model fit with no divergent transitions.
-The analysis will be conducted in R [@R-base] and fit using Stan [@stan2021], RStan [@stan2020a], and brms [@burkner2017].
 The code used to run the model can be found at <https://many-speech-analyses.github.io/suppl/simulations.html>.
 
 <!-- From ?brms:brmsformula -->
@@ -423,7 +422,7 @@ y <- c("b", "d", "e", "f")
 
 In order to generate a unique SDI for each analysis team, we will calculate the average of all pairwise SDIs for all pairs of analyses using the `beta.pair()` function in the betapart R package [@baselga2020].
 
-The major measurement dimension of each analysis will be categorized according to the following possible groups: *duration*, *amplitude*, *fundamental frequency*, *other spectral properties* (e.g. frequency, center of gravity, harmonics difference, etc.), *other measures* (e.g. principal components, vowel dispersion, etc.).
+The major measurement dimension of each analysis will be categorized according to the following possible groups: *duration*, *amplitude*, *fundamental frequency*, *other spectral properties* (e.g. frequency, center of gravity, harmonics difference, etc.), and *other measures* (e.g. principal components, vowel dispersion, etc.).
 The temporal window that the measurement is taken over is defined by the target linguistic unit.
 We assume the following relevant linguistic units: *segment*, *syllable*, *word*, *phrase*.
 Since each analysis will receive more than one peer-review rating, we will calculate the mean rating and its standard deviation for each.
