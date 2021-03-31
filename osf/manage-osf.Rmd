@@ -45,11 +45,10 @@ ratings <- read_csv("./data/dataset/ratings.csv") %>%
     # Fix wrong encoding
     object = str_replace(object, "W�_scheklammer", "Waescheklammer"),
     object = str_replace(object, "M̦hre", "Moehre"),
-    # Humanise subject ids
-    subject_id = as.numeric(as.factor(`prolific id`))
   ) %>%
-  select(subject_id, object, colour, typicality) %>%
-  arrange(subject_id, object, colour) %>%
+  rename(prolific_id = `prolific id`) %>%
+  select(prolific_id, object, colour, typicality) %>%
+  arrange(prolific_id, object, colour) %>%
   mutate(
     object_en = case_when(
       object == "Ananas" ~ "pineapple",
