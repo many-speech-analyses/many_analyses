@@ -12,7 +12,7 @@ address:
 - num: 1
   org: Institute of Phonetics and Speech Processing, Ludwig-Maximilian University Munich, Germany.
 - num: 2
-  org: Department of Applied Things, University B, City B, Country B
+  org: Department of Spanish and Portuguese, Rutgers University, New Brunswick, United States
 - num: 3
   org: Department of Linguistics and Scandinavian Studies, University of Oslo, Oslo, Norway
 corrauth: "Stefano Coretta"
@@ -49,7 +49,7 @@ my_seed <- 115116106
 
 In order to effectively accumulate knowledge, science needs to (i) produce data that can be replicated using the original methods and (ii) arrive at robust conclusions substantiated by the data.
 In recent coordinated efforts to replicate published findings, scientific disciplines have uncovered surprisingly low success rates [e.g., @open2015estimating; @camerer2018evaluating] leading to what is now referred to as the *replication crisis*.
-Beyond the difficulties of replicating scientific findings, a growing body of evidence suggests that the theoretical conclusions drawn from data are often variable even when researchers have access to reliable data.
+Beyond the difficulties of replicating scientific findings, a growing body of evidence suggests that the theoretical conclusions drawn from data are often variable even when researchers have access to reliable data. <!-- repetition "data" -->
 The latter situation has been referred to as the *inference crisis* [@rotello2015more; @starns2019assessing] and is, among other things, rooted in the inherent flexibility of data analysis [often referred to as researcher degrees of freedom: @simmons2011false; @gelman2014statistical].
 Data analysis involves many different steps, such as inspecting, organizing, transforming, and modeling the data, to name a few.
 Along the way, different methodological and analytic choices need to be made, all of which may influence the final interpretation of the data.
@@ -82,7 +82,7 @@ Analytic flexibility has been widely discussed from a conceptual point of view [
 This notwithstanding, there are still many unknowns regarding the extent of analytic plurality in practice.
 
 Consequently, it is likely that a good part of published papers present overconfident interpretations of data and statistical results based on idiosyncratic analytic strategies [e.g., @simmons2011false; @gelman2014statistical].
-These interpretations, and the conclusions that derive from them, are thus associated with an unknown degree of uncertainty (dependent on the strength of evidence provided) and with an unknown degree of generalisability (dependent on the chosen analysis).
+These interpretations, and the conclusions that derive from them, are thus associated with an unknown degree of uncertainty (dependent on the strength of evidence provided) and with an unknown degree of generalizability (dependent on the chosen analysis).
 Moreover, the same data could lead to very different conclusions depending on the analytic path taken by the researcher.
 However, instead of being critically evaluated, scientific results often remain unchallenged in the publication record.
 Despite recent efforts to improve transparency and reproducibility [e.g. @miguel2014promoting; @klein2018practical] and the advent of freely available and accessible infrastructures, such as those provided by the Open Science Framework (osf.io), critical re-analyses of published analytic strategies are still uncommon because data sharing remains rare [@wicherts2006poor].
@@ -144,11 +144,11 @@ Speech categories are inherently multidimensional and dynamic: they consist of c
 The acoustic parameters of one category are usually asynchronous, i.e. they appear at different time points in the unfolding signal, and overlap with parameters of other categories [e.g. @jongman2000acoustic; @lisker1986voicing; @summerfield1981articulatory; @winter2014spoken].
 A classical example is the distinction between voiced and voiceless stops in English (i.e. /b/ and /p/ in *bear* vs *pear*).
 This lexical contrast is manifested by many acoustic features which can differ depending on several factors, such as position of the consonant in the word and surrounding sounds [@lisker1977rapid].
-Furthermore, correlates of the contrast can even be found away from the consonant, in temporally distant speech units.
+Furthermore, correlates of the contrast can even be found away from the consonant, in temporally distant speech units. <!-- Still not sure why in this example we refer to a lexical contrast when it is clear we are focusing on the segment. Does it make sense to say the acoustic features can differ depending on the position of the consonant in the word? It wouldn't be the same lexical contrast if the segment was in another position... they would be different words and maybe no longer a minimal pair. -->
 For example, the initial /l/ of the English words *led* and *let* is affected by the voicing of the final consonant (/t, d/) [@hawkins2004influence].
 
 The multiplicity of phonetic measurements grows exponentially if we look at larger temporal domains as is the case for suprasegmental aspects of speech.
-For example, studies investigating acoustic correlates of word stress (e.g. the difference between *ínsight* and *incíte*) have been using a wide variety of measurements, including temporal characteristics (duration of certain segments or sub-segmental intervals), spectral characteristics (intensity, formants, and spectral tilt), and measurements related to fundamental frequency (f0) [e.g., @gordon2017acoustic].
+For example, studies investigating acoustic correlates of word stress (e.g. the difference between *ínsight* and *incíte*) use a wide variety of measurements, including temporal characteristics (duration of certain segments or sub-segmental intervals), spectral characteristics (intensity, formants, and spectral tilt), and measurements related to fundamental frequency (f0) [e.g., @gordon2017acoustic].
 Moving on to the expression of higher-level functions, like information structure and discourse pragmatics, relevant acoustic cues can be distributed throughout even larger domains, such as phrases and whole utterances [e.g., @ladd2008intonational].
 Differences in position, shape, and alignment of pitch modulations over multiple locations within a sentence are correlated with differences in discourse functions [e.g., @niebuhr2011there].
 The latter can also be expressed by global vs local pitch modulations [@heuven2002], as well as acoustic information within the temporal or spectral domain [e.g., @van2005speech].
@@ -179,8 +179,8 @@ knitr::include_graphics(here::here("figs", "ForkingPaths.tiff"))
 ```
 <!-- END:FIGURE -->
 
-When looking at phrase-level temporal domains, the number of alternative analytic pipelines substantially increases.
-Figure \@ref(fig:forkingPaths)A shows a typical example of a decision tree which speech researcher are often confronted with.
+When looking at phrase-level temporal domains, the number of alternative analytic pipelines increases substantially.
+Figure \@ref(fig:forkingPaths)A shows a typical example of a decision tree with which speech researchers are often confronted. 
 Each of the four analytic decisions in the example have different possible options.
 Here only one particular path has been taken, and a different one would likely produce quite different results.
 Once we have decided to compare fundamental frequency of the word *another* across the two utterances, there are still many choices to be made, all of which need to be justified.
@@ -254,7 +254,7 @@ Each subject produced 15 critical trials (NF condition).
 Each trial was repeated twice, yielding a total of 30 trials per participant and a grand-total of 900 ($15 \times 2 \times 30$ participants) spoken utterances.
 
 For the present study, N analysis teams will receive access to the entire data set generated by the production study and will be instructed to answer the following research question: *Do speakers acoustically modify utterances to signal atypical word combinations in referring expressions?*
-...
+... <!-- what's with the 3 periods? --> 
 
 # Methods
 
@@ -339,7 +339,7 @@ The initiating authors (SC, JC, TR) will conduct the analyses outlined in this s
 
 ### Descriptive statistics
 
-We will calculate summary statistics describing variation among analyses, including (a) the nature and number of acoustic measures (e.g. f0 or duration), (b) the operationalization and the temporal domain of measurement (e.g. mean of an interval or value at specified point in time), (c) the nature and number of model parameters for both fixed and random effects (if applicable), (d) the nature and reasoning behind inferential assessments (e.g. dichotomous decision based on *p*-values, ordinal decision based on a Bayes factor), as well as the (e) mean, (f) standard deviation and (g) range of the standardizes effect sizes (see the next section for the standardization procedure).
+We will calculate summary statistics describing variation among analyses, including (a) the nature and number of acoustic measures (e.g. f0 or duration), (b) the operationalization and the temporal domain of measurement (e.g. mean of an interval or value at specified point in time), (c) the nature and number of model parameters for both fixed and random effects (if applicable), (d) the nature and reasoning behind inferential assessments (e.g. dichotomous decision based on *p*-values, ordinal decision based on a Bayes factor), as well as the (e) mean, (f) standard deviation and (g) range of the standardized effect sizes (see the next section for the standardization procedure).
 
 ### Meta-analytic estimation {#s:meta-est}
 
@@ -350,7 +350,7 @@ Based on the common practices currently in place within the field, we anticipate
 Since the variables used by the analysis teams might substantially differ in their measurement scales (e.g, Hertz for frequency vs milliseconds for duration), we will standardize all reported effects by refitting each \textsc{reported model} with centered and scaled continuous variables (*z*-scores, i.e. the observed values subtracted from the mean divided by the standard deviation) and sum-coded factor variables.
 Factor-level ordering for each categorical variable will mirror that of the original analyses.
 Each \textsc{standardized model} will be fitted as a Bayesian regression model with Stan [@stan2021], RStan [@stan2020a], and brms [@burkner2017] in R [@R-base].
-For those reported models that were originally fitted within a frequentist approach, uniform distributions will be used as the priors of all parameters (with the restriction that only positive numbers will be included for scale parameters), making the standardized models in fact equivalent to the reported frequentist models.
+For those reported models that were originally fitted within a frequentist approach, uniform distributions will be used as the priors of all parameters (with the restriction that only positive numbers will be included for scale parameters), making the standardized models in fact equivalent to the reported frequentist models. <!-- It's a technicality but given that bayesian approximation of the posterior is based on sampling, this statement can't be true. I understand you are referring specifically to the MAP and that it would be the same as the MLE point estimate, but this reads as if youre saying the models are equivalent. --> 
 If a team has fitted Bayesian models, the same priors as reported by the team will be used in fitting the respective standardized model.
 
 The coefficients of the critical predictors (i.e. critical according to the analysis teams' self-reported inferential criteria) obtained from the standardized models will be used as the \textsc{standardized effect size} ($\eta_i$) of each reported model.
@@ -359,7 +359,7 @@ Moreover, to account for the differing degree of uncertainty around each standar
 This will enable us to fit a so-called "measurement-error" model, in which both the standardized effect sizes and their respective standard errors are entered in the meta-analytic model.
 As a desired consequence, effect sizes with a greater standard error will be weighted less than those with a smaller standard error in the meta-analytic calculations.
 
-After having obtained the standardized effect sizes $\eta_i$ with related standard errors $\text{se}_i$, for each critical predictor of the individual reported model, we will fit a \textsc{Bayesian random-effects meta-analysis} using a multilevel (intercept-only) regression model.
+After having obtained the standardized effect sizes $\eta_i$ with related standard errors $\text{se}_i$, for each critical predictor of the individual reported model, we will conduct a \textsc{Bayesian random-effects meta-analysis} using a multilevel (intercept-only) regression model.
 The outcome variable will be the set of standardized effect sizes $\eta_i$.
 The likelihood of $\eta_i$ is assumed to correspond to a normal distribution [@knight2000].
 The analysis teams will be entered as a group-level effect (i.e., `(1 | team)`, called *random effect* in the frequentist literature).
