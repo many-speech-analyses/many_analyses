@@ -1,0 +1,699 @@
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2021.3.27)  31 MAR 2021 15:53
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**Draft_RR.tex
+(./Draft_RR.tex
+LaTeX2e <2020-10-01> patch level 4
+L3 programming layer <2021-02-18> (./sagej.cls
+Document Class: sagej 2017/01/17 v1.20\ sagej.cls
+(/Users/ste/Library/TinyTeX/texmf-dist/tex/latex/base/article.cls
+Document Class: article 2020/04/10 v1.4m Standard LaTeX document class
+(/Users/ste/Library/TinyTeX/texmf-dist/tex/latex/base/size10.clo
+File: size10.clo 2020/04/10 v1.4m Standard LaTeX file (size option)
+)
+\c@part=\count179
+\c@section=\count180
+\c@subsection=\count181
+\c@subsubsection=\count182
+\c@paragraph=\count183
+\c@subparagraph=\count184
+\c@figure=\count185
+\c@table=\count186
+\abovecaptionskip=\skip47
+\belowcaptionskip=\skip48
+\bibindent=\dimen138
+) (/Users/ste/Library/TinyTeX/texmf-dist/tex/latex/psnfss/times.sty
+Package: times 2020/03/25 PSNFSS-v9.3 (SPQR) 
+) (/Users/ste/Library/TinyTeX/texmf-dist/tex/latex/psnfss/helvet.sty
+Package: helvet 2020/03/25 PSNFSS-v9.3 (WaS) 
+(/Users/ste/Library/TinyTeX/texmf-dist/tex/latex/graphics/keyval.sty
+Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
+\KV@toks@=\toks15
+)) (/Users/ste/Library/TinyTeX/texmf-dist/tex/latex/graphics/graphicx.sty
+Package: graphicx 2020/09/09 v1.2b Enhanced LaTeX Graphics (DPC,SPQR)
+(/Users/ste/Library/TinyTeX/texmf-dist/tex/latex/graphics/graphics.sty
+Package: graphics 2020/08/30 v1.4c Standard LaTeX Graphics (DPC,SPQR)
+(/Users/ste/Library/TinyTeX/texmf-dist/tex/latex/graphics/trig.sty
+Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
+) (/Users/ste/Library/TinyTeX/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
+File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
+)
+Package graphics Info: Driver file: pdftex.def on input line 105.
+(/Users/ste/Library/TinyTeX/texmf-dist/tex/latex/graphics-def/pdftex.def
+File: pdftex.def 2020/10/05 v1.2a Graphics/color driver for pdftex
+))
+\Gin@req@height=\dimen139
+\Gin@req@width=\dimen140
+) (/Users/ste/Library/TinyTeX/texmf-dist/tex/latex/base/latexsym.sty
+Package: latexsym 1998/08/17 v2.2e Standard LaTeX package (lasy symbols)
+\symlasy=\mathgroup4
+LaTeX Font Info:    Overwriting symbol font `lasy' in version `bold'
+(Font)                  U/lasy/m/n --> U/lasy/b/n on input line 52.
+) (/Users/ste/Library/TinyTeX/texmf-dist/tex/latex/base/ifthen.sty
+Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
+) (/Users/ste/Library/TinyTeX/texmf-dist/tex/latex/graphics/rotating.sty
+Package: rotating 2016/08/11 v2.16d rotated objects in LaTeX
+\c@r@tfl@t=\count187
+\rotFPtop=\skip49
+\rotFPbot=\skip50
+\rot@float@box=\box47
+\rot@mess@toks=\toks16
+) (/Users/ste/Library/TinyTeX/texmf-dist/tex/latex/tools/calc.sty
+Package: calc 2017/05/25 v4.3 Infix arithmetic (KKT,FJ)
+\calc@Acount=\count188
+\calc@Bcount=\count189
+\calc@Adimen=\dimen141
+\calc@Bdimen=\dimen142
+\calc@Askip=\skip51
+\calc@Bskip=\skip52
+LaTeX Info: Redefining \setlength on input line 80.
+LaTeX Info: Redefining \addtolength on input line 81.
+\calc@Ccount=\count190
+\calc@Cskip=\skip53
+) (/Users/ste/Library/TinyTeX/texmf-dist/tex/latex/textcase/textcase.sty
+Package: textcase 2019/09/14 v1.00 Text only upper/lower case changing (DPC)
+) (/Users/ste/Library/TinyTeX/texmf-dist/tex/latex/booktabs/booktabs.sty
+Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
+\heavyrulewidth=\dimen143
+\lightrulewidth=\dimen144
+\cmidrulewidth=\dimen145
+\belowrulesep=\dimen146
+\belowbottomsep=\dimen147
+\aboverulesep=\dimen148
+\abovetopsep=\dimen149
+\cmidrulesep=\dimen150
+\cmidrulekern=\dimen151
+\defaultaddspace=\dimen152
+\@cmidla=\count191
+\@cmidlb=\count192
+\@aboverulesep=\dimen153
+\@belowrulesep=\dimen154
+\@thisruleclass=\count193
+\@lastruleclass=\count194
+\@thisrulewidth=\dimen155
+) (/Users/ste/Library/TinyTeX/texmf-dist/tex/latex/graphics/color.sty
+Package: color 2020/02/24 v1.2b Standard LaTeX Color (DPC)
+(/Users/ste/Library/TinyTeX/texmf-dist/tex/latex/graphics-cfg/color.cfg
+File: color.cfg 2016/01/02 v1.6 sample color configuration
+)
+Package color Info: Driver file: pdftex.def on input line 147.
+) (/Users/ste/Library/TinyTeX/texmf-dist/tex/latex/endnotes/endnotes.sty
+Package: endnotes 2020-01-02 endnotes package
+\c@endnote=\count195
+\endnotesep=\dimen156
+\@enotes=\write3
+) (/Users/ste/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/amsfonts.sty
+Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
+\@emptytoks=\toks17
+\symAMSa=\mathgroup5
+\symAMSb=\mathgroup6
+LaTeX Font Info:    Redeclaring math symbol \hbar on input line 98.
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
+) (/Users/ste/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/amssymb.sty
+Package: amssymb 2013/01/14 v3.01 AMS font symbols
+) (/Users/ste/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amsbsy.sty
+Package: amsbsy 1999/11/29 v1.2d Bold Symbols
+(/Users/ste/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amsgen.sty
+File: amsgen.sty 1999/11/30 v2.0 generic functions
+\@emptytoks=\toks18
+\ex@=\dimen157
+)
+\pmbraise@=\dimen158
+) (/Users/ste/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amsmath.sty
+Package: amsmath 2020/09/23 v2.17i AMS math features
+\@mathmargin=\skip54
+For additional information on amsmath, use the `?' option.
+(/Users/ste/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amstext.sty
+Package: amstext 2000/06/29 v2.01 AMS text
+) (/Users/ste/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amsopn.sty
+Package: amsopn 2016/03/08 v2.02 operator names
+)
+\inf@bad=\count196
+LaTeX Info: Redefining \frac on input line 234.
+\uproot@=\count197
+\leftroot@=\count198
+LaTeX Info: Redefining \overline on input line 399.
+\classnum@=\count199
+\DOTSCASE@=\count266
+LaTeX Info: Redefining \ldots on input line 496.
+LaTeX Info: Redefining \dots on input line 499.
+LaTeX Info: Redefining \cdots on input line 620.
+\Mathstrutbox@=\box48
+\strutbox@=\box49
+\big@size=\dimen159
+LaTeX Font Info:    Redeclaring font encoding OML on input line 743.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 744.
+\macc@depth=\count267
+\c@MaxMatrixCols=\count268
+\dotsspace@=\muskip16
+\c@parentequation=\count269
+\dspbrk@lvl=\count270
+\tag@help=\toks19
+\row@=\count271
+\column@=\count272
+\maxfields@=\count273
+\andhelp@=\toks20
+\eqnshift@=\dimen160
+\alignsep@=\dimen161
+\tagshift@=\dimen162
+\tagwidth@=\dimen163
+\totwidth@=\dimen164
+\lineht@=\dimen165
+\@envbody=\toks21
+\multlinegap=\skip55
+\multlinetaggap=\skip56
+\mathdisplay@stack=\toks22
+LaTeX Info: Redefining \[ on input line 2923.
+LaTeX Info: Redefining \] on input line 2924.
+) (/Users/ste/Library/TinyTeX/texmf-dist/tex/latex/amscls/amsthm.sty
+Package: amsthm 2020/05/29 v2.20.6
+\thm@style=\toks23
+\thm@bodyfont=\toks24
+\thm@headfont=\toks25
+\thm@notefont=\toks26
+\thm@headpunct=\toks27
+\thm@preskip=\skip57
+\thm@postskip=\skip58
+\thm@headsep=\skip59
+\dth@everypar=\toks28
+) (/Users/ste/Library/TinyTeX/texmf-dist/tex/latex/base/tracefnt.sty
+Package: tracefnt 2019/10/11 v3.0l Standard LaTeX package (font tracing)
+\tracingfonts=\count274
+LaTeX Info: Redefining \selectfont on input line 106.
+) (/Users/ste/Library/TinyTeX/texmf-dist/tex/latex/geometry/geometry.sty
+Package: geometry 2020/01/02 v5.9 Page Geometry
+(/Users/ste/Library/TinyTeX/texmf-dist/tex/generic/iftex/ifvtex.sty
+Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
+(/Users/ste/Library/TinyTeX/texmf-dist/tex/generic/iftex/iftex.sty
+Package: iftex 2020/03/06 v1.0d TeX engine tests
+))
+\Gm@cnth=\count275
+\Gm@cntv=\count276
+\c@Gm@tempcnt=\count277
+\Gm@bindingoffset=\dimen166
+\Gm@wd@mp=\dimen167
+\Gm@odd@mp=\dimen168
+\Gm@even@mp=\dimen169
+\Gm@layoutwidth=\dimen170
+\Gm@layoutheight=\dimen171
+\Gm@layouthoffset=\dimen172
+\Gm@layoutvoffset=\dimen173
+\Gm@dimlist=\toks29
+)
+\absbox=\box50
+\@bls=\dimen174
+(/Users/ste/Library/TinyTeX/texmf-dist/tex/latex/caption/caption.sty
+Package: caption 2020/10/26 v3.5g Customizing captions (AR)
+(/Users/ste/Library/TinyTeX/texmf-dist/tex/latex/caption/caption3.sty
+Package: caption3 2020/10/21 v2.2e caption3 kernel (AR)
+\captionmargin=\dimen175
+\captionmargin@=\dimen176
+\captionwidth=\dimen177
+\caption@tempdima=\dimen178
+\caption@indent=\dimen179
+\caption@parindent=\dimen180
+\caption@hangindent=\dimen181
+Package caption Info: Standard document class detected.
+)
+\c@caption@flags=\count278
+\c@continuedfloat=\count279
+Package caption Info: rotating package is loaded.
+) (/Users/ste/Library/TinyTeX/texmf-dist/tex/latex/natbib/natbib.sty
+Package: natbib 2010/09/13 8.31b (PWD, AO)
+\bibhang=\skip60
+\bibsep=\skip61
+LaTeX Info: Redefining \cite on input line 694.
+\c@NAT@ctr=\count280
+Local config file natbib.cfg used
+(/Users/ste/texmf/tex/latex/natbib.cfg))) (/Users/ste/Library/TinyTeX/texmf-dis
+t/tex/latex/moreverb/moreverb.sty
+Package: moreverb 2008/06/03 v2.3a `more' verbatim facilities
+(/Users/ste/Library/TinyTeX/texmf-dist/tex/latex/tools/verbatim.sty
+Package: verbatim 2020-07-07 v1.5u LaTeX2e package for verbatim enhancements
+\every@verbatim=\toks30
+\verbatim@line=\toks31
+\verbatim@in@stream=\read2
+)
+\tab@position=\count281
+\tab@size=\count282
+\listing@line=\count283
+) (/Users/ste/Library/TinyTeX/texmf-dist/tex/latex/url/url.sty
+\Urlmuskip=\muskip17
+Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
+) (/Users/ste/Library/TinyTeX/texmf-dist/tex/latex/multirow/multirow.sty
+Package: multirow 2021/03/15 v2.8 Span multiple rows of a table
+\multirow@colwidth=\skip62
+\multirow@cntb=\count284
+\multirow@dima=\skip63
+\bigstrutjot=\dimen182
+) (/Users/ste/Library/TinyTeX/texmf-dist/tex/latex/tools/tabularx.sty
+Package: tabularx 2020/01/15 v2.11c `tabularx' package (DPC)
+(/Users/ste/Library/TinyTeX/texmf-dist/tex/latex/tools/array.sty
+Package: array 2020/10/01 v2.5c Tabular extension package (FMi)
+\col@sep=\dimen183
+\ar@mcellbox=\box51
+\extrarowheight=\dimen184
+\NC@list=\toks32
+\extratabsurround=\skip64
+\backup@length=\skip65
+\ar@cellbox=\box52
+)
+\TX@col@width=\dimen185
+\TX@old@table=\dimen186
+\TX@old@col=\dimen187
+\TX@target=\dimen188
+\TX@delta=\dimen189
+\TX@cols=\count285
+\TX@ftn=\toks33
+) (/Users/ste/Library/TinyTeX/texmf-dist/tex/latex/hyperref/hyperref.sty
+Package: hyperref 2021-02-27 v7.00k Hypertext links for LaTeX
+(/Users/ste/Library/TinyTeX/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty
+Package: ltxcmds 2020-05-10 v1.25 LaTeX kernel commands for general use (HO)
+) (/Users/ste/Library/TinyTeX/texmf-dist/tex/generic/pdftexcmds/pdftexcmds.sty
+Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO
+)
+(/Users/ste/Library/TinyTeX/texmf-dist/tex/generic/infwarerr/infwarerr.sty
+Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
+)
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+) (/Users/ste/Library/TinyTeX/texmf-dist/tex/generic/kvsetkeys/kvsetkeys.sty
+Package: kvsetkeys 2019/12/15 v1.18 Key value parser (HO)
+)
+(/Users/ste/Library/TinyTeX/texmf-dist/tex/generic/kvdefinekeys/kvdefinekeys.st
+y
+Package: kvdefinekeys 2019-12-19 v1.6 Define keys (HO)
+) (/Users/ste/Library/TinyTeX/texmf-dist/tex/generic/pdfescape/pdfescape.sty
+Package: pdfescape 2019/12/09 v1.15 Implements pdfTeX's escape features (HO)
+) (/Users/ste/Library/TinyTeX/texmf-dist/tex/latex/hycolor/hycolor.sty
+Package: hycolor 2020-01-27 v1.10 Color options for hyperref/bookmark (HO)
+) (/Users/ste/Library/TinyTeX/texmf-dist/tex/latex/letltxmacro/letltxmacro.sty
+Package: letltxmacro 2019/12/03 v1.6 Let assignment for LaTeX macros (HO)
+) (/Users/ste/Library/TinyTeX/texmf-dist/tex/latex/auxhook/auxhook.sty
+Package: auxhook 2019-12-17 v1.6 Hooks for auxiliary files (HO)
+) (/Users/ste/Library/TinyTeX/texmf-dist/tex/latex/kvoptions/kvoptions.sty
+Package: kvoptions 2020-10-07 v3.14 Key value format for package options (HO)
+)
+\@linkdim=\dimen190
+\Hy@linkcounter=\count286
+\Hy@pagecounter=\count287
+(/Users/ste/Library/TinyTeX/texmf-dist/tex/latex/hyperref/pd1enc.def
+File: pd1enc.def 2021-02-27 v7.00k Hyperref: PDFDocEncoding definition (HO)
+Now handling font encoding PD1 ...
+... no UTF-8 mapping file for font encoding PD1
+)
+(/Users/ste/Library/TinyTeX/texmf-dist/tex/latex/hyperref/hyperref-langpatches.
+def
+File: hyperref-langpatches.def 2021-02-27 v7.00k Hyperref: patches for babel la
+nguages
+) (/Users/ste/Library/TinyTeX/texmf-dist/tex/generic/intcalc/intcalc.sty
+Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
+) (/Users/ste/Library/TinyTeX/texmf-dist/tex/generic/etexcmds/etexcmds.sty
+Package: etexcmds 2019/12/15 v1.7 Avoid name clashes with e-TeX commands (HO)
+)
+\Hy@SavedSpaceFactor=\count288
+(/Users/ste/Library/TinyTeX/texmf-dist/tex/latex/hyperref/puenc.def
+File: puenc.def 2021-02-27 v7.00k Hyperref: PDF Unicode definition (HO)
+Now handling font encoding PU ...
+... no UTF-8 mapping file for font encoding PU
+)
+Package hyperref Info: Option `colorlinks' set `true' on input line 4073.
+Package hyperref Info: Option `bookmarksopen' set `true' on input line 4073.
+Package hyperref Info: Option `bookmarksnumbered' set `true' on input line 4073
+.
+Package hyperref Info: Hyper figures OFF on input line 4192.
+Package hyperref Info: Link nesting OFF on input line 4197.
+Package hyperref Info: Hyper index ON on input line 4200.
+Package hyperref Info: Plain pages OFF on input line 4207.
+Package hyperref Info: Backreferencing OFF on input line 4212.
+Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
+Package hyperref Info: Bookmarks ON on input line 4445.
+\c@Hy@tempcnt=\count289
+LaTeX Info: Redefining \url on input line 4804.
+\XeTeXLinkMargin=\dimen191
+(/Users/ste/Library/TinyTeX/texmf-dist/tex/generic/bitset/bitset.sty
+Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
+(/Users/ste/Library/TinyTeX/texmf-dist/tex/generic/bigintcalc/bigintcalc.sty
+Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO
+)
+))
+\Fld@menulength=\count290
+\Field@Width=\dimen192
+\Fld@charsize=\dimen193
+Package hyperref Info: Hyper figures OFF on input line 6075.
+Package hyperref Info: Link nesting OFF on input line 6080.
+Package hyperref Info: Hyper index ON on input line 6083.
+Package hyperref Info: backreferencing OFF on input line 6090.
+Package hyperref Info: Link coloring ON on input line 6093.
+Package hyperref Info: Link coloring with OCG OFF on input line 6100.
+Package hyperref Info: PDF/A mode OFF on input line 6105.
+LaTeX Info: Redefining \ref on input line 6145.
+LaTeX Info: Redefining \pageref on input line 6149.
+(/Users/ste/Library/TinyTeX/texmf-dist/tex/latex/base/atbegshi-ltx.sty
+Package: atbegshi-ltx 2020/08/17 v1.0a Emulation of the original atbegshi packa
+ge
+with kernel methods
+)
+\Hy@abspage=\count291
+\c@Item=\count292
+\c@Hfootnote=\count293
+)
+Package hyperref Info: Driver (autodetected): hpdftex.
+(/Users/ste/Library/TinyTeX/texmf-dist/tex/latex/hyperref/hpdftex.def
+File: hpdftex.def 2021-02-27 v7.00k Hyperref driver for pdfTeX
+(/Users/ste/Library/TinyTeX/texmf-dist/tex/latex/base/atveryend-ltx.sty
+Package: atveryend-ltx 2020/08/19 v1.0a Emulation of the original atvery packag
+e
+with kernel methods
+)
+\Fld@listcount=\count294
+\c@bookmark@seq@number=\count295
+
+(/Users/ste/Library/TinyTeX/texmf-dist/tex/latex/rerunfilecheck/rerunfilecheck.
+sty
+Package: rerunfilecheck 2019/12/05 v1.9 Rerun checks for auxiliary files (HO)
+
+(/Users/ste/Library/TinyTeX/texmf-dist/tex/generic/uniquecounter/uniquecounter.
+sty
+Package: uniquecounter 2019/12/15 v1.4 Provide unlimited unique counter (HO)
+)
+Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
+86.
+)
+\Hy@SectionHShift=\skip66
+) (/Users/ste/Library/TinyTeX/texmf-dist/tex/latex/cleveref/cleveref.sty
+Package: cleveref 2018/03/27 v0.21.4 Intelligent cross-referencing
+Package cleveref Info: `hyperref' support loaded on input line 2370.
+LaTeX Info: Redefining \cref on input line 2370.
+LaTeX Info: Redefining \Cref on input line 2370.
+LaTeX Info: Redefining \crefrange on input line 2370.
+LaTeX Info: Redefining \Crefrange on input line 2370.
+LaTeX Info: Redefining \cpageref on input line 2370.
+LaTeX Info: Redefining \Cpageref on input line 2370.
+LaTeX Info: Redefining \cpagerefrange on input line 2370.
+LaTeX Info: Redefining \Cpagerefrange on input line 2370.
+LaTeX Info: Redefining \labelcref on input line 2370.
+LaTeX Info: Redefining \labelcpageref on input line 2370.
+Package cleveref Info: `amsthm' support loaded on input line 3026.
+)
+LaTeX Font Info:    Trying to load font information for OT1+ptm on input line 1
+4.
+(/Users/ste/Library/TinyTeX/texmf-dist/tex/latex/psnfss/ot1ptm.fd
+File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
+)
+(/Users/ste/Library/TinyTeX/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
+File: l3backend-pdftex.def 2021-03-18 L3 backend support: PDF output (pdfTeX)
+\l__color_backend_stack_int=\count296
+\l__pdf_internal_box=\box53
+) (./Draft_RR.aux)
+\openout1 = `Draft_RR.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+
+(/Users/ste/Library/TinyTeX/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
+Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
+85.
+(/Users/ste/Library/TinyTeX/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
+e
+))
+*geometry* driver: auto-detecting
+*geometry* detected driver: pdftex
+*geometry* verbose mode - [ preamble ] result:
+* driver: pdftex
+* paper: custom
+* layout: <same size as paper>
+* layoutoffset:(h,v)=(0.0pt,0.0pt)
+* hratio: 1:1
+* vratio: 1:1
+* modes: twoside asymmetric 
+* h-part:(L,W,R)=(45.52441pt, 352.81416pt, 45.52441pt)
+* v-part:(T,H,B)=(69.70924pt, 526.37598pt, 69.70926pt)
+* \paperwidth=443.86299pt
+* \paperheight=665.79448pt
+* \textwidth=352.81416pt
+* \textheight=526.37598pt
+* \oddsidemargin=-26.74557pt
+* \evensidemargin=-26.74557pt
+* \topmargin=-35.56075pt
+* \headheight=12.0pt
+* \headsep=21.0pt
+* \topskip=10.0pt
+* \footskip=30.0pt
+* \marginparwidth=65.0pt
+* \marginparsep=11.0pt
+* \columnsep=12.0pt
+* \skip\footins=20.0pt plus 8.0pt
+* \hoffset=0.0pt
+* \voffset=0.0pt
+* \mag=1000
+* \@twocolumnfalse
+* \@twosidetrue
+* \@mparswitchfalse
+* \@reversemarginfalse
+* (1in=72.27pt=25.4mm, 1cm=28.453pt)
+
+Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: hyperref package is loaded.
+Package caption Info: End \AtBeginDocument code.
+Package hyperref Info: Link coloring ON on input line 14.
+(/Users/ste/Library/TinyTeX/texmf-dist/tex/latex/hyperref/nameref.sty
+Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
+(/Users/ste/Library/TinyTeX/texmf-dist/tex/latex/refcount/refcount.sty
+Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
+)
+(/Users/ste/Library/TinyTeX/texmf-dist/tex/generic/gettitlestring/gettitlestrin
+g.sty
+Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
+)
+\c@section@level=\count297
+)
+LaTeX Info: Redefining \ref on input line 14.
+LaTeX Info: Redefining \pageref on input line 14.
+LaTeX Info: Redefining \nameref on input line 14.
+(./Draft_RR.out) (./Draft_RR.out)
+\@outlinefile=\write4
+\openout4 = `Draft_RR.out'.
+
+LaTeX Font Info:    Trying to load font information for OT1+phv on input line 2
+8.
+(/Users/ste/Library/TinyTeX/texmf-dist/tex/latex/psnfss/ot1phv.fd
+File: ot1phv.fd 2020/03/25 scalable font definitions for OT1/phv.
+)
+LaTeX Font Info:    Font shape `OT1/phv/m/n' will be
+(Font)              scaled to size 11.39996pt on input line 28.
+LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
+(Font)              scaled to size 11.39996pt on input line 28.
+LaTeX Font Info:    Trying to load font information for U+lasy on input line 30
+.
+(/Users/ste/Library/TinyTeX/texmf-dist/tex/latex/base/ulasy.fd
+File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
+)
+LaTeX Font Info:    Trying to load font information for U+msa on input line 30.
+
+(/Users/ste/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Trying to load font information for U+msb on input line 30.
+
+(/Users/ste/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+)
+LaTeX Font Info:    Font shape `OT1/phv/m/n' will be
+(Font)              scaled to size 17.09995pt on input line 35.
+LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
+(Font)              scaled to size 17.09995pt on input line 35.
+LaTeX Font Info:    Font shape `OT1/phv/m/n' will be
+(Font)              scaled to size 6.64998pt on input line 35.
+LaTeX Font Info:    Trying to load font information for TS1+phv on input line 3
+5.
+(/Users/ste/Library/TinyTeX/texmf-dist/tex/latex/psnfss/ts1phv.fd
+File: ts1phv.fd 2020/03/25 scalable font definitions for TS1/phv.
+)
+LaTeX Font Info:    Font shape `TS1/phv/m/n' will be
+(Font)              scaled to size 6.64998pt on input line 35.
+LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
+(Font)              scaled to size 7.59998pt on input line 35.
+LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
+(Font)              scaled to size 5.69998pt on input line 35.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+LaTeX Font Info:    Font shape `OT1/phv/m/it' in size <12> not available
+(Font)              Font shape `OT1/phv/m/sl' tried instead on input line 35.
+LaTeX Font Info:    Font shape `OT1/phv/m/sl' will be
+(Font)              scaled to size 11.39996pt on input line 35.
+LaTeX Font Info:    Font shape `OT1/phv/m/it' in size <7> not available
+(Font)              Font shape `OT1/phv/m/sl' tried instead on input line 35.
+LaTeX Font Info:    Font shape `OT1/phv/m/sl' will be
+(Font)              scaled to size 6.64998pt on input line 35.
+[1{/Users/ste/Library/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
+
+]
+LaTeX Font Info:    Font shape `OT1/phv/m/n' will be
+(Font)              scaled to size 7.59998pt on input line 35.
+LaTeX Font Info:    Font shape `OT1/phv/m/n' will be
+(Font)              scaled to size 5.69998pt on input line 35.
+LaTeX Font Info:    Font shape `OT1/phv/m/n' will be
+(Font)              scaled to size 4.74998pt on input line 35.
+LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 3
+5.
+(/Users/ste/Library/TinyTeX/texmf-dist/tex/latex/psnfss/ot1pcr.fd
+File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
+) [2] [3]
+
+Package natbib Warning: Citation `roettger2019emergent' on page 4 undefined on 
+input line 69.
+
+[4] [5] [6]
+
+Package natbib Warning: Citation `niebuhr2011there' on page 7 undefined on inpu
+t line 150.
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[7]
+</Users/ste/repos/many_analyses/figs/ForkingPaths.png, id=271, 1398.4245pt x 15
+69.2226pt>
+File: /Users/ste/repos/many_analyses/figs/ForkingPaths.png Graphic file (type p
+ng)
+<use /Users/ste/repos/many_analyses/figs/ForkingPaths.png>
+Package pdftex.def Info: /Users/ste/repos/many_analyses/figs/ForkingPaths.png  
+used on input line 174.
+(pdftex.def)             Requested size: 352.81416pt x 395.89635pt.
+LaTeX Font Info:    Font shape `OT1/phv/m/n' will be
+(Font)              scaled to size 8.54997pt on input line 174.
+LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
+(Font)              scaled to size 8.54997pt on input line 174.
+LaTeX Font Info:    Font shape `OT1/phv/m/it' in size <9> not available
+(Font)              Font shape `OT1/phv/m/sl' tried instead on input line 174.
+LaTeX Font Info:    Font shape `OT1/phv/m/sl' will be
+(Font)              scaled to size 8.54997pt on input line 174.
+[8]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[9 </Users/ste/repos/many_analyses/figs/ForkingPaths.png>] [10]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[11]
+</Users/ste/repos/many_analyses/figs/procedure_plot.png, id=338, 1616.6799pt x 
+1045.2651pt>
+File: /Users/ste/repos/many_analyses/figs/procedure_plot.png Graphic file (type
+ png)
+<use /Users/ste/repos/many_analyses/figs/procedure_plot.png>
+Package pdftex.def Info: /Users/ste/repos/many_analyses/figs/procedure_plot.png
+  used on input line 232.
+(pdftex.def)             Requested size: 352.81416pt x 228.1089pt.
+[12 </Users/ste/repos/many_analyses/figs/procedure_plot.png>]
+LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 2
+46.
+(/Users/ste/Library/TinyTeX/texmf-dist/tex/latex/psnfss/ts1ptm.fd
+File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
+)
+Overfull \vbox (1.00761pt too high) has occurred while \output is active []
+
+[13] [14]
+Overfull \hbox (13.0275pt too wide) in paragraph at lines 305--305
+$[]$[][]\OT1/ptm/m/n/8 Temporary link: [][]$\OT1/pcr/m/n/8 https : / / osf . io
+ / h6z8w / ?view _ only = 3457f2b01a5f4435b3d917eb7b5134e8$[][]\OT1/ptm/m/n/8 .
+| 
+ []
+
+
+Overfull \hbox (11.0275pt too wide) in paragraph at lines 309--309
+$[]$[][]\OT1/ptm/m/n/8 Temporary link: [][]$\OT1/pcr/m/n/8 https : / / osf . io
+ / 5agn9 / ?view _ only = 3429acfd8eae4f0aafe2e17ad5b0983f$[][]| 
+ []
+
+[15] [16]
+Underfull \hbox (badness 10000) in paragraph at lines 390--392
+ []\OT1/phv/m/sl/12 Meta-analytic esti-ma-tion[][] \OT1/ptm/m/n/12 We will inve
+s-ti-gate the vari-abil-ity in
+ []
+
+[17]
+LaTeX Font Info:    Trying to load font information for OMS+pcr on input line 4
+09.
+(/Users/ste/Library/TinyTeX/texmf-dist/tex/latex/psnfss/omspcr.fd
+File: omspcr.fd 
+)
+LaTeX Font Info:    Font shape `OMS/pcr/m/n' in size <12> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 409.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[18] [19] [20]
+Overfull \hbox (30.36206pt too wide) in paragraph at lines 488--488
+$[]$[][]\OT1/ptm/m/n/8 Link for peer-review: [][]$\OT1/pcr/m/n/8 https : / / os
+f . io / 3bmcp / ?view _ only = 4f00dff704d742d493870f9f3d68e432$[][]\OT1/ptm/m
+/n/8 .| 
+ []
+
+[21] (./Draft_RR.bbl [22]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[23]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[24]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[25])
+
+Package natbib Warning: There were undefined citations.
+
+[26] (./Draft_RR.aux)
+Package rerunfilecheck Info: File `Draft_RR.out' has not changed.
+(rerunfilecheck)             Checksum: 1D1C7376276AA1D06C6549CC547C2A0C;3709.
+ ) 
+Here is how much of TeX's memory you used:
+ 13675 strings out of 480962
+ 220640 string characters out of 5907029
+ 546044 words of memory out of 5000000
+ 30500 multiletter control sequences out of 15000+600000
+ 452952 words of font info for 116 fonts, out of 8000000 for 9000
+ 14 hyphenation exceptions out of 8191
+ 83i,9n,88p,1204b,562s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/Users/ste/Library/TinyTeX/texmf-dist/fonts/enc/dvips/base/8r.enc}</Users/st
+e/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></Users/
+ste/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></Users
+/ste/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></User
+s/ste/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></User
+s/ste/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></Us
+ers/ste/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></U
+sers/ste/Library/TinyTeX/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></Users/
+ste/Library/TinyTeX/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></Users/ste/
+Library/TinyTeX/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></Users/ste/Libr
+ary/TinyTeX/texmf-dist/fonts/type1/urw/helvetic/uhvro8a.pfb></Users/ste/Library
+/TinyTeX/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></Users/ste/Library/TinyTe
+X/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></Users/ste/Library/TinyTeX/texmf
+-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on Draft_RR.pdf (26 pages, 7639630 bytes).
+PDF statistics:
+ 570 PDF objects out of 1000 (max. 8388607)
+ 521 compressed objects within 6 object streams
+ 144 named destinations out of 1000 (max. 500000)
+ 155 words of extra memory for PDF output out of 10000 (max. 10000000)
+
