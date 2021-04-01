@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2021.3.27)  1 APR 2021 13:59
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2021.3.27)  1 APR 2021 16:35
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -320,7 +320,6 @@ File: puenc.def 2021-02-27 v7.00k Hyperref: PDF Unicode definition (HO)
 Now handling font encoding PU ...
 ... no UTF-8 mapping file for font encoding PU
 )
-Package hyperref Info: Option `colorlinks' set `true' on input line 4073.
 Package hyperref Info: Option `bookmarksopen' set `true' on input line 4073.
 Package hyperref Info: Option `bookmarksnumbered' set `true' on input line 4073
 .
@@ -347,7 +346,7 @@ Package hyperref Info: Hyper figures OFF on input line 6075.
 Package hyperref Info: Link nesting OFF on input line 6080.
 Package hyperref Info: Hyper index ON on input line 6083.
 Package hyperref Info: backreferencing OFF on input line 6090.
-Package hyperref Info: Link coloring ON on input line 6093.
+Package hyperref Info: Link coloring OFF on input line 6095.
 Package hyperref Info: Link coloring with OCG OFF on input line 6100.
 Package hyperref Info: PDF/A mode OFF on input line 6105.
 LaTeX Info: Redefining \ref on input line 6145.
@@ -477,7 +476,7 @@ e
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: hyperref package is loaded.
 Package caption Info: End \AtBeginDocument code.
-Package hyperref Info: Link coloring ON on input line 14.
+Package hyperref Info: Link coloring OFF on input line 14.
 (/Users/ste/Library/TinyTeX/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
 (/Users/ste/Library/TinyTeX/texmf-dist/tex/latex/refcount/refcount.sty
@@ -524,15 +523,6 @@ LaTeX Font Info:    Font shape `OT1/phv/m/n' will be
 (Font)              scaled to size 17.09995pt on input line 35.
 LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
 (Font)              scaled to size 17.09995pt on input line 35.
-LaTeX Font Info:    Font shape `OT1/phv/m/n' will be
-(Font)              scaled to size 6.64998pt on input line 35.
-LaTeX Font Info:    Trying to load font information for TS1+phv on input line 3
-5.
-(/Users/ste/Library/TinyTeX/texmf-dist/tex/latex/psnfss/ts1phv.fd
-File: ts1phv.fd 2020/03/25 scalable font definitions for TS1/phv.
-)
-LaTeX Font Info:    Font shape `TS1/phv/m/n' will be
-(Font)              scaled to size 6.64998pt on input line 35.
 LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
 (Font)              scaled to size 7.59998pt on input line 35.
 LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
@@ -568,7 +558,7 @@ input line 69.
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 [7]
-</Users/ste/repos/many_analyses/figs/ForkingPaths.png, id=276, 1398.4245pt x 15
+</Users/ste/repos/many_analyses/figs/ForkingPaths.png, id=273, 1398.4245pt x 15
 69.2226pt>
 File: /Users/ste/repos/many_analyses/figs/ForkingPaths.png Graphic file (type p
 ng)
@@ -588,7 +578,7 @@ LaTeX Font Info:    Font shape `OT1/phv/m/sl' will be
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 [9 </Users/ste/repos/many_analyses/figs/ForkingPaths.png>] [10]
-</Users/ste/repos/many_analyses/figs/procedure_plot.png, id=330, 1616.6799pt x 
+</Users/ste/repos/many_analyses/figs/procedure_plot.png, id=327, 1616.6799pt x 
 1045.2651pt>
 File: /Users/ste/repos/many_analyses/figs/procedure_plot.png Graphic file (type
  png)
@@ -611,49 +601,47 @@ File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
 Overfull \vbox (1.00761pt too high) has occurred while \output is active []
 
 [13] [14]
-Overfull \hbox (13.0275pt too wide) in paragraph at lines 305--305
-$[]$[][]\OT1/ptm/m/n/8 Temporary link: [][]$\OT1/pcr/m/n/8 https : / / osf . io
- / h6z8w / ?view _ only = 3457f2b01a5f4435b3d917eb7b5134e8$[][]\OT1/ptm/m/n/8 .
-| 
+Overfull \hbox (13.0275pt too wide) in paragraph at lines 306--306
+$[]$[][]\OT1/ptm/m/n/8 Temporary link: []$\OT1/pcr/m/n/8 https : / / osf . io /
+ 3bmcp / ?view _ only = 6faaae5feabe4eed800a7c142fcda06f$[]\OT1/ptm/m/n/8 ,
  []
 
 
-Overfull \hbox (11.0275pt too wide) in paragraph at lines 309--309
-$[]$[][]\OT1/ptm/m/n/8 Temporary link: [][]$\OT1/pcr/m/n/8 https : / / osf . io
- / 5agn9 / ?view _ only = 3429acfd8eae4f0aafe2e17ad5b0983f$[][]| 
+Overfull \hbox (14.19415pt too wide) in paragraph at lines 310--310
+$[]$[][]\OT1/ptm/m/n/8 Temporary link: []$\OT1/pcr/m/n/8 https : / / osf . io /
+ 3bmcp / ?view _ only = 6faaae5feabe4eed800a7c142fcda06f$[]\OT1/ptm/m/n/8 ,
  []
-
-
-Overfull \vbox (4.73763pt too high) has occurred while \output is active []
 
 [15] [16]
-Underfull \hbox (badness 10000) in paragraph at lines 390--392
+Underfull \hbox (badness 10000) in paragraph at lines 391--393
  []\OT1/phv/m/sl/12 Meta-analytic esti-ma-tion[][] \OT1/ptm/m/n/12 We will inve
 s-ti-gate the vari-abil-ity in
  []
 
 [17]
 LaTeX Font Info:    Trying to load font information for OMS+pcr on input line 4
-09.
+10.
 (/Users/ste/Library/TinyTeX/texmf-dist/tex/latex/psnfss/omspcr.fd
 File: omspcr.fd 
 )
 LaTeX Font Info:    Font shape `OMS/pcr/m/n' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 409.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 410.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 [18] [19] [20]
-Overfull \hbox (30.36206pt too wide) in paragraph at lines 488--488
-$[]$[][]\OT1/ptm/m/n/8 Link for peer-review: [][]$\OT1/pcr/m/n/8 https : / / os
-f . io / 3bmcp / ?view _ only = 4f00dff704d742d493870f9f3d68e432$[][]\OT1/ptm/m
-/n/8 .| 
+Overfull \hbox (29.5843pt too wide) in paragraph at lines 489--489
+$[]$[][]\OT1/ptm/m/n/8 Link for peer-review: []$\OT1/pcr/m/n/8 https : / / osf 
+. io / 3bmcp / ?view _ only = 6faaae5feabe4eed800a7c142fcda06f$[]\OT1/ptm/m/n/8
+ .| 
  []
 
-[21] (./Draft_RR.bbl [22]
-Underfull \vbox (badness 10000) has occurred while \output is active []
+[21]
+Underfull \hbox (badness 10000) in paragraph at lines 505--506
+\OT1/ptm/m/n/12 See image at LINK [for peer-review, see fig-ure
+ []
 
-[23]
+[22] (./Draft_RR.bbl [23]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 [24]
@@ -668,13 +656,13 @@ Package rerunfilecheck Info: File `Draft_RR.out' has not changed.
 (rerunfilecheck)             Checksum: 1D1C7376276AA1D06C6549CC547C2A0C;3709.
  ) 
 Here is how much of TeX's memory you used:
- 13679 strings out of 480962
- 220713 string characters out of 5907029
- 547044 words of memory out of 5000000
- 30503 multiletter control sequences out of 15000+600000
- 452952 words of font info for 116 fonts, out of 8000000 for 9000
+ 13647 strings out of 480962
+ 220203 string characters out of 5907029
+ 545812 words of memory out of 5000000
+ 30475 multiletter control sequences out of 15000+600000
+ 450879 words of font info for 113 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 83i,9n,88p,1204b,570s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 83i,9n,88p,1204b,556s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/Users/ste/Library/TinyTeX/texmf-dist/fonts/enc/dvips/base/8r.enc}</Users/st
 e/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></Users/
 ste/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></Users
@@ -689,10 +677,10 @@ ary/TinyTeX/texmf-dist/fonts/type1/urw/helvetic/uhvro8a.pfb></Users/ste/Library
 /TinyTeX/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></Users/ste/Library/TinyTe
 X/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></Users/ste/Library/TinyTeX/texmf
 -dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on Draft_RR.pdf (26 pages, 7639864 bytes).
+Output written on Draft_RR.pdf (26 pages, 7639009 bytes).
 PDF statistics:
  574 PDF objects out of 1000 (max. 8388607)
  525 compressed objects within 6 object streams
- 145 named destinations out of 1000 (max. 500000)
+ 146 named destinations out of 1000 (max. 500000)
  155 words of extra memory for PDF output out of 10000 (max. 10000000)
 

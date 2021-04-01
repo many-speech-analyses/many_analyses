@@ -320,17 +320,17 @@ centering]{geometry}
     {\raggedright\titlesize\textbf{\@title} \par}%
     \vskip 1.5em%
     \vskip 12.5mm%
-    \end{minipage}\hspace{15mm}\begin{minipage}[t]{42.625mm}
-\hbox{}\scriptsize\journalname\\
-\hbox{}\volumenumber(\issuenumber):\startpage--\endpage\\ 
-\hbox{}\copyright The Author(s) \volumeyear\\
-\hbox{}Reprints and permission:\\
-\hbox{}sagepub.co.uk/journalsPermissions.nav\\
-\hbox{}DOI: 10.1177/ToBeAssigned\\
-\hbox{}www.sagepub.com/\\[2.3pt]
-%\hbox{}\includegraphics[height=4mm]{SAGE_Logo}
-\hbox{}{\fboxsep 1.5pt\framebox[14mm]{{\normalsize SAGE}}}
-\end{minipage}
+    \end{minipage}\hspace{15mm}%\begin{minipage}[t]{42.625mm}
+% \hbox{}\scriptsize\journalname\\
+% \hbox{}\volumenumber(\issuenumber):\startpage--\endpage\\ 
+% \hbox{}\copyright The Author(s) \volumeyear\\
+% \hbox{}Reprints and permission:\\
+% \hbox{}sagepub.co.uk/journalsPermissions.nav\\
+% \hbox{}DOI: 10.1177/ToBeAssigned\\
+% \hbox{}www.sagepub.com/\\[2.3pt]
+% %\hbox{}\includegraphics[height=4mm]{SAGE_Logo}
+% \hbox{}{\fboxsep 1.5pt\framebox[14mm]{{\normalsize SAGE}}}
+% \end{minipage}
 {\par\large%
 \if@Royal
       \vspace*{6mm}
