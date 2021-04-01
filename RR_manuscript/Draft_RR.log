@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2021.3.27)  31 MAR 2021 15:53
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2021.3.27)  1 APR 2021 13:59
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -537,20 +537,6 @@ LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
 (Font)              scaled to size 7.59998pt on input line 35.
 LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
 (Font)              scaled to size 5.69998pt on input line 35.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-LaTeX Font Info:    Font shape `OT1/phv/m/it' in size <12> not available
-(Font)              Font shape `OT1/phv/m/sl' tried instead on input line 35.
-LaTeX Font Info:    Font shape `OT1/phv/m/sl' will be
-(Font)              scaled to size 11.39996pt on input line 35.
-LaTeX Font Info:    Font shape `OT1/phv/m/it' in size <7> not available
-(Font)              Font shape `OT1/phv/m/sl' tried instead on input line 35.
-LaTeX Font Info:    Font shape `OT1/phv/m/sl' will be
-(Font)              scaled to size 6.64998pt on input line 35.
-[1{/Users/ste/Library/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
-
-]
 LaTeX Font Info:    Font shape `OT1/phv/m/n' will be
 (Font)              scaled to size 7.59998pt on input line 35.
 LaTeX Font Info:    Font shape `OT1/phv/m/n' will be
@@ -561,21 +547,28 @@ LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 3
 5.
 (/Users/ste/Library/TinyTeX/texmf-dist/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
-) [2] [3]
+)
+LaTeX Font Info:    Font shape `OT1/phv/m/it' in size <7> not available
+(Font)              Font shape `OT1/phv/m/sl' tried instead on input line 37.
+LaTeX Font Info:    Font shape `OT1/phv/m/sl' will be
+(Font)              scaled to size 6.64998pt on input line 37.
+[1
 
-Package natbib Warning: Citation `roettger2019emergent' on page 4 undefined on 
+{/Users/ste/Library/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+LaTeX Font Info:    Font shape `OT1/phv/m/it' in size <12> not available
+(Font)              Font shape `OT1/phv/m/sl' tried instead on input line 56.
+LaTeX Font Info:    Font shape `OT1/phv/m/sl' will be
+(Font)              scaled to size 11.39996pt on input line 56.
+[2]
+
+Package natbib Warning: Citation `roettger2019emergent' on page 3 undefined on 
 input line 69.
 
-[4] [5] [6]
-
-Package natbib Warning: Citation `niebuhr2011there' on page 7 undefined on inpu
-t line 150.
-
-
+[3] [4] [5] [6]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 [7]
-</Users/ste/repos/many_analyses/figs/ForkingPaths.png, id=271, 1398.4245pt x 15
+</Users/ste/repos/many_analyses/figs/ForkingPaths.png, id=276, 1398.4245pt x 15
 69.2226pt>
 File: /Users/ste/repos/many_analyses/figs/ForkingPaths.png Graphic file (type p
 ng)
@@ -595,10 +588,7 @@ LaTeX Font Info:    Font shape `OT1/phv/m/sl' will be
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 [9 </Users/ste/repos/many_analyses/figs/ForkingPaths.png>] [10]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-[11]
-</Users/ste/repos/many_analyses/figs/procedure_plot.png, id=338, 1616.6799pt x 
+</Users/ste/repos/many_analyses/figs/procedure_plot.png, id=330, 1616.6799pt x 
 1045.2651pt>
 File: /Users/ste/repos/many_analyses/figs/procedure_plot.png Graphic file (type
  png)
@@ -606,6 +596,12 @@ File: /Users/ste/repos/many_analyses/figs/procedure_plot.png Graphic file (type
 Package pdftex.def Info: /Users/ste/repos/many_analyses/figs/procedure_plot.png
   used on input line 232.
 (pdftex.def)             Requested size: 352.81416pt x 228.1089pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[11]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
 [12 </Users/ste/repos/many_analyses/figs/procedure_plot.png>]
 LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 2
 46.
@@ -626,6 +622,9 @@ Overfull \hbox (11.0275pt too wide) in paragraph at lines 309--309
 $[]$[][]\OT1/ptm/m/n/8 Temporary link: [][]$\OT1/pcr/m/n/8 https : / / osf . io
  / 5agn9 / ?view _ only = 3429acfd8eae4f0aafe2e17ad5b0983f$[][]| 
  []
+
+
+Overfull \vbox (4.73763pt too high) has occurred while \output is active []
 
 [15] [16]
 Underfull \hbox (badness 10000) in paragraph at lines 390--392
@@ -669,13 +668,13 @@ Package rerunfilecheck Info: File `Draft_RR.out' has not changed.
 (rerunfilecheck)             Checksum: 1D1C7376276AA1D06C6549CC547C2A0C;3709.
  ) 
 Here is how much of TeX's memory you used:
- 13675 strings out of 480962
- 220640 string characters out of 5907029
- 546044 words of memory out of 5000000
- 30500 multiletter control sequences out of 15000+600000
+ 13679 strings out of 480962
+ 220713 string characters out of 5907029
+ 547044 words of memory out of 5000000
+ 30503 multiletter control sequences out of 15000+600000
  452952 words of font info for 116 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 83i,9n,88p,1204b,562s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 83i,9n,88p,1204b,570s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/Users/ste/Library/TinyTeX/texmf-dist/fonts/enc/dvips/base/8r.enc}</Users/st
 e/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></Users/
 ste/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></Users
@@ -690,10 +689,10 @@ ary/TinyTeX/texmf-dist/fonts/type1/urw/helvetic/uhvro8a.pfb></Users/ste/Library
 /TinyTeX/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></Users/ste/Library/TinyTe
 X/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></Users/ste/Library/TinyTeX/texmf
 -dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on Draft_RR.pdf (26 pages, 7639630 bytes).
+Output written on Draft_RR.pdf (26 pages, 7639864 bytes).
 PDF statistics:
- 570 PDF objects out of 1000 (max. 8388607)
- 521 compressed objects within 6 object streams
- 144 named destinations out of 1000 (max. 500000)
+ 574 PDF objects out of 1000 (max. 8388607)
+ 525 compressed objects within 6 object streams
+ 145 named destinations out of 1000 (max. 500000)
  155 words of extra memory for PDF output out of 10000 (max. 10000000)
 

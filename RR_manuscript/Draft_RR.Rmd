@@ -1,6 +1,6 @@
 ---
-title: "Analytic choices for analyzing multidimensional behavior: Many analysts test hypotheses about human speech"
-runninghead: "Many analysts, one speech data set"
+title: "Multidimensional signals and analytic flexibility: Estimating degrees of freedom in human speech analyses"
+runninghead: "Multidimensional signals and analytic flexibility"
 author:
 - name: Stefano Coretta*
   num: 1
@@ -150,7 +150,7 @@ For example, the initial /l/ of the English words *led* and *let* is affected by
 The multiplicity of phonetic measurements grows exponentially if we look at larger temporal domains as is the case for suprasegmental aspects of speech.
 For example, studies investigating acoustic correlates of word stress (e.g. the difference between *ínsight* and *incíte*) use a wide variety of measurements, including temporal characteristics (duration of certain segments or sub-segmental intervals), spectral characteristics (intensity, formants, and spectral tilt), and measurements related to fundamental frequency (f0) [e.g., @gordon2017acoustic].
 Moving on to the expression of higher-level functions, like information structure and discourse pragmatics, relevant acoustic cues can be distributed throughout even larger domains, such as phrases and whole utterances [e.g., @ladd2008intonational].
-Differences in position, shape, and alignment of pitch modulations over multiple locations within a sentence are correlated with differences in discourse functions [e.g., @niebuhr2011there].
+Differences in position, shape, and alignment of pitch modulations over multiple locations within a sentence are correlated with differences in discourse functions [e.g., @niebuhr2011].
 The latter can also be expressed by global vs local pitch modulations [@heuven2002], as well as acoustic information within the temporal or spectral domain [e.g., @van2005speech].
 Extra-linguistic information, like the speaker's intentions, levels of emotional arousal or social identity, are also conveyed by broad-domain parameters, such as voice quality, rhythm, and pitch [@foulkes2006; @ogden2004; @white2009].
 
@@ -180,7 +180,7 @@ knitr::include_graphics(here::here("figs", "ForkingPaths.tiff"))
 <!-- END:FIGURE -->
 
 When looking at phrase-level temporal domains, the number of alternative analytic pipelines increases substantially.
-Figure \@ref(fig:forkingPaths)A shows a typical example of a decision tree with which speech researchers are often confronted. 
+Figure \@ref(fig:forkingPaths)A shows a typical example of a decision tree with which speech researchers are often confronted.
 Each of the four analytic decisions in the example have different possible options.
 Here only one particular path has been taken, and a different one would likely produce quite different results.
 Once we have decided to compare fundamental frequency of the word *another* across the two utterances, there are still many choices to be made, all of which need to be justified.
