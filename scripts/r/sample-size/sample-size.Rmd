@@ -1,0 +1,139 @@
+---
+title: "Sample size"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_knit$set(root.dir = here::here())
+library(tidyverse)
+library(brms)
+library(extraDistr)
+library(tidybayes)
+```
+
+```{r functions}
+simulate_data <- function(sd, n) {
+  tibble(
+    es_mean = rnorm(n, 1, sd),
+    # 
+    es_se = rhcauchy(n, 0.15),
+    team = letters[1:n]
+  )
+}
+
+run_brm <- function(data) {
+  priors <- c(
+    prior(normal(0, 1), class = Intercept),
+    prior(cauchy(0, 1), class = sd)
+  )
+  
+  meta_bm <- brm(
+    es_mean | se(es_se) ~
+      (1 | team),
+    data = data,
+    prior = priors,
+    chain = 4,
+    cores = 4,
+    backend = "cmdstanr", threads = threading(4),
+    control = list(adapt_delta = 0.999)
+  )
+  
+  return(meta_bm)
+}
+
+run_simulations <- function(sd, n = 12) {
+  data <- simulate_data(sd, n)
+  brm_model <- run_brm(data)
+  return(brm_model)
+}
+```
+
+
+```{r run-sims}
+sims <- tibble(
+  team_sd = seq(0.01, 0.9, by = 0.05),
+  model = map(
+    team_sd,
+    run_simulations
+  )
+)
+
+sims_20 <- tibble(
+  team_sd = seq(0.01, 0.9, by = 0.05),
+  model = map(
+    team_sd,
+    ~run_simulations(.x, 20)
+  )
+)
+
+sims_40 <- tibble(
+  team_sd = seq(0.01, 0.9, by = 0.05),
+  model = map(
+    team_sd,
+    ~run_simulations(.x, 40)
+  )
+)
+```
+
+```{r team-sds}
+sds <- map(
+  sims$model,
+  ~spread_draws(.x, sd_team__Intercept) %>% summarise(sd = sd(sd_team__Intercept)) %>% pull
+) %>%
+  unlist()
+
+sds_20 <- map(
+  sims_20$model,
+  ~spread_draws(.x, sd_team__Intercept) %>% summarise(sd = sd(sd_team__Intercept)) %>% pull
+) %>%
+  unlist()
+
+sds_40 <- map(
+  sims_40$model,
+  ~spread_draws(.x, sd_team__Intercept) %>% summarise(sd = sd(sd_team__Intercept)) %>% pull
+) %>%
+  unlist()
+```
+
+```{r plot}
+tibble(
+  team_sd = seq(0.01, 0.9, by = 0.05),
+  sd = sds,
+  min = sapply(sds, function(.x) inverseCDF(0.025, phcauchy, .x)),
+  max = sapply(sds, function(.x) inverseCDF(0.975, phcauchy, .x)),
+  width = max - min
+) %>%
+  ggplot(aes(team_sd, width)) +
+  geom_point(size = 5) +
+  geom_segment(aes(xend = team_sd, yend = 0))
+
+ggsave("./figs/sds_12.pdf", width = 7, height = 5)
+
+tibble(
+  team_sd = seq(0.01, 0.9, by = 0.05),
+  sd = sds_20,
+  min = sapply(sds_20, function(.x) inverseCDF(0.025, phcauchy, .x)),
+  max = sapply(sds_20, function(.x) inverseCDF(0.975, phcauchy, .x)),
+  width = max - min
+) %>%
+  ggplot(aes(team_sd, width)) +
+  geom_point(size = 5) +
+  geom_segment(aes(xend = team_sd, yend = 0))
+
+ggsave("./figs/sds_20.pdf", width = 7, height = 5)
+
+tibble(
+  team_sd = seq(0.01, 0.9, by = 0.05),
+  sd = sds_40,
+  min = sapply(sds_40, function(.x) inverseCDF(0.025, phcauchy, .x)),
+  max = sapply(sds_40, function(.x) inverseCDF(0.975, phcauchy, .x)),
+  width = max - min
+) %>%
+  ggplot(aes(team_sd, width)) +
+  geom_point(size = 5) +
+  geom_segment(aes(xend = team_sd, yend = 0))
+
+ggsave("./figs/sds_40.pdf", width = 7, height = 5)
+```
+
