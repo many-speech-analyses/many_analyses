@@ -113,7 +113,8 @@ tibble(
 ) %>%
   ggplot(aes(team_sd, width)) +
   geom_point(size = 5) +
-  geom_segment(aes(xend = team_sd, yend = 0))
+  geom_segment(aes(xend = team_sd, yend = 0)) +
+  ylim(0, 8)
 
 ggsave("./figs/sds_12.pdf", width = 7, height = 5)
 
@@ -126,7 +127,8 @@ tibble(
 ) %>%
   ggplot(aes(team_sd, width)) +
   geom_point(size = 5) +
-  geom_segment(aes(xend = team_sd, yend = 0))
+  geom_segment(aes(xend = team_sd, yend = 0)) +
+  ylim(0, 8)
 
 ggsave("./figs/sds_20.pdf", width = 7, height = 5)
 
@@ -139,7 +141,8 @@ tibble(
 ) %>%
   ggplot(aes(team_sd, width)) +
   geom_point(size = 5) +
-  geom_segment(aes(xend = team_sd, yend = 0))
+  geom_segment(aes(xend = team_sd, yend = 0)) +
+  ylim(0, 8)
 
 ggsave("./figs/sds_40.pdf", width = 7, height = 5)
 ```
