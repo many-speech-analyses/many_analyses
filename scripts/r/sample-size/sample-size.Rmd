@@ -7,11 +7,17 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_knit$set(root.dir = here::here())
 library(tidyverse)
+theme_set(theme_light())
 library(brms)
 library(extraDistr)
 library(HDInterval)
 library(tidybayes)
 ```
+
+```{r}
+dir.create("./figs/sample-size", FALSE)
+```
+
 
 ```{r functions}
 simulate_data <- function(sd, n) {
@@ -52,35 +58,41 @@ run_simulations <- function(sd, n = 12) {
 
 
 ```{r run-sims}
-sims <- tibble(
-  team_sd = seq(0.01, 0.9, by = 0.05),
-  model = map(
-    team_sd,
-    run_simulations
+if (file.exists("./models/sim/sims_40.rds")) {
+  sims <- readRDS("./models/sim/sims.rds")
+  sims_20 <- readRDS("./models/sim/sims_20.rds")
+  sims_40 <- readRDS("./models/sim/sims_40.rds")
+} else {
+  sims <- tibble(
+    team_sd = seq(0.01, 0.9, by = 0.05),
+    model = map(
+      team_sd,
+      run_simulations
+    )
   )
-)
-
-saveRDS(sims, "./models/sim/sims.rds")
-
-sims_20 <- tibble(
-  team_sd = seq(0.01, 0.9, by = 0.05),
-  model = map(
-    team_sd,
-    ~run_simulations(.x, 20)
+  
+  saveRDS(sims, "./models/sim/sims.rds")
+  
+  sims_20 <- tibble(
+    team_sd = seq(0.01, 0.9, by = 0.05),
+    model = map(
+      team_sd,
+      ~run_simulations(.x, 20)
+    )
   )
-)
-
-saveRDS(sims_20, "./models/sim/sims_20.rds")
-
-sims_40 <- tibble(
-  team_sd = seq(0.01, 0.9, by = 0.05),
-  model = map(
-    team_sd,
-    ~run_simulations(.x, 40)
+  
+  saveRDS(sims_20, "./models/sim/sims_20.rds")
+  
+  sims_40 <- tibble(
+    team_sd = seq(0.01, 0.9, by = 0.05),
+    model = map(
+      team_sd,
+      ~run_simulations(.x, 40)
+    )
   )
-)
-
-saveRDS(sims_40, "./models/sim/sims_40.rds")
+  
+  saveRDS(sims_40, "./models/sim/sims_40.rds")
+}
 ```
 
 ```{r team-sds}
@@ -104,46 +116,52 @@ sds_40 <- map(
 ```
 
 ```{r plot}
-tibble(
+sd_12 <- tibble(
   team_sd = seq(0.01, 0.9, by = 0.05),
   sd = sds,
   min = sapply(sds, function(.x) inverseCDF(0.025, phcauchy, .x)),
   max = sapply(sds, function(.x) inverseCDF(0.975, phcauchy, .x)),
-  width = max - min
-) %>%
-  ggplot(aes(team_sd, width)) +
-  geom_point(size = 5) +
-  geom_segment(aes(xend = team_sd, yend = 0)) +
-  ylim(0, 8)
+  width = max - min,
+  n = 12
+)
 
-ggsave("./figs/sds_12.pdf", width = 7, height = 5)
-
-tibble(
+sd_20 <- tibble(
   team_sd = seq(0.01, 0.9, by = 0.05),
   sd = sds_20,
   min = sapply(sds_20, function(.x) inverseCDF(0.025, phcauchy, .x)),
   max = sapply(sds_20, function(.x) inverseCDF(0.975, phcauchy, .x)),
-  width = max - min
-) %>%
-  ggplot(aes(team_sd, width)) +
-  geom_point(size = 5) +
-  geom_segment(aes(xend = team_sd, yend = 0)) +
-  ylim(0, 8)
+  width = max - min,
+  n = 20
+)
 
-ggsave("./figs/sds_20.pdf", width = 7, height = 5)
-
-tibble(
+sd_40 <- tibble(
   team_sd = seq(0.01, 0.9, by = 0.05),
   sd = sds_40,
   min = sapply(sds_40, function(.x) inverseCDF(0.025, phcauchy, .x)),
   max = sapply(sds_40, function(.x) inverseCDF(0.975, phcauchy, .x)),
-  width = max - min
-) %>%
-  ggplot(aes(team_sd, width)) +
-  geom_point(size = 5) +
-  geom_segment(aes(xend = team_sd, yend = 0)) +
-  ylim(0, 8)
+  width = max - min,
+  n = 40
+)
 
-ggsave("./figs/sds_40.pdf", width = 7, height = 5)
+bind_rows(sd_12, sd_20, sd_40) %>%
+  ggplot(aes(team_sd, width, colour = as.factor(n))) +
+  geom_line() +
+  geom_point(size = 4) +
+  geom_hline(yintercept = 1) +
+  annotate("text", 0.9, 1.3, label = "1 SD") +
+  geom_hline(yintercept = 2, linetype = "dashed") +
+  annotate("text", 0.9, 2.3, label = "2 SD") +
+  geom_hline(yintercept = 3, linetype = "dotted") +
+  annotate("text", 0.9, 3.3, label = "3 SD") +
+  ylim(0, 8) +
+  scale_color_brewer() +
+  labs(
+    title = "95% CrI width depending on teams' true SD and number of teams",
+    x = "Teams' true standard deviation",
+    y = "95% CrI width (standard units)",
+    colour = "N of teams"
+  )
+
+ggsave("./figs/sample-size/cri-width-nteams-true-sd.pdf", width = 7, height = 5)
 ```
 
