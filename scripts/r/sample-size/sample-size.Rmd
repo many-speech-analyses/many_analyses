@@ -9,6 +9,7 @@ knitr::opts_knit$set(root.dir = here::here())
 library(tidyverse)
 library(brms)
 library(extraDistr)
+library(HDInterval)
 library(tidybayes)
 ```
 
@@ -36,7 +37,7 @@ run_brm <- function(data) {
     chain = 4,
     cores = 4,
     backend = "cmdstanr", threads = threading(4),
-    control = list(adapt_delta = 0.999)
+    control = list(adapt_delta = 0.999),
   )
   
   return(meta_bm)
@@ -59,6 +60,8 @@ sims <- tibble(
   )
 )
 
+saveRDS(sims, "./models/sim/sims.rds")
+
 sims_20 <- tibble(
   team_sd = seq(0.01, 0.9, by = 0.05),
   model = map(
@@ -67,6 +70,8 @@ sims_20 <- tibble(
   )
 )
 
+saveRDS(sims_20, "./models/sim/sims_20.rds")
+
 sims_40 <- tibble(
   team_sd = seq(0.01, 0.9, by = 0.05),
   model = map(
@@ -74,6 +79,8 @@ sims_40 <- tibble(
     ~run_simulations(.x, 40)
   )
 )
+
+saveRDS(sims_40, "./models/sim/sims_40.rds")
 ```
 
 ```{r team-sds}
