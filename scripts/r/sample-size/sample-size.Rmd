@@ -14,25 +14,26 @@ library(HDInterval)
 library(tidybayes)
 ```
 
-```{r}
+```{r dirs}
+# Create dirs to save files to if they don't exist
+dir.create("./models/sims", FALSE, TRUE)
 dir.create("./figs/sample-size", FALSE)
 ```
 
 
 ```{r Silberzahn}
-
 # load in Silberzahn et al. data: https://osf.io/fa743/
-silber = read_csv("https://osf.io/fa743/download")
+silber <- read_csv("https://osf.io/fa743/download")
 
 ## run model on OR to estimate between teams SD
 
 # set weakly informative priors
 # mean OR
-round(mean(silber$OR),2)
+round(mean(silber$OR), 2)
 
 priors <- c(
-  prior(normal(1.39, 1), class = Intercept),
-  prior(cauchy(0, 0.5), class = sd)
+  prior(normal(1, 1), class = Intercept),
+  prior(cauchy(0, 1), class = sd)
 )
 
 # run simple model
@@ -45,24 +46,26 @@ silber_sd <- brm(
   cores = 4,
   backend = "cmdstanr", threads = threading(4),
   control = list(adapt_delta = 0.99999, max_treedepth = 15),
+  file = "./models/sims/silber_sd"
 )
 
 # extract SD estimate and 95 CrI
-SD = summary(silber_sd)$random[[1]][1]
-lower = summary(silber_sd)$random[[1]][3]
-upper = summary(silber_sd)$random[[1]][4]
+SD <- summary(silber_sd)$random[[1]][1]
+lower <- summary(silber_sd)$random[[1]][3]
+upper <- summary(silber_sd)$random[[1]][4]
 
 quantiles <- quantile(seq(lower, upper, by = 0.1), probs = seq(0, 1, 0.25),  na.rm = FALSE)
 quantiles <- c(quantiles[[1]], quantiles[[2]], quantiles[[3]], quantiles[[4]], quantiles[[5]])
+n_teams <- seq(15, 40, by = 5)
 
+# Get all unique combos of number of teams and quantiles of SD.
+n_ts_qs <- expand_grid(n_teams, quantiles)
 ```
 
-
-
 ```{r functions}
-simulate_data <- function(sd, n) {
+simulate_data <- function(n, sd) {
   tibble(
-    es_mean = rnorm(n, 0, sd),
+    odds = rnorm(n, 1, sd),
     # no measurement error model for the simulation
     # es_se = rhcauchy(n, 0.15),
     team = letters[1:n]
@@ -72,12 +75,11 @@ simulate_data <- function(sd, n) {
 run_brm <- function(data) {
   priors <- c(
     prior(normal(0, 1), class = Intercept),
-    prior(cauchy(0, 0.15), class = sd)
+    prior(cauchy(0, 1), class = sd)
   )
   
   meta_bm <- brm(
-    es_mean ~
-    #es_mean | se(es_se) ~
+    odds ~
       (1 | team),
     data = data,
     prior = priors,
@@ -90,8 +92,8 @@ run_brm <- function(data) {
   return(meta_bm)
 }
 
-run_simulations <- function(sd, n = 10) {
-  data <- simulate_data(sd, n)
+run_simulations <- function(n, sd) {
+  data <- simulate_data(n, sd)
   brm_model <- run_brm(data)
   return(brm_model)
 }
@@ -99,67 +101,17 @@ run_simulations <- function(sd, n = 10) {
 
 
 ```{r run-sims}
-if (file.exists("./models/sim/sims_40.rds")) {
-  sims_20 <- readRDS("./models/sim/sims_20.rds")
-  sims_25 <- readRDS("./models/sim/sims_25.rds")
-  sims_30 <- readRDS("./models/sim/sims_30.rds")
-  sims_35 <- readRDS("./models/sim/sims_35.rds")
-  sims_40 <- readRDS("./models/sim/sims_40.rds")
-} else {
-  
-  sims_20 <- tibble(
-    team_sd = quantiles,
-    model = map(
-      team_sd,
-      run_simulations
-    )
+sample_sims <- tibble(
+  n_teams = n_ts_qs$n_teams,
+  quants = n_ts_qs$quantiles,
+  models = map2(
+    n_teams, quants,
+    ~run_simulations(.x, .y)
   )
-  
-  saveRDS(sims_20, "./models/sim/sims_20.rds")
-  
-  sims_25 <- tibble(
-    team_sd = quantiles,
-    model = map(
-      team_sd,
-      ~run_simulations(.x, 25)
-    )
-  )
-  
-  saveRDS(sims_25, "./models/sim/sims_25.rds")
-  
-  sims_30 <- tibble(
-    team_sd = quantiles,
-    model = map(
-      team_sd,
-      run_simulations(.x, 30)
-    )
-  )
-  
-  saveRDS(sims_30, "./models/sim/sims_30.rds")
-  
-  sims_35 <- tibble(
-    team_sd = quantiles,
-    model = map(
-      team_sd,
-      ~run_simulations(.x, 35)
-    )
-  )
-  
-  saveRDS(sims_35, "./models/sim/sims_35.rds")
-  
-  sims_40 <- tibble(
-    team_sd = quantiles,
-    model = map(
-      team_sd,
-      ~run_simulations(.x, 40)
-    )
-  )
-
-  saveRDS(sims_40, "./models/sim/sims_40.rds")
-}
+)
 ```
 
-```{r team-sds}
+```{r team-sds, eval=FALSE, include=FALSE}
 sds_20 <- map(
   sims_20$model,
   ~spread_draws(.x, sd_team__Intercept) %>% summarise(sd = sd(sd_team__Intercept)) %>% pull
@@ -192,7 +144,7 @@ sds_40 <- map(
   unlist()
 ```
 
-```{r plot}
+```{r plot, eval=FALSE, include=FALSE}
 sd_20 <- tibble(
   team_sd = quantiles,
   sd = sds_20,
