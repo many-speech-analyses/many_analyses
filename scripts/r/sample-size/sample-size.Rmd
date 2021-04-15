@@ -19,12 +19,52 @@ dir.create("./figs/sample-size", FALSE)
 ```
 
 
+```{r Silberzahn}
+
+# load in Silberzahn et al. data: https://osf.io/fa743/
+silber = read_csv("https://osf.io/fa743/download")
+
+## run model on OR to estimate between teams SD
+
+# set weakly informative priors
+# mean OR
+round(mean(silber$OR),2)
+
+priors <- c(
+  prior(normal(1.39, 1), class = Intercept),
+  prior(cauchy(0, 0.5), class = sd)
+)
+
+# run simple model
+silber_sd <- brm(
+  OR ~ (1 | Team),
+  data = silber,
+  prior = priors,
+  chain = 4,
+  iter = 4000,
+  cores = 4,
+  backend = "cmdstanr", threads = threading(4),
+  control = list(adapt_delta = 0.99999, max_treedepth = 15),
+)
+
+# extract SD estimate and 95 CrI
+SD = summary(silber_sd)$random[[1]][1]
+lower = summary(silber_sd)$random[[1]][3]
+upper = summary(silber_sd)$random[[1]][4]
+
+quantiles <- quantile(seq(lower, upper, by = 0.1), probs = seq(0, 1, 0.25),  na.rm = FALSE)
+quantiles <- c(quantiles[[1]], quantiles[[2]], quantiles[[3]], quantiles[[4]], quantiles[[5]])
+
+```
+
+
+
 ```{r functions}
 simulate_data <- function(sd, n) {
   tibble(
-    es_mean = rnorm(n, 1, sd),
-    # 
-    es_se = rhcauchy(n, 0.15),
+    es_mean = rnorm(n, 0, sd),
+    # no measurement error model for the simulation
+    # es_se = rhcauchy(n, 0.15),
     team = letters[1:n]
   )
 }
@@ -32,24 +72,25 @@ simulate_data <- function(sd, n) {
 run_brm <- function(data) {
   priors <- c(
     prior(normal(0, 1), class = Intercept),
-    prior(cauchy(0, 1), class = sd)
+    prior(cauchy(0, 0.15), class = sd)
   )
   
   meta_bm <- brm(
-    es_mean | se(es_se) ~
+    es_mean ~
+    #es_mean | se(es_se) ~
       (1 | team),
     data = data,
     prior = priors,
     chain = 4,
     cores = 4,
     backend = "cmdstanr", threads = threading(4),
-    control = list(adapt_delta = 0.999),
+    control = list(adapt_delta = 0.9999, max_treedepth = 15),
   )
   
   return(meta_bm)
 }
 
-run_simulations <- function(sd, n = 12) {
+run_simulations <- function(sd, n = 10) {
   data <- simulate_data(sd, n)
   brm_model <- run_brm(data)
   return(brm_model)
@@ -59,54 +100,90 @@ run_simulations <- function(sd, n = 12) {
 
 ```{r run-sims}
 if (file.exists("./models/sim/sims_40.rds")) {
-  sims <- readRDS("./models/sim/sims.rds")
   sims_20 <- readRDS("./models/sim/sims_20.rds")
+  sims_25 <- readRDS("./models/sim/sims_25.rds")
+  sims_30 <- readRDS("./models/sim/sims_30.rds")
+  sims_35 <- readRDS("./models/sim/sims_35.rds")
   sims_40 <- readRDS("./models/sim/sims_40.rds")
 } else {
-  sims <- tibble(
-    team_sd = seq(0.01, 0.9, by = 0.05),
+  
+  sims_20 <- tibble(
+    team_sd = quantiles,
     model = map(
       team_sd,
       run_simulations
     )
   )
   
-  saveRDS(sims, "./models/sim/sims.rds")
+  saveRDS(sims_20, "./models/sim/sims_20.rds")
   
-  sims_20 <- tibble(
-    team_sd = seq(0.01, 0.9, by = 0.05),
+  sims_25 <- tibble(
+    team_sd = quantiles,
     model = map(
       team_sd,
-      ~run_simulations(.x, 20)
+      ~run_simulations(.x, 25)
     )
   )
   
-  saveRDS(sims_20, "./models/sim/sims_20.rds")
+  saveRDS(sims_25, "./models/sim/sims_25.rds")
+  
+  sims_30 <- tibble(
+    team_sd = quantiles,
+    model = map(
+      team_sd,
+      run_simulations(.x, 30)
+    )
+  )
+  
+  saveRDS(sims_30, "./models/sim/sims_30.rds")
+  
+  sims_35 <- tibble(
+    team_sd = quantiles,
+    model = map(
+      team_sd,
+      ~run_simulations(.x, 35)
+    )
+  )
+  
+  saveRDS(sims_35, "./models/sim/sims_35.rds")
   
   sims_40 <- tibble(
-    team_sd = seq(0.01, 0.9, by = 0.05),
+    team_sd = quantiles,
     model = map(
       team_sd,
       ~run_simulations(.x, 40)
     )
   )
-  
+
   saveRDS(sims_40, "./models/sim/sims_40.rds")
 }
 ```
 
 ```{r team-sds}
-sds <- map(
-  sims$model,
-  ~spread_draws(.x, sd_team__Intercept) %>% summarise(sd = sd(sd_team__Intercept)) %>% pull
-) %>%
-  unlist()
-
 sds_20 <- map(
   sims_20$model,
   ~spread_draws(.x, sd_team__Intercept) %>% summarise(sd = sd(sd_team__Intercept)) %>% pull
 ) %>%
   unlist()
+
+sds_25 <- map(
+  sims_25$model,
+  ~spread_draws(.x, sd_team__Intercept) %>% summarise(sd = sd(sd_team__Intercept)) %>% pull
+) %>%
+  unlist()
+
+sds_30 <- map(
+  sims_30$model,
+  ~spread_draws(.x, sd_team__Intercept) %>% summarise(sd = sd(sd_team__Intercept)) %>% pull
+) %>%
+  unlist()
+
+sds_35 <- map(
+  sims_35$model,
+  ~spread_draws(.x, sd_team__Intercept) %>% summarise(sd = sd(sd_team__Intercept)) %>% pull
+) %>%
+  unlist()
+
 
 sds_40 <- map(
   sims_40$model,
@@ -116,17 +193,8 @@ sds_40 <- map(
 ```
 
 ```{r plot}
-sd_12 <- tibble(
-  team_sd = seq(0.01, 0.9, by = 0.05),
-  sd = sds,
-  min = sapply(sds, function(.x) inverseCDF(0.025, phcauchy, .x)),
-  max = sapply(sds, function(.x) inverseCDF(0.975, phcauchy, .x)),
-  width = max - min,
-  n = 12
-)
-
 sd_20 <- tibble(
-  team_sd = seq(0.01, 0.9, by = 0.05),
+  team_sd = quantiles,
   sd = sds_20,
   min = sapply(sds_20, function(.x) inverseCDF(0.025, phcauchy, .x)),
   max = sapply(sds_20, function(.x) inverseCDF(0.975, phcauchy, .x)),
@@ -134,8 +202,35 @@ sd_20 <- tibble(
   n = 20
 )
 
+sd_25 <- tibble(
+  team_sd = quantiles,
+  sd = sds_25,
+  min = sapply(sds_25, function(.x) inverseCDF(0.025, phcauchy, .x)),
+  max = sapply(sds_25, function(.x) inverseCDF(0.975, phcauchy, .x)),
+  width = max - min,
+  n = 25
+)
+
+sd_30 <- tibble(
+  team_sd = quantiles,
+  sd = sds_30,
+  min = sapply(sds_30, function(.x) inverseCDF(0.025, phcauchy, .x)),
+  max = sapply(sds_30, function(.x) inverseCDF(0.975, phcauchy, .x)),
+  width = max - min,
+  n = 30
+)
+
+sd_35 <- tibble(
+  team_sd = quantiles,
+  sd = sds_35,
+  min = sapply(sds_35, function(.x) inverseCDF(0.025, phcauchy, .x)),
+  max = sapply(sds_35, function(.x) inverseCDF(0.975, phcauchy, .x)),
+  width = max - min,
+  n = 35
+)
+
 sd_40 <- tibble(
-  team_sd = seq(0.01, 0.9, by = 0.05),
+  team_sd = quantiles,
   sd = sds_40,
   min = sapply(sds_40, function(.x) inverseCDF(0.025, phcauchy, .x)),
   max = sapply(sds_40, function(.x) inverseCDF(0.975, phcauchy, .x)),
@@ -143,7 +238,7 @@ sd_40 <- tibble(
   n = 40
 )
 
-bind_rows(sd_12, sd_20, sd_40) %>%
+bind_rows(sd_20, sd_25,sd_30, sd_35, sd_40) %>%
   ggplot(aes(team_sd, width, colour = as.factor(n))) +
   geom_line() +
   geom_point(size = 4) +
