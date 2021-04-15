@@ -1,5 +1,7 @@
 *.DS_Store
 
+models
+
 # History files
 .Rhistory
 .Rapp.history
