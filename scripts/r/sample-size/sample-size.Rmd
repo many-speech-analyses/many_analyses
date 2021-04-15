@@ -109,6 +109,8 @@ sample_sims <- tibble(
     ~run_simulations(.x, .y)
   )
 )
+
+saveRDS(sample_sims, "./models/sims/sample_sims.rds")
 ```
 
 ```{r team-sds, eval=FALSE, include=FALSE}
