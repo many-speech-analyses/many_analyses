@@ -116,20 +116,21 @@ sample_file <- "./models/sims/sample_sims.rds"
 if (file.exists(sample_file)) {
   sample_sims <- readRDS(sample_file)
 } else {
-  sample_sims <- tibble(
-    n_teams = n_ts_qs$n_teams,
-    quants = n_ts_qs$quantiles,
-    sd_team = map2(
-      n_teams, quants,
-      ~run_simulations(.x, .y)
-    )
-  )
-  
-  saveRDS(sample_sims, sample_file)
+  # sample_sims <- tibble(
+  #   n_teams = n_ts_qs$n_teams,
+  #   quants = n_ts_qs$quantiles,
+  #   sd_team = map2(
+  #     n_teams, quants,
+  #     ~run_simulations(.x, .y)
+  #   )
+  # )
+  # 
+  # saveRDS(sample_sims, sample_file)
+  print("why?")
 }
 ```
 
-```{r plot, eval=FALSE, include=FALSE}
+```{r plot}
 sample_sims <- sample_sims %>%
   mutate(
     cri = map(sd_team, function(.x) .x$random$team[4] - .x$random$team[3]) %>% unlist()
