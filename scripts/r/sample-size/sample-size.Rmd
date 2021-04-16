@@ -99,9 +99,11 @@ run_brm <- function(data) {
 
 run_simulations <- function(n, sd) {
   data <- simulate_data(n, sd)
+  
+  cat("Model:", n, sd, "\n")
   brm_model <- run_brm(data)
   
-  sd_team <- as_tibble(summary(brm_model)$team)
+  sd_team <- summary(brm_model)
   
   return(sd_team)
 }
