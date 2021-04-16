@@ -23,22 +23,26 @@ dir.create("./figs/sample-size", FALSE)
 
 ```{r Silberzahn}
 # load in Silberzahn et al. data: https://osf.io/fa743/
-silber <- read_csv("https://osf.io/fa743/download")
+silber <- read_csv("https://osf.io/fa743/download") %>%
+  mutate(
+    z_score = log(OR) / ((log(OR) - log(OR_lo)) / 1.96)
+  ) %>%
+  filter(z_score < 6)
 
 ## run model on OR to estimate between teams SD
 
 # set weakly informative priors
 # mean OR
-round(mean(silber$OR), 2)
+round(mean(silber$z_score), 2)
 
 priors <- c(
-  prior(normal(1, 1), class = Intercept),
+  prior(normal(0, 1), class = Intercept),
   prior(cauchy(0, 1), class = sd)
 )
 
 # run simple model
 silber_sd <- brm(
-  OR ~ (1 | Team),
+  z_score ~ (1 | Team),
   data = silber,
   prior = priors,
   chain = 4,
@@ -65,7 +69,7 @@ n_ts_qs <- expand_grid(n_teams, quantiles)
 ```{r functions}
 simulate_data <- function(n, sd) {
   tibble::tibble(
-    odds = rnorm(n, 1, sd),
+    z_score = rnorm(n, 0, sd),
     # no measurement error model for the simulation
     # es_se = rhcauchy(n, 0.15),
     team = letters[1:n]
@@ -79,11 +83,12 @@ run_brm <- function(data) {
   )
   
   meta_bm <- brms::brm(
-    odds ~
+    z_score ~
       (1 | team),
     data = data,
     prior = priors,
     chain = 4,
+    iter = 6000,
     cores = 4,
     backend = "cmdstanr", threads = brms::threading(4),
     control = list(adapt_delta = 0.9999, max_treedepth = 15),
