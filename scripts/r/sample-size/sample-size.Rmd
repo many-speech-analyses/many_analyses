@@ -96,7 +96,7 @@ run_simulations <- function(n, sd) {
   data <- simulate_data(n, sd)
   brm_model <- run_brm(data)
   
-  sd_team <- purr::map(
+  sd_team <- purrr::map(
     brm_model$model,
     ~tidybayes::spread_draws(.x, sd_team__Intercept) %>%
       dplyr::summarise(sd = sd(sd_team__Intercept)) %>%
