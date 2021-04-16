@@ -111,80 +111,42 @@ run_simulations <- function(n, sd) {
 
 
 ```{r run-sims}
-sample_sims <- tibble(
-  n_teams = n_ts_qs$n_teams,
-  quants = n_ts_qs$quantiles,
-  sd_team = map2(
-    n_teams, quants,
-    ~run_simulations(.x, .y)
-  )
-)
+sample_file <- "./models/sims/sample_sims.rds"
 
-saveRDS(sample_sims, "./models/sims/sample_sims.rds")
+if (file.exists(sample_file)) {
+  sample_sims <- readRDS(sample_file)
+} else {
+  sample_sims <- tibble(
+    n_teams = n_ts_qs$n_teams,
+    quants = n_ts_qs$quantiles,
+    sd_team = map2(
+      n_teams, quants,
+      ~run_simulations(.x, .y)
+    )
+  )
+  
+  saveRDS(sample_sims, sample_file)
+}
 ```
 
 ```{r plot, eval=FALSE, include=FALSE}
-sd_20 <- tibble(
-  team_sd = quantiles,
-  sd = sds_20,
-  min = sapply(sds_20, function(.x) inverseCDF(0.025, phcauchy, .x)),
-  max = sapply(sds_20, function(.x) inverseCDF(0.975, phcauchy, .x)),
-  width = max - min,
-  n = 20
-)
+sample_sims <- sample_sims %>%
+  mutate(
+    cri = map(sd_team, function(.x) .x$random$team[4] - .x$random$team[3]) %>% unlist()
+  )
 
-sd_25 <- tibble(
-  team_sd = quantiles,
-  sd = sds_25,
-  min = sapply(sds_25, function(.x) inverseCDF(0.025, phcauchy, .x)),
-  max = sapply(sds_25, function(.x) inverseCDF(0.975, phcauchy, .x)),
-  width = max - min,
-  n = 25
-)
-
-sd_30 <- tibble(
-  team_sd = quantiles,
-  sd = sds_30,
-  min = sapply(sds_30, function(.x) inverseCDF(0.025, phcauchy, .x)),
-  max = sapply(sds_30, function(.x) inverseCDF(0.975, phcauchy, .x)),
-  width = max - min,
-  n = 30
-)
-
-sd_35 <- tibble(
-  team_sd = quantiles,
-  sd = sds_35,
-  min = sapply(sds_35, function(.x) inverseCDF(0.025, phcauchy, .x)),
-  max = sapply(sds_35, function(.x) inverseCDF(0.975, phcauchy, .x)),
-  width = max - min,
-  n = 35
-)
-
-sd_40 <- tibble(
-  team_sd = quantiles,
-  sd = sds_40,
-  min = sapply(sds_40, function(.x) inverseCDF(0.025, phcauchy, .x)),
-  max = sapply(sds_40, function(.x) inverseCDF(0.975, phcauchy, .x)),
-  width = max - min,
-  n = 40
-)
-
-bind_rows(sd_20, sd_25,sd_30, sd_35, sd_40) %>%
-  ggplot(aes(team_sd, width, colour = as.factor(n))) +
+sample_sims %>%
+  ggplot(aes(quants, cri, colour = as.factor(n_teams))) +
   geom_line() +
   geom_point(size = 4) +
   geom_hline(yintercept = 1) +
-  annotate("text", 0.9, 1.3, label = "1 SD") +
   geom_hline(yintercept = 2, linetype = "dashed") +
-  annotate("text", 0.9, 2.3, label = "2 SD") +
-  geom_hline(yintercept = 3, linetype = "dotted") +
-  annotate("text", 0.9, 3.3, label = "3 SD") +
-  ylim(0, 8) +
-  scale_color_brewer() +
+  scale_x_continuous(breaks = quantiles) +
+  scale_color_brewer(type = "seq", palette = "BuPu") +
   labs(
     title = "95% CrI width depending on teams' true SD and number of teams",
     x = "Teams' true standard deviation",
-    y = "95% CrI width (standard units)",
+    y = "95% CrI width",
     colour = "N of teams"
   )
 
