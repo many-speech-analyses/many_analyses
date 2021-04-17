@@ -7,7 +7,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_knit$set(root.dir = here::here())
 library(tidyverse)
-theme_set(theme_light())
+theme_set(theme_light(base_family = "Lato"))
 library(brms)
 library(extraDistr)
 library(HDInterval)
@@ -114,19 +114,20 @@ run_simulations <- function(n, sd) {
 sample_file <- "./models/sims/sample_sims.rds"
 
 if (file.exists(sample_file)) {
+  cat("Reading file...\n")
   sample_sims <- readRDS(sample_file)
+  cat("Done!")
 } else {
-  # sample_sims <- tibble(
-  #   n_teams = n_ts_qs$n_teams,
-  #   quants = n_ts_qs$quantiles,
-  #   sd_team = map2(
-  #     n_teams, quants,
-  #     ~run_simulations(.x, .y)
-  #   )
-  # )
-  # 
-  # saveRDS(sample_sims, sample_file)
-  print("why?")
+  sample_sims <- tibble(
+    n_teams = n_ts_qs$n_teams,
+    quants = n_ts_qs$quantiles,
+    sd_team = map2(
+      n_teams, quants,
+      ~run_simulations(.x, .y)
+    )
+  )
+
+  saveRDS(sample_sims, sample_file)
 }
 ```
 
@@ -136,21 +137,44 @@ sample_sims <- sample_sims %>%
     cri = map(sd_team, function(.x) .x$random$team[4] - .x$random$team[3]) %>% unlist()
   )
 
+labels <- tibble(
+  x = c(0.5, 0.25, 0.9, 0.3, 1.3),
+  y = c(1.25, 0.7, 1.5, 0.1, 0.8),
+  labs = c("Mean", "1st quart.", "3rd quart.", "Min", "Max")
+)
+
+arrows <- tibble(
+    x1 = c(0.5, 0.25, 0.9, 0.25, 1.3),
+    y1 = c(1.15, 0.6, 1.4, 0.1, 0.9),
+    x2 = c(0.63, 0.33, 0.97, 0.05, 1.33),
+    y2 = c(0.8, 0.45, 1.2, 0.1, 1.1)
+  )
+
 sample_sims %>%
-  ggplot(aes(quants, cri, colour = as.factor(n_teams))) +
-  geom_line() +
-  geom_point(size = 4) +
+  ggplot(aes(quants, cri)) +
+  geom_line(aes(colour = as.factor(n_teams))) +
+  geom_point(aes(colour = as.factor(n_teams)), size = 4) +
   geom_hline(yintercept = 1) +
   geom_hline(yintercept = 2, linetype = "dashed") +
-  scale_x_continuous(breaks = quantiles) +
-  scale_color_brewer(type = "seq", palette = "BuPu") +
+  geom_text(
+    data = labels, aes(x, y, label = labs),
+    family = "Lato"
+  ) +
+  geom_curve(
+    data = arrows, aes(x = x1, y = y1, xend = x2, yend = y2),
+    arrow = arrow(length = unit(0.07, "inch")), size = 0.4,
+    color = "gray20", curvature = 0.3
+  ) +
+  scale_x_continuous(breaks = round(quantiles, 2)) +
+  scale_color_manual(values = c("#bfd3e6", "#9ebcda", "#8c96c6", "#8c6bb1", "#88419d", "#6e016b")) +
   labs(
     title = "95% CrI width depending on teams' true SD and number of teams",
     x = "Teams' true standard deviation",
     y = "95% CrI width",
-    colour = "N of teams"
+    colour = "N of teams",
+    caption = "The values on the x-axis are the quartiles (0, 0.25, 0.5, 0.75, 1)\nof the estimated teams' SD from Silberzahn et al."
   )
 
-ggsave("./figs/sample-size/cri-width-nteams-true-sd.pdf", width = 7, height = 5)
+ggsave("./figs/sample-size/cri-width-nteams-true-sd.pdf", width = 7, height = 5, device = cairo_pdf)
 ```
 
