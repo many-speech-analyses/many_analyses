@@ -32,11 +32,13 @@ silber <- read_csv("https://osf.io/fa743/download") %>%
 ## run model on OR to estimate between teams SD
 
 # set weakly informative priors
-# mean OR
+# mean z-score
 round(mean(silber$z_score), 2)
 
+set.seed(99)
+
 priors <- c(
-  prior(normal(0, 1), class = Intercept),
+  prior(normal(2, 2), class = Intercept),
   prior(cauchy(0, 1), class = sd)
 )
 
@@ -48,8 +50,8 @@ silber_sd <- brm(
   chain = 4,
   iter = 4000,
   cores = 4,
-  backend = "cmdstanr", threads = threading(4),
-  control = list(adapt_delta = 0.99999, max_treedepth = 15),
+  #backend = "cmdstanr", threads = threading(4),
+  control = list(adapt_delta = 0.99999999, max_treedepth = 15),
   file = "./models/sims/silber_sd"
 )
 
