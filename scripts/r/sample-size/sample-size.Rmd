@@ -12,6 +12,7 @@ library(brms)
 library(extraDistr)
 library(HDInterval)
 library(tidybayes)
+my_seed <- 99
 ```
 
 ```{r dirs}
@@ -35,10 +36,8 @@ silber <- read_csv("https://osf.io/fa743/download") %>%
 # mean z-score
 round(mean(silber$z_score), 2)
 
-set.seed(99)
-
 priors <- c(
-  prior(normal(2, 2), class = Intercept),
+  prior(normal(0, 3), class = Intercept),
   prior(cauchy(0, 1), class = sd)
 )
 
@@ -50,8 +49,9 @@ silber_sd <- brm(
   chain = 4,
   iter = 4000,
   cores = 4,
-  #backend = "cmdstanr", threads = threading(4),
-  control = list(adapt_delta = 0.99999999, max_treedepth = 15),
+  seed = my_seed,
+  backend = "cmdstanr", threads = threading(4),
+  control = list(adapt_delta = 0.9999, max_treedepth = 15),
   file = "./models/sims/silber_sd"
 )
 
@@ -80,7 +80,7 @@ simulate_data <- function(n, sd) {
 
 run_brm <- function(data) {
   priors <- c(
-    brms::prior(normal(0, 1), class = Intercept),
+    brms::prior(normal(0, 3), class = Intercept),
     brms::prior(cauchy(0, 1), class = sd)
   )
   
@@ -92,6 +92,7 @@ run_brm <- function(data) {
     chain = 4,
     iter = 6000,
     cores = 4,
+    seed = my_seed,
     backend = "cmdstanr", threads = brms::threading(4),
     control = list(adapt_delta = 0.9999, max_treedepth = 15),
   )
