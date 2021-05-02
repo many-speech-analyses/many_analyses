@@ -62,7 +62,7 @@ upper <- summary(silber_sd)$random[[1]][4]
 
 quantiles <- quantile(seq(lower, upper, by = 0.1), probs = seq(0, 1, 0.25),  na.rm = FALSE)
 quantiles <- c(quantiles[[1]], quantiles[[2]], quantiles[[3]], quantiles[[4]], quantiles[[5]])
-n_teams <- seq(15, 40, by = 5)
+n_teams <- seq(5, 40, by = 5)
 
 # Get all unique combos of number of teams and quantiles of SD.
 n_ts_qs <- expand_grid(n_teams, quantiles)
@@ -102,13 +102,22 @@ run_brm <- function(data) {
 
 run_simulations <- function(n, sd) {
   data <- simulate_data(n, sd)
+
+  sd_team_i <- numeric()
   
   cat("Model:", n, sd, "\n")
-  brm_model <- run_brm(data)
+
+  for (iter in 1:10) {
+    cat("   Iteration", iter, "\n")
+    brm_model <- run_brm(data)
+    brm_summ <- summary(brm_model)
+    sd_team_i <- c(sd_team_i, brm_summ$random$team[4] - brm_summ$random$team[3]) 
+  }
+
+  sd_team_mean <- mean(sd_team_i, na.rm = TRUE)
+  sd_team_sd <- sd(sd_team_i, na.rm = TRUE)
   
-  sd_team <- summary(brm_model)
-  
-  return(sd_team)
+  return(list(sd_team_mean, sd_team_sd))
 }
 ```
 
@@ -134,7 +143,7 @@ if (file.exists(sample_file)) {
 }
 ```
 
-```{r plot}
+```{r plot, eval=FALSE}
 sample_sims <- sample_sims %>%
   mutate(
     cri = map(sd_team, function(.x) .x$random$team[4] - .x$random$team[3]) %>% unlist()
