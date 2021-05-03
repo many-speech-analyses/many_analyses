@@ -13,6 +13,7 @@ library(extraDistr)
 library(HDInterval)
 library(tidybayes)
 my_seed <- 99
+set.seed(my_seed)
 ```
 
 ```{r dirs}
@@ -92,7 +93,6 @@ run_brm <- function(data) {
     chain = 4,
     iter = 6000,
     cores = 4,
-    seed = my_seed,
     backend = "cmdstanr", threads = brms::threading(4),
     control = list(adapt_delta = 0.9999, max_treedepth = 15),
   )
@@ -143,26 +143,27 @@ if (file.exists(sample_file)) {
 }
 ```
 
-```{r plot, eval=FALSE}
-sample_sims <- sample_sims %>%
-  mutate(
-    cri = map(sd_team, function(.x) .x$random$team[4] - .x$random$team[3]) %>% unlist()
-  )
+```{r plot}
+sample_cri <- sample_sims %>%
+  unnest(sd_team) %>%
+  mutate(sd_team = unlist(sd_team)) %>% 
+  filter(sd_team > 0) %>%
+  rename(cri = sd_team)
 
 labels <- tibble(
   x = c(0.5, 0.25, 0.9, 0.3, 1.3),
-  y = c(1.25, 0.7, 1.5, 0.1, 0.8),
+  y = c(1.25, 0.7, 1.5, 0.1, 1.15),
   labs = c("Mean", "1st quart.", "3rd quart.", "Min", "Max")
 )
 
 arrows <- tibble(
     x1 = c(0.5, 0.25, 0.9, 0.25, 1.3),
-    y1 = c(1.15, 0.6, 1.4, 0.1, 0.9),
+    y1 = c(1.15, 0.6, 1.4, 0.1, 1.2),
     x2 = c(0.63, 0.33, 0.97, 0.05, 1.33),
-    y2 = c(0.8, 0.45, 1.2, 0.1, 1.1)
+    y2 = c(0.8, 0.45, 1.2, 0.1, 1.39)
   )
 
-sample_sims %>%
+sample_cri %>%
   ggplot(aes(quants, cri)) +
   geom_line(aes(colour = as.factor(n_teams))) +
   geom_point(aes(colour = as.factor(n_teams)), size = 4) +
@@ -178,7 +179,7 @@ sample_sims %>%
     color = "gray20", curvature = 0.3
   ) +
   scale_x_continuous(breaks = round(quantiles, 2)) +
-  scale_color_manual(values = c("#bfd3e6", "#9ebcda", "#8c96c6", "#8c6bb1", "#88419d", "#6e016b")) +
+  scale_color_manual(values = c("#e0ecf4", "#bfd3e6", "#9ebcda", "#8c96c6", "#8c6bb1", "#88419d", "#810f7c", "#4d004b")) +
   labs(
     title = "95% CrI width depending on teams' true SD and number of teams",
     x = "Teams' true standard deviation",
