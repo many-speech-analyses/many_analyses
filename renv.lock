@@ -1000,6 +1000,13 @@
       "Repository": "CRAN",
       "Hash": "760b5b542e8435237d1b3c253bfe18e7"
     },
+    "logger": {
+      "Package": "logger",
+      "Version": "0.2.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "67e018a0cdae685cc91a2aec9cd36750"
+    },
     "loo": {
       "Package": "loo",
       "Version": "2.4.1",
