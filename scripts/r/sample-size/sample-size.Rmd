@@ -12,37 +12,45 @@ library(brms)
 library(extraDistr)
 library(HDInterval)
 library(tidybayes)
+library(logger)
 my_seed <- 99
 set.seed(my_seed)
 ```
 
+# Set up
+
+We first create the necessary directories, if they don't exist already.
+
 ```{r dirs}
-# Create dirs to save files to if they don't exist
+# Save simulation output here
 dir.create("./models/sims", FALSE, TRUE)
+# Save figure output here
 dir.create("./figs/sample-size", FALSE)
 ```
 
+# Estimate teams' standard deviation
+
+We obtain an estimate of the teams' standard deviation based on data from Silberzahn et al.
 
 ```{r Silberzahn}
-# load in Silberzahn et al. data: https://osf.io/fa743/
+# Load in Silberzahn et al. data: https://osf.io/fa743/
 silber <- read_csv("https://osf.io/fa743/download") %>%
   mutate(
     z_score = log(OR) / ((log(OR) - log(OR_lo)) / 1.96)
   ) %>%
+  # Filter out extremely high z_scores
   filter(z_score < 6)
 
-## run model on OR to estimate between teams SD
-
-# set weakly informative priors
-# mean z-score
+# Mean z-score
 round(mean(silber$z_score), 2)
 
+# Set weakly informative priors for intercept and scale parameters.
 priors <- c(
   prior(normal(0, 3), class = Intercept),
   prior(cauchy(0, 1), class = sd)
 )
 
-# run simple model
+# Run brm to estimate teams' SD (= `(1 | Team)` in the model)
 silber_sd <- brm(
   z_score ~ (1 | Team),
   data = silber,
@@ -51,16 +59,19 @@ silber_sd <- brm(
   iter = 4000,
   cores = 4,
   seed = my_seed,
+  # Use cmdstanr to enable multi-core multi-threading processing
   backend = "cmdstanr", threads = threading(4),
   control = list(adapt_delta = 0.9999, max_treedepth = 15),
   file = "./models/sims/silber_sd"
 )
 
-# extract SD estimate and 95 CrI
-SD <- summary(silber_sd)$random[[1]][1]
-lower <- summary(silber_sd)$random[[1]][3]
-upper <- summary(silber_sd)$random[[1]][4]
+# Extract SD estimate and 95 CrI
+SD <- summary(silber_sd)$random$Team[1]
+lower <- summary(silber_sd)$random$Team[3]
+upper <- summary(silber_sd)$random$Team[4]
 
+# Create a vector of quantiles of the estimated teams' SD
+# min, 1st quartile, mean, 3rd quartile, max = 0.00 0.25 0.50 0.75 1.00
 quantiles <- quantile(seq(lower, upper, by = 0.1), probs = seq(0, 1, 0.25),  na.rm = FALSE)
 quantiles <- c(quantiles[[1]], quantiles[[2]], quantiles[[3]], quantiles[[4]], quantiles[[5]])
 n_teams <- seq(5, 40, by = 5)
@@ -69,22 +80,31 @@ n_teams <- seq(5, 40, by = 5)
 n_ts_qs <- expand_grid(n_teams, quantiles)
 ```
 
+# Prepare functions for simulation
+
+The following functions define routines to simulate data, fir the models to the data, and set up the simulation loop.
+
 ```{r functions}
+# Simulate data ####
+# For each iteration in the simulation loop, simulate data table of z-scores
+# n = number of teams
+# sd = teams' SD used to simulate z-scores
 simulate_data <- function(n, sd) {
   tibble::tibble(
     z_score = rnorm(n, 0, sd),
-    # no measurement error model for the simulation
-    # es_se = rhcauchy(n, 0.15),
     team = letters[1:n]
   )
 }
 
+# Fit brm to simulated data ####
 run_brm <- function(data) {
+  # weakly informative priors
   priors <- c(
     brms::prior(normal(0, 3), class = Intercept),
     brms::prior(cauchy(0, 1), class = sd)
   )
   
+  # fit brm
   meta_bm <- brms::brm(
     z_score ~
       (1 | team),
@@ -100,15 +120,19 @@ run_brm <- function(data) {
   return(meta_bm)
 }
 
+# Simulation iteration loop ####
+# This function defines the simulation loop.
+# The mean and SD of the simulated teams' SD across 10 iterations (per
+# n-teams/sd combos) are returned.
 run_simulations <- function(n, sd) {
   data <- simulate_data(n, sd)
 
   sd_team_i <- numeric()
   
-  cat("Model:", n, sd, "\n")
+  log_info("Model: {n}, {sd}")
 
   for (iter in 1:10) {
-    cat("   Iteration", iter, "\n")
+    log_info("--- Iteration {iter}")
     brm_model <- run_brm(data)
     brm_summ <- summary(brm_model)
     sd_team_i <- c(sd_team_i, brm_summ$random$team[4] - brm_summ$random$team[3]) 
@@ -121,15 +145,19 @@ run_simulations <- function(n, sd) {
 }
 ```
 
+# Run the simulations
 
 ```{r run-sims}
 sample_file <- "./models/sims/sample_sims.rds"
 
+# If results file already exists, read it. Otherwise run the simulations.
 if (file.exists(sample_file)) {
-  cat("Reading file...\n")
+  # read results file
+  log_info("Reading file...\n")
   sample_sims <- readRDS(sample_file)
-  cat("Done!")
+  log_info("Done!")
 } else {
+  # run simulations
   sample_sims <- tibble(
     n_teams = n_ts_qs$n_teams,
     quants = n_ts_qs$quantiles,
@@ -139,9 +167,12 @@ if (file.exists(sample_file)) {
     )
   )
 
+  # save results to file
   saveRDS(sample_sims, sample_file)
 }
 ```
+
+# Plot results
 
 ```{r plot}
 sample_cri <- sample_sims %>%
