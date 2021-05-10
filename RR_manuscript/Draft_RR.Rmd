@@ -100,7 +100,7 @@ The authors results suggest that analytic plurality may be an inevitable byprodu
 
 Several other recent studies corroborated this analytic flexibility across different disciplines.
 @dutilh2019 and @starns2019assessing investigated analysts' choices when inferring theoretical constructs based on the same data set using computational models.
-Both studies revealed vastly different modeling strategies, even though scientific conclusions were similar across analysis teams [see also @Parker2020 on analytic flexibility in ecology; and @botvinik-nezer2020 on neuroimaging data].
+Both studies revealed vastly different modeling strategies, even though scientific conclusions were similar across analysis teams (see also @Parker2020 on analytic flexibility in ecology, and @botvinik-nezer2020 on neuroimaging data).
 @bastiaansen2020 crowdsourced clinical recommendations based on analyses of an individual patient.
 Results suggests that analysts differed substantially regarding decisions related to both the statistical analysis of the data and the theoretical rationale behind interpreting the statistical results.
 
