@@ -1,11 +1,11 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2021.3.27)  1 APR 2021 18:23
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021) (preloaded format=pdflatex 2021.5.8)  10 MAY 2021 10:57
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
 **Draft_RR.tex
 (./Draft_RR.tex
 LaTeX2e <2020-10-01> patch level 4
-L3 programming layer <2021-02-18> (./sagej.cls
+L3 programming layer <2021-05-07> (./sagej.cls
 Document Class: sagej 2017/01/17 v1.20\ sagej.cls
 (/Users/ste/Library/TinyTeX/texmf-dist/tex/latex/base/article.cls
 Document Class: article 2020/04/10 v1.4m Standard LaTeX document class
@@ -226,9 +226,7 @@ Package: natbib 2010/09/13 8.31b (PWD, AO)
 \bibsep=\skip61
 LaTeX Info: Redefining \cite on input line 694.
 \c@NAT@ctr=\count280
-Local config file natbib.cfg used
-(/Users/ste/texmf/tex/latex/natbib.cfg))) (/Users/ste/Library/TinyTeX/texmf-dis
-t/tex/latex/moreverb/moreverb.sty
+)) (/Users/ste/Library/TinyTeX/texmf-dist/tex/latex/moreverb/moreverb.sty
 Package: moreverb 2008/06/03 v2.3a `more' verbatim facilities
 (/Users/ste/Library/TinyTeX/texmf-dist/tex/latex/tools/verbatim.sty
 Package: verbatim 2020-07-07 v1.5u LaTeX2e package for verbatim enhancements
@@ -404,7 +402,7 @@ LaTeX Font Info:    Trying to load font information for OT1+ptm on input line 1
 File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 )
 (/Users/ste/Library/TinyTeX/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
-File: l3backend-pdftex.def 2021-03-18 L3 backend support: PDF output (pdfTeX)
+File: l3backend-pdftex.def 2021-05-07 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count296
 \l__pdf_internal_box=\box53
 ) (./Draft_RR.aux)
@@ -558,13 +556,13 @@ input line 69.
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 [7]
-</Users/ste/repos/many_analyses/figs/ForkingPaths.png, id=273, 1398.4245pt x 15
-69.2226pt>
-File: /Users/ste/repos/many_analyses/figs/ForkingPaths.png Graphic file (type p
-ng)
-<use /Users/ste/repos/many_analyses/figs/ForkingPaths.png>
-Package pdftex.def Info: /Users/ste/repos/many_analyses/figs/ForkingPaths.png  
-used on input line 174.
+</Users/ste/repos/research/many_analyses/figs/ForkingPaths.png, id=273, 1398.42
+45pt x 1569.2226pt>
+File: /Users/ste/repos/research/many_analyses/figs/ForkingPaths.png Graphic fil
+e (type png)
+<use /Users/ste/repos/research/many_analyses/figs/ForkingPaths.png>
+Package pdftex.def Info: /Users/ste/repos/research/many_analyses/figs/ForkingPa
+ths.png  used on input line 174.
 (pdftex.def)             Requested size: 352.81416pt x 395.89635pt.
 LaTeX Font Info:    Font shape `OT1/phv/m/n' will be
 (Font)              scaled to size 8.54997pt on input line 174.
@@ -577,14 +575,14 @@ LaTeX Font Info:    Font shape `OT1/phv/m/sl' will be
 [8]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[9 </Users/ste/repos/many_analyses/figs/ForkingPaths.png>] [10]
-</Users/ste/repos/many_analyses/figs/procedure_plot.png, id=327, 1616.6799pt x 
-1045.2651pt>
-File: /Users/ste/repos/many_analyses/figs/procedure_plot.png Graphic file (type
- png)
-<use /Users/ste/repos/many_analyses/figs/procedure_plot.png>
-Package pdftex.def Info: /Users/ste/repos/many_analyses/figs/procedure_plot.png
-  used on input line 232.
+[9 </Users/ste/repos/research/many_analyses/figs/ForkingPaths.png>] [10]
+</Users/ste/repos/research/many_analyses/figs/procedure_plot.png, id=327, 1616.
+6799pt x 1045.2651pt>
+File: /Users/ste/repos/research/many_analyses/figs/procedure_plot.png Graphic f
+ile (type png)
+<use /Users/ste/repos/research/many_analyses/figs/procedure_plot.png>
+Package pdftex.def Info: /Users/ste/repos/research/many_analyses/figs/procedure
+_plot.png  used on input line 232.
 (pdftex.def)             Requested size: 352.81416pt x 228.1089pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -592,7 +590,7 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 [11]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[12 </Users/ste/repos/many_analyses/figs/procedure_plot.png>]
+[12 </Users/ste/repos/research/many_analyses/figs/procedure_plot.png>]
 LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 2
 46.
 (/Users/ste/Library/TinyTeX/texmf-dist/tex/latex/psnfss/ts1ptm.fd
@@ -601,68 +599,74 @@ File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
 Overfull \vbox (1.00761pt too high) has occurred while \output is active []
 
 [13] [14]
-Overfull \hbox (13.0275pt too wide) in paragraph at lines 306--306
+Overfull \hbox (13.0275pt too wide) in paragraph at lines 308--308
 $[]$[][]\OT1/ptm/m/n/8 Temporary link: []$\OT1/pcr/m/n/8 https : / / osf . io /
  3bmcp / ?view _ only = 6faaae5feabe4eed800a7c142fcda06f$[]\OT1/ptm/m/n/8 ,
  []
 
 
-Overfull \hbox (14.19415pt too wide) in paragraph at lines 310--310
+Overfull \hbox (14.19415pt too wide) in paragraph at lines 312--312
 $[]$[][]\OT1/ptm/m/n/8 Temporary link: []$\OT1/pcr/m/n/8 https : / / osf . io /
  3bmcp / ?view _ only = 6faaae5feabe4eed800a7c142fcda06f$[]\OT1/ptm/m/n/8 ,
  []
 
-[15] [16]
-Underfull \hbox (badness 10000) in paragraph at lines 391--393
+[15] [16] [17]
+Underfull \hbox (badness 10000) in paragraph at lines 393--395
  []\OT1/phv/m/sl/12 Meta-analytic esti-ma-tion[][] \OT1/ptm/m/n/12 We will inve
 s-ti-gate the vari-abil-ity in
  []
 
-[17]
+[18]
 LaTeX Font Info:    Trying to load font information for OMS+pcr on input line 4
-10.
+14.
 (/Users/ste/Library/TinyTeX/texmf-dist/tex/latex/psnfss/omspcr.fd
 File: omspcr.fd 
 )
 LaTeX Font Info:    Font shape `OMS/pcr/m/n' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 410.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 414.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[18] [19] [20]
-Overfull \hbox (29.5843pt too wide) in paragraph at lines 489--489
+[19] [20]
+Overfull \hbox (29.5843pt too wide) in paragraph at lines 493--493
 $[]$[][]\OT1/ptm/m/n/8 Link for peer-review: []$\OT1/pcr/m/n/8 https : / / osf 
 . io / 3bmcp / ?view _ only = 6faaae5feabe4eed800a7c142fcda06f$[]\OT1/ptm/m/n/8
  .| 
  []
 
 [21]
-Underfull \hbox (badness 10000) in paragraph at lines 505--506
+Underfull \hbox (badness 10000) in paragraph at lines 509--510
 \OT1/ptm/m/n/12 See image at LINK [for peer-review, see fig-ure
  []
 
-[22] (./Draft_RR.bbl [23]
+[22] (./Draft_RR.bbl
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[23]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 [24]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[25])
+[25]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[26])
 
 Package natbib Warning: There were undefined citations.
 
-[26] (./Draft_RR.aux)
+[27] (./Draft_RR.aux)
 Package rerunfilecheck Info: File `Draft_RR.out' has not changed.
-(rerunfilecheck)             Checksum: 1D1C7376276AA1D06C6549CC547C2A0C;3709.
+(rerunfilecheck)             Checksum: D0A8D056CFA8D8C6275358A4B4DD604F;3709.
  ) 
 Here is how much of TeX's memory you used:
- 13647 strings out of 480962
- 220203 string characters out of 5907029
- 545812 words of memory out of 5000000
- 30475 multiletter control sequences out of 15000+600000
+ 13747 strings out of 480806
+ 222926 string characters out of 5904464
+ 542230 words of memory out of 5000000
+ 30727 multiletter control sequences out of 15000+600000
  450879 words of font info for 113 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 83i,9n,88p,1204b,556s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 70i,9n,77p,1204b,584s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/Users/ste/Library/TinyTeX/texmf-dist/fonts/enc/dvips/base/8r.enc}</Users/st
 e/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></Users/
 ste/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></Users
@@ -677,10 +681,10 @@ ary/TinyTeX/texmf-dist/fonts/type1/urw/helvetic/uhvro8a.pfb></Users/ste/Library
 /TinyTeX/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></Users/ste/Library/TinyTe
 X/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></Users/ste/Library/TinyTeX/texmf
 -dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on Draft_RR.pdf (26 pages, 7639009 bytes).
+Output written on Draft_RR.pdf (27 pages, 7640522 bytes).
 PDF statistics:
- 574 PDF objects out of 1000 (max. 8388607)
- 525 compressed objects within 6 object streams
- 146 named destinations out of 1000 (max. 500000)
+ 589 PDF objects out of 1000 (max. 8388607)
+ 539 compressed objects within 6 object streams
+ 148 named destinations out of 1000 (max. 500000)
  155 words of extra memory for PDF output out of 10000 (max. 10000000)
 
