@@ -1536,10 +1536,10 @@
     },
     "rmdformats": {
       "Package": "rmdformats",
-      "Version": "1.0.1",
+      "Version": "1.0.2",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "8dfdc34e49c25dd605bff35ceb49fa2d"
+      "Hash": "5d278f6266f796c4bd0c3e8439d7f50d"
     },
     "rngtools": {
       "Package": "rngtools",
