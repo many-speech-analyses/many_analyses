@@ -419,7 +419,7 @@ meta_bm_ppred <- brm(
   sample_prior = "only",
   chain = 4,
   seed = my_seed,
-  file = "./models/sim/meta_bm_ppred"
+  file = "./models/sims/meta_bm_ppred"
 )
 
 # get samples
@@ -461,7 +461,7 @@ ppred_samples %>%
   geom_density(colour = NA, fill = "#325756", alpha = 0.9, bw = 0.4) +
   xlim(-7, 7)
 ```
-
+    
 ## Run
 
 The following code fits the meta-analytical model to the simulated data.
@@ -475,7 +475,7 @@ meta_bm <- brm(
   chain = 4,
   seed = my_seed,
   cores = 4,
-  file = "./models/sim/meta_bm"
+  file = "./models/sims/meta_bm"
 )
 ```
 
@@ -556,7 +556,7 @@ predictors_bm <- brm(
   control = list(adapt_delta = 0.9999, max_treedepth = 15),
   seed = my_seed,
   cores = 4,
-  file = "./models/sim/predictors_bm"
+  file = "./models/sims/predictors_bm"
 )
 ```
 
