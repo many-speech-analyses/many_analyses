@@ -263,7 +263,7 @@ Analysts must identify and operationalize relevant measurements, as well as the 
 The complexity of speech data constitutes the ideal testing ground to assess the upper bound of analytic flexibility that social science might face across disciplines.
 We will employ a meta-analytic approach to assess (i) the variability of the reported effects, and (ii) how analytic and researcher-related predictors affect the final results.
 
-In this study, we will follow the data collection procedure proposed by @Parker2020.
+In this study, we will follow the procedures proposed by @Parker2020 and @aczel2021.
 The project involves the following five phases:
 
 1. \textsc{Recruitment}: We will recruit independent groups of researchers to analyze the data and review data analyses.
@@ -279,14 +279,16 @@ The following sections report the criteria for sample size, data exclusions, dat
 ## Phase 1: Recruitment of analysts and initial survey
 
 An online landing page will provide a general description of the project, including a short pre-recorded slide-show that summarizes the data set and research question (<https://many-speech-analyses.github.io>).^["Questions" and "Join Project" buttons will be functioning when recruitment starts. "Join Project" will link to the intake form.]
-The project will be advertised via social media, using mailing lists for linguistic and psychological societies, and via word of mouth.^[Terms in small caps in this and later sections are included with their definition in the glossary at the end of the paper for the reader's convenience.]
+The project will be advertised via social media, using mailing lists for linguistic and psychological societies, and via word of mouth.
 The target population comprises active speech science researchers with a graduate/doctoral degree (or currently studying for a graduate/doctoral degree) in relevant disciplines.
 Researchers can choose to work independently or in a small team.
-For the sake of simplicity, we will refer both to a single researcher and teams as \textsc{analysis teams}.
+For the sake of simplicity, we will refer both to a single researcher and teams as \textsc{analysis teams}.^[Terms in small caps in this and later sections are included with their definition in the glossary at the end of the paper for the reader's convenience.]
 Recruitment for this project will commence upon receiving in-principle acceptance.
-As outlined above, our aim is to assess the variability of the reported effects and how these are affected by a set of predictors, rather than the meta-analytic estimate of the investigated effect *per se*.
-Given the scarcity of previous meta-analytic studies that directly investigate researcher's degrees of freedom, as reviewed in the introduction, we are not able to establish a properly-grounded minimal sample size.
-Thus, we aim to recruit as many teams as possible, within the resource and time limits of the project.
+As outlined above, our primary aim is to assess the variability of the reported effects, rather than the meta-analytic estimate of the investigated effect *per se*.
+To estimate the degree of uncertainty around effect variability as driven by number of teams, we ran a series of sample size simulations with values of variablity extracted from @silberzahn2018many.
+Variability among teams was operationalised as the standard deviation of the teams' reported effects from @silberzahn2018many (which we *z*-scored prior to simulations to make it comparable to our study).
+At the mean teams' true standard deviation (0.68 *z*-score), the simulation indicates that the degree of uncertainty around the estimated teams' standard deviation will be below 1 SD at any sample size greater than 10 teams.
+We have recieved initial expression of interest to participate from more than 200 analysts, which---even after assuming a 50% drop in participation---we expect to be a sufficient sample size. 
 
 We will simultaneously recruit volunteers to peer-review the analyses conducted by the analysis teams through the same channels.
 Our goal is to recruit a similar number of peer-reviewers and analysts, and to ask each peer-reviewer to review a minimum of four analyses.
@@ -348,11 +350,13 @@ We will investigate the variability in \textsc{reported effect sizes} using Baye
 As the measure of variability, we will take the meta-analytic \textsc{group-level standard deviation} ($\sigma_{\alpha_{\text{t}}}$, see below), where the groups are the analysis teams.
 
 Based on the common practices currently in place within the field, we anticipate that researchers will use multilevel regression models, thus common measurements of effect size, such as Cohen's $d$, may be inappropriate.
+Furthermore, @aczel2021 suggest that directly asking analysts to report standardized effect sizes could bias the choice of analyses towards types that more straightforwardly return a standardized effect.
 Since the variables used by the analysis teams might substantially differ in their measurement scales (e.g, Hertz for frequency vs milliseconds for duration), we will standardize all reported effects by refitting each \textsc{reported model} with centered and scaled continuous variables (*z*-scores, i.e. the observed values subtracted from the mean divided by the standard deviation) and sum-coded factor variables.
 Factor-level ordering for each categorical variable will mirror that of the original analyses.
 Each \textsc{standardized model} will be fitted as a Bayesian regression model with Stan [@stan2021], RStan [@stan2020a], and brms [@burkner2017] in R [@R-base].
 For those reported models that were originally fitted within a frequentist approach, uniform distributions will be used as the priors of all parameters (with the restriction that only positive numbers will be included for scale parameters), to approximate the estimation procedure of frequentist models (i.e. only the distribution of the data determines the posterior distribution).
 If a team has fitted Bayesian models, the same priors as reported by the team will be used in fitting the respective standardized model.
+Model refitting will also constitute a way of validating the reported analyses, a step recommended by @aczel2021.
 
 The coefficients of the critical predictors (i.e. critical according to the analysis teams' self-reported inferential criteria) obtained from the standardized models will be used as the \textsc{standardized effect size} ($\eta_i$) of each reported model.
 If multiple predictors within a single analysis have been reported as critical, each will be included in the meta-analytic model (described in details in the next paragraph).
@@ -457,7 +461,7 @@ We will also archive copies of our survey instruments from analysts and peer-rev
 We will exclude from our synthesis any individual analysis submitted after we have completed peer review or those unaccompanied by analysis files that allow us to understand what the analysts did.
 We will also exclude any individual analysis that does not produce an outcome that can be interpreted as an answer to our primary question.
 
-## Phase 6: Collaborative Write-Up of Manuscript
+## Phase 5: Collaborative Write-Up of Manuscript
 
 Analysts and initiating authors will discuss the limitations, results, and implications of the study and collaborate on writing the final manuscript for review as a stage-2 Registered Report.
 
