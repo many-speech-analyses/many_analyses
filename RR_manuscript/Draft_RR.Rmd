@@ -54,8 +54,8 @@ Beyond the difficulties of replicating scientific findings, a growing body of ev
 The latter situation has been referred to as the *inference crisis* [@rotello2015more; @starns2019assessing] and is, among other things, rooted in the inherent flexibility of data analysis [often referred to as researcher degrees of freedom: @simmons2011false; @gelman2014statistical].
 Data analysis involves many different steps, such as inspecting, organizing, transforming, and modeling the data, to name a few.
 Along the way, different methodological and analytic choices need to be made, all of which may influence the final interpretation of the data.
-These researcher degrees of freedom are both a blessing and a curse.
 
+These researcher degrees of freedom are both a blessing and a curse.
 They are a blessing because they afford us the opportunity to look at nature from different angles, which, in turn, allows us to make important discoveries and generate new hypothesis [e.g., @box1976science; @tukey1977exploratory; @de2014thought].
 They are a curse because idiosyncratic choices can lead to categorically different interpretations, which eventually find their way into the publication record where they are taken for granted [@simmons2011false].
 Recent projects have shown that the variability between different data analysts is vast and can lead independent researchers to draw different conclusions from the same data set [e.g., @silberzahn2018many; @starns2019assessing; @botvinik2020variability].
@@ -120,7 +120,7 @@ The present study looks at experimentally elicited speech production data in ord
 
 ## Operationalizing speech {#s:operspeech}
 
-Research on speech is at the heart of the cognitive sciences, informing psychological models of language, categorization, and memory, guiding methods for diagnosis and therapy of speech disorders, and facilitating advancement in automatic speech recognition and speech synthesis.
+Research on speech lies at the intersection of the cognitive sciences, informing psychological models of language, categorization, and memory, guiding methods for diagnosis and therapy of speech disorders, and facilitating advancement in automatic speech recognition and speech synthesis.
 One major challenge in the speech sciences is the mapping between communicative intentions (the unobserved behavior) and their physical manifestation (the observed behavior).
 
 Speech is a complex signal that is characterized by structurally different acoustic landmarks distributed throughout different temporal domains.
@@ -138,7 +138,7 @@ If, on the other hand, the speaker is just tired of video conferences, as oppose
 If we decide to compare the speech signal associated with these two intentions, how can we quantify the difference between them?
 In other words, given their physical manifestation (speech), what do we measure and how do we measure it?
 Because of the continuous and transient nature of speech, identifying speech parameters and temporal domains within which to measure those parameters becomes a non-trivial task.
-Utterances stretch over several thousand milliseconds and contain different levels of linguistically relevant units such as phrases, words, syllables, and individual sounds.
+Utterances stretch over several thousand milliseconds and contain different levels of linguistically relevant units such as phrases, words, syllables, and individual sounds or speech categories.
 The researcher is thus confronted with a considerable number of parameters and combinations thereof to choose from.
 
 Speech categories are inherently multidimensional and dynamic: they consist of clusters of parameters that are modulated over time.
@@ -146,7 +146,7 @@ The acoustic parameters of one category are usually asynchronous, i.e. they appe
 A classical example is the distinction between voiced and voiceless stops in English (i.e. /b/ and /p/ in *bear* vs *pear*).
 This contrast is manifested by many acoustic features which can differ depending on several factors, such as position of the consonant in the word and surrounding sounds [@lisker1977rapid].
 Furthermore, correlates of the contrast can even be found away from the consonant, in temporally distant speech units.
-For example, the initial /l/ of the English words *led* and *let* is affected by the voicing of the final consonant (/t, d/) [@hawkins2004influence].
+For example, the initial /l/ of the English words *led* and *let* is affected by the voicing of the final consonant (/d, t/) [@hawkins2004influence].
 
 The multiplicity of phonetic measurements grows exponentially if we look at larger temporal domains as is the case for suprasegmental aspects of speech.
 For example, studies investigating acoustic correlates of word stress (e.g. the difference between *ínsight* and *incíte*) use a wide variety of measurements, including temporal characteristics (duration of certain segments or sub-segmental intervals), spectral characteristics (intensity, formants, and spectral tilt), and measurements related to fundamental frequency (f0) [e.g., @gordon2017acoustic].
@@ -209,7 +209,7 @@ Thus one would expect the use of a modifier, for example, only if it is necessar
 For instance, one might use the adjective *yellow* to describe a banana in a situation in which there is a yellow and a less ripe green banana available, but not when there is only one banana to begin with.
 
 Despite the coherent idea that speakers are both rational and efficient, there is much evidence that speakers are often over-informative.
-Speakers use referring expressions that are more specific than strictly necessary for the unambiguous identification of the intended referent [@sedivy2003pragmatic; @westerbeek2015stored; @rubio2016redundant], which has been argued to facilitate object identification and making communication between speakers and listeners more efficient [@arts2011overspecification; @paraboni2007generating; @rubio2016redundant].
+Speakers use referring expressions that are more specific than strictly necessary for the unambiguous identification of the intended referent [@sedivy2003pragmatic; @westerbeek2015stored; @rubio2016redundant], which has been argued to facilitate object identification and make communication between speakers and listeners more efficient [@arts2011overspecification; @paraboni2007generating; @rubio2016redundant].
 Recent findings suggest that the utility of a referring expression depends on how good it is for a listener (compared to other referring expressions) to identify a target object.
 For example, @degen2020redundancy showed that modifiers that are less typical for a given referent (e.g. a blue banana) are more likely to be used in an over-informative scenario (e.g. when there is just one banana).
 This account, however, has mainly focused on content selection [@gatt2013we], i.e. whether a certain referential expression is chosen or not, while not taking into consideration the indexical potential of speech.
@@ -245,7 +245,8 @@ After the experimenter had moved the cube as instructed, the subject would read 
 The second utterance in the trial was the critical trial for analysis.
 
 The two sentence prompts were used to create a focus contrast between the competitor and the target object.
-If the competitor and target objects differ but their color did not (e.g. *yellow banana* vs *yellow tomato*), the noun is in focus (the Noun Focus condition, NF).
+Concretely, a focus contrast encodes information that is assumed to be contrary to the presuppositions of the interlocutor. 
+For instance, if the competitor and target objects differ but their color did not (e.g. *yellow banana* vs *yellow tomato*), the noun is in focus (the Noun Focus condition, NF).
 If the objects are the same but differ in color (e.g. *yellow banana* vs *blue banana*), the color adjective is in focus (the Adjective Focus condition, AF).
 If both the color and the object differ (e.g. *yellow banana* vs *blue tomato*), the the whole noun phrase is in focus (the Adjective/Noun Focus condition, ANF).
 The NF condition constituted the experimentally relevant condition, while the AF and ANF conditions acted as fillers.
