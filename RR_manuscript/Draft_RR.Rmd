@@ -68,7 +68,10 @@ Not only can decisions about measuring the signal influence downstream decisions
 
 In this article, we investigate the variability in analytic choices when many analyst teams analyze the same speech production data set, a process that involves both decisions regarding the operationalization of a complex signal and decisions regarding the statistical analysis.
 <!-- TODOLATER: include number of teams when known -->
-Specifically, we discuss the impact of analytic decision making on research results obtained by N teams who had access to the same set of acoustic recordings in order to answer the same research question. One aim of this study is to replicate previous many-analyses projects, confirming the large amount of flexibility observed in statistical analyses. A second aim is to extend these findings and estimate the amount of flexibility observed during measurement and operationalization.
+Specifically, we discuss the impact of analytic decision making on research results obtained by N teams who had access to the same set of acoustic recordings in order to answer the same research question. 
+Our goals are twofold: First, our study conceptually replicates previous many-analyses projects, probing previously observed flexibility in statistical analyses in order to independently confirm previously published findings and probe its generalizability to other disciplines (here speech sciences). 
+Second, our study extends previous findings and estimates the amount of observed flexibility in quantifying complex human behavior (here human speech). 
+This is important because previous studies might have investigated only the lower bound of variability across analysts because analysts did not have to quantify the variables under investigation but were instead already provided with numerical data.
 
 ## Researcher degrees of freedom
 
@@ -114,11 +117,13 @@ For instance, @flake2020 discuss the cascading impact that different practices c
 The authors highlight, among others, the following degrees of freedom in the choice and development of measures: definition of the theoretical construct, justification of the selected measure, description of the measure and of how it maps onto the construct, response coding and related transformations, and post-hoc modifications to the chosen measure.
 Taken together, these aspects alone exponentially increase the combinations of possible analytic choices, and hence flexibility in research outcomes.
 
-Extending on the many analyst approach, @landy2020crowdsourcing asked 15 research teams to independently design studies to answer the same research questions. Again, they found vast heterogeneity in researchers' conclusions which was not predicted by the researchers' expertise but by the research question itself. This is in line with a recent re-analysis of @silberzahn2018many by @auspurg2021has. The authors argue that the observed heterogeneity across analysts might be driven by flexibility in interpreting the research question. TRANSITION SENTENCE
+Extending on the many analysts approach, @landy2020crowdsourcing asked 15 research teams to independently design studies to answer the same research questions. 
+Again, they found vast heterogeneity in researchers' conclusions which was not predicted by the researchers' expertise but seem to be more dependent on the research question itself. 
+This is in line with a recent re-analysis of the study by @silberzahn2018many by @auspurg2021has. The authors argue that the observed heterogeneity across analysts in @silberzahn2018many might be driven by flexibility in interpreting the research question. TRANSITION SENTENCE
 
-In those disciplines concerned with communication, human behavior sometimes corresponds to multidimensional visual or acoustic signals.
+In those disciplines concerned with communication, human behavior often corresponds to multidimensional visual or acoustic signals.
 The complex nature of this data multiplies the number of possible analytic approaches, thus further increasing analytic flexibility.
-The present study looks at experimentally elicited speech production data in order to understand how this flexibility manifests itself in a scenario where several procedures are involved in the operationalization and measuring of complex signals.
+The present study looks at experimentally elicited speech production data in order to understand how this flexibility manifests itself in a scenario where several procedures are involved in the operationalization and measuring of complex signals. 
 
 ## Operationalizing speech {#s:operspeech}
 
