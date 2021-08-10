@@ -59,22 +59,22 @@ These researcher degrees of freedom are both a blessing and a curse.
 They are a blessing because they afford us the opportunity to look at nature from different angles, which, in turn, allows us to make important discoveries and generate new hypothesis [e.g., @box1976science; @tukey1977exploratory; @de2014thought].
 They are a curse because idiosyncratic choices can lead to categorically different interpretations, which eventually find their way into the publication record where they are taken for granted [@simmons2011false].
 Recent projects have shown that the variability between different data analysts is vast and can lead independent researchers to draw different conclusions from the same data set [e.g., @silberzahn2018many; @starns2019assessing; @botvinik2020variability].
-These studies, however, might still underestimate the extent to which analysts vary because data analysis is not merely restricted to statistical inference.
-Human behavior is complex and offers many ways to be translated into numbers.
+These studies, however, might still underestimate the extent to which analysts vary because data analysis is not merely restricted to how already obtained numbers are statistically analyzed.
+Those numbers are usually the result of a complex measurement process that translates human behavior into numbers.
 This is particularly true for fields that draw conclusions about human behavior and cognition from multidimensional data like audio or video data.
 In fields working on human speech production, for example, researchers need to make numerous decisions about what to measure and how to measure it.
 This is not trivial, given the temporal extension of the acoustic signal and its complex structural composition.
 Not only can decisions about measuring the signal influence downstream decisions about statistical modeling, but statistical results or modeling issues can also lead researchers to go back and revise earlier decisions about the measuring process itself.
 
-In this article, we investigate the variability in analytic choices when many analyst teams analyze the same speech production data set, a process that involves both decisions regarding the operationalization of a complex  signal and decisions regarding the statistical analysis.
+In this article, we investigate the variability in analytic choices when many analyst teams analyze the same speech production data set, a process that involves both decisions regarding the operationalization of a complex signal and decisions regarding the statistical analysis.
 <!-- TODOLATER: include number of teams when known -->
-Specifically, we discuss the impact of analytic decision making on research results obtained by N teams who had access to the same set of acoustic recordings in order to answer the same research question.
+Specifically, we discuss the impact of analytic decision making on research results obtained by N teams who had access to the same set of acoustic recordings in order to answer the same research question. One aim of this study is to replicate previous many-analyses projects, confirming the large amount of flexibility observed in statistical analyses. A second aim is to extend these findings and estimate the amount of flexibility observed during measurement and operationalization.
 
 ## Researcher degrees of freedom
 
-Data analysis comes with many decisions, like how to measure a given phenomenon or behavior, which data to submit to statistical modeling and which to exclude in the final analysis, or what inferential decision-making procedure to apply.
+Data analysis comes with many decisions, for example how to measure a given phenomenon or behavior, which data to submit to statistical modeling and which to exclude in the final analysis, or what inferential decision-making procedure to apply.
 This can be problematic because humans show cognitive biases that can lead to erroneous inferences.
-Humans filter the world in irrational ways [e.g., @tversky1974judgment], seeing coherent patterns in randomness [@brugger2001], convincing themselves of the validity of prior expectations ["I knew it", @nickerson1998confirmation], and perceiving events as being plausible in hindsight ["I knew it all along", @fischhoff1975hindsight].
+Humans filter the world in irrational ways [e.g., @tversky1974judgment], see coherent patterns in randomness [@brugger2001], convince themselves of the validity of prior expectations ["I knew it", @nickerson1998confirmation], and perceive events as being plausible in hindsight ["I knew it all along", @fischhoff1975hindsight].
 In conjunction with an academic incentive system that rewards certain discovery processes more than others [@sterling1959publication; @koole2012rewarding], we often find ourselves exploring many possible analytic pipelines, but only reporting a selected few.
 
 This issue is particularly amplified in fields in which the raw data lend themselves to many possible ways of being measured [@roettger2019researcher].
@@ -114,6 +114,8 @@ For instance, @flake2020 discuss the cascading impact that different practices c
 The authors highlight, among others, the following degrees of freedom in the choice and development of measures: definition of the theoretical construct, justification of the selected measure, description of the measure and of how it maps onto the construct, response coding and related transformations, and post-hoc modifications to the chosen measure.
 Taken together, these aspects alone exponentially increase the combinations of possible analytic choices, and hence flexibility in research outcomes.
 
+Extending on the many analyst approach, @landy2020crowdsourcing asked 15 research teams to independently design studies to answer the same research questions. Again, they found vast heterogeneity in researchers' conclusions which was not predicted by the researchers' expertise but by the research question itself. This is in line with a recent re-analysis of @silberzahn2018many by @auspurg2021has. The authors argue that the observed heterogeneity across analysts might be driven by flexibility in interpreting the research question. TRANSITION SENTENCE
+
 In those disciplines concerned with communication, human behavior sometimes corresponds to multidimensional visual or acoustic signals.
 The complex nature of this data multiplies the number of possible analytic approaches, thus further increasing analytic flexibility.
 The present study looks at experimentally elicited speech production data in order to understand how this flexibility manifests itself in a scenario where several procedures are involved in the operationalization and measuring of complex signals.
@@ -138,11 +140,11 @@ If, on the other hand, the speaker is just tired of video conferences, as oppose
 If we decide to compare the speech signal associated with these two intentions, how can we quantify the difference between them?
 In other words, given their physical manifestation (speech), what do we measure and how do we measure it?
 Because of the continuous and transient nature of speech, identifying speech parameters and temporal domains within which to measure those parameters becomes a non-trivial task.
-Utterances stretch over several thousand milliseconds and contain different levels of linguistically relevant units such as phrases, words, syllables, and individual sounds or speech categories.
+Utterances stretch over several thousand milliseconds and contain different levels of linguistically relevant units such as phrases, words, syllables, and individual sounds.
 The researcher is thus confronted with a considerable number of parameters and combinations thereof to choose from.
 
-Speech categories are inherently multidimensional and dynamic: they consist of clusters of parameters that are modulated over time.
-The acoustic parameters of one category are usually asynchronous, i.e. they appear at different time points in the unfolding signal, and overlap with parameters of other categories [e.g. @jongman2000acoustic; @lisker1986voicing; @summerfield1981articulatory; @winter2014spoken].
+From a phonetic viewpoint, linguistically relevant units are inherently multidimensional and dynamic: they consist of clusters of parameters that are modulated over time.
+The acoustic parameters of units are usually asynchronous, i.e. they appear at different time points in the unfolding signal, and overlap with parameters of other units [e.g. @jongman2000acoustic; @lisker1986voicing; @summerfield1981articulatory; @winter2014spoken].
 A classical example is the distinction between voiced and voiceless stops in English (i.e. /b/ and /p/ in *bear* vs *pear*).
 This contrast is manifested by many acoustic features which can differ depending on several factors, such as position of the consonant in the word and surrounding sounds [@lisker1977rapid].
 Furthermore, correlates of the contrast can even be found away from the consonant, in temporally distant speech units.
@@ -196,7 +198,7 @@ These myriads of possible decisions are multiplied by those researcher degrees o
 In sum, speech data is made of complex physical signals that generates an as-of-yet unappreciated amount of analytic flexibility in the choice of measures and operationalizations.
 The present paper probes this garden of forking paths in the analysis of speech.
 To assess the variability in data analysis pipelines across independent researchers, we provided analytic teams with an experimentally elicited speech production data set.
-The data set derives from the unpublished research project *Prosodic encoding of redundant referring expressions*, which set out to investigate whether speakers acoustically modify utterances to signal unexpected referring expressions.
+The data set derives from the unpublished research project *Prosodic encoding of redundant referring expressions*, which set out to investigate whether speakers acoustically modify utterances to signal unexpected referring expressions.^[Results of this research project were neither published nor publicly presented and are stored on a private OSF repository.] 
 In the following section we introduce the research question and the experimental procedure of said project, and we describe the resulting data set as used in the current study.
 
 ## The data set: The acoustic properties of atypical modifiers {#s:dataset}
@@ -212,7 +214,7 @@ Despite the coherent idea that speakers are both rational and efficient, there i
 Speakers use referring expressions that are more specific than strictly necessary for the unambiguous identification of the intended referent [@sedivy2003pragmatic; @westerbeek2015stored; @rubio2016redundant], which has been argued to facilitate object identification and make communication between speakers and listeners more efficient [@arts2011overspecification; @paraboni2007generating; @rubio2016redundant].
 Recent findings suggest that the utility of a referring expression depends on how good it is for a listener (compared to other referring expressions) to identify a target object.
 For example, @degen2020redundancy showed that modifiers that are less typical for a given referent (e.g. a blue banana) are more likely to be used in an over-informative scenario (e.g. when there is just one banana).
-This account, however, has mainly focused on content selection [@gatt2013we], i.e. whether a certain referential expression is chosen or not, while not taking into consideration the indexical potential of speech.
+This account, however, has mainly focused on content selection [@gatt2013we].
 
 Even when morphosyntactically identical expressions are involved, speakers can modulate utterances via suprasegmental acoustic properties like temporal and spectral modifications [e.g., @ladd2008intonational].
 Most prominently, languages use intonation to signal discourse relationships between referents, among other functions.
@@ -244,8 +246,7 @@ The participant would read a sentence prompt out loud (*Du sollst den Würfel au
 After the experimenter had moved the cube as instructed, the subject would read another sentence prompt (*Und jetzt sollst du den Würfel auf der COLOR OBJECT ablegen* 'And now, you have to put the cube on top of the COLOR OBJECT') instructing the experimenter to move the cube on top of a different object (the *target*).
 The second utterance in the trial was the critical trial for analysis.
 
-The two sentence prompts were used to create a focus contrast between the competitor and the target object.
-Concretely, a focus contrast encodes information that is assumed to be contrary to the presuppositions of the interlocutor. 
+The two sentence prompts were used to create a focus contrast between the competitor and the target object. Focused units denote the set of all (contextually relevant) alternatives [e.g. @rooth1992theory].Concretely, a focus contrast encodes information that is assumed to be contrary to the presuppositions of the interlocutor. 
 For instance, if the competitor and target objects differ but their color did not (e.g. *yellow banana* vs *yellow tomato*), the noun is in focus (the Noun Focus condition, NF).
 If the objects are the same but differ in color (e.g. *yellow banana* vs *blue banana*), the color adjective is in focus (the Adjective Focus condition, AF).
 If both the color and the object differ (e.g. *yellow banana* vs *blue tomato*), the the whole noun phrase is in focus (the Adjective/Noun Focus condition, ANF).
@@ -267,7 +268,7 @@ We will employ a meta-analytic approach to assess (i) the variability of the rep
 In this study, we will follow the procedures proposed by @Parker2020 and @aczel2021.
 The project involves the following five phases:
 
-1. \textsc{Recruitment}: We will recruit independent groups of researchers to analyze the data and review data analyses.
+1. \textsc{Recruitment}: We will recruit independent groups of researchers to analyze the data and review others' data analyses.
 2. \textsc{Team Analysis}: We will give researchers access to the speech corpus and let them analyze the data as they see fit.
 3. \textsc{Review}: We will ask reviewers to generate peer-review ratings of the analyses based on methods (not results).
 4. \textsc{Meta-analysis}: We will evaluate variability among the different analyses and how different predictors affect the outcomes.
@@ -287,15 +288,13 @@ For the sake of simplicity, we will refer both to a single researcher and teams 
 Recruitment for this project will commence upon receiving in-principle acceptance.
 As outlined above, our primary aim is to assess the variability of the reported effects, rather than the meta-analytic estimate of the investigated effect *per se*.
 To estimate the degree of uncertainty around effect variability as driven by number of teams, we ran a series of sample size simulations with values of variability extracted from @silberzahn2018many.
-Variability among teams was operationalised as the standard deviation of the teams' reported effects from @silberzahn2018many (which we *z*-scored prior to simulations to make it comparable to our study).
-For the mean of the teams' true standard deviation (0.68 *z*-score), the simulation indicates that the degree of uncertainty around the estimated teams' standard deviation will be below 1 SD at any sample size greater than 10 teams.
-We have received initial expression of interest to participate from more than 200 analysts, which---even after assuming a 50% drop in participation---we expect to be a sufficient sample size. 
+Variability among teams was operationalized as the standard deviation of the teams' reported effects from @silberzahn2018many (which we *z*-scored prior to simulations to make it comparable to our study).
+For the mean of the teams' true standard deviation (0.68 *z*-score), the simulation indicates that the degree of uncertainty around the estimated teams' standard deviation will be below 1 SD at any sample size greater than 10 teams. 
+Thus in order to achieve our main goal, i.e. estimating variability among teams, we consider a minimum sample size of 10 teams as sufficient. Given the exploratory nature of our study, however, we will sample as many analysts as possible. We have received initial expression of interest to participate from more than 200 analysts. 
 
-We will simultaneously recruit volunteers to peer-review the analyses conducted by the analysis teams through the same channels.
-Our goal is to recruit a similar number of peer-reviewers and analysts, and to ask each peer-reviewer to review a minimum of four analyses.
-If we are unable to recruit at least half the number of reviewers as analysis teams, we will ask analysts to serve also as reviewers (after they have completed their analyses).
+After submitting their analyses, we will ask analysts to also function as peer-reviewers. Each team must review four other analyses.
 
-All analysts and reviewers will share co-authorship on this manuscript and will participate in the collaborative process of producing the final manuscript.
+All analysts will share co-authorship on this manuscript and will participate in the collaborative process of producing the final manuscript.
 Informed consent will be obtained as part of the intake form.
 
 
@@ -313,8 +312,7 @@ They will also upload their analysis files (including the additionally derived d
 
 ## Phase 3: Peer Review of Analyses
 
-At a minimum, each analysis will be evaluated by four different reviewers, and each peer-reviewer will be randomly assigned to analyses from at least four analysis teams (the exact number will depend on the number of analysis teams and peer-reviewers recruited).
-Each peer-reviewer will register and answer a demographic and expertise questionnaire identical to that asked of the analysts.
+Each analysis will be evaluated by four different analysts teams who function as peer-reviewers. Each peer-reviewer will be randomly assigned to analyses from at least four analysis teams.
 Reviewers will evaluate the methods of each of their assigned analyses one at a time in a sequence determined by the initiating authors.
 The sequences will be systematically assigned so that, if possible, each analysis is allocated to each position in the sequence for at least one reviewer.
 
@@ -455,7 +453,7 @@ The code used to run the model can be found at <https://many-speech-analyses.git
 ### Data management {#ana-archive}
 
 All relevant data, code, and materials will be publicly archived on the Open Science Framework (<https://osf.io/3bmcp/>).^[Link for peer-review: <https://osf.io/3bmcp/?view_only=6faaae5feabe4eed800a7c142fcda06f>.]
-Archived data will include the original data set distributed to all analysts, any edited versions of the data analyzed by individual teams, and the data we analyze with our meta-analyses, which include the standardized effect sizes, the statistics describing variation in model structure among analysis teams, and the anonymized answers to our questionnaires of analysts and peer-reviewers.
+Archived data will include the original data set distributed to all analysts, any edited versions of the data analyzed by individual teams, and the data we analyze with our meta-analyses, which include the standardized effect sizes, the statistics describing variation in model structure among analysis teams, and the anonymized answers to our questionnaires of analysts.
 Similarly, we will archive both the analysis code used for each individual analysis and the code from our meta-analyses.
 We will also archive copies of our survey instruments from analysts and peer-reviewers.
 
