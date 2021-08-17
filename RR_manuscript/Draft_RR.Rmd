@@ -107,7 +107,12 @@ Both studies revealed vastly different modeling strategies, even though scientif
 @bastiaansen2020 crowdsourced clinical recommendations based on analyses of an individual patient.
 Results suggests that analysts differed substantially regarding decisions related to both the statistical analysis of the data and the theoretical rationale behind interpreting the statistical results.
 
-While these studies attested a large degree of analytic flexibility with possibly impactful consequences, they only investigated analytic decisions related to inferential statistics or the architecture of computational models.
+Extending on the many-analysts approach, @landy2018crowdsourcing asked 15 research teams to independently design studies to answer the same research questions.
+Again, they found vast heterogeneity in researchers' conclusions which was not predicted by the researchers' expertise but seem to be more dependent on the research question itself.
+This is in line with a recent re-analysis of the study by @silberzahn2018many by @auspurg2021has.
+The authors argue that the observed heterogeneity across analysts in @silberzahn2018many might be driven by flexibility in interpreting the research question.
+
+While these studies attested a large degree of analytic flexibility with possibly impactful consequences, they only investigated analytic decisions related to statistical inference or the architecture of computational models.
 In these studies the data sets were fixed and neither data collection nor measurement could be changed.
 However, in many fields the primary raw data are complex signals that need to be operationalized relative to a theoretically motivated research question.
 This is especially true in the social sciences, where the phenomenon under investigation corresponds to both observable and unobservable human behavior.
@@ -115,15 +120,11 @@ This is especially true in the social sciences, where the phenomenon under inves
 Decisions about how to measure a theoretical construct related to human behavior or its underlying cognitive processes might interact with downstream decisions about statistical modeling and vice versa.
 For instance, @flake2020 discuss the cascading impact that different practices can have on psychometric research.
 The authors highlight, among others, the following degrees of freedom in the choice and development of measures: definition of the theoretical construct, justification of the selected measure, description of the measure and of how it maps onto the construct, response coding and related transformations, and post-hoc modifications to the chosen measure.
-Taken together, these aspects alone exponentially increase the combinations of possible analytic choices, and hence flexibility in research outcomes.
-
-Extending on the many analysts approach, @landy2020crowdsourcing asked 15 research teams to independently design studies to answer the same research questions. 
-Again, they found vast heterogeneity in researchers' conclusions which was not predicted by the researchers' expertise but seem to be more dependent on the research question itself. 
-This is in line with a recent re-analysis of the study by @silberzahn2018many by @auspurg2021has. The authors argue that the observed heterogeneity across analysts in @silberzahn2018many might be driven by flexibility in interpreting the research question. TRANSITION SENTENCE
+Taken together, these aspects alone dramatically increase the combinations of possible analytic choices, and hence flexibility in research outcomes.
 
 In those disciplines concerned with communication, human behavior often corresponds to multidimensional visual or acoustic signals.
 The complex nature of this data multiplies the number of possible analytic approaches, thus further increasing analytic flexibility.
-The present study looks at experimentally elicited speech production data in order to understand how this flexibility manifests itself in a scenario where several procedures are involved in the operationalization and measuring of complex signals. 
+The present study looks at experimentally elicited speech production data in order to understand how this flexibility manifests itself in a scenario where several procedures are involved not only in the statistical analysis of numeric data, but also in the operationalization and measuring of complex signals necessary to derive such data.
 
 ## Operationalizing speech {#s:operspeech}
 
