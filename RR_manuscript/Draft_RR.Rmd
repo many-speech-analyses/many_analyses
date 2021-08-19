@@ -203,7 +203,7 @@ These decisions are intended to be made prior to any statistical analysis, but a
 These myriads of possible decisions are multiplied by those researcher degrees of freedom related to statistical analysis [e.g. @wicherts2016].
 In sum, speech data is made of complex physical signals that generates an as-of-yet unappreciated amount of analytic flexibility in the choice of measures and operationalizations.
 The present paper probes this garden of forking paths in the analysis of speech.
-To assess the variability in data analysis pipelines across independent researchers, we provided analytic teams with an experimentally elicited speech production data set.
+To assess the variability in data analysis pipelines, including both operationalization and statistical analysis, across independent researchers, we provided analytic teams with an experimentally elicited speech production data set.
 The data set derives from the unpublished research project *Prosodic encoding of redundant referring expressions*, which set out to investigate whether speakers acoustically modify utterances to signal unexpected referring expressions.^[Results of this research project were neither published nor publicly presented and are stored on a private OSF repository.] 
 In the following section we introduce the research question and the experimental procedure of said project, and we describe the resulting data set as used in the current study.
 
