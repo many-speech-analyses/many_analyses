@@ -178,7 +178,7 @@ For example, several decisions have to be made when comparing the two realizatio
 Do we compare only the word *another* in (2a) and (2b), or also the word *Zoom*?
 Do we measure utterance-wide acoustic profiles, whole words, or just the stressed syllables?
 Do we average across the chosen time domain or do we measure a specific point in time?
-Do we measure fundamental frequency, intensity, or something else?
+Do we measure fundamental frequency, intensity, or something else [@stevens2000]?
 
 <!-- FIGURE -->
 (ref:forkingPaths) Illustration of the analytic flexibility associated with acoustic analyses. (A) An example of multiple possible and justifiable decisions when comparing two utterances; (B) Waveform and fundamental frequency (f0) track of the utterances *I can't bear ANOTHER meeting on Zoom* and *I can't bear another meeting on ZOOM*. The green boxes mark the word *another* in both sentences; (C) Spectrogram and f0 track of the word *another*, exemplifying possible operationalizations of differences in f0.
