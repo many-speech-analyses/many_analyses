@@ -50,7 +50,7 @@ my_seed <- 115116106
 
 In order to effectively accumulate knowledge, science needs (i) to produce data that can be replicated using the original methods and (ii) to arrive at robust conclusions substantiated by such data.
 In recent coordinated efforts to replicate published findings, scientific disciplines have uncovered surprisingly low success rates [e.g., @open2015estimating; @camerer2018evaluating] leading to what is now referred to as the *replication crisis*.
-Beyond the difficulties of replicating scientific findings, a growing body of evidence suggests that the conceptual conclusions are often variable even when researchers have access to the same data.
+Beyond the difficulties of replicating scientific findings, a growing body of evidence suggests that researchers' conclusions often vary even when they have access to the same data.
 The latter situation has been referred to as the *inference crisis* [@rotello2015more; @starns2019assessing] and is, among other things, rooted in the inherent flexibility of data analysis [often referred to as researcher degrees of freedom: @simmons2011false; @gelman2014statistical].
 Data analysis involves many different steps, such as inspecting, organizing, transforming, and modeling the data, to name a few.
 Along the way, different methodological and analytic choices need to be made, all of which may influence the final interpretation of the data.
@@ -62,16 +62,16 @@ Recent projects have shown that the variability between different data analysts 
 These studies, however, might still underestimate the extent to which analysts vary because data analysis is not restricted to the statistical analysis of ready-made numeric data.
 These data can in fact be the result of complex measurement processes that translate a phenomenon, such as human behavior, into numbers.
 This is particularly true for fields that draw conclusions about human behavior and cognition from multidimensional data like audio or video data.
-In fields working on human speech production, for example, researchers need to make numerous decisions about what to measure and how to measure it, in other words, how to operationalise the phenomenon under study.
+In fields working on human speech production, for example, researchers need to make numerous decisions about what to measure and how to measure it, in other words, how to operationalise the phenomenon under investigation.
 This is not trivial, given the temporal extension of the acoustic signal and its complex structural composition.
 <!-- Not only can decisions about measuring the signal influence downstream decisions about statistical modeling, but statistical results or modeling issues can also lead researchers to go back and revise earlier decisions about the measuring process itself. -->
 
 In this article, we investigate the impact of analytic choices on research results when many analyst teams analyze the same speech production data set, a process that involves both decisions regarding the *operationalization* of a complex signal and decisions regarding *statistical analysis*.
 <!-- TODOLATER: include number of teams when known -->
-Specifically, we discuss the degree of variability in research results obtained by N teams who had to choose the operationalisation and statistical procedures to answer the same research question, on the basis of the same same set of speech recordings.
+Specifically, we discuss the degree of variability in research results obtained by N teams who had to choose the operationalisation and statistical procedures to answer the same research question, on the basis of the same same set of raw data (here, speech recordings).
 Our goals are twofold: First, our study conceptually replicates previous many-analyses projects, by probing the effects of different statistical analyses and by assessing the generalizability of published findings to other disciplines (here, the speech sciences).
 Second, our study extends the scope of inquiry to include flexibility in the operationalisation of complex human behavior (here, human speech).
-This is an important addition in that the increased number of "forking paths" in the "garden of analytic choices", deriving from the many decisions involved in quantification, might reveal a higher degree of variability across analysts than what previously observed.
+This is an important addition in that the increased number of "forking paths" in the "garden of analytic choices", deriving from the many decisions involved in quantification, might reveal a higher degree of variability across analysts than what previously observed, thus giving us a more realistic estimate of variability across analysts. 
 
 ## Researcher degrees of freedom
 
@@ -81,7 +81,7 @@ Humans filter the world in irrational ways [e.g., @tversky1974judgment], see coh
 In conjunction with an academic incentive system that rewards certain discovery processes more than others [@sterling1959publication; @koole2012rewarding], we often find ourselves exploring many possible analytic pipelines, but only reporting a selected few.
 
 This issue is particularly amplified in fields in which the raw data lend themselves to many possible ways of being measured [@roettger2019researcher].
-Combined with a wide variety of methodological and theoretical traditions as well as varying levels of statistical training across subfields, the inherent flexibility of data analysis might lead to a vast plurality of analytic approaches that can lead to different scientific conclusions [@roettger2019emergent].
+Combined with a wide variety of methodological and theoretical traditions as well as varying levels of quantitative training across subfields, the inherent flexibility of data analysis might lead to a vast plurality of analytic approaches that can lead to different scientific conclusions [@roettger2019emergent].
 Analytic flexibility has been widely discussed from a conceptual point of view [@simmons2011false; @wagenmakers2012agenda; @nosek2014method] and in regard to its application in individual scientific fields [e.g. @wicherts2016; @charles2019; @roettger2019researcher].
 This notwithstanding, there are still many unknowns regarding the extent of analytic plurality in practice.
 
@@ -94,26 +94,29 @@ Despite recent efforts to improve transparency and reproducibility [e.g. @miguel
 ## Crowdsourcing alternative analyses
 
 Recent collaborative attempts have started to shed light on how different analysts tackle the same data set and have revealed a large amount of variability.
-In a collaborative effort, @silberzahn2018many let twenty-nine independent analysis teams address the same research hypothesis.
+In a seminal collaborative effort, @silberzahn2018many let twenty-nine independent analysis teams address the same research hypothesis.
 Analytic approaches and consequently the results varied widely between teams.
 Sixty-nine percent of the teams found support for the hypothesis, and 31% did not.
 Out of the 29 analytic strategies, there were 21 unique combinations of covariates.
-Importantly, the observed variability was neither predicted by the team's preconceptions about the phenomenon under investigation nor by peer ratings of the quality of their analyses.
-The authors results suggest that analytic plurality may be an inevitable byproduct of the scientific process and not necessarily driven by different levels of expertise nor bias.
+Importantly, the observed variability was neither predicted by the team's preconceptions about the phenomenon under investigation nor by peer ratings of the quality of their analyses. 
+
+The authors results suggest that analytic plurality may be an inevitable byproduct of the scientific process and not necessarily driven by different levels of expertise or bias.
 
 Several other recent studies corroborated this analytic flexibility across different disciplines.
 @dutilh2019 and @starns2019assessing investigated analysts' choices when inferring theoretical constructs based on the same data set using computational models.
 Both studies revealed vastly different modeling strategies, even though scientific conclusions were similar across analysis teams (see also @Parker2020 on analytic flexibility in ecology, and @botvinik-nezer2020 on neuroimaging data).
 @bastiaansen2020 crowdsourced clinical recommendations based on analyses of an individual patient.
-Results suggests that analysts differed substantially regarding decisions related to both the statistical analysis of the data and the theoretical rationale behind interpreting the statistical results.
+Their results suggests that analysts differed substantially regarding decisions related to both the statistical analysis of the data and the theoretical rationale behind interpreting the statistical results.
 
 Extending on the many-analysts approach, @landy2020crowdsourcing asked 15 research teams to independently design studies to answer the same research questions.
 Again, they found vast heterogeneity in researchers' conclusions which was not predicted by the researchers' expertise but seem to be more dependent on the research question itself.
-This is in line with a recent re-analysis of the study by @silberzahn2018many by @auspurg2021has.
-The authors argue that the observed heterogeneity across analysts in @silberzahn2018many might be driven by flexibility in interpreting the research question.
+This is in line with a recent re-analysis of @silberzahn2018many by @auspurg2021has.
+The authors argue that the observed heterogeneity across analysts in @silberzahn2018many might have been driven by flexibility in statistically interpreting the research question.
 
-While these studies attested a large degree of analytic flexibility with possibly impactful consequences, they only investigated analytic decisions related to statistical inference or the architecture of computational models.
+While these studies attested a large degree of analytic flexibility with possibly impactful consequences, they focused on analytic decisions related to statistical inference or the architecture of computational models. 
 In these studies the data sets were fixed and neither data collection nor measurement could be changed.
+Thus the estimates of variability found in the literature might reflect a lower bound only, ignoring large parts of the forking path related to measurement. 
+
 However, in many fields the primary raw data are complex signals that need to be operationalized relative to a theoretically motivated research question.
 This is especially true in the social sciences, where the phenomenon under investigation corresponds to both observable and unobservable human behavior.
 
@@ -122,9 +125,10 @@ For instance, @flake2020 discuss the cascading impact that different practices c
 The authors highlight, among others, the following degrees of freedom in the choice and development of measures: definition of the theoretical construct, justification of the selected measure, description of the measure and of how it maps onto the construct, response coding and related transformations, and post-hoc modifications to the chosen measure.
 Taken together, these aspects alone dramatically increase the combinations of possible analytic choices, and hence flexibility in research outcomes.
 
-In those disciplines concerned with communication, human behavior often corresponds to multidimensional visual or acoustic signals.
-The complex nature of this data multiplies the number of possible analytic approaches, thus further increasing analytic flexibility.
-The present study looks at experimentally elicited speech production data in order to understand how this flexibility manifests itself in a scenario where several procedures are involved not only in the statistical analysis of numeric data, but also in the operationalization and measuring of complex signals necessary to derive such data.
+In those disciplines concerned with communication, human behavior often corresponds to multidimensional visual and/or acoustic signals.
+The complex nature of this data exponentiates the number of possible analytic approaches, thus further increasing analytic flexibility.
+In order to estimate this increased flexibility, the present study looks at experimentally elicited speech production data.  
+<!--in order to understand how this flexibility manifests itself in a scenario where several procedures are involved not only in the statistical analysis of numeric data, but also in the operationalization and measuring of complex signals necessary to derive such data.-->
 
 ## Operationalizing speech {#s:operspeech}
 
@@ -132,7 +136,7 @@ Research on speech lies at the intersection of the cognitive sciences, informing
 One major challenge in the speech sciences is the mapping between communicative intentions (the unobserved behavior) and their physical manifestation (the observed behavior).
 
 Speech is a complex signal that is characterized by structurally different acoustic landmarks distributed throughout different temporal domains.
-Thus, choosing how to measure a phenomenon of interest is an important analytic decision.
+Thus, choosing how to measure a phenomenon of interest is an important analytic step.
 Take for example the following sentence in (1).
 
 \vspace{1em}
