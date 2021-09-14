@@ -296,8 +296,10 @@ The following sections report the criteria for sample size, data exclusions, dat
 ## Phase 1: Recruitment of analysts and initial survey
 
 An online landing page will provide a general description of the project, including a short pre-recorded slide-show that summarizes the data set and research question (<https://many-speech-analyses.github.io>).^["Questions" and "Join Project" buttons will be functioning when recruitment starts. "Join Project" will link to the intake form.]
-The project will be advertised via social media, using mailing lists for linguistic and psychological societies, and via word of mouth.
-The target population comprises active speech science researchers with a graduate/doctoral degree (or currently studying for a graduate/doctoral degree) in relevant disciplines.
+The project will be advertised via social media, using mailing lists for linguistic and psychological societies, and via word of mouth. 
+Social media advertising will be accompanied by a short recruitment form available at LINK.^[Temporary link: <https://osf.io/3bmcp/?view_only=6faaae5feabe4eed800a7c142fcda06f>, Recruitment form.]
+The target population comprises active speech science researchers with a graduate/doctoral degree (or currently studying for a graduate/doctoral degree) in relevant disciplines. 
+All individuals interested in participating will be asked to complete a questionnaire detailing their familiarity with numerous analytical approaches common in the speech sciences (LINK^[Temporary link: <https://osf.io/3bmcp/?view_only=6faaae5feabe4eed800a7c142fcda06f>, Analytical approach form.]).
 Researchers can choose to work independently or in a small team.
 For the sake of simplicity, we will refer both to a single researcher and teams as \textsc{analysis teams}.^[Terms in small caps in this and later sections are included with their definition in the glossary at the end of the paper for the reader's convenience.]
 Recruitment for this project will commence upon receiving in-principle acceptance.
