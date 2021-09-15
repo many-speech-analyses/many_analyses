@@ -17,7 +17,7 @@ address:
   org: Department of Linguistics and Scandinavian Studies, University of Oslo, Oslo, Norway
 corrauth: "Stefano Coretta"
 email: "s.coretta@lmu.de"
-abstract: "Recent efforts to replicate published findings have uncovered surprisingly low success rates across disciplines. Moreover, several studies have highlighted the large degree of analytic flexibility in data analysis which can lead to substantially different conclusions based on the same data set. Thus, researchers have expressed their concerns that these researcher degrees of freedom might facilitate bias and can lead to claims that do not stand the test of time. Even greater flexibility is to be expected in fields in which the primary data lend themselves to a variety of possible operationalizations. The multidimensional, temporally extended nature of speech constitutes an ideal testing ground for assessing the variability in analytic approaches that derives not only from aspects of statistical modelling but also from decisions regarding the quantification of the measured behavior. In the present study, we will give the same speech production dataset to N teams of researchers and will ask them to answer the same research question. Using Bayesian meta analytical tools, we will quantify this variability and relate it to predictors related to the analysts and their analyses."
+abstract: "Recent efforts to replicate published findings have uncovered surprisingly low success rates across disciplines. Moreover, several studies have highlighted the large degree of analytic flexibility in data analysis which can lead to substantially different conclusions based on the same data set. Thus, researchers have expressed their concerns that these researcher degrees of freedom might facilitate bias and can lead to claims that do not stand the test of time. Even greater flexibility is to be expected in fields in which the primary data lend themselves to a variety of possible operationalizations. The multidimensional, temporally extended nature of speech constitutes an ideal testing ground for assessing the variability in analytic approaches that derives not only from aspects of statistical modelling but also from decisions regarding the quantification of the measured behavior. In the present study, we will give the same speech production dataset to N teams of researchers and will ask them to answer the same research question. Using Bayesian meta-analytic tools, we will quantify this variability and relate it to predictors related to the analysts and their analyses."
 keywords: "crowdsourcing science, data analysis, scientific transparency, speech, acoustic analysis"
 classoption:
   - Review
@@ -68,9 +68,9 @@ This is not trivial, given the temporal extension of the acoustic signal and its
 
 In this article, we investigate the impact of analytic choices on research results when many analyst teams analyze the same speech production data set, a process that involves both decisions regarding the *operationalization* of a complex signal and decisions regarding *statistical analysis*.
 <!-- TODOLATER: include number of teams when known -->
-Specifically, we discuss the degree of variability in research results obtained by N teams who had to choose the operationalisation and statistical procedures to answer the same research question, on the basis of the same same set of raw data (here, speech recordings).
-Our goals are twofold: First, our study conceptually replicates previous many-analyses projects, by probing the effects of different statistical analyses and by assessing the generalizability of published findings to other disciplines (here, the speech sciences).
-Second, our study extends the scope of inquiry to include flexibility in the operationalisation of complex human behavior (here, human speech).
+Specifically, we discuss the degree of variability in research results obtained by N teams who had to choose the operationalisation and statistical procedures to answer the same research question, on the basis of the same set of raw data (here, speech recordings).
+Our goals are twofold: (i) our study conceptually replicates previous many-analyses projects, by probing the effects of different statistical analyses and by assessing the generalizability of published findings to other disciplines (here, the speech sciences);
+(ii) our study extends the scope of inquiry to include flexibility in the operationalisation of complex human behavior (here, human speech).
 This is an important addition in that the increased number of "forking paths" in the "garden of analytic choices", deriving from the many decisions involved in quantification, might reveal a higher degree of variability across analysts than what previously observed, thus giving us a more realistic estimate of variability across analysts. 
 
 ## Researcher degrees of freedom
@@ -219,7 +219,7 @@ When trying to refer to a banana, what does a speaker say and how do they say it
 The context within which an entity occurs (i.e., with other non-fruits, other fruits, or other bananas) plays a large part in determining the choice of referring expressions.
 Generally, speakers aim to be as informative as possible to uniquely establish reference to the intended object, but they are also resource-efficient in that they avoid redundancy [@grice1975logic].
 Thus one would expect the use of a modifier, for example, only if it is necessary for disambiguation.
-For instance, one might use the adjective *yellow* to describe a banana in a situation in which there is a yellow and a less ripe green banana available, but not when there is only one banana to begin with.
+For instance, one might use the adjective *yellow* to describe a banana in a situation in which there are a yellow and a less ripe green banana available, but not when there is only one banana to begin with.
 
 Despite the coherent idea that speakers are both rational and efficient, there is much evidence that speakers are often over-informative.
 Speakers use referring expressions that are more specific than strictly necessary for the unambiguous identification of the intended referent [@sedivy2003pragmatic; @westerbeek2015stored; @rubio2016redundant], which has been argued to facilitate object identification and make communication between speakers and listeners more efficient [@arts2011overspecification; @paraboni2007generating; @rubio2016redundant].
@@ -260,9 +260,10 @@ The second utterance in the trial was the critical trial for analysis.
 The two sentence prompts were used to create a focus contrast between the competitor and the target object.
 Focused units denote the set of all (contextually relevant) alternatives [e.g. @rooth1992theory].
 Concretely, a focus contrast marks one of more elements in a sentence as prominent, by different linguistic means depending on the language.
-For instance, if the competitor and target objects differ but their color did not (e.g. *yellow banana* vs *yellow tomato*), the noun is in focus (the Noun Focus condition, NF).
+For instance, if the competitor and target objects differ but their color does not (e.g. *yellow banana* vs *yellow tomato*), the noun is said to be in focus.
+We call this the Noun Focus condition, or NF for short.
 If the objects are the same but differ in color (e.g. *yellow banana* vs *blue banana*), the color adjective is in focus (the Adjective Focus condition, AF).
-If both the color and the object differ (e.g. *yellow banana* vs *blue tomato*), the the whole noun phrase is in focus (the Adjective/Noun Focus condition, ANF).
+If both the color and the object differ (e.g. *yellow banana* vs *blue tomato*), then the whole noun phrase is in focus (the Adjective/Noun Focus condition, ANF).
 The NF condition constituted the experimentally relevant condition, while the AF and ANF conditions acted as fillers.
 Crucially, the color-object combinations in the Noun Focus (NF) condition were manipulated with respect to their typicality.
 The combinations were either typical (e.g. *orange mandarin*), medium typical (e.g. *green tomato*), or atypical (e.g. *yellow cherry*), as established by a norming study that was conducted prior to the production experiment just described.^[A detailed description of the norming and production studies from the *Prosodic encoding of redundant referring expressions* project, which was given to the analysts with the data set, can be found in `methods_norm_prod.pdf` at (temporary link) <https://osf.io/5agn9/?view_only=3429acfd8eae4f0aafe2e17ad5b0983f>]
@@ -291,6 +292,9 @@ The project involves the following five phases:
 
 We estimate that this process, from the time of an in-principle acceptance of this Stage 1 Registered Report to the end of Phase 5, will take nine months.
 The factor most likely to delay our time-line is the rate of completion of the original set of analyses by independent analysis teams.
+
+The project OSF repository contains all the materials mentioned in this paper and can be accessed at LINK.^[Temporary link: <https://osf.io/3bmcp/?view_only=6faaae5feabe4eed800a7c142fcda06f>.]
+The main repository holds two OSF components, `Data` and `Questionnaires`, and it is linked to the GitHub repository.
 The following sections report the criteria for sample size, data exclusions, data manipulations, and all the measures in the study.
 
 ## Phase 1: Recruitment of analysts and initial survey
@@ -315,26 +319,26 @@ Informed consent will be obtained as part of the intake form.
 
 ## Phase 2: Primary Data Analyses
 
-The analysis teams will register for participation and each of the analysts individually will answer a demographic and expertise questionnaire (`intake_form.pdf`).
-PDF versions of all the questionnaires used in this study are available at LINK^[Temporary link: <https://osf.io/3bmcp/?view_only=6faaae5feabe4eed800a7c142fcda06f>, Questionnaires component.].
+The analysis teams will register for participation and each of the analysts individually will answer a demographic and expertise questionnaire (`intake_form.pdf`).^[A PDF version of this and all other questionnaires are available in the repository's `Questionnaires` component, at <https://osf.io/h6z8w/?view_only=6faaae5feabe4eed800a7c142fcda06f>. The direct link to the intake form questionnaire is <https://osf.io/w7db5/?view_only=6faaae5feabe4eed800a7c142fcda06f>.]
 The questionnaire collects information on the analysts current position and self-estimated breadth and level of statistical expertise and acoustic analysis skills.
 We will then request that they answer the question: *Do speakers acoustically modify utterances to signal atypical word combinations?*
 To do so, they will be given the data generated by the experiment described in Section [The data set](#s:dataset).
-The data will include the audio recordings with corresponding time-aligned transcriptions in the form of Praat TextGrid files (LINK^[Temporary link: <https://osf.io/3bmcp/?view_only=6faaae5feabe4eed800a7c142fcda06f>, Data component.]).
+The data will include the audio recordings with corresponding time-aligned transcriptions in the form of Praat TextGrid files.^[These can be found in the `Data` component at <https://osf.io/3bmcp/?view_only=6faaae5feabe4eed800a7c142fcda06f>.]
 
-Once their analysis is complete, they will answer a structured questionnaire (`analytic_quest.pdf`), providing information about their analysis technique, an explanation of their analytic choices, their quantitative results, and a statement describing their conclusions.
+Once their analysis is complete, they will answer a structured questionnaire (`analytic_quest.pdf`), providing information about their analysis technique, an explanation of their analytic choices, their quantitative results, and a statement describing their conclusions.^[Direct link: <https://osf.io/ad862/?view_only=6faaae5feabe4eed800a7c142fcda06f>.]
 They will also upload their analysis files (including the additionally derived data and text files that were used to extract and pre-process the acoustic data), their analysis code (if applicable), and a detailed journal-ready analysis section.
 
 ## Phase 3: Peer Review of Analyses
 
-Each analysis will be evaluated by four different analysts teams who function as peer-reviewers. Each peer-reviewer will be randomly assigned to analyses from at least four analysis teams.
+Each analysis will be evaluated by four different analysts teams who function as peer-reviewers.
+Each peer-reviewer will be randomly assigned to analyses from at least four analysis teams.
 Reviewers will evaluate the methods of each of their assigned analyses one at a time in a sequence determined by the initiating authors.
 The sequences will be systematically assigned so that, if possible, each analysis is allocated to each position in the sequence for at least one reviewer.
 
 The process for a single reviewer will be as follows.
 First, the reviewer will receive a description of the methods of a single analysis.
 This will include the narrative methods section, the analysis team's answers to the questionnaire regarding their methods, including analysis code and the data set.
-The reviewer will then be asked in an online questionnaire (`peer_review_quest.pdf`) to rate both the acoustic and the statistical analyses and to provide an overall rating, using a scale of 0-100, respectively.
+The reviewer will then be asked in an online questionnaire (`peer_review_quest.pdf`) to rate both the acoustic and the statistical analyses and to provide an overall rating, using a scale of 0-100, respectively.^[Direct link: <https://osf.io/a3urw/?view_only=6faaae5feabe4eed800a7c142fcda06f>.]
 To help reviewers calibrate their rating, they will be given the following guidelines:
 
 * 100. A perfect analysis with no conceivable improvements from the reviewer.
@@ -352,7 +356,9 @@ After providing the final review, the reviewer will be simultaneously presented 
 
 ## Phase 4: Evaluating variation
 
-The initiating authors (SC, JC, TR) will conduct the analyses outlined in this section. We will not conduct confirmatory tests of any a priori hypotheses. We consider our analysis exploratory.
+The initiating authors (SC, JC, TR) will conduct the analyses outlined in this section.
+We will not conduct confirmatory tests of any a priori hypotheses.
+We consider our analysis exploratory.
 
 ### Descriptive statistics
 
@@ -436,7 +442,7 @@ where $|X \cap Y|$ is the number of variables common to both models in the pair,
 ```{r sdi, eval=FALSE, include=FALSE}
 x <- c("a", "b", "c", "d")
 y <- c("b", "d", "e", "f")
-(2 * length(intersect(x,y))) / (length(x) + length(y))
+(2 * length(intersect(x, y))) / (length(x) + length(y))
 ```
 
 In order to generate a unique SDI for each analysis team, we will calculate the average of all pairwise SDIs for all pairs of analyses using the `beta.pair()` function in the betapart R package [@baselga2020].
@@ -468,7 +474,9 @@ The code used to run the model can be found at <https://many-speech-analyses.git
 
 ### Data management {#ana-archive}
 
-All relevant data, code, and materials will be publicly archived on the Open Science Framework (<https://osf.io/3bmcp/>).^[Link for peer-review: <https://osf.io/3bmcp/?view_only=6faaae5feabe4eed800a7c142fcda06f>.]
+<!-- Had to remove footnote because there were too many footnotes and not enough symbols -->
+
+All relevant data, code, and materials will be publicly archived on the Open Science Framework (<https://osf.io/3bmcp/>, for peer-review: <https://osf.io/3bmcp/?view_only=6faaae5feabe4eed800a7c142fcda06f>).
 Archived data will include the original data set distributed to all analysts, any edited versions of the data analyzed by individual teams, and the data we analyze with our meta-analyses, which include the standardized effect sizes, the statistics describing variation in model structure among analysis teams, and the anonymized answers to our questionnaires of analysts.
 Similarly, we will archive both the analysis code used for each individual analysis and the code from our meta-analyses.
 We will also archive copies of our survey instruments from analysts and peer-reviewers.
