@@ -266,7 +266,7 @@ If the objects are the same but differ in color (e.g. *yellow banana* vs *blue b
 If both the color and the object differ (e.g. *yellow banana* vs *blue tomato*), then the whole noun phrase is in focus (the Adjective/Noun Focus condition, ANF).
 The NF condition constituted the experimentally relevant condition, while the AF and ANF conditions acted as fillers.
 Crucially, the color-object combinations in the Noun Focus (NF) condition were manipulated with respect to their typicality.
-The combinations were either typical (e.g. *orange mandarin*), medium typical (e.g. *green tomato*), or atypical (e.g. *yellow cherry*), as established by a norming study that was conducted prior to the production experiment just described.^[A detailed description of the norming and production studies from the *Prosodic encoding of redundant referring expressions* project, which was given to the analysts with the data set, can be found in `methods_norm_prod.pdf` at (temporary link) <https://osf.io/5agn9/?view_only=3429acfd8eae4f0aafe2e17ad5b0983f>]
+The combinations were either typical (e.g. *orange mandarin*), medium typical (e.g. *green tomato*), or atypical (e.g. *yellow cherry*), as established by a norming study that was conducted prior to the production experiment just described.^[A detailed description of the norming and production studies from the *Prosodic encoding of redundant referring expressions* project, which was given to the analysts with the data set, can be found in `methods_norm_prod.pdf` at <https://bit.ly/3Ahawc7>.]
 Each subject produced 15 critical trials (NF condition).
 Each trial was repeated twice, yielding a total of 30 trials per participant and a grand-total of 900 ($15 \times 2 \times 30$ participants) spoken utterances.
 
@@ -301,17 +301,20 @@ The following sections report the criteria for sample size, data exclusions, dat
 
 An online landing page will provide a general description of the project, including a short pre-recorded slide-show that summarizes the data set and research question (<https://many-speech-analyses.github.io>).^["Questions" and "Join Project" buttons will be functioning when recruitment starts. "Join Project" will link to the intake form.]
 The project will be advertised via social media, using mailing lists for linguistic and psychological societies, and via word of mouth. 
-Social media advertising will be accompanied by a short recruitment form available at LINK.^[Temporary link: <https://osf.io/3bmcp/?view_only=6faaae5feabe4eed800a7c142fcda06f>, Recruitment form.]
+Social media advertising will be accompanied by a short recruitment form (`recruitment_form.pdf`)
 The target population comprises active speech science researchers with a graduate/doctoral degree (or currently studying for a graduate/doctoral degree) in relevant disciplines. 
-All individuals interested in participating will be asked to complete a questionnaire detailing their familiarity with numerous analytical approaches common in the speech sciences (LINK^[Temporary link: <https://osf.io/3bmcp/?view_only=6faaae5feabe4eed800a7c142fcda06f>, Analytical approach form.]).
+All individuals interested in participating will be asked to complete a questionnaire detailing their familiarity with numerous analytical approaches common in the speech sciences (`analytic_approach_quest.pdf`).
 Researchers can choose to work independently or in a small team.
 For the sake of simplicity, we will refer both to a single researcher and teams as \textsc{analysis teams}.^[Terms in small caps in this and later sections are included with their definition in the glossary at the end of the paper for the reader's convenience.]
 Recruitment for this project will commence upon receiving in-principle acceptance.
 As outlined above, our primary aim is to assess the variability of the reported effects, rather than the meta-analytic estimate of the investigated effect *per se*.
 To estimate the degree of uncertainty around effect variability as driven by number of teams, we ran a series of sample size simulations with values of variability extracted from @silberzahn2018many.
+The code is available at <https://many-speech-analyses.github.io/suppl/simulations.html>, Section 2.^[Cached model outputs can be found at <https://bit.ly/3AgdHAN>.]
 Variability among teams was operationalized as the standard deviation of the teams' reported effects from @silberzahn2018many (which we *z*-scored prior to simulations to make it comparable to our study).
 For the mean of the teams' true standard deviation (0.68 *z*-score), the simulation indicates that the degree of uncertainty around the estimated teams' standard deviation will be below 1 SD at any sample size greater than 10 teams. 
-Thus in order to achieve our main goal, i.e. estimating variability among teams, we consider a minimum sample size of 10 teams as sufficient. Given the exploratory nature of our study, however, we will sample as many analysts as possible. We have received initial expression of interest to participate from more than 200 analysts. 
+Thus in order to achieve our main goal, i.e. estimating variability among teams, we consider a minimum sample size of 10 teams as sufficient.
+Given the exploratory nature of our study, however, we will sample as many analysts as possible.
+We have received initial expression of interest to participate from more than 200 analysts.
 
 After submitting their analyses, we will ask analysts to also function as peer-reviewers. Each team must review four other analyses.
 All analysts will share co-authorship on this manuscript and will participate in the collaborative process of producing the final manuscript.
