@@ -307,6 +307,7 @@ All individuals interested in participating will be asked to complete a question
 Researchers can choose to work independently or in a small team.
 For the sake of simplicity, we will refer both to a single researcher and teams as \textsc{analysis teams}.^[Terms in small caps in this and later sections are included with their definition in the glossary at the end of the paper for the reader's convenience.]
 Recruitment for this project will commence upon receiving in-principle acceptance.
+
 As outlined above, our primary aim is to assess the variability of the reported effects, rather than the meta-analytic estimate of the investigated effect *per se*.
 To estimate the degree of uncertainty around effect variability as driven by number of teams, we ran a series of sample size simulations with values of variability extracted from @silberzahn2018many.
 The code is available at <https://many-speech-analyses.github.io/suppl/simulations.html>, Section 2.^[Cached model outputs can be found at <https://bit.ly/3AgdHAN>.]
