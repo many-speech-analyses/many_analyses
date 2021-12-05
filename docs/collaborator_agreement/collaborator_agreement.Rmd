@@ -8,32 +8,32 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 
-This agreement provides guidelines for the paper: "Multidimensional signals and analytic flexibility: Estimating degrees of freedom in human speech analyses" accepted as a [Registered Report](https://www.cos.io/initiatives/registered-reports) at Advances in Methods and Practices in Psychological Science ([AMPPS](https://www.psychologicalscience.org/publications/ampps).)
+This agreement provides guidelines for the paper: *Multidimensional signals and analytic flexibility: Estimating degrees of freedom in human speech analyses* accepted as a [Registered Report](https://www.cos.io/initiatives/registered-reports) at Advances in Methods and Practices in Psychological Science ([AMPPS](https://www.psychologicalscience.org/publications/ampps).)
 
 ### How do I become an author on the paper ?
 
 You can become author of this paper by fulfilling all of the following requirements:
 
 - Analyse (as an individual or in a team) the dataset to answer the research question as you see fit.
-- Submit your analysis report (as an individual or in a team), in the form of "Methods" and "Results" sections, and fill in a data analysis questionnaire by 2022-04-14, 23.59 UTC.
+- Submit your analysis report (as an individual or in a team), in the form of "Methods" and "Results" sections, and fill in a data analysis questionnaire by 2022-04-15, 23.59 UTC.
 - Review (as an individual or in a team) four analyses reports and submit the review report by 2022-05-31, 23.59 UTC)
 - Read and approve the final manuscript (due 2022-08-31, 23.59 UTC)
 
 Author contributions will be reported on research products using the [CRediT taxonomy](https://www.cell.com/pb/assets/raw/shared/guidelines/CRediT-taxonomy.pdf). The [Tenzing app](https://osf.io/preprints/metaarxiv/b6ywe/) may be a helpful tool to collect this contributorship information.
 
-Principal Investigators (PIs) of contributing labs are responsible for their students and staff working on the project. This includes: honestly reporting the contributions of their lab members, evaluating whether contributions merit authorship according to the above statement and the CRediT table, and verifying that contributions are correctly described in any formal publication.
+The Team Coordinators (TCs) of contributing teams are responsible for their students and staff working on the project. This includes: honestly reporting the contributions of their lab members, evaluating whether contributions merit authorship according to the above statement and the CRediT table, and verifying that contributions are correctly described in any formal publication.
 
 ### How will authorship order be determined?
 
 Authorship order will be organized into the following sections, with order determined as listed below.
 
-*Section 1 (project coordinators)*. The project coordinators (Stefano Coretta, Joseph Casillas, and Timo Roettger) will occupy first and second author positions, respectively (Stefano Coretta and Joseph Casillas) and the last author positions (Timo Roettger). These three authors will be listed: Coretta, Casillas, ..., Roettger-
+**Section 1** Pproject Coordinators). The Project Coordinators (Stefano Coretta, Joseph Casillas, and Timo Roettger) will occupy first and second author positions, respectively (Stefano Coretta and Joseph Casillas) and the last author positions (Timo Roettger). These three authors will be listed: Coretta, Casillas, ..., Roettger-
 
 The coordinators have formulated the research goals and aims, developed the methodology and curated the materials, wrote, submitted and revised the Registered Report, recruited analysts and administered the project. The coordinators will also analyse the results, draft the final parts of the manuscript (Results, Discussion, Conclusion) and will incorporate comments and suggestions from all authors to create the final version of the manuscript.
 
-*Section 2 (design of study materials and data collection)*. Two additional authors that were involved in study design and data collection (Simon Roessig, Michael Franke), will occupy position 3 and 4 in the author list.
+**Section 2** (design of study materials and data collection). Two additional authors that were involved in study design and data collection (Simon Roessig, Michael Franke), will occupy position 3 and 4 in the author list.
 
-*Section 3 (analysts)*. Position from 5 on will be occupied by all analysts involved in alphabetical order.
+**Section 3** (analysts). Position from 5 on will be occupied by all analysts involved in alphabetical order.
 
 The final author list will be the following:
 Coretta, Casillas, Roessig, Franke, ... , Roettger
@@ -50,11 +50,18 @@ All secondary projects should be governed by their own collaboration agreement. 
 
 ### Conduct
 
-Each contributor is personally accountable for the accuracy and integrity of their work on this project. This includes ensuring that (1) you are operating in accordance with your local research rules and regulations, (2) your specific research products are honest and accurate (e.g., data, translations, code), and (3) your description of your role on the project is accurate.
+Each contributor is personally accountable for the accuracy and integrity of their work on this project. This includes ensuring that:
+
+1. You are operating in accordance with your local research rules and regulations.
+2. Your specific research products are honest and accurate (e.g., data, translations, code).
+3. Your description of your role on the project is accurate.
 
 ### Press
 
-Initial press releases will be coordinated by the Project coordinators. All collaborators are strongly encouraged to speak to the press, but are expected to (1) emphasize the highly collaborative nature of the research project and (2) encourage the interviewer to reach out to various members of the team.
+Initial press releases will be coordinated by the Project coordinators. All collaborators are strongly encouraged to speak to the press, but are expected to:
+
+1. Emphasize the highly collaborative nature of the research project.
+2. Encourage the interviewer to reach out to various members of the team.
 
 Dissemination of results will depend on the journal embargo policies.  
 
