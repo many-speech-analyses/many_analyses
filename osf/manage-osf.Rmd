@@ -114,7 +114,8 @@ tlists <- list.files("./data/trial-lists", ".csv", full.names = TRUE)
 typ <- read_csv("./data/dataset/typicality.csv")
 
 for (tlist in tlists) {
-  speaker <- str_sub(tlist, 20, 21)
+  speaker <- str_sub(tlist, 20, 23) %>%
+    str_remove("\\.c")
   tbl <- read_csv(tlist) %>%
     mutate(
       speaker = speaker,
