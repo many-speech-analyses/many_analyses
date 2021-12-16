@@ -56,7 +56,7 @@ The hexadecimal color codes for the colors that we used are listed below:
 - Black: #000
 - Grey: #fff
 
-All pictures with natural and manipulated colors are available here: <https://osf.io/rdtx5/>.
+All pictures with natural and manipulated colors are available here: <https://osf.io/5vj2z/?view_only=076bc1dbb95146fd85547f826d1edf65>.
 
 The colors for the twenty FOODs were subjectively selected to reflect a range of compatibilities with the respective objects, e.g. a typical banana is yellow; a less typical banana could be brown (too ripe) or green (not yet ripe); and an atypical banana could be blue.
 Every FOOD was presented in four of nine manipulated colors alongside its original image.

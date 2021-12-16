@@ -13,7 +13,8 @@
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
 \else % if luatex or xetex
-  \usepackage{unicode-math}
+                                %%% MODIFIED: unicode-math conflics with expex; mathspects conflicts with glossaries/leipzig
+  \usepackage{fontspec} % \usepackage{unicode-math}
   \defaultfontfeatures{Scale=MatchLowercase}
   \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
 \fi
@@ -138,7 +139,7 @@ The hexadecimal color codes for the colors that we used are listed below:
   Grey: \#fff
 \end{itemize}
 
-All pictures with natural and manipulated colors are available here: \url{https://osf.io/rdtx5/}.
+All pictures with natural and manipulated colors are available here: \url{https://osf.io/5vj2z/?view_only=076bc1dbb95146fd85547f826d1edf65}.
 
 The colors for the twenty FOODs were subjectively selected to reflect a range of compatibilities with the respective objects, e.g.~a typical banana is yellow; a less typical banana could be brown (too ripe) or green (not yet ripe); and an atypical banana could be blue.
 Every FOOD was presented in four of nine manipulated colors alongside its original image.
@@ -298,7 +299,7 @@ Figure \ref{fig:image0} illustrates combination typicality for a banana, a tomat
 
 \begin{figure}[tbp]
 
-{\centering \includegraphics[width=0.6\linewidth]{/Users/ste/repos/many_analyses/figs/typicality_examples} 
+{\centering \includegraphics[width=0.6\linewidth]{/Users/ste/repos/many-speech/many_analyses/figs/typicality_examples} 
 
 }
 
@@ -323,7 +324,7 @@ The participants were asked to instruct the experimenter to move the cube on top
 
 \begin{figure}[tbp]
 
-{\centering \includegraphics[width=0.6\linewidth,frame]{/Users/ste/repos/many_analyses/figs/sample_experiment_screen_competitor} 
+{\centering \includegraphics[width=0.6\linewidth,frame]{/Users/ste/repos/many-speech/many_analyses/figs/sample_experiment_screen_competitor} 
 
 }
 
@@ -361,7 +362,7 @@ To continue the example above, the subject would see the following test instruct
 
 \begin{figure}[tbp]
 
-{\centering \includegraphics[width=0.6\linewidth,frame]{/Users/ste/repos/many_analyses/figs/sample_experiment_screen_target} 
+{\centering \includegraphics[width=0.6\linewidth,frame]{/Users/ste/repos/many-speech/many_analyses/figs/sample_experiment_screen_target} 
 
 }
 
