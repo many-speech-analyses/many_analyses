@@ -141,7 +141,7 @@ osf_upload(osf_data, path = "./osf/data/methods_norm_prod.pdf", recurse = T, ver
 
 # Create teams components
 
-```{r}
+```{r teams-create, eval=FALSE}
 osf_teams <- osf_retrieve_node("n3fyd")
 teams <- list("echeneis_occidentale", "butis_texana", "choerodon_retusa", "paralichthys_undulatus", "stygobromus_tyraica", "pseudechidna_nubiae", "hoplostethus_macrosteus", "gorgasia_eleutherus", "trachurus_riukiuensis", "berardius_roseicapilla", "petauroides_fistulator", "polymetme_brevirostrum", "epinephelus_aztecus", "eriphia_laterispinis", "varanus_eulophotes", "genyonemus_evotis", "saron_pictus", "kryptopterus_megistos", "dermatolepis_aculeatus", "ornithorhynchus_ruficapillus", "manupecten_pearcei", "swiftia_ruber", "neosilurus_omanensis", "hoplostethus_binoculata", "pseudodax_euryzona", "haematopus_fossor", "anthracoceros_coronata", "lasionycteris_altavela", "lycodes_bradfieldi", "gymnothorax_spinulosus", "trigonias_lachneri", "anomalocaris_ornata", "trapezia_cantonensis", "comanthina_maculatus", "plectorhinchus_virens", "arapaima_modularis", "naso_cassivellaunos", "opsanus_caryi", "linckia_nattereri", "pseudobalistes_placidus", "pervagor_adscensionis", "gnathosaurus_canadensis", "ctenosaura_limax", "cromileptes_saxatilis", "eosipterus_pytyopsittacus", "psittacula_scabriculus", "clione_dorsalis", "nestor_idahoensis", "sphyrna_ellioti", "chelonia_brummeri", "pseudopleuronectes_assasi", "aratinga_lugubris", "muriceopsis_polydactyla", "procambarus_maculosus", "procambarus_mahogoni", "ceratophrys_elephantotus", "callorhinchus_libratus", "seigisaurus_cristatus", "pervagor_meeki", "lepophidium_ochropus", "trachyphyllia_lappa", "aracana_bitatawa", "dunkleosteus_inscriptus", "auchenoglanis_capriscus", "aphaniotis_alcockii", "prionotus_herodias", "acanthopagrus_signatus", "orohippus_quadricornis", "alosa_atun", "priodontes_geoffroanus", "stenomylus_hemistiktos", "parabuthus_pusilla", "anolis_nebularia", "taenianotus_cassivellaunos", "camptosaurus_antennatus", "koskinonodon_porrasi", "acanthodoras_hoehnelii", "hoplolatilus_canus", "rhinopias_brevicarpalis", "echinus_pavoninus", "cataetyx_regius", "dorudon_fossor", "notopterus_ventricosus", "corystes_communis", "cardisoma_arabicum", "favia_longus", "sternoptyx_derasa", "peltocephalus_meleagris", "dicynodon_rubra", "stauroteuthis_newberryi", "chauliodus_melanopus", "sternarchorhynchus_thamnobates", "thrinaxodon_scomberoides", "dermochelys_glaucum", "monocirrhus_qilixaensis", "symphurus_altavela", "gorgasia_jamaicensis", "porcellana_ringens", "montipora_gigantea", "arctonyx_glaucum")
 
@@ -151,5 +151,12 @@ walk(
     osf_create_component(osf_teams, team, category = "analysis")
   }
 )
+```
+
+# Download team components
+
+```{r teams-download, eval=FALSE}
+osf_teams <- osf_retrieve_node("n3fyd")
+teams_comps <- osf_ls_nodes(osf_teams, n_max = Inf)
 ```
 
