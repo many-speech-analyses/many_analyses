@@ -40,6 +40,8 @@ teams_analyses$Q17[2] <- "petauroides_fistulator"
 teams_analyses$Q16[2] <- "https://osf.io/k5bxr/?view_only=8d16018b339f4db58584bec4a89ccd0e"
 teams_analyses$Q17[3] <- "pervagor_meeki"
 teams_analyses$Q16[3] <- "https://osf.io/sfhn5/?view_only=a8cec2e3e26043f2ab0218c7a02694f2"
+
+write_csv(teams_analyses, "data/questionnaires/msa_data_analysis_questionnaire_cleaned.csv")
 ```
 
 ```{r review}
