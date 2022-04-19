@@ -219,3 +219,13 @@ for (team in teams) {
 }
 ```
 
+# Delete empty components
+
+```{r delete-comps}
+for (team_idx in 1:nrow(teams_comps)) {
+  if (!(teams_comps[team_idx,]$name %in% teams)) {
+    osf_rm(teams_comps[team_idx,], check = FALSE, verbose = TRUE, recurse = TRUE)
+  }
+}
+```
+
