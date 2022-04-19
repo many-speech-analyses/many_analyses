@@ -1,0 +1,152 @@
+
+Which software did you use for the processing of the recordings and extraction of acoustic measurements? Please indicate all pieces of software that were used, and specify what was accomplished with each. For example: "Filtering of the recordings was done using the Matlab signal processing toolbox, while the extraction of acoustic measurements (f0, duration, formants, CoG) was accomplished with Praat."
+
+
+Textgriding was done with Montreal Forced Aligner and acoustic features were extracted with OpenSmile toolkit.
+
+
+
+------------------------------------------------------------------------
+
+
+
+Which analytical/statistical technique(s) did you employ to answer the research question? Please, indicate the name of the techniques and describe specific details if necessary. For example, "We run Bayesian mixed-effects models using a Gaussian likelihood as the distribution of the outcome variable". Details about variables and parameters will be asked in later questions.
+
+
+We treated the analysis as a multi-class classification task and ran multinomial logistic regression with L1 regularization. The model was fitted using the Scikit-learn Python package.
+
+
+
+------------------------------------------------------------------------
+
+
+
+How familiar are you with the analytical/statistical technique you employed?
+
+
+Very familiar.
+
+
+
+------------------------------------------------------------------------
+
+
+
+To answer the research question, which variable(s) did you choose as the dependent variable(s) (outcome or measured or latent variable), and what was the rationale behind the choice? If the analysis included multiple dependent variables, specify all of them and the rationale behind choosing each.
+
+
+The dependent variable is the typicality condition, which consists of three distinct categories: atypical, typical, medium.
+
+
+
+------------------------------------------------------------------------
+
+
+
+To answer the research question, which variable(s) did you choose as the independent variable(s) (predictors), and what was the rationale behind the choice? If the analysis included multiple independent variables, specify all of them and the rationale behind choosing each.
+
+
+All independent variables in our final model are listed below. We chose them because they were commonly used features for speech classification. We selected only the 20 f0 and formant features out of the 88 features in the GeMAPSv2 feature set. However, we found that some features were strongly correlated with each other. While strong correlations do not pose problems for the model and the classification task, they make interpretation impossible. So we manually selected ten features through inspecting the pairwise correlation matrix. These ten features were not strongly correlated. 
+
+F0semitoneFrom27.5Hz_mean: mean F0 on a semitone frequency scale, with semitone 0 starting at 27.5 Hz.
+F0semitoneFrom27.5Hz_stddevNorm: standard deviation of F0 on a semitone frequency scale, with semitone 0 starting at 27.5 Hz.
+F0semitoneFrom27.5Hz_meanRisingSlope: mean of the slope of rising f0
+F0semitoneFrom27.5Hz_meanFallingSlope: mean of the slope of falling f0
+H1-H2_mean:  mean ratio of energy of the first F0 harmonic (H1) to the energy of the second F0 harmonic (H2)
+H1-H2_stddevNorm: normalized standard deviation of the ratio of energy of the first F0 harmonic (H1) to the energy of the second F0 harmonic (H2)
+H1-A3_mean: mean ratio of energy of the first F0 harmonic (H1) to the energy of the highest harmonic in the third formant range (A3).
+H1-A3_stddevNorm: normalized standard deviation of the ratio of energy of the first F0 harmonic (H1) to the energy of the highest harmonic in the third formant range (A3).
+F1amplitudeLogRelF0_mean: the mean ratio of the energy of the spectral harmonic peak at the first, second, third formant’s centre frequency to the energy of the spectral peak at F0.
+F1amplitudeLogRelF0_stddevNorm: normalized standard deviation of the ratio of the energy of the spectral harmonic peak at the first, second, third formant’s centre frequency to the energy of the spectral peak at F0.
+
+
+
+------------------------------------------------------------------------
+
+
+
+How did you operationalise your dependent and independent variables? For example, if you choose f0 as a variable, specify from which speech domain it was extracted (for example: the phrase, the word, the syllable, the vowel, etc.), whether you extracted a summary statistic over a larger domain or a concrete value at a specific or relative point in time. For categorical variables (like age, gender, etc.), specify the levels/categories, how they are operationalised and the rationale behind the categorisation.
+
+
+We extracted acoustic features from the NP phrases, whose boundaries were extracted with Montreal Forced Aligner. The features were computed from frame-level features of each acoustic frame for the whole phrase. All independent variables are continuous acoustic features.
+
+The dependent variable is a categorical variable with three levels, atypical, typical, medium. They were one-hot encoded, which is a standard practice for classification tasks.
+
+
+
+
+
+------------------------------------------------------------------------
+
+
+
+What transformation (if any) were applied to the variables? Please, be as specific as possible by indicating for each variable that has been transformed the name of the variable as found in the dataset and the formula/operation that has been applied to it. For example: "We log transformed the F0 values, which are found in the column 'log_f0' of our data frame."
+
+
+For the 88 acoustic features, there were multiple transformations applied to them. The main idea is to extract frequency, amplitude and spectral parameters from each frame and then compute summary statistics from them (mean, variance, etc.).
+Details can be found in Section 3.1 and 3.2 of this paper: https://sail.usc.edu/publications/files/eyben-preprinttaffc-2015.pdf.
+
+For the extracted acoustic features, we applied mean-variance normalization (z-score) using the StandardScaler() in Sklearn. 
+For the dependent variable, one hot encoding was applied to convert the three categories to numerical categories.
+
+
+
+------------------------------------------------------------------------
+
+
+
+Were any observations excluded? If so, which criteria did you follow for the exclusion? For example: "We excluded values that were +/- 3 standard deviations from the mean."
+
+
+We excluded observations from the distractor conditions as they were not relevant to the research question.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What criteria did you use to decide on an answer to the research question? For example, the decision could have been based on p-values for particular predictors and/or interactions, on Bayesian posterior distributions, or confidence/credible intervals, etc...
+
+
+We ranked the magnitude of regression coefficients to find out the variable that contributes most to the best results. 
+The results were obtained through cross validation, that is, training the model on all but one speaker and testing the model on the unseen speaker. This was repeated for all speakers so we fitted 30 models. Then we ranked regression coefficients in all 30 models and manually inspected the results to find out the coefficients with largest magnitude.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What is the size of the effect for the research question? Please, specify the magnitude and direction of the effect size, along with the 95% confidence (or credible) interval in the following format: estimate [low interval, high interval].
+
+
+The effect size is the magnitude of the coefficients, which was selected by ranking all coefficients in a model. We did this by pooling the results across 30 models.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What unit is your effect size in (i.e., Hedges' G, standardized mean difference, etc.)?
+
+
+The effect size is unitless as it is based on the normalized features.
+
+
+
+------------------------------------------------------------------------
+
+
+
+Often we do not anticipate possible road blocks during our analyses. Did you encounter scenarios in which you had to revise an earlier analytical decision at a later stage, e.g. change a measurement after you have statistically analyzed (parts of) the data? If so, please briefly describe the situation.
+
+
+We initially fitted models with 88 acoustic features that were commonly used for machine learning in speech. However, we found that many variables were not linguistically interpretable (MFCCs), even though they were highly predictive. So we later decided to select a subset of 10 f0 and formant features that were more familiar to linguists as the variables for regression analysis.
+
+
+
+------------------------------------------------------------------------
+
+

@@ -1,0 +1,136 @@
+
+Which software did you use for the processing of the recordings and extraction of acoustic measurements? Please indicate all pieces of software that were used, and specify what was accomplished with each. For example: "Filtering of the recordings was done using the Matlab signal processing toolbox, while the extraction of acoustic measurements (f0, duration, formants, CoG) was accomplished with Praat."
+
+
+All utterances were extracted from the original audio files and saved as separate files using Praat. A Python script was used to create .txt file transcripts for each utterance using the trial data .csv files. Each individual utterance was contained in a separate .wav file with a corresponding .txt transcript file. These were then used as input to forced alignment using the Montreal Forced Aligner (McAuliffe et al. 2017) with a pre-trained German acoustic model and dictionary (available here). The forced aligner produced Praat TextGrid files marking the intervals of words and phones. 
+
+Measurements were extracted in Praat (Boersma & Weenink, 2022) using a Praat script written by the team. Average f0 of the adjective was extracted by isolating the adjective using the MFA boundaries and creating a pitch contour. The Get mean… function was then used on the Pitch object to extract the average f0 of the pitch contour of the adjective. The script output consisted of a database with filenames, adjective labels, duration of the adjective, and average f0 of the adjective (henceforth referred to as f0). This output was combined with the stimuli information from the project coordinators to include additional information on each utterance (typiciality, target name, target  color, etc.) using a Python script. This combined database was then read into R (R Core Team, 2022) for further analysis. 
+
+
+
+
+------------------------------------------------------------------------
+
+
+
+Which analytical/statistical technique(s) did you employ to answer the research question? Please, indicate the name of the techniques and describe specific details if necessary. For example, "We run Bayesian mixed-effects models using a Gaussian likelihood as the distribution of the outcome variable". Details about variables and parameters will be asked in later questions.
+
+
+linear mixed effects model
+
+
+
+------------------------------------------------------------------------
+
+
+
+How familiar are you with the analytical/statistical technique you employed?
+
+
+students leading the analysis are somewhat familiar (~1 stats class), faculty team leader is familiar (regularly uses lmms in research)
+
+
+
+------------------------------------------------------------------------
+
+
+
+To answer the research question, which variable(s) did you choose as the dependent variable(s) (outcome or measured or latent variable), and what was the rationale behind the choice? If the analysis included multiple dependent variables, specify all of them and the rationale behind choosing each.
+
+
+f0 averaged over the duration of the adjective – see write up for rationale
+
+
+
+------------------------------------------------------------------------
+
+
+
+To answer the research question, which variable(s) did you choose as the independent variable(s) (predictors), and what was the rationale behind the choice? If the analysis included multiple independent variables, specify all of them and the rationale behind choosing each.
+
+
+typicality with random intercepts for speaker
+
+
+
+------------------------------------------------------------------------
+
+
+
+How did you operationalise your dependent and independent variables? For example, if you choose f0 as a variable, specify from which speech domain it was extracted (for example: the phrase, the word, the syllable, the vowel, etc.), whether you extracted a summary statistic over a larger domain or a concrete value at a specific or relative point in time. For categorical variables (like age, gender, etc.), specify the levels/categories, how they are operationalised and the rationale behind the categorisation.
+
+
+f0 extracted and time-averaged over the word (see write up for rationale), typicality levels taken directly from the provided data (atypical, medium, typical)
+
+
+
+------------------------------------------------------------------------
+
+
+
+What transformation (if any) were applied to the variables? Please, be as specific as possible by indicating for each variable that has been transformed the name of the variable as found in the dataset and the formula/operation that has been applied to it. For example: "We log transformed the F0 values, which are found in the column 'log_f0' of our data frame."
+
+
+Log and inverse transformations were attempted but also resulted in significant Shapiro-Wilks results, so we proceeded with the regression on the raw values. Results do not change if the regression is instead done with log-transformed f0.
+
+
+
+------------------------------------------------------------------------
+
+
+
+Were any observations excluded? If so, which criteria did you follow for the exclusion? For example: "We excluded values that were +/- 3 standard deviations from the mean."
+
+
+no
+
+
+
+------------------------------------------------------------------------
+
+
+
+What criteria did you use to decide on an answer to the research question? For example, the decision could have been based on p-values for particular predictors and/or interactions, on Bayesian posterior distributions, or confidence/credible intervals, etc...
+
+
+p-values for typicality predictors in the linear regression
+
+
+
+------------------------------------------------------------------------
+
+
+
+What is the size of the effect for the research question? Please, specify the magnitude and direction of the effect size, along with the 95% confidence (or credible) interval in the following format: estimate [low interval, high interval].
+
+
+Cohen's d for medium typicality vs atypical = 0.00486
+Cohen's d for typical vs. atypical = -0.00918
+
+
+
+------------------------------------------------------------------------
+
+
+
+What unit is your effect size in (i.e., Hedges' G, standardized mean difference, etc.)?
+
+
+Cohen's d
+
+
+
+------------------------------------------------------------------------
+
+
+
+Often we do not anticipate possible road blocks during our analyses. Did you encounter scenarios in which you had to revise an earlier analytical decision at a later stage, e.g. change a measurement after you have statistically analyzed (parts of) the data? If so, please briefly describe the situation.
+
+
+no
+
+
+
+------------------------------------------------------------------------
+
+

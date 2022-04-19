@@ -1,0 +1,159 @@
+
+Which software did you use for the processing of the recordings and extraction of acoustic measurements? Please indicate all pieces of software that were used, and specify what was accomplished with each. For example: "Filtering of the recordings was done using the Matlab signal processing toolbox, while the extraction of acoustic measurements (f0, duration, formants, CoG) was accomplished with Praat."
+
+
+All acoustic analysis was conducted with Praat. 
+This included the following: 
+-	Creating a textgrid tier below the existing tiers to specify the Det+Adj combinations to be analyzed. We chose to analyze the Det+Adj combination because the Det often included transitions that were difficult to segment from the adjective (e.g., “der”).
+-	Finding the boundaries for the Det+Adj was done in Praat by hand by multiple (n=6) coders. Each coder was assigned to annotate all trials for 5 participants and the first three trials for all other participants. Boundaries were created at zero crossings using large acoustic/auditory cues. Boundaries that were unable to be detected were flagged, and the team lead made a final decision as to the appropriate boundary, and whether to discard the trial if necessary. All trials that were flagged as errors in the original Praat files were discarded. 
+-	Running a script to extract fundamental frequency (F0), duration and intensity measurements. The specific measurements extracted were: duration, average intensity, average F0, F0 range (max-min), intensity range (max-min).
+
+
+
+------------------------------------------------------------------------
+
+
+
+Which analytical/statistical technique(s) did you employ to answer the research question? Please, indicate the name of the techniques and describe specific details if necessary. For example, "We run Bayesian mixed-effects models using a Gaussian likelihood as the distribution of the outcome variable". Details about variables and parameters will be asked in later questions.
+
+
+We used path analysis from the Structural Equation Modeling (SEM) family of methods. The analysis was conducted in R (R Core Team 2020) and the package lavaan (version 0.6-7; Rosseel 2012) was used to fit the model using maximum likelihood estimation. The coefficients from SEM were compared with the estimates of the mixed-effect linear regression accounting for the random intercepts by speaker.
+
+
+
+------------------------------------------------------------------------
+
+
+
+How familiar are you with the analytical/statistical technique you employed?
+
+
+The level of familiarity with the analytical/statistical technique was extremely variable in the team, ranging from zero experience to advanced. The team member in charge of the analysis was considered proficient-to-advanced.
+
+
+
+------------------------------------------------------------------------
+
+
+
+To answer the research question, which variable(s) did you choose as the dependent variable(s) (outcome or measured or latent variable), and what was the rationale behind the choice? If the analysis included multiple dependent variables, specify all of them and the rationale behind choosing each.
+
+
+1.	duration of the determiner-adjective combination
+2.	mean intensity
+3.	mean pitch
+4.	intensity range
+5.	pitch range. 
+
+All dependent variables are measured and not latent. The dependent variables were chosen after consultation with the literature on the kinds of measurements that were done in similar research (e.g., information structure, typicality effects), and would likely show an effect. We also chose variables that were relatively easy to measure/define using Praat scripts over multiple trials/participants.
+
+
+
+
+------------------------------------------------------------------------
+
+
+
+To answer the research question, which variable(s) did you choose as the independent variable(s) (predictors), and what was the rationale behind the choice? If the analysis included multiple independent variables, specify all of them and the rationale behind choosing each.
+
+
+•	Typicality, categorical with 3 levels: typical, medium, atypical. Coded into two dummy variables: ‘medium’ (contrast medium and typical), and ‘atypical’ (contrast typical and atypical). Was chosen to address the research question that was posited.
+•	Focus, categorical with 3 levels: Noun Focus, Adjective Focus, and double Noun-Adjective Focus. Coded into 2 dummy variables: ‘af’ (contrast AF with NF which is a reference group) and ‘anf’ (contrast ANF and NF). Was chosen to determine how the acoustic characteristic change when the speaker is not faced with a need to facilitate disambiguation even if having to produce an atypical noun-adjective combination, either due to the lack of the risk to run into an atypical combination (as in AF, where nouns with no prototypical colors (sunglasses, paperclip, etc.) were used) or due to the lack of disambiguation that needs to be facilitated (as in ANF, where, even if the noun-adjective combination was atypical,  both noun and adjective competitors were different from targets). 
+•	Random effect variable -  Speaker: categorical with 30 levels. Was chosen to account for the variability in acoustic measures between speakers.
+
+
+
+------------------------------------------------------------------------
+
+
+
+How did you operationalise your dependent and independent variables? For example, if you choose f0 as a variable, specify from which speech domain it was extracted (for example: the phrase, the word, the syllable, the vowel, etc.), whether you extracted a summary statistic over a larger domain or a concrete value at a specific or relative point in time. For categorical variables (like age, gender, etc.), specify the levels/categories, how they are operationalised and the rationale behind the categorisation.
+
+
+The levels of the dependent variables were operationalized as defined by the original design of the study. We chose to analyze the Det+Adj combination because it was difficult to extract the Det from the Adj. We chose the whole two-word combination to extract information from.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What transformation (if any) were applied to the variables? Please, be as specific as possible by indicating for each variable that has been transformed the name of the variable as found in the dataset and the formula/operation that has been applied to it. For example: "We log transformed the F0 values, which are found in the column 'log_f0' of our data frame."
+
+
+Typicality was treatment-coded, with two new categorical variables created: ‘medium’ to represent the contrast between medium and typical conditions and ‘atypical’ to represent the difference between typical and atypical ones.
+Condition was treatment-coded as well, with two new categorical variables created: ‘anf’ to compare ANF (adjective-noun focus) to NF (Noun Focus) that’s used as a reference group; and ‘af’ to compare the sentences with AF (adjective focus) to NF.
+
+
+
+------------------------------------------------------------------------
+
+
+
+Were any observations excluded? If so, which criteria did you follow for the exclusion? For example: "We excluded values that were +/- 3 standard deviations from the mean."
+
+
+Observations were excluded if they had been flagged as an error or hesitation in the original files provided to the team. Further, cases where boundaries were unable to be placed after inspection by multiple team members were also excluded.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What criteria did you use to decide on an answer to the research question? For example, the decision could have been based on p-values for particular predictors and/or interactions, on Bayesian posterior distributions, or confidence/credible intervals, etc...
+
+
+Interpretations were made based on the combination of the goodness of fit parameters, p-values and confidence intervals. In the regression, the t-value was examined  instead of p-value.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What is the size of the effect for the research question? Please, specify the magnitude and direction of the effect size, along with the 95% confidence (or credible) interval in the following format: estimate [low interval, high interval].
+
+
+Effect sizes for medium typicality: 
+Multivariate effect size of duration for medium typicality= -0.07615017 (6.972037e-03)
+Multivariate effect size of intensity mean for medium typicality = -0.10337176 (6.974900e-03)
+Multivariate effect of intensity range for medium typicality = -0.15656113 (0.0069829895)
+Multivariate effect size of pitch mean for medium typicality = 0.01753193 (0.0069688211)
+Multivariate effect size of pitch range for medium typicality = -0.24361498 (1.196977340)
+Effect sizes for atypical typicality: 
+Multivariate effect size of duration for atypical condition = 0.01974490 (7.068778e-03)
+Multivariate effect size of intensity mean for atypical condition = -0.10072332 (7.074492e-03)
+Multivariate effect size of intensity range for atypical condition= 0.05763679 (0.0070704946)
+Multivariate effect size of pitch mean for atypical condition= 0.06101845 (0.0070707301)
+Multivariate effect size of pitch range for atypical condition = -0.10035993 (0.0070744492)
+
+The sample sizes were calculated for the purposes of multivariate (not univariate) meta analysis using structural equation modeling which does not allow to compute the confidence intervals for the effect sizes. Instead, it provides the sample variances effect sizes which are equivalent to CIs for the purposes of meta analysis.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What unit is your effect size in (i.e., Hedges' G, standardized mean difference, etc.)?
+
+
+Standardized mean difference
+
+
+
+------------------------------------------------------------------------
+
+
+
+Often we do not anticipate possible road blocks during our analyses. Did you encounter scenarios in which you had to revise an earlier analytical decision at a later stage, e.g. change a measurement after you have statistically analyzed (parts of) the data? If so, please briefly describe the situation.
+
+
+The structure of the model was adjusted based on the badness of fit of the original hypothesized model and computed modification indices.
+
+
+
+------------------------------------------------------------------------
+
+

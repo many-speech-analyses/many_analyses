@@ -1,0 +1,132 @@
+
+Which software did you use for the processing of the recordings and extraction of acoustic measurements? Please indicate all pieces of software that were used, and specify what was accomplished with each. For example: "Filtering of the recordings was done using the Matlab signal processing toolbox, while the extraction of acoustic measurements (f0, duration, formants, CoG) was accomplished with Praat."
+
+
+Extraction of acoustic measurements (duration, intensity, F0) was accomplished with Praat.
+
+
+
+------------------------------------------------------------------------
+
+
+
+Which analytical/statistical technique(s) did you employ to answer the research question? Please, indicate the name of the techniques and describe specific details if necessary. For example, "We run Bayesian mixed-effects models using a Gaussian likelihood as the distribution of the outcome variable". Details about variables and parameters will be asked in later questions.
+
+
+Unpaired two-tailed t-tests.
+
+
+
+------------------------------------------------------------------------
+
+
+
+How familiar are you with the analytical/statistical technique you employed?
+
+
+Somewhat, it's covered in various undergrad stats classes.
+
+
+
+------------------------------------------------------------------------
+
+
+
+To answer the research question, which variable(s) did you choose as the dependent variable(s) (outcome or measured or latent variable), and what was the rationale behind the choice? If the analysis included multiple dependent variables, specify all of them and the rationale behind choosing each.
+
+
+Dependent variables were continuous, the measurements of duration, intensity, and F0.  The literature pointed to those three as good candidates of stress correlates, and the rationale was that the three levels of the typicality factor was hypothesized to elicit perhaps longer, perhaps more intense vowels from least to most typical.
+
+
+
+------------------------------------------------------------------------
+
+
+
+To answer the research question, which variable(s) did you choose as the independent variable(s) (predictors), and what was the rationale behind the choice? If the analysis included multiple independent variables, specify all of them and the rationale behind choosing each.
+
+
+Typicality, with three levels, as specified in the data provided: atypical, medium, typical.  It was thought that this would be the best independent variable for the research question provided of 'does typicality affect the phonetics?'
+
+
+
+------------------------------------------------------------------------
+
+
+
+How did you operationalise your dependent and independent variables? For example, if you choose f0 as a variable, specify from which speech domain it was extracted (for example: the phrase, the word, the syllable, the vowel, etc.), whether you extracted a summary statistic over a larger domain or a concrete value at a specific or relative point in time. For categorical variables (like age, gender, etc.), specify the levels/categories, how they are operationalised and the rationale behind the categorisation.
+
+
+The measurements were extracted from the pre-tonic, tonic, and post-tonic vowels (if there was one) of the noun focus of each noun focus condition elicited phrase.  The pre-tonic and post-tonic measurements were not included in the statistical analysis.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What transformation (if any) were applied to the variables? Please, be as specific as possible by indicating for each variable that has been transformed the name of the variable as found in the dataset and the formula/operation that has been applied to it. For example: "We log transformed the F0 values, which are found in the column 'log_f0' of our data frame."
+
+
+n/a
+
+
+
+------------------------------------------------------------------------
+
+
+
+Were any observations excluded? If so, which criteria did you follow for the exclusion? For example: "We excluded values that were +/- 3 standard deviations from the mean."
+
+
+Tokens marked in the Notes tier in Praat as "error" or "background noise" were not included.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What criteria did you use to decide on an answer to the research question? For example, the decision could have been based on p-values for particular predictors and/or interactions, on Bayesian posterior distributions, or confidence/credible intervals, etc...
+
+
+P-values for each of the three measurements, comparing pairwise across levels of typicality.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What is the size of the effect for the research question? Please, specify the magnitude and direction of the effect size, along with the 95% confidence (or credible) interval in the following format: estimate [low interval, high interval].
+
+
+n/a
+
+
+
+------------------------------------------------------------------------
+
+
+
+What unit is your effect size in (i.e., Hedges' G, standardized mean difference, etc.)?
+
+
+n/a
+
+
+
+------------------------------------------------------------------------
+
+
+
+Often we do not anticipate possible road blocks during our analyses. Did you encounter scenarios in which you had to revise an earlier analytical decision at a later stage, e.g. change a measurement after you have statistically analyzed (parts of) the data? If so, please briefly describe the situation.
+
+
+My biggest roadblock was trying to figure out what to do when the residuals normality check came back indicating that I needed to use a non-parametric test.  Davidson's pdf did not cover what to do in that instance.  During the .wav file segmenting, I did have to go back and tweak some segments, as about halfway through I decided that I should try to mark a schwa if I could find it (however tiny) on the spectrogram, even if it wasn't audible (e.g. Bohnen /bo:nən/ [bo:n]).
+
+
+
+------------------------------------------------------------------------
+
+

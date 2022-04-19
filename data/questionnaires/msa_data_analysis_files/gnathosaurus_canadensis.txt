@@ -1,0 +1,133 @@
+
+Which software did you use for the processing of the recordings and extraction of acoustic measurements? Please indicate all pieces of software that were used, and specify what was accomplished with each. For example: "Filtering of the recordings was done using the Matlab signal processing toolbox, while the extraction of acoustic measurements (f0, duration, formants, CoG) was accomplished with Praat."
+
+
+For acoustic measurement (f0), I used Praat with the following settings: Spectrogram settings left on default (view range 0 - 5000Hz), Window length 0.005 s, dynamic range 55.0 dB, pitch settings for male speakers (i.e., low f0), pitch range 75 - 250 Hz, for female speakers (high f0), pitch range 120 - 450 Hz, unit for both semitones re 100.
+
+
+
+------------------------------------------------------------------------
+
+
+
+Which analytical/statistical technique(s) did you employ to answer the research question? Please, indicate the name of the techniques and describe specific details if necessary. For example, "We run Bayesian mixed-effects models using a Gaussian likelihood as the distribution of the outcome variable". Details about variables and parameters will be asked in later questions.
+
+
+Friedman test in RStudio
+
+
+
+------------------------------------------------------------------------
+
+
+
+How familiar are you with the analytical/statistical technique you employed?
+
+
+3/10 (I have not used the method before, I researched it specifically for this analysis)
+
+
+
+------------------------------------------------------------------------
+
+
+
+To answer the research question, which variable(s) did you choose as the dependent variable(s) (outcome or measured or latent variable), and what was the rationale behind the choice? If the analysis included multiple dependent variables, specify all of them and the rationale behind choosing each.
+
+
+Median f0 difference between the primary stressed syllable of the adjective and the primary stressed syllable of the noun as dependent variable. Since German is an intonation language and much of prosodic signaling above the individual word level uses f0-variation, I figured that this was a good variable to start with. I have little experience running statistical tests with multiple dependent variables, so I only chose one.
+
+
+
+------------------------------------------------------------------------
+
+
+
+To answer the research question, which variable(s) did you choose as the independent variable(s) (predictors), and what was the rationale behind the choice? If the analysis included multiple independent variables, specify all of them and the rationale behind choosing each.
+
+
+Degree of typicality (typical, atypical, medium typical). Since the research question was "Do speakers phonetically modulate utterances to signal atypical word combinations?", I am not sure what other predictor variable I could have chosen to answer the question. I felt like the groups for gender were too unevenly distributed to also use that as one of the predictor variables.
+
+
+
+------------------------------------------------------------------------
+
+
+
+How did you operationalise your dependent and independent variables? For example, if you choose f0 as a variable, specify from which speech domain it was extracted (for example: the phrase, the word, the syllable, the vowel, etc.), whether you extracted a summary statistic over a larger domain or a concrete value at a specific or relative point in time. For categorical variables (like age, gender, etc.), specify the levels/categories, how they are operationalised and the rationale behind the categorisation.
+
+
+for the median f0 difference, I picked the main stressed syllable of the adjective and the noun in the NF condition (in the data frame with the data I extracted from Praat directly, MSA_extracteddata, the columns are called f0_MSS_adj and f0_MSS_n. The degree of typicality was assigned as specified in the document about the collection of the data.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What transformation (if any) were applied to the variables? Please, be as specific as possible by indicating for each variable that has been transformed the name of the variable as found in the dataset and the formula/operation that has been applied to it. For example: "We log transformed the F0 values, which are found in the column 'log_f0' of our data frame."
+
+
+I extracted the f0 value in semitones (re 100) directly from Praat and then calculated the median f0 difference from the values I got from Praat (MSS_diff in the data frame MSA_extracteddata). Because I only wanted to look at the difference and the direction of the difference, I added a column where I removed the negative markers (MSS_diff_pos).
+Because of the inherent f0 differences of the different syllables in the data set, I calculated the median f0 difference per degree of typicality per speaker (data frame "typ", column median_diff_st, these are the values I then used for the statistical analysis).
+
+
+
+------------------------------------------------------------------------
+
+
+
+Were any observations excluded? If so, which criteria did you follow for the exclusion? For example: "We excluded values that were +/- 3 standard deviations from the mean."
+
+
+I did not use any of the utterances that had the "error", the "noise/sound" or the "structure" comment in the textgrids. While there were notable outliers for the f0 differences, these ultimately did not have a huge effect on the result, so I did not remove these outliers.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What criteria did you use to decide on an answer to the research question? For example, the decision could have been based on p-values for particular predictors and/or interactions, on Bayesian posterior distributions, or confidence/credible intervals, etc...
+
+
+p-value
+
+
+
+------------------------------------------------------------------------
+
+
+
+What is the size of the effect for the research question? Please, specify the magnitude and direction of the effect size, along with the 95% confidence (or credible) interval in the following format: estimate [low interval, high interval].
+
+
+0.04 (small), 95%CI [0.0,1.0]
+
+
+
+------------------------------------------------------------------------
+
+
+
+What unit is your effect size in (i.e., Hedges' G, standardized mean difference, etc.)?
+
+
+Kendall's W
+
+
+
+------------------------------------------------------------------------
+
+
+
+Often we do not anticipate possible road blocks during our analyses. Did you encounter scenarios in which you had to revise an earlier analytical decision at a later stage, e.g. change a measurement after you have statistically analyzed (parts of) the data? If so, please briefly describe the situation.
+
+
+After I was done collecting the data, I realized I had to use a different statistical test from the one I originally wanted to use to one I had never used before. Because I never used this test before I also had to use a method to calculate effect size that I had never done before, which I found rather difficult because most webpages explaining statistical methods do not really tell you how to read the output you get from, e.g., R, and do not specify which packages are needed to run a specific test, or to use specific operators, which makes it basically impossible to use these methods if you are not already familiar with them.
+
+
+
+------------------------------------------------------------------------
+
+

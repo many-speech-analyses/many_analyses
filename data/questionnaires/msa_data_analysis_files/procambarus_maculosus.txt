@@ -1,0 +1,139 @@
+
+Which software did you use for the processing of the recordings and extraction of acoustic measurements? Please indicate all pieces of software that were used, and specify what was accomplished with each. For example: "Filtering of the recordings was done using the Matlab signal processing toolbox, while the extraction of acoustic measurements (f0, duration, formants, CoG) was accomplished with Praat."
+
+
+Praat (script): tier extraction, pre-segmentation; R, emuR package/BAS WebServices: automatic segmentation; wrassp package: f0 calculation; fda package: FPCA analysis; MuMin, emmeans and lmerTest packages: LMER analysis
+
+
+
+------------------------------------------------------------------------
+
+
+
+Which analytical/statistical technique(s) did you employ to answer the research question? Please, indicate the name of the techniques and describe specific details if necessary. For example, "We run Bayesian mixed-effects models using a Gaussian likelihood as the distribution of the outcome variable". Details about variables and parameters will be asked in later questions.
+
+
+Functional Principal Components Analysis to decompose the signal in principal components, describing main patterns of variation of the signal's position - i.e. frequency height - and shape, in particular its tilt. The PC-scores were submitted to LMER, Pseudo-R2 were calculated in order to quantify and compare the amount of variance captured by the LMER models.
+
+
+
+------------------------------------------------------------------------
+
+
+
+How familiar are you with the analytical/statistical technique you employed?
+
+
+Quite confident and familiar with these methods (already employed for other analyses and papers).
+
+
+
+------------------------------------------------------------------------
+
+
+
+To answer the research question, which variable(s) did you choose as the dependent variable(s) (outcome or measured or latent variable), and what was the rationale behind the choice? If the analysis included multiple dependent variables, specify all of them and the rationale behind choosing each.
+
+
+F0 was the variable analysed in our analysis, since there are some studies indirectly suggesting that a higher pitch might correlate with atypicality. The PC-scores connected to the PCs (i.e. main f0 variations) were chosen as dependent variables for the LMER models (one score per PC and token analysed in the dataset).
+
+
+
+------------------------------------------------------------------------
+
+
+
+To answer the research question, which variable(s) did you choose as the independent variable(s) (predictors), and what was the rationale behind the choice? If the analysis included multiple independent variables, specify all of them and the rationale behind choosing each.
+
+
+Typicality, Sex as fixed factors, Word and speaker as random factors (in order to filter out variation due to these components).
+
+Typicality referred to the main research question, while Sex is also highly correlated to pitch height, this si why it also had to present so as to give non-biased results.
+
+
+
+------------------------------------------------------------------------
+
+
+
+How did you operationalise your dependent and independent variables? For example, if you choose f0 as a variable, specify from which speech domain it was extracted (for example: the phrase, the word, the syllable, the vowel, etc.), whether you extracted a summary statistic over a larger domain or a concrete value at a specific or relative point in time. For categorical variables (like age, gender, etc.), specify the levels/categories, how they are operationalised and the rationale behind the categorisation.
+
+
+F0 extracted from the vowel nuclei of the primary stressed syllables of the nuclear accented (i.e. target) words. The F0 trajectories were time-normalised, so that the whole trajectories could be submitted to FPCA. Sex had two levels (M/F). The random factors Word and Speaker had as many levels as the number of speakers/words elicited.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What transformation (if any) were applied to the variables? Please, be as specific as possible by indicating for each variable that has been transformed the name of the variable as found in the dataset and the formula/operation that has been applied to it. For example: "We log transformed the F0 values, which are found in the column 'log_f0' of our data frame."
+
+
+F0 values were extracted by means of the "ksv" algorithm (Schaefer-Vincent, 1983). The F0 signals were then submitted to FPCA. This type of functional analysis linearly decomposes the input signals f 0i(t) and returns (i) K time-varying Principal Components PCkf 0 (t) which capture independent modes of variation in the signal shapes, (ii) PC scores sk,i, one per PCk and signal i, which modulate the PCs differently for each
+signal, and (iii) the mean f0 signal μf 0 (t) . Formally:
+
+f 0i(t) ≈ μf 0 (t) +K∑k=1sk,i · PCkf 0 (t)
+
+
+
+------------------------------------------------------------------------
+
+
+
+Were any observations excluded? If so, which criteria did you follow for the exclusion? For example: "We excluded values that were +/- 3 standard deviations from the mean."
+
+
+Two audio files had to be excluded from the analysis; one because the target word was produced incorrectly Tirsche instead of Kirsche, and the other one because there was a loud noise during the target word.
+
+The extracted F0 signals were cleaned up as follows: First, zeros in the middle 50\% of the vowel (which we interpreted as measuring errors) were replaced by the previous non-zero F0 value, in order to avoid that these measuring errors had an impact on the analysis. Second, zeros in the first and last 25\% of the F0 signals were removed without replacement. This was because the MAUS segmentation was not always accurate, so that parts of the surrounding voiceless sounds were included by MAUS in the vocalic segment.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What criteria did you use to decide on an answer to the research question? For example, the decision could have been based on p-values for particular predictors and/or interactions, on Bayesian posterior distributions, or confidence/credible intervals, etc...
+
+
+Shape variation captured by FPCA; amount of variance explained by LMER models (Pseudo-R2), p-values of fixed factors (and their interactions) in LMER models (i.e. significance probability).
+
+
+
+------------------------------------------------------------------------
+
+
+
+What is the size of the effect for the research question? Please, specify the magnitude and direction of the effect size, along with the 95% confidence (or credible) interval in the following format: estimate [low interval, high interval].
+
+
+The effect on the s1 score describing height shift of F0 was non-significant. The direction of the change was a raising of the pitch of around 10Hz to max. 15Hz for both males and females.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What unit is your effect size in (i.e., Hedges' G, standardized mean difference, etc.)?
+
+
+Pseudo R2 (marginal and conditional) applied to the output of the LMER models
+
+
+
+------------------------------------------------------------------------
+
+
+
+Often we do not anticipate possible road blocks during our analyses. Did you encounter scenarios in which you had to revise an earlier analytical decision at a later stage, e.g. change a measurement after you have statistically analyzed (parts of) the data? If so, please briefly describe the situation.
+
+
+The main problems were connected to the fact that the database was quite unbalanced, so for instance we did not know if it was the case to consider the vowel types as fixed factors or not. We also thought of analysing just women, in order to filter out male/female differences in pitch (but since the results were quite similar, at the end we decided to include all speakers).
+
+
+
+------------------------------------------------------------------------
+
+

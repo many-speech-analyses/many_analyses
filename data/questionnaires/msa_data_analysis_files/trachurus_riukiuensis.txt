@@ -1,0 +1,174 @@
+
+Which software did you use for the processing of the recordings and extraction of acoustic measurements? Please indicate all pieces of software that were used, and specify what was accomplished with each. For example: "Filtering of the recordings was done using the Matlab signal processing toolbox, while the extraction of acoustic measurements (f0, duration, formants, CoG) was accomplished with Praat."
+
+
+Extraction of acoustic measurements (f0, duration) was accomplished with Praat.
+
+
+
+------------------------------------------------------------------------
+
+
+
+Which analytical/statistical technique(s) did you employ to answer the research question? Please, indicate the name of the techniques and describe specific details if necessary. For example, "We run Bayesian mixed-effects models using a Gaussian likelihood as the distribution of the outcome variable". Details about variables and parameters will be asked in later questions.
+
+
+We ran linear mixed effects models fit by REML using the lme4 package in R.
+
+
+
+------------------------------------------------------------------------
+
+
+
+How familiar are you with the analytical/statistical technique you employed?
+
+
+There was varying familiarity in our group from novice to very familiar.
+
+
+
+------------------------------------------------------------------------
+
+
+
+To answer the research question, which variable(s) did you choose as the dependent variable(s) (outcome or measured or latent variable), and what was the rationale behind the choice? If the analysis included multiple dependent variables, specify all of them and the rationale behind choosing each.
+
+
+If there was going to be an effect, we predicted that the effect would manifest as a prosodic difference, and thus focussed exclusively on f0 and duration measurements.  Since adjectives were balanced across the three conditions, we decided to focus primarily on the adjective, but included the article and noun for good measure. 
+Duration of article
+Duration of adjective
+F0 peak of article
+F0 peak of adjective
+F0 peak of noun
+We hypothesized that due to the nature of the experiment, namely seeing objects with all kinds of colours, participants might vary in their f0 and durations of the adjective as a function of the adjective-noun’s typicality.
+
+We hypothesized that this effect could go either of two directions:  1) the typical adjective-noun combinations, after speakers have seen so many unusual or impossible combinations, could lead speakers to add prosodic emphasis in the typical condition, probably leading to greater duration or f0 somewhere in the article-adjective-noun sequence; or 2) speakers could add prosodic emphasis to the atypical adjective-noun combinations because they are surprising.  Direction 1 (emphasis on typical) would reflect a reaction of surprise at finally seeing a picture that makes sense, while direction 2 would reflect emphasis on novel and unlikely combinations.
+
+
+
+------------------------------------------------------------------------
+
+
+
+To answer the research question, which variable(s) did you choose as the independent variable(s) (predictors), and what was the rationale behind the choice? If the analysis included multiple independent variables, specify all of them and the rationale behind choosing each.
+
+
+We selected typicality as the independent variable and coded this as a fixed effect in the model.  Typicality was selected since the research question asked whether the typicality of the adjective-noun combination would have acoustic effects.  We did not expect there to be any effect of gender or age (and, moreover, this information was not provided), and so did not include them as predictors.
+
+
+
+------------------------------------------------------------------------
+
+
+
+How did you operationalise your dependent and independent variables? For example, if you choose f0 as a variable, specify from which speech domain it was extracted (for example: the phrase, the word, the syllable, the vowel, etc.), whether you extracted a summary statistic over a larger domain or a concrete value at a specific or relative point in time. For categorical variables (like age, gender, etc.), specify the levels/categories, how they are operationalised and the rationale behind the categorisation.
+
+
+Duration of the article and adjective were measured based on our segmentation criteria, which were hand-segmented according to the following principles:
+
+The onset of the article was the beginning of the burst, or if none was visible, the onset of formant structure of the vowel.  The offset of the article (and hence onset of the adjective) was defined by the offset of F2 or the onset of silence/creak for “der”, and the offset of the nasal formant structure for “den”. In the case of "der" followed by an initial vowel with no creak or glottal stop, the offset of the article was placed at halfway through the F2 transition.
+
+Since all adjectives end in [n], the offset of the adjective was taken to be the offset of nasal formant structure.  When the following noun began with a nasal [m] (as in Mandarine and Möhre), the boundary was taken to be the point when the distribution of frequencies of energy suddenly change in the spectrogram and waveform; in a handful of cases, there was no clear boundary and so the midpoint between the nasal formant structure of the [n#m] sequence was selected.
+
+Peak f0 was extracted from the word for the article and adjective.  For the noun, peak f0 was extracted from the interval beginning at the onset of the noun, and ending at the offset of the stressed syllable.  For all three f0 measures, the peak was measured as of 30 ms after the onset of the word in question, in order to eliminate microprosodic effects associated with voiceless consonants.
+
+
+
+
+------------------------------------------------------------------------
+
+
+
+What transformation (if any) were applied to the variables? Please, be as specific as possible by indicating for each variable that has been transformed the name of the variable as found in the dataset and the formula/operation that has been applied to it. For example: "We log transformed the F0 values, which are found in the column 'log_f0' of our data frame."
+
+
+We did not transform any of the variables.
+
+
+
+------------------------------------------------------------------------
+
+
+
+Were any observations excluded? If so, which criteria did you follow for the exclusion? For example: "We excluded values that were +/- 3 standard deviations from the mean."
+
+
+
+All tokens marked as having been produced with an error or hesitation were omitted, as were all tokens from one speaker (JW_3) who had a particularly high error rate; thus 70 tokens were removed, leaving a total of 830 observations over 29 participants before outliers were removed.
+
+For each acoustic measure, data were inspected to ensure that measures were roughly normally distributed.  Outliers for the peak f0 measures were defined using the absolute deviation around the median by participant, using the “mad” function from the “stats” package (see Leys et al., 2013).   The rejection criterion for the peak f0 of the adjective and noun was set at 2.5 standard deviations from the absolute deviation around the median; the rejection criterion was set at 2 standard deviations for the peak f0 of the determiner, as this less conservative cutoff was necessary to eliminate cases of creak that persisted throughout the determiner.  Thus for the peak f0 measures, the total number of observations were:  816 observations for the adjective; 802 for the noun; and 671 for the article.  No outliers were removed for the duration measures of the noun and adjective.
+
+Leys, C., Ley, C., Klein, O., Bernard, P., & Licata, L. (2013). Detecting outliers: Do not use standard deviation around the mean, use absolute deviation around the median. Journal of Experimental Social Psychology, 49(4), 764–766. 
+
+
+
+
+------------------------------------------------------------------------
+
+
+
+What criteria did you use to decide on an answer to the research question? For example, the decision could have been based on p-values for particular predictors and/or interactions, on Bayesian posterior distributions, or confidence/credible intervals, etc...
+
+
+For each analysis, we made a decision based on the 95% confidence intervals (CIs) for the coefficient, standard error (SE), and p-value.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What is the size of the effect for the research question? Please, specify the magnitude and direction of the effect size, along with the 95% confidence (or credible) interval in the following format: estimate [low interval, high interval].
+
+
+Article duration - no effect
+Typicality: atypical	-13.95 [-42.42,  14.52]	
+Typicality: medium	0.95 [-27.52,  29.42]	
+
+Article peak f0 - no effect
+Typicality: atypical	1.21 [ -1.29,   3.71]	
+Typicality: medium	-0.0008 [ -2.51,   2.51]	
+
+Adjective duration - no effect
+Typicality: atypical	13.96 [-111.81, 139.74]	
+Typicality: medium	-7.66 [-133.43, 118.12]
+
+Adjective peak f0 - no effect
+Typicality: atypical	1.86 [ -5.55,   9.27]		
+Typicality: medium	-0.66 [ -8.07,   6.75]	
+Noun peak f0 - no effect
+Typicality: atypical	5.58 [ -7.94,  19.10]		
+Typicality: medium	7.58 [ -5.94,  21.11]
+
+
+
+------------------------------------------------------------------------
+
+
+
+What unit is your effect size in (i.e., Hedges' G, standardized mean difference, etc.)?
+
+
+Because no effects were found, we report each analysis using the estimated coefficient in its original units, i.e., milliseconds for duration and Hz for f0.
+
+
+
+
+------------------------------------------------------------------------
+
+
+
+Often we do not anticipate possible road blocks during our analyses. Did you encounter scenarios in which you had to revise an earlier analytical decision at a later stage, e.g. change a measurement after you have statistically analyzed (parts of) the data? If so, please briefly describe the situation.
+
+
+Creak that persists throughout the entire article, or rarely throughout the entire adjective or portion of noun measured.  We did not anticipate that two speakers would often creak throughout so much of their speech, making f0 measurements bimodal and unreliable for the question we were asking.
+
+We didn't anticipate the pronunciation "orangenen" for "orangen", but this is unlikely to cause any problems in the analysis because of the overall variability of adjective durations and the matching of adjectives across conditions.
+
+
+
+
+------------------------------------------------------------------------
+
+

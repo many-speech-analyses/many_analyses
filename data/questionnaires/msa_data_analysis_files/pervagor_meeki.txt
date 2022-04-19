@@ -1,0 +1,197 @@
+
+Which software did you use for the processing of the recordings and extraction of acoustic measurements? Please indicate all pieces of software that were used, and specify what was accomplished with each. For example: "Filtering of the recordings was done using the Matlab signal processing toolbox, while the extraction of acoustic measurements (f0, duration, formants, CoG) was accomplished with Praat."
+
+
+We force-aligned the TextGrid word boundaries with the Montreal Forced Aligner (MFA, v1) (McAuliffe et al., 2017) with the pre-trained acoustic Prosody Lab German model and the ProsodyLab German Dictionary. 
+
+We then wrote a custom Praat code to recombine the force-aligned TextGrid output with the original TextGrid (indicating Condition, Sentence Number; replacing the erroneous phone/word tiers with those from the MFA output). We also wrote a custom script to slow down the wavfile and TextGrid for one particularly fast talker (Subject “AL”); after running the slowed soundfile/TextGrid through MFA, we wrote another custom script to speed up the MFA TextGrid to match the original for the speaker. This speed manipulation was only needed for the one subject (AL).
+
+Average acoustic measurements over each word were acquired through Praat, using a custom analysis script.
+
+
+
+
+------------------------------------------------------------------------
+
+
+
+Which analytical/statistical technique(s) did you employ to answer the research question? Please, indicate the name of the techniques and describe specific details if necessary. For example, "We run Bayesian mixed-effects models using a Gaussian likelihood as the distribution of the outcome variable". Details about variables and parameters will be asked in later questions.
+
+
+Each acoustic feature was separately analyzed through linear mixed effects models, using the lme4 and lmerTest packages (Bates et al., 2015; Kuznetsova, Brockhoff, & Christensen, 2017) in R (version 4.1.2, R Core Team, 2021). Separate models compared the acoustic features of the noun and the color adjective of the NF trials.
+
+The models on the nouns included a fixed effect of Typicality (Typical, Medium, Atypical; treatment coded, reference = Typical) and by-Speaker random intercepts and slopes for Typicality. The models on the adjectives additionally included by-Word random intercepts and slopes for Typicality. In case of non-convergence or singular fit, the random effects structure was simplified by iteratively removing the random effects associated with the least amount of variance (Barr et al., 2013). Each model was run twice (reference = Typical or reference = Medium) in order to produce estimates for all contrasts.
+
+
+
+
+------------------------------------------------------------------------
+
+
+
+How familiar are you with the analytical/statistical technique you employed?
+
+
+Very familiar (primary method for analysis)
+
+
+
+------------------------------------------------------------------------
+
+
+
+To answer the research question, which variable(s) did you choose as the dependent variable(s) (outcome or measured or latent variable), and what was the rationale behind the choice? If the analysis included multiple dependent variables, specify all of them and the rationale behind choosing each.
+
+
+The dependent variables were mean and max f0, mean intensity and duration for each word (nouns and adjectives in NF), as all of these acoustic features have been found to correlate with focus (Breen et al., 2010; Lam & Watson, 2010; Roettger et al., 2019). 
+
+
+
+
+------------------------------------------------------------------------
+
+
+
+To answer the research question, which variable(s) did you choose as the independent variable(s) (predictors), and what was the rationale behind the choice? If the analysis included multiple independent variables, specify all of them and the rationale behind choosing each.
+
+
+The only predictor we used was the Typicality category assigned to each color-noun pair, as this was the primary manipulation in the study. 
+
+We originally intended to include the focus condition (NF vs AF) as an additional predictor, but decided not to due to limitations of the study design (see answer to question 11).
+
+
+
+
+------------------------------------------------------------------------
+
+
+
+How did you operationalise your dependent and independent variables? For example, if you choose f0 as a variable, specify from which speech domain it was extracted (for example: the phrase, the word, the syllable, the vowel, etc.), whether you extracted a summary statistic over a larger domain or a concrete value at a specific or relative point in time. For categorical variables (like age, gender, etc.), specify the levels/categories, how they are operationalised and the rationale behind the categorisation.
+
+
+Dependent variables: 
+Average mean and max f0, intensity (in dB) and duration were extracted at the word-level, from the nouns and color adjectives in the NF trials. Similarly to previous studies (e.g., Lam & Watson, 2010) we used a single average acoustic measurement over each word, rather than over individual vowels, because different target words in this experiment (the focused nouns) contain unequal numbers of vowels. 
+
+Only pitch measurements within the plausible range of 78 to 300 Hz were used to calculate mean and max f0 over each word.
+
+Independent variable:
+Typicality included three levels: Typical, Medium and Atypical. Each color-noun pair in the NF condition had been already categorized as part of one of the three levels by the study coordinators based on the norming study. Typicality was treatment coded, with the reference level = ‘Typical’.
+
+
+
+
+------------------------------------------------------------------------
+
+
+
+What transformation (if any) were applied to the variables? Please, be as specific as possible by indicating for each variable that has been transformed the name of the variable as found in the dataset and the formula/operation that has been applied to it. For example: "We log transformed the F0 values, which are found in the column 'log_f0' of our data frame."
+
+
+Pitch was converted to semitones (ST; relative to 75 Hz) with the hqmisc R package (Quené, 2014), so that f0 would be on a linear scale. 
+
+In our dataset, non-transformed f0 measurements (in Hz) are found under the column names “Mean_f0” and “Max_f0”. Transformed f0 measurements (in ST) are found under the column names “Mean_f0_st” and “Max_f0_st”.
+
+
+
+
+------------------------------------------------------------------------
+
+
+
+Were any observations excluded? If so, which criteria did you follow for the exclusion? For example: "We excluded values that were +/- 3 standard deviations from the mean."
+
+
+Only sentences in the critical Noun Focus condition were analyzed. Sentences that had been marked as containing a speech or structure error, noise or hesitation were excluded from the analyses.
+
+Acoustic measurements exceeding 3 standard deviations from each speaker’s mean were excluded from the analyses.
+
+
+
+
+------------------------------------------------------------------------
+
+
+
+What criteria did you use to decide on an answer to the research question? For example, the decision could have been based on p-values for particular predictors and/or interactions, on Bayesian posterior distributions, or confidence/credible intervals, etc...
+
+
+The decision was based on beta coefficients from the mixed effects models (which also represent simple effect sizes) and the corresponding p-values, for each contrast among the three Typicality levels.
+
+
+
+
+------------------------------------------------------------------------
+
+
+
+What is the size of the effect for the research question? Please, specify the magnitude and direction of the effect size, along with the 95% confidence (or credible) interval in the following format: estimate [low interval, high interval].
+
+
+NOUNS
+Measure	Contrast	Effect size (beta)	95% CI
+intensity	atypical - typical	-1.06	[-1.57, -0.55]
+intensity	medium - typical	-1.54	[-2.05, -1.03]
+intensity	atypical - medium	0.48	[-0.04, 0.99]
+duration	atypical - typical	-80.67	[-98.54, -62.79]
+duration	medium - typical	33.02	[15.26, 50.78]
+duration	atypical - medium	-113.69[-131.59, -95.8]
+meanf0	atypical - typical	0.94	[0.51, 1.36]
+meanf0	medium - typical	0.41	[0.02, 0.81]
+meanf0	atypical - medium	0.53	[0.11, 0.94]
+maxf0		atypical - typical	0.77	[0.43, 1.1]
+maxf0		medium - typical	0.77	[0.44, 1.1]
+maxf0		atypical - medium	-0.01	[-0.34, 0.33]
+
+
+ADJECTIVES:
+Measure	Contrast	Effect size (beta)	95% CI
+intensity	atypical - typical	-0.01	[-1.3, 1.28]
+intensity	medium - typical	-0.48	[-1.3, 0.35]
+intensity	atypical - medium	0.47	[-0.7, 1.64]
+duration	atypical - typical	3.98	[-45.55, 53.51]
+duration	medium - typical	-9.65	[-52.58, 33.28]
+duration	atypical - medium	13.63	[-23.73, 51]
+meanf0	atypical - typical	0.16	[-0.14, 0.45]
+meanf0	medium - typical	0	[-0.3, 0.29]
+meanf0	atypical - medium	0.16	[-0.14, 0.46]
+maxf0		atypical - typical	0.27	[0.04, 0.5]
+maxf0		medium - typical	0.06	[-0.17, 0.29]
+maxf0		atypical - medium	0.21	[-0.02, 0.45]
+
+
+
+
+------------------------------------------------------------------------
+
+
+
+What unit is your effect size in (i.e., Hedges' G, standardized mean difference, etc.)?
+
+
+We chose to report simple effect sizes rather than a standardized measure of effect size (e.g., eta squared), following Baguley (2009). Simple effect sizes (i.e. unstandardized regression coefficients) are easier to interpret in relation to each dependent measure of interest, and are automatically computed as the estimated beta coefficient of treatment-coded contrasts in mixed effects models. Thus, the effect sizes are in the units of each acoustic measure (Intensity: dB; Duration: ms; Mean/Max f0: ST).
+
+This method allowed us to report an effect size for each contrast of interest (e.g., Atypical vs. Typical), while common methods to acquire standardized effect sizes (e.g., eta squared using the R package effectsize; Ben-Shachar et al., 2020) only lead to a single, less interpretable value for the effect of Typicality across all contrasts. The 95% confidence intervals for the simple effect sizes were calculated using the R package emmeans (Lenth et al., 2019).
+
+
+
+------------------------------------------------------------------------
+
+
+
+Often we do not anticipate possible road blocks during our analyses. Did you encounter scenarios in which you had to revise an earlier analytical decision at a later stage, e.g. change a measurement after you have statistically analyzed (parts of) the data? If so, please briefly describe the situation.
+
+
+We had to make two changes to our planned analyses, resulting from limitations of the production study design.
+
+First, we initially intended to include by-Word random effects for the noun models to account for differences in baseline acoustic measurements (e.g., certain words being overall longer than others). However, we did not ultimately include this random effect for the noun models because, contrary to the color adjectives, target nouns were not fully crossed with Typicality (each noun was only associated with one Typicality level). 
+
+Second, we originally intended to compare Noun Focus (NF) and Adjective Focus (AF) conditions to determine whether the effect of typicality on the noun and adjective varied as a function of whether the noun or the adjective were in focus. However, in the end we only analyzed NF trials because the data were not balanced. In the AF trials, the nouns were not counterbalanced across the 3 Typicality categories (typical, medium, atypical), but rather only contained atypical food color-noun combinations and some medium-typicality non-food nouns.
+
+We suggest that in the final paper resulting from this study, the study description in the method should be revised to more clearly differentiate between the designs of the NF, AF and ANF conditions, as the current study description and examples used (e.g., “yellow banana” vs “blue banana” for the AF condition, which were not actual items used in AF) led us to misinterpret the design.
+
+
+
+
+------------------------------------------------------------------------
+
+

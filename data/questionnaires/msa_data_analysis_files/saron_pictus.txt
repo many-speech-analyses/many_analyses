@@ -1,0 +1,135 @@
+
+Which software did you use for the processing of the recordings and extraction of acoustic measurements? Please indicate all pieces of software that were used, and specify what was accomplished with each. For example: "Filtering of the recordings was done using the Matlab signal processing toolbox, while the extraction of acoustic measurements (f0, duration, formants, CoG) was accomplished with Praat."
+
+
+Praat was used to automatically produce a word-level alignment, for hand-correcting the relevant boundaries, and for extracting relevant acoustic measurements from the hand-corrected textgrids.
+
+
+
+------------------------------------------------------------------------
+
+
+
+Which analytical/statistical technique(s) did you employ to answer the research question? Please, indicate the name of the techniques and describe specific details if necessary. For example, "We run Bayesian mixed-effects models using a Gaussian likelihood as the distribution of the outcome variable". Details about variables and parameters will be asked in later questions.
+
+
+we analyzed the word duration of the target adjectives produced during the experiment with a Bayesian hierarchical model with a lognormal likelihood
+
+
+
+------------------------------------------------------------------------
+
+
+
+How familiar are you with the analytical/statistical technique you employed?
+
+
+Very familiar
+
+
+
+------------------------------------------------------------------------
+
+
+
+To answer the research question, which variable(s) did you choose as the dependent variable(s) (outcome or measured or latent variable), and what was the rationale behind the choice? If the analysis included multiple dependent variables, specify all of them and the rationale behind choosing each.
+
+
+We chose word duration, as it was thought that the medium and atypical conditions may have been produced more clearly, and with less reduction. Word duration was thought of as a good first step in addressing pronunciation differences.
+
+
+
+------------------------------------------------------------------------
+
+
+
+To answer the research question, which variable(s) did you choose as the independent variable(s) (predictors), and what was the rationale behind the choice? If the analysis included multiple independent variables, specify all of them and the rationale behind choosing each.
+
+
+We included typicality, coded as an indicator variable with typical words being represented by the intercept. We also controlled for trial, as we thought it likely that word durations would be shorter over the course of the experiment, as similar sentences were being repeated.
+
+
+
+------------------------------------------------------------------------
+
+
+
+How did you operationalise your dependent and independent variables? For example, if you choose f0 as a variable, specify from which speech domain it was extracted (for example: the phrase, the word, the syllable, the vowel, etc.), whether you extracted a summary statistic over a larger domain or a concrete value at a specific or relative point in time. For categorical variables (like age, gender, etc.), specify the levels/categories, how they are operationalised and the rationale behind the categorisation.
+
+
+We chose the duration of the adjective in milliseconds. As the adjective was the only target word that appeared in all three conditions, it was the only suitable comparison that could be make in terms of word duration.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What transformation (if any) were applied to the variables? Please, be as specific as possible by indicating for each variable that has been transformed the name of the variable as found in the dataset and the formula/operation that has been applied to it. For example: "We log transformed the F0 values, which are found in the column 'log_f0' of our data frame."
+
+
+We transformed the trial variable to a normalized variable that spanned between 0 and 1, and we called in 'trial_minmax'.
+
+This is the line of code in R that did this:
+d$trial_minmax <- (d$trial - min(d$trial)) / (max(d$trial) - min(d$trial))
+
+
+
+------------------------------------------------------------------------
+
+
+
+Were any observations excluded? If so, which criteria did you follow for the exclusion? For example: "We excluded values that were +/- 3 standard deviations from the mean."
+
+
+We excluded trials that had any sort of issue denoted in the notes column.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What criteria did you use to decide on an answer to the research question? For example, the decision could have been based on p-values for particular predictors and/or interactions, on Bayesian posterior distributions, or confidence/credible intervals, etc...
+
+
+We interpreted the results of our Bayesian model using a combination of highest density intervals and regions of practical equivalence.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What is the size of the effect for the research question? Please, specify the magnitude and direction of the effect size, along with the 95% confidence (or credible) interval in the following format: estimate [low interval, high interval].
+
+
+0.01[-0.08, 0.09]
+
+
+
+------------------------------------------------------------------------
+
+
+
+What unit is your effect size in (i.e., Hedges' G, standardized mean difference, etc.)?
+
+
+the effect size is in log milliseconds
+
+
+
+------------------------------------------------------------------------
+
+
+
+Often we do not anticipate possible road blocks during our analyses. Did you encounter scenarios in which you had to revise an earlier analytical decision at a later stage, e.g. change a measurement after you have statistically analyzed (parts of) the data? If so, please briefly describe the situation.
+
+
+We initially assumed that the competitor's colour was going to be matched in some trials and mismatched in others, and so we were going to include the competitor's colour in and interaction with typicality. We revised this when we realized that the colours were always congruent.
+
+
+
+------------------------------------------------------------------------
+
+

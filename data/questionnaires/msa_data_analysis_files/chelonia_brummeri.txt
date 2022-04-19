@@ -1,0 +1,205 @@
+
+Which software did you use for the processing of the recordings and extraction of acoustic measurements? Please indicate all pieces of software that were used, and specify what was accomplished with each. For example: "Filtering of the recordings was done using the Matlab signal processing toolbox, while the extraction of acoustic measurements (f0, duration, formants, CoG) was accomplished with Praat."
+
+
+The transcripts and audio files were force aligned with the Montreal Forced Aligner using the pretrained Prosodylab German acoustic model and corresponding German lexicon (see report for source). 
+
+Acoustic-phonetic measurements for analysis of suprasegmentals were extracted from the aligned TextGrids and audio files using Praat (v 6.1.50). F0 measurements were extracted with a pitch floor of 50 Hz and ceiling of 600 Hz.
+
+Dynamic F1/F2 vowel measurements were extracted using the FastTrack Praat plug-in (Barreda 2021) with the default settings.
+
+Data analysis, visualisation and modelling were performed in R. Bayesian linear mixed-effects models were run using the brms package. Generalised Additive Mixed Models (GAMMs) were run and analysed using the mgcv, itsadug and tidymv packages.
+
+
+
+------------------------------------------------------------------------
+
+
+
+Which analytical/statistical technique(s) did you employ to answer the research question? Please, indicate the name of the techniques and describe specific details if necessary. For example, "We run Bayesian mixed-effects models using a Gaussian likelihood as the distribution of the outcome variable". Details about variables and parameters will be asked in later questions.
+
+
+We ran Bayesian linear mixed-effects models using a Gaussian likelihood as the distribution for each outcome variable. Priors on fixed effects were specified with Gaussian distributions; priors on random effects were specified with t-distributions (see report for more details). We ran GAMMs for modelling dynamic formant trajectories.
+
+
+
+------------------------------------------------------------------------
+
+
+
+How familiar are you with the analytical/statistical technique you employed?
+
+
+The team member who ran the models is very familiar with the technique. The team member who ran the GAMMs is somewhat familiar with the technique.
+
+
+
+------------------------------------------------------------------------
+
+
+
+To answer the research question, which variable(s) did you choose as the dependent variable(s) (outcome or measured or latent variable), and what was the rationale behind the choice? If the analysis included multiple dependent variables, specify all of them and the rationale behind choosing each.
+
+
+DVs were: relative duration, relative intensity, max F0 and F0 range. Measurements were taken in the colour adjective only (see report); Relative duration and relative intensity were relativised to relevant properties of each target utterance. 
+
+Relative duration = duration [in milliseconds] of the stressed rhyme of the adjective, as a proportion of the average syllable duration in the target utterance. Average syllable duration in each target utterance was calculated by dividing each utterance duration by the number of syllables in a canonical/citation production of the target utterance.
+
+Relative intensity = mean intensity [in dB] in the stressed rhyme of the adjective as a proportion of mean intensity [in dB] in the whole target utterance. 
+
+Max F0 = max F0 [in semitones relative to the speaker’s minimum F0] in the adjective. The speaker’s minimum F0 was the minimum F0 value for that speaker across all target adjectives. 
+
+F0 range = max F0 in the adjective minus min F0 in the adjective [both in semitones relative to the speaker’s minimum F0]. The speaker’s minimum F0 was the minimum F0 value for that speaker across all target adjectives.
+
+Rationale: We consider these to be the minimal set of DVs appropriate for estimating suprasegmental acoustic cues to prominence in German. The measures must be relativised to compensate for between speaker and/or item variation in speech rate, amplitude and F0 span/range. 
+--
+We also analysed F1/F2, using dynamic formant tracking through the stressed vowel in the noun and adjective in each utterance. These measures were taken at regular 2ms intervals throughout the duration of the vowel using the default settings in FastTrack (Barreda 2021). 
+
+We discussed additional potentially relevant measures of F0, to compensate for audible variation in the data in choice of phonological pitch accent across speakers/items. However, manual coding (prosodic annotation) of the data was not possible to complete in the time available, and we would have had to rely on annotation by a single team member, with no scope for checks on annotation (e.g. inter-transcriber agreement).
+
+
+
+------------------------------------------------------------------------
+
+
+
+To answer the research question, which variable(s) did you choose as the independent variable(s) (predictors), and what was the rationale behind the choice? If the analysis included multiple independent variables, specify all of them and the rationale behind choosing each.
+
+
+IVs in the Bayesian models were: typicality (typical, medium, atypical); syllable structure of the stressed syllable in the adjective (CV, CVC, CCV); trial; plus the interaction between typicality and trial.
+
+Rationale: Typicality is the manipulated variable of interest. Trial is included to control for task fatigue as the experiment progressed, which interacts with typicality since each participant produced items in a different pseudorandomized order. Syllable structure of the stressed syllable in the adjective is included because this varies unevenly across target items; syllable structure variation will affect duration of the stressed rhyme directly, and may have indirect effects on intensity and F0 alignment/scaling.
+
+
+
+------------------------------------------------------------------------
+
+
+
+How did you operationalise your dependent and independent variables? For example, if you choose f0 as a variable, specify from which speech domain it was extracted (for example: the phrase, the word, the syllable, the vowel, etc.), whether you extracted a summary statistic over a larger domain or a concrete value at a specific or relative point in time. For categorical variables (like age, gender, etc.), specify the levels/categories, how they are operationalised and the rationale behind the categorisation.
+
+
+All DVs in the Bayesian models were relativized as set out above (and pasted again below). We did not include speaker sex in the model as we do not have any specific expectations of variation in the DVs by sex or gender. The effect of speaker sex on F0 was controlled by relativizing of F0 measures to a relevant measure for each speaker, as described. For the GAMMs, the effect of speaker sex on F1/F2 was controlled by including random by-speaker smooths in the model (subsuming intercepts and slopes) 
+–
+Relative duration = duration [in milliseconds] of the stressed rhyme of the adjective, as a proportion of the average syllable duration in the target utterance. Average syllable duration in each target utterance was calculated by dividing each utterance duration by the number of syllables in a canonical production of the target utterance.
+
+Relative intensity = mean intensity [in dB] in the stressed rhyme of the adjective as a proportion of mean intensity [in dB] in the whole target utterance. 
+
+Max F0 = max F0 [in semitones relative to the speaker’s minimum F0] in the adjective. The speaker’s minimum F0 was the minimum F0 value for that speaker across all target adjectives. 
+
+F0 range = max F0 in the adjective minus min F0 in the adjective [both in semitones relative to the speaker’s minimum F0]. The speaker’s minimum F0 was the minimum F0 value for that speaker across all target adjectives.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What transformation (if any) were applied to the variables? Please, be as specific as possible by indicating for each variable that has been transformed the name of the variable as found in the dataset and the formula/operation that has been applied to it. For example: "We log transformed the F0 values, which are found in the column 'log_f0' of our data frame."
+
+
+Relative duration: we first extracted values for the duration of the stressed adjective rhyme (d$adj_vdur) and the duration of the target utterance (d$utt_dur) in seconds. These were converted to milliseconds (using the same column names). Then we calculated the average syllable duration (d$avg_syll_dur) by dividing the full utterance duration by the target number of syllables (d$n_syll). Finally, we subtracted the average syllable duration from the duration of the stressed rhyme in the adjective to get the column d$rel_dur. This was then centred on the overall mean in the dataset (d$Nreldur).
+
+Relative intensity: we first extracted the amplitude in pascal for the stressed rhyme of the adjective (d$adj_v_amp) and the entire utterance (d$utt_amp). We transformed each of these from pascal to decibel (dB) using a reference level of 0.00002 pascal. This resulted in the columns d$adj_v_intens and d$utt_intens. Finally, we subtracted the utterance intensity from the adjective rhyme intensity to get the column d$rel_intens. This was then centred on the overall mean in the dataset (d$Nrelintens).
+
+Max F0 and F0 range: we extracted the max F0 (d$adj_maxf0) and min f0 (d$adj_minf0) from the adjective in hertz. We transformed each individual max f0 and min f0 from hertz to semitones using the speaker’s absolute minimum f0 as the reference level (d$adj_maxf0_st, d$adj_minf0_st). For F0 range, we then subtracted the transformed min F0 from the transformed max F0. The final variable for max F0 is in d$adj_maxf0_st and the final variable for F0 range is in d$f0range_st. These were then centred on the overall mean in the dataset (d$Nadj_maxf0_st, d$Nf0range_st).
+
+The raw F1/F2 values (f1_raw, f2_raw) were centred and scaled using the scale function in R to normalise for between-speaker differences in absolute formant frequencies (f1_norm, f2_norm). Analysis was conducted on both sets of values.
+
+
+
+------------------------------------------------------------------------
+
+
+
+Were any observations excluded? If so, which criteria did you follow for the exclusion? For example: "We excluded values that were +/- 3 standard deviations from the mean."
+
+
+We excluded all tokens with a non-empty ‘notes’ field in the relevant trial list, resulting in 54 exclusions. No further observations were excluded.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What criteria did you use to decide on an answer to the research question? For example, the decision could have been based on p-values for particular predictors and/or interactions, on Bayesian posterior distributions, or confidence/credible intervals, etc...
+
+
+Based on the posterior distribution of Bayesian linear mixed effects models, the analysis tests whether the reported effect is reliably different from 0 by examining whether the reported 95% credible interval spans 0. If the reported 95% CI excludes 0, then we conclude that the estimated effect is reliable in its direction and in its deviation from 0. Specifically, for a positive mean estimate, we ask whether p(β≤0| model,data) < 0.025. For a negative mean estimate, we ask whetherp(β≥0| model,data) < 0.025. 
+
+For the dynamic formant analysis, differences between the typicality conditions were diagnosed through a combination of:
+- the significance of the parametric and smooth terms for typicality in the model summaries for F1 and F2
+- visual inspection of the (overlapping/non-overlapping) confidence intervals in plotted GAMM smooths
+- analysis of difference smooths between the typicality conditions within each vowel to reveal which parts of the trajectories significantly differ as a function of typicality
+- model comparison with ML estimation between full models containing the typicality predictor and null models containing only the vowel category predictor
+
+
+
+
+------------------------------------------------------------------------
+
+
+
+What is the size of the effect for the research question? Please, specify the magnitude and direction of the effect size, along with the 95% confidence (or credible) interval in the following format: estimate [low interval, high interval].
+
+
+For the suprasegmental variables analysed using Bayesian models, we report the effect of the medium and atypical conditions on each dependent variable as a deviation from the typical condition along with the 95% credible interval. These are the beta coefficients from a Bayesian linear mixed effects model, in which typicality was treatment coded and the typical condition was treated as the baseline.
+
+Relative duration (ms):
+beta_medium: 3.33, 95% CI: [-3.18, 10.09]
+beta_atypical: 4.24, 95% CI: [-2.01, 10.34]
+
+Relative intensity (dB):
+beta_medium: 0.154, 95% CI: [-0.141, 0.436]
+beta_atypical: 0.208, 95% CI: [-0.058, 0.473]
+
+Max F0 (st):
+beta_medium: 0.269, 95% CI: [-0.029, 0.558]
+beta_atypical: -0.015, 95% CI: [-0.291, 0.257]
+
+F0 range (st):
+beta_medium: -0.530, 95% CI: [-1.235, 0.176]
+beta_atypical: 0.014, 95% CI: [-0.708, 0.726]
+
+
+For the dynamic formant analysis, we report the effect of the medium and atypical conditions on F1 and F2 as a deviation from the typical condition along with the 95% confidence interval as calculated/reported from the GAMM, in which typicality was treatment coded and the typical condition was treated as the baseline.
+
+F1 (Hz)
+beta_medium: 15.766, 95% CI: [1.902, 29.63]
+beta_atypical: 2.805, 95% CI: [-6.595, 12.205]
+
+F2 (Hz)
+beta_medium: 26.42, 95% CI: [-10.88, 63.72]
+beta_atypical: 25.17, 95% CI: [-0.15, 50.49]
+
+
+
+
+------------------------------------------------------------------------
+
+
+
+What unit is your effect size in (i.e., Hedges' G, standardized mean difference, etc.)?
+
+
+Estimated mean deviation between the reported condition (either medium or atypical) and the typical condition. The units depend on the variable and are reported above (differences in milliseconds, decibels, raw semitones, and formant frequencies).
+
+
+
+------------------------------------------------------------------------
+
+
+
+Often we do not anticipate possible road blocks during our analyses. Did you encounter scenarios in which you had to revise an earlier analytical decision at a later stage, e.g. change a measurement after you have statistically analyzed (parts of) the data? If so, please briefly describe the situation.
+
+
+No. 
+
+We considered additional approaches that we think are probably needed to completely rule out the possibility of meaningful patterns in this data (i.e. patterns consistent with a positive answer to the RQ), such as qualitative prosodic annotation, but were not able to perform them with the time and expertise available.
+
+
+
+------------------------------------------------------------------------
+
+

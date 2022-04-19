@@ -1,0 +1,142 @@
+
+Which software did you use for the processing of the recordings and extraction of acoustic measurements? Please indicate all pieces of software that were used, and specify what was accomplished with each. For example: "Filtering of the recordings was done using the Matlab signal processing toolbox, while the extraction of acoustic measurements (f0, duration, formants, CoG) was accomplished with Praat."
+
+
+Praat was used for coding (simultaneous analysis of audio and text grid) and for extraction of acoustic measurements (pitch)
+
+
+
+------------------------------------------------------------------------
+
+
+
+Which analytical/statistical technique(s) did you employ to answer the research question? Please, indicate the name of the techniques and describe specific details if necessary. For example, "We run Bayesian mixed-effects models using a Gaussian likelihood as the distribution of the outcome variable". Details about variables and parameters will be asked in later questions.
+
+
+Repeated measure ANOVA
+
+
+
+------------------------------------------------------------------------
+
+
+
+How familiar are you with the analytical/statistical technique you employed?
+
+
+Quite familiar
+
+
+
+------------------------------------------------------------------------
+
+
+
+To answer the research question, which variable(s) did you choose as the dependent variable(s) (outcome or measured or latent variable), and what was the rationale behind the choice? If the analysis included multiple dependent variables, specify all of them and the rationale behind choosing each.
+
+
+The outcome variable is the mean pitch score (numeric, in Hz). Speakers in many languages use pitch modifications as a phonetic cue to draw the listener’s attention to a certain part of the utterance. For example, for an English speaker, the pitch maximum in ‘bananas’ in the utterance “I bought bananas” will normally be higher in a contrastive focus context (e.g., “I bought bananas, not pears”) than in the non-contrastive declarative counterpart. I believe participants in this study could use a similar process to mark adjectives that appear in atypical adjective + noun combinations. For example, the atypicality of the adjective ‘rot’ (Eng., ‘red’) in relation to the noun ‘Gurke’ (Eng., ‘cucumber’) could prompt speakers to mark this atypicality by using higher pitch in the modifier adjective.
+
+
+
+------------------------------------------------------------------------
+
+
+
+To answer the research question, which variable(s) did you choose as the independent variable(s) (predictors), and what was the rationale behind the choice? If the analysis included multiple independent variables, specify all of them and the rationale behind choosing each.
+
+
+The within-subject factor is the typicality level between the target adjective and the noun (three levels: typical, medium, atypical). This factor was chosen as the independent variable since the research question seeks to answer if typicality variations have an effect on the acoustics of the utterance.
+
+
+
+------------------------------------------------------------------------
+
+
+
+How did you operationalise your dependent and independent variables? For example, if you choose f0 as a variable, specify from which speech domain it was extracted (for example: the phrase, the word, the syllable, the vowel, etc.), whether you extracted a summary statistic over a larger domain or a concrete value at a specific or relative point in time. For categorical variables (like age, gender, etc.), specify the levels/categories, how they are operationalised and the rationale behind the categorisation.
+
+
+Pitch was operationalized as the pitch maxima (in Hz) in adjectives of NF adjective + noun combinations. 
+Typicality was operationalized as having three levels: atypical, medium, typical, based on norming and production studies supplied by MSA project.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What transformation (if any) were applied to the variables? Please, be as specific as possible by indicating for each variable that has been transformed the name of the variable as found in the dataset and the formula/operation that has been applied to it. For example: "We log transformed the F0 values, which are found in the column 'log_f0' of our data frame."
+
+
+N/A
+
+
+
+------------------------------------------------------------------------
+
+
+
+Were any observations excluded? If so, which criteria did you follow for the exclusion? For example: "We excluded values that were +/- 3 standard deviations from the mean."
+
+
+Target adjectives were marked as containing errors in the following circumstances:
+o	A pitch track was not visible at all.
+o	Creaky voice inside the target adjective affected the pitch track.
+o	The pitch track contained unusual excursions, such as sudden shifts or isolated spikes.
+o	The trial contained an annotation in the ‘notes’ tier, as provided by the MSA project. In most cases, the annotation in these cases was simply ‘error’, but sometimes ‘hesitation break’ or ‘structure’ were also used.  Since I do not know enough German to evaluate the error gravity or type for these trials, I decided to mark all of them as errors. 
+All target adjectives with any kind of error were subsequently excluded from analysis.
+
+During analysis, seven participants were excluded:
+o	In order to preserve representativeness of each target adjective, speakers whose mean pitch score on any typicality level resulted from less than six original scores were excluded from analysis. This process eliminated three speakers.
+o	Outliers were identified, using identify.outliers(), which determines limits for outliers by multiplying the interquartile range (IQR) by 1.5. This identified 13 outlier data points (that is, 13 mean pitch scores), 12 of which belonged to four participants. That is, these four participants had outlier scores in every typicality level. These four participants were removed from the analysis.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What criteria did you use to decide on an answer to the research question? For example, the decision could have been based on p-values for particular predictors and/or interactions, on Bayesian posterior distributions, or confidence/credible intervals, etc...
+
+
+I use the p-value. F(2, 44) = 2.967, p = .0618
+
+
+
+------------------------------------------------------------------------
+
+
+
+What is the size of the effect for the research question? Please, specify the magnitude and direction of the effect size, along with the 95% confidence (or credible) interval in the following format: estimate [low interval, high interval].
+
+
+Effect size = .0028
+
+
+
+------------------------------------------------------------------------
+
+
+
+What unit is your effect size in (i.e., Hedges' G, standardized mean difference, etc.)?
+
+
+eta_squared
+
+
+
+------------------------------------------------------------------------
+
+
+
+Often we do not anticipate possible road blocks during our analyses. Did you encounter scenarios in which you had to revise an earlier analytical decision at a later stage, e.g. change a measurement after you have statistically analyzed (parts of) the data? If so, please briefly describe the situation.
+
+
+I reran analysis only to account for outliers.
+
+
+
+------------------------------------------------------------------------
+
+

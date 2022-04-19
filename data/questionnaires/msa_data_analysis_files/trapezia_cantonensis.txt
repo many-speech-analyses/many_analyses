@@ -1,0 +1,136 @@
+
+Which software did you use for the processing of the recordings and extraction of acoustic measurements? Please indicate all pieces of software that were used, and specify what was accomplished with each. For example: "Filtering of the recordings was done using the Matlab signal processing toolbox, while the extraction of acoustic measurements (f0, duration, formants, CoG) was accomplished with Praat."
+
+
+All acoustic processing was done via Praat. Text was aligned to the audio manually. Acoustic measurements (F1, F2, F3, intensity, duration, F0) were extacted using Fast Track, a Praat plugin.
+
+
+
+------------------------------------------------------------------------
+
+
+
+Which analytical/statistical technique(s) did you employ to answer the research question? Please, indicate the name of the techniques and describe specific details if necessary. For example, "We run Bayesian mixed-effects models using a Gaussian likelihood as the distribution of the outcome variable". Details about variables and parameters will be asked in later questions.
+
+
+I ran generalized additive mixed-effects models on F1/F2, intensity, and F0 contours. I ran a linear mixed-effects model on durations.
+
+
+
+------------------------------------------------------------------------
+
+
+
+How familiar are you with the analytical/statistical technique you employed?
+
+
+Pretty familiar. I've used them in multiple publications.
+
+
+
+------------------------------------------------------------------------
+
+
+
+To answer the research question, which variable(s) did you choose as the dependent variable(s) (outcome or measured or latent variable), and what was the rationale behind the choice? If the analysis included multiple dependent variables, specify all of them and the rationale behind choosing each.
+
+
+I analyzed F1, F2, intensity, F0, and duration. 
+
+My hypothesis was that atypical treatments would be realized louder, longer, with more intensity, and with more peripheral vowels than typical treatments. The is consistent with what is often found in stressed syllables (compared to unstressed) syllables in many of the world's languages. I wasn't sure if all four of these differences would be found, but I thought I'd extract all of them and check anyway.
+
+
+
+------------------------------------------------------------------------
+
+
+
+To answer the research question, which variable(s) did you choose as the independent variable(s) (predictors), and what was the rationale behind the choice? If the analysis included multiple independent variables, specify all of them and the rationale behind choosing each.
+
+
+Typicality was the only main predictor. Adjective and speaker were also included as random effects because I expect to find differences across those groups, but I'm not particularly in those differences.
+
+
+
+------------------------------------------------------------------------
+
+
+
+How did you operationalise your dependent and independent variables? For example, if you choose f0 as a variable, specify from which speech domain it was extracted (for example: the phrase, the word, the syllable, the vowel, etc.), whether you extracted a summary statistic over a larger domain or a concrete value at a specific or relative point in time. For categorical variables (like age, gender, etc.), specify the levels/categories, how they are operationalised and the rationale behind the categorisation.
+
+
+Because I used FastTrack, I was able to extract F1, F2, intensity, and F0 data every 5ms along the duration of each vowel. This resulted in formant, intensity, and fundamental frequency counters. Duration obvious does not apply across time like that, so duration measures were calculated for each vowel token.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What transformation (if any) were applied to the variables? Please, be as specific as possible by indicating for each variable that has been transformed the name of the variable as found in the dataset and the formula/operation that has been applied to it. For example: "We log transformed the F0 values, which are found in the column 'log_f0' of our data frame."
+
+
+No transformations were done.
+
+
+
+------------------------------------------------------------------------
+
+
+
+Were any observations excluded? If so, which criteria did you follow for the exclusion? For example: "We excluded values that were +/- 3 standard deviations from the mean."
+
+
+The only observations that were excluded were in the F0 analysis. Any observation with an F0 of 0 was considered bad data and excluded.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What criteria did you use to decide on an answer to the research question? For example, the decision could have been based on p-values for particular predictors and/or interactions, on Bayesian posterior distributions, or confidence/credible intervals, etc...
+
+
+For the GAMMs, I used model comparison between full and impoverished models. The full model contained typicality as a predictor and the impoverished model did not. The model comparisons consider AIC scores and p-values. In all cases, the p-value was small (as it typically is in GAMMs, I've noticed), so I just examined visualizations of predicted trajectories to check for consistent effects
+
+For the linear mixed-effects models, I used p-values of the model estimates.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What is the size of the effect for the research question? Please, specify the magnitude and direction of the effect size, along with the 95% confidence (or credible) interval in the following format: estimate [low interval, high interval].
+
+
+I don't know of a way to calculate effect sizes for GAMMs.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What unit is your effect size in (i.e., Hedges' G, standardized mean difference, etc.)?
+
+
+unknown
+
+
+
+------------------------------------------------------------------------
+
+
+
+Often we do not anticipate possible road blocks during our analyses. Did you encounter scenarios in which you had to revise an earlier analytical decision at a later stage, e.g. change a measurement after you have statistically analyzed (parts of) the data? If so, please briefly describe the situation.
+
+
+The only major obstacle was that the data was in German. I am used to using English, so it was not possible to use the tools I normally use for automatic forced-alignment. The manual aligning was easily the most time-consuming step (I spread it out over a month). Once everything was aligned, the formant extraction and most of the analysis was completed in a couple hours.
+
+
+
+------------------------------------------------------------------------
+
+

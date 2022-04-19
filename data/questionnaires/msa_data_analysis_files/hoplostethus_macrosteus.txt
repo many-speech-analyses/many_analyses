@@ -1,0 +1,157 @@
+
+Which software did you use for the processing of the recordings and extraction of acoustic measurements? Please indicate all pieces of software that were used, and specify what was accomplished with each. For example: "Filtering of the recordings was done using the Matlab signal processing toolbox, while the extraction of acoustic measurements (f0, duration, formants, CoG) was accomplished with Praat."
+
+
+First, the target (stressed) vowels were segmented by hand in Praat. Then, a Praat script was used to extract the acoustic measurements of duration and intensity of target vowel.
+
+
+
+------------------------------------------------------------------------
+
+
+
+Which analytical/statistical technique(s) did you employ to answer the research question? Please, indicate the name of the techniques and describe specific details if necessary. For example, "We run Bayesian mixed-effects models using a Gaussian likelihood as the distribution of the outcome variable". Details about variables and parameters will be asked in later questions.
+
+
+We ran linear mixed-effects regression models in R using duration (in milliseconds) and maximum intensity (in decibels) as our continuous dependent variables.
+
+
+
+------------------------------------------------------------------------
+
+
+
+How familiar are you with the analytical/statistical technique you employed?
+
+
+Very familiar
+
+
+
+------------------------------------------------------------------------
+
+
+
+To answer the research question, which variable(s) did you choose as the dependent variable(s) (outcome or measured or latent variable), and what was the rationale behind the choice? If the analysis included multiple dependent variables, specify all of them and the rationale behind choosing each.
+
+
+Our dependent variables were duration and intensity of the target vowel. We chose these variables because they are two of the few vowel variables that do not differ between male and female speakers. Since we were not provided with the gender of the participants, we did not feel we could use f0 or vowel quality, as both of these variables (and their measurements) depend heavily on vocal tract size. 
+
+
+
+
+------------------------------------------------------------------------
+
+
+
+To answer the research question, which variable(s) did you choose as the independent variable(s) (predictors), and what was the rationale behind the choice? If the analysis included multiple independent variables, specify all of them and the rationale behind choosing each.
+
+
+We included ‘typicality’, ‘color’, and ‘observation’ as independent variables (fixed effects) and ‘participant’ as a random effect. We included ‘typicality’ to respond to the research question of whether speakers acoustically modify their speech with different color + noun typicality combinations. We included color in order to examine the differences in acoustic realization between the five colors. We also included Observation, a numeric variable assigned during data collection, as a possible task effect of where in the experiment the token appeared. Given what we know about variation in duration based on vowel identity, we tested models that included an interaction between color and typicality, so we could evaluate each color’s typicality separately. Finally, we included participants as a random effect to account for interspeaker variation.
+
+
+
+------------------------------------------------------------------------
+
+
+
+How did you operationalise your dependent and independent variables? For example, if you choose f0 as a variable, specify from which speech domain it was extracted (for example: the phrase, the word, the syllable, the vowel, etc.), whether you extracted a summary statistic over a larger domain or a concrete value at a specific or relative point in time. For categorical variables (like age, gender, etc.), specify the levels/categories, how they are operationalised and the rationale behind the categorisation.
+
+
+Because the stressed syllable of the adjective started with either a liquid (grün, roten, braun, orangen) or a stop (gelb), we determined that measuring consonantal features such as VOT would be inappropriate. Therefore, we chose to segment the stressed vowel of each adjective. The target nuclear vowel (that of the stressed syllable in each color word) was segmented by hand using the following criteria for onset and offset of the vowel, primarily relying on oral consonantal constriction events (as recommended by Turk et al. 2006:3).
+Onset:
+In the case of vowel nuclei preceded by a liquid, we relied on a change in waveform amplitude between the preceding voiced liquid and the vowel nucleus, as well as clear onset of energy in the vowel’s second formant. For vowels that followed stops, we again relied on an increase in waveform amplitude, periodicity in the waveform, and clear formant energy to mark the onset of the segment (the stop burst was not included in the vowel nuclei segment). In the few instances of mismatch among these three parameters, we particularly relied on the onset of the second formant (following Turk et al. 2006) to identify oral stop closure releases. 
+
+Offset: 
+To determine the offset of the vowel nuclei, we utilized both the waveform and spectrogram and placed the offset of the vowel at the point at which amplitude in the waveform decreased accompanied by cessation of formant energy (relying specifically on the second and third formants (following Turk et al. 2006:7) when there were instances of formants offsetting at different times). 
+
+Following nasal (grun, braun, orangen): The nasals were often accompanied by abrupt spectral changes at closure onset (cf. Turk et al. 2006:12), particularly in the middle and higher-frequency regions due to nasal antiformants, and a decrease in waveform amplitude.
+Following stop (roten): The offset of the vowel was marked at the oral stop closure, indicated by a cessation of formant energy and a decrease in overall amplitude.
+Following liquid (gelb): Many times there was no clear decrease in waveform amplitude, signaling a deleted or coarticulated /l/ in the word ‘gelben’. In these instances, the offset of the vowel was marked at the oral stop closure [b].
+
+Duration: The Praat script measured the duration of the segmented target vowel.
+Intensity: The Praat script measured the maximum intensity of the target vowel. 
+Typicality: Typical, medium, atypical
+Color: Grün, Gelb, Ro:ten, Braun, Orangen 
+
+
+
+
+------------------------------------------------------------------------
+
+
+
+What transformation (if any) were applied to the variables? Please, be as specific as possible by indicating for each variable that has been transformed the name of the variable as found in the dataset and the formula/operation that has been applied to it. For example: "We log transformed the F0 values, which are found in the column 'log_f0' of our data frame."
+
+
+We centered and scaled the duration and intensity_maximum variables to ensure normality of our data distribution. 
+
+
+
+
+------------------------------------------------------------------------
+
+
+
+Were any observations excluded? If so, which criteria did you follow for the exclusion? For example: "We excluded values that were +/- 3 standard deviations from the mean."
+
+
+During our segmentation process, we noted that some of the trials were marked with “Error” codes on the textgrid and excluded these observations from our analysis. In addition, there were some trials that were marked with “hesitation break”. If the hesitation break affected the target color + noun combination, we excluded the observation, and if it did not affect the target, we included the observation. 
+Additionally, since we had normalized the duration and the intensity measures, we excluded any values that were +/- 2 standard deviations from the mean (in the case of duration, this excluded N=30 observations, leaving 830 observations, and in the case of intensity, N=33 observations were excluded, leaving 827 observations for the analysis. 
+
+
+
+
+------------------------------------------------------------------------
+
+
+
+What criteria did you use to decide on an answer to the research question? For example, the decision could have been based on p-values for particular predictors and/or interactions, on Bayesian posterior distributions, or confidence/credible intervals, etc...
+
+
+We used p-values (alpha value of 0.05) to determine whether there was a significant effect of the independent variables on duration or intensity. 
+We compared the AIC values of the models to determine the model with the best fit. 
+Additionally, we calculated the marginal and conditional R-squared values of each of the models (from Nakagawa and Schielzeth (2012), using the performance R package (Lüdecke et al. 2021)). The “winning” model in each case was the model with the lowest AIC and the largest marginal and conditional R-squared values.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What is the size of the effect for the research question? Please, specify the magnitude and direction of the effect size, along with the 95% confidence (or credible) interval in the following format: estimate [low interval, high interval].
+
+
+We found no significant main effects.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What unit is your effect size in (i.e., Hedges' G, standardized mean difference, etc.)?
+
+
+n/a
+
+
+
+------------------------------------------------------------------------
+
+
+
+Often we do not anticipate possible road blocks during our analyses. Did you encounter scenarios in which you had to revise an earlier analytical decision at a later stage, e.g. change a measurement after you have statistically analyzed (parts of) the data? If so, please briefly describe the situation.
+
+
+We determined early on that we would not be able to use f0 or vowel quality, two of the predictors we thought would be most influenced by typicality, without making assumptions about the gender of the participants. We decided that it was not a sound decision to make this assumption and thus were not able to include these predictors. 
+We encountered a couple of issues with segmenting which were resolved with our inter-rater reliability checks: 
+At times the vowel was nasalized. 
+Because of the variation in liquid realization, segmenting words such as “braunen”, “orangen”, “rot”, and “gelb” proved challenging at times. 
+
+
+
+
+------------------------------------------------------------------------
+
+

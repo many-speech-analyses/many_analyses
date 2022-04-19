@@ -1,0 +1,142 @@
+
+Which software did you use for the processing of the recordings and extraction of acoustic measurements? Please indicate all pieces of software that were used, and specify what was accomplished with each. For example: "Filtering of the recordings was done using the Matlab signal processing toolbox, while the extraction of acoustic measurements (f0, duration, formants, CoG) was accomplished with Praat."
+
+
+We used Praat to annotate the recordings and extract acoustic measurements (F0, duration, F1 + F2, intensity) from them, as well.
+We used R for the statistical analysis (linear mixed-effects models).
+We developed a number of customized Perl scripts to help us process the data, as well (segmenting the original sound files, converting Hz to Semi-tones, comparing timings for our inter-transcriber analysis, etc.) 
+
+
+
+
+------------------------------------------------------------------------
+
+
+
+Which analytical/statistical technique(s) did you employ to answer the research question? Please, indicate the name of the techniques and describe specific details if necessary. For example, "We run Bayesian mixed-effects models using a Gaussian likelihood as the distribution of the outcome variable". Details about variables and parameters will be asked in later questions.
+
+
+We employed the linear mixed-effects models and ANOVA.
+
+
+
+------------------------------------------------------------------------
+
+
+
+How familiar are you with the analytical/statistical technique you employed?
+
+
+Very familiar.
+
+
+
+------------------------------------------------------------------------
+
+
+
+To answer the research question, which variable(s) did you choose as the dependent variable(s) (outcome or measured or latent variable), and what was the rationale behind the choice? If the analysis included multiple dependent variables, specify all of them and the rationale behind choosing each.
+
+
+We used 4 dependent variables, taken from the stressed vowels of the adjective and noun of the target phase in each utterance: (1) Duration of the vowel, (2) Median F0 of the vowel (in Semi-Tones), (3) Median intensity of the vowel, and (4) Formant Distance. 
+We calculated Formant Distance as the Euclidean Distance of the vowel from the speaker's mean F1/F2 in a normalized vowel space. We chose to look at the stressed vowels of the target words, so we measured the main acoustic properties of stress.
+Each dependent variable was tested separately, i.e. we ran separate tests for each dependent variable.
+
+
+
+------------------------------------------------------------------------
+
+
+
+To answer the research question, which variable(s) did you choose as the independent variable(s) (predictors), and what was the rationale behind the choice? If the analysis included multiple independent variables, specify all of them and the rationale behind choosing each.
+
+
+We have four independent variables. 1) Word (v1, v2), Focus (AF, NF, ANF), Typicality (typical, atypical, medium typical), and Sex (male, female). These were the relevant variables for the research question and the data. Typicality is the main target variable for the question, but given the data we were given, word and focus were included as they were part of the design of the original study. We also included Sex only for the F0 test, since it is a known factor for F0. It was not possible to include all independent variables in a single test due to the nature of the original data, so each test has different independent variables.
+
+
+
+------------------------------------------------------------------------
+
+
+
+How did you operationalise your dependent and independent variables? For example, if you choose f0 as a variable, specify from which speech domain it was extracted (for example: the phrase, the word, the syllable, the vowel, etc.), whether you extracted a summary statistic over a larger domain or a concrete value at a specific or relative point in time. For categorical variables (like age, gender, etc.), specify the levels/categories, how they are operationalised and the rationale behind the categorisation.
+
+
+We measured the stressed rhyme for each word in the target Adjective/Noun phrase. This includes the target vowel of diphthong and any sonorant codas (/l, r, n/). All measurements were extracted automatically with a Praat script, except for the Formant Distance. For that, we first measured with Praat F1 and F2 from a time point 1/3rd of the way through the rhyme, then converted those into Z-scores for each speaker (Lobanov's method), and then measured the Euclidean distance of each vowel from the speaker's mean F1+F2 point.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What transformation (if any) were applied to the variables? Please, be as specific as possible by indicating for each variable that has been transformed the name of the variable as found in the dataset and the formula/operation that has been applied to it. For example: "We log transformed the F0 values, which are found in the column 'log_f0' of our data frame."
+
+
+We converted the F0 values to Semi-Tones, using the formula provided by Reetz & Jongman (2020). We used 75 Hz as the baseline for this calculation. 
+We also converted F1 + F2 measures to a general measure of "Formant Distance" according to the method described above.
+
+
+
+------------------------------------------------------------------------
+
+
+
+Were any observations excluded? If so, which criteria did you follow for the exclusion? For example: "We excluded values that were +/- 3 standard deviations from the mean."
+
+
+We excluded items that were labeled as mistakes in the provided textgrids and any items that had mistakes, disfluencies, or noise.
+We also excluded from the Formant Distance any items whose F1 or F2 z-scores were greater than 2, as this enabled us to eliminate the most obvious cases where the Praat formant tracker had missed measuring one of the formants. 
+Finally, for F0 (ST), we set the lower end of the pitch range at 75 Hz for male speakers, and 100 Hz for female speakers. This enabled us to avoid the most obvious cases of pitch halving in the automatically generated F0 data.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What criteria did you use to decide on an answer to the research question? For example, the decision could have been based on p-values for particular predictors and/or interactions, on Bayesian posterior distributions, or confidence/credible intervals, etc...
+
+
+p-values < .05
+
+
+
+------------------------------------------------------------------------
+
+
+
+What is the size of the effect for the research question? Please, specify the magnitude and direction of the effect size, along with the 95% confidence (or credible) interval in the following format: estimate [low interval, high interval].
+
+
+We tested the effects of typicality on four different acoustic measures and found no significant effect for any of them. In those cases, there is no "effect size" to report. 
+However, we also tested the effects of focus on adjectives and nouns in the "atypical" condition. These tests yielded significant results for all of our dependent measures, generally in the direction of greater acoustic prominence for focused items. 
+We reported the estimates of these effect sizes from the output of the linear mixed-effects models in the write-up of our findings. Since there are many of them, we won't repeat them all here.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What unit is your effect size in (i.e., Hedges' G, standardized mean difference, etc.)?
+
+
+We were not sure how to standardize effect sizes for the output of linear mixed-effects models and thus just reported the raw effect size for the specific variables we tested in each case.
+
+
+
+------------------------------------------------------------------------
+
+
+
+Often we do not anticipate possible road blocks during our analyses. Did you encounter scenarios in which you had to revise an earlier analytical decision at a later stage, e.g. change a measurement after you have statistically analyzed (parts of) the data? If so, please briefly describe the situation.
+
+
+No, we did not.
+
+
+
+------------------------------------------------------------------------
+
+

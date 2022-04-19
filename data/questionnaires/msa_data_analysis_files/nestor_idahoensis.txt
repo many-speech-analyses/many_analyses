@@ -1,0 +1,132 @@
+
+Which software did you use for the processing of the recordings and extraction of acoustic measurements? Please indicate all pieces of software that were used, and specify what was accomplished with each. For example: "Filtering of the recordings was done using the Matlab signal processing toolbox, while the extraction of acoustic measurements (f0, duration, formants, CoG) was accomplished with Praat."
+
+
+Study audio was standardized to a left-channel mono at a sampling rate of 44.1 kHz using Praat (Boersma & Weenink, 2019) and the Parselmouth-Praat API (Jadoul, Thompson, & de Boer, 2018) in Python. Utterances were then force-aligned to isolate the stressed vowel in the adjective of interest. Forced alignment was completed using the align function of the Montreal Forced Aligner v 2.0.0rc3 (McAuliffe et al., 2017), using Prosodylab pretrained models and dictionaries for German. The Prosodylab German dictionary was adapted to specifically reflect the combinations of morphemes present in the adjectives of interest. The force-aligned utterances were subset to the stressed phones in the adjectives of interest using Python libraries Parselmouth-Praat, and PraatIO (Mahrt, 2016). Fundamental frequency and formant values were estimated using a Python implementation of the Praat FastTrack plugin (Barreda, 2021), customized for the HTCondor framework (Thain et al, 2005) on the OrangeGrid computing environment at Syracuse University.
+
+
+
+------------------------------------------------------------------------
+
+
+
+Which analytical/statistical technique(s) did you employ to answer the research question? Please, indicate the name of the techniques and describe specific details if necessary. For example, "We run Bayesian mixed-effects models using a Gaussian likelihood as the distribution of the outcome variable". Details about variables and parameters will be asked in later questions.
+
+
+We ran one multivariate Bayesian mixed effects model using logarithmic likelihood as the distribution of the outcome variables.
+
+
+
+------------------------------------------------------------------------
+
+
+
+How familiar are you with the analytical/statistical technique you employed?
+
+
+I would say I am fairly familiar with the statistical technique. There are always more to learn about using Bayesian statistics, such as specifying priors. However, I feel comfortable to run Bayesian mixed effects models with acoustic variables.
+
+
+
+------------------------------------------------------------------------
+
+
+
+To answer the research question, which variable(s) did you choose as the dependent variable(s) (outcome or measured or latent variable), and what was the rationale behind the choice? If the analysis included multiple dependent variables, specify all of them and the rationale behind choosing each.
+
+
+We chose four dependent variables which all included acoustic measures of the stressed vowel of the target word: fundamental frequency, duration, first formant frequency, and second formant frequency. We chose fundamental frequency and duration as indicators of changes in prosodic production of the target word. If there is a difference by typicality, then speakers are likely to emphasize the target word using fundamental frequency and duration. We would typically add intensity as a measure as well but we decided not to include it in this analysis since we didn't have information about microphone distance. We also included the first and second formant frequency to determine whether speakers used hyperarticulation to signal typicality.
+
+
+
+------------------------------------------------------------------------
+
+
+
+To answer the research question, which variable(s) did you choose as the independent variable(s) (predictors), and what was the rationale behind the choice? If the analysis included multiple independent variables, specify all of them and the rationale behind choosing each.
+
+
+The only predictor we chose was categorical typicality. We thought about running a separate analysis with the quantitative typicality measure. However, the researchers categorized typicality in the datasheet so we decided to stick with the designated categories. We chose to analyze typicality because the purpose of this analysis was to determine if speakers would alter word production based on typicality. It therefore made sense to include typicality as the predictor of the acoustic production of the target word.
+
+
+
+------------------------------------------------------------------------
+
+
+
+How did you operationalise your dependent and independent variables? For example, if you choose f0 as a variable, specify from which speech domain it was extracted (for example: the phrase, the word, the syllable, the vowel, etc.), whether you extracted a summary statistic over a larger domain or a concrete value at a specific or relative point in time. For categorical variables (like age, gender, etc.), specify the levels/categories, how they are operationalised and the rationale behind the categorisation.
+
+
+We operationalized our four dependent variables as the stressed vowel of the target word. There is evidence that when speakers alter the production of a word for emphasis, they mainly alter the stressed vowel of that word. Additionally, acoustic measures such as fundamental frequency are more reliably measured from vowels rather than consonants. The first and second formant frequencies were measured from the midpoint of the stressed vowel which reduces the chance of including changes in production due to coarticulation.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What transformation (if any) were applied to the variables? Please, be as specific as possible by indicating for each variable that has been transformed the name of the variable as found in the dataset and the formula/operation that has been applied to it. For example: "We log transformed the F0 values, which are found in the column 'log_f0' of our data frame."
+
+
+All dependent variables were log transformed in the statistical model by specifying a logarithmic distribution for the outcome variables. To do this, I specified the logarithmic distribution in the family function in brms.
+
+
+
+------------------------------------------------------------------------
+
+
+
+Were any observations excluded? If so, which criteria did you follow for the exclusion? For example: "We excluded values that were +/- 3 standard deviations from the mean."
+
+
+Force-aligned phone intervals shorter than 50 ms did not meet our duration heuristic for plausibility and were excluded from further analysis. Candidate formant tracks not meeting heuristic standards (e.g., F1 > 1200 Hz | F2 < 600 Hz) were penalized during the selection step.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What criteria did you use to decide on an answer to the research question? For example, the decision could have been based on p-values for particular predictors and/or interactions, on Bayesian posterior distributions, or confidence/credible intervals, etc...
+
+
+We used two criteria for decision making: Bayesian credible intervals and probability of direction. An effect was considered robust if the credible interval excluded zero and if the probability of direction was greater than 95%.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What is the size of the effect for the research question? Please, specify the magnitude and direction of the effect size, along with the 95% confidence (or credible) interval in the following format: estimate [low interval, high interval].
+
+
+The effect size was a 95% credible interval and 95% probability of direction.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What unit is your effect size in (i.e., Hedges' G, standardized mean difference, etc.)?
+
+
+Standardized mean difference.
+
+
+
+------------------------------------------------------------------------
+
+
+
+Often we do not anticipate possible road blocks during our analyses. Did you encounter scenarios in which you had to revise an earlier analytical decision at a later stage, e.g. change a measurement after you have statistically analyzed (parts of) the data? If so, please briefly describe the situation.
+
+
+There were a few data preprocessing steps we had to add in that we originally did not account for. For example, we realized that to run the forced aligner, we needed a spreadsheet with the filename in one column and the target German words in another column. Extra steps like this had to be delegated and planned out along the way.
+
+
+
+------------------------------------------------------------------------
+
+

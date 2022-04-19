@@ -1,0 +1,183 @@
+
+Which software did you use for the processing of the recordings and extraction of acoustic measurements? Please indicate all pieces of software that were used, and specify what was accomplished with each. For example: "Filtering of the recordings was done using the Matlab signal processing toolbox, while the extraction of acoustic measurements (f0, duration, formants, CoG) was accomplished with Praat."
+
+
+New text grids were created in Praat. Updated Praat TextGrids were then uploaded to the WebMAUS interface (Kisler, Reichel, and Schiel 2017) and auto-aligned through the pipeline without ASR (CHUNKKPREP –> G2P –> MAUS –> PHO2SYL) (Reichel 2012; Poerner and Schiel 2018) which is able to process German audio data. The TextGrids were then run through a Praat script which returned measurements for intensity, duration (both at word and phone level) and F0 at 10 time points within each voiced phoneme. The script used was adapted to include the German phonemes in the sample from a script made available online by Wendy Elvira García (available at: https://github.com/wendyelviragarcia/vowels).
+
+
+
+
+------------------------------------------------------------------------
+
+
+
+Which analytical/statistical technique(s) did you employ to answer the research question? Please, indicate the name of the techniques and describe specific details if necessary. For example, "We run Bayesian mixed-effects models using a Gaussian likelihood as the distribution of the outcome variable". Details about variables and parameters will be asked in later questions.
+
+
+We ran linear mixed effects models with Gaussian distributions.
+
+
+
+------------------------------------------------------------------------
+
+
+
+How familiar are you with the analytical/statistical technique you employed?
+
+
+Both fairly familiar with the technique.
+
+
+
+------------------------------------------------------------------------
+
+
+
+To answer the research question, which variable(s) did you choose as the dependent variable(s) (outcome or measured or latent variable), and what was the rationale behind the choice? If the analysis included multiple dependent variables, specify all of them and the rationale behind choosing each.
+
+
+We decided to look at three measures in order to approach the given research question: 1) Intensity in dB of the entire word (for colour and object), 2) F0 as an acoustic correlate of what is perceived as pitch (looking at only the stressed vowel in both colour and object) and 3) vowel duration (again of only the stressed vowels in both the colour and object levels). We selected these dependent variables as they are known to index accentedness in the German language.
+
+
+
+------------------------------------------------------------------------
+
+
+
+To answer the research question, which variable(s) did you choose as the independent variable(s) (predictors), and what was the rationale behind the choice? If the analysis included multiple independent variables, specify all of them and the rationale behind choosing each.
+
+
+Typicality (categorical) , col_obj (a 2 level variable of either colour or object), voice_type (2 levels of either lower or higher F0). We used categorical typicality as the mean typicality had very few values to run as a continuous variable. For F0. voice_type was important as findings for pitch have shown significant variation for gender. Not knowing the gender of the speaker, voice_type deals with some of this variation. We focused on just the colour and object as we thought this is where the variation would best show.
+
+
+
+
+
+------------------------------------------------------------------------
+
+
+
+How did you operationalise your dependent and independent variables? For example, if you choose f0 as a variable, specify from which speech domain it was extracted (for example: the phrase, the word, the syllable, the vowel, etc.), whether you extracted a summary statistic over a larger domain or a concrete value at a specific or relative point in time. For categorical variables (like age, gender, etc.), specify the levels/categories, how they are operationalised and the rationale behind the categorisation.
+
+
+We decided to look at three measures in order to approach the given research question: 1) Intensity in dB of the entire word (for colour and object), 2) F0 as an acoustic correlate of what is perceived as pitch (looking at only the stressed vowel in both colour and object) and 3) vowel duration (again of only the stressed vowels in both the colour and object levels). 
+
+ Key for this analysis was the reduction of words down to only those of interest (object and colour) and the creation of a new two-level column `(col_obj)` which identified words as being either `colour` or `object`. The column `voice_type` was also added to the data frame which contained a two-level factor assigning each speaker as either having `low` or `high` pitch. Both authors coded the speakers auditorily and were in agreement for all 30 speakers. F0 means and ranges were also checked for each group with a cut off of <150Hz (~12 Semitones) for the lower group and >150 Hz for the higher group.
+
+Col_obj was manually coded in R as either colour or object.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What transformation (if any) were applied to the variables? Please, be as specific as possible by indicating for each variable that has been transformed the name of the variable as found in the dataset and the formula/operation that has been applied to it. For example: "We log transformed the F0 values, which are found in the column 'log_f0' of our data frame."
+
+
+For Intensity in dB, we squared the predictor variable (Mean_dB^2) as the distribution was skewed left.
+
+As the f0 residuals were bimodal, we cut the data into measures above and below 150Hz (~10 Semitones) where the two local peaks in the distributions were. This did produce model residuals for both models which were visually much more normally distributed and more appropriate for the assumptions made in linear modelling.
+
+
+
+------------------------------------------------------------------------
+
+
+
+Were any observations excluded? If so, which criteria did you follow for the exclusion? For example: "We excluded values that were +/- 3 standard deviations from the mean."
+
+
+Values over 1.5* the interquartile range were removed to mitigate against alignment issues.
+
+26 production errors were also added to the database. These were independently checked by the authors and are not completely in line with those provided in the original database.
+
+
+
+
+------------------------------------------------------------------------
+
+
+
+What criteria did you use to decide on an answer to the research question? For example, the decision could have been based on p-values for particular predictors and/or interactions, on Bayesian posterior distributions, or confidence/credible intervals, etc...
+
+
+NHST, p-values
+
+
+
+------------------------------------------------------------------------
+
+
+
+What is the size of the effect for the research question? Please, specify the magnitude and direction of the effect size, along with the 95% confidence (or credible) interval in the following format: estimate [low interval, high interval].
+
+
+Intensity:
+ The model included col_obj and speaker as random effects (formula: ~1 + col_obj | speaker). The model's total explanatory power is moderate (conditional R2 = 0.23) and the part related to the fixed effects alone (marginal R2) is of 0.04. The model's intercept, corresponding to typicality = typical, col_obj = colour and voice_type = high, is at 62.89 (95% CI [61.66, 64.12], t(11076) = 100.20, p < .001). Within this model:
+
+  - The effect of typicality [medium] is statistically non-significant and negative (beta = -0.24, 95% CI [-0.62, 0.14], t(11076) = -1.23, p = 0.218; Std. beta = -0.04, 95% CI [-0.09, 0.02])
+  - The effect of typicality [atypical] is statistically significant and negative (beta = -0.45, 95% CI [-0.83, -0.07], t(11076) = -2.31, p = 0.021; Std. beta = -0.07, 95% CI [-0.12, -0.01])
+  - The effect of col_obj [object] is statistically significant and negative (beta = -0.49, 95% CI [-0.96, -0.01], t(11076) = -2.01, p = 0.045; Std. beta = -0.07, 95% CI [-0.14, -1.76e-03])
+  - The effect of voice_type [low] is statistically non-significant and negative (beta = -1.30, 95% CI [-4.07, 1.47], t(11076) = -0.92, p = 0.359; Std. beta = -0.19, 95% CI [-0.61, 0.22])
+  - The interaction effect of col_obj [object] on typicality [medium] is statistically significant and negative (beta = -1.99, 95% CI [-2.51, -1.46], t(11076) = -7.38, p < .001; Std. beta = -0.30, 95% CI [-0.38, -0.22])
+  - The interaction effect of col_obj [object] on typicality [atypical] is statistically significant and negative (beta = -1.90, 95% CI [-2.45, -1.36], t(11076) = -6.87, p < .001; Std. beta = -0.29, 95% CI [-0.37, -0.20])
+
+
+Duration
+The model included Word and speaker as random effects (formula: list(~1 | Word, ~1 | speaker)). The model's total explanatory power is substantial (conditional R2 = 0.65) and the part related to the fixed effects alone (marginal R2) is of 0.06. The model's intercept, corresponding to typicality = typical and col_obj = colour, is at 91.02 (95% CI [54.41, 127.63], t(1691) = 4.87, p < .001). Within this model:
+
+  - The effect of typicality [medium] is statistically non-significant and positive (beta = 3.06, 95% CI [-2.39, 8.52], t(1691) = 1.10, p = 0.270; Std. beta = 0.06, 95% CI [-0.05, 0.17])
+  - The effect of typicality [atypical] is statistically non-significant and positive (beta = 2.37, 95% CI [-3.08, 7.82], t(1691) = 0.85, p = 0.394; Std. beta = 0.05, 95% CI [-0.06, 0.16])
+  - The effect of col_obj [object] is statistically non-significant and positive (beta = 33.08, 95% CI [-16.02, 82.17], t(1691) = 1.32, p = 0.187; Std. beta = 0.66, 95% CI [-0.32, 1.64])
+  - The interaction effect of col_obj [object] on typicality [medium] is statistically non-significant and negative (beta = -6.75, 95% CI [-47.84, 34.34], t(1691) = -0.32, p = 0.748; Std. beta = -0.13, 95% CI [-0.96, 0.69])
+  - The interaction effect of col_obj [object] on typicality [atypical] is statistically non-significant and negative (beta = -33.14, 95% CI [-85.79, 19.50], t(1691) = -1.23, p = 0.217; Std. beta = -0.66, 95% CI [-1.72, 0.39])
+
+F0 GLOBAL
+The model included col_obj and speaker as random effects (formula: ~1 + col_obj | speaker). The model's total explanatory power is substantial (conditional R2 = 0.53) and the part related to the fixed effects alone (marginal R2) is of 0.07. The model's intercept, corresponding to col_obj = colour, typicality = typical and voice_type = high, is at 16.17 (95% CI [15.56, 16.79], t(54696) = 51.44, p < .001). Within this model:
+
+  - The effect of col_obj [object] is statistically significant and negative (beta = -0.88, 95% CI [-1.18, -0.57], t(54696) = -5.67, p < .001; Std. beta = -0.40, 95% CI [-0.53, -0.26])
+  - The effect of typicality [medium] is statistically non-significant and negative (beta = -0.04, 95% CI [-0.08, 3.84e-03], t(54696) = -1.78, p = 0.075; Std. beta = -0.02, 95% CI [-0.04, 1.73e-03])
+  - The effect of typicality [atypical] is statistically significant and positive (beta = 0.20, 95% CI [0.16, 0.24], t(54696) = 9.53, p < .001; Std. beta = 0.09, 95% CI [0.07, 0.11])
+  - The effect of voice_type [low] is statistically significant and negative (beta = -3.63, 95% CI [-5.16, -2.10], t(54696) = -4.65, p < .001; Std. beta = -1.64, 95% CI [-2.33, -0.95])
+  - The interaction effect of typicality [medium] on col_obj [object] is statistically significant and positive (beta = 0.44, 95% CI [0.38, 0.51], t(54696) = 14.02, p < .001; Std. beta = 0.20, 95% CI [0.17, 0.23])
+  - The interaction effect of typicality [atypical] on col_obj [object] is statistically significant and positive (beta = 0.28, 95% CI [0.21, 0.34], t(54696) = 8.42, p < .001; Std. beta = 0.13, 95% CI [0.10, 0.15])
+
+
+F0 LOCAL
+The model included col_obj and speaker as random effects (formula: ~1 + col_obj | speaker). The model's total explanatory power is substantial (conditional R2 = 0.57) and the part related to the fixed effects alone (marginal R2) is of 0.04. The model's intercept, corresponding to col_obj = colour, typicality = typical and voice_type = high, is at 4.75 (95% CI [3.91, 5.59], t(16863) = 11.10, p < .001). Within this model:
+
+  - The effect of col_obj [object] is statistically non-significant and negative (beta = -0.17, 95% CI [-0.99, 0.65], t(16863) = -0.41, p = 0.682; Std. beta = -0.06, 95% CI [-0.34, 0.22])
+  - The effect of typicality [medium] is statistically significant and positive (beta = 0.25, 95% CI [0.14, 0.36], t(16863) = 4.39, p < .001; Std. beta = 0.08, 95% CI [0.05, 0.12])
+  - The effect of typicality [atypical] is statistically non-significant and positive (beta = 0.03, 95% CI [-0.08, 0.14], t(16863) = 0.47, p = 0.639; Std. beta = 9.07e-03, 95% CI [-0.03, 0.05])
+  - The effect of voice_type [low] is statistically non-significant and positive (beta = 1.21, 95% CI [-0.67, 3.08], t(16863) = 1.26, p = 0.207; Std. beta = 0.41, 95% CI [-0.23, 1.06])
+  - The interaction effect of typicality [medium] on col_obj [object] is statistically non-significant and positive (beta = 0.06, 95% CI [-0.08, 0.21], t(16863) = 0.85, p = 0.396; Std. beta = 0.02, 95% CI [-0.03, 0.07])
+  - The interaction effect of typicality [atypical] on col_obj [object] is statistically significant and positive (beta = 0.34, 95% CI [0.18, 0.50], t(16863) = 4.16, p < .001; Std. beta = 0.12, 95% CI [0.06, 0.17])
+
+
+
+------------------------------------------------------------------------
+
+
+
+What unit is your effect size in (i.e., Hedges' G, standardized mean difference, etc.)?
+
+
+Conditional R2 values?
+
+
+
+------------------------------------------------------------------------
+
+
+
+Often we do not anticipate possible road blocks during our analyses. Did you encounter scenarios in which you had to revise an earlier analytical decision at a later stage, e.g. change a measurement after you have statistically analyzed (parts of) the data? If so, please briefly describe the situation.
+
+
+There were issues normalising the data as some features of interest were not normally distributed. Left negative skews were particularly difficult to overcome.
+
+
+
+------------------------------------------------------------------------
+
+

@@ -1,0 +1,168 @@
+
+Which software did you use for the processing of the recordings and extraction of acoustic measurements? Please indicate all pieces of software that were used, and specify what was accomplished with each. For example: "Filtering of the recordings was done using the Matlab signal processing toolbox, while the extraction of acoustic measurements (f0, duration, formants, CoG) was accomplished with Praat."
+
+
+Word-level transcriptions were done by preprocessing the provided TextGrids with Praat scripts and Python and using the german_prosodylab pronunciation dictionary and acoustic model in Montreal Forced Aligner.
+
+Extraction of prosodic cues was done by using a Praat script.
+
+
+
+------------------------------------------------------------------------
+
+
+
+Which analytical/statistical technique(s) did you employ to answer the research question? Please, indicate the name of the techniques and describe specific details if necessary. For example, "We run Bayesian mixed-effects models using a Gaussian likelihood as the distribution of the outcome variable". Details about variables and parameters will be asked in later questions.
+
+
+We ran linear mixed effect models, and simplified the random effects structure to aid with convergence and to decrease correlations between terms.
+
+
+
+------------------------------------------------------------------------
+
+
+
+How familiar are you with the analytical/statistical technique you employed?
+
+
+Very familiar, although I do not consider myself an expert.
+
+
+
+------------------------------------------------------------------------
+
+
+
+To answer the research question, which variable(s) did you choose as the dependent variable(s) (outcome or measured or latent variable), and what was the rationale behind the choice? If the analysis included multiple dependent variables, specify all of them and the rationale behind choosing each.
+
+
+Our dependent variables were log duration, intensity, and F0 for the critical words (the adjective and noun in the sentence). The rationale behind choosing these words was that these were the manipulated words, and it might be easier to see differences in how something is being said between conditions by narrowing down our analyses to these words. Adjectives and Nouns were both analyzed, as either could carry focus depending on condition. The cues that were selected are cues that are often argued to be acoustic correlates of focus. Duration was log transformed to make duration values more normally distributed. F0 values were extracted at the word onset, midpoint, and offset so that they may serve as a coarse grained approximation for F0 contours for each word.
+
+
+
+------------------------------------------------------------------------
+
+
+
+To answer the research question, which variable(s) did you choose as the independent variable(s) (predictors), and what was the rationale behind the choice? If the analysis included multiple independent variables, specify all of them and the rationale behind choosing each.
+
+
+The independent variables were the continuous typicality score, the experimental condition for each sentence, the part of speech status of the word that is being analyzed, and the interactions between these terms. 
+
+The continuous typicality score was chosen for 2 reasons: firstly, it offers a more detailed measure of typicality than the binned categories, and secondly, not all conditions were equally represented in all binned categories, but they all did have some continuous typicality value. The experimental condition (focus location) was explored because we thought it might interact with the typicality of the phrase. Similarly, the part of speech status was included since the experimental condition should determine which word carries focus and therefore might affect the prosodic cue values for each word depending on condition.
+
+
+
+------------------------------------------------------------------------
+
+
+
+How did you operationalise your dependent and independent variables? For example, if you choose f0 as a variable, specify from which speech domain it was extracted (for example: the phrase, the word, the syllable, the vowel, etc.), whether you extracted a summary statistic over a larger domain or a concrete value at a specific or relative point in time. For categorical variables (like age, gender, etc.), specify the levels/categories, how they are operationalised and the rationale behind the categorisation.
+
+
+All dependent variables were extracted from the word level of the critical adjective-noun pair. Duration values were log transformed to normalize their distribution. All F0 values were centered on a by-talker basis so that rises and falls might be treated similarly even if talkers had different baselines in pitch. F0 values were extracted from the onset, midpoint, and offset of each of the 2 words in the critical adjective-noun pair. 
+
+For the independent variables, part of speech was a categorical variable that specified whether the analyzed word was the adjective or the noun from the critical adjective-noun word pair. No other words were analyzed. The typicality measure used for the analyses was the mean typicality score for the adjective-noun pair provided in the norms. The experimental condition investigated included 3 levels, depending on what word was meant to carry focus: Adjective Focus, Noun Focus, and Dual Focus.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What transformation (if any) were applied to the variables? Please, be as specific as possible by indicating for each variable that has been transformed the name of the variable as found in the dataset and the formula/operation that has been applied to it. For example: "We log transformed the F0 values, which are found in the column 'log_f0' of our data frame."
+
+
+Duration was log transformed to make values more normally distributed. The transformation was done in R when performing the analyses, but can be found in the ManySpeech_Preprocessed_Data.csv file as LogDur. 
+
+F0 values were centered based on the talker's mean F0 value for all words for each location. These values can be found as cfo1 (onset), cfo2 (midpoint), and cfo3 (offset) in the ManySpeech_Preprocessed_Data.csv file.
+
+
+
+------------------------------------------------------------------------
+
+
+
+Were any observations excluded? If so, which criteria did you follow for the exclusion? For example: "We excluded values that were +/- 3 standard deviations from the mean."
+
+
+Any words that were not part of the critical adjective-noun pair were excluded from analyses. No other exclusions were made.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What criteria did you use to decide on an answer to the research question? For example, the decision could have been based on p-values for particular predictors and/or interactions, on Bayesian posterior distributions, or confidence/credible intervals, etc...
+
+
+P values for the main effect of typicality mean score or any interactions that included the typicality mean score.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What is the size of the effect for the research question? Please, specify the magnitude and direction of the effect size, along with the 95% confidence (or credible) interval in the following format: estimate [low interval, high interval].
+
+
+Cohen's F for Log duration:
+typicality mean	0.33	[0.000, 0.807]
+POS * typicality mean	0.477	[0.000, 0.966]
+condition * typicality mean	0.168	[0.000, 0.411]
+(POS * condition) * typicality mean	0.317	[0.000, 0.581]
+
+Cohen's F for Intensity:
+typicality mean	0.429	[0.000, 0.887]
+POS * typicality mean	0.283	[0.000, 0.731]
+condition * typicality mean	0.223	[0.000, 0.443]
+(POS * condition) * typicality mean	0.192	[0.000, 0.407]
+
+Cohen's F for Onset F0:
+typicality mean	0.144	[0.000, 0.410]
+POS * typicality mean	0.048	[0.000, 0.302]
+condition * typicality mean	0.074	[0.000, 0.172]
+(POS * condition) * typicality mean	0.038	[0.000, 0.123]
+
+Cohen's F for Midpoint F0:
+typicality mean	0.045	[0.000, 0.414]
+POS * typicality mean	0.061	[0.000, 0.447]
+condition * typicality mean	0.147	[0.000, 0.357]
+(POS * condition) * typicality mean	0.084	[0.000, 0.270]
+
+Cohen's F for Offset F0:
+typicality mean	0.496	[0.138, 0.847]
+POS * typicality mean	0.335	[0.000, 0.676]
+condition * typicality mean	0.086	[0.000, 0.214]
+(POS * condition) * typicality mean	0.164	[0.000, 0.302]
+
+
+
+------------------------------------------------------------------------
+
+
+
+What unit is your effect size in (i.e., Hedges' G, standardized mean difference, etc.)?
+
+
+Cohen's F
+
+
+
+------------------------------------------------------------------------
+
+
+
+Often we do not anticipate possible road blocks during our analyses. Did you encounter scenarios in which you had to revise an earlier analytical decision at a later stage, e.g. change a measurement after you have statistically analyzed (parts of) the data? If so, please briefly describe the situation.
+
+
+I was initially expecting typicality to have been independently manipulated independent of the condition. I noticed while exploring the data that this wasn't the case. This limited my options as to how I could analyze the data. Although I don't think the analysis is optimal in this case, I still would have had a preference to include the continuous typicality mean score rather than the categorical typicality variable if possible.
+
+
+
+------------------------------------------------------------------------
+
+

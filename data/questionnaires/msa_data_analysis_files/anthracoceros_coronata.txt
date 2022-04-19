@@ -1,0 +1,147 @@
+
+Which software did you use for the processing of the recordings and extraction of acoustic measurements? Please indicate all pieces of software that were used, and specify what was accomplished with each. For example: "Filtering of the recordings was done using the Matlab signal processing toolbox, while the extraction of acoustic measurements (f0, duration, formants, CoG) was accomplished with Praat."
+
+
+Segmenting of sound files and TextGrids was done in Praat.  The praatR and rPraat packages were used to control Praat from R, and in so doing to create Intensity and Pitch objects.  All acoustic measurements came from the Intensity, Pitch, and TextGrid objects, queried from Praat, through the R packages mentioned above.
+
+
+
+------------------------------------------------------------------------
+
+
+
+Which analytical/statistical technique(s) did you employ to answer the research question? Please, indicate the name of the techniques and describe specific details if necessary. For example, "We run Bayesian mixed-effects models using a Gaussian likelihood as the distribution of the outcome variable". Details about variables and parameters will be asked in later questions.
+
+
+I initially was using linear mixed models, but convergence issues suggested that the model couldn't support random effects, so I used standard linear regression.
+
+
+
+------------------------------------------------------------------------
+
+
+
+How familiar are you with the analytical/statistical technique you employed?
+
+
+Fairly familiar
+
+
+
+------------------------------------------------------------------------
+
+
+
+To answer the research question, which variable(s) did you choose as the dependent variable(s) (outcome or measured or latent variable), and what was the rationale behind the choice? If the analysis included multiple dependent variables, specify all of them and the rationale behind choosing each.
+
+
+Dependent variables used were: maximum intensity for adjective and for noun, maximum pitch for adjective and noun, and duratiaon for adjective and noun.
+
+Intensity, pitch, and duration were chosen since they are common correlates of stress or focus.
+
+For intensity and pitch, I measured both the maximum and the mean for each word.  I ended up using the maximums because they were more normally distributed than the means.
+
+
+
+------------------------------------------------------------------------
+
+
+
+To answer the research question, which variable(s) did you choose as the independent variable(s) (predictors), and what was the rationale behind the choice? If the analysis included multiple independent variables, specify all of them and the rationale behind choosing each.
+
+
+The only independent variable was mean typicality, directly from the provided typ_mean column in the trial lists.  the "typicality" column was not used because it was not available for all conditions due to the setup of the experiment.
+
+
+
+------------------------------------------------------------------------
+
+
+
+How did you operationalise your dependent and independent variables? For example, if you choose f0 as a variable, specify from which speech domain it was extracted (for example: the phrase, the word, the syllable, the vowel, etc.), whether you extracted a summary statistic over a larger domain or a concrete value at a specific or relative point in time. For categorical variables (like age, gender, etc.), specify the levels/categories, how they are operationalised and the rationale behind the categorisation.
+
+
+For dependent variables, the duration, pitch, and intensity were measured from each word.  I used the maximum of each of these measures for each word (as opposed to the mean) because they were more normally distributed.
+
+For the independent variable, typ_mean, it was left as-is.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What transformation (if any) were applied to the variables? Please, be as specific as possible by indicating for each variable that has been transformed the name of the variable as found in the dataset and the formula/operation that has been applied to it. For example: "We log transformed the F0 values, which are found in the column 'log_f0' of our data frame."
+
+
+Durations for both adjectives and nouns were log transformed: the A_dur_log and N_dur_log columns.
+
+
+
+------------------------------------------------------------------------
+
+
+
+Were any observations excluded? If so, which criteria did you follow for the exclusion? For example: "We excluded values that were +/- 3 standard deviations from the mean."
+
+
+We excluded values that were ±2 standard deviations from the mean.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What criteria did you use to decide on an answer to the research question? For example, the decision could have been based on p-values for particular predictors and/or interactions, on Bayesian posterior distributions, or confidence/credible intervals, etc...
+
+
+I used p-values (computed from t values from the linear models) and effect sizes (z-scores, based on the standardized and centered values of the variables).
+
+
+
+------------------------------------------------------------------------
+
+
+
+What is the size of the effect for the research question? Please, specify the magnitude and direction of the effect size, along with the 95% confidence (or credible) interval in the following format: estimate [low interval, high interval].
+
+
+Several measures were used, so I provide the data for each:
+
+Looking at the interaction of condition and typ_mean, the dependent variables that showed significant correlations were N_max_pitch and N_dur_log.
+
+For the N_max_pitch model, the interaction of condition AF and typ_mean was positive:
+-0.002 [-0.006, 0.002]
+
+For the N_dur_log model, the interaction of typ_mean showed negative correlations withboth condition AF and condition NF.
+Interaction with condition AF: 0.026 [0.023, 0.030]
+Interaction with condition NF: 0.010 [0.007, 0.013]
+
+
+
+------------------------------------------------------------------------
+
+
+
+What unit is your effect size in (i.e., Hedges' G, standardized mean difference, etc.)?
+
+
+Z-score / standard units
+
+
+
+------------------------------------------------------------------------
+
+
+
+Often we do not anticipate possible road blocks during our analyses. Did you encounter scenarios in which you had to revise an earlier analytical decision at a later stage, e.g. change a measurement after you have statistically analyzed (parts of) the data? If so, please briefly describe the situation.
+
+
+I had initially decided to use linear mixed models, but found that I ran into convergence issues whenever including speaker as a random intercept.  I therefore decided to switch to standard linear models.
+
+
+
+------------------------------------------------------------------------
+
+

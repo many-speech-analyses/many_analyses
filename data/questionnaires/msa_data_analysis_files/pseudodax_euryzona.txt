@@ -1,0 +1,132 @@
+
+Which software did you use for the processing of the recordings and extraction of acoustic measurements? Please indicate all pieces of software that were used, and specify what was accomplished with each. For example: "Filtering of the recordings was done using the Matlab signal processing toolbox, while the extraction of acoustic measurements (f0, duration, formants, CoG) was accomplished with Praat."
+
+
+We first manually aligned the words and then extracted the relevant acoustic measurements (f0 and duration) using Praat.
+
+
+
+------------------------------------------------------------------------
+
+
+
+Which analytical/statistical technique(s) did you employ to answer the research question? Please, indicate the name of the techniques and describe specific details if necessary. For example, "We run Bayesian mixed-effects models using a Gaussian likelihood as the distribution of the outcome variable". Details about variables and parameters will be asked in later questions.
+
+
+First we performed a Functional Principal Components Analysis (FPCA) to capture the variation in the data, we modeled it with a linear mixed-effects model and then we performed a post-hoc pairwise comparison.
+
+
+
+------------------------------------------------------------------------
+
+
+
+How familiar are you with the analytical/statistical technique you employed?
+
+
+I attended a course on FPCA and I’m also currently using this method in a different research project.
+
+
+
+------------------------------------------------------------------------
+
+
+
+To answer the research question, which variable(s) did you choose as the dependent variable(s) (outcome or measured or latent variable), and what was the rationale behind the choice? If the analysis included multiple dependent variables, specify all of them and the rationale behind choosing each.
+
+
+The response variable s2 (the score values to be multiplied by the second principal component) was selected after performing a functional principal component analysis on F0 and visually inspecting the curves of the PCs resulting from it. We determined that the first PC, which varied in the vertical axis, likely corresponded to a residue of inter-speaker variation that survived normalization, and that the second (which looked more like a “shifter”), had likely captured the relevant variation. PC2 corresponded to 20.8% of the variation in the F0-normalized dataset, and the statistical analysis revealed that it effectively captured at least part of the relevant variation present in the data.
+
+
+
+------------------------------------------------------------------------
+
+
+
+To answer the research question, which variable(s) did you choose as the independent variable(s) (predictors), and what was the rationale behind the choice? If the analysis included multiple independent variables, specify all of them and the rationale behind choosing each.
+
+
+We used typicality as the only independent variable, given that this predictor directly corresponds to the proposed research question. Given that the focus condition would also likely elicit significant differences between f0 slopes, we only used the NF (noun focus) condition for the final analysis, which was also the only condition marked for typicality in the provided materials. As typicality only applies to the FOOD subset, the NON-FOOD subset of examples was not used in the analysis.
+
+
+
+------------------------------------------------------------------------
+
+
+
+How did you operationalise your dependent and independent variables? For example, if you choose f0 as a variable, specify from which speech domain it was extracted (for example: the phrase, the word, the syllable, the vowel, etc.), whether you extracted a summary statistic over a larger domain or a concrete value at a specific or relative point in time. For categorical variables (like age, gender, etc.), specify the levels/categories, how they are operationalised and the rationale behind the categorisation.
+
+
+The variables time and f0 were extracted both by (prep.) phrase and by word. The prepositional phrase was created by combining the data extracted for sequences of four words: the word auf and the article, adjective and noun that followed it (e.g., auf den orangen Kartoffeln). The variable gender was only used for parameter setting in the extraction of f0 values in Praat.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What transformation (if any) were applied to the variables? Please, be as specific as possible by indicating for each variable that has been transformed the name of the variable as found in the dataset and the formula/operation that has been applied to it. For example: "We log transformed the F0 values, which are found in the column 'log_f0' of our data frame."
+
+
+We min-max transformed the time values, which are found under “time”, by subtracting the minimum value to each observation and then dividing it by the range with the function (x - min(x)) / (max(x) - min(x)). F0 was also z-transformed (x–mean(x)/sd(x)) to account for inter-speaker variation using the function scale(), and the resulting z-scores can be found in column ‘f0.z’. Normalized Hz values were then reconstructed from the z-scores by multiplying z-scores by the mean of the SDs of all speakers and then adding the grand mean of the sample to the resulting value, and these can be found in column ‘f0.norm’.
+
+
+
+------------------------------------------------------------------------
+
+
+
+Were any observations excluded? If so, which criteria did you follow for the exclusion? For example: "We excluded values that were +/- 3 standard deviations from the mean."
+
+
+Examples with annotations in the notes tier (labeled as error, hesitation break, error2, break and doubt) were excluded. In addition, examples with more than 7 F0 values that were +/- 3 standard deviations from the mean were also excluded.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What criteria did you use to decide on an answer to the research question? For example, the decision could have been based on p-values for particular predictors and/or interactions, on Bayesian posterior distributions, or confidence/credible intervals, etc...
+
+
+Our answer was based on the p-values resulting from a post-hoc pairwise comparison of the 3 levels of the predictor typicality after building a model with s2 as response (i.e., the score relative to the second principal component), typicality as a predictor and a random by-speaker intercept.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What is the size of the effect for the research question? Please, specify the magnitude and direction of the effect size, along with the 95% confidence (or credible) interval in the following format: estimate [low interval, high interval].
+
+
+The effect of typicality is 0.04 [0.02, 0.07].
+
+
+
+------------------------------------------------------------------------
+
+
+
+What unit is your effect size in (i.e., Hedges' G, standardized mean difference, etc.)?
+
+
+Partial eta squared (the proportion of variance explained by the variable).
+
+
+
+------------------------------------------------------------------------
+
+
+
+Often we do not anticipate possible road blocks during our analyses. Did you encounter scenarios in which you had to revise an earlier analytical decision at a later stage, e.g. change a measurement after you have statistically analyzed (parts of) the data? If so, please briefly describe the situation.
+
+
+When deciding on how to analyze the F0 curves, we discussed using either Generalized Additive Models or Functional Principal Component Analysis. We initially decided to divide the team to try both analyses. However, due to the dataset being big, running GAM models proved difficult since the beginning for some team members. Thus, the fact that GAMMs are computationally heavy was factored in when deciding which route to follow, and ultimately tipped the balance in favor of a fPCA + LMER analysis.
+
+
+
+------------------------------------------------------------------------
+
+

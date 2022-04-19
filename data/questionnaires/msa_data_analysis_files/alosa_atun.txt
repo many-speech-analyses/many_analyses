@@ -1,0 +1,188 @@
+
+Which software did you use for the processing of the recordings and extraction of acoustic measurements? Please indicate all pieces of software that were used, and specify what was accomplished with each. For example: "Filtering of the recordings was done using the Matlab signal processing toolbox, while the extraction of acoustic measurements (f0, duration, formants, CoG) was accomplished with Praat."
+
+
+We used Praat to extract the acoustic measurements of our dependent variables.
+
+However, it was necessary for us to first modify the textgrids provided to us by the MSA team, as trigger utterances were not segmented in the original textgrids and we wished to analyse them.  We use Praat to find silences, and then a Python script populated the interval tiers with the appropriate text (by reference to the participant csvs).   We manually checked the alignment and corrected any which were not  appropriatelyaligned. Then we uploaded the newly segmented and corrected textgrids into LaBB-CAT, the browser-based Language, Brain & Behaviour Corpus Analysis Too (LaBB-CAT; Fromont & Hay, 2012)., so that the individual phones could be automatically force-aligned using the BAS webservice, WebMAUSBasic.
+
+We also used LaBB-CAT to calculate speech rate based on the CELEX lexical database (Baayen et al., 1996) for German, and the LaBB-CAT interface with praat to extract our acoustic variables, using the nzilbb.labbcat and rPraat R libraries.  Within R, we joined the resultant dataframe to the original MSA data, namely the participant/trial information and the typicality judgements from `ratings_summary.csv` collected from the original MSA database (Coretta, Roettger, & Casillas, 2021).
+
+In addition to these programmes for extracting acoustic measurements, we also utilised Python and R programming (Van Rossum & Drake, 1995; R Core Team 2022) to further organise the TextGrids and acoustic data.
+
+After we had prepared the textgrids and extracted the acoustic measurements, we used R to organise the data. We created an R script that would process and evaluate the measurements; the script was divided into two discrete chunks, to complete two separate tasks, thereby creating two steps.
+
+In the first step, the first chunk of the script extracted the acoustic information of the vowels in ‘der’ and ‘den’ from the [LaBB-CAT](https://labbcat.canterbury.ac.nz/system/) corpus which was specifically created for this analysis, while, the second chunk of the script joined that dataframe to the original MSA data, namely the participant/trial information and the typicality judgements from `ratings_summary.csv` collected from the original MSA database (https://osf.io/5agn9/?view_only=6fec040a9589499bb9998240bdab12a1). 
+
+Next, we used the nzilbb.labbcat package in R to extract the trialnumber and syllable articulation information: trialnumber, syllableCount, syllablesPerMinute, participant_syllablesPerMinute. 
+
+F1 and F2 formants of the midpoint of a segment and the pitch and intensity measures were processed with Praat through the nzilbb.labcat package. Following this a combined analytical dataset was generated with dplyr and tidyr that is used for the modelling analysis detailed below (see also ‘Data Dictionary’ for additional information on individual variables).
+
+
+
+------------------------------------------------------------------------
+
+
+
+Which analytical/statistical technique(s) did you employ to answer the research question? Please, indicate the name of the techniques and describe specific details if necessary. For example, "We run Bayesian mixed-effects models using a Gaussian likelihood as the distribution of the outcome variable". Details about variables and parameters will be asked in later questions.
+
+
+In order to analyse the acoustic measurements extracted from Praat our initial analyses included linear mixed-effects models (lmer) using the model including random intercepts and random slopes.  Our final analysis only used intercepts.
+
+A linear mixed-effects model (lmer) is a statistical model where fixed and random effects are added to simple linear modes in order to explain the relationship between the dependent and independent variables. To apply these models we used the lme4 package which allowed us to fit a linear mixed-effects model to our data via residual maximum likelihood.
+
+
+
+------------------------------------------------------------------------
+
+
+
+How familiar are you with the analytical/statistical technique you employed?
+
+
+Most of our team members were familiar with exploratory data analysis and statistical modelling in R.
+
+
+
+------------------------------------------------------------------------
+
+
+
+To answer the research question, which variable(s) did you choose as the dependent variable(s) (outcome or measured or latent variable), and what was the rationale behind the choice? If the analysis included multiple dependent variables, specify all of them and the rationale behind choosing each.
+
+
+Our team chose to explore the vocalic components of the German definite article ‘der’. We excluded tokens in which the definite article was ‘den’.   We included both the target trials, and also the preceding ‘competitor’ trials, referred to in this document as the ‘trigger’.
+
+The acoustic variables analysed are given in table 1.  Those that are measured at the level of a vowel are analysed in two sets of models - models of the nucleus, and those at the offglide.
+
+The following is a list of dependent variables we employed:
+
+• The first formant measure at the midpoint of the target segment expressed as f1.
+• The second formant measure at the midpoint of the target segment expressed as f2.
+• The maximum amplitude of the target segment (i.e., /e/ or /@/)
+• The mean pitch of the target segment expressed as f0.
+• The duration of the target segment. 
+• The combined duration of the nucleus /e/ and the schwa-offglide.
+• The degree of formant movement between the nucleus and offglide, measured as the euclidean distance
+• The ratio of the duration between the nucleus and the offglide.
+• The duration of the target word.
+• The duration of the pause between the end of the word and the start of the following word.
+• The number of syllables in the sentence (either the trial or target, as relevant) divided by the summed word duration (excluding pauses)
+
+These were tested across several stages of modelling. For our pre-registered model we focussed on acoustic characteristics of the nucleus. These models were not well-formed and we did not complete this modelling step, but abandoned it for models that have a better structure (described below). Vowel-specific factors were tested both for the nucleus (e) and the offglide (@). Three models were tested for properties of the combined nucleus/offglide. Finally, we tested the full word-level duration, and effects of the overall speech rate.
+
+Our motivations for choosing variables associated with the /e/ and /ə/ vowels, of each preceding definite article ‘der’, is that we might expect changes in typicality to be signalled in surrounding words of the adjective+noun pairs, since a similar frequency effect is found in other multiword stretches. A similar phenomenon occurs in the English definite article ‘the’ where the vowel can experience production changes from /ə/ to /i:/ in situations where a speaker encounters a problem with the following utterance, such as when they are uncertain about pronunciation or word choice (Fox Tree & Clarke, 1997) . This is further supported by the findings in Jurafsky et al. (2001), Bell et al. (2009), and Tily et al. (2009) where acoustic features in an utterance are mediated by probabilistic relationships such as lexical frequency and predictability. As this analysis was fairly exploratory, we chose to investigate a wide range of potential acoustic factors.
+
+
+
+------------------------------------------------------------------------
+
+
+
+To answer the research question, which variable(s) did you choose as the independent variable(s) (predictors), and what was the rationale behind the choice? If the analysis included multiple independent variables, specify all of them and the rationale behind choosing each.
+
+
+Typicality: Our pre-registered model tested the three way Typicality Category supplied.  For other models we used a numeric predictor - the mean typicality from the typicality rating study. (P.typ_mean)
+
+Condition: The trigger sentences were not part of the original design, and we coded them to a separate condition (T), so we tested a four level condition variable (T, NF, AF, ANF).
+
+ScaledTrialNumber:  We scaled the trial number, and included this as a measure of how far through the experiment we were. 
+
+syllablesPerMinute. The number of syllables in the clause (either the trigger or the target as appropriate), divided by the summed word duration.  Note: in our attempted pre-registered model, we used trialduration, as a speech rate control, and we switched to syllablesPerMinute for the other models.
+
+We considered three way interactions between the first three variables, and included the speech rate variable as a control  (except in the speech rate model, where this became the dependent variable).
+
+In the models of amplitude and pitch we also included a local control measure, which was the amplitude/pitch extracted from ‘den’ in the ‘den Wurfel’, immediately preceding the analysed ‘der’.
+
+
+The first three independent variables are directly related to our hypotheses - firstly, that the typicality of the adjective+noun pairs and the combinations themselves could affect production of the vowel of the preceding definite article. Secondly this may be more pronounced in the adjective focus condition.  Thirdly, this phenomenon could decrease over time for each speaker.  In other words, the change in vowel quality/peripherality and duration may be less pronounced over time due to the normalising effects of regularly anticipating possible atypical adjective+noun pairs by the speakers as the experiment progresses. 
+
+A control for speech rate is necessary, as duration effects will vary with speech rate, as may the other acoustic variables.  We preregistered that we would use the duration of the trial.  During modelling we realised that trials differed by number of syllables, and we switched to syllablesPerMinute for the final models as a more appropriate control.
+
+
+
+------------------------------------------------------------------------
+
+
+
+How did you operationalise your dependent and independent variables? For example, if you choose f0 as a variable, specify from which speech domain it was extracted (for example: the phrase, the word, the syllable, the vowel, etc.), whether you extracted a summary statistic over a larger domain or a concrete value at a specific or relative point in time. For categorical variables (like age, gender, etc.), specify the levels/categories, how they are operationalised and the rationale behind the categorisation.
+
+
+The domain is indicated in the table above. Variables are defined at the domain of the nucleus, offglide, diphthong, or word.  The domain of speech rate is the local clause (either the trigger or the target clause in the trial).
+
+
+
+------------------------------------------------------------------------
+
+
+
+What transformation (if any) were applied to the variables? Please, be as specific as possible by indicating for each variable that has been transformed the name of the variable as found in the dataset and the formula/operation that has been applied to it. For example: "We log transformed the F0 values, which are found in the column 'log_f0' of our data frame."
+
+
+We scaled and centred the continuous variables, trialnumber and trialduration (for the preregistered model), in order to help with model convergence.  These are in the columns scaledtrialnumber and scaledtrialduration.
+
+
+
+------------------------------------------------------------------------
+
+
+
+Were any observations excluded? If so, which criteria did you follow for the exclusion? For example: "We excluded values that were +/- 3 standard deviations from the mean."
+
+
+For every variable, we remove outliers with 2.5sd +/- mean for each participant.   
+We also applied a hard cut-off minimum of 800 to F2, as the 2.5sd criteria resulted in the inclusion of some unplausibly low values.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What criteria did you use to decide on an answer to the research question? For example, the decision could have been based on p-values for particular predictors and/or interactions, on Bayesian posterior distributions, or confidence/credible intervals, etc...
+
+
+Significant pairwise ANOVA comparisons of minimally different lmer models.  We accepted a predictor as significant if its inclusion led to a significantly better model than a model that excluded it.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What is the size of the effect for the research question? Please, specify the magnitude and direction of the effect size, along with the 95% confidence (or credible) interval in the following format: estimate [low interval, high interval].
+
+
+As model fitting involves pairwise (ANOVA) anova comparison between minimally different models, in a backwards procedure, we used analysis of variance (ANOVA) to evaluate our models. The purpose of the ANOVA test was to compare two models and determine whether the removal of a variable significantly affected model performance.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What unit is your effect size in (i.e., Hedges' G, standardized mean difference, etc.)?
+
+
+We compared the explanatory power between our models using performance metrics from ANOVA.
+
+
+
+------------------------------------------------------------------------
+
+
+
+Often we do not anticipate possible road blocks during our analyses. Did you encounter scenarios in which you had to revise an earlier analytical decision at a later stage, e.g. change a measurement after you have statistically analyzed (parts of) the data? If so, please briefly describe the situation.
+
+
+We preregistered a model that did not converge and had singularity errors, leading us to refine our model fitting, and adopt the numeric value of typicality rating.
+
+Earlier modelling also showed the following:
+(1) A significant effect of F2 on schwa.  Visualization of this effect revealed the problems with the low F2 values, leading us to impose a stricter F2 outlier criteria.
+(2) Duration effects when speech rate was not properly controlled, leading us to adopt a more direct measure of speech rate, and analyse speech rate itself as a variable of interest.
+
+
+
+------------------------------------------------------------------------
+
+

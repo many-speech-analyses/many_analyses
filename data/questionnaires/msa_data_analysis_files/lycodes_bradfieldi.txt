@@ -1,0 +1,457 @@
+
+Which software did you use for the processing of the recordings and extraction of acoustic measurements? Please indicate all pieces of software that were used, and specify what was accomplished with each. For example: "Filtering of the recordings was done using the Matlab signal processing toolbox, while the extraction of acoustic measurements (f0, duration, formants, CoG) was accomplished with Praat."
+
+
+mPraat was used to important audio and text data into MATLAB
+acoustic features were extracted in MATLAB. Their extraction relied on:
+The Signal Processing Toolbox
+Code from the Varnet et al., 2017 paper TODO update
+JASP was used to run final statistical models
+
+
+
+
+------------------------------------------------------------------------
+
+
+
+Which analytical/statistical technique(s) did you employ to answer the research question? Please, indicate the name of the techniques and describe specific details if necessary. For example, "We run Bayesian mixed-effects models using a Gaussian likelihood as the distribution of the outcome variable". Details about variables and parameters will be asked in later questions.
+
+
+We ran repeated measures analysis of variance (ANOVAs) in JASP.
+
+
+
+------------------------------------------------------------------------
+
+
+
+How familiar are you with the analytical/statistical technique you employed?
+
+
+We are very familiar with these statistical techniques.
+
+
+
+------------------------------------------------------------------------
+
+
+
+To answer the research question, which variable(s) did you choose as the dependent variable(s) (outcome or measured or latent variable), and what was the rationale behind the choice? If the analysis included multiple dependent variables, specify all of them and the rationale behind choosing each.
+
+
+AM and Mi were our dependent variables. Our rationale was that surprise (driven by typicality) should lead to changes in the amplitude modulation spectrum indices.
+
+
+
+------------------------------------------------------------------------
+
+
+
+To answer the research question, which variable(s) did you choose as the independent variable(s) (predictors), and what was the rationale behind the choice? If the analysis included multiple independent variables, specify all of them and the rationale behind choosing each.
+
+
+Typicality and frequency band were our independent variables. Typicality was our main variable of interest, but frequency band was also considered relevant as we wanted to know which bands (if any) showed a significant change in power by typicality condition. Their interaction was also included in our ANOVA.
+
+
+
+------------------------------------------------------------------------
+
+
+
+How did you operationalise your dependent and independent variables? For example, if you choose f0 as a variable, specify from which speech domain it was extracted (for example: the phrase, the word, the syllable, the vowel, etc.), whether you extracted a summary statistic over a larger domain or a concrete value at a specific or relative point in time. For categorical variables (like age, gender, etc.), specify the levels/categories, how they are operationalised and the rationale behind the categorisation.
+
+
+Dependent variables were extracted as described above (in Analysis Workflow). 
+Independent variables were operationalized as follows: 
+Typicality: by the three levels (‘atypical’, ‘medium’, ‘typical’ provided in the data set, and determined based on a previous norming study). 
+Frequency band: by standard ranges used in the neuroscientific literature 
+
+
+
+
+------------------------------------------------------------------------
+
+
+
+What transformation (if any) were applied to the variables? Please, be as specific as possible by indicating for each variable that has been transformed the name of the variable as found in the dataset and the formula/operation that has been applied to it. For example: "We log transformed the F0 values, which are found in the column 'log_f0' of our data frame."
+
+
+No transformations
+
+
+
+------------------------------------------------------------------------
+
+
+
+Were any observations excluded? If so, which criteria did you follow for the exclusion? For example: "We excluded values that were +/- 3 standard deviations from the mean."
+
+
+No data were excluded. The number of trials per condition is already very low. The analyzed utterances were meant to be instructions, to which no clear exclusion criterion applies.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What criteria did you use to decide on an answer to the research question? For example, the decision could have been based on p-values for particular predictors and/or interactions, on Bayesian posterior distributions, or confidence/credible intervals, etc...
+
+
+The answer was decided based on significance, or absence thereof, of the main factor Typicality, and of its interaction with the Frequency Band factor. Significance was defined as p <.05, after Bonferroni correction.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What is the size of the effect for the research question? Please, specify the magnitude and direction of the effect size, along with the 95% confidence (or credible) interval in the following format: estimate [low interval, high interval].
+
+
+Partial eta square values: Typicality = 0.253; Band = 0.816; Interaction = 0.206. However, in the context of the original eta square values, which for Typicality and the Interaction were below 0.004, we deem the effect size of the Typicality factor very small.    
+
+Mean difference and CIs for all post hoc comparisons are reported below 
+
+Post Hoc Tests
+Post Hoc Comparisons - typicality ✻ bands
+
+
+95% CI for Mean Difference
+
+
+
+
+
+
+Mean Difference
+Lower
+Upper
+SE
+t
+p bonf
+atypicality, delta
+
+
+medium, delta
+
+
+0.010
+
+
+-0.026
+
+
+0.045
+
+
+0.010
+
+
+1.006
+
+
+1.000
+
+
+ 
+
+
+typicality, delta
+
+
+0.016
+
+
+-0.019
+
+
+0.052
+
+
+0.010
+
+
+1.724
+
+
+1.000
+
+
+atypicality, theta
+
+
+medium, theta
+
+
+0.011
+
+
+-0.025
+
+
+0.046
+
+
+0.010
+
+
+1.107
+
+
+1.000
+
+
+ 
+
+
+typicality, theta
+
+
+0.042
+
+
+0.006
+
+
+0.077
+
+
+0.010
+
+
+4.361
+
+
+0.004
+
+
+atypicality, alpha
+
+
+medium, alpha
+
+
+0.013
+
+
+-0.022
+
+
+0.049
+
+
+0.010
+
+
+1.393
+
+
+1.000
+
+
+ 
+
+
+typicality, alpha
+
+
+0.051
+
+
+0.016
+
+
+0.086
+
+
+0.010
+
+
+5.349
+
+
+5.380e  -5
+
+
+atypicality, beta
+
+
+medium, beta
+
+
+0.024
+
+
+-0.011
+
+
+0.059
+
+
+0.010
+
+
+2.504
+
+
+1.000
+
+
+ 
+
+
+typicality, beta
+
+
+0.052
+
+
+0.017
+
+
+0.087
+
+
+0.010
+
+
+5.465
+
+
+3.155e  -5
+
+
+atypicality, lower_gamma
+
+
+medium, lower_gamma
+
+
+0.026
+
+
+-0.009
+
+
+0.061
+
+
+0.010
+
+
+2.727
+
+
+1.000
+
+
+ 
+
+
+typicality, lower_gamma
+
+
+0.036
+
+
+8.904e -4
+
+
+0.071
+
+
+0.010
+
+
+3.778
+
+
+0.036
+
+
+atypicality, higher_gamma
+
+
+medium, higher_gamma
+
+
+-0.025
+
+
+-0.060
+
+
+0.011
+
+
+0.010
+
+
+-2.566
+
+
+1.000
+
+
+ 
+
+
+typicality, higher_gamma
+
+
+-0.002
+
+
+-0.037
+
+
+0.033
+
+
+0.010
+
+
+-0.224
+
+
+1.000
+
+
+
+
+
+
+
+
+
+
+------------------------------------------------------------------------
+
+
+
+What unit is your effect size in (i.e., Hedges' G, standardized mean difference, etc.)?
+
+
+Standardized mean difference.
+Partial eta square measures the proportion of variance explained by the factor of interest, out of the total variance remaining after the variance explained by the other factor (or factors) is partialled out. Hence, it is a meaningful index only when evaluated in the context of the other factors.
+
+
+
+
+------------------------------------------------------------------------
+
+
+
+Often we do not anticipate possible road blocks during our analyses. Did you encounter scenarios in which you had to revise an earlier analytical decision at a later stage, e.g. change a measurement after you have statistically analyzed (parts of) the data? If so, please briefly describe the situation.
+
+
+We initially were aiming at analyzing also the frequency modulation spectrum, but given the presence of many NaNs in the data (short utterances), this part of the project was put aside. 
+
+
+
+
+------------------------------------------------------------------------
+
+

@@ -1,0 +1,172 @@
+
+Which software did you use for the processing of the recordings and extraction of acoustic measurements? Please indicate all pieces of software that were used, and specify what was accomplished with each. For example: "Filtering of the recordings was done using the Matlab signal processing toolbox, while the extraction of acoustic measurements (f0, duration, formants, CoG) was accomplished with Praat."
+
+
+Montreal forced aligner for segmentation; praat for hand-correction and extraction of acoustic measurements (duration, intensity, vowel formants)
+
+
+
+------------------------------------------------------------------------
+
+
+
+Which analytical/statistical technique(s) did you employ to answer the research question? Please, indicate the name of the techniques and describe specific details if necessary. For example, "We run Bayesian mixed-effects models using a Gaussian likelihood as the distribution of the outcome variable". Details about variables and parameters will be asked in later questions.
+
+
+We used linear mixed-effects regression models in R.
+
+
+
+------------------------------------------------------------------------
+
+
+
+How familiar are you with the analytical/statistical technique you employed?
+
+
+Very familiar.
+
+
+
+------------------------------------------------------------------------
+
+
+
+To answer the research question, which variable(s) did you choose as the dependent variable(s) (outcome or measured or latent variable), and what was the rationale behind the choice? If the analysis included multiple dependent variables, specify all of them and the rationale behind choosing each.
+
+
+The “frame duration”: the duration in milliseconds from the onset of the utterance to
+the start of the adjective. This is the length of time it takes to say "und jetzt sollst du
+den würfel auf der/den …". Rationale: speakers may slow down for atypical items if they are harder to process (cf Fox Tree & Clark 1997).
+The duration in milliseconds of the adjective. Rationale: predictable items tend to be phonetically reduced.
+The duration in milliseconds of the noun. Rationale: predictable items tend to be phonetically reduced.
+The duration in milliseconds of the stressed vowel of the adjective. Rationale: predictable items tend to be phonetically reduced.
+The duration in milliseconds of the stressed vowel of the noun. Rationale: predictable items tend to be phonetically reduced.
+The mean intensity in dB of the stressed vowel of the adjective. Rationale: predictable items tend to be phonetically reduced.
+The mean intensity in dB of the stressed vowel of the noun. Rationale: predictable items tend to be phonetically reduced.
+A measure of vowel centralisation of the stressed vowel of the adjective. Rationale: predictable items tend to be phonetically reduced.
+A measure of vowel centralisation of the stressed vowel of the noun. Rationale: predictable items tend to be phonetically reduced.
+
+
+
+------------------------------------------------------------------------
+
+
+
+To answer the research question, which variable(s) did you choose as the independent variable(s) (predictors), and what was the rationale behind the choice? If the analysis included multiple independent variables, specify all of them and the rationale behind choosing each.
+
+
+Trial number. Rationale: participants may "acclimate" to the unusual trials, such that by the end of the experiment the idea of a red banana isn't so strange.
+Typicality. Rationale: this is the research question...
+Interaction between typicality and trial. Rationale: There are possible interactions.
+
+
+
+------------------------------------------------------------------------
+
+
+
+How did you operationalise your dependent and independent variables? For example, if you choose f0 as a variable, specify from which speech domain it was extracted (for example: the phrase, the word, the syllable, the vowel, etc.), whether you extracted a summary statistic over a larger domain or a concrete value at a specific or relative point in time. For categorical variables (like age, gender, etc.), specify the levels/categories, how they are operationalised and the rationale behind the categorisation.
+
+
+Duration was measured over the whole word and over the stressed vowel.
+Intensity was measured as a mean over the stressed vowel.
+Vowel formants were extracted from stressed vowel midpoint; these values were then used to calculate a centralisation metric.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What transformation (if any) were applied to the variables? Please, be as specific as possible by indicating for each variable that has been transformed the name of the variable as found in the dataset and the formula/operation that has been applied to it. For example: "We log transformed the F0 values, which are found in the column 'log_f0' of our data frame."
+
+
+IVs were centred around the mean prior to analysis. Centred variables have the suffix ".c" in their column name (e.g. "duration.c") while the untransformed variables do not (e.g. "duration").
+
+
+
+------------------------------------------------------------------------
+
+
+
+Were any observations excluded? If so, which criteria did you follow for the exclusion? For example: "We excluded values that were +/- 3 standard deviations from the mean."
+
+
+We excluded trials which were marked as having an error or hesitation.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What criteria did you use to decide on an answer to the research question? For example, the decision could have been based on p-values for particular predictors and/or interactions, on Bayesian posterior distributions, or confidence/credible intervals, etc...
+
+
+p-values for the "typicality" (and its interactions) variable.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What is the size of the effect for the research question? Please, specify the magnitude and direction of the effect size, along with the 95% confidence (or credible) interval in the following format: estimate [low interval, high interval].
+
+
+frame duration, medium versus atypical: 0.10 [-0.03, 0.23]
+frame duration, typical versus (medium and atypical): -0.07 [-0.20, 0.07]
+
+adjective duration, medium versus atypical: -0.04 [-0.10, 0.02]
+adjective duration, typical versus (medium and atypical): 0.07 [ 0.01, 0.13]
+
+noun duration, medium versus atypical: 0.28 [-0.08, 0.64]
+noun duration, typical versus (medium and atypical): 0.15 [-0.21, 0.50]
+
+adjective vowel duration, medium versus atypical: 0.04 [-0.06, 0.13]
+adjective vowel duration, typical versus (medium and atypical): 0.11 | [ 0.02, 0.21]
+
+noun vowel duration, medium versus atypical: -0.08 [-0.44, 0.29]
+noun vowel duration, typical versus (medium and atypical): 6.07e-03 [-0.48, 0.50]
+
+adjective vowel intensity, medium versus atypical: 4.07e-03 [-0.06, 0.07]
+adjective vowel intensity, typical versus (medium and atypical): -9.65e-03 [-0.08, 0.06]
+
+noun vowel intensity, medium versus atypical: -0.08 [-0.27, 0.10]
+noun vowel intensity, typical versus (medium and atypical): 0.11 [-0.10, 0.32]
+
+adjective vowel centralisation, medium versus atypical: -0.04 [-0.13, 0.05]
+adjective vowel centralisation, typical versus (medium and atypical): 0.03 [-0.05, 0.12]
+
+noun vowel centralisation, medium versus atypical: 0.07 [-0.26, 0.41]
+noun vowel centralisation, typical versus (medium and atypical): 0.44 [ 0.02, 0.87]
+
+
+
+
+------------------------------------------------------------------------
+
+
+
+What unit is your effect size in (i.e., Hedges' G, standardized mean difference, etc.)?
+
+
+Standardised regression coefficients
+
+
+
+------------------------------------------------------------------------
+
+
+
+Often we do not anticipate possible road blocks during our analyses. Did you encounter scenarios in which you had to revise an earlier analytical decision at a later stage, e.g. change a measurement after you have statistically analyzed (parts of) the data? If so, please briefly describe the situation.
+
+
+No
+
+
+
+------------------------------------------------------------------------
+
+

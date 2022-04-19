@@ -1,0 +1,147 @@
+
+Which software did you use for the processing of the recordings and extraction of acoustic measurements? Please indicate all pieces of software that were used, and specify what was accomplished with each. For example: "Filtering of the recordings was done using the Matlab signal processing toolbox, while the extraction of acoustic measurements (f0, duration, formants, CoG) was accomplished with Praat."
+
+
+Data was first segmented using a custom-built Praat script, then we used Prosogram to propose an acoustic syllable segmentation, followed by SPPAS for forced-alignment of the data.
+Next, we use custom-built Praat scripts to filter and extract the acoustic measurements using  Praat, version 6.2.10.
+Next, we use custom-built Praat scripts to filter and extract the acoustic measurements using  Praat, version 6.2.10.
+
+
+
+------------------------------------------------------------------------
+
+
+
+Which analytical/statistical technique(s) did you employ to answer the research question? Please, indicate the name of the techniques and describe specific details if necessary. For example, "We run Bayesian mixed-effects models using a Gaussian likelihood as the distribution of the outcome variable". Details about variables and parameters will be asked in later questions.
+
+
+We used Principal Component Analysis on the combination of predictors followed by a supervised machine learning algorithm (extremely randomized random forests, with subsampling without replacement and permutation tests). 
+We used Principal Component Analysis on the combination of predictors followed by a supervised machine learning algorithm (extremely randomized random forests, with subsampling without replacement and permutation tests). 
+We then ran a Bayesian mixed-effects model with the categorical family and a logit link for the response distribution.
+
+
+
+
+------------------------------------------------------------------------
+
+
+
+How familiar are you with the analytical/statistical technique you employed?
+
+
+For Machine learning, PCA: Highly. we employ these regularly and have a few publications   Bayesian analysis: very familiar with linear mixed models, not very familiar with Bayesian modeling.
+
+
+
+------------------------------------------------------------------------
+
+
+
+To answer the research question, which variable(s) did you choose as the dependent variable(s) (outcome or measured or latent variable), and what was the rationale behind the choice? If the analysis included multiple dependent variables, specify all of them and the rationale behind choosing each.
+
+
+Because we wanted to explore the data, we obtained various metrics on each of the adjective and noun as whole words. Formant-based metrics (F1, F2, F3; mean, SD, range, median), amplitude-based (HNR, in various bands; intensity, hammerberg index, energy components in various bands, energy of the glottal cycle, prominence, etc..) and f0-prosodic-based metrics (f0, min, max mean, median, SD, rise time and speed of rise time). We add our Praat scripts to the analyses for the specifics of how each of these were computed.
+
+
+
+
+------------------------------------------------------------------------
+
+
+
+To answer the research question, which variable(s) did you choose as the independent variable(s) (predictors), and what was the rationale behind the choice? If the analysis included multiple independent variables, specify all of them and the rationale behind choosing each.
+
+
+As our independent variable, we only chose typicality. In our inferential statistics, we used both speaker and words. Typicality was used as our outcome in the PCA and in random forests. Within the latter, we specifically chose the first 20 speakers to be part of the training set, while the remaining 20 speakers were in the testing set. Typicality was also chosen as the outcome variable for Bayesian modeling.
+
+
+
+
+------------------------------------------------------------------------
+
+
+
+How did you operationalise your dependent and independent variables? For example, if you choose f0 as a variable, specify from which speech domain it was extracted (for example: the phrase, the word, the syllable, the vowel, etc.), whether you extracted a summary statistic over a larger domain or a concrete value at a specific or relative point in time. For categorical variables (like age, gender, etc.), specify the levels/categories, how they are operationalised and the rationale behind the categorisation.
+
+
+For all of our dependent variables (acoustic metrics), we decided to do the analyses on a word level, first by identifying the adjective and then the noun in the NF context. Once identified, we obtained all the acoustic measurements at a word level. Then we obtained an adjusted measure for each acoustic metric. This adjustment was done as e.g., F1_Mean_Adjusted = F1_Mean_Adjective - F1_Mean_Noun. 
+
+
+
+
+------------------------------------------------------------------------
+
+
+
+What transformation (if any) were applied to the variables? Please, be as specific as possible by indicating for each variable that has been transformed the name of the variable as found in the dataset and the formula/operation that has been applied to it. For example: "We log transformed the F0 values, which are found in the column 'log_f0' of our data frame."
+
+
+All of our variables were centered and scaled prior to being used in the PCA or the random forests. The f0 values were obtained using the semi-tones scale (with semitones re 1 Hz). Original formant values were in Bark. 
+
+
+
+
+------------------------------------------------------------------------
+
+
+
+Were any observations excluded? If so, which criteria did you follow for the exclusion? For example: "We excluded values that were +/- 3 standard deviations from the mean."
+
+
+None of the observations were excluded. The analyses were adapted to the speaker’s sex, for both f0 and formant-based analyses to minimise as much as possible extreme values and errors in extractions. 
+
+
+
+
+------------------------------------------------------------------------
+
+
+
+What criteria did you use to decide on an answer to the research question? For example, the decision could have been based on p-values for particular predictors and/or interactions, on Bayesian posterior distributions, or confidence/credible intervals, etc...
+
+
+Because we decided to do an exploratory data analysis, we looked at % variance explained in our PCA and variable loadings on each of the dimensions. The biplots from the PCA allowed to show clear confusions and overlap between specific levels of typicality.
+Next, we used random forests as a classification tool that allowed us to identify the percentage of accurate classification. We assessed accuracy of the classification model using separate training and testing sets, then an AUC-based evaluation of the performance. We used the sensitivity, specificity, recall, precision and the F-measure on the training set and only accuracy and the AUC value for the testing set. In addition, and to try to evaluate any specific differences emerging from the three levels of typicality, we used the confusion matrix to identify accuracies and confusions in classification, in addition to the cumulative gains and AUC-ROC curves. These two allowed us to pinpoint differences related to the typical context being mostly well produced by the participants as it was the best performing level in our classification metric. 
+
+
+
+
+------------------------------------------------------------------------
+
+
+
+What is the size of the effect for the research question? Please, specify the magnitude and direction of the effect size, along with the 95% confidence (or credible) interval in the following format: estimate [low interval, high interval].
+
+
+In the initial steps of data analyses, we used PCA and machine learning in assessing group differences. Following this, we report on the 95% credible intervals from the Bayesian Logit regression as well as the magnitude and direction of the effect for each predictor.
+We did not report on any effect size or confidence intervals. We decided to use machine learning to assess performance of the model in identifying differences.
+
+
+
+
+------------------------------------------------------------------------
+
+
+
+What unit is your effect size in (i.e., Hedges' G, standardized mean difference, etc.)?
+
+
+NA
+
+
+
+------------------------------------------------------------------------
+
+
+
+Often we do not anticipate possible road blocks during our analyses. Did you encounter scenarios in which you had to revise an earlier analytical decision at a later stage, e.g. change a measurement after you have statistically analyzed (parts of) the data? If so, please briefly describe the situation.
+
+
+Initially, we started with intensity mean adjusted value. Next, we looked at intensity/amplitude-based and prosodic metrics. We tested our models and the performance was relatively low at 70% accuracy. We then increased the sample by looking at formant-based metrics. The combination of the three (formant, amplitude and f0-based metrics) increased the accuracy level of the model to 81%. We did not amend any of our initial analyses.   
+
+
+
+
+------------------------------------------------------------------------
+
+

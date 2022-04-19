@@ -1,0 +1,149 @@
+
+Which software did you use for the processing of the recordings and extraction of acoustic measurements? Please indicate all pieces of software that were used, and specify what was accomplished with each. For example: "Filtering of the recordings was done using the Matlab signal processing toolbox, while the extraction of acoustic measurements (f0, duration, formants, CoG) was accomplished with Praat."
+
+
+Praat: multiple splitting of TextGrid and audio files; extraction of pitch information in Hz at 10 ms intervals
+R: extraction of the TextGrid ‘word’ tier entries; creation of utterances as text files
+webMAUS: automated transcription and segmentation of utterances (as created by R)
+
+
+
+------------------------------------------------------------------------
+
+
+
+Which analytical/statistical technique(s) did you employ to answer the research question? Please, indicate the name of the techniques and describe specific details if necessary. For example, "We run Bayesian mixed-effects models using a Gaussian likelihood as the distribution of the outcome variable". Details about variables and parameters will be asked in later questions.
+
+
+We used a Gaussian generalised additive mixed model as statistical technique.
+
+
+
+------------------------------------------------------------------------
+
+
+
+How familiar are you with the analytical/statistical technique you employed?
+
+
+Fairly familiar, spent some years using it
+
+
+
+------------------------------------------------------------------------
+
+
+
+To answer the research question, which variable(s) did you choose as the dependent variable(s) (outcome or measured or latent variable), and what was the rationale behind the choice? If the analysis included multiple dependent variables, specify all of them and the rationale behind choosing each.
+
+
+We chose fundamental pitch, F0. The rational of this choice was that if intonation was different due to differences in typicality, this should become visible in the overall pitch contour.
+
+
+
+------------------------------------------------------------------------
+
+
+
+To answer the research question, which variable(s) did you choose as the independent variable(s) (predictors), and what was the rationale behind the choice? If the analysis included multiple independent variables, specify all of them and the rationale behind choosing each.
+
+
+We included a number of independent variables:
+-	as parametric predictor: TYPICALITY
+-	as smooth term predictor: ID
+-	as random smooth terms: TRIAL, SPEAKER, TARGET_NAME, TARGET_COLOUR, COMPETITOR_NAME, COMPETITOR_COLOUR, DISTRACTOR1_NAME, DISTRACTOR1_COLOUR, DISTRACTOR2_NAME, and DISTRACTOR2_COLOUR
+
+We chose to include as many variables as possible to account for potential effects of these variables. Including especially names and colours of non-target objects, we took into account effects which might otherwise stayed hidden. Including ID as smooth term, we accounted for the natural order of the pitch values we extracted. TYPICALITY, finally, was the predictor of interest.
+
+
+
+------------------------------------------------------------------------
+
+
+
+How did you operationalise your dependent and independent variables? For example, if you choose f0 as a variable, specify from which speech domain it was extracted (for example: the phrase, the word, the syllable, the vowel, etc.), whether you extracted a summary statistic over a larger domain or a concrete value at a specific or relative point in time. For categorical variables (like age, gender, etc.), specify the levels/categories, how they are operationalised and the rationale behind the categorisation.
+
+
+Dependent variable: F0 was extracted in Hz for each target word (i.e. the noun) at intervals of 10 ms. Before the statistical analysis, F0 was transformed to semitones with a baseline frequency of 50 Hz. For each target word, F0 was measured at 10 ms intervals, starting at the onset of the word. Thus, there are multiple data points per target word.
+
+Independent variables: ID was included to account for the natural order of the pitch values we extracted.
+
+All other variables (as mentioned in Q5) were included in the way they are provided in the original materials. No changes have been made as we found that no changes were necessary.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What transformation (if any) were applied to the variables? Please, be as specific as possible by indicating for each variable that has been transformed the name of the variable as found in the dataset and the formula/operation that has been applied to it. For example: "We log transformed the F0 values, which are found in the column 'log_f0' of our data frame."
+
+
+Pitch in Hz as extracted by the Praat script was transformed into semitones using the hqmisc (Quené, 2014) package’s f2st function in R, with the default baseline frequency of 50 Hz. The pitch variable in Hz is given as ‘pitch’, the pitch variable in semitones is given as ‘pitch_st’.
+
+Other variables were not transformed.
+
+
+
+
+------------------------------------------------------------------------
+
+
+
+Were any observations excluded? If so, which criteria did you follow for the exclusion? For example: "We excluded values that were +/- 3 standard deviations from the mean."
+
+
+All observations of the ‘NF’ condition were included.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What criteria did you use to decide on an answer to the research question? For example, the decision could have been based on p-values for particular predictors and/or interactions, on Bayesian posterior distributions, or confidence/credible intervals, etc...
+
+
+We relied on p-values as obtained by multiple comparisons of the variable of interest (TYPICALITY) as contained in our GAMM. We aimed at a conservative alpha-level of 0.001 (instead of the common 0.05) to speak of significance.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What is the size of the effect for the research question? Please, specify the magnitude and direction of the effect size, along with the 95% confidence (or credible) interval in the following format: estimate [low interval, high interval].
+
+
+We are not aware of a widely accepted concept of effect size in GAMS, or an appropriate method thereof. We report here the estimated means and their CIs of the TYPICALITY variable’s levels:
+typical: 20.39079 [19.43039, 21.35119]
+medium: 21.01482 [20.05419, 21.97545]
+atypical: 18.80542 [17.95549, 19.65535]
+
+
+
+------------------------------------------------------------------------
+
+
+
+What unit is your effect size in (i.e., Hedges' G, standardized mean difference, etc.)?
+
+
+Connected to Q10, our values are given in (estimated) semitones.
+
+
+
+------------------------------------------------------------------------
+
+
+
+Often we do not anticipate possible road blocks during our analyses. Did you encounter scenarios in which you had to revise an earlier analytical decision at a later stage, e.g. change a measurement after you have statistically analyzed (parts of) the data? If so, please briefly describe the situation.
+
+
+To our own surprise, no roadblocks occurred.
+
+
+
+------------------------------------------------------------------------
+
+

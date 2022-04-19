@@ -1,0 +1,148 @@
+
+Which software did you use for the processing of the recordings and extraction of acoustic measurements? Please indicate all pieces of software that were used, and specify what was accomplished with each. For example: "Filtering of the recordings was done using the Matlab signal processing toolbox, while the extraction of acoustic measurements (f0, duration, formants, CoG) was accomplished with Praat."
+
+
+Textgrid alignment and phoneme segmentation was done using WebMAUS (link below), splitting the recordings into utterances and acoustic measurements extraction were done using Praat v6.1.39 and Praat v6.2.06.
+
+https://www.clarin.eu/showcase/webmaus-automatic-segmentation-and-labelling-speech-signals-over-web
+
+
+
+
+------------------------------------------------------------------------
+
+
+
+Which analytical/statistical technique(s) did you employ to answer the research question? Please, indicate the name of the techniques and describe specific details if necessary. For example, "We run Bayesian mixed-effects models using a Gaussian likelihood as the distribution of the outcome variable". Details about variables and parameters will be asked in later questions.
+
+
+We used null hypothesis significance testing, using linear mixed effects models and full random structure, via R Studio (RCore Team, 2019) and the lme4 package (Bates et al., 2015)
+
+
+
+------------------------------------------------------------------------
+
+
+
+How familiar are you with the analytical/statistical technique you employed?
+
+
+Fairly familiar. Most authors have used LMM’s before and one of the authors has completed a summer school on statistics which specifically addressed LMM’s using R.
+
+
+
+------------------------------------------------------------------------
+
+
+
+To answer the research question, which variable(s) did you choose as the dependent variable(s) (outcome or measured or latent variable), and what was the rationale behind the choice? If the analysis included multiple dependent variables, specify all of them and the rationale behind choosing each.
+
+
+In the context of the research question “Do speakers phonetically modulate utterances to signal atypical word combinations” we decided to focus on phonetic prominence as a potentially modulated aspect of the speech signal. This was motivated by the assumption that typicality would be related to predictability in context, and predictability has proven effects on prosodic prominence (e.g. Turnbull 2017).   Phonetic prominence was measured using  Tykalova et al’s “Stress Pattern Index” (SPI), which is a composite measure of phonetic prominence, taking F0 variation, duration and relative intensity into account. We reasoned that a composite measure was well suited to combine some of the multi-variate effects of prosodic prominence into a single outcome variable.
+
+
+
+------------------------------------------------------------------------
+
+
+
+To answer the research question, which variable(s) did you choose as the independent variable(s) (predictors), and what was the rationale behind the choice? If the analysis included multiple independent variables, specify all of them and the rationale behind choosing each.
+
+
+As the research question focuses on the relationship between typicality and prosodic emphasis overall and only one effect size is of interest, we  used the mean typicality ratings as a continuous predictor and we report the overall relationship between the typicality rating and the prosodic prominence measure.
+
+
+
+------------------------------------------------------------------------
+
+
+
+How did you operationalise your dependent and independent variables? For example, if you choose f0 as a variable, specify from which speech domain it was extracted (for example: the phrase, the word, the syllable, the vowel, etc.), whether you extracted a summary statistic over a larger domain or a concrete value at a specific or relative point in time. For categorical variables (like age, gender, etc.), specify the levels/categories, how they are operationalised and the rationale behind the categorisation.
+
+
+The DV phonetic prominence was operationalised using the SPI as described in [1] in our own implementation (see Praat script SPI_and_friends4anon.psc) The formula used was:
+SPI = (1+ln(F0max/F0min))ΣEn. 
+Minimal amplitude over the analysed unit was set to 0 dB.
+SPI was originally devised as a word level measure and in accordance to that it was calculated over the total duration of the colour word in the NF condition.
+
+The IV typicality was operationalised as a continuous variable, using the mean typicality ratings from the trial lists.
+
+[1] Tykalová, T., Rusz, J., Cmejla, R., Ruzickova, H., & Růžička, E. (2014). Acoustic investigation of stress patterns in Parkinson’s disease. Journal of Voice : Official Journal of the Voice Foundation.
+
+
+
+
+
+------------------------------------------------------------------------
+
+
+
+What transformation (if any) were applied to the variables? Please, be as specific as possible by indicating for each variable that has been transformed the name of the variable as found in the dataset and the formula/operation that has been applied to it. For example: "We log transformed the F0 values, which are found in the column 'log_f0' of our data frame."
+
+
+The SPI log-transforms F0. The composite SPI measure was log-transformed as a Shapiro-Wilk test indicated non-normal distribution.
+
+
+
+------------------------------------------------------------------------
+
+
+
+Were any observations excluded? If so, which criteria did you follow for the exclusion? For example: "We excluded values that were +/- 3 standard deviations from the mean."
+
+
+We excluded all tokens with non-empty comment fields because having inspected the comments it was judged that in all the cases speaker prosody may have been affected by factors other than the experimental condition.)
+
+
+
+------------------------------------------------------------------------
+
+
+
+What criteria did you use to decide on an answer to the research question? For example, the decision could have been based on p-values for particular predictors and/or interactions, on Bayesian posterior distributions, or confidence/credible intervals, etc...
+
+
+P-value and 95% CI for the continuous predictor Typicality. P-value was derived using the functions contained in R package lmerTest [1].
+
+[1] Kuznetsova A, Brockhoff PB, Christensen RHB (2017). “lmerTest Package: Tests in Linear Mixed Effects Models.” Journal of Statistical
+Software, 82(13), 1-26.
+
+
+
+
+------------------------------------------------------------------------
+
+
+
+What is the size of the effect for the research question? Please, specify the magnitude and direction of the effect size, along with the 95% confidence (or credible) interval in the following format: estimate [low interval, high interval].
+
+
+The effect size is based on Westfall, Judd, and Kenny (2014), as cited in Brysbaert and Stevens (2018) d =  -0.0003[ -0.002, 0.001]
+
+
+
+------------------------------------------------------------------------
+
+
+
+What unit is your effect size in (i.e., Hedges' G, standardized mean difference, etc.)?
+
+
+Standardized mean difference = Mean difference divided by the square root of the sum of the random slopes, intercepts and residual.
+
+
+
+------------------------------------------------------------------------
+
+
+
+Often we do not anticipate possible road blocks during our analyses. Did you encounter scenarios in which you had to revise an earlier analytical decision at a later stage, e.g. change a measurement after you have statistically analyzed (parts of) the data? If so, please briefly describe the situation.
+
+
+We initially anticipated that the focus condition would be another predictor. It was later clarified that the ANF and AF conditions were not balanced so we only focused on the effect of typicality in NF.
+
+
+
+------------------------------------------------------------------------
+
+

@@ -1,0 +1,206 @@
+
+Which software did you use for the processing of the recordings and extraction of acoustic measurements? Please indicate all pieces of software that were used, and specify what was accomplished with each. For example: "Filtering of the recordings was done using the Matlab signal processing toolbox, while the extraction of acoustic measurements (f0, duration, formants, CoG) was accomplished with Praat."
+
+
+We first used Praat to extract the targets for analysis, from "auf" to the end of "ablegen" in each utterance. The resulting multiple shorter audio files were batch-processed in the following order using a commercial program Myriad*: (1) Clear all meta-data and remove DC offset; (2) Fade-in and fade-out 10 ms on each side;(3) Add 200 ms of silence on each side; (4) Normalize to -23 LUFS. 
+
+* Myriad 4.4.1 by Aurchitect Audio Software, LLC (discontinued). These basic procedures can be also achieved with batch processing in the open-source software Audacity (among others).
+
+Next, we analyzed all the files using the ProPer workflow (https://osf.io/28ea5/). We used Praat to extract Intensity Tier, Pitch Object and Pitch Tier for each audio file. The Pitch Tiers were manually corrected by a group of annotators from the team to obtain reliable and smoothed F0 contours (10Hz smoothing in Praat). The Praat files (Intensity Tiers, Pitch Objects and Pitch Tiers) were then read into R using RStudio. The Pitch Tier files were read as the F0 time series; the Intensity Tier and Pitch Object files were read in order to calculate the periodic energy time series. The ProPer toolbox computes a prominence-related metric termed mass, which is based on the area under the periodic energy curve between two boundaries. ProPer also computes two pitch-related metrics, ∆F0 and synchrony, based on informative interactions between F0 and periodic energy.
+
+For all statistical analysis, we used R and Rstudio. Bayesian mixed-modelling was performed using Stan via the brms library in R.
+
+
+
+
+------------------------------------------------------------------------
+
+
+
+Which analytical/statistical technique(s) did you employ to answer the research question? Please, indicate the name of the techniques and describe specific details if necessary. For example, "We run Bayesian mixed-effects models using a Gaussian likelihood as the distribution of the outcome variable". Details about variables and parameters will be asked in later questions.
+
+
+The inferential results that are described in our report were obtained using Bayesian Mixed-Effects modeling with both Gaussian and log-normal likelihoods.
+
+
+We also carried out hierarchical cluster analysis (linkage-criterion: complete linkage, distance matrix calculated on the basis of Euclidean distances).
+
+
+
+
+------------------------------------------------------------------------
+
+
+
+How familiar are you with the analytical/statistical technique you employed?
+
+
+We were familiar with the ProPer analysis and the cluster analysis. In the team, people have various levels of expertise with mixed-modeling and / or Bayesian approaches. Overall, our collective expertise is relatively satisfactory but not perfect. On a 10 point likert-scale (1 being complete beginner in all aspects, e.g. both in mixed-modeling and in Bayesian approaches, 10 being high-level of expertise in both domains), we may estimate our global familiarity as close to 6/7, although it is distributed over various people with specific knowledge. Some of us were beginners in Bayesian analyses but received help from more experienced users in the team at various stages of the analysis. Some aspects of mixed-modeling that were crucial to reaching an appropriate level of data interpretation were also addressed during meetings.
+
+
+
+------------------------------------------------------------------------
+
+
+
+To answer the research question, which variable(s) did you choose as the dependent variable(s) (outcome or measured or latent variable), and what was the rationale behind the choice? If the analysis included multiple dependent variables, specify all of them and the rationale behind choosing each.
+
+
+The dependent variables were mass, deltaF0 and synchrony. 
+
+1. Mass is the area under the periodic energy curve within each syllable. 
+
+2. ∆F0 (DeltaF0) is the difference in F0 (Hz) between successive syllables (values taken from the center of periodic energy mass within each syllable) to account for the shape of the F0 curve across syllables. 
+
+3. Synchrony measures the distance (in ms) between the center of periodic energy mass (CoM) and the tonal center of gravity (CoG) within each syllable, to account for the shape of the F0 curve within syllables. 
+
+We chose these metrics as they allow for a holistic approach to measuring and describing speech prosody. 
+
+For cluster analysis, time-series f0 measures were used as a dependent variable because they represent the f0 trajectory, unlike static measures such as f0 mean, f0 range, etc.
+
+
+
+
+------------------------------------------------------------------------
+
+
+
+To answer the research question, which variable(s) did you choose as the independent variable(s) (predictors), and what was the rationale behind the choice? If the analysis included multiple independent variables, specify all of them and the rationale behind choosing each.
+
+
+We chose ‘typicality’ as the independent variable, because the research question concerned the ‘typicality’. The ‘medium’ level was not investigated thoroughly because there were not sufficient data points in this experimental condition.
+We used the categorical distinction of 'typical' vs 'atypical', rather than the continuous mean values for typical also provided, as the latter did not in fact represent a continuous distribution of values, and therefore was essentially not informative beyond the binary/ternary distinction.
+
+Defining ‘independent variable(s)’ does not apply to the cluster analysis itself. However, the clustering output was checked against the predictor ‘typicality’.
+
+
+
+
+------------------------------------------------------------------------
+
+
+
+How did you operationalise your dependent and independent variables? For example, if you choose f0 as a variable, specify from which speech domain it was extracted (for example: the phrase, the word, the syllable, the vowel, etc.), whether you extracted a summary statistic over a larger domain or a concrete value at a specific or relative point in time. For categorical variables (like age, gender, etc.), specify the levels/categories, how they are operationalised and the rationale behind the categorisation.
+
+
+The ProPer analysis was syllable-based. The syllable boundaries were semi-automatically determined in the ProPer algorithm, informed by both the minima across the periodic energy curve and the location of manually annotated boundaries from the textgrids (boundaries were manually added by a group of annotators from the team).
+
+Although we looked at a relatively long stretch of the utterance (from "auf" to the end of "ablegen"), we eventually targeted 4 syllables in each trial: the 2 stressed syllables and the 2 final syllables within the adjective and the following noun. For each syllable we computed the three ProPer metrics (mass, deltaF0 and synchrony).
+
+Bayesian models included all three levels of Typicality for global estimation but the ‘medium’ level was not considered in the part that was dedicated to hypothesis testing: only specific comparisons between the ‘typical’ and ‘atypical’ conditions were estimated.
+
+For clustering analysis, F0 measures were taken from noun-final syllables; 30 measures per syllable to acquire a reasonably high resolution trajectory. Octave jumps were corrected and if this correction did not succeed, the f0 contours were discarded.
+
+
+
+
+------------------------------------------------------------------------
+
+
+
+What transformation (if any) were applied to the variables? Please, be as specific as possible by indicating for each variable that has been transformed the name of the variable as found in the dataset and the formula/operation that has been applied to it. For example: "We log transformed the F0 values, which are found in the column 'log_f0' of our data frame."
+
+
+We used the ProPer workflow to obtain a smooth F0 contour that is modulated by the corresponding periodic energy curve. Periodic energy was computed in R from the Praat Pitch Object and Intensity Tier files. The periodic energy curve was log-transformed and smoothed. Four different floor values were used to fit the periodic energy curve of the different speakers in order to adjust the zero value of the log-transformed periodic energy time series. We used a 12Hz low-pass filter to smooth the final periodic energy curve and a 6Hz low-pass filter to smooth the final F0 curve. The variable names we used were 'smogPP_12Hz' for the periodic energy curve (smoothed with a 12Hz low-pass filtering), and 'f0_interp_stretch_smooth' for the F0 curve (smoothed with a 6Hz low-pass filter).
+
+ProPer computes the three metrics from the two variables, 'smogPP_12Hz’ and 'f0_interp_stretch_smooth', and from landmarks that are derived from these two time series, such as the center of periodic energy mass (CoM) and the tonal center of gravity (CoG):
+
+1. We normalized mass by computing the relative difference between the masses in each utterance, yielding the variable 'mass_rel'.
+
+2. We normalized DeltaF0 by dividing the raw values by the F0 range of that speaker across the different analyzed trials, yielding the variable 'DeltaF0_rel'.
+
+3. We normalized synchrony by dividing the raw values with the duration of the containing syllable, yielding the variable 'sync_rel'.
+
+Only relative measures were used as Dependent Variables. No further transformations were performed for the inference part.
+
+For clustering analysis, F0 time-series measures were speaker-corrected using standardisation (Rose, 1987; doi: 10.1016/0167-6393(87)90009-4).
+
+
+
+
+
+
+
+------------------------------------------------------------------------
+
+
+
+Were any observations excluded? If so, which criteria did you follow for the exclusion? For example: "We excluded values that were +/- 3 standard deviations from the mean."
+
+
+We used a subset of the data in two phases. In both phases we analyzed the targets (from "auf" to the end of "ablegen") only for the noun focus (NF) condition. We excluded the utterances with errors as commented by the MSA coordinators in the textgrid. 
+
+In Phase 1, we controlled word length in the targets; we selected targets with a disyllabic adjective followed by a disyllabic noun. In Phase 2 we added two targets containing words with more than two syllables, "o.ran.ge(.)n(en) Trau.ben" and "gel.ben Zit.ro.ne", to mitigate the potential confound, the syllable structure, found in Phase 1. In Phase 1, all ‘typical’ noun phrases were found to end with a closed syllable (Wal.nuss, Boh.nen) whilst all ‘atypical’ noun phrases ended with an open syllable (Möh.re, Kir.sche, Gur.ke). 
+
+
+For cluster analysis, Clustering was applied using R and subsetting of the data was done following the procedure referenced in the report. From the total number of NF syllables, 364 were clustered.
+
+In the Bayesian modeling part, no data were excluded. For each item, 4 syllables were entered into the analysis (Penultimate syllable / Adjective, Final syllable / Adjective, Penultimate syllable / Noun, Final syllable / Noun). Relative expressions of Mass, Synchrony and DeltaF0 were investigated as Dependent Variables. Initial explorations of distributional properties for each dependent variable were performed in order to target possible distribution fits for the modeling, which should limit the impact of possible extreme observations that may not fit the selected likelihood. Although all 3 levels of typicality were included in the analyses, the ‘medium’ level was excluded from specific hypothesis testing for simplification (and due to a paucity of data for this condition), even though at least some partial investigations seemed to be in line with conclusions that were drawn from the ‘atypical’ condition.
+
+In the Bayesian modeling part, no data were excluded. For each item, 4 syllables were entered into the analysis (Penultimate syllable / Adjective, Final syllable / Adjective, Penultimate syllable / Noun, Final syllable / Noun). Relative expressions of Mass, Synchrony and DeltaF0 were investigated as Dependent Variables. Initial explorations of distributional properties for each dependent variable were performed in order to target possible distribution fits for the modeling, which should limit the impact of possible extreme observations that may not fit the selected likelihood. Although all 3 levels of typicality were included in the analyses, the ‘medium’ level was excluded from specific hypothesis testing for simplification (and due to a paucity of data for this condition), even though at least some partial investigations seemed to be in line with conclusions that were drawn from the ‘atypical’ condition.
+
+
+
+
+
+
+------------------------------------------------------------------------
+
+
+
+What criteria did you use to decide on an answer to the research question? For example, the decision could have been based on p-values for particular predictors and/or interactions, on Bayesian posterior distributions, or confidence/credible intervals, etc...
+
+
+For Bayesian modeling, our criteria were based on the computation of 95%-credible intervals and posterior probabilities for each specific effect.
+
+For clustering analysis, an evaluation method to find the ideal number of clusters was applied. This method is based on comparing information cost measures for several clustering rounds. We obtained the lowest information cost value for a cluster analysis with 6 clusters. 
+
+
+
+
+------------------------------------------------------------------------
+
+
+
+What is the size of the effect for the research question? Please, specify the magnitude and direction of the effect size, along with the 95% confidence (or credible) interval in the following format: estimate [low interval, high interval].
+
+
+For each syllable, we tested the unidirectional posterior probability that, given our model, priors, and data, the estimate size is greater than zero (with the same sign, therefore in the same direction). The estimate is measured by subtracting the ‘Typical’ from the ‘Atypical’ condition, a negative sign indicating a lowering of the measurement in the Atypical condition with respect to the Typical condition.
+
+The main effect which we focused on in our analysis, using a log-normal likelihood, is observed on the Noun Final syllable for “relative Mass”: Estimate: -0.59 [-0.69, -0.49].
+
+The effect size as estimated by Cohen's d on the posterior distribution is -2.23.
+
+
+
+
+
+------------------------------------------------------------------------
+
+
+
+What unit is your effect size in (i.e., Hedges' G, standardized mean difference, etc.)?
+
+
+The unit for the effect size is a standardized mean difference. These were computed from the posterior distributions for each model and each specific comparison
+
+
+
+
+------------------------------------------------------------------------
+
+
+
+Often we do not anticipate possible road blocks during our analyses. Did you encounter scenarios in which you had to revise an earlier analytical decision at a later stage, e.g. change a measurement after you have statistically analyzed (parts of) the data? If so, please briefly describe the situation.
+
+
+See answer to an earlier question on the observations excluded (explaining the rationale of phase 2).
+
+An intermediate phase in the analysis influenced the choice of the main Dependent Variable. Indeed, we first looked at patterns of the Typicality effect on the 4 target syllables (corresponding to the noun and adjective in the sequence) as concerns the various measurements of interest (Synchrony, DeltaF0 and Mass). Our analysis was first focused on Mass, as it was the only measurement for which we observed a difference that seemed to be potentially systematic. However, it turned out in the subsequent analyses that some effects occurred on the other two Dependent Variables (DeltaF0 and synchrony) as well, although these were very small, not on the same syllables and with various effect sizes. However no changes in actual measurements or type of analysis applied were made. As these effects were so small and considering the computational power required by Bayesian modeling, due to time constraints, we did not pursue further aspects of the analyses for these two  other variables at this point (e.g. comparing models with varying likelihoods in order to select the best one as was done for Mass).
+
+
+
+
+------------------------------------------------------------------------
+
+

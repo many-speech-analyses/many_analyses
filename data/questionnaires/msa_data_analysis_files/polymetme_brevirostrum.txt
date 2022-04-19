@@ -1,0 +1,132 @@
+
+Which software did you use for the processing of the recordings and extraction of acoustic measurements? Please indicate all pieces of software that were used, and specify what was accomplished with each. For example: "Filtering of the recordings was done using the Matlab signal processing toolbox, while the extraction of acoustic measurements (f0, duration, formants, CoG) was accomplished with Praat."
+
+
+f0 and duration measurements were collected with PRAAT. Metadata originally included in the PRAAT TextGrids (e.g., Trial, Condition) were extracted by means of a PRAAT script. Audio was aligned to text using the Montreal Forced Aligner with the german_mfa dictionary and acoustic model. Statistical analysis and data visualization was conducted in R.
+
+
+
+------------------------------------------------------------------------
+
+
+
+Which analytical/statistical technique(s) did you employ to answer the research question? Please, indicate the name of the techniques and describe specific details if necessary. For example, "We run Bayesian mixed-effects models using a Gaussian likelihood as the distribution of the outcome variable". Details about variables and parameters will be asked in later questions.
+
+
+We analyzed the data using linear mixed effects regression under a Bayesian approach with the rstanarm package in R (Goodrich et al. 2020; R Core Team 2021). We used treatment coding for Condition, setting the reference level at NF based on the conjecture that conditions which involved focus specifically on the adjective should lead to higher pitch ranges than the case where focus was on the noun. We used custom contrasts for Typicality to allow us to compare Atypical category to the Typical category as well as compare the Atypical category to the mean of the other categories. Finally, we used treatment coding for Category, setting the reference level on NONFOOD because the expectation is that non-foods come in a wider variety of colors. We began by fitting a maximal model justified by the experimental design: main effects for Typicality, Category, and Condition as well as all interactions. Random Effects included random intercepts for Object, Colour, and Speaker and random slopes matching the fixed effects (except for any slopes dealing with Category for the Object random intercept, as it already captures the notion of Category. We fit this model using weakly informative Gaussian priors that were autoscaled by rstanarm. We set the adapt_delta parameter, which penalizes larger step transitions, to a conservative value of 0.999. We sampled four chains from the posterior distribution with 2000 steps equally split between warmup and sampling. Model fit was assessed using visual posterior predictive checks and leave-one-out cross validation with a Pareto k diagnostic set at a threshold of 0.7. We then simplified the model beginning by removing the random slopes and higher-order terms; we determined a stopping point based on a comparison of ELPD (expected log pointwise predictive density) values.
+
+
+
+------------------------------------------------------------------------
+
+
+
+How familiar are you with the analytical/statistical technique you employed?
+
+
+I have advanced intermediate knowledge of this technique
+
+
+
+------------------------------------------------------------------------
+
+
+
+To answer the research question, which variable(s) did you choose as the dependent variable(s) (outcome or measured or latent variable), and what was the rationale behind the choice? If the analysis included multiple dependent variables, specify all of them and the rationale behind choosing each.
+
+
+The research question is whether the acoustic profile of an utterance with an typical referent differs from one with a more typical referent, so we began by searching for phonetic and phonological studies that focused on the manipulation of predictability and/or typicality in German. A cursory examination of the literature suggests that contrastive (narrow) focus in German is marked by a rising tone with a low boundary tone (L+H* L%; cf. Weber et al., 2006; Fery & Wang, 2018) as opposed to a flat high tone in broad focus utterances, and this pitch accent is also seen in unexpected or less common adjectives. We operationalize this hypothesized difference using pitch range within the adjective as a dependent variable. Specifically, we hypothesize that pitch range should be higher within the adjective for utterances where that adjective is atypical and the utterance is focused.
+
+
+
+------------------------------------------------------------------------
+
+
+
+To answer the research question, which variable(s) did you choose as the independent variable(s) (predictors), and what was the rationale behind the choice? If the analysis included multiple independent variables, specify all of them and the rationale behind choosing each.
+
+
+We included Condition, Typicality, and Category as independent variables in the model. We expected main effects of Condition (AF >= ANF > NF) and Typicality (Atypical > Medium >= Typical) as well as an interaction between Typicality and Category (e.g., Atypical foods should show wider pitch excursions than atypical nonfoods, because foods are much more likely than nonfoods to have one canonical color).
+
+
+
+------------------------------------------------------------------------
+
+
+
+How did you operationalise your dependent and independent variables? For example, if you choose f0 as a variable, specify from which speech domain it was extracted (for example: the phrase, the word, the syllable, the vowel, etc.), whether you extracted a summary statistic over a larger domain or a concrete value at a specific or relative point in time. For categorical variables (like age, gender, etc.), specify the levels/categories, how they are operationalised and the rationale behind the categorisation.
+
+
+We selected f0 range within the adjective, assuming that this would index pitch excursion. Given that the adjective appears first and carries the majority of the pragmatic value in terms of typicality/surprisal, we restricted our analysis to this area specifically.We used treatment coding for Condition, setting the reference level at NF based on the conjecture that conditions which involved focus specifically on the adjective should lead to higher pitch ranges than the case where focus was on the noun. We used custom contrasts for Typicality to allow us to compare Atypical category to the Typical category as well as compare the Atypical category to the mean of the other categories. Finally, we used treatment coding for Category, setting the reference level on NONFOOD because the expectation is that non-foods come in a wider variety of colors. We began by fitting a maximal model justified by the experimental design: main effects for Typicality, Category, and Condition as well as all interactions. Random Effects included random intercepts for Object, Colour, and Speaker and random slopes matching the fixed effects (except for any slopes dealing with Category for the Object random intercept, as it already captures the notion of Category.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What transformation (if any) were applied to the variables? Please, be as specific as possible by indicating for each variable that has been transformed the name of the variable as found in the dataset and the formula/operation that has been applied to it. For example: "We log transformed the F0 values, which are found in the column 'log_f0' of our data frame."
+
+
+We did not transform the variables.
+
+
+
+------------------------------------------------------------------------
+
+
+
+Were any observations excluded? If so, which criteria did you follow for the exclusion? For example: "We excluded values that were +/- 3 standard deviations from the mean."
+
+
+We excluded any observation that had comments in the "Notes" tier of the text grids.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What criteria did you use to decide on an answer to the research question? For example, the decision could have been based on p-values for particular predictors and/or interactions, on Bayesian posterior distributions, or confidence/credible intervals, etc...
+
+
+We used the posterior distribution and 95% credible intervals to answer the research question
+
+
+
+------------------------------------------------------------------------
+
+
+
+What is the size of the effect for the research question? Please, specify the magnitude and direction of the effect size, along with the 95% confidence (or credible) interval in the following format: estimate [low interval, high interval].
+
+
+No significant effects based on 89% % in region of practical equivalence (ROPE)  (cf. Schwaferts & Augustin 2020)
+
+
+
+------------------------------------------------------------------------
+
+
+
+What unit is your effect size in (i.e., Hedges' G, standardized mean difference, etc.)?
+
+
+% in region of practical equivalence (ROPE) based on 89% HDI (cf. Schwaferts & Augustin 2020)
+
+
+
+------------------------------------------------------------------------
+
+
+
+Often we do not anticipate possible road blocks during our analyses. Did you encounter scenarios in which you had to revise an earlier analytical decision at a later stage, e.g. change a measurement after you have statistically analyzed (parts of) the data? If so, please briefly describe the situation.
+
+
+The only revisions I had to make pertained to formatting the data to reflect the information in the study pdf document.
+
+
+
+------------------------------------------------------------------------
+
+

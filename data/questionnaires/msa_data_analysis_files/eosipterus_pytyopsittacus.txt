@@ -1,0 +1,142 @@
+
+Which software did you use for the processing of the recordings and extraction of acoustic measurements? Please indicate all pieces of software that were used, and specify what was accomplished with each. For example: "Filtering of the recordings was done using the Matlab signal processing toolbox, while the extraction of acoustic measurements (f0, duration, formants, CoG) was accomplished with Praat."
+
+
+We used Praat for all acoustic measurements (F0 and duration). Values based on those measurements (e.g., slope) were calculated in R using PoLaR-BEAR (citation).
+
+
+
+------------------------------------------------------------------------
+
+
+
+Which analytical/statistical technique(s) did you employ to answer the research question? Please, indicate the name of the techniques and describe specific details if necessary. For example, "We run Bayesian mixed-effects models using a Gaussian likelihood as the distribution of the outcome variable". Details about variables and parameters will be asked in later questions.
+
+
+Subsequently, R was used to perform a K-means clustering analysis based on slope measures, and to perform a Random Forest classification model of focus type (based on PoLaR labels, acoustic measures, and statistical analysis).
+
+
+
+------------------------------------------------------------------------
+
+
+
+How familiar are you with the analytical/statistical technique you employed?
+
+
+All team members are very familiar with PoLaR labelling and statistics on acoustic measures. Some of us are moderately familiar with the usage of K-means clustering and Random Forest classification on this sort of data; two of the four members have previously successfully used such techniques in previous research.
+
+
+
+------------------------------------------------------------------------
+
+
+
+To answer the research question, which variable(s) did you choose as the dependent variable(s) (outcome or measured or latent variable), and what was the rationale behind the choice? If the analysis included multiple dependent variables, specify all of them and the rationale behind choosing each.
+
+
+For the k-means clustering analysis, the dependent variable was pitch accent type (as determined by PoLaR labels), the rationale being that different pitch accents should signal different meanings with respect to information structure (e.g., which words are semantically focused).
+
+The primary goal was to run a random forest classification model, for which the dependent variable was the focus condition of the original experiment. The rationale was that we hoped that intonational information should be reliably conveyed and modulated by focus condition.
+
+
+
+
+------------------------------------------------------------------------
+
+
+
+To answer the research question, which variable(s) did you choose as the independent variable(s) (predictors), and what was the rationale behind the choice? If the analysis included multiple independent variables, specify all of them and the rationale behind choosing each.
+
+
+For the k-means clustering analysis, the independent variables were normed f0-slopes (i.e. PoLaR “Levels” per second) that defined the close-copy of the f0 movements (as created by PoLaR labels)
+
+For the random forest classification model, the independent variables were acoustic variables of the utterance (guided by PoLaR labels; e.g., f0 min (Hz), max (Hz), f0 range size (Hz)) as well as variables having to do with prominence (which word/words in relevant region is/are pitch-accented, and which types of pitch accent are used for each word type).
+
+
+
+
+------------------------------------------------------------------------
+
+
+
+How did you operationalise your dependent and independent variables? For example, if you choose f0 as a variable, specify from which speech domain it was extracted (for example: the phrase, the word, the syllable, the vowel, etc.), whether you extracted a summary statistic over a larger domain or a concrete value at a specific or relative point in time. For categorical variables (like age, gender, etc.), specify the levels/categories, how they are operationalised and the rationale behind the categorisation.
+
+
+Most of the operationalization was done according to PoLaR annotation conventions (guiding pitch range size, f0 turning points, and normed pitch values). Given the experimental design, we focused our analysis on the region of each utterance containing the determiner, adjective, and noun in the second half.
+
+
+
+
+------------------------------------------------------------------------
+
+
+
+What transformation (if any) were applied to the variables? Please, be as specific as possible by indicating for each variable that has been transformed the name of the variable as found in the dataset and the formula/operation that has been applied to it. For example: "We log transformed the F0 values, which are found in the column 'log_f0' of our data frame."
+
+
+We applied no transformations (though PoLaR annotations essentially transform f0 values to scaled/normed pitch levels 1-5).
+
+
+
+------------------------------------------------------------------------
+
+
+
+Were any observations excluded? If so, which criteria did you follow for the exclusion? For example: "We excluded values that were +/- 3 standard deviations from the mean."
+
+
+We excluded any observation in which the adjective-noun pairing was not “medium”, because only for “medium” typicality observations were there an equal number of observations across focus types.
+
+Additionally, we excluded the files that were labelled as errors by the original labeller. We also excluded files where there were major disfluencies (involving the repetition of several words): MS’s 1st trial, CG’s 66th trial, and PB’s 31st trial.
+
+
+
+
+------------------------------------------------------------------------
+
+
+
+What criteria did you use to decide on an answer to the research question? For example, the decision could have been based on p-values for particular predictors and/or interactions, on Bayesian posterior distributions, or confidence/credible intervals, etc...
+
+
+We examined the confusion matrix for the random forest classification, specifying that an error rate of less than 25% would indicate reliable performance. To decide whether a factor was a good predictor, we visually examined the relative importance of the factors in the classification model, and removed low-ranking variables while checking that the error rate in the confusion matrix did not go down.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What is the size of the effect for the research question? Please, specify the magnitude and direction of the effect size, along with the 95% confidence (or credible) interval in the following format: estimate [low interval, high interval].
+
+
+N/A for this analysis.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What unit is your effect size in (i.e., Hedges' G, standardized mean difference, etc.)?
+
+
+N/A for this analysis.
+
+
+
+------------------------------------------------------------------------
+
+
+
+Often we do not anticipate possible road blocks during our analyses. Did you encounter scenarios in which you had to revise an earlier analytical decision at a later stage, e.g. change a measurement after you have statistically analyzed (parts of) the data? If so, please briefly describe the situation.
+
+
+For utterances with more than two F0 turning points, we had to reassess how to calculate slope to capture multiple dynamic changes. In the end, we calculated a sum of slopes, which does have the limitation of not capturing differences between flat f0 contours and contours that both fall and rise. Additionally, rises comprised of two moderate excursions cannot be distinguished from a single extreme excursion.
+
+
+
+------------------------------------------------------------------------
+
+

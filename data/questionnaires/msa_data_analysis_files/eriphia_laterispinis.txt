@@ -1,0 +1,133 @@
+
+Which software did you use for the processing of the recordings and extraction of acoustic measurements? Please indicate all pieces of software that were used, and specify what was accomplished with each. For example: "Filtering of the recordings was done using the Matlab signal processing toolbox, while the extraction of acoustic measurements (f0, duration, formants, CoG) was accomplished with Praat."
+
+
+The acoustic measurements were extracted using the PraatR, rPraat, and phonfieldwork packages (Albin, 2014; Bořil & Skarnitzl, 2016; Moroz, 2020) in R version 4.1.2 (R Core Team, 2020).
+
+
+
+------------------------------------------------------------------------
+
+
+
+Which analytical/statistical technique(s) did you employ to answer the research question? Please, indicate the name of the techniques and describe specific details if necessary. For example, "We run Bayesian mixed-effects models using a Gaussian likelihood as the distribution of the outcome variable". Details about variables and parameters will be asked in later questions.
+
+
+We fitted a multivariate (i.e., with multiple outcomes) multilevel Bayesian regression model using the brms package (Bürkner, 2017).
+
+
+
+------------------------------------------------------------------------
+
+
+
+How familiar are you with the analytical/statistical technique you employed?
+
+
+Quite familiar (wrote some tutorials about it).
+
+
+
+------------------------------------------------------------------------
+
+
+
+To answer the research question, which variable(s) did you choose as the dependent variable(s) (outcome or measured or latent variable), and what was the rationale behind the choice? If the analysis included multiple dependent variables, specify all of them and the rationale behind choosing each.
+
+
+We chose to focus on three acoustic measurements: the F0, the intensity, and the duration. As the time alignment for the words tier was not available, we computed the average F0, intensity, and duration of the whole sentence.
+
+
+
+------------------------------------------------------------------------
+
+
+
+To answer the research question, which variable(s) did you choose as the independent variable(s) (predictors), and what was the rationale behind the choice? If the analysis included multiple independent variables, specify all of them and the rationale behind choosing each.
+
+
+We only used the typicality categories from the norming study as predictor. Because we were interested in assessing the effects of typicality, we chose to remove medium-typical items to focus on the comparison between highly atypical and highly typical items (included as a binary predictor in the model).
+
+
+
+------------------------------------------------------------------------
+
+
+
+How did you operationalise your dependent and independent variables? For example, if you choose f0 as a variable, specify from which speech domain it was extracted (for example: the phrase, the word, the syllable, the vowel, etc.), whether you extracted a summary statistic over a larger domain or a concrete value at a specific or relative point in time. For categorical variables (like age, gender, etc.), specify the levels/categories, how they are operationalised and the rationale behind the categorisation.
+
+
+We chose to focus on three acoustic measurements: the F0, the intensity, and the duration. As the time alignment for the words tier was not available, we computed the average F0, intensity, and duration of the whole sentence.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What transformation (if any) were applied to the variables? Please, be as specific as possible by indicating for each variable that has been transformed the name of the variable as found in the dataset and the formula/operation that has been applied to it. For example: "We log transformed the F0 values, which are found in the column 'log_f0' of our data frame."
+
+
+Because speakers have very variable baseline levels of F0 or intensity, our three acoustic measurement were standardised (i.e., subtracting the mean and dividing by the standard deviation) per speaker.
+
+
+
+------------------------------------------------------------------------
+
+
+
+Were any observations excluded? If so, which criteria did you follow for the exclusion? For example: "We excluded values that were +/- 3 standard deviations from the mean."
+
+
+We did not exclude observations.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What criteria did you use to decide on an answer to the research question? For example, the decision could have been based on p-values for particular predictors and/or interactions, on Bayesian posterior distributions, or confidence/credible intervals, etc...
+
+
+We used both the standardised regression coefficient (the slope), its 95% credible interval, a standardised mean difference, and a BF to answer the research question.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What is the size of the effect for the research question? Please, specify the magnitude and direction of the effect size, along with the 95% confidence (or credible) interval in the following format: estimate [low interval, high interval].
+
+
+Our analyses revealed a negative effect of typicality on the average F0, with atypical items having a higher average F0 than typical items (𝛽 = -0.469, 95% CrI [-0.626, -0.313], 𝛿𝑡 = -0.479, 95% CrI [-0.642, -0.317]), but a positive effect of typicality on the average intensity (𝛽 = 0.308, 95% CrI [0.145, 0.469], 𝛿𝑡 = 0.304, 95% CrI [0.142, 0.464]) and average duration
+(𝛽 = 0.274, 95% CrI [0.116, 0.434], 𝛿𝑡 = 0.276, 95% CrI [0.116, 0.436]).
+
+
+
+------------------------------------------------------------------------
+
+
+
+What unit is your effect size in (i.e., Hedges' G, standardized mean difference, etc.)?
+
+
+The effect size is a standardised mean difference (computed from the model's estimates, see the RMarkdown document for code details).
+
+
+
+------------------------------------------------------------------------
+
+
+
+Often we do not anticipate possible road blocks during our analyses. Did you encounter scenarios in which you had to revise an earlier analytical decision at a later stage, e.g. change a measurement after you have statistically analyzed (parts of) the data? If so, please briefly describe the situation.
+
+
+Yes. We initially planned on conducting our analyses at the word level, but then realised than the time alignement was not available for words. Because we had not enough time (or skill) to perform the alignement ourselves, we decided to focus on the sentence level.
+
+
+
+------------------------------------------------------------------------
+
+

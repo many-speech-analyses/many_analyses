@@ -1,0 +1,140 @@
+
+Which software did you use for the processing of the recordings and extraction of acoustic measurements? Please indicate all pieces of software that were used, and specify what was accomplished with each. For example: "Filtering of the recordings was done using the Matlab signal processing toolbox, while the extraction of acoustic measurements (f0, duration, formants, CoG) was accomplished with Praat."
+
+
+Textgrids of recordings were manually corrected in Praat in two phases. In the first phase, 4 team members independently corrected the durations of adjectives and nouns for NF trials. In the second phase, a separate phonetically-trained member with knowledge of German revised the textgrids and identified other error trials to ensure maximal accuracy. After the textgrids were corrected, acoustic measurements were extracted via Praat scripts.
+
+
+
+------------------------------------------------------------------------
+
+
+
+Which analytical/statistical technique(s) did you employ to answer the research question? Please, indicate the name of the techniques and describe specific details if necessary. For example, "We run Bayesian mixed-effects models using a Gaussian likelihood as the distribution of the outcome variable". Details about variables and parameters will be asked in later questions.
+
+
+We ran linear mixed effects models using a Gaussian likelihood function.
+
+
+
+------------------------------------------------------------------------
+
+
+
+How familiar are you with the analytical/statistical technique you employed?
+
+
+The team members who conducted the analyses are highly familiar with using mixed effects models.
+
+
+
+------------------------------------------------------------------------
+
+
+
+To answer the research question, which variable(s) did you choose as the dependent variable(s) (outcome or measured or latent variable), and what was the rationale behind the choice? If the analysis included multiple dependent variables, specify all of them and the rationale behind choosing each.
+
+
+We selected four outcome measures to assess the effect of typicality on speech production: duration, minimum pitch, maximum pitch, and pitch range. Pitch measures were included because pitch is a correlate of both stress and intonation – both suprasegmental features that might reasonably be expected to be affected by typicality. Duration was included as another marker of stress and as an index of speaking rate.
+
+
+
+------------------------------------------------------------------------
+
+
+
+To answer the research question, which variable(s) did you choose as the independent variable(s) (predictors), and what was the rationale behind the choice? If the analysis included multiple independent variables, specify all of them and the rationale behind choosing each.
+
+
+Our primary independent variable was typicality, given that it was the primary manipulation in the experiment. We also included the color of the target as a covariate, and included random intercepts at the speaker and phrase level. Color was included as a covariate because different colors are likely to produce different baseline duration and pitch measurements, and we wanted to examine the effect of typicality while controlling for the effect of the target color. We also included a random intercept at the speaker level, to account for speaker-level differences in acoustic signals, and a random intercept at the phrase level to account for baseline differences in uttering different word combinations.
+
+
+
+------------------------------------------------------------------------
+
+
+
+How did you operationalise your dependent and independent variables? For example, if you choose f0 as a variable, specify from which speech domain it was extracted (for example: the phrase, the word, the syllable, the vowel, etc.), whether you extracted a summary statistic over a larger domain or a concrete value at a specific or relative point in time. For categorical variables (like age, gender, etc.), specify the levels/categories, how they are operationalised and the rationale behind the categorisation.
+
+
+We operationalized duration, minimum pitch, maximum pitch, and pitch range at both the adjective (color) and noun (object) level.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What transformation (if any) were applied to the variables? Please, be as specific as possible by indicating for each variable that has been transformed the name of the variable as found in the dataset and the formula/operation that has been applied to it. For example: "We log transformed the F0 values, which are found in the column 'log_f0' of our data frame."
+
+
+We did not apply any additional transformations to the variables.
+
+
+
+------------------------------------------------------------------------
+
+
+
+Were any observations excluded? If so, which criteria did you follow for the exclusion? For example: "We excluded values that were +/- 3 standard deviations from the mean."
+
+
+Observations were excluded if they were marked as an “error” trial by our team members after the second phase of phonetic coding.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What criteria did you use to decide on an answer to the research question? For example, the decision could have been based on p-values for particular predictors and/or interactions, on Bayesian posterior distributions, or confidence/credible intervals, etc...
+
+
+We used a combination of X2 values and a non-overlapping 95% confidence interval of the effect size estimate with 0 as the criterion for evaluating the effect of typicality.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What is the size of the effect for the research question? Please, specify the magnitude and direction of the effect size, along with the 95% confidence (or credible) interval in the following format: estimate [low interval, high interval].
+
+
+Our analysis consisted of 8 different models investigating the effect of typicality. We report the effect sizes for each of the six models below:
+Duration - adjective: ηp2= .13 (95% CI=[0.00, 1.00])
+Duration - noun: ηp2= .94 (95% CI=[0.00, 1.00])
+Pitch - maximum - adjective: ηp2= .14 (95% CI=[0.00, 1.00])
+Pitch - minimum - adjective: ηp2= .38 (95% CI=[0.00, 1.00])
+Pitch - range - adjective: ηp2= .22 (95% CI=[0.00, 1.00])
+Pitch - maximum - noun: ηp2= .11 (95% CI=[0.00, 1.00])
+Pitch - minimum - noun: ηp2= .17 (95% CI=[0.00, 1.00])
+Pitch - range - noun: ηp2= .37 (95% CI=[0.00, 1.00])
+
+
+
+------------------------------------------------------------------------
+
+
+
+What unit is your effect size in (i.e., Hedges' G, standardized mean difference, etc.)?
+
+
+Proportion of variance explained
+
+
+
+------------------------------------------------------------------------
+
+
+
+Often we do not anticipate possible road blocks during our analyses. Did you encounter scenarios in which you had to revise an earlier analytical decision at a later stage, e.g. change a measurement after you have statistically analyzed (parts of) the data? If so, please briefly describe the situation.
+
+
+NA
+
+
+
+------------------------------------------------------------------------
+
+

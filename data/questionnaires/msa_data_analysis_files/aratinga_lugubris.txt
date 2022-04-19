@@ -1,0 +1,151 @@
+
+Which software did you use for the processing of the recordings and extraction of acoustic measurements? Please indicate all pieces of software that were used, and specify what was accomplished with each. For example: "Filtering of the recordings was done using the Matlab signal processing toolbox, while the extraction of acoustic measurements (f0, duration, formants, CoG) was accomplished with Praat."
+
+
+We used a viewer created in R package phonfieldwork.
+We did not use any software for extracting acoustic measurements. We analyzed non-phonetic cues and annotated them in Excel tables
+
+
+
+------------------------------------------------------------------------
+
+
+
+Which analytical/statistical technique(s) did you employ to answer the research question? Please, indicate the name of the techniques and describe specific details if necessary. For example, "We run Bayesian mixed-effects models using a Gaussian likelihood as the distribution of the outcome variable". Details about variables and parameters will be asked in later questions.
+
+
+We used Bayesian mixed effects ordinal regression models as implemented in the R package brms, which uses the Stan programming language’s interface with the R statistical programming environment. We used default priors from the brms package
+
+
+
+------------------------------------------------------------------------
+
+
+
+How familiar are you with the analytical/statistical technique you employed?
+
+
+We have never used this type of model before, however we have some experience with Bayesian modeling
+
+
+
+------------------------------------------------------------------------
+
+
+
+To answer the research question, which variable(s) did you choose as the dependent variable(s) (outcome or measured or latent variable), and what was the rationale behind the choice? If the analysis included multiple dependent variables, specify all of them and the rationale behind choosing each.
+
+
+The dependent variable was typicality as provided by the organizers (typical/medium/atypical)
+
+
+
+------------------------------------------------------------------------
+
+
+
+To answer the research question, which variable(s) did you choose as the independent variable(s) (predictors), and what was the rationale behind the choice? If the analysis included multiple independent variables, specify all of them and the rationale behind choosing each.
+
+
+We chose the number of speech errors/hesitations/longer pauses and adjective focus as independent variables. We did this on the basis of perceptual analysis of the provided recordings.
+The speaker and color variables were used as random intercepts
+
+
+
+------------------------------------------------------------------------
+
+
+
+How did you operationalise your dependent and independent variables? For example, if you choose f0 as a variable, specify from which speech domain it was extracted (for example: the phrase, the word, the syllable, the vowel, etc.), whether you extracted a summary statistic over a larger domain or a concrete value at a specific or relative point in time. For categorical variables (like age, gender, etc.), specify the levels/categories, how they are operationalised and the rationale behind the categorisation.
+
+
+The ‘speech errors’ variable was binary: 0 or 1. The ‘adjective emphasis’ variable was also binary: 0 or 1.
+Both variables were annotated perceptually
+
+
+
+------------------------------------------------------------------------
+
+
+
+What transformation (if any) were applied to the variables? Please, be as specific as possible by indicating for each variable that has been transformed the name of the variable as found in the dataset and the formula/operation that has been applied to it. For example: "We log transformed the F0 values, which are found in the column 'log_f0' of our data frame."
+
+
+We did not apply any transformations
+
+
+
+------------------------------------------------------------------------
+
+
+
+Were any observations excluded? If so, which criteria did you follow for the exclusion? For example: "We excluded values that were +/- 3 standard deviations from the mean."
+
+
+We did not exclude any observations
+
+
+
+------------------------------------------------------------------------
+
+
+
+What criteria did you use to decide on an answer to the research question? For example, the decision could have been based on p-values for particular predictors and/or interactions, on Bayesian posterior distributions, or confidence/credible intervals, etc...
+
+
+We visually analyzed degrees of overlapping of credible intervals
+
+
+
+------------------------------------------------------------------------
+
+
+
+What is the size of the effect for the research question? Please, specify the magnitude and direction of the effect size, along with the 95% confidence (or credible) interval in the following format: estimate [low interval, high interval].
+
+
+First model (speech errors vs typicality)
+No. 	estimate lower higher typicality speech_errors   
+1	0.330 0.293  0.372 atypical   no speech errors
+2	0.334 0.304  0.365 medium 	no speech errors
+3	0.335 0.296  0.376 typical	no speech errors
+4	0.360 0.270  0.461 atypical   speech errors   
+5	0.330 0.298  0.362 medium 	speech errors   
+6	0.307 0.224  0.404 typical	speech errors
+
+Second model (adjective emphasis vs typicality)
+No. 	estimate lower higher typicality annotation_adjective_emphasis
+1	0.332 0.294  0.372 atypical   non-emphasized          	 
+2	0.334 0.303  0.365 medium 	non-emphasized          	 
+3	0.334 0.295  0.373 typical	non-emphasized          	 
+4	0.356 0.205  0.547 atypical   emphasized              	 
+5	0.325 0.274  0.359 medium 	emphasized              	 
+6	0.312 0.171  0.494 typical	emphasized
+
+
+
+------------------------------------------------------------------------
+
+
+
+What unit is your effect size in (i.e., Hedges' G, standardized mean difference, etc.)?
+
+
+We didn’t calculate the effect size
+
+
+
+------------------------------------------------------------------------
+
+
+
+Often we do not anticipate possible road blocks during our analyses. Did you encounter scenarios in which you had to revise an earlier analytical decision at a later stage, e.g. change a measurement after you have statistically analyzed (parts of) the data? If so, please briefly describe the situation.
+
+
+During our analysis we set small and achievable goals and decided on the following steps after a goal was reached. So we did not need to change the course of our analysis
+
+
+
+------------------------------------------------------------------------
+
+

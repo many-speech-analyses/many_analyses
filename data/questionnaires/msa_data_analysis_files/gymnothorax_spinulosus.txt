@@ -1,0 +1,139 @@
+
+Which software did you use for the processing of the recordings and extraction of acoustic measurements? Please indicate all pieces of software that were used, and specify what was accomplished with each. For example: "Filtering of the recordings was done using the Matlab signal processing toolbox, while the extraction of acoustic measurements (f0, duration, formants, CoG) was accomplished with Praat."
+
+
+Manipulations and segmentation of textgrids were done with the TextGridTools library in Python. Forced alignment of the audio files was done with the WebMAUS web service for the Munich Automatic Segmentation System (MAUS). Extraction of acoustic measurements (f0, duration, intensity) was done with the Parselmouth library in Python, using algorithms from the Praat acoustic analyses software.
+
+
+
+------------------------------------------------------------------------
+
+
+
+Which analytical/statistical technique(s) did you employ to answer the research question? Please, indicate the name of the techniques and describe specific details if necessary. For example, "We run Bayesian mixed-effects models using a Gaussian likelihood as the distribution of the outcome variable". Details about variables and parameters will be asked in later questions.
+
+
+We ran linear mixed models with R.
+
+
+
+------------------------------------------------------------------------
+
+
+
+How familiar are you with the analytical/statistical technique you employed?
+
+
+We are quite familiar.
+
+
+
+------------------------------------------------------------------------
+
+
+
+To answer the research question, which variable(s) did you choose as the dependent variable(s) (outcome or measured or latent variable), and what was the rationale behind the choice? If the analysis included multiple dependent variables, specify all of them and the rationale behind choosing each.
+
+
+The dependent variable is the intensity of the stressed vowel of the adjective (i.e. the target_colour) in dB minus the average intensity of the sentence (in dB as well). Since dB is a logarithmic scale, calculating the difference actually represents a ratio. We based our decision on the following paper:
+Andreeva, B., Barry, W. J., & Steiner, I. (2007). Producing phrasal prominence in German. XVIth International Congress of Phonetic Sciences, (January 2007), 1209–1212. Retrieved from http://icphs2007.de/conference/Papers/1699/
+Also this dependent variable gives very nice shape of the data (like a Gaussian as opposed to doing a ratio of the intensity in dB which was giving a skewed distribution).
+
+
+
+
+------------------------------------------------------------------------
+
+
+
+To answer the research question, which variable(s) did you choose as the independent variable(s) (predictors), and what was the rationale behind the choice? If the analysis included multiple independent variables, specify all of them and the rationale behind choosing each.
+
+
+The predictors we selected are:
+-	The condition since we expected it to have a high influence on the prosody of the vowel (we expected the adjective to be more stressed in the AF condition than in the NF condition).
+-	The typicality. We decided to use the mean typicality (mean_typ). We selected it to answer the research question!
+
+
+
+------------------------------------------------------------------------
+
+
+
+How did you operationalise your dependent and independent variables? For example, if you choose f0 as a variable, specify from which speech domain it was extracted (for example: the phrase, the word, the syllable, the vowel, etc.), whether you extracted a summary statistic over a larger domain or a concrete value at a specific or relative point in time. For categorical variables (like age, gender, etc.), specify the levels/categories, how they are operationalised and the rationale behind the categorisation.
+
+
+The predictors are the condition since we expected it to have a high influence on the prosody of the vowel (we expected the adjective to be more stressed in the AF condition than in the NF condition).
+
+
+
+------------------------------------------------------------------------
+
+
+
+What transformation (if any) were applied to the variables? Please, be as specific as possible by indicating for each variable that has been transformed the name of the variable as found in the dataset and the formula/operation that has been applied to it. For example: "We log transformed the F0 values, which are found in the column 'log_f0' of our data frame."
+
+
+No transformation was applied since our data already looked symmetrical, like Gaussian curve.
+
+
+
+------------------------------------------------------------------------
+
+
+
+Were any observations excluded? If so, which criteria did you follow for the exclusion? For example: "We excluded values that were +/- 3 standard deviations from the mean."
+
+
+We excluded values that were +/- 1.5 standard deviations from the median.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What criteria did you use to decide on an answer to the research question? For example, the decision could have been based on p-values for particular predictors and/or interactions, on Bayesian posterior distributions, or confidence/credible intervals, etc...
+
+
+We made the decision based on the p value of post hoc comparisons, given that the interaction between condition and typicality was included in our resulting model.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What is the size of the effect for the research question? Please, specify the magnitude and direction of the effect size, along with the 95% confidence (or credible) interval in the following format: estimate [low interval, high interval].
+
+
+The size effect we found is 0.799 [0.512, 1.086] 
+The effect is found in the AF condition only. It means that the more typical is   the target_colour the higher will be the relative intensity of the stressed vowel vs the rest of the sentence. 
+
+
+
+
+------------------------------------------------------------------------
+
+
+
+What unit is your effect size in (i.e., Hedges' G, standardized mean difference, etc.)?
+
+
+I’d say it’s in dB by unit of typicality (typicality varying from 0 to 1, 0 for low typicality and 1 for high typicality, since we divided the typ_mean variable by 100).
+
+
+
+------------------------------------------------------------------------
+
+
+
+Often we do not anticipate possible road blocks during our analyses. Did you encounter scenarios in which you had to revise an earlier analytical decision at a later stage, e.g. change a measurement after you have statistically analyzed (parts of) the data? If so, please briefly describe the situation.
+
+
+Not really. But this is true that we extracted intensity, pitch and duration and selected intensity because it was the one which was varying the most according to condition and typicality (based on charts, not proper statistical analysis though).
+
+
+
+------------------------------------------------------------------------
+
+

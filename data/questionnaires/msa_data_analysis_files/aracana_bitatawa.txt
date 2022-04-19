@@ -1,0 +1,152 @@
+
+Which software did you use for the processing of the recordings and extraction of acoustic measurements? Please indicate all pieces of software that were used, and specify what was accomplished with each. For example: "Filtering of the recordings was done using the Matlab signal processing toolbox, while the extraction of acoustic measurements (f0, duration, formants, CoG) was accomplished with Praat."
+
+
+The extraction of acoustic measurements (F0, duration) was accomplished with Praat.
+
+
+
+------------------------------------------------------------------------
+
+
+
+Which analytical/statistical technique(s) did you employ to answer the research question? Please, indicate the name of the techniques and describe specific details if necessary. For example, "We run Bayesian mixed-effects models using a Gaussian likelihood as the distribution of the outcome variable". Details about variables and parameters will be asked in later questions.
+
+
+We run Quantile Generalized Additive Mixed Effects Models.
+
+
+
+------------------------------------------------------------------------
+
+
+
+How familiar are you with the analytical/statistical technique you employed?
+
+
+Very familiar
+
+
+
+------------------------------------------------------------------------
+
+
+
+To answer the research question, which variable(s) did you choose as the dependent variable(s) (outcome or measured or latent variable), and what was the rationale behind the choice? If the analysis included multiple dependent variables, specify all of them and the rationale behind choosing each.
+
+
+We used 
+*duration of the adjective and
+* F0 
+as the dependent variables. Reasoning: these have been mostly found to correlate with lexical predictors such as frequency or probability -- measues that can be regarded to gauge typicality. 
+
+We did not use other dependent variables such as formants of the stressed vowel because the adjectives were not controlled for phonetic characteristics (which is technically also not possible).
+
+
+
+------------------------------------------------------------------------
+
+
+
+To answer the research question, which variable(s) did you choose as the independent variable(s) (predictors), and what was the rationale behind the choice? If the analysis included multiple independent variables, specify all of them and the rationale behind choosing each.
+
+
+The predictor of interest was typicality -- the target of this analysis. 
+We also controlled for and tested  
+* frequency of occurrence of the adjective-noun phrase -- which can be regarded to gauge typicality
+* number of syllables of the following noun -- to account for potential duration variation in an articulatory frame
+* speaking rate -- to account for contextual velocity changes affecting both, F0 and the duration of the adjective. 
+* when testing F0, we also controlled for the duration of the adjective -- to account for effects of duration onto F0
+
+
+
+------------------------------------------------------------------------
+
+
+
+How did you operationalise your dependent and independent variables? For example, if you choose f0 as a variable, specify from which speech domain it was extracted (for example: the phrase, the word, the syllable, the vowel, etc.), whether you extracted a summary statistic over a larger domain or a concrete value at a specific or relative point in time. For categorical variables (like age, gender, etc.), specify the levels/categories, how they are operationalised and the rationale behind the categorisation.
+
+
+dependent variables
+-----------------------------
+* duration - duration of the adjective, gradient variable
+* F0 - extracted as a trajectory along the entire adjective, gradient variable, z-transformed across participants
+
+independent variables
+--------------------------------
+* frequency of occurrence -- google count, gradient variable, log transformed
+* number of syllables of the following noun -- numeric
+* speaking rate -- number of syllables in entire phrase divided by the duration of the phrase in seconds
+
+
+
+------------------------------------------------------------------------
+
+
+
+What transformation (if any) were applied to the variables? Please, be as specific as possible by indicating for each variable that has been transformed the name of the variable as found in the dataset and the formula/operation that has been applied to it. For example: "We log transformed the F0 values, which are found in the column 'log_f0' of our data frame."
+
+
+* frequency of occurrence (adjective + noun) was log transformed --> column L.Freq
+* F0 was  z-scaled --> column c.F0
+
+
+
+------------------------------------------------------------------------
+
+
+
+Were any observations excluded? If so, which criteria did you follow for the exclusion? For example: "We excluded values that were +/- 3 standard deviations from the mean."
+
+
+We used all observations.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What criteria did you use to decide on an answer to the research question? For example, the decision could have been based on p-values for particular predictors and/or interactions, on Bayesian posterior distributions, or confidence/credible intervals, etc...
+
+
+We used z-values provided by the qgam analysis, with absolute 2 as the significance threshold.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What is the size of the effect for the research question? Please, specify the magnitude and direction of the effect size, along with the 95% confidence (or credible) interval in the following format: estimate [low interval, high interval].
+
+
+We have performed an analysis that gives an effect for a continuum of percentiles of the dependent variable. This is why we obtained a set of effect differences. On average, we our effect size is negative and smaller than 0.002 seconds (standard error of 0.01).
+
+
+
+------------------------------------------------------------------------
+
+
+
+What unit is your effect size in (i.e., Hedges' G, standardized mean difference, etc.)?
+
+
+Seconds.
+
+
+
+------------------------------------------------------------------------
+
+
+
+Often we do not anticipate possible road blocks during our analyses. Did you encounter scenarios in which you had to revise an earlier analytical decision at a later stage, e.g. change a measurement after you have statistically analyzed (parts of) the data? If so, please briefly describe the situation.
+
+
+No.
+
+
+
+------------------------------------------------------------------------
+
+

@@ -1,0 +1,132 @@
+
+Which software did you use for the processing of the recordings and extraction of acoustic measurements? Please indicate all pieces of software that were used, and specify what was accomplished with each. For example: "Filtering of the recordings was done using the Matlab signal processing toolbox, while the extraction of acoustic measurements (f0, duration, formants, CoG) was accomplished with Praat."
+
+
+Labeling and extraction of acoustic measurements (time- and frequency-normalized f0 contours) were performed using Praat scripts.
+
+
+
+------------------------------------------------------------------------
+
+
+
+Which analytical/statistical technique(s) did you employ to answer the research question? Please, indicate the name of the techniques and describe specific details if necessary. For example, "We run Bayesian mixed-effects models using a Gaussian likelihood as the distribution of the outcome variable". Details about variables and parameters will be asked in later questions.
+
+
+We ran four Bayesian B-splines in order to model four f0 contours based on the data, one for each combination of typicality-condition possible within the dataset we analyzed: typical-NF, atypical-NF, atypical-AF and typical-ANF. We used the predicted splines for visual comparison.
+
+
+
+------------------------------------------------------------------------
+
+
+
+How familiar are you with the analytical/statistical technique you employed?
+
+
+Somewhat familiar.
+
+
+
+------------------------------------------------------------------------
+
+
+
+To answer the research question, which variable(s) did you choose as the dependent variable(s) (outcome or measured or latent variable), and what was the rationale behind the choice? If the analysis included multiple dependent variables, specify all of them and the rationale behind choosing each.
+
+
+We analyzed time- and frequency-normalized f0 contours. f0 was chosen because it is the most robust correlate of intonational contrasts in many languages. Time and frequency normalization were employed to allow for the joint comparison of data from all speakers within the same contour.
+
+
+
+------------------------------------------------------------------------
+
+
+
+To answer the research question, which variable(s) did you choose as the independent variable(s) (predictors), and what was the rationale behind the choice? If the analysis included multiple independent variables, specify all of them and the rationale behind choosing each.
+
+
+The independent variables were typicality (two levels, typical and atypical) and focus condition (three levels, AF, NF and ANF). Because of the subset of the whole dataset we chose to analyze, it was impossible to look at the interaction between them, once not all focus conditions were present in each typicality level.
+
+
+
+------------------------------------------------------------------------
+
+
+
+How did you operationalise your dependent and independent variables? For example, if you choose f0 as a variable, specify from which speech domain it was extracted (for example: the phrase, the word, the syllable, the vowel, etc.), whether you extracted a summary statistic over a larger domain or a concrete value at a specific or relative point in time. For categorical variables (like age, gender, etc.), specify the levels/categories, how they are operationalised and the rationale behind the categorisation.
+
+
+F0 was extracted from V-to-V units (intervals between two consecutive vowel onsets on the speech signal) along the test phrase, that is, the Determiner-Adjective-Noun sequence. The test phrases selected for analysis had 5 V-to-V units and 5 equidistant f0 samples were taken within each consecutive V-to-V unit. The 25 f0 values comprising the contour were our dependent variable.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What transformation (if any) were applied to the variables? Please, be as specific as possible by indicating for each variable that has been transformed the name of the variable as found in the dataset and the formula/operation that has been applied to it. For example: "We log transformed the F0 values, which are found in the column 'log_f0' of our data frame."
+
+
+F0 values in Hertz were transformed using the formula ome = log2(Hz / median), where ome is the value in the OMe scale, Hz the f0 value in the Hertz scale and median is the median value of the f0 contour being converted. The transformed values are found in the column ‘f0’ of our data table.
+
+
+
+------------------------------------------------------------------------
+
+
+
+Were any observations excluded? If so, which criteria did you follow for the exclusion? For example: "We excluded values that were +/- 3 standard deviations from the mean."
+
+
+No values were excluded.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What criteria did you use to decide on an answer to the research question? For example, the decision could have been based on p-values for particular predictors and/or interactions, on Bayesian posterior distributions, or confidence/credible intervals, etc...
+
+
+We used 95% credible intervals of the Bayesian B-splines posterior distributions to generate predicted f0 contours, which were visually compared.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What is the size of the effect for the research question? Please, specify the magnitude and direction of the effect size, along with the 95% confidence (or credible) interval in the following format: estimate [low interval, high interval].
+
+
+Our analysis consisted in the visual analysis of contours generated by the  Bayesian B-splines models, as explained in the previous question. Because of that choice, no effect size was generated.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What unit is your effect size in (i.e., Hedges' G, standardized mean difference, etc.)?
+
+
+Not applicable (see previous question).
+
+
+
+------------------------------------------------------------------------
+
+
+
+Often we do not anticipate possible road blocks during our analyses. Did you encounter scenarios in which you had to revise an earlier analytical decision at a later stage, e.g. change a measurement after you have statistically analyzed (parts of) the data? If so, please briefly describe the situation.
+
+
+No analytical decision was revised after the initial data analysis was carried out as planned.
+
+
+
+------------------------------------------------------------------------
+
+

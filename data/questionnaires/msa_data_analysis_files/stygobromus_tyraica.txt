@@ -1,0 +1,144 @@
+
+Which software did you use for the processing of the recordings and extraction of acoustic measurements? Please indicate all pieces of software that were used, and specify what was accomplished with each. For example: "Filtering of the recordings was done using the Matlab signal processing toolbox, while the extraction of acoustic measurements (f0, duration, formants, CoG) was accomplished with Praat."
+
+
+Word- and phone-level forced alignment was performed using Montreal Forced Aligner v2.0, using the pretrained (Prosodylab) German acoustic model and accompanying pronunciation dictionary (edited to include alternative transliterations in the TextGrids, e.g. grünen/gruenen).
+
+Further trimming of recordings was accomplished in Praat.
+
+Acoustic features were extracted using the openSMILE 3.0 toolkit and the “extended Geneva Minimalistic Acoustic Parameter Set” (eGEMAPS) v02, which comprises 25 acoustic features measured at 10 ms intervals. These features were extracted using the reticulate R package interface to the openSMILE Python package.
+
+
+
+------------------------------------------------------------------------
+
+
+
+Which analytical/statistical technique(s) did you employ to answer the research question? Please, indicate the name of the techniques and describe specific details if necessary. For example, "We run Bayesian mixed-effects models using a Gaussian likelihood as the distribution of the outcome variable". Details about variables and parameters will be asked in later questions.
+
+
+We trained an extreme gradient boosting model to perform a multiclass classification task, using the XGBoost R package. The acoustic features were used as independent variables and a three-class representation of typicality for the outcome variable.
+
+
+
+------------------------------------------------------------------------
+
+
+
+How familiar are you with the analytical/statistical technique you employed?
+
+
+With the general approach (supervised machine learning classification task), quite familiar: 8/10. With the specific approach (extreme gradient boosting), moderately familiar: 6/10.
+
+
+
+------------------------------------------------------------------------
+
+
+
+To answer the research question, which variable(s) did you choose as the dependent variable(s) (outcome or measured or latent variable), and what was the rationale behind the choice? If the analysis included multiple dependent variables, specify all of them and the rationale behind choosing each.
+
+
+Typicality (categorical).
+
+Rationale: If speakers do systematically modulate utterances, then there will be phonetic and acoustic consequences of this modulation. If there are acoustic consequences, then using relevant acoustic parameters to classify and predict typicality category should produce a greater-than-chance outcome. Using typicality as the outcome variable allowed us to incorporate multiple input features in our investigation of how the acoustic signal may be modulated, while maintaining a single effect size output.
+
+
+
+------------------------------------------------------------------------
+
+
+
+To answer the research question, which variable(s) did you choose as the independent variable(s) (predictors), and what was the rationale behind the choice? If the analysis included multiple independent variables, specify all of them and the rationale behind choosing each.
+
+
+We chose to incorporate all 25 low-level acoustic features from the openSMILE “extended Geneva Minimalistic Acoustic Parameter Set” (eGEMAPS) v02 feature set, as well as duration, aimed at making use of the frequency, energy, spectral and temporal dimensions to capture acoustic patterns in relation to stress, accent and aspects of voice quality.
+
+
+
+------------------------------------------------------------------------
+
+
+
+How did you operationalise your dependent and independent variables? For example, if you choose f0 as a variable, specify from which speech domain it was extracted (for example: the phrase, the word, the syllable, the vowel, etc.), whether you extracted a summary statistic over a larger domain or a concrete value at a specific or relative point in time. For categorical variables (like age, gender, etc.), specify the levels/categories, how they are operationalised and the rationale behind the categorisation.
+
+
+Categorical dependent variable (typicality: “atypical”, “medium”, “typical”): operationalized as zero-based ordinal factor.
+
+All acoustic independent variables: extracted at the word level, at 10 ms intervals across the duration of the modifier adjective.
+
+Duration (independent variable): extracted at the word level.
+
+Acoustic features were included for only the adjectives (i.e. the color words), since these words are the same across the three typicality conditions whereas the nouns are not.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What transformation (if any) were applied to the variables? Please, be as specific as possible by indicating for each variable that has been transformed the name of the variable as found in the dataset and the formula/operation that has been applied to it. For example: "We log transformed the F0 values, which are found in the column 'log_f0' of our data frame."
+
+
+We performed discrete cosine transform (DCT) on all acoustic variables except duration, over the interval of the entire word, and retained the first four coefficients (named with the suffixes x0-x3). This resulted in 101 features for each speaker (4 DCT coefficients x 25 openSMILE features, + duration). These 101 features were centered and scaled (i.e. z-score transformed) for each speaker.
+
+
+
+------------------------------------------------------------------------
+
+
+
+Were any observations excluded? If so, which criteria did you follow for the exclusion? For example: "We excluded values that were +/- 3 standard deviations from the mean."
+
+
+We excluded trials with non-empty “notes” in the provided TextGrids (indicating errors, hesitations, etc.). No other observations (e.g., acoustic feature outliers) were removed.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What criteria did you use to decide on an answer to the research question? For example, the decision could have been based on p-values for particular predictors and/or interactions, on Bayesian posterior distributions, or confidence/credible intervals, etc...
+
+
+p-value from one-tailed binomial test of whether model accuracy is higher than the no-information rate.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What is the size of the effect for the research question? Please, specify the magnitude and direction of the effect size, along with the 95% confidence (or credible) interval in the following format: estimate [low interval, high interval].
+
+
+15.37% [11.95%, 18.79%].
+
+
+
+------------------------------------------------------------------------
+
+
+
+What unit is your effect size in (i.e., Hedges' G, standardized mean difference, etc.)?
+
+
+(Percentage) accuracy above chance level (i.e. the no-information rate).
+
+
+
+------------------------------------------------------------------------
+
+
+
+Often we do not anticipate possible road blocks during our analyses. Did you encounter scenarios in which you had to revise an earlier analytical decision at a later stage, e.g. change a measurement after you have statistically analyzed (parts of) the data? If so, please briefly describe the situation.
+
+
+Initially, we used random sampling for tuning the values of the XGBoost hyperparameters. After further consideration, we came to the conclusion that this approach is anti-conservative. We then changed the approach to use random speaker-wise folds, in the same manner that was applied to building the final models.
+
+
+
+------------------------------------------------------------------------
+
+

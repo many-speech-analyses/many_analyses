@@ -1,0 +1,134 @@
+
+Which software did you use for the processing of the recordings and extraction of acoustic measurements? Please indicate all pieces of software that were used, and specify what was accomplished with each. For example: "Filtering of the recordings was done using the Matlab signal processing toolbox, while the extraction of acoustic measurements (f0, duration, formants, CoG) was accomplished with Praat."
+
+
+pydub, ffmpeg, sox, VoiceSauce, Praat
+
+
+
+------------------------------------------------------------------------
+
+
+
+Which analytical/statistical technique(s) did you employ to answer the research question? Please, indicate the name of the techniques and describe specific details if necessary. For example, "We run Bayesian mixed-effects models using a Gaussian likelihood as the distribution of the outcome variable". Details about variables and parameters will be asked in later questions.
+
+
+
+tSNE, kernel density estimation, Generalized linear mixed-effects model
+
+
+
+------------------------------------------------------------------------
+
+
+
+How familiar are you with the analytical/statistical technique you employed?
+
+
+familiar
+
+
+
+------------------------------------------------------------------------
+
+
+
+To answer the research question, which variable(s) did you choose as the dependent variable(s) (outcome or measured or latent variable), and what was the rationale behind the choice? If the analysis included multiple dependent variables, specify all of them and the rationale behind choosing each.
+
+
+The dependent variable is typicality. We regressed all the acoustic measures back to the levels of typicality. Given the large pool of acoustic measures, we expect collinearity and considerable correlation among the acoustic measures; thus, it is less valid to generate individual statistic models on treating each acoustic measure as dependent variables as a function of typicality. We argue that, based on the t-SNE visualizations and density plots, acoustic measures should be analyzed holistically as a group. Thus, we employed binary logistic regression with mixed-effects models to investigate the contributions of various acoustic measures on establishing a certain typicality category. Note that this model assumes a perception-production link during speech production, such that speakers would make an effort to produce and signal a less typical word combination to the listeners in a conversational setting. Further, there is a designed competitor in the different experimental conditions, so we expect speakers to actively distinguish between a less typical and a typical object and to convey the differences to be perceptible.
+
+
+
+------------------------------------------------------------------------
+
+
+
+To answer the research question, which variable(s) did you choose as the independent variable(s) (predictors), and what was the rationale behind the choice? If the analysis included multiple independent variables, specify all of them and the rationale behind choosing each.
+
+
+F0, H1*, H2*, H4*, H2K*, H5K*, H1*-H2*, H2*-H4*, H4*-2K*, H2K*-H5K*, cepstral peak prominence (CPP), harmonics-to-noise ratio (HNR05-35), subharmonics-to-harmonics ratio (SHR), energy, and strength of excitation (soe). We approach the question of phonetic modulation from the suprasegmental aspects of speech production. So, we employed acoustic measures of pitch and phonation to capture the levels of typicality.
+
+
+
+------------------------------------------------------------------------
+
+
+
+How did you operationalise your dependent and independent variables? For example, if you choose f0 as a variable, specify from which speech domain it was extracted (for example: the phrase, the word, the syllable, the vowel, etc.), whether you extracted a summary statistic over a larger domain or a concrete value at a specific or relative point in time. For categorical variables (like age, gender, etc.), specify the levels/categories, how they are operationalised and the rationale behind the categorisation.
+
+
+From the syllable. We converted f0 to semitones and z-scored other acoustic measures, and then extracted quartiles over their cumulative density distribution. For categorical dependent variable "typicality", we assigned the typicality labels based on the median of the typicality ratings.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What transformation (if any) were applied to the variables? Please, be as specific as possible by indicating for each variable that has been transformed the name of the variable as found in the dataset and the formula/operation that has been applied to it. For example: "We log transformed the F0 values, which are found in the column 'log_f0' of our data frame."
+
+
+We take the four quartiles (25, 50, 75 and 95 percentiles of the sample) from the cumulative distribution function (cdf) of each measurement as representation of the overall distribution of acoustic measurements for F0 and voice quality for the segments of interest. F0 values were normalized to semitone with the 10th percentile as baseline.
+All other measurements were normalized to Z-score with regard to the means of all the samples produced by individual speakers. These normalizations make it possible for comparisons with the same unit: the numeric values are relative to the sample distribution of measurements taken from the speaker. The final feature vector for each target word in each condition for a speaker thus consists of 4 points taken from the cdf of each acoustic measurement from the sonorant intervals.
+
+
+
+------------------------------------------------------------------------
+
+
+
+Were any observations excluded? If so, which criteria did you follow for the exclusion? For example: "We excluded values that were +/- 3 standard deviations from the mean."
+
+
+We excluded values that are greater than the 97.5 percentile and smaller than the 2.5 percentile of the population.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What criteria did you use to decide on an answer to the research question? For example, the decision could have been based on p-values for particular predictors and/or interactions, on Bayesian posterior distributions, or confidence/credible intervals, etc...
+
+
+t-SNE visulizations, density plots of acoustic measures, and p-values of some predictors.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What is the size of the effect for the research question? Please, specify the magnitude and direction of the effect size, along with the 95% confidence (or credible) interval in the following format: estimate [low interval, high interval].
+
+
+We interpret the effect size as the coefficients of the independent variables, which are included in the table of the report. More details output can be regenerated using the R code uploaded to the OSF page.
+
+
+
+------------------------------------------------------------------------
+
+
+
+What unit is your effect size in (i.e., Hedges' G, standardized mean difference, etc.)?
+
+
+Coefficients of the independent predictors, which should be the normalized weight of the corresponding acoustic measure contributing to the overall probability of the response variable, typicality.
+
+
+
+------------------------------------------------------------------------
+
+
+
+Often we do not anticipate possible road blocks during our analyses. Did you encounter scenarios in which you had to revise an earlier analytical decision at a later stage, e.g. change a measurement after you have statistically analyzed (parts of) the data? If so, please briefly describe the situation.
+
+
+No.
+
+
+
+------------------------------------------------------------------------
+
+
