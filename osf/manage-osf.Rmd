@@ -189,3 +189,33 @@ for (team in 1:length(my_assignment)) {
 }
 ```
 
+# Upload analytic questionnaire answers.
+
+Ugly code to do the job quickly. Need a-fixing.
+
+```{r upload-analytic-responses}
+teams_analyses <- read_csv("data/questionnaires/msa_data_analysis_questionnaire_cleaned.csv")
+
+teams <- teams_analyses$Q17
+teams_files <- paste0(teams, ".txt")
+
+for (team in 1:length(teams)) {
+  file_path <- glue("data/questionnaires/msa_data_analysis_files/{teams[team]}.txt")
+  osf_upload(teams_comps[which(teams_comps$name == teams[team]),], path = file_path, verbose = T, conflicts = "overwrite")
+}
+```
+
+```{r delete-analytic-responses}
+for (team in teams) {
+  file_name <- glue("{team}.txt")
+  file_id <- osf_ls_files(teams_comps[which(teams_comps$name == team),], pattern = ".txt")
+  if (nrow(file_id) > 0) {
+    for (file in 1:nrow(file_id)) {
+      if (file_id$name[file] %in% teams_files) {
+        osf_rm(file_id[file,], check = FALSE)
+      }
+    }
+  }
+}
+```
+
