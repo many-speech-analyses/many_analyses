@@ -1,0 +1,14 @@
+---
+title: "02 - Teams reviews"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_knit$set(root.dir = here::here())
+library(tidyverse)
+library(magrittr)
+library(glue)
+```
+

@@ -1,0 +1,53 @@
+---
+title: "03 - Analyses coding"
+output: html_document
+date: "`r Sys.Date()`"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_knit$set(root.dir = here::here())
+library(tidyverse)
+library(ggmosaic)
+library(googlesheets4)
+library(magrittr)
+library(glue)
+```
+
+
+```{r coding}
+the_sheet <- "https://docs.google.com/spreadsheets/d/1OOXB-8Uk-fh_urw0Lm4DC0jBueXLIb4Bm-a9--UVXOw/edit?usp=sharing"
+
+coding <- read_sheet(the_sheet) %>%
+  mutate(
+    outcome = factor(outcome, levels = c("duration", "f0", "formants", "intensity", "harmonics", "SNR", "multivariate", "other")),
+    temporal_window = factor(temporal_window, levels = c("segment", "syllable", "word", "phrase", "sentence", "other"))
+  )
+
+```
+
+```{r}
+coding %>%
+  ggplot(aes(model)) +
+  geom_bar()
+```
+
+```{r}
+coding %>%
+  drop_na(outcome, temporal_window) %>%
+  ggplot() +
+  geom_mosaic(aes(x = product(outcome, temporal_window), fill = outcome))
+```
+
+```{r}
+coding %>%
+  drop_na(outcome, temporal_window) %>%
+  filter(
+    outcome %in% c("duration", "f0", "intensity"),
+    temporal_window %in% c("segment", "word", "phrase", "sentence")
+  ) %>%
+  droplevels() %>%
+  ggplot() +
+  geom_mosaic(aes(x = product(outcome, temporal_window), fill = outcome))
+```
+
