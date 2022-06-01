@@ -12,3 +12,17 @@ library(magrittr)
 library(glue)
 ```
 
+```{r}
+cols <- str_split("StartDate,EndDate,Status,IPAddress,Progress,Duration (in seconds),Finished,RecordedDate,ResponseId,RecipientLastName,RecipientFirstName,RecipientEmail,ExternalReference,LocationLatitude,LocationLongitude,DistributionChannel,UserLanguage,Q2,Q3,Q5_2,Q5_3,Q5_4,Q6,Q8,Q9,Q10,Q11,Q12,Q13,Q14,Q15", ",")
+
+reviews <- read_csv(list.files("data/peer_review/", full.names = TRUE), skip = 3, col_names = cols[[1]]) %>%
+  mutate(
+    q6 = case_when(
+      Q6 == "deeply flawed and unpublishable." ~ 0,
+      Q6 == "publishable with major revision." ~ 1,
+      Q6 == "publishable with minor revision." ~ 2,
+      Q6 == "publishable as is." ~ 3
+    )
+  )
+```
+
