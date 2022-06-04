@@ -1,0 +1,10 @@
+---
+title: "Analyses"
+output: github_document
+date: 'Last update: `r Sys.Date()`'
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
