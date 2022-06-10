@@ -12,8 +12,11 @@ library(ggmosaic)
 library(googlesheets4)
 library(magrittr)
 library(glue)
+library(osfr)
+library(cli)
 ```
 
+# Read coding sheet
 
 ```{r coding}
 the_sheet <- "https://docs.google.com/spreadsheets/d/1OOXB-8Uk-fh_urw0Lm4DC0jBueXLIb4Bm-a9--UVXOw/edit?usp=sharing"
@@ -25,6 +28,53 @@ coding <- read_sheet(the_sheet) %>%
   )
 
 ```
+
+# Download OSF components
+
+First, we get a list of the OSF components in the Teams Analyses component. (It takes a few seconds)
+
+```{r}
+assigned <- coding %>%
+  select(team, animal, assigned_to) %>%
+  distinct()
+
+comps <- osf_retrieve_node("https://osf.io/n3fyd/") %>%
+  osf_ls_nodes(n_max = Inf) %>%
+  left_join(y = assigned, by = c("name" = "animal"))
+```
+
+Now we get only those components that are assigned to you. Tell me who you are when prompt.
+
+```{r}
+who <- menu(c("Ste", "Joseph", "Timo"), "Who are you?")
+
+whos <- c("sc", "jvc", "tr")
+your_comps <- comps %>%
+  filter(assigned_to == whos[who])
+dir.create(glue("./data/analyses/{whos[who]}"), showWarnings = FALSE, recursive = TRUE)
+```
+
+And now we download the components in `data/analyses/`
+
+```{r}
+for (comp in 1:nrow(your_comps)) {
+  name <- your_comps$name[comp]
+  files <- osf_ls_files(your_comps[comp,])
+  dir <- glue("./data/analyses/{whos[who]}/{name}")
+  dir.create(dir, showWarnings = FALSE, recursive = TRUE)
+  cli_h1(name)
+  osf_download(
+    files,
+    path = dir,
+    recurse = TRUE,
+    conflicts = "skip",
+    verbose = TRUE, progress = TRUE
+  )
+}
+```
+
+
+# Basic plots
 
 ```{r}
 coding %>%
