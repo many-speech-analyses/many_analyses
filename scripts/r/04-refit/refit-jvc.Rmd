@@ -1,7 +1,91 @@
 ---
 title: "Re-fit"
 subtitle: "JVC"
-output: html_document
+output: 
+  html_document:
+    toc: true
 date: "Last update: `r Sys.Date()`"
+editor_options: 
+  chunk_output_type: console
 ---
 
+
+```{r}
+#| label: setup
+#| include: false
+knitr::opts_chunk$set(
+  echo = TRUE, 
+  message = FALSE, 
+  warning = FALSE
+  )
+knitr::opts_knit$set(root.dir = here::here())
+```
+
+```{r}
+#| label: libs
+library("here")
+library("stringr")
+library("dplyr")
+library("readr")
+library("lme4")
+library("brms")
+```
+
+# anomalocaris_ornata
+# anthracoceros_coronata
+# arapaima_modularis
+# comanthina_maculatus
+# cromileptes_saxatilis
+# ctenosaura_limax
+# gnathosaurus_canadensis
+# gymnothorax_spinulosus
+# haematopus_fossor
+
+# lasionycteris_altavela
+
+```{r}
+#| label: lasionycteris_altavela-load-data
+# Relevant code is in 'analysis.Rmd'
+# Starting at line 327
+
+intensity_final <- read_csv(
+  here("data", "analyses", "jvc", "lasionycteris_altavela", 
+    "intensity_df.csv")) # load this is in
+
+# just look at noun focus trials
+intensity_DF <- subset(intensity_final, label == "NF")
+
+#
+# JVC: ORIGINAL MODEL (singular fit)
+#
+intensity_model_lmer <- lmer(Intensity ~ typ_mean + (1|target_name)+ (1|filename) + (1|filename:target_name),
+                       data = intensity_DF)
+
+#
+# JVC: Standardized model
+# - Model contains two variables to standardize: Intensity and typ_mean 
+# - Both variables are continuous, parameter estimate for typ_mean will be 
+#   effect size (named effect_con)
+#
+MSA_lasionycteris_altavela_intensity_DF <- intensity_DF %>% 
+  mutate(int_z = (Intensity - mean(Intensity)) / sd(Intensity), 
+    effect_con = (typ_mean - mean(typ_mean)) / sd(typ_mean))
+
+lasionycteris_altavela_1_int_con <- brm(
+  int_z ~ effect_con + 
+    (1|target_name) + (1|filename) + (1|filename:target_name), 
+  data = MSA_lasionycteris_altavela_intensity_DF, 
+  cores = 4, threads = threading(2, grainsize = 100), 
+  backend = "cmdstanr", 
+  file = here("data", "analyses", "models", "lasionycteris_altavela_1_int_con")
+  )
+```
+
+
+
+
+# linckia_nattereri
+# lycodes_bradfieldi
+# naso_cassivellaunos
+# trapezia_cantonensis
+# trigonias_lachneri
