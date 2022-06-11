@@ -5,3 +5,254 @@ output: html_document
 date: "Last update: `r Sys.Date()`"
 ---
 
+```{r setup}
+knitr::opts_knit$set(root.dir = here::here())
+library(tidyverse)
+library(brms)
+```
+
+
+# dermatolepis_aculeatus
+
+```{r}
+msa_data <- read_csv("./data/analyses/sc/dermatolepis_aculeatus/Many Speech Analyses_measurements.csv") %>%
+  mutate(
+    effect_cat = factor(typicality, levels = c("atypical", "medium", "typical")),
+    adj_pitch_max.norms = scale(adj_pitch_max) %>% as.numeric(),
+    noun_pitch_max.norms= scale(noun_pitch_max) %>% as.numeric(),
+    phrase_pitch_max.norms= scale(phrase_pitch_max) %>% as.numeric()
+  ) %>%
+  filter(
+    exclude == "N",
+    condition == "NF"
+  ) %>%
+  drop_na()
+```
+
+```{r}
+# LME  noun model with one fixed effect, two random effects: speaker, noun
+dermatolepis_aculeatus_1_pitch_cat <- brm(
+  noun_pitch_max.norms ~ effect_cat + (1 | speaker) + (1 | noun),
+  data = msa_data,
+  cores = 4,
+  threads = threading(2, grainsize = 100), 
+  backend = "cmdstanr",
+  file = "./data/analyses/models/dermatolepis_aculeatus_1_pitch_cat"
+)
+
+# LME  adjective model with one fixed effect, two random effects: speaker, adjective
+dermatolepis_aculeatus_2_pitch_cat <- brm(
+  adj_pitch_max.norms ~ effect_cat + (1 | speaker) + (1 | adjective),
+  data = msa_data,
+  cores = 4,
+  threads = threading(2, grainsize = 100), 
+  backend = "cmdstanr",
+  file = "./data/analyses/models/dermatolepis_aculeatus_2_pitch_cat"
+)
+
+# LME  phrase model with one fixed effect, two random effects: speaker, phrase
+dermatolepis_aculeatus_3_pitch_cat <- brm(
+  phrase_pitch_max.norms ~ effect_cat + (1 | speaker) + (1 | phrase),
+  data = msa_data,
+  cores = 4,
+  threads = threading(2, grainsize = 100), 
+  backend = "cmdstanr",
+  file = "./data/analyses/models/dermatolepis_aculeatus_3_pitch_cat"
+)
+```
+
+# epinephelus_aztecus
+
+# eriphia_laterispinis
+
+```{r}
+# listing all available csv files (30 participants in the production study)
+trials_files <- list.files(
+    path = "./osf/data/production/trial-lists/",
+    pattern = ".csv", full.names = TRUE
+    )
+
+# importing and reshaping all csv files at once
+trials <- map_dfr(
+    .x = trials_files,
+    .f = read.csv
+    )
+
+msa_data <- read.csv("data/analyses/sc/eriphia_laterispinis/processed_data/summary_data.csv") %>%
+    # keeping only the NF condition
+    filter(Condition == "NF") %>%
+    # retrieving the trial information
+    left_join(x = ., y = trials, by = c("speaker", "trial") ) %>%
+    # keeping only the relevant columns
+    select(
+        speaker, trial, condition,
+        mean_f0, mean_int, duration,
+        typicality, typ_mean, typ_sd, typ_median
+        ) %>%
+    # normalising measures per speaker
+    group_by(speaker) %>%
+    mutate(
+        mean_f0 = scale(mean_f0) %>% as.numeric(),
+        mean_int = scale(mean_int) %>% as.numeric(),
+        duration = scale(duration) %>% as.numeric()
+        ) %>%
+    # un-grouping
+    ungroup() %>%
+    # filtering out medium typical items
+    filter(typicality != "medium")  %>%
+    # converts to factor
+    mutate(effect_cat = factor(x = typicality, levels = c("atypical", "typical")))
+```
+
+```{r}
+priors <- c(
+    prior(normal(0, 1), class = Intercept),
+    prior(normal(0, 1), class = b),
+    prior(exponential(0.1), class = sd, resp = "duration"),
+    prior(exponential(0.1), class = sigma, resp = "duration"),
+    prior(exponential(0.1), class = sd, resp = "meanf0"),
+    prior(exponential(0.1), class = sigma, resp = "meanf0"),
+    prior(exponential(0.1), class = sd, resp = "meanint"),
+    prior(exponential(0.1), class = sigma, resp = "meanint")
+    )
+
+# fitting the varying intercept model
+# 4 chains with each 8000 post warm-up posterior samples
+eriphia_laterispinis_1_mult_cat <- brm(
+  bf(mvbind(mean_f0, mean_int, duration) ~
+    1 + effect_cat + (1 | speaker) ) +
+    set_rescor(rescor = TRUE),
+  prior = priors,
+  data = msa_data,
+  cores = 4,
+  threads = threading(2, grainsize = 100), 
+  backend = "cmdstanr",
+  file = "data/analyses/models/eriphia_laterispinis_1_mult_cat"
+)
+```
+
+# genyonemus_evotis
+
+# hoplostethus_macrosteus
+
+```{r}
+msa_data <- read_csv("./data/analyses/sc/hoplostethus_macrosteus/Analysis materials/Results_clean.csv") %>%
+  mutate(
+    effect_cat = factor(typicality, levels = c("atypical", "medium", "typical")),
+    color = factor(color),
+    durmsec = scale(durmsec) %>% as.numeric(),
+    intensity_maximum = scale(intensity_maximum) %>% as.numeric()
+  )
+
+contrasts(msa_data$color) <- "contr.sum"
+```
+
+```{r}
+hoplostethus_macrosteus_1_dur_cat <- brm(
+  durmsec ~ Observation + effect_cat + color + (1|Participant),
+  data = Results_noDurOutliers,
+  cores = 4,
+  threads = threading(2, grainsize = 100), 
+  backend = "cmdstanr",
+  file = "data/analyses/models/hoplostethus_macrosteus_1_dur_cat"
+)
+
+hoplostethus_macrosteus_2_int_cat <- brm(
+  intensity_maximum ~ Observation + effect_cat + color + (1|Participant),
+  data = Results_noIntOutliers,
+  cores = 4,
+  threads = threading(2, grainsize = 100), 
+  backend = "cmdstanr",
+  file = "data/analyses/models/hoplostethus_macrosteus_2_int_cat"
+)
+```
+
+# neosilurus_omanensis
+
+```{r}
+
+```
+
+# paralichthys_undulatus
+
+```{r}
+msa_data <- read_delim("./data/analyses/sc/paralichthys_undulatus/Data files/MSA-measurements.txt", delim = "\t") %>%
+  mutate(
+    Typicality = recode(Typicality, atyp = "atypical", med = "medium", typ = "typical"),
+    effect_cat = factor(Typicality, levels = c("atypical", "medium", "typical")),
+    Word.type = factor(Word.type),
+    RangeST = scale(RangeST) %>% as.numeric()
+  )
+
+contrasts(msa_data$Word.type) <- "contr.sum"
+```
+
+```{r}
+paralichthys_undulatus_1_f0_cat <- brm(
+  RangeST ~ Word.type + Typicality + (1|Speaker) + (1|Word),
+  data = msa_data,
+  cores = 4,
+  threads = threading(2, grainsize = 100), 
+  backend = "cmdstanr",
+  file = "data/analyses/models/paralichthys_undulatus_1_f0_cat"
+)
+```
+
+# petauroides_fistulator
+
+GAM but team reported parametric effects so we could include those.
+
+# polymetme_brevirostrum
+
+```{r}
+# Get datasets
+praat_data <- read_delim("./data/analyses/sc/polymetme_brevirostrum/Data/acoustic_results.txt", delim = "\t")
+norming_data <- read_csv("./data/analyses/sc/polymetme_brevirostrum/Data/ratings_summary.csv")
+ratings <- read_csv("./osf/data/norming/ratings/ratings.csv")
+foods <- list('aprikose','kirsche','moehre','gurke','erbsen','tomate','kartoffeln','banane','zitrone','bohnen','erdbeere','mandarine','walnuss')
+# Get rid of that pesky case marking and include typicality bins
+msa_data <- norming_data %>%
+  filter(colour %in% list('braun','gelb','gruen','rot','orange')) %>% 
+  mutate(
+    object = tolower(object),
+    Typicality = case_when(
+      typ_median >= 90 ~ "typical",
+      typ_median < 25 ~ "atypical",
+      typ_median >= 25 & typ_median < 90 ~ "medium"
+    ),
+    colour = recode(colour, "braun"="braunen", "gelb"="gelben", "gruen"="gruenen", "rot"="roten", "orange"="orangen")
+  ) %>%
+  right_join(., praat_data, by = c("colour"="Adjective", "object"="Noun")) %>%
+  filter(is.na(Notes)) %>%
+  mutate(
+    across(contains("f0"), function(x) {ifelse(x == "--undefined--", NA, x)}),
+    Category = ifelse(object %in% foods, "FOOD", "NONFOOD"),
+    effect_cat = factor(Typicality, levels = c("atypical", "medium", "typical")),
+    Adj_Dur = scale(Adj_Dur) %>% as.numeric(),
+    Condition = factor(Condition),
+    Category = factor(Category)
+  )
+
+contrasts(msa_data$Category) <- "contr.sum"
+contrasts(msa_data$Condition) <- "contr.sum"
+```
+
+```{r}
+polymetme_brevirostrum_1_dur_cat <- brm(
+  Adj_Dur ~ Condition * effect_cat * Category + (Condition * effect_cat || Speaker) + (Condition || object) + (effect_cat || colour),
+  data = msa_data,
+  cores = 4,
+  threads = threading(2, grainsize = 100), 
+  backend = "cmdstanr",
+  file = "data/analyses/models/polymetme_brevirostrum_1_dur_cat"
+)
+```
+
+# saron_pictus
+
+
+
+# stygobromus_tyraica
+
+ML.
+
