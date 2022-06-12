@@ -63,6 +63,8 @@ dermatolepis_aculeatus_3_pitch_cat <- brm(
 
 # epinephelus_aztecus
 
+Lavaan.
+
 # eriphia_laterispinis
 
 ```{r}
@@ -135,6 +137,8 @@ eriphia_laterispinis_1_mult_cat <- brm(
 
 # hoplostethus_macrosteus
 
+File missing.
+
 ```{r}
 msa_data <- read_csv("./data/analyses/sc/hoplostethus_macrosteus/Analysis materials/Results_clean.csv") %>%
   mutate(
@@ -168,6 +172,8 @@ hoplostethus_macrosteus_2_int_cat <- brm(
 ```
 
 # neosilurus_omanensis
+
+Script missing.
 
 ```{r}
 
@@ -237,6 +243,8 @@ contrasts(msa_data$Category) <- "contr.sum"
 contrasts(msa_data$Condition) <- "contr.sum"
 ```
 
+100% divergent transitions.
+
 ```{r}
 polymetme_brevirostrum_1_dur_cat <- brm(
   Adj_Dur ~ Condition * effect_cat * Category + (Condition * effect_cat || Speaker) + (Condition || object) + (effect_cat || colour),
@@ -250,9 +258,106 @@ polymetme_brevirostrum_1_dur_cat <- brm(
 
 # saron_pictus
 
+```{r}
+# The following code reads in the thirty different .csv files with the trial-level data and merges them into a single dataframe
+trial_dat <- list.files(path = "./osf/data/production/trial-lists/",
+                       pattern = "*.csv",
+                       full.names = TRUE) %>%
+  lapply(read_csv) %>%                              
+  bind_rows
+
+# Reading in the results file output by the Praat script
+d <- read.delim("./data/analyses/sc/saron_pictus/results.txt",
+                fileEncoding = "UTF-16")
+
+# Saving original number of rows
+N <- nrow(d)
+
+# Getting rid of columns we won't need from trial_dat
+trial_dat <- trial_dat[trial_dat$condition == "NF",]
+
+# Changing the trial_dat colours to the inflected forms to match the utterances
+trial_dat$target_colour[trial_dat$target_colour == "gelb"] <- "gelben"
+trial_dat$target_colour[trial_dat$target_colour == "orange"] <- "orangen"
+trial_dat$target_colour[trial_dat$target_colour == "braun"] <- "braunen"
+trial_dat$target_colour[trial_dat$target_colour == "rot"] <- "roten"
+trial_dat$target_colour[trial_dat$target_colour == "gruen"] <- "gruenen"
+
+# Saving the target colours present in the data-set into a vector
+colours <- c("gelben", "orangen", "braunen", "roten", "gruenen")
+
+# Subsetting to only target nouns and adjectives
+d <- d[d$word_label %in% trial_dat$target_name | d$word_label %in% trial_dat$target_colour,]
+d <- droplevels(d)
+
+# Merging the data from Praat with the trial data
+d <- merge(d, trial_dat, 
+            by = c("speaker", "trial", "condition"))
+
+# Lumping all trial problems together
+d$trial_status <- ifelse(d$notes == "", "Good", "Bad")
+
+# Creating a column specifying whether a word is an adjective or noun
+d$word_class <- ifelse(d$word_label %in% colours, "adjective", "noun")
+
+# Creating a column with duration in milliseconds instead of seconds
+d$dur_ms <- d$word_duration*1000
+
+# Transforming trial to have a max value of 1
+d$trial_minmax <- (d$trial - min(d$trial)) / (max(d$trial) - min(d$trial))
+
+# Creating a data-set that is only adjectives
+adj <- d[d$word_class == "adjective",]
+
+# Removing trials with problems
+adj <- adj[adj$notes == "",]
+adj$effect_cat <- factor(adj$typicality,
+                         levels = c("atypical", "medium", "typical"))
+
+adj <- adj %>%
+  mutate(
+    trial_minmax = scale(trial_minmax) %>% as.numeric(),
+    dur_ms = scale(log(dur_ms)) %>% as.numeric()
+  )
+
+model_formula <- bf(dur_ms ~
+                      effect_cat +
+                      trial_minmax +
+                      (effect_cat + trial_minmax | speaker) +
+                      (effect_cat + trial_minmax | word_label))
+
+# Setting weakly-informative priors for lognormal model
+lognormal_priors <- c(
+  prior(normal(5.5, 1), class = "Intercept"),
+  prior(normal(0, 0.5), class = "b"),
+  prior(normal(0, 1), class = "sd"),
+  prior(normal(0, 1), class = "sigma"),
+  prior(lkj(2), class = "cor")
+)
+
+# Fitting the lognormal model to data
+saron_pictus_1_dur_cat <- brm(
+  model_formula,
+  data = adj,
+  family = gaussian,
+  prior = lognormal_priors,
+  backend = "cmdstanr",
+  control = list(adapt_delta = 0.99, max_treedepth = 12),
+  cores = 4,
+  threads = threading(2, grainsize = 100), 
+  file = "data/analyses/models/saron_pictus_1_dur_cat"
+)
+```
 
 
 # stygobromus_tyraica
 
 ML.
 
+# swiftia_ruber
+
+Bayesian B-splines.
+
+# trachurus_riukiuensis
+
+# varanus_eulophotes
