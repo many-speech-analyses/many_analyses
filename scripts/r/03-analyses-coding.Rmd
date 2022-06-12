@@ -14,6 +14,13 @@ library(magrittr)
 library(glue)
 library(osfr)
 library(cli)
+library("here")
+library("fs")
+library("forcats")
+library("strex")
+library("purrr")
+library("broom")
+library("broom.mixed")
 ```
 
 # Read coding sheet
@@ -33,7 +40,7 @@ coding <- read_sheet(the_sheet) %>%
 
 First, we get a list of the OSF components in the Teams Analyses component. (It takes a few seconds)
 
-```{r}
+```{r comps}
 assigned <- coding %>%
   select(team, animal, assigned_to) %>%
   distinct()
@@ -45,7 +52,7 @@ comps <- osf_retrieve_node("https://osf.io/n3fyd/") %>%
 
 Now we get only those components that are assigned to you. Tell me who you are when prompt.
 
-```{r}
+```{r who}
 who <- menu(c("Ste", "Joseph", "Timo"), "Who are you?")
 
 whos <- c("sc", "jvc", "tr")
@@ -56,7 +63,7 @@ dir.create(glue("./data/analyses/{whos[who]}"), showWarnings = FALSE, recursive 
 
 And now we download the components in `data/analyses/`
 
-```{r}
+```{r download}
 for (comp in 1:nrow(your_comps)) {
   name <- your_comps$name[comp]
   files <- osf_ls_files(your_comps[comp,])
@@ -73,8 +80,81 @@ for (comp in 1:nrow(your_comps)) {
 }
 ```
 
+# Refit models
 
-# Basic plots
+Now that the components have been downloaded, we can start refitting the models using the scripts in `scripts/r/04-refit/`.
+
+# Get estimated from refitted models
+
+A few helpers. 
+
+```{r helpers}
+# Plotting theme because Im extra
+clean_theme <- function(...) {
+  list(
+    theme_minimal(), 
+    theme(
+      axis.title.y = element_text(size = rel(.9), hjust = 0.95),
+      axis.title.x = element_text(size = rel(.9), hjust = 0.95),
+      panel.grid.major = element_line(colour = 'grey90', size = 0.15),
+      panel.grid.minor = element_line(colour = 'grey90', size = 0.15))
+  )
+}
+
+# Functional sequence to get relevant info from Rds files
+clean_up <- . %>% 
+  tidy(effects = "fixed") %>% 
+  suppressWarnings() %>% 
+  filter(term %in% c("effect_cattypical", "effect_con")) %>% 
+  select(term, estimate, se = std.error)
+```
+
+```{r load-models}
+msa_models <- dir_ls(path = here("data/analyses/models"), regexp = ".rds$") %>% 
+  as_tibble() %>% 
+  transmute(path = value,
+    mod_name = str_remove(path, here("data/analyses/models/")), 
+    mod_name = str_remove(mod_name, ".rds"), 
+    model = map(path, ~ readRDS(file = .))) %>% 
+  separate(mod_name, 
+    into = c("word1", "word2", "mod_n", "outcome", "typicality"), 
+    sep = "_", remove = F) %>% 
+  unite(group, word1, word2, sep = "_") %>% 
+  select(group, mod_name:model) %>% 
+  mutate(sum = map(model, clean_up)) %>% 
+  suppressWarnings() # because it warns every time that some coef have underscores and its annoying
+```
+
+```{r effect-table}
+# Simple pandoc table of the models, estimates, se, etc.
+msa_models %>% 
+  unnest(sum) %>% 
+  select(-model) %>% 
+  knitr::kable(format = "pandoc")
+```
+
+```{r forest-plot}
+# Simple forest plot of the estimates +/- SE
+msa_models %>% 
+  unnest(sum) %>% 
+  mutate(
+    typicality_lab = if_else(
+      typicality == "cat", "Typicality = categorical", "Typicality = continuous"
+    ), 
+    mod_name = fct_reorder(mod_name, estimate)
+  ) %>% 
+  ggplot(aes(x = estimate, y = mod_name)) + 
+  geom_vline(xintercept = 0) +
+  geom_segment(aes(x = estimate - se, xend = estimate + se, yend = mod_name), 
+    color = "#cc0033", alpha = 0.5, size = 3, lineend = "round") + 
+  geom_point(color = "#cc0033", pch = 21, stroke = 3, size = 3.1) +
+  facet_wrap(~ typicality_lab, ncol = 1, scales = "free") +
+  labs(y = "Model", x = "Estimate ± SE") + 
+  clean_theme() + 
+  theme(strip.text.x = element_text(hjust = 0))
+```
+
+# Analyses coding plots
 
 ```{r}
 coding %>%
@@ -125,114 +205,5 @@ coding %>%
   distinct() %>%
   drop_na() %>%
   summarise(mean(n_models), median(n_models), sd(n_models), min(n_models), max(n_models))
-```
-
-
-# Refit models
-
-This is just a copy/paste of what I had in the other rmd file. 
-It still needs to be cleaned up (there is probably overlap with the code above in terms of packages loaded, etc.). 
-
-```{r}
-#| label: load-libs
-#| message: false
-#| warning: false
-library("here")
-library("fs")
-library("dplyr")
-library("tidyr")
-library("forcats")
-library("ggplot2")
-library("stringr")
-library("strex")
-library("purrr")
-library("broom")
-library("broom.mixed")
-```
-
-A few helpers. 
-
-```{r}
-#| label: helpers
-
-# Plotting theme because Im extra
-clean_theme <- function(...) {
-  list(
-    theme_minimal(), 
-    theme(
-      axis.title.y = element_text(size = rel(.9), hjust = 0.95),
-      axis.title.x = element_text(size = rel(.9), hjust = 0.95),
-      panel.grid.major = element_line(colour = 'grey90', size = 0.15),
-      panel.grid.minor = element_line(colour = 'grey90', size = 0.15))
-  )
-}
-
-# Functional sequence to get relevant info from Rds files
-clean_up <- . %>% 
-  tidy(effects = "fixed") %>% 
-  suppressWarnings() %>% 
-  filter(term %in% c("effect_cattypical", "effect_con")) %>% 
-  select(term, estimate, se = std.error)
-
-```
-
-
-## Load models
-
-```{r}
-#| label: load-models
-#| eval: false
-
-# This code will need to change eventually to pull rds files from OSF... for now it assumes they are stored in a folder called "models"
-msa_models <- dir_ls(path = here("models"), regexp = ".rds$") %>% 
-  as_tibble() %>% 
-  transmute(path = value, 
-    mod_name = str_remove(path, here("models/")), 
-    mod_name = str_remove(mod_name, ".rds"), 
-    model = map(path, ~ readRDS(file = .))) %>% 
-  separate(mod_name, 
-    into = c("word1", "word2", "mod_n", "outcome", "typicality"), 
-    sep = "_", remove = F) %>% 
-  unite(group, word1, word2, sep = "_") %>% 
-  select(group, mod_name:model) %>% 
-  mutate(sum = map(model, clean_up)) %>% 
-  suppressWarnings() # because it warns every time that some coef have underscores and its annoying
-```
-
-## Table
-
-```{r}
-#| label: effect-table
-#| eval: false
-
-# Simple pandoc table of the models, estimates, se, etc.
-msa_models %>% 
-  unnest(sum) %>% 
-  select(-model) %>% 
-  knitr::kable(format = "pandoc")
-
-```
-
-## Plot
-
-```{r}
-#| label: forest-plot
-#| eval: false
-
-# Simple forest plot of the estimates +/- SE
-msa_models %>% 
-  unnest(sum) %>% 
-  mutate(typicality_lab = if_else(typicality == "cat", 
-    "Typicality = categorical", "Typicality = continuous"), 
-    mod_name = fct_reorder(mod_name, estimate)) %>% 
-  ggplot() + 
-  facet_wrap(~ typicality_lab, ncol = 1, scales = "free") + 
-  aes(x = estimate, y = mod_name) + 
-  geom_segment(aes(x = estimate - se, xend = estimate + se, yend = mod_name), 
-    color = "#cc0033", alpha = 0.5, size = 3, lineend = "round") + 
-  geom_point(color = "#cc0033", pch = 21, stroke = 3, size = 3.1) + 
-  labs(y = "Model", x = "Estimate ± SE") + 
-  clean_theme() + 
-  theme(strip.text.x = element_text(hjust = 0))
 ```
 
