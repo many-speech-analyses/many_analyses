@@ -101,7 +101,31 @@ coding %>%
   geom_mosaic(aes(x = product(outcome, temporal_window), fill = outcome))
 ```
 
+```{r}
+coding %>%
+  drop_na(outcome, operationalisation) %>%
+  filter(
+    outcome %in% c("duration", "f0", "intensity"),
+    temporal_window %in% c("segment", "word", "phrase", "sentence")
+  ) %>%
+  droplevels() %>%
+  ggplot() +
+  geom_mosaic(aes(x = product(outcome, operationalisation), fill = outcome))
+```
 
+```{r}
+coding %>%
+  select(framework:operationalisation, temporal_window, typicality_operationalization, random_effects) %>%
+  distinct()
+```
+
+```{r}
+coding %>%
+  select(team, n_models) %>%
+  distinct() %>%
+  drop_na() %>%
+  summarise(mean(n_models), median(n_models), sd(n_models), min(n_models), max(n_models))
+```
 
 
 # Refit models
