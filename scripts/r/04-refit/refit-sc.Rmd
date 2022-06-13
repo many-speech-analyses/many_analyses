@@ -138,8 +138,6 @@ eriphia_laterispinis_1_mult_cat <- brm(
 
 # hoplostethus_macrosteus
 
-File missing.
-
 ```{r}
 msa_data <- read_csv("./data/analyses/sc/hoplostethus_macrosteus/Analysis materials/Results_clean.csv") %>%
   mutate(
@@ -155,7 +153,7 @@ contrasts(msa_data$color) <- "contr.sum"
 ```{r}
 hoplostethus_macrosteus_1_dur_cat <- brm(
   durmsec ~ Observation + effect_cat + color + (1|Participant),
-  data = Results_noDurOutliers,
+  data = msa_data,
   cores = 4,
   threads = threading(2, grainsize = 100), 
   backend = "cmdstanr",
@@ -164,7 +162,7 @@ hoplostethus_macrosteus_1_dur_cat <- brm(
 
 hoplostethus_macrosteus_2_int_cat <- brm(
   intensity_maximum ~ Observation + effect_cat + color + (1|Participant),
-  data = Results_noIntOutliers,
+  data = msa_data,
   cores = 4,
   threads = threading(2, grainsize = 100), 
   backend = "cmdstanr",
