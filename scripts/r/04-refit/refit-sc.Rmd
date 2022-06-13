@@ -8,6 +8,7 @@ date: "Last update: `r Sys.Date()`"
 ```{r setup}
 knitr::opts_knit$set(root.dir = here::here())
 library(tidyverse)
+library(plyr)
 library(brms)
 ```
 
@@ -360,4 +361,143 @@ Bayesian B-splines.
 
 # trachurus_riukiuensis
 
+```{r}
+#Read in output file from Praat script
+msa <- read.delim("./data/analyses/sc/trachurus_riukiuensis/MSA-Praat-output.txt", na.strings = "--undefined--")
+
+#Read in list of NF trials (this is an edited version of one of the trial-lists on OSF)
+triallist <- read.csv("./data/analyses/sc/trachurus_riukiuensis/MSA-triallist.csv")
+
+#Merge them together
+msa2 <- merge(msa, triallist, by=c("noun","condition"))
+#Adjust factor
+msa2$comment <- as.factor(msa2$comment)
+#Remove errors (31/900) and hesitation utterances (20/900) ~ 6% of data removed
+data <- subset(msa2, comment=="NA" | comment=="noise")
+
+#Remove JW_3; too many errors and hesitations
+data <- subset(data, participant!="JW_3")
+
+#Adjust typicality variable as dummy coded factor
+data$effect_cat <- factor(data$typicality, levels = c("atypical", "medium", "typical"))
+
+#Calculate a by participant median for each f0 measure and the median absolute deviation
+#See Leys, C., Ley, C., Klein, O., Bernard, P., & Licata, L. (2013). Detecting outliers: Do not use standard deviation around the mean, use absolute deviation around the median. Journal of Experimental Social Psychology, 49(4), 764-766.
+by.participant.median <- data %>%
+  group_by(participant) %>%
+  dplyr::summarise( n.mad = mad(noun_peakf0), n.median = median(noun_peakf0),
+             adj.mad = mad(adj_peakf0), adj.median = median(adj_peakf0),
+             art.mad = mad(art_peakf0), art.median = median(art_peakf0),)
+
+#Merge by participant with full data
+data.mm <- merge(by.participant.median, data)
+
+#Create new dataframes for each f0 measure by removing less than 2.5 times median absolute deviation
+noun <- subset(data.mm, noun_peakf0 > n.median-(2.5*n.mad))
+#noun peak f0 removed 28 data points
+
+adjective <- subset(data.mm, adj_peakf0 > adj.median-(2.5*adj.mad))
+#adj peak f0 removed 14 data points
+
+article <- subset(data.mm, art_peakf0 > art.median-(2*art.mad))
+#art peak f0 removed 160 data points NOTE we use 2 times median absolute deviation to remove all creaky voice tokens
+
+# scale
+data <- data %>%
+  mutate(
+    art_dur = scale(art_dur) %>% as.numeric(),
+    adj_dur = scale(adj_dur) %>% as.numeric()
+  )
+
+article <- article %>%
+  mutate(
+    art_peakf0 = scale(art_peakf0) %>% as.numeric()
+  )
+
+adjective <- adjective %>%
+  mutate(
+    adj_peakf0 = scale(adj_peakf0) %>% as.numeric()
+  )
+
+noun <- noun %>%
+  mutate(
+    noun_peakf0 = scale(noun_peakf0) %>% as.numeric()
+  )
+```
+
+```{r}
+trachurus_riukiuensis_1_durart_cat <- brm(
+  art_dur ~ effect_cat + (1 | participant) + (1 | noun),
+  data = data,
+  backend = "cmdstanr",
+  cores = 4,
+  threads = threading(2, grainsize = 100), 
+  file = "data/analyses/models/trachurus_riukiuensis_1_durart_cat"
+)
+
+trachurus_riukiuensis_2_f0art_cat <- brm(
+  art_peakf0 ~ effect_cat + (1 | participant),
+  data = article,
+  backend = "cmdstanr",
+  cores = 4,
+  threads = threading(2, grainsize = 100), 
+  file = "data/analyses/models/trachurus_riukiuensis_2_f0art_cat"
+)
+
+trachurus_riukiuensis_3_duradj_cat <- brm(
+  adj_dur ~ effect_cat + (1|participant) + (1|noun),
+  data = data,
+  backend = "cmdstanr",
+  cores = 4,
+  threads = threading(2, grainsize = 100), 
+  file = "data/analyses/models/trachurus_riukiuensis_3_duradj_cat"
+)
+
+trachurus_riukiuensis_4_f0adj_cat <- brm(
+  adj_peakf0 ~ effect_cat + (1|participant) + (1|noun),
+  data = adjective,
+  backend = "cmdstanr",
+  cores = 4,
+  threads = threading(2, grainsize = 100), 
+  file = "data/analyses/models/trachurus_riukiuensis_4_f0adj_cat"
+)
+
+trachurus_riukiuensis_5_f0noun_cat <- brm(
+  noun_peakf0 ~ effect_cat + (1|participant) + (1|noun),
+  data = noun,
+  backend = "cmdstanr",
+  cores = 4,
+  threads = threading(2, grainsize = 100), 
+  file = "data/analyses/models/trachurus_riukiuensis_5_f0noun_cat"
+)
+```
+
+
 # varanus_eulophotes
+
+```{r}
+# reading in data
+f0data <- read.csv("./data/analyses/sc/varanus_eulophotes/analysis/f0data-complete.csv", header = T)
+
+# new dataframe with only typicality-rated data
+f0data_cor <- f0data[f0data$typicality !="NA" & !is.na(f0data$typicality),]
+f0data_cor$avgF0 <- as.numeric(f0data_cor$avgF0) # coercing types...
+f0data_cor$effect_cat <- factor(f0data_cor$typicality, levels = c("atypical", "medium", "typical"))
+
+##### DESCRIPTIVE STATS and GRAPHS ###########
+# centering f0 values within speakers
+f0data_cor <- ddply(f0data_cor, c("speaker"), transform, centeredF0 = scale(avgF0, scale=F)) # centered
+f0data_cor <- ddply(f0data_cor, c("speaker"), transform, scaledF0 = scale(avgF0)) # z-scores
+```
+
+```{r}
+varanus_eulophotes_1_f0_cat <- brm(
+  scaledF0 ~ effect_cat + (1|speaker),
+  data = f0data_cor,
+  backend = "cmdstanr",
+  cores = 4,
+  threads = threading(2, grainsize = 100), 
+  file = "data/analyses/models/varanus_eulophotes_1_f0_cat"
+)
+```
+
