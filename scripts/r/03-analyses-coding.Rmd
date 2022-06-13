@@ -82,7 +82,28 @@ for (comp in 1:nrow(your_comps)) {
 
 # Refit models
 
-Now that the components have been downloaded, we can start refitting the models using the scripts in `scripts/r/04-refit/`.
+Now that the components have been downloaded, we can refit the models using the scripts in `scripts/r/04-refit/`.
+
+Once all your models have been refitted, you can upload them to the OSF, in the Cache component, `models/refitted/` folder.
+
+Here's some code that does that for you.
+
+```{r upload-refitted}
+cache <- osf_retrieve_node("wds2m")
+refitted <- osf_ls_files(osf_ls_files(cache, type = "folder")) %>%
+  filter(name == "refitted")
+models <- list.files(
+  "./data/analyses/models",
+  full.names = TRUE
+)
+
+osf_upload(
+  refitted,
+  path = models,
+  recurse = TRUE, conflicts = "skip", progress = TRUE, verbose = TRUE
+)
+```
+
 
 # Get estimated from refitted models
 
