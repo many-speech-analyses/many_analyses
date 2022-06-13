@@ -107,6 +107,20 @@ osf_upload(
 
 # Get estimated from refitted models
 
+We first download all the refitted models .rds files from the OSF
+
+```{r download-refitted}
+cache <- osf_retrieve_node("wds2m")
+refitted_rds <- osf_ls_files(cache, "models/refitted", n_max = Inf)
+
+osf_download(
+  refitted_rds,
+  path = "./data/analyses/models/",
+  conflicts = "skip", progress = TRUE, verbose = TRUE
+)
+```
+
+
 A few helpers. 
 
 ```{r helpers}
