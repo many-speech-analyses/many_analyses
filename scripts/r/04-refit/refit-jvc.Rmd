@@ -9,6 +9,7 @@ editor_options:
   chunk_output_type: console
 ---
 
+# Setup
 
 ```{r}
 #| label: setup
@@ -24,27 +25,302 @@ knitr::opts_knit$set(root.dir = here::here())
 ```{r}
 #| label: libs
 library("here")
-library("stringr")
+library("fs")
 library("dplyr")
+library("tidyr")
 library("readr")
+library("forcats")
+library("ggplot2")
+library("stringr")
+library("strex")
+library("purrr")
 library("lme4")
 library("brms")
+library("broom")
+library("broom.mixed")
 ```
 
-# anomalocaris_ornata
-# anthracoceros_coronata
-# arapaima_modularis
-# comanthina_maculatus
-# cromileptes_saxatilis
-# ctenosaura_limax
-# gnathosaurus_canadensis
-# gymnothorax_spinulosus
-# haematopus_fossor
+```{r}
+#| label: helpers
+#| include: false
+# Plotting theme because Im extra
+clean_theme <- function(...) {
+  list(
+    theme_minimal(), 
+    theme(
+      axis.title.y = element_text(size = rel(.9), hjust = 0.95),
+      axis.title.x = element_text(size = rel(.9), hjust = 0.95),
+      panel.grid.major = element_line(colour = 'grey90', size = 0.15),
+      panel.grid.minor = element_line(colour = 'grey90', size = 0.15))
+  )
+}
 
-# lasionycteris_altavela
+# Functional sequence to get relevant info from Rds files
+clean_up <- . %>% 
+  tidy(effects = "fixed") %>% 
+  suppressWarnings() %>% 
+  filter(term %in% c("effect_cattypical", "effect_con")) %>% 
+  select(term, estimate, se = std.error)
+```
+
+
+# Refits
+
+## anomalocaris_ornata
+
+## anthracoceros_coronata
+
+## arapaima_modularis
+
+## comanthina_maculatus
+
+## cromileptes_saxatilis
+
+## ctenosaura_limax
+
+## gnathosaurus_canadensis
+
+## gymnothorax_spinulosus
+
+## haematopus_fossor
 
 ```{r}
-#| label: lasionycteris_altavela-load-data
+#| label: haematopus_fossor
+
+directory <- here("data", "trial-lists")
+list_of_files = dir(here("data", "trial-lists"))
+
+trial_data = data.frame()
+for(file in list_of_files) {
+  this_file = read.csv(paste0(directory, "/", file), stringsAsFactors = FALSE)
+  trial_data = rbind(trial_data, this_file)
+}
+
+trial_data$typicality = factor(trial_data$typicality)
+contrasts(trial_data$typicality) = contr.helmert(3)
+dimnames(contrasts(trial_data$typicality))[[2]] = c("atypical", "typical")
+
+#
+# DURATION
+#
+
+# Get duration data
+duration <- read_csv(here("data", "analyses", "jvc", "haematopus_fossor", 
+  "details", "analysis", "wordDurations.csv")) %>% 
+  filter(adj != "")
+
+# Merge in trial data
+duration$speaker = gsub(".TextGrid", "", duration$participant)
+duration_full = merge(duration, trial_data)
+
+# Remove errors
+duration_full = filter(duration_full, comments!="hesitation break")
+
+# Centre relevant variables
+duration_full$adjdur.c = scale(duration_full$adjdur, scale=FALSE)
+duration_full$noundur.c = scale(duration_full$noundur, scale=FALSE)
+duration_full$framedur.c = scale(duration_full$framedur, scale=FALSE)
+
+# LME models
+# Adjective duration
+adj_duration_model = lmer(adjdur.c ~ trial * typicality + (1 | adj) + (1 | speaker), duration_full)
+
+# Noun duration
+noun_duration_model = lmer(noundur.c ~ trial * typicality + (1 | noun) + (1 | speaker), duration_full)
+
+# Frame duration
+frame_duration_model = lmer(framedur.c ~ trial * typicality + (1 | speaker), duration_full)
+
+#
+# JVC: setup df
+#
+MSA_duration_df <- duration_full %>% 
+  mutate(across(c("adjdur", "noundur", "framedur"), .fns = scale, 
+    .names = "{.col}_z")) %>% 
+  mutate(effect_cat = C(typicality, treatment))
+
+
+# Adjective duration
+haematopus_fossor_1_adjdur_cat <- brm(
+  adjdur_z ~ trial * effect_cat + 
+    (1 | adj) + (1 | speaker), 
+  data = MSA_duration_df, 
+  cores = 4, threads = threading(2, grainsize = 100), 
+  backend = "cmdstanr", 
+  file = here("data", "analyses", "models", "haematopus_fossor_1_adjdur_cat")
+  )
+
+# Noun duration
+haematopus_fossor_2_noundur_cat <- brm(
+  noundur_z ~ trial * effect_cat + 
+    (1 | noun) + (1 | speaker), 
+  data = MSA_duration_df, 
+  cores = 4, threads = threading(2, grainsize = 100), 
+  backend = "cmdstanr", 
+  file = here("data", "analyses", "models", "haematopus_fossor_2_noundur_cat")
+)
+
+# Frame duration
+haematopus_fossor_3_framedur_cat <- brm(
+  framedur_z ~ trial * effect_cat + 
+    (1 | speaker), 
+  data = MSA_duration_df, 
+  cores = 4, threads = threading(2, grainsize = 100), 
+  backend = "cmdstanr", 
+  file = here("data", "analyses", "models", "haematopus_fossor_3_framedur_cat")
+)
+
+
+#
+# JVC: same for Vowel
+#
+vowel <- read_csv(here("data", "analyses", "jvc", "haematopus_fossor", 
+  "details", "analysis", "vowelMeasurements.csv"), na = "--undefined--") %>% 
+  # Get rid of data with no word or vowel label
+  filter(word != "", vowel != "")
+
+# Merge in trial data
+vowel$speaker = gsub("\\.", "", vowel$participant)
+vowel_full = merge(vowel, trial_data)
+
+# Fix typos in word names
+vowel_full$word = gsub("banana","banane", vowel_full$word)
+vowel_full$word = gsub("braunen0","braunen", vowel_full$word)
+vowel_full$word = gsub("erbeere","erdbeere", vowel_full$word)
+vowel_full$word = gsub("greunen","gruenen", vowel_full$word)
+vowel_full$word = gsub("gruenen ","gruenen", vowel_full$word)
+vowel_full$word = gsub("orangen ","orangen", vowel_full$word)
+vowel_full$word = gsub("orangenen","orangen", vowel_full$word)
+vowel_full$word = gsub("Paprika","paprika", vowel_full$word)
+vowel_full$word = gsub("traubenn","trauben", vowel_full$word)
+
+# Fix typos in vowel label and exclude erroneously segmented segments
+vowel_full = vowel_full %>% filter(!vowel %in% c(" ", "@0", "&0", "a0", "e0", "r"))
+vowel_full$vowel = gsub("gelben","E1", vowel_full$vowel)
+vowel_full$vowel = gsub("E1o","E1", vowel_full$vowel)
+vowel_full$vowel = gsub("01","o1", vowel_full$vowel)
+vowel_full$vowel = gsub("I.*","I1", vowel_full$vowel)
+vowel_full$vowel = gsub("y.*","y1", vowel_full$vowel)
+
+# Define nouns and adjectives
+list_of_nouns = c("aprikose", "banane", "bohnen", "erbsen", "erdberre", "gurken", "kartoffeln", "kirche", "mandarine", "moehre", "paprika", "tomate", "trauben", "walnuss", "zitrone")
+vowel_full$pos = ifelse(vowel_full$word %in% list_of_nouns, "noun", "adj")
+
+# Define centralisation metric
+vowel_full = vowel_full %>% 
+  group_by(speaker) %>% 
+  mutate(centralisation = sqrt((F1 - mean(F1, na.rm=TRUE))^2 + (F2 - mean(F2, na.rm=TRUE))^2))
+
+
+#############
+# Analyses
+#############
+
+adj_full = vowel_full %>% filter(pos == "adj")
+noun_full = vowel_full %>% filter(pos == "noun")
+
+# Centre the variables
+noun_full$duration.c = scale(noun_full$duration, scale=FALSE)
+noun_full$intensity.c = scale(noun_full$intensity, scale=FALSE)
+noun_full$centralisation.c = scale(noun_full$centralisation, scale=FALSE)
+adj_full$duration.c = scale(adj_full$duration, scale=FALSE)
+adj_full$intensity.c = scale(adj_full$intensity, scale=FALSE)
+adj_full$centralisation.c = scale(adj_full$centralisation, scale=FALSE)
+
+# Duration analysis
+adj_vowel_duration_model = lmer(duration.c ~ trial * typicality + (1 | word) + (1 | speaker), adj_full)
+noun_vowel_duration_model = lmer(duration.c ~ trial * typicality + (1 | word) + (1 | speaker), noun_full)
+
+# Intensity analysis
+adj_vowel_int_model = lmer(intensity.c ~ trial * typicality + (1 | word) + (1 | speaker), adj_full)
+noun_vowel_int_model = lmer(intensity.c ~ trial * typicality + (1 | word) + (1 | speaker), noun_full)
+
+# Centralisation analysis
+adj_vowel_cent_model = lmer(centralisation.c ~ trial * typicality + (1 | word) + (1 | speaker), adj_full)
+noun_vowel_cent_model = lmer(centralisation.c ~ trial * typicality + (1 | word) + (1 | speaker), noun_full)
+
+#
+# JVC: standardize predictors
+#
+MSA_vowel_noun_df <- noun_full %>% 
+  mutate(across(c("duration", "intensity", "centralisation"), .fns = scale, 
+    .names = "{.col}_z")) %>% 
+  mutate(effect_cat = C(typicality, treatment))
+
+MSA_vowel_adj_df <- adj_full %>% 
+  mutate(across(c("duration", "intensity", "centralisation"), .fns = scale, 
+    .names = "{.col}_z")) %>% 
+  mutate(effect_cat = C(typicality, treatment))
+
+
+#
+# JVC: refit models
+#
+
+# Duration analysis
+haematopus_fossor_4_adjvoweldur_cat <- brm(
+  duration_z ~ trial * effect_cat + 
+    (1 | word) + (1 | speaker), 
+  data = MSA_vowel_adj_df, 
+  cores = 4, threads = threading(2, grainsize = 100), 
+  backend = "cmdstanr", 
+  file = here("data", "analyses", "models", "haematopus_fossor_4_adjvoweldur_cat")
+)
+
+haematopus_fossor_5_nounvoweldur_cat <- brm(
+  duration_z ~ trial * effect_cat + 
+    (1 | word) + (1 | speaker), 
+  data = MSA_vowel_noun_df, 
+  cores = 4, threads = threading(2, grainsize = 100), 
+  backend = "cmdstanr", 
+  file = here("data", "analyses", "models", "haematopus_fossor_5_nounvoweldur_cat")
+)
+
+# Intensity analysis
+haematopus_fossor_6_adjvowelint_cat <- brm(
+  intensity_z ~ trial * effect_cat + 
+    (1 | word) + (1 | speaker), 
+  data = MSA_vowel_adj_df, 
+  cores = 4, threads = threading(2, grainsize = 100), 
+  backend = "cmdstanr", 
+  file = here("data", "analyses", "models", "haematopus_fossor_6_adjvowelint_cat")
+)
+
+haematopus_fossor_7_nounvowelint_cat <- brm(
+  intensity_z ~ trial * effect_cat + 
+    (1 | word) + (1 | speaker), 
+  data = MSA_vowel_noun_df, 
+  cores = 4, threads = threading(2, grainsize = 100), 
+  backend = "cmdstanr", 
+  file = here("data", "analyses", "models", "haematopus_fossor_7_nounvowelint_cat")
+)
+
+
+# Centralisation analysis
+haematopus_fossor_8_adjvowelcent_cat <- brm(
+  centralisation_z ~ trial * effect_cat + 
+    (1 | word) + (1 | speaker), 
+  data = MSA_vowel_adj_df, 
+  cores = 4, threads = threading(2, grainsize = 100), 
+  backend = "cmdstanr", 
+  file = here("data", "analyses", "models", "haematopus_fossor_8_adjvowelcent_cat")
+)
+
+haematopus_fossor_9_nounvowelcent_cat <- brm(
+  centralisation_z ~ trial * effect_cat + 
+    (1 | word) + (1 | speaker), 
+  data = MSA_vowel_noun_df, 
+  cores = 4, threads = threading(2, grainsize = 100), 
+  backend = "cmdstanr", 
+  file = here("data", "analyses", "models", "haematopus_fossor_9_nounvowelcent_cat")
+)
+```
+
+
+## lasionycteris_altavela
+
+```{r}
+#| label: lasionycteris_altavela
 # Relevant code is in 'analysis.Rmd'
 # Starting at line 327
 
@@ -84,8 +360,80 @@ lasionycteris_altavela_1_int_con <- brm(
 
 
 
-# linckia_nattereri
-# lycodes_bradfieldi
-# naso_cassivellaunos
-# trapezia_cantonensis
-# trigonias_lachneri
+
+## linckia_nattereri
+
+## lycodes_bradfieldi
+
+## naso_cassivellaunos
+
+## trapezia_cantonensis
+
+## trigonias_lachneri
+
+
+
+
+
+
+
+
+
+# Results
+
+## Load models
+
+```{r}
+#| label: load-models
+
+# This code will need to change eventually to pull rds files from OSF... for now it assumes they are stored in a folder called "models"
+msa_models <- dir_ls(path = here("data", "analyses", "models"), regexp = ".rds$") %>% 
+  as_tibble() %>% 
+  transmute(path = value, 
+    mod_name = str_remove(path, here("data", "analyses", "models/")), 
+    mod_name = str_remove(mod_name, ".rds"), 
+    model = map(path, ~ readRDS(file = .))) %>% 
+  separate(mod_name, 
+    into = c("word1", "word2", "mod_n", "outcome", "typicality"), 
+    sep = "_", remove = F) %>% 
+  unite(group, word1, word2, sep = "_") %>% 
+  select(group, mod_name:model) %>% 
+  mutate(sum = map(model, clean_up)) %>% 
+  suppressWarnings() # because it warns every time that some coef have underscores and its annoying
+```
+
+## Table
+
+```{r}
+#| label: effect-table
+
+# Simple pandoc table of the models, estimates, se, etc.
+msa_models %>% 
+  unnest(sum) %>% 
+  select(-model) %>% 
+  knitr::kable(format = "pandoc")
+
+```
+
+## Plot
+
+```{r}
+#| label: forest-plot
+
+# Simple forest plot of the estimates +/- SE
+msa_models %>% 
+  unnest(sum) %>% 
+  mutate(typicality_lab = if_else(typicality == "cat", 
+    "Typicality = categorical", "Typicality = continuous"), 
+    mod_name = fct_reorder(mod_name, estimate)) %>% 
+  ggplot() + 
+  facet_wrap(~ typicality_lab, ncol = 1, scales = "free") + 
+  aes(x = estimate, y = mod_name) + 
+  geom_segment(aes(x = estimate - se, xend = estimate + se, yend = mod_name), 
+    color = "#cc0033", alpha = 0.5, size = 3, lineend = "round") + 
+  geom_point(color = "#cc0033", pch = 21, stroke = 3, size = 3.1) + 
+  labs(y = "Model", x = "Estimate ± SE") + 
+  clean_theme() + 
+  theme(strip.text.x = element_text(hjust = 0))
+```
+
