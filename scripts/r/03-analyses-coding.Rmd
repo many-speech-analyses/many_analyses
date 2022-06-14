@@ -66,7 +66,7 @@ And now we download the components in `data/analyses/`
 ```{r download}
 for (comp in 1:nrow(your_comps)) {
   name <- your_comps$name[comp]
-  files <- osf_ls_files(your_comps[comp,])
+  files <- osf_ls_files(your_comps[comp,], n_max = Inf)
   dir <- glue("./data/analyses/{whos[who]}/{name}")
   dir.create(dir, showWarnings = FALSE, recursive = TRUE)
   cli_h1(name)
