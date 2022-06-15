@@ -32,7 +32,7 @@ osf_data <- osf_retrieve_node("5agn9")
 We can knit the readme files (they are GitHub documents, i.e. `.Rmd` files that are converted to `.md` files upon knitting).
 
 ```{r knit-readmes, message=FALSE, warning=FALSE}
-readme_rmds <- list.files("./osf/data", pattern = "[.]Rmd$", recursive = T, full.names = T)
+readme_rmds <- list.files("./data/osf", pattern = "[.]Rmd$", recursive = T, full.names = T)
 
 for (f in readme_rmds) {
   xfun::Rscript_call(rmarkdown::render, list(f))
@@ -91,7 +91,7 @@ ratings <- read_csv("./data/dataset/ratings.csv") %>%
     )
   )
 
-write_csv(ratings, "./osf/data/norming/ratings/ratings.csv")
+write_csv(ratings, "./data/osf/norming/ratings/ratings.csv")
 
 ratings_summary <- ratings %>%
   group_by(object, colour, object_en, colour_en) %>%
@@ -102,7 +102,7 @@ ratings_summary <- ratings %>%
     .groups = "drop"
   )
 
-write_csv(ratings_summary, "./osf/data/norming/ratings/ratings_summary.csv")
+write_csv(ratings_summary, "./data/osf/norming/ratings/ratings_summary.csv")
 ```
 
 ## Production study
@@ -128,17 +128,17 @@ for (tlist in tlists) {
     mutate(typicality = ifelse(condition == "NF", typicality, NA)) %>%
     left_join(y = ratings_summary, by = c("target_name" = "object", "target_colour" = "colour"))
   
-  write_csv(tbl, file = paste0("./osf/data/production/trial-lists/", speaker, ".csv"))
+  write_csv(tbl, file = paste0("./data/osf/production/trial-lists/", speaker, ".csv"))
 }
 ```
 
 # Upload files
 
 ```{r upload-files, eval=FALSE}
-osf_upload(osf_data, path = "./osf/data/norming", recurse = T, verbose = T)
-osf_upload(osf_data, path = "./osf/data/production", recurse = T, verbose = T)
-osf_upload(osf_data, path = "./osf/data/README.md", recurse = T, verbose = T)
-osf_upload(osf_data, path = "./osf/data/methods_norm_prod.pdf", recurse = T, verbose = T)
+osf_upload(osf_data, path = "./data/osf/norming", recurse = T, verbose = T)
+osf_upload(osf_data, path = "./data/osf/production", recurse = T, verbose = T)
+osf_upload(osf_data, path = "./data/osf/README.md", recurse = T, verbose = T)
+osf_upload(osf_data, path = "./data/osf/methods_norm_prod.pdf", recurse = T, verbose = T)
 ```
 
 # Create teams components
