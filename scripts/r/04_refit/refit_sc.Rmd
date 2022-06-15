@@ -9,6 +9,7 @@ date: "Last update: `r Sys.Date()`"
 knitr::opts_knit$set(root.dir = here::here())
 library(tidyverse)
 library(plyr)
+library(mgcv)
 library(brms)
 ```
 
@@ -136,6 +137,8 @@ eriphia_laterispinis_1_mult_cat <- brm(
 
 # genyonemus_evotis
 
+Difficult case.
+
 # hoplostethus_macrosteus
 
 ```{r}
@@ -172,11 +175,64 @@ hoplostethus_macrosteus_2_int_cat <- brm(
 
 # neosilurus_omanensis
 
-Script missing.
+```{r}
+msa_data <- read.csv("./data/analyses/sc/neosilurus_omanensis/annotated_cleaned_data_v7.csv", stringsAsFactors = T, header = T) %>%
+  mutate(
+    effect_cat = factor(typ_cat, levels = c("atypical", "medium", "typical"))
+  )
+
+contrasts(msa_data$Condition) <- "contr.sum"
+```
 
 ```{r}
+neosilurus_omanensis_1_f0rat_cat <- brm(
+  PitchRatioAtoU ~ effect_cat + (1|Participant) + (1|Adjective),
+  data = msa_data,
+  cores = 4,
+  threads = threading(2, grainsize = 100), 
+  backend = "cmdstanr",
+  file = "data/analyses/models/neosilurus_omanensis_1_f0rat_cat"
+)
 
+neosilurus_omanensis_2_f0ranrat_cat <- brm(
+  PitchRangeRatioAtoU ~ effect_cat + (1|Participant) + (1|Adjective),
+  data = msa_data,
+  cores = 4,
+  threads = threading(2, grainsize = 100), 
+  backend = "cmdstanr",
+  file = "data/analyses/models/neosilurus_omanensis_2_f0ranrat_cat"
+)
+
+# Convergence issues
+neosilurus_omanensis_3_f0varrat_cat <- brm(
+  PitchVariationRatioAtoU ~ effect_cat * Condition + (1|Participant) + (1|Adjective),
+  data = msa_data,
+  cores = 4,
+  threads = threading(2, grainsize = 100), 
+  backend = "cmdstanr",
+  file = "data/analyses/models/neosilurus_omanensis_3_f0varrat_cat"
+)
+
+neosilurus_omanensis_4_f0riserat_cat <- brm(
+  PitchRiseRatio ~ effect_cat + (1|Participant) + (1|Adjective),
+  data = msa_data,
+  cores = 4,
+  threads = threading(2, grainsize = 100), 
+  backend = "cmdstanr",
+  file = "data/analyses/models/neosilurus_omanensis_4_f0riserat_cat"
+)
+
+# Convergence issues
+neosilurus_omanensis_5_srrat_cat <- brm(
+  SpeechRateRatioAtoU ~ effect_cat * Condition + (1|Participant) + (1|Adjective),
+  data = msa_data,
+  cores = 4,
+  threads = threading(2, grainsize = 100), 
+  backend = "cmdstanr",
+  file = "data/analyses/models/neosilurus_omanensis_5_srrat_cat"
+)
 ```
+
 
 # paralichthys_undulatus
 
@@ -194,7 +250,7 @@ contrasts(msa_data$Word.type) <- "contr.sum"
 
 ```{r}
 paralichthys_undulatus_1_f0_cat <- brm(
-  RangeST ~ Word.type + Typicality + (1|Speaker) + (1|Word),
+  RangeST ~ Word.type + effect_cat + (1|Speaker) + (1|Word),
   data = msa_data,
   cores = 4,
   threads = threading(2, grainsize = 100), 
@@ -206,6 +262,37 @@ paralichthys_undulatus_1_f0_cat <- brm(
 # petauroides_fistulator
 
 GAM but team reported parametric effects so we could include those.
+
+```{r}
+load("./data/analyses/sc/petauroides_fistulator/mdl_data.RData")
+
+msa_data <- mdl_data %>%
+  mutate(
+    effect_cat = factor(typicality, levels = c("atypical", "medium", "typical"))
+  )
+```
+
+```{r}
+petauroides_fistulator_1_f0_cat <- gam(
+  pitch_st ~
+    effect_cat +
+    s(id) +
+    s(trial, bs = "re") +
+    s(speaker, bs = "re") +
+    s(target_name, bs = "re") +
+    s(target_colour, bs = "re") +
+    s(competitor_name, bs = "re") +
+    s(competitor_colour, bs = "re") +
+    s(distractor1_name, bs = "re") +
+    s(distractor1_colour, bs = "re") +
+    s(distractor2_name, bs = "re") +
+    s(distractor2_colour, bs = "re"),
+  data = msa_data
+)
+
+saveRDS(petauroides_fistulator_1_f0_cat, "./data/analyses/models/petauroides_fistulator_1_f0_cat.rds")
+```
+
 
 # polymetme_brevirostrum
 
@@ -242,7 +329,7 @@ contrasts(msa_data$Category) <- "contr.sum"
 contrasts(msa_data$Condition) <- "contr.sum"
 ```
 
-100% divergent transitions.
+Convergence issues.
 
 ```{r}
 polymetme_brevirostrum_1_dur_cat <- brm(
