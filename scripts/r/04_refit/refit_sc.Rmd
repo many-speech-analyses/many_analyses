@@ -176,9 +176,15 @@ hoplostethus_macrosteus_2_int_cat <- brm(
 # neosilurus_omanensis
 
 ```{r}
-msa_data <- read.csv("./data/analyses/sc/neosilurus_omanensis/annotated_cleaned_data_v7.csv", stringsAsFactors = T, header = T) %>%
+msa_data <- read_csv("./data/analyses/sc/neosilurus_omanensis/annotated_cleaned_data_v7.csv") %>%
   mutate(
-    effect_cat = factor(typ_cat, levels = c("atypical", "medium", "typical"))
+    effect_cat = factor(typ_cat, levels = c("atypical", "medium", "typical")),
+    PitchRatioAtoU = scale(PitchRatioAtoU) %>% as.numeric(),
+    PitchRangeRatioAtoU = scale(PitchRangeRatioAtoU) %>% as.numeric(),
+    PitchVariationRatioAtoU = scale(PitchVariationRatioAtoU) %>% as.numeric(),
+    PitchRiseRatio = scale(PitchRiseRatio) %>% as.numeric(),
+    SpeechRateRatioAtoU = scale(SpeechRateRatioAtoU) %>% as.numeric(),
+    Condition = as.factor(Condition)
   )
 
 contrasts(msa_data$Condition) <- "contr.sum"
@@ -203,9 +209,10 @@ neosilurus_omanensis_2_f0ranrat_cat <- brm(
   file = "data/analyses/models/neosilurus_omanensis_2_f0ranrat_cat"
 )
 
-# Convergence issues
+# Team also had interaction effect_cat:Condition which leads to convergence issues
+# since typ:AF = 0 and atyp:ANF = 0
 neosilurus_omanensis_3_f0varrat_cat <- brm(
-  PitchVariationRatioAtoU ~ effect_cat * Condition + (1|Participant) + (1|Adjective),
+  PitchVariationRatioAtoU ~ effect_cat + Condition + (1|Participant) + (1|Adjective),
   data = msa_data,
   cores = 4,
   threads = threading(2, grainsize = 100), 
@@ -222,9 +229,10 @@ neosilurus_omanensis_4_f0riserat_cat <- brm(
   file = "data/analyses/models/neosilurus_omanensis_4_f0riserat_cat"
 )
 
-# Convergence issues
+# Team also had interaction effect_cat:Condition which leads to convergence issues
+# since typ:AF = 0 and atyp:ANF = 0
 neosilurus_omanensis_5_srrat_cat <- brm(
-  SpeechRateRatioAtoU ~ effect_cat * Condition + (1|Participant) + (1|Adjective),
+  SpeechRateRatioAtoU ~ effect_cat + Condition + (1|Participant) + (1|Adjective),
   data = msa_data,
   cores = 4,
   threads = threading(2, grainsize = 100), 
@@ -268,12 +276,13 @@ load("./data/analyses/sc/petauroides_fistulator/mdl_data.RData")
 
 msa_data <- mdl_data %>%
   mutate(
-    effect_cat = factor(typicality, levels = c("atypical", "medium", "typical"))
+    effect_cat = factor(typicality, levels = c("atypical", "medium", "typical")),
+    pitch_st = scale(pitch_st) %>% as.numeric()
   )
 ```
 
 ```{r}
-petauroides_fistulator_1_f0_cat <- gam(
+petauroides_fistulator_1_f0_cat <- bam(
   pitch_st ~
     effect_cat +
     s(id) +
@@ -287,7 +296,8 @@ petauroides_fistulator_1_f0_cat <- gam(
     s(distractor1_colour, bs = "re") +
     s(distractor2_name, bs = "re") +
     s(distractor2_colour, bs = "re"),
-  data = msa_data
+  data = msa_data,
+  cluster = parallel::makeCluster(8)
 )
 
 saveRDS(petauroides_fistulator_1_f0_cat, "./data/analyses/models/petauroides_fistulator_1_f0_cat.rds")
@@ -300,7 +310,7 @@ saveRDS(petauroides_fistulator_1_f0_cat, "./data/analyses/models/petauroides_fis
 # Get datasets
 praat_data <- read_delim("./data/analyses/sc/polymetme_brevirostrum/Data/acoustic_results.txt", delim = "\t")
 norming_data <- read_csv("./data/analyses/sc/polymetme_brevirostrum/Data/ratings_summary.csv")
-ratings <- read_csv("./osf/data/norming/ratings/ratings.csv")
+ratings <- read_csv("./data/osf/norming/ratings/ratings.csv")
 foods <- list('aprikose','kirsche','moehre','gurke','erbsen','tomate','kartoffeln','banane','zitrone','bohnen','erdbeere','mandarine','walnuss')
 # Get rid of that pesky case marking and include typicality bins
 msa_data <- norming_data %>%
@@ -318,25 +328,24 @@ msa_data <- norming_data %>%
   filter(is.na(Notes)) %>%
   mutate(
     across(contains("f0"), function(x) {ifelse(x == "--undefined--", NA, x)}),
-    Category = ifelse(object %in% foods, "FOOD", "NONFOOD"),
+    Category = as.factor(ifelse(object %in% foods, "FOOD", "NONFOOD")),
     effect_cat = factor(Typicality, levels = c("atypical", "medium", "typical")),
     Adj_Dur = scale(Adj_Dur) %>% as.numeric(),
-    Condition = factor(Condition),
-    Category = factor(Category)
+    Condition = as.factor(Condition),
+    Category = as.factor(Category)
   )
 
 contrasts(msa_data$Category) <- "contr.sum"
 contrasts(msa_data$Condition) <- "contr.sum"
 ```
 
-Convergence issues.
-
 ```{r}
 polymetme_brevirostrum_1_dur_cat <- brm(
-  Adj_Dur ~ Condition * effect_cat * Category + (Condition * effect_cat || Speaker) + (Condition || object) + (effect_cat || colour),
+  Adj_Dur ~ Condition * effect_cat + effect_cat * Category + (Condition * effect_cat | Speaker) + (Condition | object) + (effect_cat | colour),
   data = msa_data,
-  cores = 4,
-  threads = threading(2, grainsize = 100), 
+  chains = 1,
+  cores = 8,
+  threads = threading(8, grainsize = 100), 
   backend = "cmdstanr",
   file = "data/analyses/models/polymetme_brevirostrum_1_dur_cat"
 )
