@@ -143,7 +143,7 @@ clean_theme <- function(...) {
 
 # Functional sequence to get relevant info from Rds files
 clean_up <- . %>% 
-  tidy(effects = "fixed") %>% 
+  tidy(effects = "fixed", parametric = TRUE) %>% 
   suppressWarnings() %>% 
   filter(term %in% c("effect_cattypical", "effect_con")) %>% 
   select(term, estimate, se = std.error)
@@ -165,15 +165,15 @@ msa_models <- dir_ls(path = here("data/analyses/models"), regexp = ".rds$") %>%
   select(group, mod_name:model) %>% 
   mutate(sum = map(model, clean_up)) %>% 
   # because it warns every time that some coef have underscores and its annoying
-  suppressWarnings()
+  suppressWarnings() %>%
+  select(-model)
 ```
 
 Simple pandoc table of the models, estimates, se, etc.
 
 ```{r effect-table}
 msa_models %>% 
-  unnest(sum) %>% 
-  select(-model) %>% 
+  unnest(sum) %>%
   knitr::kable(format = "pandoc")
 ```
 
