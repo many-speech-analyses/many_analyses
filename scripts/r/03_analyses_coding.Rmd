@@ -50,7 +50,7 @@ comps <- osf_retrieve_node("https://osf.io/n3fyd/") %>%
   left_join(y = assigned, by = c("name" = "animal"))
 ```
 
-Now we get only those components that are assigned to you. Tell me who you are when prompt.
+Now we get only those components that are assigned to you. Tell me who you are when prompted.
 
 ```{r who}
 who <- menu(c("Ste", "Joseph", "Timo"), "Who are you?")
@@ -61,7 +61,7 @@ your_comps <- comps %>%
 dir.create(glue("./data/analyses/{whos[who]}"), showWarnings = FALSE, recursive = TRUE)
 ```
 
-And now we download the components in `data/analyses/`
+And now we download the components in `data/analyses/` (it will take some time!).
 
 ```{r download}
 for (comp in 1:nrow(your_comps)) {
@@ -84,9 +84,11 @@ for (comp in 1:nrow(your_comps)) {
 
 Now that the components have been downloaded, we can refit the models using the scripts in `scripts/r/04-refit/`.
 
+# Upload refitted models to OSF
+
 Once all your models have been refitted, you can upload them to the OSF, in the Cache component, `models/refitted/` folder.
 
-Here's some code that does that for you.
+Here's the code that does that for you.
 
 ```{r upload-refitted}
 cache <- osf_retrieve_node("wds2m")
@@ -104,10 +106,9 @@ osf_upload(
 )
 ```
 
+# Download all refitted models
 
-# Get estimated from refitted models
-
-We first download all the refitted models .rds files from the OSF
+We first download all the refitted models .rds files from the OSF.
 
 ```{r download-refitted}
 cache <- osf_retrieve_node("wds2m")
@@ -121,10 +122,14 @@ osf_download(
 ```
 
 
-A few helpers. 
+# Get estimates from refitted models
+
+Now we can extract the relevant estimates from the refitted models.
+
+A few helper functions.
 
 ```{r helpers}
-# Plotting theme because Im extra
+# Plotting theme
 clean_theme <- function(...) {
   list(
     theme_minimal(), 
@@ -144,6 +149,8 @@ clean_up <- . %>%
   select(term, estimate, se = std.error)
 ```
 
+Load all the models.
+
 ```{r load-models}
 msa_models <- dir_ls(path = here("data/analyses/models"), regexp = ".rds$") %>% 
   as_tibble() %>% 
@@ -157,19 +164,22 @@ msa_models <- dir_ls(path = here("data/analyses/models"), regexp = ".rds$") %>%
   unite(group, word1, word2, sep = "_") %>% 
   select(group, mod_name:model) %>% 
   mutate(sum = map(model, clean_up)) %>% 
-  suppressWarnings() # because it warns every time that some coef have underscores and its annoying
+  # because it warns every time that some coef have underscores and its annoying
+  suppressWarnings()
 ```
 
+Simple pandoc table of the models, estimates, se, etc.
+
 ```{r effect-table}
-# Simple pandoc table of the models, estimates, se, etc.
 msa_models %>% 
   unnest(sum) %>% 
   select(-model) %>% 
   knitr::kable(format = "pandoc")
 ```
 
+Simple forest plot of the estimates +/- SE
+
 ```{r forest-plot}
-# Simple forest plot of the estimates +/- SE
 msa_models %>% 
   unnest(sum) %>% 
   mutate(
