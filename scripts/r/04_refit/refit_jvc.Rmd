@@ -87,8 +87,8 @@ clean_up <- . %>%
 ```{r}
 #| label: haematopus_fossor
 
-directory <- here("osf", "data", "production", "trial-lists")
-list_of_files = dir(here("osf", "data", "production", "trial-lists"))
+directory <- here("data", "osf", "production", "trial-lists")
+list_of_files = dir(here("data", "osf", "production", "trial-lists"))
 
 trial_data = data.frame()
 for(file in list_of_files) {
@@ -169,7 +169,6 @@ haematopus_fossor_3_framedur_cat <- brm(
   backend = "cmdstanr", 
   file = here("data", "analyses", "models", "haematopus_fossor_3_framedur_cat")
 )
-
 
 #
 # JVC: same for Vowel
@@ -333,8 +332,13 @@ intensity_DF <- subset(intensity_final, label == "NF")
 #
 # JVC: ORIGINAL MODEL (singular fit)
 #
-intensity_model_lmer <- lmer(Intensity ~ typ_mean + (1|target_name)+ (1|filename) + (1|filename:target_name),
-                       data = intensity_DF)
+intensity_model_lmer <- lmer(
+  Intensity ~ typ_mean + 
+    (1|target_name) + 
+    (1|filename) + 
+    (1|filename:target_name), 
+  data = intensity_DF
+  )
 
 #
 # JVC: Standardized model
