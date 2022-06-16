@@ -363,7 +363,7 @@ pre code {
 
 <h1 class="title toc-ignore">Re-fit</h1>
 <h3 class="subtitle">JVC</h3>
-<h4 class="date">Last update: 2022-06-13</h4>
+<h4 class="date">Last update: 2022-06-14</h4>
 
 </div>
 
@@ -442,8 +442,8 @@ library(&quot;broom.mixed&quot;)</code></pre>
 </div>
 <div id="haematopus_fossor" class="section level2">
 <h2>haematopus_fossor</h2>
-<pre class="r"><code>directory &lt;- here(&quot;data&quot;, &quot;trial-lists&quot;)
-list_of_files = dir(here(&quot;data&quot;, &quot;trial-lists&quot;))
+<pre class="r"><code>directory &lt;- here(&quot;osf&quot;, &quot;data&quot;, &quot;production&quot;, &quot;trial-lists&quot;)
+list_of_files = dir(here(&quot;osf&quot;, &quot;data&quot;, &quot;production&quot;, &quot;trial-lists&quot;))
 
 trial_data = data.frame()
 for(file in list_of_files) {
@@ -649,7 +649,6 @@ haematopus_fossor_7_nounvowelint_cat &lt;- brm(
   backend = &quot;cmdstanr&quot;, 
   file = here(&quot;data&quot;, &quot;analyses&quot;, &quot;models&quot;, &quot;haematopus_fossor_7_nounvowelint_cat&quot;)
 )
-
 
 # Centralisation analysis
 haematopus_fossor_8_adjvowelcent_cat &lt;- brm(

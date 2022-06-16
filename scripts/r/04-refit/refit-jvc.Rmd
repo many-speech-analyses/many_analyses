@@ -87,8 +87,8 @@ clean_up <- . %>%
 ```{r}
 #| label: haematopus_fossor
 
-directory <- here("data", "trial-lists")
-list_of_files = dir(here("data", "trial-lists"))
+directory <- here("osf", "data", "production", "trial-lists")
+list_of_files = dir(here("osf", "data", "production", "trial-lists"))
 
 trial_data = data.frame()
 for(file in list_of_files) {
@@ -295,7 +295,6 @@ haematopus_fossor_7_nounvowelint_cat <- brm(
   file = here("data", "analyses", "models", "haematopus_fossor_7_nounvowelint_cat")
 )
 
-
 # Centralisation analysis
 haematopus_fossor_8_adjvowelcent_cat <- brm(
   centralisation_z ~ trial * effect_cat + 
@@ -356,9 +355,6 @@ lasionycteris_altavela_1_int_con <- brm(
   file = here("data", "analyses", "models", "lasionycteris_altavela_1_int_con")
   )
 ```
-
-
-
 
 
 ## linckia_nattereri
