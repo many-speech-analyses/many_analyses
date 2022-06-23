@@ -5,3 +5,1331 @@ output: html_document
 date: "Last update: `r Sys.Date()`"
 ---
 
+```{r setup}
+knitr::opts_chunk$set(
+  echo = TRUE, 
+  message = FALSE, 
+  warning = FALSE
+  )
+knitr::opts_knit$set(root.dir = here::here())
+
+# libs
+library("here")
+library("fs")
+library("dplyr")
+library("tidyr")
+library("readr")
+library("forcats")
+library("ggplot2")
+library("stringr")
+library("strex")
+library("purrr")
+library("lme4")
+library("brms")
+library("broom")
+library("broom.mixed")
+library("readxl")
+library("optimx")
+
+# Plotting theme because Joseph is extra
+clean_theme <- function(...) {
+  list(
+    theme_minimal(), 
+    theme(
+      axis.title.y = element_text(size = rel(.9), hjust = 0.95),
+      axis.title.x = element_text(size = rel(.9), hjust = 0.95),
+      panel.grid.major = element_line(colour = 'grey90', size = 0.15),
+      panel.grid.minor = element_line(colour = 'grey90', size = 0.15))
+  )
+}
+
+# Functional sequence to get relevant info from Rds files
+clean_up <- . %>% 
+  tidy(effects = "fixed") %>% 
+  suppressWarnings() %>% 
+  filter(term %in% c("effect_cattypical", "effect_con")) %>% 
+  select(term, estimate, se = std.error)
+
+```
+```
+
+# trachyphyllia_lappa
+
+```{r trachyphyllia_lappa_setup}
+
+path <- "./data/analyses/tr/trachyphyllia_lappa"
+
+path_trial = paste0(path, "/trial_level_data/")
+msa <- list.files(path = path_trial, pattern = "*.csv", full.names = TRUE) %>% 
+  lapply(read_csv,  col_types = cols( .default = col_character())) %>% 
+  bind_rows %>%
+  mutate(trial = as.numeric(trial))
+
+# analyze only NF condition with the first 35 trials
+msa_nf = msa %>% filter(condition == "NF" & trial < 36)
+
+results_path = paste0(path, "/acoustic_measurements/errors.txt")
+errorfile = read.delim(results_path, skipNul = TRUE, fileEncoding="latin1", header = TRUE) %>%
+  mutate(label = as.factor(label)) %>%
+  group_by(speaker) %>%
+  mutate(trial = as.integer(row_number()/2))
+
+main_errors = errorfile %>% filter(!label %in% "") %>% filter(trial < 36) %>%
+  filter(!label %in% c("team_add", "team_delete") )
+
+main_errors %>% group_by(label) %>% summarise(trials = n()) %>%
+       mutate(percent = trials/sum(trials))
+
+
+results_path = paste0(path, "/acoustic_measurements/durations.txt")
+durations = read.delim(results_path,skipNul = TRUE, fileEncoding="latin1", header = TRUE) 
+newnames = c("speaker", "phrase", "duration")
+
+durations = durations %>%
+  rename_with(~ newnames[which(names(durations) == .x)], .cols = names(durations))%>%
+  group_by(speaker) %>%
+  mutate(trial = as.integer(gl(n(), 11, n()))) %>% 
+  group_by(speaker, trial) %>%
+  mutate(word = row_number()) %>%
+filter(word %in% c(9,10)) %>%
+  ## merge with msa data
+  left_join(msa_nf %>% select(speaker,trial, condition, typicality, target_colour) %>%
+              mutate(trial = as.integer(trial))) %>%
+  filter(!is.na(condition))
+  
+# combine with phrase info
+phrase_data = durations %>% select(speaker, trial, phrase) %>%
+  group_by(speaker, trial) %>%
+   summarise(phrase = paste(phrase, collapse = "-")) 
+
+durations = durations %>% select(-phrase) %>%
+  left_join(phrase_data)
+
+# exclude error trials
+durations = durations %>% left_join(main_errors) %>%
+  filter(is.na(label))
+
+durations %>% group_by(speaker) %>% summarise(n=n()/2) %>%
+  summarise(mean_trials = mean(n), sd_trials = sd(n))
+
+# pitch extraction
+results_path = paste0(path,"/acoustic_measurements/pitchresults.txt")
+pitchfile = read.delim(results_path, skipNul = TRUE, fileEncoding="latin1", header = TRUE)
+newnames = c("speaker", "phrase", "maximum","minimum")
+
+pitchfile = pitchfile %>%
+  rename_with(~ newnames[which(names(pitchfile) == .x)], .cols = names(pitchfile))%>%
+  group_by(speaker) %>%
+  mutate(trial = as.integer(gl(n(), 11, n()))) %>% 
+  group_by(speaker, trial) %>%
+  mutate(word = row_number()) %>%
+filter(word %in% c(9,10)) %>%
+  ## merge with msa data
+  left_join(msa_nf %>% select(speaker,trial, condition, typicality, target_colour) %>%
+              mutate(trial = as.integer(trial))) %>%
+  filter(!is.na(condition)) %>%
+  pivot_longer(names_to = "pitch", cols = minimum:maximum) %>%
+  mutate(value = ifelse(value == "--undefined--", NA, value),
+         value = as.numeric(value))
+
+pitchfile = pitchfile %>% select(-phrase) %>%
+  left_join(phrase_data)
+
+# exclude errors
+pitchfile = pitchfile %>% left_join(main_errors) %>%
+  filter(is.na(label)) %>%
+# pitch into wide 
+  pivot_wider(names_from = pitch, values_from = value)%>%
+  mutate(range = maximum - minimum)
+
+```
+
+```{r trachyphyllia_lappa_models}
+
+ctrl = lmerControl(check.conv.singular = .makeCC(action = "ignore",  tol = 1e-4),
+                   optimizer = "optimx", optCtrl  = list(method="bobyqa", maxfun = 2e+6))
+
+duration_int = duration ~ typicality*target_colour + 
+  (typicality + target_colour  | speaker) + (1 | phrase)
+duration_noint = duration ~ typicality + target_colour + 
+  (typicality + target_colour  | speaker) + (1 | phrase)
+
+pitch_min_int = minimum ~ typicality * target_colour + (typicality + target_colour  | speaker)+ 
+  (1 | phrase)
+pitch_min_noint = minimum ~ typicality + target_colour + (typicality + target_colour  | speaker)+ 
+  (1 | phrase)
+
+pitch_max_int = maximum ~ typicality * target_colour + (typicality + target_colour  | speaker)+
+   (1 | phrase)
+pitch_max_noint = maximum ~ typicality + target_colour + (typicality + target_colour  | speaker)+
+   (1 | phrase)
+
+pitch_range_noint = range ~ typicality + target_colour + (typicality + target_colour  | speaker)+
+   (1 | phrase)
+pitch_range_int = range ~ typicality * target_colour + (typicality + target_colour  | speaker)+
+   (1 | phrase)
+
+# adjective models - duration
+duration_adj_data = durations %>% filter(word == 9) %>% 
+  mutate(type = "adjective")
+  
+# TR: no interaction better fit, so chosen by the analysts
+duration_adj_model_noint = lme4::lmer(data = duration_adj_data, duration_noint, control=ctrl)
+
+# nouns models - duration
+duration_noun_data = durations %>% filter(word == 10) %>% mutate(type = "noun")
+
+# TR: interaction model picked
+duration_noun_model_int =lme4::lmer(data = duration_noun_data, duration_int, control=ctrl)
+
+# adjective model - pitch
+pitch_adj_data = pitchfile %>% filter(word == 9)%>% mutate(type = "adjective")
+pitch_noun_data = pitchfile %>% filter(word == 10)%>%mutate(type = "noun")
+
+pitch_adj_model_max_noint = lme4::lmer(data = pitch_adj_data,pitch_max_noint, control = ctrl) 
+pitch_adj_model_min_noint = lme4::lmer(data = pitch_adj_data, pitch_min_noint, control = ctrl)
+pitch_adj_model_range_noint = lme4::lmer(data = pitch_adj_data, pitch_range_noint, control = ctrl)
+
+pitch_noun_model_max_noint = lme4::lmer(data = pitch_noun_data,pitch_max_noint, control = ctrl) 
+pitch_noun_model_min_noint = lme4::lmer(data = pitch_noun_data, pitch_min_noint, control = ctrl)
+pitch_noun_model_range_noint = lme4::lmer(data = pitch_noun_data, pitch_range_noint, control = ctrl)
+
+```
+
+```{r trachyphyllia_lappa_fitting}
+
+# standardize
+duration_adj_data_temp <- duration_adj_data %>% 
+  mutate(duration_s = (duration - mean(duration, na.rm =TRUE)) / sd(duration,  na.rm = TRUE),
+  # dummy-code typicality
+  typicality = as.factor(typicality),
+  target_colour = as.factor(target_colour),
+  effect_cat = C(typicality, treatment),
+  # sum-code categorical predictors
+  target_colour_s = C(target_colour, sum)
+  )
+
+duration_noun_data <- duration_noun_data %>% 
+  mutate(
+         # scale continuous variables
+         duration_s = (duration - mean(duration, na.rm = TRUE)) / sd(duration,  na.rm = TRUE),
+         # dummy-code typicality
+         typicality = as.factor(typicality),
+         target_colour = as.factor(target_colour),
+         effect_cat = C(typicality, treatment),
+         # sum-code categorical predictors
+         target_colour_s = C(target_colour, sum)
+  )
+
+pitch_adj_data <- pitch_adj_data %>% 
+  mutate(
+         # scale continuous variables
+         minimum_s = (minimum - mean(minimum, na.rm = TRUE)) / sd(minimum,  na.rm = TRUE),
+         maximum_s = (maximum - mean(maximum, na.rm = TRUE)) / sd(maximum,  na.rm = TRUE),
+         range_s = (range - mean(range, na.rm = TRUE)) / sd(range,  na.rm = TRUE),
+         # dummy-code typicality
+         typicality = as.factor(typicality),
+         target_colour = as.factor(target_colour),
+         effect_cat = C(typicality, treatment),
+         # sum-code categorical predictors
+         target_colour_s = C(target_colour, sum)
+  )
+
+pitch_noun_data <- pitch_noun_data %>% 
+  mutate(
+         # scale continuous variables
+         minimum_s = (minimum - mean(minimum, na.rm = TRUE)) / sd(minimum,  na.rm = TRUE),
+         maximum_s = (maximum - mean(maximum, na.rm = TRUE)) / sd(maximum,  na.rm = TRUE),
+         range_s = (range - mean(range, na.rm = TRUE)) / sd(range,  na.rm = TRUE),
+         # dummy-code typicality
+         typicality = as.factor(typicality),
+         target_colour = as.factor(target_colour),
+         effect_cat = C(typicality, treatment),
+         # sum-code categorical predictors
+         target_colour_s = C(target_colour, sum)
+  )
+
+# run brms equivalents
+trachyphyllia_lappa_1_duradj_cat <- brm(
+  duration_s ~  typicality + target_colour + 
+      (typicality + target_colour  | speaker) + 
+      (1 | phrase),
+  data = duration_adj_data, 
+  seed = 111,
+  cores = 4,  
+  file = "./data/analyses/models/trachyphyllia_lappa_1_duradj_cat"
+  )
+  
+trachyphyllia_lappa_2_f0maxadj_cat <- brm(
+  maximum_s ~  typicality + target_colour + 
+      (typicality + target_colour  | speaker) + 
+      (1 | phrase),
+  data = pitch_adj_data, 
+  seed = 111,
+  cores = 4,  
+  file = "./data/analyses/models/trachyphyllia_lappa_2_f0maxadj_cat"
+  )
+  
+trachyphyllia_lappa_3_f0minadj_cat <- brm(
+  minimum_s ~  typicality + target_colour + 
+      (typicality + target_colour  | speaker) + 
+      (1 | phrase),
+  data = pitch_adj_data, 
+  seed = 111,
+  cores = 4,  
+  file = "./data/analyses/models/trachyphyllia_lappa_3_f0minadj_cat"
+  )
+
+trachyphyllia_lappa_4_f0rangeadj_cat <- brm(
+  range_s ~  typicality + target_colour + 
+      (typicality + target_colour  | speaker) + 
+      (1 | phrase),
+  data = pitch_adj_data, 
+  seed = 111,
+  cores = 4,  
+  file = "./data/analyses/models/trachyphyllia_lappa_4_f0rangeadj_cat"
+  )
+
+trachyphyllia_lappa_5_durnoun_cat <- brm(
+  duration_s ~  typicality + target_colour + 
+      (typicality + target_colour  | speaker) + 
+      (1 | phrase),
+  data = duration_noun_data, 
+  seed = 111,
+  cores = 4,  
+  file = "./data/analyses/models/trachyphyllia_lappa_5_durnoun_cat"
+  )
+  
+trachyphyllia_lappa_6_f0maxnoun_cat <- brm(
+  maximum_s ~  typicality + target_colour + 
+      (typicality + target_colour | speaker) + 
+      (1 | phrase),
+  data = pitch_noun_data, 
+  seed = 111,
+  cores = 4,  
+  file = "./data/analyses/models/trachyphyllia_lappa_6_f0maxnoun_cat"
+  )
+  
+  
+trachyphyllia_lappa_7_f0minnoun_cat <- brm(
+  minimum_s ~  typicality + target_colour + 
+      (typicality + target_colour  | speaker) + 
+      (1 | phrase),
+  data = pitch_noun_data, 
+  seed = 111,
+  cores = 4,  
+  file = "./data/analyses/models/trachyphyllia_lappa_7_f0minnoun_cat"
+  )
+  
+trachyphyllia_lappa_8_f0rangenoun_cat <- brm(
+  range_s ~  typicality + target_colour + 
+      (typicality + target_colour  | speaker) + 
+      (1 | phrase),
+  data = pitch_noun_data, 
+  seed = 111,
+  cores = 4,  
+  file = "./data/analyses/models/trachyphyllia_lappa_8_f0rangenoun_cat"
+  )
+
+```
+
+# alosa_atun
+
+```{r alosa_atun_setup}
+
+MSA_combined <- readRDS("./data/analyses/tr/alosa_atun/alosa_atun_data.rds", refhook = NULL)
+
+MSA_combined$meanPitch = as.numeric(MSA_combined$meanPitch)
+
+MSA_combined_all <-
+MSA_combined %>%
+  filter(Text == "der",
+         After.Match != "Würfel") %>%
+  filter(!is.na(meanPitch)) 
+
+MSA_combined_all <-
+MSA_combined_all %>%
+  filter(!is.na(Target.word.duration))
+
+MSA_combined_all <-
+MSA_combined_all %>%
+  filter(!is.na(condition)) %>%
+  filter(condition != "NA")
+  
+# create summary of F1 and F2 values based on speaker and vowels. sd_limit, max and min variables are used for outlier removal in the next step
+
+sd_limit = 2.5 
+
+#set this to the +/- sd limit you want to filter outliers by
+
+MSA_summstats <- MSA_combined_all %>%
+  group_by(Transcript, Target.segment) %>%
+  summarise(mean_F1 = mean(f1_time_0_5),
+            mean_F2 = mean(f2_time_0_5),
+            mean_amp = mean(maxIntensity),
+            mean_pitch = mean(meanPitch),
+            mean_durSeg = mean(Target.segment.duration),
+            mean_durWord = mean(Target.word.duration),
+            sd_F1 = sd(f1_time_0_5),
+            sd_F2 = sd(f2_time_0_5),
+            sd_amp = sd(maxIntensity),
+            sd_pitch = sd(meanPitch),
+            sd_durSeg = sd(Target.segment.duration),
+            sd_durWord = sd(Target.word.duration),
+            max_F1 = mean(f1_time_0_5) + sd_limit*(sd(f1_time_0_5)),
+            min_F1 = mean(f1_time_0_5) - sd_limit*(sd(f1_time_0_5)),
+            max_F2 = mean(f2_time_0_5) + sd_limit*(sd(f2_time_0_5)),
+            min_F2 = mean(f2_time_0_5) - sd_limit*(sd(f2_time_0_5)),
+            max_amp = mean(maxIntensity) + sd_limit*(sd(maxIntensity)),
+            min_amp = mean(maxIntensity) - sd_limit*(sd(maxIntensity)),
+            max_pitch = mean(meanPitch) + sd_limit*(sd(meanPitch)),
+            min_pitch = mean(meanPitch) - sd_limit*(sd(meanPitch)),
+            max_durSeg = mean(Target.segment.duration) + sd_limit*(sd(Target.segment.duration)),
+            min_durSeg = mean(Target.segment.duration) - sd_limit*(sd(Target.segment.duration)),
+            max_durWord = mean(Target.word.duration) + sd_limit*(sd(Target.word.duration)),
+            min_durWord = mean(Target.word.duration) - sd_limit*(sd(Target.word.duration)))
+
+#store the outlier tokens data
+
+outlier_tokens <- MSA_combined_all %>%
+  left_join(., MSA_summstats) %>%
+  mutate(outlier = ifelse(f1_time_0_5 > min_F1 &
+                            f1_time_0_5 < max_F1 &
+                            f2_time_0_5 > min_F2 &
+                            f2_time_0_5 < max_F2 &
+                            maxIntensity > min_amp &
+                            maxIntensity < max_amp &
+                            meanPitch > min_pitch &
+                            meanPitch < max_pitch &
+                            Target.segment.duration > min_durSeg &
+                            Target.segment.duration < max_durSeg &
+                            Target.word.duration > min_durWord &
+                            Target.word.duration < max_durWord &
+                            f2_time_0_5 > 800,  
+                          FALSE,
+                          TRUE)) %>%
+  group_by(Transcript, Target.segment) %>%
+  filter(outlier == TRUE) %>%
+  ungroup()
+
+#add the summary statistics and filter out outliers
+
+MSA_combined_pruned <- MSA_combined_all %>%
+  left_join(., MSA_summstats) %>%
+  mutate(outlier = ifelse(f1_time_0_5 > min_F1 &
+                            f1_time_0_5 < max_F1 &
+                            f2_time_0_5 > min_F2 &
+                            f2_time_0_5 < max_F2 &
+                            maxIntensity > min_amp &
+                            maxIntensity < max_amp &
+                            meanPitch > min_pitch &
+                            meanPitch < max_pitch &
+                            Target.segment.duration > min_durSeg &
+                            Target.segment.duration < max_durSeg &
+                            Target.word.duration > min_durWord &
+                            Target.word.duration < max_durWord &
+                            f2_time_0_5 > 800,  
+                          FALSE,
+                          TRUE)) %>%
+  group_by(Transcript, Target.segment) %>%
+  filter(outlier == FALSE) %>%
+  ungroup()
+
+#get new summary values
+MSA_summstats <- MSA_combined_pruned %>%
+  group_by(Transcript, Target.segment) %>%
+  summarise(n_tokens_vowel = n(),
+            mean_F1 = mean(f1_time_0_5),
+            mean_F2 = mean(f2_time_0_5),
+            mean_amp = mean(maxIntensity),
+            mean_durSeg = mean(Target.segment.duration),
+            mean_durWord = mean(Target.word.duration),
+            mean_pitch = mean(meanPitch),
+            sd_F1 = sd(f1_time_0_5),
+            sd_F2 = sd(f2_time_0_5),
+            sd_amp = sd(maxIntensity),
+            sd_durSeg = sd(Target.segment.duration),
+            sd_durWord = sd(Target.word.duration),
+            sd_pitch = sd(meanPitch)) %>%
+  ungroup()  
+
+
+MSA_controls <-
+MSA_combined %>%
+  filter(Text == "den") %>%
+  filter(Target.segment == "e" | Target.segment == "@" ) %>%
+  filter(After.Match == "Würfel") 
+
+MSA_combined_pruned$item = paste(MSA_combined_pruned$Transcript, MSA_combined_pruned$trialnumber, MSA_combined_pruned$trialtype)
+
+MSA_controls$item = paste(MSA_controls$Transcript, MSA_controls$trialnumber, MSA_controls$trialtype)
+
+MSA_controls_selected = MSA_controls %>% select(item, meanPitch, maxIntensity)
+names(MSA_controls_selected) = c("item", "controlPitch", "controlIntensity")
+
+MSA_final = left_join(MSA_combined_pruned, MSA_controls_selected, by="item")
+
+MSA_final$Pause.duration = MSA_final$Token.plus.1.word.start - MSA_final$Target.word.end
+
+MSA_finale <-
+  MSA_final %>%
+  filter(Target.segment == "e")
+
+MSA_finalschwa <-
+  MSA_final %>%
+  filter(Target.segment == "@")
+
+MSA_finale$eduration = MSA_finale$Target.segment.duration
+MSA_finalschwa$schwaduration = MSA_finalschwa$Target.segment.duration
+MSA_finalschwa$schwaF1 = MSA_finalschwa$f1_time_0_5
+MSA_finalschwa$schwaF2 = MSA_finalschwa$f2_time_0_5
+
+MSA_interimschwa = MSA_finalschwa %>% select(item, schwaduration, schwaF1, schwaF2)
+MSA_both = left_join(MSA_finale, MSA_interimschwa, by="item")
+MSA_both = MSA_both %>% filter(!is.na(schwaduration))
+MSA_both$DiphDur = MSA_both$Target.segment.duration + MSA_both$schwaduration
+MSA_both$DurRat = MSA_both$Target.segment.duration / MSA_both$schwaduration
+MSA_both$ED = sqrt((MSA_both$f1_time_0_5-MSA_both$schwaF1)^2 + (MSA_both$f2_time_0_5-MSA_both$schwaF2)^2)
+
+
+```
+
+```{r alosa_atun_models}
+
+# schwa analyses
+model_f1c <-
+MSA_finale %>%
+  lmer(., formula=f1_time_0_5 ~
+         (P.typ_mean + condition + scaledtrialnumber) + syllablesPerMinute +
+         (1 | Transcript) + 
+         (1 | P.Adj),
+       verbose = 0)
+
+model_f2c <-
+  MSA_finale %>%
+  lmer(., formula=f2_time_0_5 ~ 
+         (P.typ_mean + condition + scaledtrialnumber) + syllablesPerMinute +
+         (1 | Transcript) + 
+         (1 | P.Adj),
+       verbose = 0)
+
+model_ampc <-
+  MSA_finale %>%
+  lmer(., formula=maxIntensity ~ 
+         (P.typ_mean + condition + scaledtrialnumber)  + syllablesPerMinute + controlIntensity +
+         (1 | Transcript) + 
+         (1 | P.Adj),
+       verbose = 0)
+
+model_pitchc <-
+  MSA_finale %>%
+    mutate(meanPitch = as.integer(meanPitch)) %>%
+  lmer(., formula=meanPitch ~ 
+         (P.typ_mean + condition + scaledtrialnumber)  + syllablesPerMinute + controlPitch +
+         (1 | Transcript) + 
+         (1 | P.Adj),
+       verbose = 0)
+
+model_durSegc <-
+  MSA_finale %>%
+  lmer(., formula=Target.segment.duration ~ 
+         (P.typ_mean + condition + scaledtrialnumber)  + syllablesPerMinute +
+         (1 | Transcript) + 
+         (1 | P.Adj),
+       verbose = 0)
+
+# schwa offglide analysis
+shmodel_f1c <-
+MSA_finalschwa %>%
+  lmer(., formula=f1_time_0_5 ~
+         (P.typ_mean + condition + scaledtrialnumber) + syllablesPerMinute +
+         (1 | Transcript) + 
+         (1 | P.Adj),
+       verbose = 0)
+
+shmodel_f2c <-
+  MSA_finalschwa %>%
+  lmer(., formula=f2_time_0_5 ~ 
+         (P.typ_mean + condition + scaledtrialnumber) + syllablesPerMinute +
+         (1 | Transcript) + 
+         (1 | P.Adj),
+       verbose = 0)
+
+shmodel_ampc <-
+  MSA_finalschwa %>%
+  lmer(., formula=maxIntensity ~ 
+         (P.typ_mean + condition + scaledtrialnumber)  + syllablesPerMinute + controlIntensity +
+         (1 | Transcript) + 
+         (1 | P.Adj),
+       verbose = 0)
+
+shmodel_pitchc <-
+  MSA_finalschwa %>%
+    mutate(meanPitch = as.integer(meanPitch)) %>%
+  lmer(., formula=meanPitch ~ 
+         (P.typ_mean + condition + scaledtrialnumber)  + syllablesPerMinute + controlPitch +
+         (1 | Transcript) + 
+         (1 | P.Adj),
+       verbose = 0)
+
+shmodel_durSegc <-
+  MSA_finalschwa %>%
+  lmer(., formula=Target.segment.duration ~ 
+         (P.typ_mean + condition + scaledtrialnumber)  + syllablesPerMinute +
+         (1 | Transcript) + 
+         (1 | P.Adj),
+       verbose = 0)
+
+# schwa + schwa offglide analysis
+combo_model_DiphDurc <-
+  MSA_both %>%
+  lmer(., formula=DiphDur ~ 
+         (P.typ_mean + condition + scaledtrialnumber)  + syllablesPerMinute +
+         (1 | Transcript) + 
+         (1 | P.Adj),
+       verbose = 0)
+
+combo_model_EDc <-
+  MSA_both %>%
+  lmer(., formula=ED ~ 
+         (P.typ_mean + condition + scaledtrialnumber)  + syllablesPerMinute +
+         (1 | Transcript) + 
+         (1 | P.Adj),
+       verbose = 0)
+
+combo_model_DurRatc <-
+  MSA_both %>%
+  lmer(., formula=DurRat ~ 
+         (P.typ_mean + condition + scaledtrialnumber)  + syllablesPerMinute +
+         (1 | Transcript) + 
+         (1 | P.Adj),
+       verbose = 0)
+
+# model word duration and pause duration
+model_durWordc <-
+  MSA_finale %>%
+  lmer(., formula=Target.word.duration ~ 
+         (P.typ_mean + condition + scaledtrialnumber)   + syllablesPerMinute +
+         (1 | Transcript) + 
+         (1 | P.Adj),
+       verbose = 0)
+
+model_Pausec <-
+  MSA_finale %>%
+  lmer(., formula=Pause.duration ~ 
+         (P.typ_mean + condition + scaledtrialnumber)  + syllablesPerMinute +
+         (1 | Transcript) + 
+         (1 | P.Adj),
+       verbose = 0)
+
+# speech rate (focuses on an interaction effect)
+combo_model_rated <-
+  MSA_both %>%
+  lmer(., formula=syllablesPerMinute ~ 
+         condition * P.typ_mean + scaledtrialnumber +
+         (1 | Transcript) + 
+         (1 | P.Adj),
+       verbose = 0)
+
+```
+
+
+```{r alosa_atun_refitting_TR}
+
+# standardize datasets for schwa analyses
+MSA_finale <- MSA_finale %>% 
+  mutate(
+         # scale continuous variables
+         f1_time_0_5_s = (f1_time_0_5 - mean(f1_time_0_5, na.rm = TRUE)) / sd(f1_time_0_5,  na.rm = TRUE),
+         f2_time_0_5_s = (f2_time_0_5 - mean(f2_time_0_5, na.rm = TRUE)) / sd(f2_time_0_5,  na.rm = TRUE),
+         maxIntensity_s = (maxIntensity - mean(maxIntensity, na.rm = TRUE)) / sd(maxIntensity,  na.rm = TRUE),
+         meanPitch = as.integer(meanPitch),
+         meanPitch_s = (meanPitch - mean(meanPitch, na.rm = TRUE)) / sd(meanPitch,  na.rm = TRUE),
+         Target.segment.duration_s = (Target.segment.duration - mean(Target.segment.duration, na.rm = TRUE)) / sd(Target.segment.duration,  na.rm = TRUE),
+         Target.word.duration_s = (Target.word.duration - mean(Target.word.duration, na.rm = TRUE)) / sd(Target.word.duration,  na.rm = TRUE),
+         Pause.duration_s = (Pause.duration - mean(Pause.duration, na.rm = TRUE)) / sd(Pause.duration,  na.rm = TRUE),
+         syllablesPerMinute_s = (syllablesPerMinute - mean(syllablesPerMinute, na.rm = TRUE)) / sd(syllablesPerMinute,  na.rm = TRUE),
+         controlPitch_s = (controlPitch - mean(controlPitch, na.rm = TRUE)) / sd(controlPitch,  na.rm = TRUE),
+         controlIntensity_s = (controlIntensity - mean(controlIntensity, na.rm = TRUE)) / sd(controlIntensity,  na.rm = TRUE),
+         effect_con = (P.typ_mean - mean(P.typ_mean, na.rm = TRUE)) / sd(P.typ_mean,  na.rm = TRUE),
+         # sum-code categorical predictors
+         condition_s = C(as.factor(condition), sum)
+  )
+
+# standardize datasets for schwa offglide analyses
+MSA_finalschwa <- MSA_finalschwa %>% 
+  mutate(
+         # scale continuous variables
+         f1_time_0_5_s = (f1_time_0_5 - mean(f1_time_0_5, na.rm = TRUE)) / sd(f1_time_0_5,  na.rm = TRUE),
+         f2_time_0_5_s = (f2_time_0_5 - mean(f2_time_0_5, na.rm = TRUE)) / sd(f2_time_0_5,  na.rm = TRUE),
+         maxIntensity_s = (maxIntensity - mean(maxIntensity, na.rm = TRUE)) / sd(maxIntensity,  na.rm = TRUE),
+         meanPitch = as.integer(meanPitch),
+         meanPitch_s = (meanPitch - mean(meanPitch, na.rm = TRUE)) / sd(meanPitch,  na.rm = TRUE),
+         Target.segment.duration_s = (Target.segment.duration - mean(Target.segment.duration, na.rm = TRUE)) / sd(Target.segment.duration,  na.rm = TRUE),
+         syllablesPerMinute_s = (syllablesPerMinute - mean(syllablesPerMinute, na.rm = TRUE)) / sd(syllablesPerMinute,  na.rm = TRUE),
+         controlPitch_s = (controlPitch - mean(controlPitch, na.rm = TRUE)) / sd(controlPitch,  na.rm = TRUE),
+         controlIntensity_s = (controlIntensity - mean(controlIntensity, na.rm = TRUE)) / sd(controlIntensity,  na.rm = TRUE),
+         effect_con = (P.typ_mean - mean(P.typ_mean, na.rm = TRUE)) / sd(P.typ_mean,  na.rm = TRUE),
+         # sum-code categorical predictors
+         condition_s = C(as.factor(condition), sum)
+  )
+
+# standardize datasets for schwa + schwa offglide analyses
+MSA_both <- MSA_both %>% 
+  mutate(
+         # scale continuous variables
+         DiphDur_s = (DiphDur - mean(DiphDur, na.rm = TRUE)) / sd(DiphDur,  na.rm = TRUE),
+         ED_s = (ED - mean(ED, na.rm = TRUE)) / sd(ED,  na.rm = TRUE),
+         DurRat_s = (DurRat - mean(DurRat, na.rm = TRUE)) / sd(DurRat,  na.rm = TRUE),
+         syllablesPerMinute_s = (syllablesPerMinute - mean(syllablesPerMinute, na.rm = TRUE)) / sd(syllablesPerMinute,  na.rm = TRUE),
+         effect_con = (P.typ_mean - mean(P.typ_mean, na.rm = TRUE)) / sd(P.typ_mean,  na.rm = TRUE),
+         # sum-code categorical predictors
+         condition_s = C(as.factor(condition), sum)
+  )
+
+
+# run brms equivalent for schwa
+alosa_atun_4_f1schwa_con <- brm(
+  f1_time_0_5_s ~ 
+         (effect_con + condition_s + scaledtrialnumber) + syllablesPerMinute_s +
+         (1 | Transcript) + 
+         (1 | P.Adj), 
+  data = MSA_finale, 
+  seed = 111,
+  cores = 4,  
+  file = "./data/analyses/models/alosa_atun_4_f1schwa_con"
+  )
+
+alosa_atun_5_f2schwa_con <- brm(
+  f2_time_0_5_s ~ 
+         (effect_con + condition_s + scaledtrialnumber) + syllablesPerMinute_s +
+         (1 | Transcript) + 
+         (1 | P.Adj), 
+  seed = 111,
+  data = MSA_finale, 
+  cores = 4,  
+  file = "./data/analyses/models/alosa_atun_5_f2schwa_con"
+  )
+
+alosa_atun_2_intschwa_con <- brm(
+  maxIntensity_s ~ 
+         (effect_con + condition_s + scaledtrialnumber) + syllablesPerMinute_s + controlIntensity_s +
+         (1 | Transcript) + 
+         (1 | P.Adj), 
+  seed = 111,
+  data = MSA_finale, 
+  cores = 4,  
+  file = "./data/analyses/models/alosa_atun_2_intschwa_con"
+  )
+
+alosa_atun_1_f0schwa_con <- brm(
+  meanPitch_s ~ 
+         (effect_con + condition_s + scaledtrialnumber) + syllablesPerMinute_s + controlPitch_s +
+         (1 | Transcript) + 
+         (1 | P.Adj), 
+  seed = 111,
+  data = MSA_finale, 
+  cores = 4,  
+  file = "./data/analyses/models/alosa_atun_1_f0schwa_con"
+  )
+
+alosa_atun_3_durschwa_con <- brm(
+  Target.segment.duration_s ~ 
+         (effect_con + condition_s + scaledtrialnumber) + syllablesPerMinute_s +
+         (1 | Transcript) + 
+         (1 | P.Adj), 
+  seed = 111,
+  data = MSA_finale, 
+  cores = 4,  
+  file = "./data/analyses/models/alosa_atun_3_durschwa_con"
+  )
+
+# run brms equivalent for schwa offglide
+alosa_atun_9_f1off_con <- brm(
+  f1_time_0_5_s ~ 
+         (effect_con + condition_s + scaledtrialnumber) + syllablesPerMinute_s +
+         (1 | Transcript) + 
+         (1 | P.Adj), 
+  seed = 111,
+  data = MSA_finalschwa, 
+  cores = 4,  
+  file = "./data/analyses/models/alosa_atun_9_f1off_con"
+  )
+
+alosa_atun_10_f2off_con <- brm(
+  f2_time_0_5_s ~ 
+         (effect_con + condition_s + scaledtrialnumber) + syllablesPerMinute_s +
+         (1 | Transcript) + 
+         (1 | P.Adj), 
+  seed = 111,
+  data = MSA_finalschwa, 
+  cores = 4,  
+  file = "./data/analyses/models/alosa_atun_10_f2off_con"
+  )
+
+alosa_atun_7_intoff_con <- brm(
+  maxIntensity_s ~ 
+         (effect_con + condition_s + scaledtrialnumber) + syllablesPerMinute_s + controlIntensity_s +
+         (1 | Transcript) + 
+         (1 | P.Adj), 
+  seed = 111,
+  data = MSA_finalschwa, 
+  cores = 4,  
+  file = "./data/analyses/models/alosa_atun_7_intoff_con"
+  )
+
+alosa_atun_6_f0off_con <- brm(
+  meanPitch_s ~ 
+         (effect_con + condition_s + scaledtrialnumber) + syllablesPerMinute_s + controlPitch_s +
+         (1 | Transcript) + 
+         (1 | P.Adj), 
+  seed = 111,
+  data = MSA_finalschwa, 
+  cores = 4,  
+  file = "./data/analyses/models/alosa_atun_6_f0off_con"
+  )
+
+alosa_atun_8_duroff_con <- brm(
+  Target.segment.duration_s ~ 
+         (effect_con + condition_s + scaledtrialnumber) + syllablesPerMinute_s +
+         (1 | Transcript) + 
+         (1 | P.Adj), 
+  seed = 111,
+  data = MSA_finalschwa, 
+  cores = 4,  
+  file = "./data/analyses/models/alosa_atun_8_duroff_con"
+  )
+
+
+# run brms equivalent for schwa + schwa offglide analysis
+alosa_atun_11_durboth_con <- brm(
+  DiphDur_s ~ 
+         (effect_con + condition_s + scaledtrialnumber) + syllablesPerMinute_s +
+         (1 | Transcript) + 
+         (1 | P.Adj), 
+  seed = 111,
+  data = MSA_both, 
+  cores = 4,  
+  file = "./data/analyses/models/alosa_atun_11_durboth_con"
+  )
+
+alosa_atun_12_durrelboth_con <- brm(
+  DurRat_s ~ 
+         (effect_con + condition_s + scaledtrialnumber) + syllablesPerMinute_s +
+         (1 | Transcript) + 
+         (1 | P.Adj), 
+  seed = 111,
+  data = MSA_both, 
+  cores = 4,  
+  file = "./data/analyses/models/alosa_atun_12_durrelboth_con"
+  )
+
+alosa_atun_13_EDboth_con <- brm(
+  ED_s ~ 
+         (effect_con + condition_s + scaledtrialnumber) + syllablesPerMinute_s +
+         (1 | Transcript) + 
+         (1 | P.Adj), 
+  seed = 111,
+  data = MSA_both, 
+  cores = 4,  
+  file = "./data/analyses/models/alosa_atun_13_EDboth_con"
+  )
+
+# run brms equivalent for word duration
+alosa_atun_14_worddur_con <- brm(
+  Target.word.duration_s ~ 
+         (effect_con + condition_s + scaledtrialnumber) + syllablesPerMinute_s +
+         (1 | Transcript) + 
+         (1 | P.Adj), 
+  seed = 111,
+  data = MSA_finale, 
+  cores = 4,  
+  file = "./data/analyses/models/alosa_atun_14_worddur_con"
+  )
+
+# run brms equivalent for pause duration
+alosa_atun_15_pausedur_con <- brm(
+  Pause.duration_s ~ 
+         (effect_con + condition_s + scaledtrialnumber) + syllablesPerMinute_s +
+         (1 | Transcript) + 
+         (1 | P.Adj), 
+  seed = 111,
+  data = MSA_finale, 
+  cores = 4,  
+  file = "./data/analyses/models/alosa_atun_15_pausedur_con"
+  )
+
+# run brms equivalent for speech rate
+alosa_atun_16_speechrate_con <- brm(
+  syllablesPerMinute_s ~ 
+         effect_con * condition_s + scaledtrialnumber +
+         (1 | Transcript) + 
+         (1 | P.Adj), 
+  seed = 111,
+  data = MSA_both, 
+  cores = 4,  
+  file = "./data/analyses/models/alosa_atun_16_speechrate_con"
+  )
+
+```
+
+# psittacula_scabriculus
+
+```{r authors setup}
+
+```
+
+```{r their_models}
+
+```
+
+```{r refitting}
+
+```
+
+# eosipterus_pytyopsittacus
+
+```{r authors setup}
+
+```
+
+```{r their_models}
+
+```
+
+```{r refitting}
+
+```
+
+# pseudopleuronectes_assasi
+
+```{r authors setup}
+
+```
+
+```{r their_models}
+
+```
+
+```{r refitting}
+
+```
+
+# pervagor_meeki
+
+```{r authors setup}
+
+```
+
+```{r their_models}
+
+```
+
+```{r refitting}
+
+```
+
+# procambarus_maculosus
+
+```{r authors setup}
+
+```
+
+```{r their_models}
+
+```
+
+```{r refitting}
+
+```
+
+# ceratophrys_elephantotus
+
+```{r authors setup}
+
+```
+
+```{r their_models}
+
+```
+
+```{r refitting}
+
+```
+
+# clione_dorsalis
+
+```{r authors setup}
+
+```
+
+```{r their_models}
+
+```
+
+```{r refitting}
+
+```
+
+# aracana_bitatawa
+
+```{r authors setup}
+
+```
+
+```{r their_models}
+
+```
+
+```{r refitting}
+
+```
+
+# dunkleosteus_inscriptus
+
+```{r dunkleosteus_inscriptus_setup}
+
+path <- "./data/analyses/tr/dunkleosteus_inscriptus/data/"
+
+flist_times  <- list.files(path = "./data/analyses/tr/dunkleosteus_inscriptus/data/", pattern = "^timings(.*)xlsx")
+get_times    <- lapply(paste0(path, flist_times), read_excel)
+times        <- bind_rows(get_times)
+
+flist_trials <- list.files(path = "./data/analyses/tr/dunkleosteus_inscriptus/data/", pattern = "^trials(.*)xlsx")
+get_trials   <- lapply(paste0(path, flist_trials), read_excel)
+trials       <- bind_rows(get_trials)
+
+mfields      <- c( "trial","speaker" )
+dat          <- merge( trials, times, by=mfields )
+
+dat$condition      <- factor(dat$condition)
+dat$typicality     <- factor(dat$typicality)
+dat$target_name    <- factor(dat$target_name)
+dat$target_colour  <- factor(dat$target_colour)
+
+
+# correct constituent names exported by <extract_timings_MSA.m> and 
+# calculate additional durations derived from from Praat intervals
+dat$dur_n    <- dat$dur_np
+dat$dur_np   <- dat$dur_ap
+dat$dur_a    <- dat$dur_np - dat$dur_n
+dat$dur_ap   <- NULL
+dat$rel_a    <- dat$dur_a / dat$dur_dp
+dat$rel_n    <- dat$dur_n / dat$dur_dp
+
+
+## check extremely long utterances
+dur_ip_max     <- mean(dat$dur_ip) + 2.5*sd(dat$dur_ip)
+#(dat_long_ip   <- dat[ dat$dur_ip>dur_ip_max, ])
+# 28 utterances longer than 3.91s rechecked with <check_maus.m>
+# all 28 invalid: misproduced, contain hesitations, or are incorrectly segmented
+# remove all trials longer than 2.5sd mean duration:
+dat  <- dat[ !(dat$dur_ip > dur_ip_max ), ]
+
+
+## check duration extrema: preposition phrase 'auf ...'
+dur_pp_min     <- mean(dat$dur_pp) - 2*sd(dat$dur_pp)
+#(dat_short_pp  <- dat[ dat$dur_pp < dur_pp_min, ])
+# 4 trials with PPs shorter than 728ms rechecked with <check_maus.m>
+# all involve some segmentation inaccuracies: remove from dataset
+dat  <- dat[ !(dat$dur_pp < dur_pp_min ), ]
+
+dur_pp_max     <- mean(dat$dur_pp) + 3*sd(dat$dur_pp)
+#(dat_long_pp   <- dat[ dat$dur_pp > dur_pp_max, ])
+# 19 trials with PPs longer than 2.03s rechecked with <check_maus.m>
+# all involve some segmentation inaccuracies: remove from dataset
+dat  <- dat[ !(dat$dur_pp > dur_pp_max ), ]
+
+
+## check duration extrema: target determiner phrase
+dur_dp_min     <- mean(dat$dur_dp) - 2*sd(dat$dur_dp)
+#(dat_short_dp  <- dat[ dat$dur_dp < dur_dp_min, ])
+# 5 trials with target DPs shorter than 629ms rechecked with <check_maus.m>
+# all involve some segmentation inaccuracies: remove from dataset
+dat  <- dat[ !(dat$dur_dp < dur_dp_min ), ]
+
+dur_dp_max     <- mean(dat$dur_dp) + 3.1*sd(dat$dur_dp)
+#(dat_long_dp   <- dat[ dat$dur_dp > dur_dp_max, ])
+# 5 trials with target DPs longer than 1.75s rechecked with <check_maus.m>
+# mainly just long words/slow speech rate: don't remove from dataset
+
+
+## check duration extrema: target noun phrase
+dur_np_min     <- mean(dat$dur_np) - 2*sd(dat$dur_np)
+#(dat_short_np  <- dat[ dat$dur_np < dur_np_min, ])
+# 26 trials with target NPs shorter than 460ms rechecked with <check_maus.m>
+# all involve some segmentation inaccuracies: remove from dataset
+dat  <- dat[ !(dat$dur_np < dur_np_min ), ]
+
+dur_np_max     <- mean(dat$dur_np) + 3.1*sd(dat$dur_np)
+#(dat_long_np   <- dat[ dat$dur_np > dur_np_max, ])
+# 3 trials with target APs longer than 1.55s rechecked with <check_maus.m>
+# all involve some segmentation inaccuracies: remove from dataset
+dat  <- dat[ !(dat$dur_np > dur_np_max ), ]
+
+
+## check duration extrema: target nouns
+dur_n_min     <- mean(dat$dur_n) - 1.8*sd(dat$dur_n)
+#(dat_short_n  <- dat[ dat$dur_n < dur_n_min, ])
+# 28 trials with target nouns shorter than 217ms rechecked with <check_maus.m>
+# all involve some segmentation inaccuracies: remove from dataset
+dat  <- dat[ !(dat$dur_n < dur_n_min ), ]
+
+dur_n_max     <- mean(dat$dur_n) + 2.5*sd(dat$dur_n)
+#(dat_long_n   <- dat[ dat$dur_n > dur_n_max, ])
+# 23 trials with target nouns longer than 875ms rechecked with <check_maus.m>
+# all involve some segmentation inaccuracies: remove from dataset
+dat  <- dat[ !(dat$dur_n > dur_n_max ), ]
+
+
+## check duration extrema: target adjectives
+dur_a_min     <- mean(dat$dur_a) - 1.6*sd(dat$dur_a)
+#(dat_short_a  <- dat[ dat$dur_a < dur_a_min, ])
+# 25 trials with target adjectives shorter than 173ms rechecked with <check_maus.m>
+# all involve some segmentation inaccuracies: remove from dataset
+dat  <- dat[ !(dat$dur_a < dur_a_min ), ]
+
+dur_a_max     <- mean(dat$dur_a) + 3.85*sd(dat$dur_a)
+#(dat_long_a   <- dat[ dat$dur_a > dur_a_max, ])
+# 4 trials with target adjectives longer than 947ms rechecked with <check_maus.m>
+# all involve some segmentation inaccuracies: remove from dataset
+dat  <- dat[ !(dat$dur_a > dur_a_max ), ]
+
+## ===== select trials eliciting target words in NF condition  =====
+dat_nf  <- dat[ (dat$condition=='NF'), ]
+dat_nf$condition   <- factor(dat_nf$condition)
+dat_nf$typicality  <- factor(dat_nf$typicality)
+
+
+```
+
+```{r dunkleosteus_inscriptus_models}
+
+## Bayesian model:
+fm2 <- rel_n ~ typicality + (1|speaker) + (1|target_name) + (1|target_colour)
+fm2a <- dur_n ~ typicality + (1|speaker) + (1|target_name) + (1|target_colour)
+fm3 <- rel_a ~ typicality + (1|speaker) + (1|target_name) + (1|target_colour)
+fm3a <- dur_a ~ typicality + (1|speaker) + (1|target_name) + (1|target_colour)
+fm4  <- dur_np ~ typicality + (1|speaker) + (1|target_name) + (1|target_colour)
+
+# TR: claimed to run fm2a and fm3a as Bayesian, but scripts do not provide these models, so I take the frequentist ones
+lm2a <- lmer(fm2a, data=dat)
+lm3a <- lmer(fm3a, data=dat)
+
+# TR: They specified priors but ended up running default priors (strange), also unclear which data are used, subsetted ones ("dat_nf") or full data ("dat"). I will pick dat for all. 
+pri2 <- get_prior( formula=fm2, data=dat )
+pri3 <- get_prior( formula=fm3, data=dat )
+pri4 <- get_prior( formula=fm4, data=dat )
+
+# TR: add cores to fit quicker
+bm2   <- brm( fm2, dat, prior=pri2, cores = 4 )
+bm3   <- brm( fm3, dat, prior=pri3, cores = 4 )
+bm4   <- brm( fm4, dat, prior=pri4, cores = 4 )
+
+```
+
+```{r dunkleosteus_inscriptus_refitting}
+
+# standardizing 
+dat <- dat %>% 
+  mutate(
+         # scale continuous variables
+         rel_n_s = (rel_n - mean(rel_n, na.rm = TRUE)) / sd(rel_n,  na.rm = TRUE),
+         rel_a_s = (rel_a - mean(rel_a, na.rm = TRUE)) / sd(rel_a,  na.rm = TRUE),
+         dur_n_s = (dur_n - mean(dur_n, na.rm = TRUE)) / sd(dur_n,  na.rm = TRUE),
+         dur_a_s = (dur_a - mean(dur_a, na.rm = TRUE)) / sd(dur_a,  na.rm = TRUE),
+         dur_np_s = (dur_np - mean(dur_np, na.rm = TRUE)) / sd(dur_np,  na.rm = TRUE),
+         effect_cat = C(typicality, treatment)
+  )
+
+# run brms on standardized models
+dunkleosteus_inscriptus_1_relndur_cat <- brm(
+  rel_n_s ~ 
+         effect_cat + 
+         (1|speaker) + 
+         (1|target_name) + 
+         (1|target_colour),
+  seed = 111,
+  data = dat, 
+  cores = 4,  
+  file = "./data/analyses/models/dunkleosteus_inscriptus_1_relndur_cat"
+  )
+  
+# did initially not converge, adjusted adapt_delta to 0.9999  
+dunkleosteus_inscriptus_2_ndur_cat <- brm(
+  dur_n_s ~ 
+         effect_cat + 
+         (1|speaker) + 
+         (1|target_name) + 
+         (1|target_colour),
+  seed = 111,
+  data = dat, 
+  control = list(adapt_delta = 0.9999),
+  cores = 4,  
+  file = "./data/analyses/models/dunkleosteus_inscriptus_2_ndur_cat"
+  )
+
+dunkleosteus_inscriptus_3_reladur_cat <- brm(
+  rel_a_s ~ 
+         effect_cat + 
+         (1|speaker) + 
+         (1|target_name) + 
+         (1|target_colour),
+  seed = 111,
+  data = dat, 
+  cores = 4,  
+  file = "./data/analyses/models/dunkleosteus_inscriptus_3_reladur_cat"
+  )
+  
+dunkleosteus_inscriptus_4_adur_cat <- brm(
+  dur_a_s ~ 
+         effect_cat + 
+         (1|speaker) + 
+         (1|target_name) + 
+         (1|target_colour),
+  seed = 111,
+  data = dat, 
+  cores = 4,  
+  file = "./data/analyses/models/dunkleosteus_inscriptus_4_adur_cat"
+  )
+  
+dunkleosteus_inscriptus_5_npdur_cat <- brm(
+  dur_a_s ~ 
+         effect_cat + 
+         (1|speaker) + 
+         (1|target_name) + 
+         (1|target_colour),
+  seed = 111,
+  data = dat, 
+  cores = 4,  
+  file = "./data/analyses/models/dunkleosteus_inscriptus_5_npdur_cat"
+  )
+
+```
+
+# nestor_idahoensis
+
+```{r authors setup}
+
+```
+
+```{r their_models}
+
+```
+
+```{r refitting}
+
+```
+
+# sphyrna_ellioti
+
+```{r authors setup}
+
+```
+
+```{r their_models}
+
+```
+
+```{r refitting}
+
+```
+
+# chelonia_brummeri
+
+```{r authors setup}
+
+```
+
+```{r their_models}
+
+```
+
+```{r refitting}
+
+```
+
+# procambarus_mahogoni
+
+```{r authors setup}
+
+```
+
+```{r their_models}
+
+```
+
+```{r refitting}
+
+```
+
+# aratinga_lugubris
+
+```{r authors setup}
+
+```
+
+```{r their_models}
+
+```
+
+```{r refitting}
+
+```
+
+# summary
+
+
+## Load models
+
+```{r}
+#| label: load-models
+# This code will need to change eventually to pull rds files from OSF... for now it assumes they are stored in a folder called "models"
+
+msa_models <- dir_ls(path = here("data", "analyses", "models"), regexp = ".rds$") %>% 
+  as_tibble() %>% 
+  transmute(path = value, 
+    mod_name = str_remove(path, here("data", "analyses", "models/")), 
+    mod_name = str_remove(mod_name, ".rds"), 
+    model = map(path, ~ readRDS(file = .))) %>% 
+  separate(mod_name, 
+    into = c("word1", "word2", "mod_n", "outcome", "typicality"), 
+    sep = "_", remove = F) %>% 
+  unite(group, word1, word2, sep = "_") %>% 
+  select(group, mod_name:model) %>% 
+  mutate(sum = map(model, clean_up)) %>% 
+  suppressWarnings() # because it warns every time that some coef have underscores and its annoying
+```
+
+## Table
+
+```{r}
+#| label: effect-table
+# Simple pandoc table of the models, estimates, se, etc.
+msa_models %>% 
+  unnest(sum) %>% 
+  select(-model) %>% 
+  knitr::kable(format = "pandoc")
+```
+
+## Plot
+
+```{r}
+#| label: forest-plot
+# Simple forest plot of the estimates +/- SE
+msa_models %>% 
+  unnest(sum) %>% 
+  mutate(typicality_lab = if_else(typicality == "cat", 
+    "Typicality = categorical", "Typicality = continuous"), 
+    mod_name = fct_reorder(mod_name, estimate)) %>% 
+  ggplot() + 
+  facet_wrap(~ typicality_lab, ncol = 1, scales = "free_y") + 
+  aes(x = estimate, y = mod_name) + 
+  geom_segment(aes(x = estimate - se, xend = estimate + se, yend = mod_name), 
+    color = "#cc0033", alpha = 0.5, size = 3, lineend = "round") + 
+  geom_vline(xintercept = 0, lty = "dashed", color = "grey") +
+  geom_point(color = "#cc0033", pch = 21, stroke = 3, size = 3.1) + 
+  labs(y = "Model", x = "Estimate ± SE") + 
+  clean_theme() + 
+  theme(strip.text.x = element_text(hjust = 0))
+```
