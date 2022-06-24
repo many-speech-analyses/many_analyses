@@ -23,6 +23,20 @@ reviews <- read_csv(list.files("data/peer_review/", full.names = TRUE), skip = 3
       Q6 == "publishable with minor revision." ~ 2,
       Q6 == "publishable as is." ~ 3
     )
-  )
+  ) %>%
+  drop_na(Q3) %>%
+  filter(Finished == TRUE)
 ```
 
+```{r analytic-quest}
+dir.create("data/peer_review/msa_reviews/", showWarnings = FALSE)
+
+for (team in unique(reviews$Q3)) {
+  file_name <- as.character(glue("data/peer_review/msa_reviews/{team}.csv"))
+  
+  reviews %>%
+    filter(Q3 == team) %>%
+    select(-(StartDate:Q2)) %>%
+    write_csv(file_name)
+}
+```
