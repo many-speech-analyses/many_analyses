@@ -19,6 +19,7 @@ knitr::opts_chunk$set(
   message = FALSE, 
   warning = FALSE
   )
+
 knitr::opts_knit$set(root.dir = here::here())
 ```
 
@@ -29,6 +30,7 @@ library("fs")
 library("dplyr")
 library("tidyr")
 library("readr")
+library("readxl")
 library("forcats")
 library("ggplot2")
 library("stringr")
@@ -61,28 +63,560 @@ clean_up <- . %>%
   suppressWarnings() %>% 
   filter(term %in% c("effect_cattypical", "effect_con")) %>% 
   select(term, estimate, se = std.error)
+
+# Function for printing unordered lists
+print_status <- function(name) {
+  filter(teams, team == name) %>% 
+  pivot_longer(cols = -team, names_to = "var", values_to = "val") %>% 
+  mutate(out = glue::glue("- {var}: {val}\n")) %>% 
+  pull(out) 
+}
 ```
 
 
 # Refits
 
+**Teams**: 
+
+```{r}
+#| label: teams
+#| echo: false
+teams <- tribble(
+  ~'team',                  ~"Reviewed", ~'Included', 
+  "anomalocaris_ornata",      TRUE,           TRUE,
+  "anthracoceros_coronata",   TRUE,           TRUE,
+  "arapaima_modularis",       TRUE,           TRUE,
+  "comanthina_maculatus",     TRUE,           TRUE,
+  "cromileptes_saxatilis",    TRUE,           TRUE,
+  "ctenosaura_limax",         TRUE,           FALSE,
+  "gnathosaurus_canadensis",  FALSE,          FALSE,
+  "gymnothorax_spinulosus",   FALSE,          FALSE,
+  "haematopus_fossor",        TRUE,           TRUE,
+  "lasionycteris_altavela",   TRUE,           TRUE,
+  "linckia_nattereri",        FALSE,          FALSE,
+  "lycodes_bradfieldi",       FALSE,          FALSE,
+  "naso_cassivellaunos",      FALSE,          FALSE,
+  "trapezia_cantonensis",     FALSE,          FALSE,
+  "trigonias_lachneri",       FALSE,          FALSE,
+  )
+
+knitr::kable(teams)
+```
+
+**Current status**: 
+
+```{r}
+#| label: status
+#| echo: false
+teams %>% 
+  summarize(Reviewed = mean(Reviewed), Included = mean(Included)) %>% 
+  pivot_longer(cols = everything(), names_to = " ", values_to = "%") %>% 
+  mutate(`%` = round(`%` * 100, 2)) %>% 
+  knitr::kable(format = "pipe")
+```
+
 ## anomalocaris_ornata
+
+```{r}
+#| label: print_anomalocaris_ornata
+#| echo: false
+#| results: 'asis'
+print_status("anomalocaris_ornata")
+```
+
+```{r}
+#| label: anomalocaris_ornata
+
+# Analyst team setup
+main.df <- read.csv2(here("data", "analyses", "jvc", 
+  "anomalocaris_ornata", "MSA", "data", "data_frame.csv")
+  )
+
+df.int <- main.df %>%
+  filter(keep == "yes") %>%  
+  filter(condition == "NF") %>% 
+  mutate(typicality = fct_relevel(typicality, "typical", "medium", "atypical"))
+
+df.int$Mean_dB <- as.numeric(df.int$Mean_dB)
+
+# F0
+df.f0 <- main.df
+df.f0 <- df.f0 %>%
+  #filter(stress == "stressed") %>%
+  filter(keep == "yes") %>% 
+  filter(condition == "NF") %>%
+  #filter(phoneme %in% c("AO","AW","IH","o","OEH","UH","AH","EH","EH?","u","a?","i","i?" )) %>% 
+  gather(f0_point, f0, F0AtPoint1, F0AtPoint2, F0AtPoint3, F0AtPoint4,
+         F0AtPoint5,F0AtPoint6,F0AtPoint7,F0AtPoint8,F0AtPoint9,F0AtPoint10)%>% 
+  filter(f0 !="--undefined--")%>% 
+  mutate(typicality = fct_relevel(typicality, "typical", "medium", "atypical")) %>% 
+  group_by(voice_type, col_obj)
+
+df.f0$f0 <- as.numeric(df.f0$f0)
+outliers <- boxplot(df.f0$f0, plot=F)$out
+f0.clean <- df.f0[-which(df.f0$f0 %in% outliers),]
+f0.clean <- f0.clean %>% 
+  ungroup() %>% 
+  group_by(speaker) %>% 
+  mutate(f0min = min(f0)) %>%
+  mutate(f0sem=(12*log(f0 /f0min))/log(2)) %>% 
+  ungroup()
+
+under <- f0.clean %>% 
+  filter(f0<150)
+over <- f0.clean %>% 
+  filter(f0>150)
+
+# Vowel
+vowel.df <- main.df
+vowel.df$Duration_in_ms <- as.numeric(vowel.df$Duration_in_ms)
+vowel.df <- vowel.df %>%
+  filter(keep == "yes") %>%  
+  filter(condition == "NF") %>% 
+  filter(stress =="stressed") %>% 
+  mutate(typicality = fct_relevel(typicality, "typical", "medium","atypical")) %>%
+  filter(Duration_in_ms>40)
+
+# FREQ MODELS
+mod1 <- lmer(Mean_dB^2~typicality*col_obj+voice_type+(1+col_obj|speaker),df.int)
+mod2 <- lmer(f0sem~col_obj*typicality+voice_type+(1+col_obj|speaker),under)
+mod3 <- lmer(f0sem~col_obj*typicality+voice_type+(1+col_obj|speaker),over)
+mod4 <- lmer(Duration_in_ms~typicality*col_obj+(1|Word)+(1|speaker),data = vowel.df)
+
+
+#
+# JVC: Setup and reanalyses
+#
+
+# Intensity
+MSA_int_df <- df.int %>% 
+  mutate(mean_db_2 = Mean_dB ^ 2, 
+    db_z = (mean_db_2 - mean(mean_db_2)) / sd(mean_db_2), 
+    effect_cat = C(typicality, treatment), 
+    effect_cat = fct_relevel(effect_cat, "atypical"), 
+    col_obj = as.factor(col_obj), 
+    col_obj = C(col_obj, sum), 
+    voice_type = as.factor(voice_type), 
+    voice_type = C(voice_type, sum)
+)
+
+# Intensity model
+anomalocaris_ornata_1_int_cat <- brm(
+  db_z ~ effect_cat * col_obj + voice_type + 
+    (1 + col_obj | speaker), 
+  data = MSA_int_df, 
+  cores = 4, threads = threading(2, grainsize = 100), 
+  backend = "cmdstanr", 
+  file = here("data", "analyses", "models", "anomalocaris_ornata_1_int_cat")
+  )
+
+# Pitch "under"
+MSA_under_df <- under %>% 
+  mutate(f0sem_z = (f0sem - mean(f0sem)) / sd(f0sem), 
+    effect_cat = C(typicality, treatment), 
+    effect_cat = fct_relevel(effect_cat, "atypical"), 
+    col_obj = as.factor(col_obj), 
+    col_obj = C(col_obj, sum), 
+    voice_type = as.factor(voice_type), 
+    voice_type = C(voice_type, sum)
+  )
+
+# Pitch "under" model
+anomalocaris_ornata_2_f0under_cat <- brm(
+  f0sem_z ~ effect_cat * col_obj + voice_type + 
+    (1 + col_obj | speaker), 
+  data = MSA_under_df, 
+  cores = 4, threads = threading(2, grainsize = 100), 
+  backend = "cmdstanr", 
+  file = here("data", "analyses", "models", "anomalocaris_ornata_2_f0under_cat")
+  )
+
+# Pitch "over"
+MSA_over_df <- over %>% 
+  mutate(f0sem_z = (f0sem - mean(f0sem)) / sd(f0sem), 
+    effect_cat = C(typicality, treatment), 
+    effect_cat = fct_relevel(effect_cat, "atypical"), 
+    col_obj = as.factor(col_obj), 
+    col_obj = C(col_obj, sum), 
+    voice_type = as.factor(voice_type), 
+    voice_type = C(voice_type, sum)
+  )
+
+# Pitch "over" model
+anomalocaris_ornata_3_f0over_cat <- brm(
+  f0sem_z ~ effect_cat * col_obj + voice_type + 
+    (1 + col_obj | speaker), 
+  data = MSA_over_df, 
+  cores = 4, threads = threading(2, grainsize = 100), 
+  control = list(max_treedepth = 15), 
+  backend = "cmdstanr", 
+  file = here("data", "analyses", "models", "anomalocaris_ornata_3_f0over_cat")
+  )
+
+# Duration
+MSA_durvowel_df <- vowel.df %>% 
+  mutate(dur_z = (Duration_in_ms - mean(Duration_in_ms)) / sd(Duration_in_ms), 
+    effect_cat = C(typicality, treatment), 
+    effect_cat = fct_relevel(effect_cat, "atypical"), 
+    col_obj = as.factor(col_obj), 
+    col_obj = C(col_obj, sum)
+  )
+
+anomalocaris_ornata_4_durvowel_cat <- brm(
+  dur_z ~ effect_cat * col_obj + 
+    (1 | Word) + (1 | speaker), 
+  data = MSA_durvowel_df, 
+  cores = 4, threads = threading(2, grainsize = 100), 
+  backend = "cmdstanr", 
+  file = here("data", "analyses", "models", "anomalocaris_ornata_4_durvowel_cat")
+  )
+
+```
 
 ## anthracoceros_coronata
 
+```{r}
+#| label: print_anthracoceros_coronata
+#| echo: false
+#| results: 'asis'
+print_status("anthracoceros_coronata")
+```
+
+```{r}
+#| label: anthracoceros_coronata
+
+data_long <- read_csv(here("data", "analyses", "jvc", "anthracoceros_coronata", 
+  "data", "data_long.csv"))
+
+# Fit LME models (dont converge and not used)
+overall_models <- data_long %>% 
+  group_by(variable) %>% 
+  nest() %>% 
+  mutate(model = map(data, ~ lmer(value ~ typ_mean + (1|speaker), data = .)),
+         tidy = map(model, broom.mixed::tidy, effects = c("fixed", "ran_vals"), conf.int = TRUE, conf.level =.95)) %>% 
+  unnest(tidy) %>% 
+  select(-model) 
+
+# Standard lm
+overall_models_lm <- data_long %>% 
+  group_by(variable) %>% 
+  nest() %>% 
+  mutate(model = map(data, ~ lm(value ~ typ_mean, data = .)),
+         tidy = map(model, tidy, conf.int = TRUE, conf.level =.95)) %>% 
+  unnest(tidy) %>% 
+  select(-data, -model) 
+
+#
+# JVC: setup and refit
+#
+MSA_ac_all_df <- data_long %>% 
+  group_by(variable) %>% 
+  mutate(value_z = (value - mean(value, na.rm = T)) / sd(value, na.rm = T)) %>% 
+  ungroup() %>% 
+  mutate(effect_con = (typ_mean - mean(typ_mean)) / sd(typ_mean))
+
+# A_max_pitch
+anthracoceros_coronata_1_pitchadj_con <- brm(
+  value_z ~ effect_con, 
+  data = filter(MSA_ac_all_df, variable == "A_max_pitch"), 
+  cores = 4, threads = threading(2, grainsize = 100), 
+  backend = "cmdstanr", 
+  file = here("data", "analyses", "models", 
+    "anthracoceros_coronata_1_pitchadj_con")
+  )
+
+# N_max_pitch
+anthracoceros_coronata_2_pitchnoun_con <- brm(
+  value_z ~ effect_con, 
+  data = filter(MSA_ac_all_df, variable == "N_max_pitch"), 
+  cores = 4, threads = threading(2, grainsize = 100), 
+  backend = "cmdstanr", 
+  file = here("data", "analyses", "models", 
+    "anthracoceros_coronata_2_pitchnoun_con")
+  )
+
+# A_max_intens
+anthracoceros_coronata_3_intadj_con <- brm(
+  value_z ~ effect_con, 
+  data = filter(MSA_ac_all_df, variable == "A_max_intens"), 
+  cores = 4, threads = threading(2, grainsize = 100), 
+  backend = "cmdstanr", 
+  file = here("data", "analyses", "models", 
+    "anthracoceros_coronata_3_intadj_con")
+  )
+
+# N_max_intens
+anthracoceros_coronata_4_intnoun_con <- brm(
+  value_z ~ effect_con, 
+  data = filter(MSA_ac_all_df, variable == "N_max_intens"), 
+  cores = 4, threads = threading(2, grainsize = 100), 
+  backend = "cmdstanr", 
+  file = here("data", "analyses", "models", 
+    "anthracoceros_coronata_4_intnoun_con")
+  )
+
+# A_dur_log
+anthracoceros_coronata_5_duradj_con <- brm(
+  value_z ~ effect_con, 
+  data = filter(MSA_ac_all_df, variable == "A_dur_log"), 
+  cores = 4, threads = threading(2, grainsize = 100), 
+  backend = "cmdstanr", 
+  file = here("data", "analyses", "models", 
+    "anthracoceros_coronata_5_duradj_con")
+  )
+
+# N_dur_log
+anthracoceros_coronata_6_durnoun_con <- brm(
+  value_z ~ effect_con, 
+  data = filter(MSA_ac_all_df, variable == "N_dur_log"), 
+  cores = 4, threads = threading(2, grainsize = 100), 
+  backend = "cmdstanr", 
+  file = here("data", "analyses", "models", 
+    "anthracoceros_coronata_6_durnoun_con")
+  )
+```
+
 ## arapaima_modularis
+
+```{r}
+#| label: print_arapaima_modularis
+#| echo: false
+#| results: 'asis'
+print_status("arapaima_modularis")
+```
+
+```{r}
+#| label: arapaima_modularis
+
+data_manyspeech <- read.csv(here("data", "analyses", "jvc", 
+  "arapaima_modularis", "sheet_data_pitch.csv"))
+
+#convert factors and numeric
+data_manyspeech$typicality <- factor(data_manyspeech$typicality)
+data_manyspeech$target_colour <- factor(data_manyspeech$target_colour)
+data_manyspeech$pitch_max_hz <- as.numeric(data_manyspeech$pitch_max_hz)
+data_manyspeech$exclude <- factor(data_manyspeech$exclude)
+
+#select variables to be used, exclude error items
+clean_data <- data_manyspeech %>%
+  select(condition, speaker, typicality, target_colour, pitch_max_hz, exclude) %>%
+  filter(condition == "NF",
+    exclude == "No") 
+
+#Main stats
+summary_clean_data <- clean_data %>%
+  group_by(speaker, typicality) %>%
+  rstatix::get_summary_stats(pitch_max_hz)
+
+#rename outcome variable 
+names(summary_clean_data)[names(summary_clean_data) == 'mean'] <- 'mean_pitch'
+
+#exclude three speakers who had typycality conditions < 6
+clean_data_2 <- clean_data %>%
+  filter(speaker != "EM",
+         speaker != "IP",
+         speaker != "JW_3")
+
+#New main stats without 3 excluded participants
+data_for_analysis <- clean_data_2 %>%
+  group_by(speaker, typicality) %>%
+  rstatix::get_summary_stats(pitch_max_hz)
+
+names(data_for_analysis)[names(data_for_analysis) == 'mean'] <- 'mean_pitch'
+
+#find ouliers
+outliers <- data_for_analysis %>%
+  group_by(typicality) %>%
+  rstatix::identify_outliers(mean_pitch)
+  #13 outlier data points were found
+
+#continue without outliers
+data_for_analysis_noOL <- data_for_analysis %>%
+  filter(speaker != "AL",
+         speaker != "JR",
+         speaker != "PS",
+         speaker != "TB")
+
+# Original model
+mod1_am <- ez::ezANOVA(data = data_for_analysis_noOL,
+        wid = speaker,
+        within = typicality,
+        dv = mean_pitch,
+        type = 3)
+
+#
+# JVC: setup df
+#
+MSA_arapaima_modularis_df <- data_for_analysis_noOL %>% 
+  mutate(pitch_z = (mean_pitch - mean(mean_pitch)) / sd(mean_pitch), 
+    effect_cat = C(typicality, treatment), 
+    effect_cat = fct_relevel(effect_cat, "atypical"))
+
+# Model
+arapaima_modularis_1_f0_cat <- brm(
+  pitch_z ~ effect_cat, 
+  data = MSA_arapaima_modularis_df, 
+  cores = 4, threads = threading(2, grainsize = 100), 
+  backend = "cmdstanr", 
+  file = here("data", "analyses", "models", "arapaima_modularis_1_f0_cat")
+  )
+```
 
 ## comanthina_maculatus
 
+```{r}
+#| label: print_comanthina_maculatus
+#| echo: false
+#| results: 'asis'
+print_status("comanthina_maculatus")
+```
+
+```{r}
+#| label: comanthina_maculatus
+
+# No code provided
+MSA_comanthina_maculatus_df <- read_xlsx(here("data", "analyses", "jvc", 
+  "comanthina_maculatus", "0 Clean Data.xlsx"), na = "--undefined--") %>% 
+  select(key:typicality, 
+    tonic_vowel_duration, tonic_vowel_intensity, tonic_vowel_F0) %>% 
+  na.omit() %>% 
+  filter(typicality != "medium") %>% 
+  mutate(across(starts_with("tonic"), .fns = scale, .names = "{.col}_z")) %>% 
+  mutate(effect_cat = as.factor(typicality), 
+    effect_cat = C(effect_cat, treatment))
+
+# Model
+comanthina_maculatus_1_dur_cat <- brm(
+  tonic_vowel_duration_z ~ effect_cat, 
+  data = MSA_comanthina_maculatus_df, 
+  cores = 4, threads = threading(2, grainsize = 100), 
+  backend = "cmdstanr", seed = 06022016, 
+  file = here("data", "analyses", "models", "comanthina_maculatus_1_dur_cat")
+  )
+
+comanthina_maculatus_2_int_cat <- brm(
+  tonic_vowel_intensity_z ~ effect_cat, 
+  data = MSA_comanthina_maculatus_df, 
+  cores = 4, threads = threading(2, grainsize = 100), 
+  backend = "cmdstanr", seed = 06022016, 
+  file = here("data", "analyses", "models", "comanthina_maculatus_2_int_cat")
+  )
+
+comanthina_maculatus_3_f0_cat <- brm(
+  tonic_vowel_F0_z ~ effect_cat, 
+  data = MSA_comanthina_maculatus_df, 
+  cores = 4, threads = threading(2, grainsize = 100), 
+  backend = "cmdstanr", seed = 06022016, 
+  file = here("data", "analyses", "models", "comanthina_maculatus_3_f0_cat")
+  )
+```
+
 ## cromileptes_saxatilis
+
+```{r}
+#| label: print_cromileptes_saxatilis
+#| echo: false
+#| results: 'asis'
+print_status("cromileptes_saxatilis")
+```
+
+```{r}
+#| label: cromileptes_saxatilis
+
+cromileptes_saxatilis_durs <- read_csv(here("data", "analyses", "jvc", "cromileptes_saxatilis", "processed_data", "NF_durations.csv")) %>% 
+  filter(typicality != "medium")
+
+mod_priors <- c(
+  prior("normal(-1, 1)", class="Intercept"),
+  prior("normal(0, 2)", class="b"),
+  prior("student_t(3, 0, 1)", class="sd"),
+  prior("lkj(2)", class="L")
+)
+
+# Original model
+if(F) {
+set.seed(12341234)
+mod <- brm(colour_dur ~ 
+             typicality + 
+             (1 + typicality | target_colour) + 
+             (1 | target_name) + 
+             (1 | speaker),
+           data=cromileptes_saxatilis_durs, cores=4,
+           family=lognormal(),
+           prior=mod_priors,
+           control=list(adapt_delta=0.99,
+                        max_treedepth=16),
+           iter=4000,
+           warmup=2000)
+}
+
+#
+# JVC refits
+#
+
+MSA_cromileptes_saxatilis_df <- cromileptes_saxatilis_durs %>% 
+  mutate(colour_dur_log = log(colour_dur), 
+    colour_dur_z = (colour_dur_log - mean(colour_dur_log)) / sd(colour_dur_log), 
+    effect_cat = as.factor(typicality), 
+    effect_cat = C(effect_cat, treatment))
+
+cromileptes_saxatilis_1_dur_cat <- brm(
+  colour_dur_z ~ effect_cat + 
+    (1 + typicality | target_colour) + 
+    (1 | target_name) + 
+    (1 | speaker), 
+  data = MSA_cromileptes_saxatilis_df, 
+  cores = 4, threads = threading(2, grainsize = 100), 
+  backend = "cmdstanr", seed = 06022016, 
+  file = here("data", "analyses", "models", "cromileptes_saxatilis_1_dur_cat")
+  )
+```
 
 ## ctenosaura_limax
 
+```{r}
+#| label: print_ctenosaura_limax
+#| echo: false
+#| results: 'asis'
+print_status("ctenosaura_limax")
+```
+
+```{r}
+#| label: ctenosaura_limax
+
+```
+
 ## gnathosaurus_canadensis
+
+```{r}
+#| label: print_gnathosaurus_canadensis
+#| echo: false
+#| results: 'asis'
+print_status("gnathosaurus_canadensis")
+```
+
+```{r}
+
+```
+
 
 ## gymnothorax_spinulosus
 
+```{r}
+#| label: print_gymnothorax_spinulosus
+#| echo: false
+#| results: 'asis'
+print_status("gymnothorax_spinulosus")
+```
+
 ## haematopus_fossor
+
+```{r}
+#| label: print_haematopus_fossor
+#| echo: false
+#| results: 'asis'
+print_status("haematopus_fossor")
+```
 
 ```{r}
 #| label: haematopus_fossor
@@ -314,8 +848,14 @@ haematopus_fossor_9_nounvowelcent_cat <- brm(
 )
 ```
 
-
 ## lasionycteris_altavela
+
+```{r}
+#| label: print_lasionycteris_altavela
+#| echo: false
+#| results: 'asis'
+print_status("lasionycteris_altavela")
+```
 
 ```{r}
 #| label: lasionycteris_altavela
@@ -360,18 +900,50 @@ lasionycteris_altavela_1_int_con <- brm(
   )
 ```
 
-
 ## linckia_nattereri
+
+```{r}
+#| label: print_linckia_nattereri
+#| echo: false
+#| results: 'asis'
+print_status("linckia_nattereri")
+```
 
 ## lycodes_bradfieldi
 
+```{r}
+#| label: print_lycodes_bradfieldi
+#| echo: false
+#| results: 'asis'
+print_status("lycodes_bradfieldi")
+```
+
 ## naso_cassivellaunos
+
+```{r}
+#| label: print_naso_cassivellaunos
+#| echo: false
+#| results: 'asis'
+print_status("naso_cassivellaunos")
+```
 
 ## trapezia_cantonensis
 
+```{r}
+#| label: print_trapezia_cantonensis
+#| echo: false
+#| results: 'asis'
+print_status("trapezia_cantonensis")
+```
+
 ## trigonias_lachneri
 
-
+```{r}
+#| label: print_trigonias_lachneri
+#| echo: false
+#| results: 'asis'
+print_status("trigonias_lachneri")
+```
 
 
 
@@ -386,8 +958,8 @@ lasionycteris_altavela_1_int_con <- brm(
 ```{r}
 #| label: load-models
 
-# This code will need to change eventually to pull rds files from OSF... for now it assumes they are stored in a folder called "models"
-msa_models <- dir_ls(path = here("data", "analyses", "models"), regexp = ".rds$") %>% 
+msa_models <- dir_ls(path = here("data", "analyses", "models"), 
+  regexp = ".rds$") %>% 
   as_tibble() %>% 
   transmute(path = value, 
     mod_name = str_remove(path, here("data", "analyses", "models/")), 
@@ -399,7 +971,7 @@ msa_models <- dir_ls(path = here("data", "analyses", "models"), regexp = ".rds$"
   unite(group, word1, word2, sep = "_") %>% 
   select(group, mod_name:model) %>% 
   mutate(sum = map(model, clean_up)) %>% 
-  suppressWarnings() # because it warns every time that some coef have underscores and its annoying
+  suppressWarnings() 
 ```
 
 ## Table
@@ -429,9 +1001,10 @@ msa_models %>%
   ggplot() + 
   facet_wrap(~ typicality_lab, ncol = 1, scales = "free") + 
   aes(x = estimate, y = mod_name) + 
+  geom_vline(xintercept = 0, lty = 3) + 
   geom_segment(aes(x = estimate - se, xend = estimate + se, yend = mod_name), 
-    color = "#cc0033", alpha = 0.5, size = 3, lineend = "round") + 
-  geom_point(color = "#cc0033", pch = 21, stroke = 3, size = 3.1) + 
+    color = "#cc0033", alpha = 0.5, size = 1.5, lineend = "round") + 
+  geom_point(color = "#cc0033", pch = 21, stroke = 1.5, size = 1.6) + 
   labs(y = "Model", x = "Estimate ± SE") + 
   clean_theme() + 
   theme(strip.text.x = element_text(hjust = 0))
