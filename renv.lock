@@ -650,6 +650,16 @@
       "Hash": "36b67b5adf57b292923f5659f5f0c853",
       "Requirements": []
     },
+    "datawizard": {
+      "Package": "datawizard",
+      "Version": "0.4.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "b1d9b9d4f73830cea95ed48f3d64be2e",
+      "Requirements": [
+        "insight"
+      ]
+    },
     "dbplyr": {
       "Package": "dbplyr",
       "Version": "2.1.1",
@@ -1031,6 +1041,18 @@
         "withr"
       ]
     },
+    "ggeffects": {
+      "Package": "ggeffects",
+      "Version": "1.1.2",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "e8812da7ef973b9b0a3f547223ea5126",
+      "Requirements": [
+        "MASS",
+        "insight",
+        "sjlabelled"
+      ]
+    },
     "ggmosaic": {
       "Package": "ggmosaic",
       "Version": "0.3.3",
@@ -1358,6 +1380,14 @@
       "Hash": "1deaf1de3eac7e1d3377954b3a283652",
       "Requirements": []
     },
+    "insight": {
+      "Package": "insight",
+      "Version": "0.17.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "1ce0d9c527482d41e0f36e9217847674",
+      "Requirements": []
+    },
     "isoband": {
       "Package": "isoband",
       "Version": "0.2.5",
@@ -1682,10 +1712,10 @@
     },
     "nlme": {
       "Package": "nlme",
-      "Version": "3.1-157",
+      "Version": "3.1-158",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "dbca60742be0c9eddc5205e5c7ca1f44",
+      "Hash": "9469aeaeddf4f48a7ac70877d0b7ba36",
       "Requirements": [
         "lattice"
       ]
@@ -2243,6 +2273,30 @@
         "pkgbuild"
       ]
     },
+    "rstanarm": {
+      "Package": "rstanarm",
+      "Version": "2.21.3",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "d19858d9dc1cdd08fda49af34e645436",
+      "Requirements": [
+        "BH",
+        "Matrix",
+        "Rcpp",
+        "RcppEigen",
+        "RcppParallel",
+        "StanHeaders",
+        "bayesplot",
+        "ggplot2",
+        "lme4",
+        "loo",
+        "nlme",
+        "rstan",
+        "rstantools",
+        "shinystan",
+        "survival"
+      ]
+    },
     "rstantools": {
       "Package": "rstantools",
       "Version": "2.2.0",
@@ -2430,6 +2484,17 @@
       "Hash": "30f0ebc41feba25691073626ff5e2cf4",
       "Requirements": [
         "shiny"
+      ]
+    },
+    "sjlabelled": {
+      "Package": "sjlabelled",
+      "Version": "1.2.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "4bd18166ef8ca74aeec74ad295dfe77f",
+      "Requirements": [
+        "datawizard",
+        "insight"
       ]
     },
     "snow": {
