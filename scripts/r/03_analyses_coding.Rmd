@@ -181,7 +181,8 @@ Simple forest plot of the estimates +/- SE
 
 ```{r forest-plot}
 msa_models %>% 
-  unnest(sum) %>% 
+  unnest(sum) %>%
+  filter(mod_name != "polymetme_brevirostrum_1_dur_cat") %>%
   mutate(
     typicality_lab = if_else(
       typicality == "cat", "Typicality = categorical", "Typicality = continuous"
