@@ -11,6 +11,7 @@ library(tidyverse)
 library(plyr)
 library(mgcv)
 library(brms)
+my_seed = 8891
 ```
 
 
@@ -39,7 +40,8 @@ dermatolepis_aculeatus_1_pitch_cat <- brm(
   cores = 4,
   threads = threading(2, grainsize = 100), 
   backend = "cmdstanr",
-  file = "./data/analyses/models/dermatolepis_aculeatus_1_pitch_cat"
+  file = "./data/analyses/models/dermatolepis_aculeatus_1_pitch_cat",
+  seed = my_seed
 )
 
 # LME  adjective model with one fixed effect, two random effects: speaker, adjective
@@ -49,7 +51,8 @@ dermatolepis_aculeatus_2_pitch_cat <- brm(
   cores = 4,
   threads = threading(2, grainsize = 100), 
   backend = "cmdstanr",
-  file = "./data/analyses/models/dermatolepis_aculeatus_2_pitch_cat"
+  file = "./data/analyses/models/dermatolepis_aculeatus_2_pitch_cat",
+  seed = my_seed
 )
 
 # LME  phrase model with one fixed effect, two random effects: speaker, phrase
@@ -59,7 +62,8 @@ dermatolepis_aculeatus_3_pitch_cat <- brm(
   cores = 4,
   threads = threading(2, grainsize = 100), 
   backend = "cmdstanr",
-  file = "./data/analyses/models/dermatolepis_aculeatus_3_pitch_cat"
+  file = "./data/analyses/models/dermatolepis_aculeatus_3_pitch_cat",
+  seed = my_seed
 )
 ```
 
@@ -72,7 +76,7 @@ Lavaan.
 ```{r}
 # listing all available csv files (30 participants in the production study)
 trials_files <- list.files(
-    path = "./osf/data/production/trial-lists/",
+    path = "./data/osf/production/trial-lists/",
     pattern = ".csv", full.names = TRUE
     )
 
@@ -131,7 +135,8 @@ eriphia_laterispinis_1_mult_cat <- brm(
   cores = 4,
   threads = threading(2, grainsize = 100), 
   backend = "cmdstanr",
-  file = "data/analyses/models/eriphia_laterispinis_1_mult_cat"
+  file = "data/analyses/models/eriphia_laterispinis_1_mult_cat",
+  seed = my_seed
 )
 ```
 
@@ -160,7 +165,8 @@ hoplostethus_macrosteus_1_dur_cat <- brm(
   cores = 4,
   threads = threading(2, grainsize = 100), 
   backend = "cmdstanr",
-  file = "data/analyses/models/hoplostethus_macrosteus_1_dur_cat"
+  file = "data/analyses/models/hoplostethus_macrosteus_1_dur_cat",
+  seed = my_seed
 )
 
 hoplostethus_macrosteus_2_int_cat <- brm(
@@ -169,7 +175,8 @@ hoplostethus_macrosteus_2_int_cat <- brm(
   cores = 4,
   threads = threading(2, grainsize = 100), 
   backend = "cmdstanr",
-  file = "data/analyses/models/hoplostethus_macrosteus_2_int_cat"
+  file = "data/analyses/models/hoplostethus_macrosteus_2_int_cat",
+  seed = my_seed
 )
 ```
 
@@ -197,7 +204,8 @@ neosilurus_omanensis_1_f0rat_cat <- brm(
   cores = 4,
   threads = threading(2, grainsize = 100), 
   backend = "cmdstanr",
-  file = "data/analyses/models/neosilurus_omanensis_1_f0rat_cat"
+  file = "data/analyses/models/neosilurus_omanensis_1_f0rat_cat",
+  seed = my_seed
 )
 
 neosilurus_omanensis_2_f0ranrat_cat <- brm(
@@ -206,7 +214,8 @@ neosilurus_omanensis_2_f0ranrat_cat <- brm(
   cores = 4,
   threads = threading(2, grainsize = 100), 
   backend = "cmdstanr",
-  file = "data/analyses/models/neosilurus_omanensis_2_f0ranrat_cat"
+  file = "data/analyses/models/neosilurus_omanensis_2_f0ranrat_cat",
+  seed = my_seed
 )
 
 # Team also had interaction effect_cat:Condition which leads to convergence issues
@@ -217,7 +226,8 @@ neosilurus_omanensis_3_f0varrat_cat <- brm(
   cores = 4,
   threads = threading(2, grainsize = 100), 
   backend = "cmdstanr",
-  file = "data/analyses/models/neosilurus_omanensis_3_f0varrat_cat"
+  file = "data/analyses/models/neosilurus_omanensis_3_f0varrat_cat",
+  seed = my_seed
 )
 
 neosilurus_omanensis_4_f0riserat_cat <- brm(
@@ -226,7 +236,8 @@ neosilurus_omanensis_4_f0riserat_cat <- brm(
   cores = 4,
   threads = threading(2, grainsize = 100), 
   backend = "cmdstanr",
-  file = "data/analyses/models/neosilurus_omanensis_4_f0riserat_cat"
+  file = "data/analyses/models/neosilurus_omanensis_4_f0riserat_cat",
+  seed = my_seed
 )
 
 # Team also had interaction effect_cat:Condition which leads to convergence issues
@@ -237,7 +248,8 @@ neosilurus_omanensis_5_srrat_cat <- brm(
   cores = 4,
   threads = threading(2, grainsize = 100), 
   backend = "cmdstanr",
-  file = "data/analyses/models/neosilurus_omanensis_5_srrat_cat"
+  file = "data/analyses/models/neosilurus_omanensis_5_srrat_cat",
+  seed = my_seed
 )
 ```
 
@@ -263,7 +275,8 @@ paralichthys_undulatus_1_f0_cat <- brm(
   cores = 4,
   threads = threading(2, grainsize = 100), 
   backend = "cmdstanr",
-  file = "data/analyses/models/paralichthys_undulatus_1_f0_cat"
+  file = "data/analyses/models/paralichthys_undulatus_1_f0_cat",
+  seed = my_seed
 )
 ```
 
@@ -347,7 +360,8 @@ polymetme_brevirostrum_1_dur_cat <- brm(
   cores = 8,
   threads = threading(8, grainsize = 100), 
   backend = "cmdstanr",
-  file = "data/analyses/models/polymetme_brevirostrum_1_dur_cat"
+  file = "data/analyses/models/polymetme_brevirostrum_1_dur_cat",
+  seed = my_seed
 )
 ```
 
@@ -355,7 +369,7 @@ polymetme_brevirostrum_1_dur_cat <- brm(
 
 ```{r}
 # The following code reads in the thirty different .csv files with the trial-level data and merges them into a single dataframe
-trial_dat <- list.files(path = "./osf/data/production/trial-lists/",
+trial_dat <- list.files(path = "./data/osf/production/trial-lists/",
                        pattern = "*.csv",
                        full.names = TRUE) %>%
   lapply(read_csv) %>%                              
@@ -440,7 +454,8 @@ saron_pictus_1_dur_cat <- brm(
   control = list(adapt_delta = 0.99, max_treedepth = 12),
   cores = 4,
   threads = threading(2, grainsize = 100), 
-  file = "data/analyses/models/saron_pictus_1_dur_cat"
+  file = "data/analyses/models/saron_pictus_1_dur_cat",
+  seed = my_seed
 )
 ```
 
@@ -526,7 +541,8 @@ trachurus_riukiuensis_1_durart_cat <- brm(
   backend = "cmdstanr",
   cores = 4,
   threads = threading(2, grainsize = 100), 
-  file = "data/analyses/models/trachurus_riukiuensis_1_durart_cat"
+  file = "data/analyses/models/trachurus_riukiuensis_1_durart_cat",
+  seed = my_seed
 )
 
 trachurus_riukiuensis_2_f0art_cat <- brm(
@@ -535,7 +551,8 @@ trachurus_riukiuensis_2_f0art_cat <- brm(
   backend = "cmdstanr",
   cores = 4,
   threads = threading(2, grainsize = 100), 
-  file = "data/analyses/models/trachurus_riukiuensis_2_f0art_cat"
+  file = "data/analyses/models/trachurus_riukiuensis_2_f0art_cat",
+  seed = my_seed
 )
 
 trachurus_riukiuensis_3_duradj_cat <- brm(
@@ -544,7 +561,8 @@ trachurus_riukiuensis_3_duradj_cat <- brm(
   backend = "cmdstanr",
   cores = 4,
   threads = threading(2, grainsize = 100), 
-  file = "data/analyses/models/trachurus_riukiuensis_3_duradj_cat"
+  file = "data/analyses/models/trachurus_riukiuensis_3_duradj_cat",
+  seed = my_seed
 )
 
 trachurus_riukiuensis_4_f0adj_cat <- brm(
@@ -553,7 +571,8 @@ trachurus_riukiuensis_4_f0adj_cat <- brm(
   backend = "cmdstanr",
   cores = 4,
   threads = threading(2, grainsize = 100), 
-  file = "data/analyses/models/trachurus_riukiuensis_4_f0adj_cat"
+  file = "data/analyses/models/trachurus_riukiuensis_4_f0adj_cat",
+  seed = my_seed
 )
 
 trachurus_riukiuensis_5_f0noun_cat <- brm(
@@ -562,7 +581,8 @@ trachurus_riukiuensis_5_f0noun_cat <- brm(
   backend = "cmdstanr",
   cores = 4,
   threads = threading(2, grainsize = 100), 
-  file = "data/analyses/models/trachurus_riukiuensis_5_f0noun_cat"
+  file = "data/analyses/models/trachurus_riukiuensis_5_f0noun_cat",
+  seed = my_seed
 )
 ```
 
@@ -591,7 +611,8 @@ varanus_eulophotes_1_f0_cat <- brm(
   backend = "cmdstanr",
   cores = 4,
   threads = threading(2, grainsize = 100), 
-  file = "data/analyses/models/varanus_eulophotes_1_f0_cat"
+  file = "data/analyses/models/varanus_eulophotes_1_f0_cat",
+  seed = my_seed
 )
 ```
 
