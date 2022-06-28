@@ -191,8 +191,6 @@ for (team in 1:length(my_assignment)) {
 
 # Upload analytic questionnaire answers.
 
-Ugly code to do the job quickly. Need a-fixing.
-
 ```{r upload-analytic-responses}
 teams_analyses <- read_csv("data/questionnaires/msa_data_analysis_questionnaire_cleaned.csv")
 
@@ -209,6 +207,37 @@ for (team in 1:length(teams)) {
 for (team in teams) {
   file_name <- glue("{team}.txt")
   file_id <- osf_ls_files(teams_comps[which(teams_comps$name == team),], pattern = ".txt")
+  if (nrow(file_id) > 0) {
+    for (file in 1:nrow(file_id)) {
+      if (file_id$name[file] %in% teams_files) {
+        osf_rm(file_id[file,], check = FALSE)
+      }
+    }
+  }
+}
+```
+
+# Upload reviews.
+
+```{r upload-analytic-responses}
+osf_teams <- osf_retrieve_node("n3fyd")
+# Warning, takes a minute
+teams_comps <- osf_ls_nodes(osf_teams, n_max = Inf)
+
+reviews_csvs <- list.files("./data/peer_review/msa_reviews/")
+
+teams <- str_remove(reviews_csvs, "\\.csv")
+
+for (team in 1:length(teams)) {
+  file_path <- glue("data/peer_review/msa_reviews/{teams[team]}.csv")
+  osf_upload(teams_comps[which(teams_comps$name == teams[team]),], path = file_path, verbose = T, conflicts = "overwrite")
+}
+```
+
+```{r delete-reviews}
+for (team in teams) {
+  file_name <- glue("{team}.csv")
+  file_id <- osf_ls_files(teams_comps[which(teams_comps$name == team),], pattern = ".csv")
   if (nrow(file_id) > 0) {
     for (file in 1:nrow(file_id)) {
       if (file_id$name[file] %in% teams_files) {
