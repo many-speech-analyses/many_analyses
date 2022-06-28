@@ -190,7 +190,7 @@ msa_models %>%
   ) %>% 
   ggplot(aes(x = estimate, y = mod_name)) + 
   geom_vline(xintercept = 0) +
-  geom_segment(aes(x = estimate - se, xend = estimate + se, yend = mod_name), 
+  geom_segment(aes(x = estimate - se * 1.96, xend = estimate + se * 1.96, yend = mod_name), 
     color = "#cc0033", alpha = 0.5, size = 3, lineend = "round") + 
   geom_point(color = "#cc0033", pch = 21, stroke = 3, size = 3.1) +
   facet_wrap(~ typicality_lab, ncol = 1, scales = "free") +
