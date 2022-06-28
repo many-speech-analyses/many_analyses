@@ -9,7 +9,9 @@ date: "Last update: `r Sys.Date()`"
 knitr::opts_knit$set(root.dir = here::here())
 library(tidyverse)
 library(plyr)
+library(mgcv)
 library(brms)
+my_seed = 8891
 ```
 
 
@@ -38,7 +40,8 @@ dermatolepis_aculeatus_1_pitch_cat <- brm(
   cores = 4,
   threads = threading(2, grainsize = 100), 
   backend = "cmdstanr",
-  file = "./data/analyses/models/dermatolepis_aculeatus_1_pitch_cat"
+  file = "./data/analyses/models/dermatolepis_aculeatus_1_pitch_cat",
+  seed = my_seed
 )
 
 # LME  adjective model with one fixed effect, two random effects: speaker, adjective
@@ -48,7 +51,8 @@ dermatolepis_aculeatus_2_pitch_cat <- brm(
   cores = 4,
   threads = threading(2, grainsize = 100), 
   backend = "cmdstanr",
-  file = "./data/analyses/models/dermatolepis_aculeatus_2_pitch_cat"
+  file = "./data/analyses/models/dermatolepis_aculeatus_2_pitch_cat",
+  seed = my_seed
 )
 
 # LME  phrase model with one fixed effect, two random effects: speaker, phrase
@@ -58,7 +62,8 @@ dermatolepis_aculeatus_3_pitch_cat <- brm(
   cores = 4,
   threads = threading(2, grainsize = 100), 
   backend = "cmdstanr",
-  file = "./data/analyses/models/dermatolepis_aculeatus_3_pitch_cat"
+  file = "./data/analyses/models/dermatolepis_aculeatus_3_pitch_cat",
+  seed = my_seed
 )
 ```
 
@@ -71,7 +76,7 @@ Lavaan.
 ```{r}
 # listing all available csv files (30 participants in the production study)
 trials_files <- list.files(
-    path = "./osf/data/production/trial-lists/",
+    path = "./data/osf/production/trial-lists/",
     pattern = ".csv", full.names = TRUE
     )
 
@@ -130,11 +135,14 @@ eriphia_laterispinis_1_mult_cat <- brm(
   cores = 4,
   threads = threading(2, grainsize = 100), 
   backend = "cmdstanr",
-  file = "data/analyses/models/eriphia_laterispinis_1_mult_cat"
+  file = "data/analyses/models/eriphia_laterispinis_1_mult_cat",
+  seed = my_seed
 )
 ```
 
 # genyonemus_evotis
+
+Difficult case.
 
 # hoplostethus_macrosteus
 
@@ -157,7 +165,8 @@ hoplostethus_macrosteus_1_dur_cat <- brm(
   cores = 4,
   threads = threading(2, grainsize = 100), 
   backend = "cmdstanr",
-  file = "data/analyses/models/hoplostethus_macrosteus_1_dur_cat"
+  file = "data/analyses/models/hoplostethus_macrosteus_1_dur_cat",
+  seed = my_seed
 )
 
 hoplostethus_macrosteus_2_int_cat <- brm(
@@ -166,17 +175,84 @@ hoplostethus_macrosteus_2_int_cat <- brm(
   cores = 4,
   threads = threading(2, grainsize = 100), 
   backend = "cmdstanr",
-  file = "data/analyses/models/hoplostethus_macrosteus_2_int_cat"
+  file = "data/analyses/models/hoplostethus_macrosteus_2_int_cat",
+  seed = my_seed
 )
 ```
 
 # neosilurus_omanensis
 
-Script missing.
+```{r}
+msa_data <- read_csv("./data/analyses/sc/neosilurus_omanensis/annotated_cleaned_data_v7.csv") %>%
+  mutate(
+    effect_cat = factor(typ_cat, levels = c("atypical", "medium", "typical")),
+    PitchRatioAtoU = scale(PitchRatioAtoU) %>% as.numeric(),
+    PitchRangeRatioAtoU = scale(PitchRangeRatioAtoU) %>% as.numeric(),
+    PitchVariationRatioAtoU = scale(PitchVariationRatioAtoU) %>% as.numeric(),
+    PitchRiseRatio = scale(PitchRiseRatio) %>% as.numeric(),
+    SpeechRateRatioAtoU = scale(SpeechRateRatioAtoU) %>% as.numeric(),
+    Condition = as.factor(Condition)
+  )
+
+contrasts(msa_data$Condition) <- "contr.sum"
+```
 
 ```{r}
+neosilurus_omanensis_1_f0rat_cat <- brm(
+  PitchRatioAtoU ~ effect_cat + (1|Participant) + (1|Adjective),
+  data = msa_data,
+  cores = 4,
+  threads = threading(2, grainsize = 100), 
+  backend = "cmdstanr",
+  file = "data/analyses/models/neosilurus_omanensis_1_f0rat_cat",
+  seed = my_seed
+)
 
+neosilurus_omanensis_2_f0ranrat_cat <- brm(
+  PitchRangeRatioAtoU ~ effect_cat + (1|Participant) + (1|Adjective),
+  data = msa_data,
+  cores = 4,
+  threads = threading(2, grainsize = 100), 
+  backend = "cmdstanr",
+  file = "data/analyses/models/neosilurus_omanensis_2_f0ranrat_cat",
+  seed = my_seed
+)
+
+# Team also had interaction effect_cat:Condition which leads to convergence issues
+# since typ:AF = 0 and atyp:ANF = 0
+neosilurus_omanensis_3_f0varrat_cat <- brm(
+  PitchVariationRatioAtoU ~ effect_cat + Condition + (1|Participant) + (1|Adjective),
+  data = msa_data,
+  cores = 4,
+  threads = threading(2, grainsize = 100), 
+  backend = "cmdstanr",
+  file = "data/analyses/models/neosilurus_omanensis_3_f0varrat_cat",
+  seed = my_seed
+)
+
+neosilurus_omanensis_4_f0riserat_cat <- brm(
+  PitchRiseRatio ~ effect_cat + (1|Participant) + (1|Adjective),
+  data = msa_data,
+  cores = 4,
+  threads = threading(2, grainsize = 100), 
+  backend = "cmdstanr",
+  file = "data/analyses/models/neosilurus_omanensis_4_f0riserat_cat",
+  seed = my_seed
+)
+
+# Team also had interaction effect_cat:Condition which leads to convergence issues
+# since typ:AF = 0 and atyp:ANF = 0
+neosilurus_omanensis_5_srrat_cat <- brm(
+  SpeechRateRatioAtoU ~ effect_cat + Condition + (1|Participant) + (1|Adjective),
+  data = msa_data,
+  cores = 4,
+  threads = threading(2, grainsize = 100), 
+  backend = "cmdstanr",
+  file = "data/analyses/models/neosilurus_omanensis_5_srrat_cat",
+  seed = my_seed
+)
 ```
+
 
 # paralichthys_undulatus
 
@@ -194,12 +270,13 @@ contrasts(msa_data$Word.type) <- "contr.sum"
 
 ```{r}
 paralichthys_undulatus_1_f0_cat <- brm(
-  RangeST ~ Word.type + Typicality + (1|Speaker) + (1|Word),
+  RangeST ~ Word.type + effect_cat + (1|Speaker) + (1|Word),
   data = msa_data,
   cores = 4,
   threads = threading(2, grainsize = 100), 
   backend = "cmdstanr",
-  file = "data/analyses/models/paralichthys_undulatus_1_f0_cat"
+  file = "data/analyses/models/paralichthys_undulatus_1_f0_cat",
+  seed = my_seed
 )
 ```
 
@@ -207,13 +284,46 @@ paralichthys_undulatus_1_f0_cat <- brm(
 
 GAM but team reported parametric effects so we could include those.
 
+```{r}
+load("./data/analyses/sc/petauroides_fistulator/mdl_data.RData")
+
+msa_data <- mdl_data %>%
+  mutate(
+    effect_cat = factor(typicality, levels = c("atypical", "medium", "typical")),
+    pitch_st = scale(pitch_st) %>% as.numeric()
+  )
+```
+
+```{r}
+petauroides_fistulator_1_f0_cat <- bam(
+  pitch_st ~
+    effect_cat +
+    s(id) +
+    s(trial, bs = "re") +
+    s(speaker, bs = "re") +
+    s(target_name, bs = "re") +
+    s(target_colour, bs = "re") +
+    s(competitor_name, bs = "re") +
+    s(competitor_colour, bs = "re") +
+    s(distractor1_name, bs = "re") +
+    s(distractor1_colour, bs = "re") +
+    s(distractor2_name, bs = "re") +
+    s(distractor2_colour, bs = "re"),
+  data = msa_data,
+  cluster = parallel::makeCluster(8)
+)
+
+saveRDS(petauroides_fistulator_1_f0_cat, "./data/analyses/models/petauroides_fistulator_1_f0_cat.rds")
+```
+
+
 # polymetme_brevirostrum
 
 ```{r}
 # Get datasets
 praat_data <- read_delim("./data/analyses/sc/polymetme_brevirostrum/Data/acoustic_results.txt", delim = "\t")
 norming_data <- read_csv("./data/analyses/sc/polymetme_brevirostrum/Data/ratings_summary.csv")
-ratings <- read_csv("./osf/data/norming/ratings/ratings.csv")
+ratings <- read_csv("./data/osf/norming/ratings/ratings.csv")
 foods <- list('aprikose','kirsche','moehre','gurke','erbsen','tomate','kartoffeln','banane','zitrone','bohnen','erdbeere','mandarine','walnuss')
 # Get rid of that pesky case marking and include typicality bins
 msa_data <- norming_data %>%
@@ -231,27 +341,27 @@ msa_data <- norming_data %>%
   filter(is.na(Notes)) %>%
   mutate(
     across(contains("f0"), function(x) {ifelse(x == "--undefined--", NA, x)}),
-    Category = ifelse(object %in% foods, "FOOD", "NONFOOD"),
+    Category = as.factor(ifelse(object %in% foods, "FOOD", "NONFOOD")),
     effect_cat = factor(Typicality, levels = c("atypical", "medium", "typical")),
     Adj_Dur = scale(Adj_Dur) %>% as.numeric(),
-    Condition = factor(Condition),
-    Category = factor(Category)
+    Condition = as.factor(Condition),
+    Category = as.factor(Category)
   )
 
 contrasts(msa_data$Category) <- "contr.sum"
 contrasts(msa_data$Condition) <- "contr.sum"
 ```
 
-100% divergent transitions.
-
 ```{r}
 polymetme_brevirostrum_1_dur_cat <- brm(
-  Adj_Dur ~ Condition * effect_cat * Category + (Condition * effect_cat || Speaker) + (Condition || object) + (effect_cat || colour),
+  Adj_Dur ~ Condition * effect_cat + effect_cat * Category + (Condition * effect_cat | Speaker) + (Condition | object) + (effect_cat | colour),
   data = msa_data,
-  cores = 4,
-  threads = threading(2, grainsize = 100), 
+  chains = 1,
+  cores = 8,
+  threads = threading(8, grainsize = 100), 
   backend = "cmdstanr",
-  file = "data/analyses/models/polymetme_brevirostrum_1_dur_cat"
+  file = "data/analyses/models/polymetme_brevirostrum_1_dur_cat",
+  seed = my_seed
 )
 ```
 
@@ -259,7 +369,7 @@ polymetme_brevirostrum_1_dur_cat <- brm(
 
 ```{r}
 # The following code reads in the thirty different .csv files with the trial-level data and merges them into a single dataframe
-trial_dat <- list.files(path = "./osf/data/production/trial-lists/",
+trial_dat <- list.files(path = "./data/osf/production/trial-lists/",
                        pattern = "*.csv",
                        full.names = TRUE) %>%
   lapply(read_csv) %>%                              
@@ -344,7 +454,8 @@ saron_pictus_1_dur_cat <- brm(
   control = list(adapt_delta = 0.99, max_treedepth = 12),
   cores = 4,
   threads = threading(2, grainsize = 100), 
-  file = "data/analyses/models/saron_pictus_1_dur_cat"
+  file = "data/analyses/models/saron_pictus_1_dur_cat",
+  seed = my_seed
 )
 ```
 
@@ -430,7 +541,8 @@ trachurus_riukiuensis_1_durart_cat <- brm(
   backend = "cmdstanr",
   cores = 4,
   threads = threading(2, grainsize = 100), 
-  file = "data/analyses/models/trachurus_riukiuensis_1_durart_cat"
+  file = "data/analyses/models/trachurus_riukiuensis_1_durart_cat",
+  seed = my_seed
 )
 
 trachurus_riukiuensis_2_f0art_cat <- brm(
@@ -439,7 +551,8 @@ trachurus_riukiuensis_2_f0art_cat <- brm(
   backend = "cmdstanr",
   cores = 4,
   threads = threading(2, grainsize = 100), 
-  file = "data/analyses/models/trachurus_riukiuensis_2_f0art_cat"
+  file = "data/analyses/models/trachurus_riukiuensis_2_f0art_cat",
+  seed = my_seed
 )
 
 trachurus_riukiuensis_3_duradj_cat <- brm(
@@ -448,7 +561,8 @@ trachurus_riukiuensis_3_duradj_cat <- brm(
   backend = "cmdstanr",
   cores = 4,
   threads = threading(2, grainsize = 100), 
-  file = "data/analyses/models/trachurus_riukiuensis_3_duradj_cat"
+  file = "data/analyses/models/trachurus_riukiuensis_3_duradj_cat",
+  seed = my_seed
 )
 
 trachurus_riukiuensis_4_f0adj_cat <- brm(
@@ -457,7 +571,8 @@ trachurus_riukiuensis_4_f0adj_cat <- brm(
   backend = "cmdstanr",
   cores = 4,
   threads = threading(2, grainsize = 100), 
-  file = "data/analyses/models/trachurus_riukiuensis_4_f0adj_cat"
+  file = "data/analyses/models/trachurus_riukiuensis_4_f0adj_cat",
+  seed = my_seed
 )
 
 trachurus_riukiuensis_5_f0noun_cat <- brm(
@@ -466,7 +581,8 @@ trachurus_riukiuensis_5_f0noun_cat <- brm(
   backend = "cmdstanr",
   cores = 4,
   threads = threading(2, grainsize = 100), 
-  file = "data/analyses/models/trachurus_riukiuensis_5_f0noun_cat"
+  file = "data/analyses/models/trachurus_riukiuensis_5_f0noun_cat",
+  seed = my_seed
 )
 ```
 
@@ -495,7 +611,8 @@ varanus_eulophotes_1_f0_cat <- brm(
   backend = "cmdstanr",
   cores = 4,
   threads = threading(2, grainsize = 100), 
-  file = "data/analyses/models/varanus_eulophotes_1_f0_cat"
+  file = "data/analyses/models/varanus_eulophotes_1_f0_cat",
+  seed = my_seed
 )
 ```
 
