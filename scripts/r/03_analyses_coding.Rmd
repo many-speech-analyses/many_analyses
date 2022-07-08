@@ -32,7 +32,8 @@ coding <- read_sheet(the_sheet) %>%
   mutate(
     outcome = factor(outcome, levels = c("duration", "f0", "formants", "intensity", "harmonics", "SNR", "multivariate", "other")),
     temporal_window = factor(temporal_window, levels = c("segment", "syllable", "word", "phrase", "sentence", "other"))
-  )
+  ) %>%
+  drop_na(model_id)
 
 ```
 
@@ -204,7 +205,23 @@ msa_models %>%
 
 ```{r}
 coding %>%
+  ggplot(aes(framework)) +
+  geom_bar()
+```
+
+```{r}
+coding %>%
   ggplot(aes(model)) +
+  geom_bar()
+```
+
+```{r}
+coding %>%
+  ggplot(aes(family)) +
+  geom_bar()
+
+coding %>%
+  ggplot(aes(outcome, fill = family)) +
   geom_bar()
 ```
 
@@ -229,6 +246,15 @@ coding %>%
 
 ```{r}
 coding %>%
+  count(operationalisation) %>%
+  ggplot(
+    aes(reorder(operationalisation, desc(n)), n)
+    ) +
+  geom_bar(stat = "identity")
+```
+
+```{r}
+coding %>%
   drop_na(outcome, operationalisation) %>%
   filter(
     outcome %in% c("duration", "f0", "intensity"),
@@ -241,7 +267,7 @@ coding %>%
 
 ```{r}
 coding %>%
-  select(framework:operationalisation, temporal_window, typicality_operationalization, random_effects) %>%
+  select(framework:outcome, operationalisation, temporal_window, typicality_operationalization, random_effects) %>%
   distinct()
 ```
 
