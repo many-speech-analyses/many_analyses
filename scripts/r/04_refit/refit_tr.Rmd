@@ -14,28 +14,9 @@ knitr::opts_chunk$set(
 knitr::opts_knit$set(root.dir = here::here())
 
 # libs
-library("here")
-library("fs")
-library("dplyr")
-library("tidyr")
-library("readr")
-library("forcats")
-library("ggplot2")
-library("stringr")
-library("strex")
-library("purrr")
-library("lme4")
-library("brms")
-library("broom")
-library("broom.mixed")
-library("readxl")
-library("optimx")
-library("MuMIn")
-library("fda")
-library("abind")
-library("data.table")
-library("magrittr")
-library("tidyverse")
+library(tidyverse)
+library(brms)
+library(readxl)
 
 # NOTE: one of the many packages interferes with tidyverse, so the select function throws an error!
 
@@ -908,48 +889,6 @@ alosa_atun_16_speechrate_con <- brm(
 
 ```
 
-# psittacula_scabriculus
-
-```{r authors setup}
-
-```
-
-```{r their_models}
-
-```
-
-```{r refitting}
-
-```
-
-# eosipterus_pytyopsittacus
-
-```{r authors setup}
-
-```
-
-```{r their_models}
-
-```
-
-```{r refitting}
-
-```
-
-# pseudopleuronectes_assasi
-
-```{r authors setup}
-
-```
-
-```{r their_models}
-
-```
-
-```{r refitting}
-
-```
-
 # pervagor_meeki
 
 ```{r pervagor_meeki_setup}
@@ -1362,55 +1301,6 @@ ggsave(filename = "./PCcurves_col.png", plot = pl, width = 20, height = 12, unit
 
 ```
 
-```{r their_models}
-
-```
-
-```{r refitting}
-
-```
-
-# ceratophrys_elephantotus
-
-```{r authors setup}
-
-```
-
-```{r their_models}
-
-```
-
-```{r refitting}
-
-```
-
-# clione_dorsalis
-
-```{r authors setup}
-
-```
-
-```{r their_models}
-
-```
-
-```{r refitting}
-
-```
-
-# aracana_bitatawa
-
-```{r authors setup}
-
-```
-
-```{r their_models}
-
-```
-
-```{r refitting}
-
-```
 
 # dunkleosteus_inscriptus
 
@@ -1631,34 +1521,6 @@ dunkleosteus_inscriptus_5_npdur_cat <- brm(
   cores = 4,  
   file = "./data/analyses/models/dunkleosteus_inscriptus_5_npdur_cat"
   )
-
-```
-
-# nestor_idahoensis
-
-```{r authors setup}
-
-```
-
-```{r their_models}
-
-```
-
-```{r refitting}
-
-```
-
-# sphyrna_ellioti
-
-```{r authors setup}
-
-```
-
-```{r their_models}
-
-```
-
-```{r refitting}
 
 ```
 
@@ -1940,20 +1802,6 @@ procambarus_mahogoni_3_int_con <- brm(
   cores = 4,  
   file = "./data/analyses/models/procambarus_mahogoni_3_int_con"
   )
-
-```
-
-# aratinga_lugubris
-
-```{r authors setup}
-
-```
-
-```{r their_models}
-
-```
-
-```{r refitting}
 
 ```
 
