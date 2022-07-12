@@ -43,7 +43,7 @@ First, we get a list of the OSF components in the Teams Analyses component. (It 
 
 ```{r comps}
 assigned <- coding %>%
-  select(team, animal, assigned_to) %>%
+  dplyr::select(team, animal, assigned_to) %>%
   distinct()
 
 comps <- osf_retrieve_node("https://osf.io/n3fyd/") %>%
@@ -195,7 +195,7 @@ msa_models %>%
   geom_segment(aes(x = estimate - se * 1.96, xend = estimate + se * 1.96, yend = mod_name), 
     color = "#cc0033", alpha = 0.5, size = 3, lineend = "round") + 
   geom_point(color = "#cc0033", pch = 21, stroke = 3, size = 3.1) +
-  facet_wrap(~ typicality_lab, ncol = 1, scales = "free") +
+  facet_wrap(typicality_lab ~ ., ncol = 2, scales = "free") +
   labs(y = "Model", x = "Estimate ± SE") + 
   clean_theme() + 
   theme(strip.text.x = element_text(hjust = 0))
