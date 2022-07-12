@@ -253,6 +253,68 @@ neosilurus_omanensis_5_srrat_cat <- brm(
 )
 ```
 
+# nestor_idahoensis
+
+```{r}
+msa_data <- read_csv("./data/analyses/sc/nestor_idahoensis/msa_data_v2.csv", na = c("", "--undefined--")) %>%
+  mutate(
+    effect_cat = factor(typicality, levels = c("atypical", "medium", "typical")),
+    f0 = scale(log(f0)) %>% as.numeric(),
+    duration = scale(log(duration)) %>% as.numeric(),
+    f15 = scale(log(f15)) %>% as.numeric(),
+    f25 = scale(log(f25)) %>% as.numeric()
+  )
+```
+
+Not sure which priors to use after scaling.
+
+```{r}
+priors2 = c(
+  #weakly informative priors for intercepts and beta for each response variable
+  prior(normal(0,1.5), class = Intercept, resp = f0),
+  prior(normal(0,1.5), class = b, resp = f0),
+  prior(normal(0,1.5), class = Intercept, resp = duration),
+  prior(normal(0,1.5), class = b, resp = duration),
+  prior(normal(0,1.5), class = Intercept, resp = f15),
+  prior(normal(0,1), class = b, resp = f15),
+  prior(normal(0,1), class = Intercept, resp = f25),
+  prior(normal(0,1), class = b, resp = f25),
+  #weakly informative priors for random effects (slopes)
+  prior(cauchy(0,0.1), class = sd, group = ID, resp = f0),
+  prior(cauchy(0,0.1), class = sd, group = ID, resp = duration),
+  prior(cauchy(0,0.1), class = sd, group = ID, resp = f15),
+  prior(cauchy(0,0.1), class = sd, group = ID, resp = f25),
+  prior(cauchy(0,0.1), class = sd, group = targetWord, resp = f0),
+  prior(cauchy(0,0.1), class = sd, group = targetWord, resp = duration),
+  prior(cauchy(0,0.1), class = sd, group = targetWord, resp = f15),
+  prior(cauchy(0,0.1), class = sd, group = targetWord, resp = f25),
+  #weakly informative priors for the correlation between random intercept and slope
+  prior(lkj(2), class = cor, group = ID),
+  prior(lkj(2), class = cor, group = targetWord),
+  prior(cauchy(0, 1), class = sigma, resp=f0),
+  prior(cauchy(0, 1), class = sigma, resp=duration),
+  prior(cauchy(0, 1), class = sigma, resp=f15),
+  prior(cauchy(0, 1), class = sigma, resp=f25)
+)
+
+nestor_idahoensis_1_mult_cat <- brm(
+  mvbind(f0, duration, f15, f25) ~
+    effect_cat +
+    (1|ID) + (1|targetWord) +
+    (0 + typicality|ID) +
+    (0 + typicality|targetWord),
+  data = msa_data,
+  family = gaussian(),
+  prior = priors2, chains = 4, cores = 4,
+  threads = threading(2, grainsize = 100),
+  backend = "cmdstanr",
+  # control = list(max_treedepth = 15, adapt_delta = 0.9),
+  file = "./data/analyses/models/nestor_idahoensis_1_mult_cat.rds",
+  seed = my_seed
+)
+```
+
+
 
 # paralichthys_undulatus
 
@@ -295,25 +357,30 @@ msa_data <- mdl_data %>%
 ```
 
 ```{r}
-petauroides_fistulator_1_f0_cat <- bam(
-  pitch_st ~
-    effect_cat +
-    s(id) +
-    s(trial, bs = "re") +
-    s(speaker, bs = "re") +
-    s(target_name, bs = "re") +
-    s(target_colour, bs = "re") +
-    s(competitor_name, bs = "re") +
-    s(competitor_colour, bs = "re") +
-    s(distractor1_name, bs = "re") +
-    s(distractor1_colour, bs = "re") +
-    s(distractor2_name, bs = "re") +
-    s(distractor2_colour, bs = "re"),
-  data = msa_data,
-  cluster = parallel::makeCluster(8)
-)
+the_file <- "./data/analyses/models/petauroides_fistulator_1_f0_cat.rds"
 
-saveRDS(petauroides_fistulator_1_f0_cat, "./data/analyses/models/petauroides_fistulator_1_f0_cat.rds")
+if (file.exists(the_file)) {
+  petauroides_fistulator_1_f0_cat <- readRDS(the_file)
+} else {
+  petauroides_fistulator_1_f0_cat <- bam(
+    pitch_st ~
+      effect_cat +
+      s(id) +
+      s(trial, bs = "re") +
+      s(speaker, bs = "re") +
+      s(target_name, bs = "re") +
+      s(target_colour, bs = "re") +
+      s(competitor_name, bs = "re") +
+      s(competitor_colour, bs = "re") +
+      s(distractor1_name, bs = "re") +
+      s(distractor1_colour, bs = "re") +
+      s(distractor2_name, bs = "re") +
+      s(distractor2_colour, bs = "re"),
+    data = msa_data,
+    cluster = parallel::makeCluster(8)
+  )
+  saveRDS(petauroides_fistulator_1_f0_cat, the_file)
+}
 ```
 
 
@@ -453,8 +520,138 @@ saron_pictus_1_dur_cat <- brm(
   backend = "cmdstanr",
   control = list(adapt_delta = 0.99, max_treedepth = 12),
   cores = 4,
-  threads = threading(2, grainsize = 100), 
+  threads = threading(2, grainsize = 100),
   file = "data/analyses/models/saron_pictus_1_dur_cat",
+  seed = my_seed
+)
+```
+
+# sphyrna_ellioti
+
+```{r}
+pro_df <- read.csv("data/analyses/sc/sphyrna_ellioti/Data & Analysis Files/ManySpeech_ProsodyTrialsData.csv")
+
+#Some intervals are blank, so delete those:
+
+pro_df <- pro_df[!pro_df$AFI=="",]
+
+#Create a column that specifies the part of speech of the phrase of interest:
+
+pro_df <- pro_df %>%
+  mutate(POS = case_when(
+    n.interval == "10" ~ "Adj",
+    n.interval == "11" ~ "Noun"
+  ))
+
+#Convert continuous variables from character type to numeric:
+
+pro_df$Duration..ms.<- as.numeric(pro_df$Duration..ms.)
+pro_df$Intensity <- as.numeric(pro_df$Intensity)
+pro_df$fo1 <- as.numeric(pro_df$fo1)
+pro_df$fo2 <- as.numeric(pro_df$fo2)
+pro_df$fo3.Hz. <- as.numeric(pro_df$fo3.Hz.)
+
+#Centering F0 values by speaker:
+
+pro_df <- pro_df %>%
+  group_by(speaker) %>% 
+  mutate(mfo1 = mean(fo1),
+         mfo2 = mean(fo2),
+         mfo3 = mean(fo3.Hz.),
+         cfo1 = fo1-mfo1,
+         cfo2 = fo2-mfo2,
+         cfo3 = fo3.Hz.-mfo3)
+
+#For now, let's just look at the critical Adjectives and Nouns:
+
+phrase_df <- pro_df %>% drop_na(POS)
+
+#Filling out the typicality columns for the AF and ANF conditions from the typicality mean scores
+#based on the thresholds provided by the experimenters:
+
+msa_data <- phrase_df %>%
+  mutate(typicality = case_when(
+    typ_mean < 25 ~ "atypical",
+    typ_mean > 25 & typ_mean < 90 ~ "medium",
+    typ_mean > 90 ~ "typical"
+  ))
+
+msa_data$POS <- as.factor(phrase_df$POS)
+msa_data$typicality <- as.factor(phrase_df$typicality)
+msa_data$condition <- as.factor(phrase_df$condition)
+msa_data$AFI <- as.factor(phrase_df$AFI)
+
+msa_data <- msa_data %>%
+  mutate(
+    eff_cont = scale(typ_mean) %>% as.numeric(),
+    duration = log(Duration..ms.) %>% scale() %>% as.numeric(),
+    intensity = scale(Intensity) %>% as.numeric(),
+    cfo1 = scale(cfo1) %>% as.numeric(),
+    cfo2 = scale(cfo2) %>% as.numeric(),
+    cfo3 = scale(cfo3) %>% as.numeric()
+  )
+
+contrasts(msa_data$POS) <- "contr.sum"
+contrasts(msa_data$condition) <- "contr.sum"
+```
+
+```{r}
+sphyrna_ellioti_dur_cat <- brm(
+  duration ~
+    POS * condition * eff_cont +
+    (POS|speaker) + (POS|AFI),
+  data = msa_data,
+  file = "./data/analyses/models/sphyrna_ellioti_dur_cat.rds",
+  cores = 4,
+  threads = threading(2, grainsize = 100), 
+  backend = "cmdstanr",
+  seed = my_seed
+)
+
+sphyrna_ellioti_int_cat <- brm(
+  intensity ~
+    POS * condition * eff_cont +
+    (POS|speaker) + (POS|AFI),
+  data = msa_data,
+  file = "./data/analyses/models/sphyrna_ellioti_int_cat.rds",
+  cores = 4,
+  threads = threading(2, grainsize = 100), 
+  backend = "cmdstanr",
+  seed = my_seed
+)
+
+sphyrna_ellioti_cfo1_cat <- brm(
+  cfo1 ~
+    POS * condition * eff_cont +
+    (POS|speaker) + (POS|AFI),
+  data = msa_data,
+  file = "./data/analyses/models/sphyrna_ellioti_cfo1_cat.rds",
+  cores = 4,
+  threads = threading(2, grainsize = 100), 
+  backend = "cmdstanr",
+  seed = my_seed
+)
+
+sphyrna_ellioti_cfo2_cat <- brm(
+  cfo2 ~
+    POS * condition * eff_cont +
+    (POS|speaker) + (POS|AFI),
+  data = msa_data,
+  file = "./data/analyses/models/sphyrna_ellioti_cfo2_cat.rds",
+  cores = 4,
+  threads = threading(2, grainsize = 100), 
+  backend = "cmdstanr",
+  seed = my_seed
+)
+sphyrna_ellioti_cf03_cat <- brm(
+  cfo3 ~
+    POS * condition * eff_cont +
+    (POS|speaker) + (POS|AFI),
+  data = msa_data,
+  file = "./data/analyses/models/sphyrna_ellioti_cf03_cat.rds",
+  cores = 4,
+  threads = threading(2, grainsize = 100), 
+  backend = "cmdstanr",
   seed = my_seed
 )
 ```
