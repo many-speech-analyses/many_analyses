@@ -596,59 +596,59 @@ contrasts(msa_data$condition) <- "contr.sum"
 ```
 
 ```{r}
-sphyrna_ellioti_dur_cat <- brm(
+sphyrna_ellioti_1_dur_cat <- brm(
   duration ~
     POS * condition * eff_cont +
     (POS|speaker) + (POS|AFI),
   data = msa_data,
-  file = "./data/analyses/models/sphyrna_ellioti_dur_cat.rds",
+  file = "./data/analyses/models/sphyrna_ellioti_1_dur_cat.rds",
   cores = 4,
   threads = threading(2, grainsize = 100), 
   backend = "cmdstanr",
   seed = my_seed
 )
 
-sphyrna_ellioti_int_cat <- brm(
+sphyrna_ellioti_2_int_cat <- brm(
   intensity ~
     POS * condition * eff_cont +
     (POS|speaker) + (POS|AFI),
   data = msa_data,
-  file = "./data/analyses/models/sphyrna_ellioti_int_cat.rds",
+  file = "./data/analyses/models/sphyrna_ellioti_2_int_cat.rds",
   cores = 4,
   threads = threading(2, grainsize = 100), 
   backend = "cmdstanr",
   seed = my_seed
 )
 
-sphyrna_ellioti_cfo1_cat <- brm(
+sphyrna_ellioti_3_cfo1_cat <- brm(
   cfo1 ~
     POS * condition * eff_cont +
     (POS|speaker) + (POS|AFI),
   data = msa_data,
-  file = "./data/analyses/models/sphyrna_ellioti_cfo1_cat.rds",
+  file = "./data/analyses/models/sphyrna_ellioti_3_cfo1_cat.rds",
   cores = 4,
   threads = threading(2, grainsize = 100), 
   backend = "cmdstanr",
   seed = my_seed
 )
 
-sphyrna_ellioti_cfo2_cat <- brm(
+sphyrna_ellioti_4_cfo2_cat <- brm(
   cfo2 ~
     POS * condition * eff_cont +
     (POS|speaker) + (POS|AFI),
   data = msa_data,
-  file = "./data/analyses/models/sphyrna_ellioti_cfo2_cat.rds",
+  file = "./data/analyses/models/sphyrna_ellioti_4_cfo2_cat.rds",
   cores = 4,
   threads = threading(2, grainsize = 100), 
   backend = "cmdstanr",
   seed = my_seed
 )
-sphyrna_ellioti_cf03_cat <- brm(
+sphyrna_ellioti_5_cf03_cat <- brm(
   cfo3 ~
     POS * condition * eff_cont +
     (POS|speaker) + (POS|AFI),
   data = msa_data,
-  file = "./data/analyses/models/sphyrna_ellioti_cf03_cat.rds",
+  file = "./data/analyses/models/sphyrna_ellioti_5_cf03_cat.rds",
   cores = 4,
   threads = threading(2, grainsize = 100), 
   backend = "cmdstanr",
