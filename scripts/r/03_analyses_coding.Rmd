@@ -168,6 +168,8 @@ msa_models <- dir_ls(path = here("data/analyses/models"), regexp = ".rds$") %>%
   # because it warns every time that some coef have underscores and its annoying
   suppressWarnings() %>%
   select(-model)
+
+saveRDS(msa_models, "./data/analyses/msa_models.rds")
 ```
 
 Simple pandoc table of the models, estimates, se, etc.
