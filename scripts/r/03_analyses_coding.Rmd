@@ -33,8 +33,7 @@ coding <- read_sheet(the_sheet) %>%
     outcome = factor(outcome, levels = c("duration", "f0", "formants", "intensity", "harmonics", "SNR", "multivariate", "other")),
     temporal_window = factor(temporal_window, levels = c("segment", "syllable", "word", "phrase", "sentence", "other"))
   ) %>%
-  drop_na(model_id)
-
+  drop_na(model_n)
 ```
 
 # Download OSF components
@@ -135,19 +134,27 @@ clean_theme <- function(...) {
   list(
     theme_minimal(), 
     theme(
-      axis.title.y = element_text(size = rel(.9), hjust = 0.95),
-      axis.title.x = element_text(size = rel(.9), hjust = 0.95),
+      axis.title.x = element_blank(),
       panel.grid.major = element_line(colour = 'grey90', size = 0.15),
-      panel.grid.minor = element_line(colour = 'grey90', size = 0.15))
+      panel.grid.minor = element_line(colour = 'grey90', size = 0.15),
+      strip.text.x = element_text(hjust = 0),
+      axis.text.x = element_blank()
+    )
   )
 }
 
 # Functional sequence to get relevant info from Rds files
-clean_up <- . %>% 
-  tidy(effects = "fixed", parametric = TRUE) %>% 
-  suppressWarnings() %>% 
-  filter(term %in% c("effect_cattypical", "effect_con")) %>% 
-  select(term, estimate, se = std.error)
+clean_up <- function(model) {
+  effs <- suppressWarnings(tidy(model, effects = "fixed", parametric = TRUE)) %>% 
+  filter(term %in% c("effect_catmedium", "effect_cattypical", "effect_con"))
+  if (!("response" %in% colnames(effs))) {
+    effs$response <- "none"
+  }
+  effs <- effs %>%
+  select(outcome_mult = response, term, estimate, se = std.error)
+  
+  return(effs)
+}
 ```
 
 Load all the models.
@@ -155,19 +162,48 @@ Load all the models.
 ```{r load-models}
 msa_models <- dir_ls(path = here("data/analyses/models"), regexp = ".rds$") %>% 
   as_tibble() %>% 
-  transmute(path = value,
+  transmute(
+    path = value,
     mod_name = str_remove(path, here("data/analyses/models/")), 
     mod_name = str_remove(mod_name, ".rds"), 
-    model = map(path, ~ readRDS(file = .))) %>% 
-  separate(mod_name, 
-    into = c("word1", "word2", "mod_n", "outcome", "typicality"), 
-    sep = "_", remove = F) %>% 
-  unite(group, word1, word2, sep = "_") %>% 
-  select(group, mod_name:model) %>% 
-  mutate(sum = map(model, clean_up)) %>% 
-  # because it warns every time that some coef have underscores and its annoying
-  suppressWarnings() %>%
-  select(-model)
+    model = map(path, ~ readRDS(file = .))
+  ) %>% 
+  separate(
+    mod_name, 
+    into = c("word1", "word2", "model_n", "model_outcome", "typicality"), 
+    sep = "_", remove = F,
+    convert = TRUE
+  ) %>% 
+  unite(animal, word1, word2, sep = "_") %>% 
+  select(animal, model_n:model) %>% 
+  mutate(summaries = map(model, clean_up)) %>%
+  select(-model) %>%
+  unnest(summaries) %>%
+  mutate(
+    typ_level = case_when(
+      term == "effect_cattypical" ~ "typical",
+      term == "effect_catmedium" ~ "medium"
+    ),
+    typicality = ifelse(typicality == "con", "continuous", "categorical"),
+    model_id = paste(animal, model_n, sep = "_")
+  ) %>%
+  select(animal, model_n, model_id, model_outcome, outcome_mult, typicality, typ_level, estimate, se) %>%
+  mutate(
+    outcome_mult = case_when(
+      outcome_mult == "none" ~ NA_character_,
+      outcome_mult == "meanf0" ~ "f0",
+      outcome_mult == "meanint" ~ "intensity",
+      outcome_mult == "duration" ~ "duration",
+      outcome_mult == "f0" ~ "f0",
+      outcome_mult == "f15" ~ "formants_1",
+      outcome_mult == "f25" ~ "formants_2"
+    )
+  ) %>%
+  left_join(y = coding) %>%
+  mutate(
+    model_id = ifelse(is.na(outcome_mult), model_id, paste(model_id, outcome_mult, sep = "_")),
+    model_id = ifelse(is.na(typ_level), model_id, paste(model_id, typ_level, sep = "_"))
+  )
 
 saveRDS(msa_models, "./data/analyses/msa_models.rds")
 ```
@@ -176,31 +212,41 @@ Simple pandoc table of the models, estimates, se, etc.
 
 ```{r effect-table}
 msa_models %>% 
-  unnest(sum) %>%
   knitr::kable(format = "pandoc")
 ```
 
-Simple forest plot of the estimates +/- SE
+Simple forest plot of the estimates and 95% CrIs.
 
 ```{r forest-plot}
-msa_models %>% 
-  unnest(sum) %>%
-  filter(mod_name != "polymetme_brevirostrum_1_dur_cat") %>%
-  mutate(
-    typicality_lab = if_else(
-      typicality == "cat", "Typicality = categorical", "Typicality = continuous"
-    ), 
-    mod_name = fct_reorder(mod_name, estimate)
-  ) %>% 
-  ggplot(aes(x = estimate, y = mod_name)) + 
-  geom_vline(xintercept = 0) +
-  geom_segment(aes(x = estimate - se * 1.96, xend = estimate + se * 1.96, yend = mod_name), 
-    color = "#cc0033", alpha = 0.5, size = 3, lineend = "round") + 
-  geom_point(color = "#cc0033", pch = 21, stroke = 3, size = 3.1) +
-  facet_wrap(typicality_lab ~ ., ncol = 2, scales = "free") +
-  labs(y = "Model", x = "Estimate ± SE") + 
-  clean_theme() + 
-  theme(strip.text.x = element_text(hjust = 0))
+msa_models %>%
+  filter(animal != "polymetme_brevirostrum") %>%
+  ggplot(aes(x = reorder(model_id, estimate), y = estimate, colour = outcome)) + 
+  geom_hline(yintercept = 0) +
+  geom_segment(
+    aes(y = estimate - se * 1.96, yend = estimate + se * 1.96, xend = model_id), 
+    alpha = 0.5, size = 1, lineend = "round"
+  ) + 
+  geom_point(pch = 21, stroke = 2, size = 1) +
+  facet_wrap(. ~ typicality, ncol = 1, scales = "free") +
+  scale_colour_brewer(palette = "Set1", type = "qual") +
+  labs(y = "Estimate (z-scores)") + 
+  clean_theme() 
+```
+
+```{r forest-plot-2}
+msa_models %>%
+  filter(animal != "polymetme_brevirostrum") %>%
+  ggplot(aes(x = reorder(model_id, estimate), y = estimate, colour = estimate)) + 
+  geom_hline(yintercept = 0) +
+  geom_segment(
+    aes(y = estimate - se * 1.96, yend = estimate + se * 1.96, xend = model_id), 
+    alpha = 0.5, size = 1, lineend = "round"
+  ) + 
+  geom_point(pch = 21, stroke = 2, size = 1) +
+  facet_wrap(. ~ typicality, ncol = 1, scales = "free") +
+  scale_colour_gradientn(colours = c("#d95f02", "#dfc27d", "#80cdc1", "#018571"), limits = c(-1, 1)) +
+  labs(y = "Estimate (z-scores)") + 
+  clean_theme() 
 ```
 
 # Analyses coding plots
