@@ -62,7 +62,7 @@ clean_up <- . %>%
   tidy(effects = "fixed") %>% 
   suppressWarnings() %>% 
   filter(term %in% c("effect_cattypical", "effect_con")) %>% 
-  select(term, estimate, se = std.error)
+  dplyr::select(term, estimate, se = std.error)
 
 # Function for printing unordered lists
 print_status <- function(name) {
@@ -89,15 +89,17 @@ teams <- tribble(
   "comanthina_maculatus",     TRUE,           TRUE,
   "cromileptes_saxatilis",    TRUE,           TRUE,
   "ctenosaura_limax",         TRUE,           FALSE,
-  "gnathosaurus_canadensis",  FALSE,          FALSE,
-  "gymnothorax_spinulosus",   FALSE,          FALSE,
+  "gnathosaurus_canadensis",  TRUE,           TRUE,
+  "gymnothorax_spinulosus",   TRUE,           TRUE,
   "haematopus_fossor",        TRUE,           TRUE,
   "lasionycteris_altavela",   TRUE,           TRUE,
-  "linckia_nattereri",        FALSE,          FALSE,
-  "lycodes_bradfieldi",       FALSE,          FALSE,
-  "naso_cassivellaunos",      FALSE,          FALSE,
-  "trapezia_cantonensis",     FALSE,          FALSE,
-  "trigonias_lachneri",       FALSE,          FALSE,
+  "linckia_nattereri",        TRUE,           FALSE,
+  "lycodes_bradfieldi",       TRUE,           FALSE,
+  "naso_cassivellaunos",      TRUE,           TRUE,
+  "trapezia_cantonensis",     TRUE,           TRUE,
+  "trigonias_lachneri",       TRUE,           TRUE,
+  "psittacula_scabriculus",   TRUE,           TRUE, 
+  "clione_dorsalis",          TRUE,           TRUE
   )
 
 knitr::kable(teams)
@@ -596,9 +598,37 @@ print_status("gnathosaurus_canadensis")
 ```
 
 ```{r}
+#| label: gnathosaurus_canadensis
+
+# Load teams data
+gnathosaurus_canadensis_typ <- read_xlsx(here("data", "analyses", "jvc", 
+  "gnathosaurus_canadensis", "typ.xlsx"))
+
+# Refit original model
+f_test <- friedman.test(
+  y = gnathosaurus_canadensis_typ$median_st_diff, 
+  groups = gnathosaurus_canadensis_typ$typicality, 
+  blocks = gnathosaurus_canadensis_typ$speaker
+  ) 
+
+#
+# JVC refits
+#
+
+MSA_gnathosaurus_canadensis_df <- gnathosaurus_canadensis_typ %>% 
+  mutate(median_diff_z = (median_st_diff - mean(median_st_diff)) / sd(median_st_diff),
+    effect_cat = as.factor(typicality), 
+    effect_cat = C(effect_cat, treatment))
+
+gnathosaurus_canadensis_1_f0diff_cat <- brm(
+  median_diff_z ~ effect_cat, 
+  data = MSA_gnathosaurus_canadensis_df, 
+  cores = 4, threads = threading(2, grainsize = 100), 
+  backend = "cmdstanr", seed = 06022016, 
+  file = here("data", "analyses", "models", "gnathosaurus_canadensis_1_f0diff_cat")
+  )
 
 ```
-
 
 ## gymnothorax_spinulosus
 
@@ -607,6 +637,64 @@ print_status("gnathosaurus_canadensis")
 #| echo: false
 #| results: 'asis'
 print_status("gymnothorax_spinulosus")
+```
+
+```{r}
+#| label: gymnothorax_spinulosus
+
+gymnothorax_spinulosus_data <- read.csv2(here("data", "analyses", "jvc", "gymnothorax_spinulosus", "Many_speech_final_3.csv"), dec = ".") %>% 
+  mutate(measure = vowel_intensity_diff, 
+    speaker = as.factor(speaker), 
+    trial = as.factor(trial), 
+    condition = as.factor(condition), 
+    token = as.factor(token), 
+    target_colour = as.factor(target_colour))
+
+# Exclusion process
+sd_intensity <- sd(gymnothorax_spinulosus_data$vowel_intensity_diff)
+min_int_diff <- median(gymnothorax_spinulosus_data$vowel_intensity_diff)-1.5*sd_intensity
+max_int_diff <- median(gymnothorax_spinulosus_data$vowel_intensity_diff)+1.5*sd_intensity
+gymnothorax_spinulosus_data$exclude <- 0
+gymnothorax_spinulosus_data[which(gymnothorax_spinulosus_data$vowel_intensity_diff<min_int_diff),]$exclude <- 1
+gymnothorax_spinulosus_data$exclude <- factor(gymnothorax_spinulosus_data$exclude)
+gymnothorax_spinulosus_int <- gymnothorax_spinulosus_data[which(gymnothorax_spinulosus_data$exclude==0),]
+gymnothorax_spinulosus_int$typ_mean <- gymnothorax_spinulosus_int$typ_mean/100
+
+#
+# Fit original model
+#
+fit0 <- lmer(measure ~ condition * typ_mean + 
+    (1|target_colour) + 
+    (1|speaker),
+  data = gymnothorax_spinulosus_int, 
+  REML = FALSE , 
+  na.action = na.exclude
+  )
+
+# Set up post hoc comparisons
+contmat <- rbind(c(0,0,0,1,0,0), c(0,0,0,1,1,0), c(0,0,0,1,0,1))
+rownames(contmat) <- c('pente AF','pente ANF','pente NF')
+comp_mult <- summary(multcomp::glht(fit0, linfct = contmat))
+comp_mult
+
+#
+# JVC refits
+#
+MSA_gymnothorax_spinulosus_df <- gymnothorax_spinulosus_int %>% 
+  mutate(measure_z = (measure - mean(measure)) / sd(measure),
+    effect_con = (typ_mean - mean(typ_mean)) / sd(typ_mean)) %>% 
+  filter(condition == "AF")
+
+gymnothorax_spinulosus_1_intdiff_con <- brm(
+  measure_z ~ effect_con + 
+    (1|target_colour) + 
+    (1|speaker), 
+  data = MSA_gymnothorax_spinulosus_df, 
+  cores = 4, threads = threading(2, grainsize = 100), 
+  backend = "cmdstanr", seed = 06022016, 
+  file = here("data", "analyses", "models", "gymnothorax_spinulosus_1_intdiff_con")
+  )
+
 ```
 
 ## haematopus_fossor
@@ -909,6 +997,21 @@ lasionycteris_altavela_1_int_con <- brm(
 print_status("linckia_nattereri")
 ```
 
+```{r}
+#| label: linckia_nattereri
+
+linckia_nattereri_dat <- read.csv(here("data", "analyses", "jvc", 
+"linckia_nattereri", "ResultsNF2.csv")) %>% 
+  mutate(typicality = as.factor(typicality))
+
+# Fit original bayesian models with default priors
+
+
+```
+
+NOTE: Fit bayesian logistic regression model (typicality = DV) with 10 continuous predictors. ASK stef and timo for suggestions. 
+
+
 ## lycodes_bradfieldi
 
 ```{r}
@@ -918,6 +1021,14 @@ print_status("linckia_nattereri")
 print_status("lycodes_bradfieldi")
 ```
 
+```{r}
+#| label: lycodes_bradfieldi
+
+
+```
+
+Processed data not available.
+
 ## naso_cassivellaunos
 
 ```{r}
@@ -925,6 +1036,67 @@ print_status("lycodes_bradfieldi")
 #| echo: false
 #| results: 'asis'
 print_status("naso_cassivellaunos")
+```
+
+```{r}
+#| label: naso_cassivellaunos
+
+msa <- read_csv(here("data", "analyses", "jvc", "naso_cassivellaunos", 
+  "ProPer_MSA", "data_tables", "ProPer_MSA_scores.csv"))
+msa <- msa[msa$syllable %in% c("A_P*", "A_F", "N_P*", "N_F"),]
+msa$syllable <- factor(msa$syllable, levels = c("A_P*", "A_F", "N_P*", "N_F"), labels = c("A_Penult", "A_Final", "N_Penult", "N_Final"), ordered = FALSE)
+# Set "typical" the 1st / reference level
+msa$typicality <- factor(msa$typicality, levels = c("typical", "medium", "atypical"))
+# Set "atypical" the 1st / reference level
+#msa$typicality <- factor(msa$typicality, levels = c("atypical", "medium", "typical"))
+
+# Reorder target_name wrt typicality
+msa$target_name <- factor(msa$target_name)
+msa$target_name <- fct_reorder(msa$target_name, as.numeric(msa$typicality))
+
+load(here("data", "analyses", "jvc", "naso_cassivellaunos", 
+  "Bayesian analysis", "Mass_Models.rda"))
+
+#
+# JVC refit
+#
+
+MSA_naso_cassivellaunos_data <- msa %>% 
+  mutate(mass_rel_log = log(mass_rel), 
+    mass_rel_z = (mass_rel_log - mean(mass_rel_log)) / sd(mass_rel_log), 
+    DeltaF0_rel_z = (DeltaF0_rel - mean(DeltaF0_rel)) / sd(DeltaF0_rel), 
+    sync_rel_z = (sync_rel - mean(sync_rel)) / sd(sync_rel), 
+    effect_cat = C(typicality, treatment), 
+    effect_cat = fct_relevel(effect_cat, "atypical"), 
+    syllable = C(syllable, sum))
+
+naso_cassivellaunos_1_mass_cat <- brm(
+  mass_rel_z ~ effect_cat * syllable +  
+    (1 + effect_cat * syllable | speaker), 
+  data = MSA_naso_cassivellaunos_data, 
+  cores = 4, threads = threading(2, grainsize = 100), 
+  backend = "cmdstanr", seed = 06022016, 
+  file = here("data", "analyses", "models", "naso_cassivellaunos_1_mass_cat")
+  )
+
+naso_cassivellaunos_2_f0delta_cat <- brm(
+  DeltaF0_rel_z ~ effect_cat * syllable +  
+    (1 + effect_cat * syllable | speaker), 
+  data = MSA_naso_cassivellaunos_data, 
+  cores = 4, threads = threading(2, grainsize = 100), 
+  backend = "cmdstanr", seed = 06022016, 
+  file = here("data", "analyses", "models", "naso_cassivellaunos_2_f0delta_cat")
+  )
+
+naso_cassivellaunos_3_syncrel_cat <- brm(
+  sync_rel_z ~ effect_cat * syllable +  
+    (1 + effect_cat * syllable | speaker), 
+  data = MSA_naso_cassivellaunos_data, 
+  cores = 4, threads = threading(2, grainsize = 100), 
+  backend = "cmdstanr", seed = 06022016, 
+  file = here("data", "analyses", "models", "naso_cassivellaunos_3_syncrel_cat")
+  )
+
 ```
 
 ## trapezia_cantonensis
@@ -936,6 +1108,110 @@ print_status("naso_cassivellaunos")
 print_status("trapezia_cantonensis")
 ```
 
+```{r}
+#| label: trapezia_cantonensis
+
+if(F) {
+msa_raw <- tibble(
+  path = Sys.glob(
+    glue::glue("{here('./data/analyses/jvc/trapezia_cantonensis/')}/audio_chunks/*/_FastTrack/csvs/*.csv")), 
+  file = map(path, read_csv, progress = FALSE, show_col_types = FALSE)) %>%
+    unnest(file)
+
+typicality <- tribble(
+    ~"adj", ~"noun", ~"typicality",
+    "gelben",  "Kirsche", "atypical",
+    "gruenen", "Moehre",  "atypical",
+    "roten",   "Gurke",   "atypical",
+    "orangen", "Trauben", "atypical",
+    "braunen", "Paprika", "atypical",
+    "gelben",  "Erbsen",     "medium",
+    "gruenen", "Tomate",     "medium", 
+    "roten",   "Aprikose",   "medium",
+    "orangen", "Kartoffeln", "medium",
+    "braunen", "Banane",     "medium",
+    "gelben",  "Zitrone",   "typical",
+    "gruenen", "Bohnen",    "typical",
+    "roten",   "Erdbeere",  "typical",
+    "orangen", "Mandarine", "typical",
+    "braunen", "Walnuss",   "typical",
+    "gelben", "Sonnenbrille",   "non-food",
+    "gelben", "Socken",         "non-food",
+    "gelben", "Waescheklammer", "non-food",
+    "gruenen", "Sonnenbrille",   "non-food",
+    "gruenen", "Socken",         "non-food",
+    "gruenen", "Bueroklammer",   "non-food",
+    "roten", "Socken",         "non-food",
+    "roten", "Bueroklammer",   "non-food",
+    "roten", "Waescheklammer", "non-food",
+    "orangen", "Socken",         "non-food",
+    "orangen", "Bueroklammer",   "non-food",
+    "orangen", "Waescheklammer", "non-food",
+    "braunen", "Sonnenbrille",   "non-food",
+    "braunen", "Bueroklammer",   "non-food",
+    "braunen", "Waescheklammer", "non-food"
+)
+
+beast_path <- "/Users/casillas/academia/research/in_progress/many_speech_analyses/many_analyses/./data/analyses/jvc/trapezia_cantonensis//audio_chunks/"
+
+msa_processed <- msa_raw %>% 
+  mutate(path = str_remove_all(path, beast_path), 
+    path = str_remove_all(path, "/.*/_FastTrack/csvs/"),
+    path = str_remove_all(path, "_\\d+\\.csv")) %>% 
+    separate(path, into = c("art", "adj", "noun", "speaker_trial"), 
+      sep = "_", extra = "merge") %>%
+    mutate(noun = str_remove_all(noun, "/")) %>% 
+    separate(speaker_trial, into = c("speaker", "trial"), 
+      sep = "_(?=\\d+\\Z)") %>%
+    # Add the typicality ratings
+    left_join(typicality, by = c("adj", "noun")) %>%
+    # Get normalized time, and duration
+    group_by(speaker, trial) %>%
+    mutate(percent = time / max(time),
+           dur = max(time) - min(time),
+           .after = time) %>%
+    ungroup()
+
+msa_for_dur <- msa_processed %>%
+  dplyr::select(art, adj, noun, speaker, trial, dur, typicality) %>%
+  distinct() %>%
+  mutate(typicality = factor(typicality, 
+    levels = c("typical", "medium", "atypical", "non-food")))
+
+write_csv(msa_for_dur, 
+  file = here("data", "analyses", "jvc", "trapezia_cantonensis", "jvc_tidy.csv"))
+
+dur_lmer <- lmer(
+  dur ~ typicality + 
+    (1|adj) + (1|speaker), 
+  data = msa_for_dur
+  )
+
+}
+
+#
+# JVC refit
+#
+
+MSA_trapezia_cantonensis_data <- read_csv(
+  here("data", "analyses", "jvc", "trapezia_cantonensis", "jvc_tidy.csv")
+  ) %>% 
+  mutate_if(is.character, as.factor) %>% 
+  mutate(dur_z = (dur - mean(dur)) / sd(dur), 
+    effect_cat = C(typicality, treatment), 
+    effect_cat = fct_relevel(effect_cat, "atypical"))
+
+trapezia_cantonensis_4_dur_cat <- brm(
+  dur_z ~ effect_cat +  
+    (1|adj) + (1|speaker), 
+  data = MSA_trapezia_cantonensis_data, 
+  cores = 4, threads = threading(2, grainsize = 100), 
+  backend = "cmdstanr", seed = 06022016, 
+  file = here("data", "analyses", "models", "trapezia_cantonensis_4_dur_cat")
+  )
+
+```
+
 ## trigonias_lachneri
 
 ```{r}
@@ -945,8 +1221,298 @@ print_status("trapezia_cantonensis")
 print_status("trigonias_lachneri")
 ```
 
+```{r}
+#| label: trigonias_lachneri
+
+msa <- read.csv(here("data", "analyses", "jvc", "trigonias_lachneri", 
+  "CSV", "whole_no_errors.csv"))
+
+msa_linear <- subset(msa, select = c(participant, spi, speaker, trial, condition, typicality, target_colour,typ_mean))
+#correcting variable types in R
+msa_linear$participant <- as.factor(msa_linear$participant)
+msa_linear$speaker <- as.factor(msa_linear$speaker)
+msa_linear$trial <- as.integer(msa_linear$trial)
+msa_linear$spi <- as.numeric(msa_linear$spi)
+msa_linear$condition <- as.factor(msa_linear$condition)
+msa_linear$typicality <- as.factor(msa_linear$typicality)
+msa_linear$target_colour <- as.factor(msa_linear$target_colour)
+
+spi_base <- msa_linear %>%
+  filter(condition %in% "NF")
+spi_base$spi <- log(spi_base$spi)
+
+spi.var.md <- lmer(spi ~ typ_mean + 
+    (1 + typ_mean|target_colour) + 
+    (1 + typ_mean|speaker), 
+  data = spi_base, 
+  control=lmerControl(optimizer="bobyqa",optCtrl=list(maxfun=100000)), 
+  REML = TRUE)
+
+#
+# JVC refit
+#
+
+MSA_trigonias_lachneri_spi_data <- spi_base %>% 
+  mutate(spi_z = (spi - mean(spi, na.rm = T)) / sd(spi, na.rm = T)) %>% 
+  mutate(effect_con = (typ_mean - mean(typ_mean)) / sd(typ_mean))
+
+trigonias_lachneri_1_spi_con <- brm(
+  spi_z ~ effect_con, 
+  data = MSA_trigonias_lachneri_spi_data, 
+  cores = 4, threads = threading(2, grainsize = 100), 
+  backend = "cmdstanr", 
+  file = here("data", "analyses", "models", "trigonias_lachneri_1_spi_con")
+  )
+
+```
 
 
+## psittacula_scabriculus
+
+```{r}
+#| label: print_psittacula_scabriculus
+#| echo: false
+#| results: 'asis'
+print_status("psittacula_scabriculus")
+```
+
+```{r}
+#| label: psittacula_scabriculus
+
+MSA_psittacula_scabriculus_raw <- read_xlsx(
+  path = here("data", "analyses", "jvc", "psittacula_scabriculus", 
+    "Data_and_analysis", "psittacula_scabriculus_full_dataset_checked.xlsx"))
+
+
+MSA <- MSA_psittacula_scabriculus_raw %>%
+  arrange(target_name) %>% #orders the rows of the data by the target_name column
+  group_by(target_name) %>% #group by the target name
+  transform(items = as.numeric(factor(target_name)))%>% #transform target name into a item
+  select(items, target_name, everything()
+         ) #select all variables from items and target_name 
+
+MSAcomplete <- MSA %>% 
+  filter (condition == 'NF') %>% 
+  filter (avgdur > 0) 
+
+#count notpronounced for each vowel (1,2,3,4)
+M_not <- MSAcomplete %>%
+  filter(dur1 == "notpronounced"|dur2 == "notpronounced"|dur3 == "notpronounced"|dur4 == "notpronounced")
+
+dur1_not <- M_not%>%
+  filter(dur1 == "notpronounced")
+dur2_not <- M_not%>%
+  filter(dur2 == "notpronounced")
+dur3_not <- M_not%>%
+  filter(dur3 == "notpronounced")
+dur4_not <- M_not%>%
+  filter(dur4 == "notpronounced")
+
+#Convert the average duration from character to number. 
+MSAcomplete$avgdur <- as.numeric(MSAcomplete$avgdur)
+
+regularizing_priors <- prior('normal(0, 1)', class = 'b')
+options(mc.cores=parallel::detectCores())
+# Original model
+set.seed(42)
+
+if(F) {
+MSA_mdl <- brm(
+  avgdur ~ 1 + typicality + 
+    (1 + typicality |participant) +  
+    (1 + typicality |items), 
+  data = MSAcomplete, 
+  prior = regularizing_priors,  
+  seed = 42, init = 0, cores = 4, 
+  chains = 4, warmup = 2000, iter = 4000)
+}
+
+
+#
+# JVC refit
+#
+
+msa_psittacula_scabriculus_df <- MSAcomplete %>% 
+  mutate(avgdur_z = (avgdur - mean(avgdur)) / sd(avgdur), 
+    effect_cat = as.factor(typicality), 
+    effect_cat = C(effect_cat, treatment), 
+    effect_cat = fct_relevel(effect_cat, "atypical"))
+
+psittacula_scabriculus_1_dur_cat <- brm(
+  avgdur_z ~ effect_cat +  
+    (1 + effect_cat | participant) +  
+    (1 + effect_cat | items), 
+  data = msa_psittacula_scabriculus_df, 
+  cores = 4, threads = threading(2, grainsize = 100), 
+  backend = "cmdstanr", seed = 06022016, 
+  file = here("data", "analyses", "models", "psittacula_scabriculus_1_dur_cat")
+  )
+
+```
+
+
+## clione_dorsalis
+
+```{r}
+#| label: print_clione_dorsalis
+#| echo: false
+#| results: 'asis'
+print_status("clione_dorsalis")
+```
+
+```{r}
+#| label: clione_dorsalis
+
+#read and clean the data
+data_formants_duration <- read.csv(
+  here("data", "analyses", "jvc", "clione_dorsalis", 
+  "MSA_formantlog.csv"))
+data_vs <- read.csv(
+    here("data", "analyses", "jvc", "clione_dorsalis", 
+    "MSA_formantlog_vowel space area.csv"))
+
+data_no_NA <- subset(data_formants_duration, typicality != "NA")
+data_formant_midpoint <- subset(data_no_NA, timept == "3")
+data_vs <- plyr::rename(data_vs, c("atypical"="vowel_space_area"))
+data_2 <- subset(data_vs, timepoint == "2")
+data_4 <- subset(data_vs, timepoint == "4")
+formants_tp_2 <- subset(data_no_NA, timept == "2")
+formants_tp_4 <- subset(data_no_NA, timept == "4")
+
+# REfit original models
+duration.mod <- lmer(word.duration ~ typicality + vowel + gender + (1|filename), data=data_formant_midpoint)
+
+vsa.mod.2 <- lmer(vowel_space_area ~ typicality + (1|subject),data=data_2)
+vsa.mod.4 <- lmer(vowel_space_area ~ typicality + (1|subject),data=data_4)
+
+###F1 and F2 models
+mod.4 <- lmer(f1 ~ typicality*vowel + gender + (1|filename), data=formants_tp_2)
+mod.5 <- lmer(f2 ~ typicality*vowel + gender + (1|filename), data=formants_tp_2)
+mod.6 <- lmer(f1 ~ typicality*vowel + gender + (1|filename), data=formants_tp_4)
+mod.7 <- lmer(f2 ~ typicality*vowel + gender + (1|filename), data=formants_tp_4)
+
+
+#
+# JVC refit
+#
+msa_clione_dorsalis_mp <- data_formant_midpoint %>% 
+  mutate(
+    word_duration_z = (word.duration - mean(word.duration)) / sd(word.duration), 
+    effect_cat = as.factor(typicality), 
+    effect_cat = C(effect_cat, treatment), 
+    effect_cat = fct_relevel(effect_cat, "atypical"), 
+    vowel = as.factor(vowel), 
+    vowel = C(vowel, sum), 
+    gender = as.factor(gender), 
+    gender = C(gender, sum)
+    )
+
+clione_dorsalis_1_mp_cat <- brm(
+  word_duration_z ~ effect_cat + vowel + gender + 
+    (1|filename), 
+  data = msa_clione_dorsalis_mp, 
+  cores = 4, threads = threading(2, grainsize = 100), 
+  backend = "cmdstanr", seed = 06022016, 
+  file = here("data", "analyses", "models", "clione_dorsalis_1_mp_cat")
+  )
+
+msa_clione_dorsalis_vs <- data_2 %>% 
+  mutate(
+    vowel_space_area_z = (vowel_space_area - mean(vowel_space_area)) / sd(vowel_space_area), 
+    effect_cat = as.factor(typicality), 
+    effect_cat = C(effect_cat, treatment), 
+    effect_cat = fct_relevel(effect_cat, "atypical"), 
+  )
+
+clione_dorsalis_2_vs_cat <- brm(
+  vowel_space_area_z ~ effect_cat + 
+    (1 | subject), 
+  data = msa_clione_dorsalis_vs, 
+  cores = 4, threads = threading(2, grainsize = 100), 
+  backend = "cmdstanr", seed = 06022016, 
+  file = here("data", "analyses", "models", "clione_dorsalis_2_vs_cat")
+  )
+
+msa_clione_dorsalis_vs4 <- data_4 %>% 
+  mutate(
+    vowel_space_area_z = (vowel_space_area - mean(vowel_space_area)) / sd(vowel_space_area), 
+    effect_cat = as.factor(typicality), 
+    effect_cat = C(effect_cat, treatment), 
+    effect_cat = fct_relevel(effect_cat, "atypical"), 
+  )
+
+clione_dorsalis_3_vs4_cat <- brm(
+  vowel_space_area_z ~ effect_cat + 
+    (1 | subject), 
+  data = msa_clione_dorsalis_vs4, 
+  cores = 4, threads = threading(2, grainsize = 100), 
+  backend = "cmdstanr", seed = 06022016, 
+  file = here("data", "analyses", "models", "clione_dorsalis_3_vs4_cat")
+  )
+
+msa_clione_dorsalis_f1f22 <- formants_tp_2 %>% 
+  mutate(
+    f1_z = (f1 - mean(f1)) / sd(f1), 
+    f2_z = (f2 - mean(f2)) / sd(f2), 
+    effect_cat = as.factor(typicality), 
+    effect_cat = C(effect_cat, treatment), 
+    effect_cat = fct_relevel(effect_cat, "atypical"), 
+    vowel = as.factor(vowel), 
+    vowel = C(vowel, sum), 
+    gender = as.factor(gender), 
+    gender = C(gender, sum)
+  )
+
+clione_dorsalis_4_f12_cat <- brm(
+  f1_z ~ effect_cat + vowel + gender + 
+    (1|filename), 
+  data = msa_clione_dorsalis_f1f22, 
+  cores = 4, threads = threading(2, grainsize = 100), 
+  backend = "cmdstanr", seed = 06022016, 
+  file = here("data", "analyses", "models", "clione_dorsalis_4_f12_cat")
+  )
+
+clione_dorsalis_5_f22_cat <- brm(
+  f2_z ~ effect_cat + vowel + gender + 
+    (1|filename), 
+  data = msa_clione_dorsalis_f1f22, 
+  cores = 4, threads = threading(2, grainsize = 100), 
+  backend = "cmdstanr", seed = 06022016, 
+  file = here("data", "analyses", "models", "clione_dorsalis_5_f22_cat")
+  )
+
+msa_clione_dorsalis_f1f24 <- formants_tp_4 %>% 
+  mutate(
+    f1_z = (f1 - mean(f1)) / sd(f1), 
+    f2_z = (f2 - mean(f2)) / sd(f2), 
+    effect_cat = as.factor(typicality), 
+    effect_cat = C(effect_cat, treatment), 
+    effect_cat = fct_relevel(effect_cat, "atypical"), 
+    vowel = as.factor(vowel), 
+    vowel = C(vowel, sum), 
+    gender = as.factor(gender), 
+    gender = C(gender, sum)
+  )
+
+clione_dorsalis_6_f14_cat <- brm(
+  f1_z ~ effect_cat + vowel + gender + 
+    (1|filename), 
+  data = msa_clione_dorsalis_f1f24, 
+  cores = 4, threads = threading(2, grainsize = 100), 
+  backend = "cmdstanr", seed = 06022016, 
+  file = here("data", "analyses", "models", "clione_dorsalis_6_f14_cat")
+  )
+
+clione_dorsalis_7_f24_cat <- brm(
+  f2_z ~ effect_cat + vowel + gender + 
+    (1|filename), 
+  data = msa_clione_dorsalis_f1f24, 
+  cores = 4, threads = threading(2, grainsize = 100), 
+  backend = "cmdstanr", seed = 06022016, 
+  file = here("data", "analyses", "models", "clione_dorsalis_7_f24_cat")
+  )
+
+```
 
 
 
@@ -969,7 +1535,7 @@ msa_models <- dir_ls(path = here("data", "analyses", "models"),
     into = c("word1", "word2", "mod_n", "outcome", "typicality"), 
     sep = "_", remove = F) %>% 
   unite(group, word1, word2, sep = "_") %>% 
-  select(group, mod_name:model) %>% 
+  dplyr::select(group, mod_name:model) %>% 
   mutate(sum = map(model, clean_up)) %>% 
   suppressWarnings() 
 ```
@@ -982,7 +1548,7 @@ msa_models <- dir_ls(path = here("data", "analyses", "models"),
 # Simple pandoc table of the models, estimates, se, etc.
 msa_models %>% 
   unnest(sum) %>% 
-  select(-model) %>% 
+  dplyr::select(-model) %>% 
   knitr::kable(format = "pandoc")
 
 ```
@@ -991,6 +1557,7 @@ msa_models %>%
 
 ```{r}
 #| label: forest-plot
+#| fig.height: 8
 
 # Simple forest plot of the estimates +/- SE
 msa_models %>% 
