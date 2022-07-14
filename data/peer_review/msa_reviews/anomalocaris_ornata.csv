@@ -1,0 +1,95 @@
+Q3,Q5_2,Q5_3,Q5_4,Q6,Q8,Q9,Q10,Q11,Q12,Q13,Q14,Q15,q6
+anomalocaris_ornata,80,53,60,publishable with major revision.,"Overall, appropriate models for analysed outcome variables were used, and an attempt was made to include the maximal random structure where possible, which is a strength of the analysis. In situations where convergence problems occurred, the researchers could have used optimisers and keep the maximal random structure.
+
+There are some aspects of the analysis that require additional explanation in our view.  For example, in some of the models the researchers use the binary ‘col_obj’ variable in the random structure and in others they used ‘word’ but it does not become entirely clear why there are different approaches for different outcome models. I our view, ‘word’ might have generally been a more appropriate variable to include than ‘col_obj’, as it should capture more variation. 
+
+Further, each model was checked for ‘best fit’, and it would have been interesting to check whether ‘colour’ and ‘object’ independently affected each model first before creating the combined variable ‘col_obj’.
+
+Overall, appropriate models for analysed outcome variables were used, and an attempt was made to include the maximal random structure where possible, which is a strength of the analysis. In situations where convergence problems occurred, the researchers could have used optimisers and keep the maximal random structure.
+
+There are some aspects of the analysis that require additional explanation in our view.  For example, in some of the models the researchers use the binary ‘col_obj’ variable in the random structure and in others they used ‘word’ but it does not become entirely clear why there are different approaches for different outcome models. I our view, ‘word’ might have generally been a more appropriate variable to include than ‘col_obj’, as it should capture more variation. 
+
+Further, each model was checked for ‘best fit’, and it would have been interesting to check whether ‘color’ and ‘object’ independently affected each model first before creating the combined variable ‘col_obj’.
+
+Our most serious concern with the analyses is the way in which the food items (nouns) were included in the analysis, as the nouns were not balanced across the three typicality conditions. In our view, their varying segmental and syllabic composition, stress pattern and length will confound the typicality condition. For example, all words in the 'typical' category have unchecked/long/tense vowels (with the possible exception of 'Erdbeere'), while three of the 'atypical' words have checked/short/lax vowels.
+
+The statistical code provided might need updating, adding a list of packages and a clarification which specific dataset the models are based on. When we ran the model for dB^2, the resulting numbers were different from the reported ones. This is probably a minor issue as the statistical significance results remained the same. 
+
+Lastly, in our interpretation, the task was to provide one overall answer to the research question about utterance modulation in response to information typicality, and this approach provides several answers from different outcome variables, and does not become clear which variable the authors want to prioritise over the others as the final answer.
+
+
+The statistical code provided might need updating, adding a list of packages and a clarification which specific dataset the models are based on. When we ran the model for dB^2, the resulting numbers were different from the reported ones. This is probably a minor issue as the statistical significance results remained the same. 
+
+Lastly, in our interpretation, the task was to provide one overall answer to the research question about utterance modulation in response to information typicality, and this approach provides several answers from different outcome variables, and does not become clear which variable the authors want to prioritise over the others as the final answer.
+","Linear mixed models seem appropriate for the continuous outcome variables analysed, considering that multiple participants responded to the same stimuli and that the same words (for adjectives) occurred in different conditions.","More information is needed on how the cut-off levels for voice_type were chosen and how the variable adds to answering the question. If it is used as proxy for binary genders, could the authors provide a rationale for their assumption that the genders might differ in their approach to information marking with prosody? 
+Also it might have been more appropriate to add voice_type in interactions with the remaining variables if the authors thought that gender could lead to different responses to changing typicality.
+
+When analysing pitch, the researchers split the data into two using the already arbitrary cut-off points of voice_type. Why was that level chosen? Why was voice_type left in the model, considering that a semitone transformation would have normalised the data? The bimodal distribution is explained as having occurred due to an impact of voice_type on F0 (dependent variable), however splitting the data reduces the power of the model, and seems like an ad hoc rationale for fitting the model.
+","As mentioned above, a clearer rationale is needed for the voice_type variable. Even if it improves AIC somewhat, without an additional theoretical rationale we are not convinced that it needs to be included, particularly in the split f0 models.
+
+Including nouns (objects) is unlikely to be a reasonable decision considering they were not balanced across typicality levels and had different lengths and syllabic structures. 
+Issues with the variables in the random slopes and intercepts were also pointed out above.
+
+Considering that only one answer (effect size and CI) was required at the end, we are not sure why typicality was included as a categorical variable or which specific partial effect (level of the variable and its interactions) the researchers want to highlight as the main answer. 
+
+","If inclusion of col_obj in the random structure of the intensity and f0 models was inappropriate (1+col_obj|Word) why weren’t just random intercepts per word included (1|Word) as in the vowel duration model? As mentioned before, this would not be a problem if only colour adjectives were included.
+
+As mentioned before, it is unclear why voice_type was included, and why it was included as a separate predictor without adding it to any interactions or in the random structures of the models.
+
+The vowel duration model would have been appropriate if nouns were excluded and optimisers were used to help preserve the maximal random structure.
+
+","We have already commented on the problem of not excluding nouns.
+It is potentially problematic that outliers were excluded only from the f0 data but not from the intensity and vowel duration data. While it is reasonable that measurement errors might have occurred in f0, this may also have happened for intensity or duration.
+
+",Semitone transformation was explained and it appears reasonable.,The figures were not clearly labelled and numbered.,1
+anomalocaris_ornata,88,56,67,publishable with minor revision.,"The use of mixed model is good. The choice of the fixed effects and random effects as well.
+But they only analyze the NF condition. The other condition (AF and ANF) are simply excluded with no specific explanations in the report.
+We have to note that they did not follow the guideline to choose only one dependent variable (instead they analyzed pitch, duration and intensity separately) - which to me is a good thing for a paper and something we would probably all do, but just did not respect the guidelines.
+","The choice of mixed models is a good one for this type of dataset, in order to control for variability coming from the participants and the stimuli.","Overall the process is not much explained.
+They did not choose a particular dependent variable because they used many of them, so it’s hard to evaluate this selection process. 
+The good things are: Model residuals were checked properly. There was one transformation because one distribution was skewed.
+They did not explain why they choose to use the typicality factor as a categorical variable (rather than the continuous scale typ_mean or typ_median). 
+","There are good things and bad things.
+To me the choice of using the typicality factor with 3 modality (rather than the continuous scale typ_mean or typ_median) is not a very good choice because they lose some information by reducing a continuous scale down to a 4-modalities factor. (and it kind of forces them to just discard the AF and ANF conditions)
+We believe all the conditions (AF, NF, ANF) should have been included in the model instead of removing all the data from the AF and ANF conditions.
+The use of col_obj factor (2 modalities: noun vs adjective) is a good idea to contrast the prosody in the color adjective vs the noun (instead of using absolute values or normalizing relatively to the whole sentence) and keeping everything in the model.
+","Given the variables they have chosen, the structure of the statistical model is very good.","They excluded all data from NF and ANF condition which we disagree with. 
+They also exclude outliers rather properly, although the way they exclude the outliers vary from one dependent variable to another.
+","The choice to transform data seemed good, at least well-justified and useful.",NA,2
+anomalocaris_ornata,75,80,75,publishable with major revision.,"The authors test the effect of typicality (categorical) on f0, vowel duration, and intensity, at the word level, for only the object and color words. Mixed models were used with speaker and word or word type (col_obj) included as random effects. Additional fixed effects were included for voice type and col_obj (i.e., color vs. object word). 
+
+While the authors seem to have a strong command of statistical modelling, the variety of exclusions and transformations, as well as the additional inclusion of variables not initially included in the dataset, make the overall analysis and conclusions somewhat confusing / questionable. The f0 work may be particularly fragile, given the transformations and splitting.  
+
+It is interesting that the authors find an intensity effect for the object word, rather than the color word, as one might have expected. The result is weak, but not because it is just or barely below alpha = 0.05 (meaningless statement, given that the authors take an NSHT approach; they should get rid of such statement), but because the effect seems very small. The inclusion of effect size would have helped in interpretation. 
+",The choice of a linear mixed model is appropriate. Details about the model are discussed below.,"The authors were interested in the following dependent variables:
+-	Intensity in dB of the entire word (for colour and object), 
+-	F0 (looking at only the stressed vowel in both colour and object) 
+-	Vowel duration (of only the stressed vowels in both the colour and object levels).
+
+They considered these variables relevant based on previous literature, particularly what is known about the structure of the German language. 
+
+Their dependent variables were: 
+-	Typicality (categorical), color-obj (indicate whether it was a color vs. object work), and voice type (high vs. low pitch). The interaction between typicality and color-obj was also included. 
+
+A random effect was included for col_obj nested in speaker. In the model predicting vowel duration, word and speaker were included individually as random effects, as the previous structure (sol_obj|speaker) failed to converge. In other words, not all models had the same random effects structure. 
+
+We are slightly confused why voice type was included as a fixed, rather than random effect. Further, isn’t the inclusion of the random slope and intercept for participant enough to account for differences due to their voice type? 
+","The included variables are generally suitable. 
+The authors did a significant amount of additional work to conduct their analyses. They seem to have created new text grids, a new analysis of production errors for the sake of exclusion criterion (though what exactly was done here is not totally clear), and they also added an additional variable of voice type, which they coded by hand into high pitch or low pitch. Please see the answer to the previous question with respect to the inclusion of voice type. 
+",See previous answers.,"The authors seem to have excluded 26 production errors in some way, though it is unclear how exactly (full trials? individual words?). It would also be nice to know what the criteria for coding these errors were. 
+
+The analysis was done only on the variables of interest during the production of color or object words, i.e., all other words in the full utterance were excluded. 
+
+Words with e.g., f0, values falling outside the 1.5 IQR were excluded as outliers. 
+","f0 data showed a bi-modal distribution and were first split into low vs. high voice type; however, this transformation did not solve the bi-modal distribution problem so the data were instead split into above vs. below 150 Hz. 
+We find this transformation confusing (what is underlying this bimodality?) but respect the authors careful checking of these matters. 
+",NA,1
+anomalocaris_ornata,100,63,81,publishable with major revision.,"I think the authors did a great job. There were a few issues I saw: 
+
+1. No indication of effect size. 
+2.  I have issues with their F0 analysis. Specifically,  introduction of new variables after looking at the data (low and high peak; dichomtizing). Also, the authors kind of gave trying to normalize the data. I am surprised they did not try  a log transformation would work.
+",The choice of analysis seems appropriate.,They ran a maximal model with backward selection to pick best model. If the maximal ran I am not sure why they engaged in this selection process.  This backward selection process is acceptable.,"No particular justification was given for the dependent measures, but intensity, vowel duration, and F0 are all viable correlates of contrastive focus and stress.
+Independent variables for the analysis were selected via model fit (AIC) obtained from ANOVAs. A new variable was introduced by the team to separate speakers into voice-type groups based on overall F0. This was created post-hoc to deal with a bimodal distribution in F0.
+",The structure was adequate,"F0 measures with values more than 1.5 times the interquartile range were removed (1.75% of total F0 tokens). This was done to filter any errors in the data transformation process. Given all the automated scripts in the data transformation pipeline were hand-checked, this seems very cautious but not inappropriate. The researchers did not report exclusion criteria for the intensity or duration measurements.","Transformations seemed appropiate. They squared the intensity measure due to non-normality.  
+
+",NA,1
