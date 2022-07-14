@@ -1,0 +1,46 @@
+Q3,Q5_2,Q5_3,Q5_4,Q6,Q8,Q9,Q10,Q11,Q12,Q13,Q14,Q15,q6
+aracana_bitatawa,50,75,75,publishable with minor revision.,"Our primary concern with the phonetic analysis is that, while the authors report manually correcting the adjective and noun boundaries, they do not mention any additional exclusions/complications on the basis of that hand correction. For example, how did they handle pauses between the adjective and the noun? See comments below regarding statistics.","Quantile generalized additive mixed models were used, but it isn't clear to us why this approach (which we are admittedly not familiar with) is better than standard mixed models. Linear mixed models are quite robust to violations of the normality assumption, which seemed to be the primary concern. However, even that concern was a bit unclear as they referred both to the normality of the residuals and the normality of the data.",See below.,See below.,"We did not fully understand the motivation for including number of syllables and not speaking rate in the final model for the duration analysis. It seems like number of syllables can be accounted for by the fact that random intercepts were included for nouns. Given that, speaking rate would make more sense as a fixed effect.","This analysis included both NF (3 levels of typicality) and ANF (2 levels of typicality) for duration. It was not clear whether both were included for the F0 analysis. 
+
+Importantly, both repetitions of each item by each speaker were included throughout, but they did not control for repetition in their models. This is potentially problematic as an atypical combination may be less atypical the second time it is encountered.
+
+These analyses included only the adjectives. However, it is entirely possible that speakers might phonetically mark the typicality of an adjective-noun pairing on the noun. It seems like a missed opportunity not to include the nouns in analysis.","F0 measures were z-normalized to avoid sex differences. Since participant was included as a random effect, this may have been unnecessary.","This analysis included an important investigation into the typicality manipulation. Specifically, they looked at Google bigram frequency of the adj-noun pairs, finding significant overlap in the frequency of different typicality conditions.",2
+aracana_bitatawa,80,75,77,publishable with major revision.,"Positives: 
+- Addressed unbalanced data
+- Transforming pitch
+- Considered speech rate
+- Considered controlling for other variables
+- Visualization of the factors (typicality / adjective + nouns) in tables
+- Time-normalized f0 in the QGAM
+
+Negatives
+- Specifications of QGAMs needed more detail
+- Motivation for using QGAMs for duration was unclear
+- Pipeline for determining which fixed effects are included was unclear
+- No effect sizes
+- Unclear why the noun’s acoustic properties were not analyzed
+- Needed more detail about the hand-correctors and the criteria used to annotate duration of the sentence
+","1. The authors could have provided more motivation for the choice to use QGAMs as opposed to other analysis methods. In particular, why QGAMs were appropriate to analyze duration as it doesn’t vary across time.
+
+2. The team motivated the use of QGAMs under the assumption that residuals would not be normally distributed, but didn’t include a check showing that this is the case.
+
+3. Based on the Fasiolo et al. (2020) paper cited by the team, QGAMs are a Bayesian method. The team should address what the “p” value means in a Bayesian context.
+
+4. Effect sizes were not discussed in the report. The effect size mentioned in the survey responses is only for duration, not for pitch.
+","1. The pipeline for including or excluding fixed effects was not well described. Was the choice to include or not a fixed effect based on model comparison? They note that they use a “confirmatory analysis when testing typicality, which is why we did not compare the following model to simpler models on the basis of ML-scores or AIC” (p. 5), but whether they used maximum likelihood/AIC for log_freq, speech rate, etc. is not clear. 
+
+2. It was unclear why the team only analyzed the adjective and not the nouns, considering that the noun focus condition was the only condition that included trials across all three typicality levels. The team raised an important issue in the study design by noting that adjectives, but not nouns, were counterbalanced across typicality levels; however, since the team controlled for the noun’s # of syllables, it would have been reasonable to look at how duration and pitch varied for the nouns as well.
+
+3. There could have been more details as to how the syllable count used to compute speech rate was acquired.
+
+4. The team could have also looked at intensity, a variable that consistently varies as a function of focus.
+
+5. It was unclear how pitch was extracted over the course of the adjectives and over how many measurements.
+","See comments to question 11. 
+","See comments to question 11. 
+","We agree with the team’s choice to exclude error trials. However it was unclear whether only trials marked as containing an error were excluded, or also trials marked as containing a hesitation, pause or structure error. Also, the survey responses indicated that all observations were included in the analyses, in contrast to what was described in the report.","We agree with the team’s choice to transform f0. However, the parametric table output (e.g., with Intercept = 184.95) suggests that the analysis was not conducted on z-scored f0 values. 
+","1. It would have been nice to have more information about the 3 hand-correctors:   what criteria did they use for segmenting the words? How consistent were they? Did 1 hand-corrector do the entire textgrid for the subject? Similarly, it would be useful to know whether the Rapp force aligner consistently led to errors, and if so, we might suggest the use of a different force alignment method.
+
+2. In the QGAMs, what was “err” defined as? Did the team use the default 0.05?
+",1
+aracana_bitatawa,50,97,74,publishable with minor revision.,"The research report does not clearly state at what level duration and f0 were extracted: word level, segmental level or even adj-noun group level.",I do not know QGAM. But it seems to me that the applied methods are solid.,Seems fine. However I am not sure about including google bigrams as the furnished data set already contains typicality rates collected from humans.,"Duration and f0 were processed independently in two different models. The other variables are fine, too.","I do not know QGAM analyses. Froma what I know about mixed effects models, it seems fine.",All erroneous productions were excluded. Ok.,"F0 was transformed. A z-normalization was applied in order to smooth variation according to speaker gender. Only five speakers were male, the normalization process is a good idea in order to smooth out gender bias in the values.",I'd really like to know more about how acoustic measures were extracted.,2
+aracana_bitatawa,90,75,80,publishable with major revision.,The explanation seems a bit inaccessible and over-complex for the given data set.,The authors might have chosen a challenging statistical model instead of focusing on the research questions themselves.,"They chose duration and F0 of the adjective, which are good variables for answering the research question.",They are appropriate to answer the question provided given the data.,"Our minimal understanding of the model is that it is best suited for longitudinal data and for a larger data set. With that in mind, the model is too complex for the data.",N/A,They z-normalized frequency values due to differences in sex of the participants. This was a good choice.,"We question the use of Google for frequency measures and the subsequent use of that measure in the statistical model, particularly given that we were provided with multiple measures of typicality, including a numeric one.",1
