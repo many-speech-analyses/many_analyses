@@ -10,6 +10,7 @@ knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_knit$set(root.dir = here::here())
 library(tidyverse)
 library(brms)
+library(tidybayes)
 my_seed <- 99
 set.seed(my_seed)
 ```
@@ -17,7 +18,14 @@ set.seed(my_seed)
 # Read data
 
 ```{r}
-msa_models <- readRDS("./data/analyses/msa_models.rds")
+msa_models <- readRDS("./data/analyses/msa_models.rds") %>%
+  mutate(
+    outcome = as.factor(outcome),
+    typicality = as.factor(typicality)
+  ) %>%
+  droplevels()
+contrasts(msa_models$outcome) <- "contr.sum"
+contrasts(msa_models$typicality) <- "contr.sum"
 ```
 
 # Meta-analysis
@@ -40,7 +48,23 @@ meta_bm <- brm(
   cores = 4,
   backend = "cmdstanr",
   threads = threading(2),
-  file = "meta_bm.rds"
+  file = "./data/meta_analysis/meta_bm.rds"
 )
+```
+
+```{r}
+meta_bm
+```
+
+```{r}
+plot(conditional_effects(meta_bm), ask = FALSE)
+```
+
+```{r}
+meta_bm %>%
+  spread_draws(b_Intercept, r_model_id[model,]) %>%
+  mutate(model_mean = b_Intercept + r_model_id) %>%
+  ggplot(aes(y = reorder(model, model_mean), x = model_mean)) +
+  stat_halfeye()
 ```
 
