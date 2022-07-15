@@ -21,6 +21,20 @@ library("strex")
 library("purrr")
 library("broom")
 library("broom.mixed")
+
+# Plotting theme
+clean_theme <- function(...) {
+  list(
+    theme_minimal(), 
+    theme(
+      axis.title.x = element_blank(),
+      panel.grid.major = element_line(colour = 'grey90', size = 0.15),
+      panel.grid.minor = element_line(colour = 'grey90', size = 0.15),
+      strip.text.x = element_text(hjust = 0),
+      axis.text.x = element_blank()
+    )
+  )
+}
 ```
 
 # Read coding sheet
@@ -36,7 +50,9 @@ coding <- read_sheet(the_sheet) %>%
   drop_na(model_n)
 ```
 
-# Download OSF components
+# Teams' analyses
+
+## Download OSF components
 
 First, we get a list of the OSF components in the Teams Analyses component. (It takes a few seconds)
 
@@ -80,11 +96,11 @@ for (comp in 1:nrow(your_comps)) {
 }
 ```
 
-# Refit models
+## Refit models
 
 Now that the components have been downloaded, we can refit the models using the scripts in `scripts/r/04-refit/`.
 
-# Upload refitted models to OSF
+## Upload refitted models to OSF
 
 Once all your models have been refitted, you can upload them to the OSF, in the Cache component, `models/refitted/` folder.
 
@@ -106,9 +122,9 @@ osf_upload(
 )
 ```
 
-# Download all refitted models
+## Download all refitted models
 
-We first download all the refitted models .rds files from the OSF.
+We download all the refitted models `.rds` files from the OSF.
 
 ```{r download-refitted}
 cache <- osf_retrieve_node("wds2m")
@@ -126,24 +142,9 @@ osf_download(
 
 Now we can extract the relevant estimates from the refitted models.
 
-A few helper functions.
+The following functions extracts the estimates.
 
-```{r helpers}
-# Plotting theme
-clean_theme <- function(...) {
-  list(
-    theme_minimal(), 
-    theme(
-      axis.title.x = element_blank(),
-      panel.grid.major = element_line(colour = 'grey90', size = 0.15),
-      panel.grid.minor = element_line(colour = 'grey90', size = 0.15),
-      strip.text.x = element_text(hjust = 0),
-      axis.text.x = element_blank()
-    )
-  )
-}
-
-# Functional sequence to get relevant info from Rds files
+```{r clean-up}
 clean_up <- function(model) {
   effs <- suppressWarnings(tidy(model, effects = "fixed", parametric = TRUE)) %>% 
   filter(term %in% c("effect_catmedium", "effect_cattypical", "effect_con"))
@@ -157,7 +158,7 @@ clean_up <- function(model) {
 }
 ```
 
-Load all the models.
+Now we load all the models and apply `clean_up()` to get the estimates.
 
 ```{r load-models}
 msa_models <- dir_ls(path = here("data/analyses/models"), regexp = ".rds$") %>% 
@@ -211,13 +212,16 @@ saveRDS(msa_models, "./data/analyses/msa_models.rds")
 Simple pandoc table of the models, estimates, se, etc.
 
 ```{r effect-table}
-msa_models %>% 
+msa_models %>%
+  select(model_id, estimate, se) %>%
   knitr::kable(format = "pandoc")
 ```
 
+# Plotting
+
 Simple forest plot of the estimates and 95% CrIs.
 
-```{r forest-plot}
+```{r fp-outcome}
 msa_models %>%
   filter(animal != "polymetme_brevirostrum") %>%
   ggplot(aes(x = reorder(model_id, estimate), y = estimate, colour = outcome)) + 
@@ -231,6 +235,22 @@ msa_models %>%
   scale_colour_brewer(palette = "Set1", type = "qual") +
   labs(y = "Estimate (z-scores)") + 
   clean_theme() 
+```
+
+```{r fp-outcome-facet}
+msa_models %>%
+  filter(animal != "polymetme_brevirostrum") %>%
+  ggplot(aes(x = reorder(model_id, estimate), y = estimate, colour = outcome)) + 
+  geom_hline(yintercept = 0) +
+  geom_segment(
+    aes(y = estimate - se * 1.96, yend = estimate + se * 1.96, xend = model_id), 
+    alpha = 0.5, size = 1, lineend = "round"
+  ) + 
+  geom_point(pch = 21, stroke = 2, size = 1) +
+  facet_grid(outcome ~ typicality, scales = "free") +
+  scale_colour_brewer(palette = "Set1", type = "qual") +
+  labs(y = "Estimate (z-scores)") + 
+  clean_theme()
 ```
 
 ```{r forest-plot-2}
@@ -248,8 +268,6 @@ msa_models %>%
   labs(y = "Estimate (z-scores)") + 
   clean_theme() 
 ```
-
-# Analyses coding plots
 
 ```{r}
 coding %>%
