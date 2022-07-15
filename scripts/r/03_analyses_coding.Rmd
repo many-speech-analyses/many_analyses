@@ -43,10 +43,6 @@ clean_theme <- function(...) {
 the_sheet <- "https://docs.google.com/spreadsheets/d/1OOXB-8Uk-fh_urw0Lm4DC0jBueXLIb4Bm-a9--UVXOw/edit?usp=sharing"
 
 coding <- read_sheet(the_sheet) %>%
-  mutate(
-    outcome = factor(outcome, levels = c("duration", "f0", "formants", "intensity", "harmonics", "SNR", "multivariate", "other")),
-    temporal_window = factor(temporal_window, levels = c("segment", "syllable", "word", "phrase", "sentence", "other"))
-  ) %>%
   drop_na(model_n)
 ```
 
@@ -203,7 +199,10 @@ msa_models <- dir_ls(path = here("data/analyses/models"), regexp = ".rds$") %>%
   left_join(y = coding) %>%
   mutate(
     model_id = ifelse(is.na(outcome_mult), model_id, paste(model_id, outcome_mult, sep = "_")),
-    model_id = ifelse(is.na(typ_level), model_id, paste(model_id, typ_level, sep = "_"))
+    model_id = ifelse(is.na(typ_level), model_id, paste(model_id, typ_level, sep = "_")),
+    outcome = factor(outcome, levels = c("duration", "f0", "formants", "intensity", "harmonics", "SNR", "other")),
+    typicality = factor(typicality, levels = c("categorical", "continuous")),
+    temporal_window = factor(temporal_window, levels = c("segment", "syllable", "word", "phrase", "sentence", "other"))
   )
 
 saveRDS(msa_models, "./data/analyses/msa_models.rds")
