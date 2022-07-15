@@ -269,19 +269,19 @@ msa_models %>%
   clean_theme() 
 ```
 
-```{r}
+```{r frameworks}
 coding %>%
   ggplot(aes(framework)) +
   geom_bar()
 ```
 
-```{r}
+```{r models}
 coding %>%
   ggplot(aes(model)) +
   geom_bar()
 ```
 
-```{r}
+```{r family}
 coding %>%
   ggplot(aes(family)) +
   geom_bar()
@@ -291,14 +291,14 @@ coding %>%
   geom_bar()
 ```
 
-```{r}
+```{r temporal-w}
 coding %>%
   drop_na(outcome, temporal_window) %>%
   ggplot() +
   geom_mosaic(aes(x = product(outcome, temporal_window), fill = outcome))
 ```
 
-```{r}
+```{r temporal-w-2}
 coding %>%
   drop_na(outcome, temporal_window) %>%
   filter(
@@ -310,8 +310,9 @@ coding %>%
   geom_mosaic(aes(x = product(outcome, temporal_window), fill = outcome))
 ```
 
-```{r}
+```{r operation}
 coding %>%
+  drop_na(operationalisation) %>%
   count(operationalisation) %>%
   ggplot(
     aes(reorder(operationalisation, desc(n)), n)
@@ -319,7 +320,7 @@ coding %>%
   geom_bar(stat = "identity")
 ```
 
-```{r}
+```{r operation-2}
 coding %>%
   drop_na(outcome, operationalisation) %>%
   filter(
@@ -331,13 +332,15 @@ coding %>%
   geom_mosaic(aes(x = product(outcome, operationalisation), fill = outcome))
 ```
 
-```{r}
+# Unique model combinations
+
+```{r combos}
 coding %>%
   select(framework:outcome, operationalisation, temporal_window, typicality_operationalization, random_effects) %>%
   distinct()
 ```
 
-```{r}
+```{r n-models}
 coding %>%
   select(team, n_models) %>%
   distinct() %>%
