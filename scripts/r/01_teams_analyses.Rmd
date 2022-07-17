@@ -45,13 +45,6 @@ teams_analyses$Q16[3] <- "https://osf.io/sfhn5/?view_only=a8cec2e3e26043f2ab0218
 write_csv(teams_analyses, "data/questionnaires/msa_data_analysis_questionnaire_cleaned.csv")
 ```
 
-```{r review, eval=FALSE}
-the_sheet <- "https://docs.google.com/spreadsheets/d/1vFPjZkB4naCNj10v0BuEWQDvo34okmcN1Mv7VkZL9po/edit#gid=0"
-
-review <- read_sheet(the_sheet) %>%
-  left_join(teams_analyses %>% select(Q17, Q16), by = c("Animal" = "Q17"))
-```
-
 ```{r analytic-quest}
 dir.create("data/questionnaires/msa_data_analysis_files/", showWarnings = FALSE)
 

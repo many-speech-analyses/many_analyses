@@ -46,6 +46,78 @@ coding <- read_sheet(the_sheet) %>%
   drop_na(model_n)
 ```
 
+# Read intake forms
+
+We will join the intake forms with `msa_models`.
+
+```{r intake}
+other_sheet <- "https://docs.google.com/spreadsheets/d/1KAZC2vyteTfGE6mlwOiz9b8F9VghDYLGsOzmWaNbmEE/edit?usp=sharing"
+
+team_animal_coord <- read_sheet(other_sheet)
+
+msa_intake <- read_csv("./data/questionnaires/msa_intake_form.csv") %>%
+  filter(row_number() != 2)
+msa_intake_qs <- msa_intake[1,]
+msa_intake <- msa_intake[-1,]
+
+msa_intake <- msa_intake %>%
+  mutate(
+    Q6 = case_when(
+      Q6 == "Zlatomira IIchovska" ~ "Zlatomira Ilchovska",
+      Q6 == "University of Birmingham team under the team coordinator Zlatomira IIchovska" ~ "Zlatomira Ilchovska",
+      Q6 == "Vincent Hughes" ~ "Vince Hughes",
+      Q6 == "Tiphaine Cordelier" ~ "Tiphaine Caudrelier",
+      Q6 == "Scott Perry" ~ "Scott James Perry",
+      Q6 == "Scott James Perru" ~ "Scott James Perry",
+      Q6 == "Nicole Rodriquez" ~ "Nicole Rodriguez",
+      Q6 == "Michael Gradoville (Arizona State Univ.)" ~ "Michael Gradoville",
+      Q6 == "Joey Stanley" ~ "Joseph A. Stanley",
+      Q6 == "Dusan Nikolic (dusan.nikolic1@ucalgary.ca)" ~ "Dušan Nikolić",
+      Q6 == "Dusan Nikolic" ~ "Dušan Nikolić",
+      Q6 == "Dušan Nickolić" ~ "Dušan Nikolić",
+      Q6 == "Alicea Megan Brown" ~ "Alicia M Brown",
+      Q6 == "Alicia Brown" ~ "Alicia M Brown",
+      Q6 == "Ali A-Hoorie" ~ "Ali H. Al-Hoorie",
+      Q6 == "Ali Al-Hoorie" ~ "Ali H. Al-Hoorie",
+      Q6 == "Dr Rory Turnbull" ~ "Rory Turnbull",
+      Q6 == "Dr. Reenu Punnoose" ~ "Reenu Punnoose",
+      TRUE ~ Q6
+    ),
+    Q5 = as.numeric(Q5),
+    Q7_1 = as.numeric(Q7_1)
+  )
+
+msa_intake_teams <- msa_intake %>%
+  group_by(Q6) %>%
+  summarise(
+    years_from_phd = mean(Q5, na.rm = TRUE),
+    years_from_phd_sd = sd(Q5, na.rm = TRUE),
+    prior_belief = mean(Q7_1, na.rm = TRUE),
+    prior_belief_sd = sd(Q7_1, na.rm = TRUE)
+  ) %>%
+  full_join(y = team_animal_coord, by = c("Q6" = "coordinator")) %>%
+  select(-Q6)
+```
+
+# Read reviews
+
+```{r}
+msa_reviews <- readRDS("./data/peer_review/msa_reviews.rds")
+
+msa_reviews_teams <- msa_reviews %>%
+  group_by(Q3) %>%
+  summarise(
+    phon_rating = mean(Q5_2, na.rm = TRUE),
+    phon_sd = sd(Q5_2, na.rm = TRUE),
+    stat_rating = mean(Q5_3, na.rm = TRUE),
+    stat_sd = sd(Q5_3, na.rm = TRUE),
+    all_rating = mean(Q5_4, na.rm = TRUE),
+    all_sd = sd(Q5_4, na.rm = TRUE),
+  )
+```
+
+
+
 # Teams' analyses
 
 ## Download OSF components
@@ -203,7 +275,9 @@ msa_models <- dir_ls(path = here("data/analyses/models"), regexp = ".rds$") %>%
     outcome = factor(outcome, levels = c("duration", "f0", "formants", "intensity", "harmonics", "SNR", "other")),
     typicality = factor(typicality, levels = c("categorical", "continuous")),
     temporal_window = factor(temporal_window, levels = c("segment", "syllable", "word", "phrase", "sentence", "other"))
-  )
+  ) %>%
+  left_join(y = msa_intake_teams) %>%
+  left_join(y = msa_reviews_teams, by = c("animal" = "Q3"))
 
 saveRDS(msa_models, "./data/analyses/msa_models.rds")
 ```
