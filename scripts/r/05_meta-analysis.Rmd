@@ -11,6 +11,8 @@ knitr::opts_knit$set(root.dir = here::here())
 library(tidyverse)
 library(brms)
 library(tidybayes)
+library(faux)
+library(betapart)
 my_seed <- 99
 set.seed(my_seed)
 ```
@@ -23,9 +25,12 @@ msa_models <- readRDS("./data/analyses/msa_models.rds") %>%
     outcome = as.factor(outcome),
     typicality = as.factor(typicality)
   ) %>%
-  droplevels()
-contrasts(msa_models$outcome) <- "contr.sum"
-contrasts(msa_models$typicality) <- "contr.sum"
+  droplevels() %>%
+  mutate(
+    outcome = contr_code_sum(outcome),
+    typicality = contr_code_sum(typicality),
+    
+  )
 ```
 
 # Meta-analysis
@@ -64,7 +69,46 @@ plot(conditional_effects(meta_bm), ask = FALSE)
 meta_bm %>%
   spread_draws(b_Intercept, r_model_id[model,]) %>%
   mutate(model_mean = b_Intercept + r_model_id) %>%
-  ggplot(aes(y = reorder(model, model_mean), x = model_mean)) +
-  stat_halfeye()
+  ggplot(aes(x = reorder(model, model_mean), y = model_mean, colour = model_mean)) +
+  geom_hline(yintercept = 0) +
+  stat_pointinterval() +
+  theme(axis.text.x = element_blank())
 ```
 
+# Analytic and researcher-related predictors model
+
+Weakly-informative regularising priors.
+
+```{r preds-priors}
+preds_priors <- c(
+  prior(normal(0, 1), class = Intercept),
+  prior(normal(0, 1), class = b),
+  prior(normal(0, 1), class = meanme),
+  prior(cauchy(0, 1), class = sdme),
+  prior(lkj(2), class = corme)
+)
+```
+
+```{r predictors-bm}
+predictors_bm <- brm(
+  estimate | se(se) ~
+    # pop_sdi +
+    # phoc_n +
+    n_models +
+    mdim +
+    twin +
+    me(all_rating, all_sd) +
+    me(years_from_phd, years_from_phd_sd) +
+    me(prior_belief, prior_belief_sd),
+  data = msa_models,
+  prior = preds_priors,
+  chain = 4,
+  iter = 4000,
+  # control = list(adapt_delta = 0.9999, max_treedepth = 15),
+  seed = my_seed,
+  cores = 4,
+  threads = threading(2),
+  backend = "cmdstanr",
+  file = "./data/meta_analysis/predictors_bm.rds"
+)
+```
