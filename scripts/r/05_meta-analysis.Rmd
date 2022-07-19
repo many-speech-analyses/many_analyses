@@ -23,14 +23,22 @@ set.seed(my_seed)
 msa_models <- readRDS("./data/analyses/msa_models.rds") %>%
   mutate(
     outcome = as.factor(outcome),
-    typicality = as.factor(typicality)
+    typicality = as.factor(typicality),
+    temporal_window = as.factor(temporal_window)
   ) %>%
   droplevels() %>%
   mutate(
     outcome = contr_code_sum(outcome),
     typicality = contr_code_sum(typicality),
-    
+    temporal_window = contr_code_sum(temporal_window)
   )
+
+# bpair <- tibble::tibble(preds) %>% tidyr::unnest_wider(preds, names_sep = ".") %>%
+#     as.matrix() %>%
+#     betapart::beta.pair(.)
+#   sdim <- as.matrix(bpair$beta.sor)
+#   diag(sdim) <- NA
+#   rowSums(sdim, na.rm = T) / length(preds)
 ```
 
 # Meta-analysis
@@ -82,10 +90,10 @@ Weakly-informative regularising priors.
 ```{r preds-priors}
 preds_priors <- c(
   prior(normal(0, 1), class = Intercept),
-  prior(normal(0, 1), class = b),
-  prior(normal(0, 1), class = meanme),
-  prior(cauchy(0, 1), class = sdme),
-  prior(lkj(2), class = corme)
+  prior(normal(0, 1), class = b)
+  # prior(normal(0, 1), class = meanme),
+  # prior(cauchy(0, 1), class = sdme),
+  # prior(lkj(2), class = corme)
 )
 ```
 
@@ -95,11 +103,12 @@ predictors_bm <- brm(
     # pop_sdi +
     # phoc_n +
     n_models +
-    mdim +
-    twin +
-    me(all_rating, all_sd) +
-    me(years_from_phd, years_from_phd_sd) +
-    me(prior_belief, prior_belief_sd),
+    outcome +                  # major dimension
+    temporal_window +          # temporal window
+    typicality +
+    all_rating +
+    years_from_phd +
+    prior_belief,
   data = msa_models,
   prior = preds_priors,
   chain = 4,
@@ -112,3 +121,12 @@ predictors_bm <- brm(
   file = "./data/meta_analysis/predictors_bm.rds"
 )
 ```
+
+```{r}
+predictors_bm
+```
+
+```{r}
+plot(conditional_effects(predictors_bm), ask = FALSE)
+```
+
