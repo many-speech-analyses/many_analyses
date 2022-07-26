@@ -17,6 +17,7 @@ knitr::opts_knit$set(root.dir = here::here())
 library(tidyverse)
 library(brms)
 library(readxl)
+library(lme4)
 
 # NOTE: one of the many packages interferes with tidyverse, so the select function throws an error!
 
