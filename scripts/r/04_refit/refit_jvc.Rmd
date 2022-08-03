@@ -682,16 +682,18 @@ comp_mult
 #
 MSA_gymnothorax_spinulosus_df <- gymnothorax_spinulosus_int %>% 
   mutate(measure_z = (measure - mean(measure)) / sd(measure),
-    effect_con = (typ_mean - mean(typ_mean)) / sd(typ_mean)) %>% 
+    effect_con = (typ_mean - mean(typ_mean)) / sd(typ_mean), 
+    typ_mean_z = (typ_mean - mean(typ_mean)) / sd(typ_mean)) %>% 
   filter(condition == "AF")
 
 gymnothorax_spinulosus_1_intdiff_con <- brm(
-  measure_z ~ effect_con + 
+  measure_z ~ effect_con * typ_mean_z + 
     (1|target_colour) + 
     (1|speaker), 
   data = MSA_gymnothorax_spinulosus_df, 
   cores = 4, threads = threading(2, grainsize = 100), 
   backend = "cmdstanr", seed = 06022016, 
+  control = list(max_treedepth = 14), 
   file = here("data", "analyses", "models", "gymnothorax_spinulosus_1_intdiff_con")
   )
 
@@ -1024,10 +1026,18 @@ print_status("lycodes_bradfieldi")
 ```{r}
 #| label: lycodes_bradfieldi
 
+# JVC: load data
+
+msa_lycodes_bradfieldi <- read_csv(here("data", "analyses", "jvc", 
+  "lycodes_bradfieldi", "processed-data", "all_trial_data_nas_removed.csv")) %>% 
+  mutate(typicality = as.factor(typicality), 
+    effect_cat = C(typicality, treatment), 
+    effect_cat = fct_relevel(effect_cat, "atypical")
+)
 
 ```
 
-Processed data not available.
+Processed data does not include DVs.
 
 ## naso_cassivellaunos
 
@@ -1257,10 +1267,13 @@ MSA_trigonias_lachneri_spi_data <- spi_base %>%
   mutate(effect_con = (typ_mean - mean(typ_mean)) / sd(typ_mean))
 
 trigonias_lachneri_1_spi_con <- brm(
-  spi_z ~ effect_con, 
+  spi_z ~ effect_con + 
+    (1 + typ_mean|target_colour) + 
+    (1 + typ_mean|speaker),
   data = MSA_trigonias_lachneri_spi_data, 
   cores = 4, threads = threading(2, grainsize = 100), 
   backend = "cmdstanr", 
+  control = list(adapt_delta = 0.99), 
   file = here("data", "analyses", "models", "trigonias_lachneri_1_spi_con")
   )
 
