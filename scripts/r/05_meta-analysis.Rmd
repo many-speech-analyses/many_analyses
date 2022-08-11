@@ -13,8 +13,11 @@ library(brms)
 library(tidybayes)
 library(faux)
 library(betapart)
+library(modelr)
 my_seed <- 99
 set.seed(my_seed)
+b4ss_colors <- c(purple = "#8970FF", orange = "#FFA70B")
+
 ```
 
 # Read data
@@ -67,13 +70,66 @@ meta_bm
 ```
 
 ```{r}
-meta_bm %>%
+
+# wrangle by hand 
+post_meta <- meta_bm %>%
   spread_draws(b_Intercept, r_model_id[model,]) %>%
-  mutate(model_mean = b_Intercept + r_model_id) %>%
-  ggplot(aes(x = reorder(model, model_mean), y = model_mean, colour = model_mean)) +
-  geom_hline(yintercept = 0) +
-  stat_pointinterval() +
-  theme(axis.text.x = element_blank())
+  mutate(model_mean = b_Intercept + r_model_id) %>% 
+  group_by(model) %>% 
+  dplyr::summarise(post_mean = mean(model_mean),
+            lower95 = quantile(model_mean, probs = .025),
+            higher95 = quantile(model_mean, probs = .975)
+            ) %>% 
+  # this basically needs to be fed by whether or not the authors considered there to be an effect
+  mutate(compelling = as.factor(case_when(lower95 > 0 ~ "negative",
+                                          higher95 < 0 ~ "positive",
+                                          TRUE ~ "not compelling"))) 
+  
+# extract model mean and CrIs
+population_mean = fixef(meta_bm)[1,1]
+population_lower95 = fixef(meta_bm)[1,3]
+population_higher95 = fixef(meta_bm)[1,4]
+
+meta_plot1 <- 
+ggplot(post_meta,
+       aes(x = reorder(model, post_mean), 
+             y = post_mean, 
+             colour = compelling)) +
+  geom_hline(yintercept = 0,
+             lty = "dotted") +
+  geom_point(size = 0.5) +
+  geom_errorbar(aes(ymin = lower95,
+                    ymax = higher95),
+                 width = 0) +
+  scale_y_continuous(limits = c(-0.5, 1),
+                     breaks = c(-0.5, 0, 0.5, 1)) + 
+  annotate("text",
+           x = c(30, 90, 150),
+           y = 0.8,
+           hjust = c(0, 0.5, 1),
+           color = c(b4ss_colors[[2]], "black", b4ss_colors[[1]]),
+           label = c("Negative (95% CrI)",
+                     "Not compelling",
+                     "Positive (95% CrI)")
+           ) +
+  labs(x = "submitted statistical models",
+       y = "standardized posterior effect size") +
+  scale_color_manual(values = c(b4ss_colors[[1]], "black", b4ss_colors[[2]])) + 
+  theme_classic() +
+  theme(legend.position = "none",
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank(),
+        axis.line = element_blank()
+        )
+
+ggsave(filename = "./plots/meta_plot1.png",
+       plot = meta_plot1,
+       device = "png",
+       width = 200, 
+       height = 75,
+       units = "mm", 
+       dpi = 500)
+
 ```
 
 # Analytic and researcher-related predictors model
