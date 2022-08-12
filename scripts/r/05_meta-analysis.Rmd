@@ -16,7 +16,7 @@ library(betapart)
 library(modelr)
 my_seed <- 99
 set.seed(my_seed)
-b4ss_colors <- c(purple = "#8970FF", orange = "#FFA70B")
+b4ss_colors <- c(purple = "#8970FF", orange = "#FFA70B", pink = "#dd1c77")
 
 ```
 
@@ -130,6 +130,59 @@ ggsave(filename = "./plots/meta_plot1.png",
        units = "mm", 
        dpi = 500)
 
+# alternative visualization with absolute values
+post_meta_abs <- post_meta %>% 
+  mutate(post_mean_abs = case_when(post_mean > 0 ~ post_mean,
+                                   post_mean < 0 ~ abs(post_mean)),
+         low_to_mean = post_mean - lower95,
+         mean_to_high = higher95 - post_mean,
+         l95_abs = post_mean_abs - low_to_mean,
+         h95_abs = post_mean_abs + mean_to_high,
+         compelling_abs = case_when(compelling == "negative" ~ "positive",
+                                    compelling == "positive" ~ "positive",
+                                    compelling == "not compelling" ~ "not compelling")
+         )
+
+
+meta_plot2 <- 
+ggplot(post_meta_abs,
+       aes(x = reorder(model, post_mean_abs), 
+             y = post_mean_abs, 
+             colour = compelling_abs)) +
+  geom_hline(yintercept = 0,
+             lty = "dotted") +
+  geom_point(size = 0.5) +
+  geom_errorbar(aes(ymin = l95_abs,
+                    ymax = h95_abs),
+                 width = 0) +
+  scale_y_continuous(limits = c(-0.5, 1),
+                     breaks = c(-0.5, 0, 0.5, 1)) + 
+  annotate("text",
+           x = c(60,120),
+           y = 0.8,
+           hjust = c(0.5, 0.5),
+           color = c("black", b4ss_colors[[3]]),
+           label = c("Not compelling",
+                     "Claimed effect")
+           ) +
+  labs(x = "submitted statistical models",
+       y = "abs(standardized posterior effect size)") +
+  scale_color_manual(values = c("black", b4ss_colors[[3]])) + 
+  theme_classic() +
+  theme(legend.position = "none",
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank(),
+        axis.line = element_blank()
+        )
+
+ggsave(filename = "./plots/meta_plot2.png",
+       plot = meta_plot2,
+       device = "png",
+       width = 200, 
+       height = 75,
+       units = "mm", 
+       dpi = 500)
+
 ```
 
 # Analytic and researcher-related predictors model
@@ -172,10 +225,26 @@ predictors_bm <- brm(
 ```
 
 ```{r}
-predictors_bm
+print(predictors_bm, digits = 4)
+
+# notable for paper:
+# the more models in analysis, the smaller the more negative the effect. note: not really interpretable I think
+# both outcome and window, two prime dfs for phonetic analysis, seems to affect the outcome. Useful to make raw-data plot with model estimate overlayed
+# ratings and prior belief have no effect, so quality seems to have no effect, in line with previous literature
+# years_from_phd more negative with more seniority. Interpretation? 
+
 ```
 
 ```{r}
 plot(conditional_effects(predictors_bm), ask = FALSE)
+
+# plot outcome
+
+# plot window
+
+# combine
+
+# plot years_from_phd?
+
 ```
 
