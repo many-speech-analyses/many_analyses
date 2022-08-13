@@ -424,10 +424,14 @@ ggplot(post_pred_window,
            arrow = arrow(angle = 45, 
                          length = unit(.2, "cm"))) +
   # plot raw data, doesnt make sense right now because models are too confident
-  # geom_point(data = msa_models[msa_models$animal != "polymetme_brevirostrum",],
-  #            aes(x = outcome,
-  #                y = estimate),
-  #            )
+   # geom_point(data = msa_models[msa_models$animal != "polymetme_brevirostrum" & 
+   #                              msa_models$temporal_window != "other" ,],
+   #            aes(x = temporal_window,
+   #                y = estimate, 
+   #                fill = temporal_window),
+   #            pch = 21,
+   #            alpha = 0.5
+   #            ) +
   #scale_y_continuous(limits = c(-0.5, 1),
   #                   breaks = c(-0.5, 0, 0.5, 1)) + 
   labs(title = "B: Measurement window matters.",
@@ -446,7 +450,7 @@ predictor_plot <- outcome + window
 ggsave(filename = "./plots/predictor_plot.png",
        plot = predictor_plot,
        device = "png",
-       width = 400, 
+       width = 300, 
        height = 125,
        units = "mm", 
        dpi = 500)
