@@ -1,0 +1,131 @@
+---
+title: "results notes"
+author: "Timo Roettger"
+date: "2022-08-13"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+
+library(tidyverse)
+library(faux)
+
+```
+
+## Sample Charactaristics
+
+```{r}
+
+msa_models <- readRDS("./data/analyses/msa_models.rds") %>%
+  mutate(
+    outcome = as.factor(outcome),
+    typicality = as.factor(typicality),
+    temporal_window = as.factor(temporal_window)
+  ) %>%
+  droplevels() %>%
+  mutate(
+    outcome = contr_code_sum(outcome),
+    typicality = contr_code_sum(typicality),
+    temporal_window = contr_code_sum(temporal_window)
+  )
+
+# number of teams
+no_teams = length(unique(msa_models$team))
+
+# number of analyses
+no_analyses = nrow(msa_models)
+
+# average analyses
+mean_analyses <- msa_models %>% 
+  group_by(team) %>% 
+  summarise(max_models = max(model_n)) %>% 
+  group_by() %>% 
+  summarise(mean_models = mean(max_models))
+
+# outcomes
+outcome_n <- msa_models %>% 
+  count(outcome) %>% 
+  summarise(prop = n / sum(n))
+
+# windows
+window_n <- msa_models %>% 
+  count(temporal_window) %>% 
+  summarise(prop = n / sum(n))
+
+# predictors
+predictor_n <- msa_models %>% 
+  summarise(mean_predictor = mean(n_predictors, na.rm = TRUE)) 
+
+# typicality op
+typicality_n <- msa_models %>% 
+  count(typicality_operationalization) %>% 
+  summarise(prop = n / sum(n))
+
+# framework
+framework_n <- msa_models %>% 
+  count(framework) %>% 
+  summarise(prop = n / sum(n))
+
+# model
+model_n <- msa_models %>% 
+  count(model) %>% 
+  summarise(prop = n / sum(n))
+
+# random
+random_n <- msa_models %>% 
+  filter(model == "linear model") %>% 
+  count(random_effects) %>% 
+  summarise(prop = n / sum(n))
+
+# random terms
+rterms_n <- msa_models %>% 
+  filter(n_random != 0) %>% 
+  summarise(mean_rterms = mean(n_random, na.rm = TRUE)) 
+
+
+```
+
+# Sample characteristics
+
+[all of this or most of this should go into a nice overview table]
+
+`r no_teams` teams initially signed up to participate. xx dropped out of the project during the analysis phase^[ADD REASONS]. 
+The remaining xx teams submitted their analysis in time and were coded by the three initiating authors (SC, JC, TR). 
+
+Of the submitted teams, teams consisted of an average of xx analysts (sd = xx), with an average of post PhD experience of xx years (sd = xx). 
+
+The teams have submitted `r no_analyses` to answer the research question. 
+On average, teams submitted `r round(mean_analyses[[1]], 1)` models. 
+Analytical approaches widely varied along the following dimensions: 
+Teams differed in what and how they measured the acoustic signal, including chosing different aspects of the acoustic signal, the temporal window over which they measured, the concrete operationalization of how they measured said acoustic properties.
+
+`r round(outcome_n[[1,1]],2) * 100`\% of models used a duration measure as the outcome variable, `r round(outcome_n[[2,1]],2) * 100`\% used a f0 measure, `r round(outcome_n[[3,1]],2) * 100`\% used a formant measure, `r round(outcome_n[[4,1]],2) * 100`\% used an intensity measure, and `r round(outcome_n[[5,1]],2) * 100`\% used a different measure. 
+
+`r round(window_n[[1,1]],2) * 100`\% of models measured acoustic properties on the level of the segment (e.g. one vowel), `r round(window_n[[2,1]],2) * 100`\% on the level of the word (e.g. the noun), `r round(window_n[[3,1]],2) * 100`\% on the level of the phrase (e.g. the noun phrase including determiner and adjective, e.g. "the green banana"), `r round(window_n[[4,1]],2) * 100`\% on the level of the whole sentence, and `r round(window_n[[5,1]],2) * 100`\% used a different time window. 
+
+TO ADD. LOOK AT OPERATIONALIZATIONS AND SEE HOW MANY UNIQUE MEASUREMENTS SPECIFICATIONS WERE DONE
+
+Teams also differed in what predictors they chose and how they operationalized them.
+On average, models included `r predictor_n` different predictors (counting only conceptually different predictors), i.e. in addition to the critical predictor, typicality of the adjective noun combinations, on average, each teams included one additional predictor in their models, including LIST CO-OCCURING IVS
+
+The most relevant predictor, typicality, was operationalized in different ways. 
+It was operationalized as categorical in `r round(typicality_n[[1,1]],2) * 100`\% of models, continuous with the mean typicality rating in `r round(typicality_n[[2,1]],2) * 100`\% of models, and continuous with the median typicality rating in `r round(typicality_n[[3,1]],2) * 100`\% of models.
+
+This multiverse of measurement choices is exponentiated with choices during the statistical analysis, including the chosen inferential framework, the type of model, and their model architecture, specifically how they accounted for dependencies in the data via random effect specifications in their multilevel models.
+
+The majority of models were rooted in the frequentist framework (`r round(framework_n[[2,1]],2) * 100`\%). (`r round(framework_n[[1,1]],2) * 100`\% were rooted in a Bayesian framework. 
+While teams almost exclusively used linear models to analyze their data (`r round(model_n[[2,1]],2) * 100`\%, with a few exception using machine learning techniques or GAMs as a special case of a linear model), teams differed drastically in how they accounted for dependencies within the data. 
+The data contains several dependencies between data points, with multiple data points coming from the same subject and with multiple data points being associated with the same adjective or noun. 
+The appropriate way to account for this non-independence is by using multi-level models and specifying so-called random effects (REFERENCE). 
+`r round(random_n[[3,1]],2) * 100`\% of linear models specified no random effects, `r round(random_n[[1,1]],2) * 100`\% specified random intercepts only, and `r round(random_n[[2,1]],2) * 100`\% specified random intercepts and random slopes to account for the non-independence.
+On average, teams that specified random effects, included `r rterms_n` random terms in their models. 
+
+
+
+
+
+
+
+
+
