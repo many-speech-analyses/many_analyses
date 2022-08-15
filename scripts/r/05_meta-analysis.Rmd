@@ -16,6 +16,7 @@ library(betapart)
 library(modelr)
 library(ggdist)
 library(patchwork)
+
 my_seed <- 99
 set.seed(my_seed)
 b4ss_colors <- c(purple = "#8970FF", orange = "#FFA70B", pink = "#dd1c77")
@@ -98,7 +99,7 @@ ggplot(post_meta,
              y = post_mean, 
              colour = compelling)) +
   geom_hline(yintercept = 0,
-             lty = "dotted") +
+             lty = "dotted") 
   geom_point(size = 0.5) +
   geom_errorbar(aes(ymin = lower95,
                     ymax = higher95),
@@ -277,7 +278,10 @@ post_pred <- predictors_bm_rintercepts %>%
                b_temporal_window.wordMintercept,
                b_temporal_window.phraseMintercept,
                b_temporal_window.sentenceMintercept,
-               b_years_from_phd
+               b_categoricalMintercept,
+               b_all_rating,
+               b_years_from_phd,
+               b_prior_belief
                ) %>%
   select(-.chain, -.iteration) %>% 
   pivot_longer(-.draw,
@@ -367,6 +371,7 @@ ggplot(post_pred_outcome,
            x = 1.6,
            y = -0.05,
            hjust= 0, 
+           size = 2.5,
            label = "analyzing f0 tends to provide\nmore negative effect sizes") +
   annotate("curve",
            x = 1.7, y = -0.043,
@@ -413,14 +418,15 @@ ggplot(post_pred_window,
   scale_fill_viridis_d(begin = 0,
                        end = 0.8) +
   annotate("text",
-           x = 3,
-           y = 0.15,
-           hjust= 1, 
+           x = 1.6,
+           y = 0.1,
+           hjust= 0, 
+           size = 2.5,
            label = "analyzing phrasal patterns tends\nto provide more positive effect sizes") +
   annotate("curve",
-           x = 3.1, y = 0.15,
-           xend = 3.8, yend = 0.14, 
-           curvature = -0.5,
+           x = 1.5, y = 0.1,
+           xend = 1, yend = 0.01, 
+           curvature = 0.3,
            arrow = arrow(angle = 45, 
                          length = unit(.2, "cm"))) +
   # plot raw data, doesnt make sense right now because models are too confident
@@ -458,3 +464,94 @@ ggsave(filename = "./plots/predictor_plot.png",
 
 ```
 
+```{r}
+
+post_pred_forest <- predictors_bm_rintercepts %>%
+  spread_draws(b_Intercept, 
+               b_outcome.durationMintercept,
+               b_outcome.f0Mintercept,
+               b_outcome.formantsMintercept,
+               b_outcome.intensityMintercept,
+               b_temporal_window.segmentMintercept,
+               b_temporal_window.wordMintercept,
+               b_temporal_window.phraseMintercept,
+               b_temporal_window.sentenceMintercept,
+               b_typicality.categoricalMintercept,
+               b_all_rating,
+               b_years_from_phd,
+               b_prior_belief
+               ) %>%
+  select(-.chain, -.iteration) %>% 
+  pivot_longer(-.draw,
+               names_to = "predictor", 
+               values_to = "posterior") %>% 
+  mutate(predictor = fct_recode(predictor, 
+                                "Intercept" = "b_Intercept",
+                                "outcome: duration" = "b_outcome.durationMintercept", 
+                                "outcome: f0" = "b_outcome.f0Mintercept", 
+                                "outcome: intensity" = "b_outcome.intensityMintercept",
+                                "outcome: formants" = "b_outcome.formantsMintercept",
+                                "window: segment" = "b_temporal_window.segmentMintercept",
+                                "window: word" = "b_temporal_window.wordMintercept",
+                                "window: phrase" = "b_temporal_window.phraseMintercept",
+                                "window: sentence" = "b_temporal_window.sentenceMintercept",
+                                "typicality operationalization" = "b_typicality.categoricalMintercept",
+                                "peer rating" = "b_all_rating",
+                                "years after Phd" = "b_years_from_phd",
+                                "prior belief" = "b_prior_belief"
+                                )
+         ) %>% 
+  group_by(predictor) %>%
+  dplyr::summarise(post_mean = mean(posterior),
+            lower95 = quantile(posterior, probs = .025),
+            lower80 = quantile(posterior, probs = .10),
+            higher80 = quantile(posterior, probs = .90),
+            higher95 = quantile(posterior, probs = .975)
+            )
+
+
+forest <- 
+ggplot(post_pred_forest %>% filter(predictor != "Intercept"),
+       aes(x = post_mean,
+           #y = predictor)
+           y = reorder(predictor, post_mean))
+       ) +
+  geom_vline(xintercept = 0,
+             lty = "dotted") +
+  geom_segment(aes(x = lower95,
+                   y = reorder(predictor, post_mean),
+                   xend = higher95,
+                   yend = reorder(predictor, post_mean)),
+               size = 1) +
+  geom_segment(aes(x = lower80,
+                   y = reorder(predictor, post_mean),
+                   xend = higher80,
+                   yend = reorder(predictor, post_mean)),
+               size = 2) +
+  geom_point(pch = 21,
+             fill = "white",
+             color = "black",
+             size = 4) +
+  labs(title = "C: Forest plot",
+       subtitle = "Model coefficients for all predictors",
+       y = "",
+       x = "\neffect size difference to the overall mean\n") +
+  #scale_color_manual(values = c("black", b4ss_colors[[3]])) + 
+  theme_classic() +
+  theme(legend.position = "none",
+        axis.line = element_blank()
+        )
+
+
+alltogether <- ( outcome / window ) | forest
+
+ggsave(filename = "./plots/alltogether.png",
+       plot = alltogether,
+       device = "png",
+       width = 250, 
+       height = 200,
+       units = "mm", 
+       dpi = 500)
+
+
+```

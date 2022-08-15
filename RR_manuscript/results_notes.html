@@ -372,18 +372,43 @@ pre code {
 
 <div id="sample-charactaristics" class="section level2">
 <h2>Sample Charactaristics</h2>
+<pre><code>## # A tibble: 32 × 3
+##    n_coefficients n_random random_effects 
+##             &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;          
+##  1              6        2 intercept      
+##  2              8        2 intercept      
+##  3              5        2 intercept      
+##  4              7        2 intercept      
+##  5              7        2 intercept+slope
+##  6             NA        0 intercept+slope
+##  7             NA        0 intercept      
+##  8              2        0 no             
+##  9              1        0 no             
+## 10              7        3 intercept+slope
+## # … with 22 more rows</code></pre>
 </div>
 <div id="sample-characteristics" class="section level1">
 <h1>Sample characteristics</h1>
-<p>[all of this or most of this should go into a nice overview
-table]</p>
+<p>In the following, we will describe the characteristics of our
+ananlyst teams and their models in order to give an overview over the
+sample and the large variation across analysis strategies.</p>
+<!-- TR: some of this or most of this should go into a nice overview table -->
+<div id="team-properties" class="section level2">
+<h2>Team properties</h2>
 <p>31 teams initially signed up to participate. xx dropped out of the
 project during the analysis phase<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>. The remaining xx teams submitted their
 analysis in time and were coded by the three initiating authors (SC, JC,
 TR).</p>
 <p>Of the submitted teams, teams consisted of an average of xx analysts
-(sd = xx), with an average of post PhD experience of xx years (sd =
-xx).</p>
+(sd = xx) <!-- TR: Where is this info? -->, with an average of post PhD
+experience of 4.7 years (sd = 4.1) ranging from -3.8 years, i.e. PhD
+students (or younger) to 12.4 years.</p>
+<p>Analysts prior belief in the effect under investigation ranged from
+48.5 to 92 with an average of 69.7 (sd = 11.5), indicating an overall
+rather high prior plausibility of the hypothesis.</p>
+</div>
+<div id="acoustic-analysis" class="section level2">
+<h2>Acoustic analysis</h2>
 <p>The teams have submitted 179 to answer the research question. On
 average, teams submitted 3.5 models. Analytical approaches widely varied
 along the following dimensions: Teams differed in what and how they
@@ -399,7 +424,7 @@ segment (e.g. one vowel), 45% on the level of the word (e.g. the noun),
 3% on the level of the phrase (e.g. the noun phrase including determiner
 and adjective, e.g. “the green banana”), 2% on the level of the whole
 sentence, and 6% used a different time window.</p>
-<p>TO ADD. LOOK AT OPERATIONALIZATIONS AND SEE HOW MANY UNIQUE
+<p>TO ADD: LOOK AT OPERATIONALIZATIONS AND SEE HOW MANY UNIQUE
 MEASUREMENTS SPECIFICATIONS WERE DONE</p>
 <p>Teams also differed in what predictors they chose and how they
 operationalized them. On average, models included 1.9653179 different
@@ -411,6 +436,9 @@ in their models, including LIST CO-OCCURING IVS</p>
 different ways. It was operationalized as categorical in 79% of models,
 continuous with the mean typicality rating in 18% of models, and
 continuous with the median typicality rating in 2% of models.</p>
+</div>
+<div id="statistical-analysis" class="section level2">
+<h2>Statistical analysis</h2>
 <p>This multiverse of measurement choices is exponentiated with choices
 during the statistical analysis, including the chosen inferential
 framework, the type of model, and their model architecture, specifically
@@ -429,8 +457,56 @@ non-independence is by using multi-level models and specifying so-called
 random effects (REFERENCE). 6% of linear models specified no random
 effects, 66% specified random intercepts only, and 28% specified random
 intercepts and random slopes to account for the non-independence. On
-average, teams that specified random effects, included 2.5 in their
-models.</p>
+average, teams that specified random effects, included 2.5 random terms
+in their models.</p>
+<p>TO ADD: LOOK AT MODELS AND COUNT UNIQUE MODELS.</p>
+</div>
+<div id="review-ratings" class="section level2">
+<h2>Review ratings</h2>
+<p>The mean rating of the quality of acoustic analyses was 74.3 (sd =
+11.1); the mean rating of the queality of statistical analysis was 73.6
+(sd = 14). For reference, the scale of the rating anchored a point grade
+of 75 as “an imperfect analysis but the needed changes are unlikely to
+dramatically alter final interpretation” indicating a rather high
+confidence of reviewers that the provided analyses yield appropriate
+answers to the research question.</p>
+</div>
+</div>
+<div id="meta-analysis" class="section level1">
+<h1>Meta analysis</h1>
+<pre><code>## Warning: `gather_()` was deprecated in tidyr 1.2.0.
+## Please use `gather()` instead.
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.</code></pre>
+<p>The Bayesian random effects meta analysis estimates the range of
+probable values of the standardized effect size of 0.013 (95% CrI =
+[-0.011, -0.0114]). In other words, if we were to assume that there is a
+true underlying effect and we consider each model an attempt to estimate
+this effect randomly drawn from a population of models, our best guess
+about the underlying effect is that it is 0.013 standard deviations
+above zero, corresponding to atypical word combinations having 0.013
+standard deviations higher acoustic values (e.g. duration) than typical
+word combinations. CONTEXTUALIZE IN CONCRETE ACOUSTIC VALUES
+(ALTERNATIVELY IN IQ VALUES). This is not only a extremely small effect
+<!-- TR: cannot really talk about tiny effects because we have the continuous typicality included and that looks at a difference of one unit (which is 1 in a 1-100 scale -->,
+but the range of probably values also includes zero. So, given the data,
+the model, and our prior assumptions, we cannot be very certain that
+there actually is an effect that is not point zero to begin with. This
+population effect is dwarfed by the estimated standard deviation between
+different models (EXTRACT BETA AND CRIS). (ref:meta_plot1) plots the
+estimated model outputs for all submitted models according to size. Note
+that given the nature of acoustic operationalization, there is not
+always a natural interpretation of the scale, but in most cases a
+positive effect corresponds to atypical word combinations eliciting
+higher acoustic values (e.g. longer duration, or higher f0). Notably,
+there are 31 model estimates for which the 95% credible interval does
+not overlap with zero (17%).</p>
+<div class="figure">
+<img src="./plots/meta_plot1.png" alt="(ref:meta_plot1)" width="100%" />
+<p class="caption">
+(ref:meta_plot1)
+</p>
+</div>
 </div>
 <div class="footnotes footnotes-end-of-document">
 <hr />
