@@ -226,6 +226,19 @@ clean_up <- function(model) {
 }
 ```
 
+This function is for calculation of the SDI.
+
+```{r sdi-mean}
+sdi_mean <- function(preds) {
+  bpair <- tibble::tibble(preds) %>% tidyr::unnest_wider(preds, names_sep = ".") %>%
+    as.matrix() %>%
+    betapart::beta.pair(.)
+  sdim <- as.matrix(bpair$beta.sor)
+  diag(sdim) <- NA
+  rowSums(sdim, na.rm = T) / length(preds)
+}
+```
+
 Now we load all the models and apply `clean_up()` to get the estimates.
 
 ```{r load-models}
@@ -277,7 +290,14 @@ msa_models <- dir_ls(path = here("data/analyses/models"), regexp = ".rds$") %>%
     temporal_window = factor(temporal_window, levels = c("segment", "syllable", "word", "phrase", "sentence", "other"))
   ) %>%
   left_join(y = msa_intake_teams) %>%
-  left_join(y = msa_reviews_teams, by = c("animal" = "Q3"))
+  left_join(y = msa_reviews_teams, by = c("animal" = "Q3")) %>%
+  # We have excluded a few extra models so keeping them out at this stage
+  filter(exclude == "no") %>%
+  # We nest all the population predictors in the coding sheet to calculate the SDI
+  nest(pop_pred = typicality_cont:`2interaction_typicality_cont_typ_mean_z`) %>%
+  mutate(
+    pop_sdi = sdi_mean(pop_pred)
+  )
 
 saveRDS(msa_models, "./data/analyses/msa_models.rds")
 ```
