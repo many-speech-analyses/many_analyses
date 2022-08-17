@@ -99,7 +99,7 @@ ggplot(post_meta,
              y = post_mean, 
              colour = compelling)) +
   geom_hline(yintercept = 0,
-             lty = "dotted") 
+             lty = "dotted") +
   geom_point(size = 0.5) +
   geom_errorbar(aes(ymin = lower95,
                     ymax = higher95),
