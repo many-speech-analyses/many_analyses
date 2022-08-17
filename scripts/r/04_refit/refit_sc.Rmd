@@ -266,36 +266,38 @@ msa_data <- read_csv("./data/analyses/sc/nestor_idahoensis/msa_data_v2.csv", na 
   )
 ```
 
-Not sure which priors to use after scaling.
+~~Not sure which priors to use after scaling.~~
+
+We have decided to use default (flat) priors.
 
 ```{r}
-priors2 = c(
-  #weakly informative priors for intercepts and beta for each response variable
-  prior(normal(0,1.5), class = Intercept, resp = f0),
-  prior(normal(0,1.5), class = b, resp = f0),
-  prior(normal(0,1.5), class = Intercept, resp = duration),
-  prior(normal(0,1.5), class = b, resp = duration),
-  prior(normal(0,1.5), class = Intercept, resp = f15),
-  prior(normal(0,1), class = b, resp = f15),
-  prior(normal(0,1), class = Intercept, resp = f25),
-  prior(normal(0,1), class = b, resp = f25),
-  #weakly informative priors for random effects (slopes)
-  prior(cauchy(0,0.1), class = sd, group = ID, resp = f0),
-  prior(cauchy(0,0.1), class = sd, group = ID, resp = duration),
-  prior(cauchy(0,0.1), class = sd, group = ID, resp = f15),
-  prior(cauchy(0,0.1), class = sd, group = ID, resp = f25),
-  prior(cauchy(0,0.1), class = sd, group = targetWord, resp = f0),
-  prior(cauchy(0,0.1), class = sd, group = targetWord, resp = duration),
-  prior(cauchy(0,0.1), class = sd, group = targetWord, resp = f15),
-  prior(cauchy(0,0.1), class = sd, group = targetWord, resp = f25),
-  #weakly informative priors for the correlation between random intercept and slope
-  prior(lkj(2), class = cor, group = ID),
-  prior(lkj(2), class = cor, group = targetWord),
-  prior(cauchy(0, 1), class = sigma, resp=f0),
-  prior(cauchy(0, 1), class = sigma, resp=duration),
-  prior(cauchy(0, 1), class = sigma, resp=f15),
-  prior(cauchy(0, 1), class = sigma, resp=f25)
-)
+# priors2 = c(
+#   #weakly informative priors for intercepts and beta for each response variable
+#   prior(normal(0,1.5), class = Intercept, resp = f0),
+#   prior(normal(0,1.5), class = b, resp = f0),
+#   prior(normal(0,1.5), class = Intercept, resp = duration),
+#   prior(normal(0,1.5), class = b, resp = duration),
+#   prior(normal(0,1.5), class = Intercept, resp = f15),
+#   prior(normal(0,1), class = b, resp = f15),
+#   prior(normal(0,1), class = Intercept, resp = f25),
+#   prior(normal(0,1), class = b, resp = f25),
+#   #weakly informative priors for random effects (slopes)
+#   prior(cauchy(0,0.1), class = sd, group = ID, resp = f0),
+#   prior(cauchy(0,0.1), class = sd, group = ID, resp = duration),
+#   prior(cauchy(0,0.1), class = sd, group = ID, resp = f15),
+#   prior(cauchy(0,0.1), class = sd, group = ID, resp = f25),
+#   prior(cauchy(0,0.1), class = sd, group = targetWord, resp = f0),
+#   prior(cauchy(0,0.1), class = sd, group = targetWord, resp = duration),
+#   prior(cauchy(0,0.1), class = sd, group = targetWord, resp = f15),
+#   prior(cauchy(0,0.1), class = sd, group = targetWord, resp = f25),
+#   #weakly informative priors for the correlation between random intercept and slope
+#   prior(lkj(2), class = cor, group = ID),
+#   prior(lkj(2), class = cor, group = targetWord),
+#   prior(cauchy(0, 1), class = sigma, resp=f0),
+#   prior(cauchy(0, 1), class = sigma, resp=duration),
+#   prior(cauchy(0, 1), class = sigma, resp=f15),
+#   prior(cauchy(0, 1), class = sigma, resp=f25)
+# )
 
 nestor_idahoensis_1_mult_cat <- brm(
   mvbind(f0, duration, f15, f25) ~
@@ -305,7 +307,8 @@ nestor_idahoensis_1_mult_cat <- brm(
     (0 + typicality|targetWord),
   data = msa_data,
   family = gaussian(),
-  prior = priors2, chains = 4, cores = 4,
+  # prior = priors2,
+  chains = 4, cores = 4,
   threads = threading(2, grainsize = 100),
   backend = "cmdstanr",
   # control = list(max_treedepth = 15, adapt_delta = 0.9),
@@ -314,7 +317,7 @@ nestor_idahoensis_1_mult_cat <- brm(
 )
 ```
 
-
+Warning: 6 of 4000 (0.0%) transitions ended with a divergence.
 
 # paralichthys_undulatus
 
