@@ -386,7 +386,9 @@ if (file.exists(the_file)) {
 
 # polymetme_brevirostrum
 
-```{r}
+We have excluded this because of fixed-effect matrix rank deficiency given that many combination of Condition * effect_cat do not exist in the data.
+
+```{r eval=FALSE}
 # Get datasets
 praat_data <- read_delim("./data/analyses/sc/polymetme_brevirostrum/Data/acoustic_results.txt", delim = "\t")
 norming_data <- read_csv("./data/analyses/sc/polymetme_brevirostrum/Data/ratings_summary.csv")
@@ -419,7 +421,7 @@ contrasts(msa_data$Category) <- "contr.sum"
 contrasts(msa_data$Condition) <- "contr.sum"
 ```
 
-```{r}
+```{r eval=FALSE}
 polymetme_brevirostrum_1_dur_cat <- brm(
   Adj_Dur ~ Condition * effect_cat + effect_cat * Category + (Condition * effect_cat | Speaker) + (Condition | object) + (effect_cat | colour),
   data = msa_data,
