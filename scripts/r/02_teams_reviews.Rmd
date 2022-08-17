@@ -15,7 +15,7 @@ library(glue)
 ```{r}
 cols <- str_split("StartDate,EndDate,Status,IPAddress,Progress,Duration (in seconds),Finished,RecordedDate,ResponseId,RecipientLastName,RecipientFirstName,RecipientEmail,ExternalReference,LocationLatitude,LocationLongitude,DistributionChannel,UserLanguage,Q2,Q3,Q5_2,Q5_3,Q5_4,Q6,Q8,Q9,Q10,Q11,Q12,Q13,Q14,Q15", ",")
 
-reviews <- read_csv(list.files("data/peer_review/", full.names = TRUE), skip = 3, col_names = cols[[1]]) %>%
+msa_reviews <- read_csv(list.files("data/peer_review/", pattern = ".csv", include.dirs = FALSE, full.names = TRUE), skip = 3, col_names = cols[[1]]) %>%
   mutate(
     q6 = case_when(
       Q6 == "deeply flawed and unpublishable." ~ 0,
@@ -26,6 +26,8 @@ reviews <- read_csv(list.files("data/peer_review/", full.names = TRUE), skip = 3
   ) %>%
   drop_na(Q3) %>%
   filter(Finished == TRUE)
+
+saveRDS(msa_reviews, "./data/peer_review/msa_reviews.rds")
 ```
 
 ```{r analytic-quest}
@@ -34,7 +36,7 @@ dir.create("data/peer_review/msa_reviews/", showWarnings = FALSE)
 for (team in unique(reviews$Q3)) {
   file_name <- as.character(glue("data/peer_review/msa_reviews/{team}.csv"))
   
-  reviews %>%
+  msa_reviews %>%
     filter(Q3 == team) %>%
     select(-(StartDate:Q2)) %>%
     write_csv(file_name)

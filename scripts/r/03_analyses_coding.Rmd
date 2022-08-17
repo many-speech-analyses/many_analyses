@@ -7,7 +7,11 @@ date: "`r Sys.Date()`"
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_knit$set(root.dir = here::here())
-library(tidyverse)
+#library(tidyverse)
+library(dplyr)
+library(ggplot2)
+library(tidyr)
+library(readr)
 library(ggmosaic)
 library(googlesheets4)
 library(magrittr)
@@ -21,6 +25,20 @@ library("strex")
 library("purrr")
 library("broom")
 library("broom.mixed")
+
+# Plotting theme
+clean_theme <- function(...) {
+  list(
+    theme_minimal(), 
+    theme(
+      axis.title.x = element_blank(),
+      panel.grid.major = element_line(colour = 'grey90', size = 0.15),
+      panel.grid.minor = element_line(colour = 'grey90', size = 0.15),
+      strip.text.x = element_text(hjust = 0),
+      axis.text.x = element_blank()
+    )
+  )
+}
 ```
 
 # Read coding sheet
@@ -29,14 +47,84 @@ library("broom.mixed")
 the_sheet <- "https://docs.google.com/spreadsheets/d/1OOXB-8Uk-fh_urw0Lm4DC0jBueXLIb4Bm-a9--UVXOw/edit?usp=sharing"
 
 coding <- read_sheet(the_sheet) %>%
-  mutate(
-    outcome = factor(outcome, levels = c("duration", "f0", "formants", "intensity", "harmonics", "SNR", "multivariate", "other")),
-    temporal_window = factor(temporal_window, levels = c("segment", "syllable", "word", "phrase", "sentence", "other"))
-  ) %>%
   drop_na(model_n)
 ```
 
-# Download OSF components
+# Read intake forms
+
+We will join the intake forms with `msa_models`.
+
+```{r intake}
+other_sheet <- "https://docs.google.com/spreadsheets/d/1KAZC2vyteTfGE6mlwOiz9b8F9VghDYLGsOzmWaNbmEE/edit?usp=sharing"
+
+team_animal_coord <- read_sheet(other_sheet)
+
+msa_intake <- read_csv("./data/questionnaires/msa_intake_form.csv") %>%
+  filter(row_number() != 2)
+msa_intake_qs <- msa_intake[1,]
+msa_intake <- msa_intake[-1,]
+
+msa_intake <- msa_intake %>%
+  mutate(
+    Q6 = case_when(
+      Q6 == "Zlatomira IIchovska" ~ "Zlatomira Ilchovska",
+      Q6 == "University of Birmingham team under the team coordinator Zlatomira IIchovska" ~ "Zlatomira Ilchovska",
+      Q6 == "Vincent Hughes" ~ "Vince Hughes",
+      Q6 == "Tiphaine Cordelier" ~ "Tiphaine Caudrelier",
+      Q6 == "Scott Perry" ~ "Scott James Perry",
+      Q6 == "Scott James Perru" ~ "Scott James Perry",
+      Q6 == "Nicole Rodriquez" ~ "Nicole Rodriguez",
+      Q6 == "Michael Gradoville (Arizona State Univ.)" ~ "Michael Gradoville",
+      Q6 == "Joey Stanley" ~ "Joseph A. Stanley",
+      Q6 == "Dusan Nikolic (dusan.nikolic1@ucalgary.ca)" ~ "Dušan Nikolić",
+      Q6 == "Dusan Nikolic" ~ "Dušan Nikolić",
+      Q6 == "Dušan Nickolić" ~ "Dušan Nikolić",
+      Q6 == "Alicea Megan Brown" ~ "Alicia M Brown",
+      Q6 == "Alicia Brown" ~ "Alicia M Brown",
+      Q6 == "Ali A-Hoorie" ~ "Ali H. Al-Hoorie",
+      Q6 == "Ali Al-Hoorie" ~ "Ali H. Al-Hoorie",
+      Q6 == "Dr Rory Turnbull" ~ "Rory Turnbull",
+      Q6 == "Dr. Reenu Punnoose" ~ "Reenu Punnoose",
+      TRUE ~ Q6
+    ),
+    Q5 = as.numeric(Q5),
+    Q7_1 = as.numeric(Q7_1)
+  )
+
+msa_intake_teams <- msa_intake %>%
+  group_by(Q6) %>%
+  summarise(
+    years_from_phd = mean(Q5, na.rm = TRUE),
+    years_from_phd_sd = sd(Q5, na.rm = TRUE),
+    prior_belief = mean(Q7_1, na.rm = TRUE),
+    prior_belief_sd = sd(Q7_1, na.rm = TRUE)
+  ) %>%
+  full_join(y = team_animal_coord, by = c("Q6" = "coordinator")) %>%
+  select(-Q6)
+```
+
+# Read reviews
+
+```{r}
+msa_reviews <- readRDS("./data/peer_review/msa_reviews.rds")
+
+msa_reviews_teams <- msa_reviews %>%
+  group_by(Q3) %>%
+  summarise(
+    phon_rating = mean(Q5_2, na.rm = TRUE),
+    phon_sd = sd(Q5_2, na.rm = TRUE),
+    stat_rating = mean(Q5_3, na.rm = TRUE),
+    stat_sd = sd(Q5_3, na.rm = TRUE),
+    all_rating = mean(Q5_4, na.rm = TRUE),
+    all_sd = sd(Q5_4, na.rm = TRUE),
+  )
+```
+
+
+
+# Teams' analyses
+
+## Download OSF components
 
 First, we get a list of the OSF components in the Teams Analyses component. (It takes a few seconds)
 
@@ -80,11 +168,11 @@ for (comp in 1:nrow(your_comps)) {
 }
 ```
 
-# Refit models
+## Refit models
 
 Now that the components have been downloaded, we can refit the models using the scripts in `scripts/r/04-refit/`.
 
-# Upload refitted models to OSF
+## Upload refitted models to OSF
 
 Once all your models have been refitted, you can upload them to the OSF, in the Cache component, `models/refitted/` folder.
 
@@ -106,9 +194,9 @@ osf_upload(
 )
 ```
 
-# Download all refitted models
+## Download all refitted models
 
-We first download all the refitted models .rds files from the OSF.
+We download all the refitted models `.rds` files from the OSF.
 
 ```{r download-refitted}
 cache <- osf_retrieve_node("wds2m")
@@ -126,24 +214,9 @@ osf_download(
 
 Now we can extract the relevant estimates from the refitted models.
 
-A few helper functions.
+The following functions extracts the estimates.
 
-```{r helpers}
-# Plotting theme
-clean_theme <- function(...) {
-  list(
-    theme_minimal(), 
-    theme(
-      axis.title.x = element_blank(),
-      panel.grid.major = element_line(colour = 'grey90', size = 0.15),
-      panel.grid.minor = element_line(colour = 'grey90', size = 0.15),
-      strip.text.x = element_text(hjust = 0),
-      axis.text.x = element_blank()
-    )
-  )
-}
-
-# Functional sequence to get relevant info from Rds files
+```{r clean-up}
 clean_up <- function(model) {
   effs <- suppressWarnings(tidy(model, effects = "fixed", parametric = TRUE)) %>% 
   filter(term %in% c("effect_catmedium", "effect_cattypical", "effect_con"))
@@ -157,7 +230,20 @@ clean_up <- function(model) {
 }
 ```
 
-Load all the models.
+This function is for calculation of the SDI.
+
+```{r sdi-mean}
+sdi_mean <- function(preds) {
+  bpair <- tibble::tibble(preds) %>% tidyr::unnest_wider(preds, names_sep = ".") %>%
+    as.matrix() %>%
+    betapart::beta.pair(.)
+  sdim <- as.matrix(bpair$beta.sor)
+  diag(sdim) <- NA
+  rowSums(sdim, na.rm = T) / length(preds)
+}
+```
+
+Now we load all the models and apply `clean_up()` to get the estimates.
 
 ```{r load-models}
 msa_models <- dir_ls(path = here("data/analyses/models"), regexp = ".rds$") %>% 
@@ -202,7 +288,19 @@ msa_models <- dir_ls(path = here("data/analyses/models"), regexp = ".rds$") %>%
   left_join(y = coding) %>%
   mutate(
     model_id = ifelse(is.na(outcome_mult), model_id, paste(model_id, outcome_mult, sep = "_")),
-    model_id = ifelse(is.na(typ_level), model_id, paste(model_id, typ_level, sep = "_"))
+    model_id = ifelse(is.na(typ_level), model_id, paste(model_id, typ_level, sep = "_")),
+    outcome = factor(outcome, levels = c("duration", "f0", "formants", "intensity", "harmonics", "SNR", "other")),
+    typicality = factor(typicality, levels = c("categorical", "continuous")),
+    temporal_window = factor(temporal_window, levels = c("segment", "syllable", "word", "phrase", "sentence", "other"))
+  ) %>%
+  left_join(y = msa_intake_teams) %>%
+  left_join(y = msa_reviews_teams, by = c("animal" = "Q3")) %>%
+  # We have excluded a few extra models so keeping them out at this stage
+  filter(exclude == "no") %>%
+  # We nest all the population predictors in the coding sheet to calculate the SDI
+  nest(pop_pred = typicality_cont:`2interaction_typicality_cont_typ_mean_z`) %>%
+  mutate(
+    pop_sdi = sdi_mean(pop_pred)
   )
 
 saveRDS(msa_models, "./data/analyses/msa_models.rds")
@@ -211,13 +309,16 @@ saveRDS(msa_models, "./data/analyses/msa_models.rds")
 Simple pandoc table of the models, estimates, se, etc.
 
 ```{r effect-table}
-msa_models %>% 
+msa_models %>%
+  select(model_id, estimate, se) %>%
   knitr::kable(format = "pandoc")
 ```
 
+# Plotting
+
 Simple forest plot of the estimates and 95% CrIs.
 
-```{r forest-plot}
+```{r fp-outcome}
 msa_models %>%
   filter(animal != "polymetme_brevirostrum") %>%
   ggplot(aes(x = reorder(model_id, estimate), y = estimate, colour = outcome)) + 
@@ -231,6 +332,22 @@ msa_models %>%
   scale_colour_brewer(palette = "Set1", type = "qual") +
   labs(y = "Estimate (z-scores)") + 
   clean_theme() 
+```
+
+```{r fp-outcome-facet}
+msa_models %>%
+  filter(animal != "polymetme_brevirostrum") %>%
+  ggplot(aes(x = reorder(model_id, estimate), y = estimate, colour = outcome)) + 
+  geom_hline(yintercept = 0) +
+  geom_segment(
+    aes(y = estimate - se * 1.96, yend = estimate + se * 1.96, xend = model_id), 
+    alpha = 0.5, size = 1, lineend = "round"
+  ) + 
+  geom_point(pch = 21, stroke = 2, size = 1) +
+  facet_grid(outcome ~ typicality, scales = "free") +
+  scale_colour_brewer(palette = "Set1", type = "qual") +
+  labs(y = "Estimate (z-scores)") + 
+  clean_theme()
 ```
 
 ```{r forest-plot-2}
@@ -249,21 +366,19 @@ msa_models %>%
   clean_theme() 
 ```
 
-# Analyses coding plots
-
-```{r}
+```{r frameworks}
 coding %>%
   ggplot(aes(framework)) +
   geom_bar()
 ```
 
-```{r}
+```{r models}
 coding %>%
   ggplot(aes(model)) +
   geom_bar()
 ```
 
-```{r}
+```{r family}
 coding %>%
   ggplot(aes(family)) +
   geom_bar()
@@ -273,14 +388,14 @@ coding %>%
   geom_bar()
 ```
 
-```{r}
+```{r temporal-w}
 coding %>%
   drop_na(outcome, temporal_window) %>%
   ggplot() +
   geom_mosaic(aes(x = product(outcome, temporal_window), fill = outcome))
 ```
 
-```{r}
+```{r temporal-w-2}
 coding %>%
   drop_na(outcome, temporal_window) %>%
   filter(
@@ -292,8 +407,9 @@ coding %>%
   geom_mosaic(aes(x = product(outcome, temporal_window), fill = outcome))
 ```
 
-```{r}
+```{r operation}
 coding %>%
+  drop_na(operationalisation) %>%
   count(operationalisation) %>%
   ggplot(
     aes(reorder(operationalisation, desc(n)), n)
@@ -301,7 +417,7 @@ coding %>%
   geom_bar(stat = "identity")
 ```
 
-```{r}
+```{r operation-2}
 coding %>%
   drop_na(outcome, operationalisation) %>%
   filter(
@@ -313,13 +429,15 @@ coding %>%
   geom_mosaic(aes(x = product(outcome, operationalisation), fill = outcome))
 ```
 
-```{r}
+# Unique model combinations
+
+```{r combos}
 coding %>%
   select(framework:outcome, operationalisation, temporal_window, typicality_operationalization, random_effects) %>%
   distinct()
 ```
 
-```{r}
+```{r n-models}
 coding %>%
   select(team, n_models) %>%
   distinct() %>%
