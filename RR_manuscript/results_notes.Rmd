@@ -1,0 +1,222 @@
+---
+title: "results notes"
+author: "Timo Roettger"
+date: "2022-08-13"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE,
+                      warning = FALSE,
+                      message = FALSE)
+
+library(brms)
+library(faux)
+library(dplyr)
+library(ggplot2)
+library(tidybayes)
+
+```
+
+## Sample Charactaristics
+
+```{r}
+
+msa_models <- readRDS("./data/analyses/msa_models.rds") %>%
+  mutate(
+    outcome = as.factor(outcome),
+    typicality = as.factor(typicality),
+    temporal_window = as.factor(temporal_window)
+  ) %>%
+  droplevels() %>%
+  mutate(
+    outcome = contr_code_sum(outcome),
+    typicality = contr_code_sum(typicality),
+    temporal_window = contr_code_sum(temporal_window)
+  )
+
+# average phd experience
+phd_mean <- msa_models %>% 
+  select(team, years_from_phd) %>% 
+  distinct(team, years_from_phd) %>% 
+  summarise(mean_phd = mean(years_from_phd, na.rm = TRUE),
+            sd_phd = sd(years_from_phd, na.rm = TRUE),
+            min_phd = min(years_from_phd, na.rm = TRUE),
+            max_phd = max(years_from_phd, na.rm = TRUE)) 
+
+prior_mean <- msa_models %>% 
+  select(team, prior_belief) %>% 
+  distinct(team, prior_belief) %>% 
+  summarise(mean_prior = mean(prior_belief, na.rm = TRUE),
+            sd_prior = sd(prior_belief, na.rm = TRUE),
+            min_prior = min(prior_belief, na.rm = TRUE),
+            max_prior = max(prior_belief, na.rm = TRUE)) 
+
+# number of teams
+no_teams = length(unique(msa_models$team))
+
+# number of analyses
+no_analyses = nrow(msa_models)
+
+# average analyses
+mean_analyses <- msa_models %>% 
+  group_by(team) %>% 
+  summarise(max_models = max(model_n)) %>% 
+  group_by() %>% 
+  summarise(mean_models = mean(max_models))
+
+# outcomes
+outcome_n <- msa_models %>% 
+  count(outcome) %>% 
+  summarise(prop = n / sum(n))
+
+# windows
+window_n <- msa_models %>% 
+  count(temporal_window) %>% 
+  summarise(prop = n / sum(n))
+
+# predictors
+predictor_n <- msa_models %>% 
+  summarise(mean_predictor = mean(n_predictors, na.rm = TRUE)) 
+
+# typicality op
+typicality_n <- msa_models %>% 
+  count(typicality_operationalization) %>% 
+  summarise(prop = n / sum(n))
+
+# framework
+framework_n <- msa_models %>% 
+  count(framework) %>% 
+  summarise(prop = n / sum(n))
+
+# model
+model_n <- msa_models %>% 
+  count(model) %>% 
+  summarise(prop = n / sum(n))
+
+# random
+random_n <- msa_models %>% 
+  filter(model == "linear model") %>% 
+  count(random_effects) %>% 
+  summarise(prop = n / sum(n))
+
+# random terms
+rterms_n <- msa_models %>% 
+  filter(n_random != 0) %>% 
+  summarise(mean_rterms = mean(n_random, na.rm = TRUE)) 
+
+# unique models
+#msa_models %>% distinct(n_coefficients, n_random, random_effects)
+
+# review ratings
+review_mean <- msa_models %>% 
+  summarise(mean_prating = mean(phon_rating, na.rm = TRUE),
+            sd_prating = sd(phon_rating, na.rm = TRUE),
+            mean_srating = mean(stat_rating, na.rm = TRUE),
+            sd_srating = sd(stat_rating, na.rm = TRUE)) 
+
+
+```
+
+# Sample characteristics
+In the following, we will describe the characteristics of our ananlyst teams and their models in order to give an overview over the sample and the large variation across analysis strategies.  
+
+<!-- TR: some of this or most of this should go into a nice overview table -->
+
+## Team properties
+
+`r no_teams` teams initially signed up to participate. xx dropped out of the project during the analysis phase^[ADD REASONS]. 
+The remaining xx teams submitted their analysis in time and were coded by the three initiating authors (SC, JC, TR). 
+
+Of the submitted teams, teams consisted of an average of xx analysts (sd = xx) <!-- TR: Where is this info? -->, with an average of post PhD experience of `r round(phd_mean[[1]],1)` years (sd = `r round(phd_mean[[2]],1)`) ranging from `r round(phd_mean[[3]],1)` years, i.e. PhD students (or younger) to `r round(phd_mean[[4]],1)` years.
+
+Analysts prior belief in the effect under investigation ranged from `r round(prior_mean[[3]],1)`  to `r round(prior_mean[[4]],1)` with an average of `r round(prior_mean[[1]],1)` (sd = `r round(prior_mean[[2]],1)`), indicating an overall rather high prior plausibility of the hypothesis.  
+
+## Acoustic analysis 
+The teams have submitted `r no_analyses` to answer the research question. 
+On average, teams submitted `r round(mean_analyses[[1]], 1)` models. 
+Analytical approaches widely varied along the following dimensions: 
+Teams differed in what and how they measured the acoustic signal, including chosing different aspects of the acoustic signal, the temporal window over which they measured, the concrete operationalization of how they measured said acoustic properties.
+
+`r round(outcome_n[[1,1]],2) * 100`\% of models used a duration measure as the outcome variable, `r round(outcome_n[[2,1]],2) * 100`\% used a f0 measure, `r round(outcome_n[[3,1]],2) * 100`\% used a formant measure, `r round(outcome_n[[4,1]],2) * 100`\% used an intensity measure, and `r round(outcome_n[[5,1]],2) * 100`\% used a different measure. 
+
+`r round(window_n[[1,1]],2) * 100`\% of models measured acoustic properties on the level of the segment (e.g. one vowel), `r round(window_n[[2,1]],2) * 100`\% on the level of the word (e.g. the noun), `r round(window_n[[3,1]],2) * 100`\% on the level of the phrase (e.g. the noun phrase including determiner and adjective, e.g. "the green banana"), `r round(window_n[[4,1]],2) * 100`\% on the level of the whole sentence, and `r round(window_n[[5,1]],2) * 100`\% used a different time window. 
+
+TO ADD: LOOK AT OPERATIONALIZATIONS AND SEE HOW MANY UNIQUE MEASUREMENTS SPECIFICATIONS WERE DONE
+
+Teams also differed in what predictors they chose and how they operationalized them.
+On average, models included `r predictor_n` different predictors (counting only conceptually different predictors), i.e. in addition to the critical predictor, typicality of the adjective noun combinations, on average, each teams included one additional predictor in their models, including LIST CO-OCCURING IVS
+
+The most relevant predictor, typicality, was operationalized in different ways. 
+It was operationalized as categorical in `r round(typicality_n[[1,1]],2) * 100`\% of models, continuous with the mean typicality rating in `r round(typicality_n[[2,1]],2) * 100`\% of models, and continuous with the median typicality rating in `r round(typicality_n[[3,1]],2) * 100`\% of models.
+
+## Statistical analysis 
+This multiverse of measurement choices is exponentiated with choices during the statistical analysis, including the chosen inferential framework, the type of model, and their model architecture, specifically how they accounted for dependencies in the data via random effect specifications in their multilevel models.
+
+The majority of models were rooted in the frequentist framework (`r round(framework_n[[2,1]],2) * 100`\%). (`r round(framework_n[[1,1]],2) * 100`\% were rooted in a Bayesian framework. 
+While teams almost exclusively used linear models to analyze their data (`r round(model_n[[2,1]],2) * 100`\%, with a few exception using machine learning techniques or GAMs as a special case of a linear model), teams differed drastically in how they accounted for dependencies within the data. 
+The data contains several dependencies between data points, with multiple data points coming from the same subject and with multiple data points being associated with the same adjective or noun. 
+The appropriate way to account for this non-independence is by using multi-level models and specifying so-called random effects (REFERENCE). 
+`r round(random_n[[3,1]],2) * 100`\% of linear models specified no random effects, `r round(random_n[[1,1]],2) * 100`\% specified random intercepts only, and `r round(random_n[[2,1]],2) * 100`\% specified random intercepts and random slopes to account for the non-independence.
+On average, teams that specified random effects, included `r rterms_n` random terms in their models. 
+
+TO ADD: LOOK AT MODELS AND COUNT UNIQUE MODELS.
+
+## Review ratings 
+The mean rating of the quality of acoustic analyses was `r round(review_mean[[1]],1)` (sd = `r round(review_mean[[2]],1)`); the mean rating of the queality of statistical analysis was `r round(review_mean[[3]],1)` (sd = `r round(review_mean[[4]],1)`). For reference, the scale of the rating anchored a point grade of 75 as "an imperfect analysis but the needed changes are unlikely to dramatically alter final interpretation" indicating a rather high confidence of reviewers that the provided analyses yield appropriate answers to the research question. 
+
+# Meta analysis
+```{r}
+
+meta_bm <- readRDS("./data/meta_analysis/meta_bm.rds")
+
+meta_intercept <- fixef(meta_bm)
+meta_random <- ranef(meta_bm)
+
+# wrangle by hand 
+post_meta <- meta_bm %>%
+  spread_draws(b_Intercept, r_model_id[model,]) %>%
+  mutate(model_mean = b_Intercept + r_model_id) %>% 
+  group_by(model) %>% 
+  dplyr::summarise(post_mean = mean(model_mean),
+            lower95 = quantile(model_mean, probs = .025),
+            higher95 = quantile(model_mean, probs = .975)
+            ) %>% 
+  # this basically needs to be fed by whether or not the authors considered there to be an effect
+  mutate(compelling = as.factor(case_when(lower95 > 0 ~ "negative",
+                                          higher95 < 0 ~ "positive",
+                                          TRUE ~ "not compelling"))) 
+
+compelling_results <- post_meta %>% 
+  count(compelling) %>% 
+  summarise(prop = n / sum(n))
+
+compelling_count <- table(post_meta$compelling)
+
+```
+
+## SUBHEADER 1
+
+The Bayesian random effects meta analysis estimates the range of probable values of the standardized effect size of `r round(meta_intercept[1],3)` (95\% CrI = [`r round(meta_intercept[3],3)`, `r round(meta_intercept[3],4)`]). 
+In other words, if we were to assume that there is a true underlying effect and we consider each model an attempt to estimate this effect randomly drawn from a population of models, our best guess about the underlying effect is that it is `r round(meta_intercept[1],3)` standard deviations above zero, corresponding to atypical word combinations having `r round(meta_intercept[1],3)` standard deviations higher acoustic values (e.g. duration) than typical word combinations. 
+CONTEXTUALIZE IN CONCRETE ACOUSTIC VALUES (ALTERNATIVELY IN IQ VALUES). 
+This is not only a extremely small effect <!-- TR: cannot really talk about tiny effects because we have the continuous typicality included and that looks at a difference of one unit (which is 1 in a 1-100 scale -->, but the range of probably values also includes zero. 
+So, given the data, the model, and our prior assumptions, we cannot be very certain that there actually is an effect that is not point zero to begin with.
+This population effect is dwarfed by the estimated standard deviation between different models (EXTRACT BETA AND CRIS). 
+(ref:meta_plot1) plots the estimated model outputs for all submitted models according to size. 
+Note that given the nature of acoustic operationalization, there is not always a natural interpretation of the scale, but in most cases a positive effect corresponds to atypical word combinations eliciting higher acoustic values (e.g. longer duration, or higher f0).
+Notably, while the majority of models yielded inconclusive results, there are `r compelling_count[[1]] + compelling_count[[3]]` model estimates for which the 95\% credible interval does not overlap with zero (`r round((compelling_results[[1,1]] + compelling_results[[3,1]]), 2) * 100`\%).
+
+
+```{r 'plot_meta1', echo = FALSE, fig.cap="(ref:meta_plot1)", out.width="100%"}
+
+knitr::include_graphics("./plots/meta_plot1.png")
+
+```
+
+## SUBHEADER 2
+After assessing the variability across models, we now turn towards estiamting the impact of a series of predictors to predict model outcomes. 
+
+
+
+
