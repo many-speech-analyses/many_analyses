@@ -372,20 +372,6 @@ pre code {
 
 <div id="sample-charactaristics" class="section level2">
 <h2>Sample Charactaristics</h2>
-<pre><code>## # A tibble: 32 × 3
-##    n_coefficients n_random random_effects 
-##             &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;          
-##  1              6        2 intercept      
-##  2              8        2 intercept      
-##  3              5        2 intercept      
-##  4              7        2 intercept      
-##  5              7        2 intercept+slope
-##  6             NA        0 intercept+slope
-##  7             NA        0 intercept      
-##  8              2        0 no             
-##  9              1        0 no             
-## 10              7        3 intercept+slope
-## # … with 22 more rows</code></pre>
 </div>
 <div id="sample-characteristics" class="section level1">
 <h1>Sample characteristics</h1>
@@ -474,10 +460,8 @@ answers to the research question.</p>
 </div>
 <div id="meta-analysis" class="section level1">
 <h1>Meta analysis</h1>
-<pre><code>## Warning: `gather_()` was deprecated in tidyr 1.2.0.
-## Please use `gather()` instead.
-## This warning is displayed once every 8 hours.
-## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.</code></pre>
+<div id="subheader-1" class="section level2">
+<h2>SUBHEADER 1</h2>
 <p>The Bayesian random effects meta analysis estimates the range of
 probable values of the standardized effect size of 0.013 (95% CrI =
 [-0.011, -0.0114]). In other words, if we were to assume that there is a
@@ -499,13 +483,21 @@ that given the nature of acoustic operationalization, there is not
 always a natural interpretation of the scale, but in most cases a
 positive effect corresponds to atypical word combinations eliciting
 higher acoustic values (e.g. longer duration, or higher f0). Notably,
-there are 31 model estimates for which the 95% credible interval does
-not overlap with zero (17%).</p>
+while the majority of models yielded inconclusive results, there are 31
+model estimates for which the 95% credible interval does not overlap
+with zero (17%).</p>
 <div class="figure">
 <img src="./plots/meta_plot1.png" alt="(ref:meta_plot1)" width="100%" />
 <p class="caption">
 (ref:meta_plot1)
 </p>
+</div>
+</div>
+<div id="subheader-2" class="section level2">
+<h2>SUBHEADER 2</h2>
+<p>After assessing the variability across models, we now turn towards
+estiamting the impact of a series of predictors to predict model
+outcomes.</p>
 </div>
 </div>
 <div class="footnotes footnotes-end-of-document">

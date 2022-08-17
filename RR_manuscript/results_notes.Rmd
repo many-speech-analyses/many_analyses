@@ -6,7 +6,9 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(echo = FALSE,
+                      warning = FALSE,
+                      message = FALSE)
 
 library(brms)
 library(faux)
@@ -104,7 +106,7 @@ rterms_n <- msa_models %>%
   summarise(mean_rterms = mean(n_random, na.rm = TRUE)) 
 
 # unique models
-msa_models %>% distinct(n_coefficients, n_random, random_effects)
+#msa_models %>% distinct(n_coefficients, n_random, random_effects)
 
 # review ratings
 review_mean <- msa_models %>% 
@@ -193,6 +195,8 @@ compelling_count <- table(post_meta$compelling)
 
 ```
 
+## SUBHEADER 1
+
 The Bayesian random effects meta analysis estimates the range of probable values of the standardized effect size of `r round(meta_intercept[1],3)` (95\% CrI = [`r round(meta_intercept[3],3)`, `r round(meta_intercept[3],4)`]). 
 In other words, if we were to assume that there is a true underlying effect and we consider each model an attempt to estimate this effect randomly drawn from a population of models, our best guess about the underlying effect is that it is `r round(meta_intercept[1],3)` standard deviations above zero, corresponding to atypical word combinations having `r round(meta_intercept[1],3)` standard deviations higher acoustic values (e.g. duration) than typical word combinations. 
 CONTEXTUALIZE IN CONCRETE ACOUSTIC VALUES (ALTERNATIVELY IN IQ VALUES). 
@@ -201,7 +205,7 @@ So, given the data, the model, and our prior assumptions, we cannot be very cert
 This population effect is dwarfed by the estimated standard deviation between different models (EXTRACT BETA AND CRIS). 
 (ref:meta_plot1) plots the estimated model outputs for all submitted models according to size. 
 Note that given the nature of acoustic operationalization, there is not always a natural interpretation of the scale, but in most cases a positive effect corresponds to atypical word combinations eliciting higher acoustic values (e.g. longer duration, or higher f0).
-Notably, there are `r compelling_count[[1]] + compelling_count[[3]]` model estimates for which the 95\% credible interval does not overlap with zero (`r round((compelling_results[[1,1]] + compelling_results[[3,1]]), 2) * 100`\%).
+Notably, while the majority of models yielded inconclusive results, there are `r compelling_count[[1]] + compelling_count[[3]]` model estimates for which the 95\% credible interval does not overlap with zero (`r round((compelling_results[[1,1]] + compelling_results[[3,1]]), 2) * 100`\%).
 
 
 ```{r 'plot_meta1', echo = FALSE, fig.cap="(ref:meta_plot1)", out.width="100%"}
@@ -209,6 +213,10 @@ Notably, there are `r compelling_count[[1]] + compelling_count[[3]]` model estim
 knitr::include_graphics("./plots/meta_plot1.png")
 
 ```
+
+## SUBHEADER 2
+After assessing the variability across models, we now turn towards estiamting the impact of a series of predictors to predict model outcomes. 
+
 
 
 
