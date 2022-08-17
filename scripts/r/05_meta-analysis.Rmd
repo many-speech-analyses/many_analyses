@@ -16,6 +16,7 @@ library(betapart)
 library(modelr)
 library(ggdist)
 library(patchwork)
+library(ggcorrplot)
 
 my_seed <- 99
 set.seed(my_seed)
@@ -99,7 +100,7 @@ ggplot(post_meta,
              y = post_mean, 
              colour = compelling)) +
   geom_hline(yintercept = 0,
-             lty = "dotted") 
+             lty = "dotted") +
   geom_point(size = 0.5) +
   geom_errorbar(aes(ymin = lower95,
                     ymax = higher95),
@@ -203,57 +204,47 @@ preds_priors <- c(
 ```
 
 ```{r predictors-bm}
-predictors_bm <- brm(
-  estimate | se(se) ~
-    pop_sdi +
-    # phoc_n +
-    n_random +
-    n_models +
-    outcome +                  # major dimension
-    temporal_window +          # temporal window
-    typicality +
-    all_rating +
-    years_from_phd +
-    prior_belief,
-  data = msa_models,
-  prior = preds_priors,
-  chain = 4,
-  iter = 4000,
-  # control = list(adapt_delta = 0.9999, max_treedepth = 15),
-  seed = my_seed,
-  cores = 4,
-  threads = threading(2),
-  backend = "cmdstanr",
-  file = "./data/meta_analysis/predictors_bm.rds"
-)
+
+# contrast code
+msa_models <- msa_models %>% 
+  mutate(
+         # standardize cont predictors
+         pop_sdi_s =  (pop_sdi - mean(pop_sdi, na.rm = TRUE)) / sd(pop_sdi,  na.rm = TRUE),
+         n_random_s =(n_random - mean(n_random, na.rm = TRUE)) / sd(n_random,  na.rm = TRUE),
+         n_models_s =(n_models - mean(n_models, na.rm = TRUE)) / sd(n_models,  na.rm = TRUE),
+         all_rating_s = (all_rating - mean(all_rating, na.rm = TRUE)) / sd(all_rating,  na.rm = TRUE),
+         years_from_phd_s = (years_from_phd - mean(years_from_phd, na.rm = TRUE)) / sd(years_from_phd,  na.rm = TRUE),
+         prior_belief_s =  (prior_belief - mean(prior_belief, na.rm = TRUE)) / sd(prior_belief,  na.rm = TRUE)
+         )
 
 predictors_bm_rintercepts <- brm(
   estimate | se(se) ~
-    pop_sdi +
+    pop_sdi_s +
     # phoc_n +
-    n_models +
+    n_random_s +
+    n_models_s +
     outcome +                  # major dimension
     temporal_window +          # temporal window
     typicality +
-    all_rating +
-    years_from_phd +
-    prior_belief +
+    all_rating_s +
+    years_from_phd_s +
+    prior_belief_s +
     (1 | animal),
   data = msa_models,
   prior = preds_priors,
   chain = 4,
-  iter = 4000,
-  # control = list(adapt_delta = 0.9999, max_treedepth = 15),
+  iter = 8000,
+  control = list(adapt_delta = 0.9999, max_treedepth = 15),
   seed = my_seed,
   cores = 4,
   threads = threading(2),
   backend = "cmdstanr",
   file = "./data/meta_analysis/predictors_bm_rintercepts.rds"
 )
+
 ```
 
 ```{r}
-print(predictors_bm, digits = 4)
 print(predictors_bm_rintercepts, digits = 4)
 
 # notable for paper:
@@ -278,10 +269,13 @@ post_pred <- predictors_bm_rintercepts %>%
                b_temporal_window.wordMintercept,
                b_temporal_window.phraseMintercept,
                b_temporal_window.sentenceMintercept,
-               b_categoricalMintercept,
-               b_all_rating,
-               b_years_from_phd,
-               b_prior_belief
+               b_typicality.categoricalMintercept,
+               b_pop_sdi_s,
+               b_n_random_s,
+               b_n_models_s,
+               b_all_rating_s,
+               b_years_from_phd_s,
+               b_prior_belief_s
                ) %>%
   select(-.chain, -.iteration) %>% 
   pivot_longer(-.draw,
@@ -297,7 +291,14 @@ post_pred <- predictors_bm_rintercepts %>%
                                 "word" = "b_temporal_window.wordMintercept",
                                 "phrase" = "b_temporal_window.phraseMintercept",
                                 "sentence" = "b_temporal_window.sentenceMintercept",
-                                "years_from_phd" = "b_years_from_phd"
+                                "years_from_phd" = "b_years_from_phd_s",
+                                "model uniqueness" = "b_pop_sdi_s",
+                                "model conservativeness"  = "b_n_random_s",
+                                "team's number of models"  = "b_n_models_s",
+                                "typicality operationalization" = "b_typicality.categoricalMintercept",
+                                "peer rating" = "b_all_rating_s",
+                                "years after Phd" = "b_years_from_phd_s",
+                                "prior belief" = "b_prior_belief_s"
                                 )
          ) 
 
@@ -316,11 +317,11 @@ years = seq(-4,12,0.2)
 
 ## extract
 post_years <- predictors_bm_rintercepts %>%
-  spread_draws(b_Intercept, b_years_from_phd) %>%
+  spread_draws(b_Intercept, b_years_from_phd_s) %>%
   ## make a list of relevant value range of b_years_from_phd
   mutate(years = list(seq(-4, 13, 0.5))) %>% 
   unnest(years) %>%
-  mutate(prediction = b_Intercept + b_years_from_phd * years) %>%
+  mutate(prediction = b_Intercept + b_years_from_phd_s * years) %>%
   group_by(years) %>%
   summarise(pred_mean = mean(prediction, na.rm = TRUE),
             l95 = quantile(prediction, prob = 0.025),
@@ -369,13 +370,13 @@ ggplot(post_pred_outcome,
                        end = 0.8) +
   annotate("text",
            x = 1.6,
-           y = -0.05,
+           y = -0.055,
            hjust= 0, 
            size = 2.5,
            label = "analyzing f0 tends to provide\nmore negative effect sizes") +
   annotate("curve",
-           x = 1.7, y = -0.043,
-           xend = 1.25, yend = -0.035, 
+           x = 1.7, y = -0.05,
+           xend = 1.25, yend = -0.045, 
            arrow = arrow(angle = 45, 
                          length = unit(.2, "cm"))) +
   # plot raw data, doesnt make sense right now because models are too confident
@@ -422,10 +423,10 @@ ggplot(post_pred_window,
            y = 0.1,
            hjust= 0, 
            size = 2.5,
-           label = "analyzing phrasal patterns tends\nto provide more positive effect sizes") +
+           label = "e.g. analyzing segmental patterns tends\nto provide more negative effect sizes") +
   annotate("curve",
            x = 1.5, y = 0.1,
-           xend = 1, yend = 0.01, 
+           xend = 1, yend = -0.03, 
            curvature = 0.3,
            arrow = arrow(angle = 45, 
                          length = unit(.2, "cm"))) +
@@ -477,28 +478,35 @@ post_pred_forest <- predictors_bm_rintercepts %>%
                b_temporal_window.phraseMintercept,
                b_temporal_window.sentenceMintercept,
                b_typicality.categoricalMintercept,
-               b_all_rating,
-               b_years_from_phd,
-               b_prior_belief
+               b_pop_sdi_s,
+               b_n_random_s,
+               b_n_models_s,
+               b_all_rating_s,
+               b_years_from_phd_s,
+               b_prior_belief_s
                ) %>%
   select(-.chain, -.iteration) %>% 
   pivot_longer(-.draw,
                names_to = "predictor", 
                values_to = "posterior") %>% 
-  mutate(predictor = fct_recode(predictor, 
+ mutate(predictor = fct_recode(predictor, 
                                 "Intercept" = "b_Intercept",
-                                "outcome: duration" = "b_outcome.durationMintercept", 
-                                "outcome: f0" = "b_outcome.f0Mintercept", 
-                                "outcome: intensity" = "b_outcome.intensityMintercept",
-                                "outcome: formants" = "b_outcome.formantsMintercept",
-                                "window: segment" = "b_temporal_window.segmentMintercept",
-                                "window: word" = "b_temporal_window.wordMintercept",
-                                "window: phrase" = "b_temporal_window.phraseMintercept",
-                                "window: sentence" = "b_temporal_window.sentenceMintercept",
+                                "duration" = "b_outcome.durationMintercept", 
+                                "f0" = "b_outcome.f0Mintercept", 
+                                "intensity" = "b_outcome.intensityMintercept",
+                                "formants" = "b_outcome.formantsMintercept",
+                                "segment" = "b_temporal_window.segmentMintercept",
+                                "word" = "b_temporal_window.wordMintercept",
+                                "phrase" = "b_temporal_window.phraseMintercept",
+                                "sentence" = "b_temporal_window.sentenceMintercept",
+                                "years_from_phd" = "b_years_from_phd_s",
+                                "model uniqueness" = "b_pop_sdi_s",
+                                "model conservativeness"  = "b_n_random_s",
+                                "team's number of models"  = "b_n_models_s",
                                 "typicality operationalization" = "b_typicality.categoricalMintercept",
-                                "peer rating" = "b_all_rating",
-                                "years after Phd" = "b_years_from_phd",
-                                "prior belief" = "b_prior_belief"
+                                "peer rating" = "b_all_rating_s",
+                                "years after Phd" = "b_years_from_phd_s",
+                                "prior belief" = "b_prior_belief_s"
                                 )
          ) %>% 
   group_by(predictor) %>%
@@ -553,5 +561,56 @@ ggsave(filename = "./plots/alltogether.png",
        units = "mm", 
        dpi = 500)
 
+
+```
+
+
+```{r}
+
+# check covariance structure:
+
+# select variables
+msa_models_corr <- msa_models %>% 
+  dplyr::select(
+         #outcome,
+         #temporal_window,
+         years_from_phd_s,
+         pop_sdi_s,
+         n_random_s,
+         n_models_s,
+         #typicality,
+         all_rating_s,
+         prior_belief_s) %>% 
+  drop_na()
+
+# plot correlations between cont variables
+ggcorrplot(cor(msa_models_corr), 
+           method = "circle",
+           hc.order = TRUE,
+           lab = TRUE,
+           type = "lower",
+           outline.color = "black",
+           lab_size = 6)
+
+# run lm equivalent in order to extract vif
+predictors_lm <- lm(
+  estimate ~
+    pop_sdi_s +
+    # phoc_n +
+    n_random_s +
+    n_models_s +
+    outcome +                  # major dimension
+    temporal_window +          # temporal window
+    typicality +
+    all_rating_s +
+    years_from_phd_s +
+    prior_belief_s,
+  data = msa_models
+)
+
+#calculate vif
+car::vif(predictors_lm)
+
+# looks like n_models has the highest vif (~3), which is moderate (Zuur, 2010)
 
 ```
