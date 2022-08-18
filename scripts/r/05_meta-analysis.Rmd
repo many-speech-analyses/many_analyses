@@ -24,6 +24,9 @@ b4ss_colors <- c(purple = "#8970FF", orange = "#FFA70B", pink = "#dd1c77")
 
 ```
 
+
+```{r} 
+
 # Read data
 
 msa_models <- readRDS("./data/analyses/msa_models.rds") %>%
@@ -47,6 +50,7 @@ msa_models <- readRDS("./data/analyses/msa_models.rds") %>%
 #   rowSums(sdim, na.rm = T) / length(preds)
 ```
 
+```{r} 
 # Meta-analysis
 
 priors <- c(
@@ -67,10 +71,11 @@ meta_bm <- brm(
 )
 ```
 
+```{r} 
 meta_bm
 ```
 
-
+```{r} 
 # wrangle by hand 
 post_meta <- meta_bm %>%
   spread_draws(b_Intercept, r_model_id[model,]) %>%
@@ -192,10 +197,10 @@ Weakly-informative regularising priors.
 ```{r preds-priors}
 preds_priors <- c(
   prior(normal(0, 1), class = Intercept),
-  prior(normal(0, 1), class = b)
-  # prior(normal(0, 1), class = meanme),
-  # prior(cauchy(0, 1), class = sdme),
-  # prior(lkj(2), class = corme)
+  prior(normal(0, 1), class = b),
+ # prior(normal(0, 1), class = meanme),
+ # prior(cauchy(0, 1), class = sdme),
+ # prior(lkj(2), class = corme)
 )
 ```
 
@@ -216,7 +221,6 @@ msa_models <- msa_models %>%
 predictors_bm_rintercepts <- brm(
   estimate | se(se) ~
     pop_sdi_s +
-    # phoc_n +
     n_random_s +
     n_models_s +
     outcome +                  # major dimension
@@ -229,13 +233,13 @@ predictors_bm_rintercepts <- brm(
   data = msa_models,
   prior = preds_priors,
   chain = 4,
-  iter = 8000,
-  control = list(adapt_delta = 0.9999, max_treedepth = 15),
+  iter = 4000,
+  control = list(adapt_delta = 0.99999, max_treedepth = 20),
   seed = my_seed,
   cores = 4,
   threads = threading(2),
   backend = "cmdstanr",
-  file = "./data/meta_analysis/predictors_bm_rintercepts.rds"
+  file = "./data/meta_analysis/predictors_bm_rintercepts_priors.rds"
 )
 
 ```
@@ -245,7 +249,7 @@ print(predictors_bm_rintercepts, digits = 4)
 
 # notable for paper:
 # the more models in analysis, the smaller the more negative the effect. note: not really interpretable I think
-# both outcome and window, two prime dfs for phonetic analysis, seems to affect the outcome. Useful to make raw-data plot with model estimate overlayed
+# both outcome and window, two prime dfs for phonetic analysis, seems to affect the outcome. Useful to make raw-data plot with model estimate overlaid
 # ratings and prior belief have no effect, so quality seems to have no effect, in line with previous literature
 # years_from_phd more negative with more seniority. Interpretation? 
 
@@ -312,8 +316,8 @@ post_pred_agg <-  post_pred %>%
 years = seq(-4,12,0.2)
 
 ## extract
-post_years <- predictors_bm_rintercepts %>%
-  spread_draws(b_Intercept, b_years_from_phd_s) %>%
+post_conservatives <- predictors_bm_rintercepts %>%
+  spread_draws(b_Intercept, b_n_random_s) %>%
   ## make a list of relevant value range of b_years_from_phd
   mutate(years = list(seq(-4, 13, 0.5))) %>% 
   unnest(years) %>%
@@ -563,18 +567,22 @@ ggsave(filename = "./plots/alltogether.png",
 
 ```{r}
 
+# look at model conservatives
+
+
+```
+
+```{r}
+
 # check covariance structure:
 
 # select variables
 msa_models_corr <- msa_models %>% 
   dplyr::select(
-         #outcome,
-         #temporal_window,
          years_from_phd_s,
          pop_sdi_s,
          n_random_s,
          n_models_s,
-         #typicality,
          all_rating_s,
          prior_belief_s) %>% 
   drop_na()
@@ -610,3 +618,5 @@ car::vif(predictors_lm)
 # looks like n_models has the highest vif (~3), which is moderate (Zuur, 2010)
 
 ```
+
+
