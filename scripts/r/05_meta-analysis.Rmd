@@ -197,7 +197,7 @@ Weakly-informative regularising priors.
 ```{r preds-priors}
 preds_priors <- c(
   prior(normal(0, 1), class = Intercept),
-  prior(normal(0, 1), class = b),
+  prior(normal(0, 1), class = b)
  # prior(normal(0, 1), class = meanme),
  # prior(cauchy(0, 1), class = sdme),
  # prior(lkj(2), class = corme)
@@ -216,7 +216,9 @@ msa_models <- msa_models %>%
          all_rating_s = (all_rating - mean(all_rating, na.rm = TRUE)) / sd(all_rating,  na.rm = TRUE),
          years_from_phd_s = (years_from_phd - mean(years_from_phd, na.rm = TRUE)) / sd(years_from_phd,  na.rm = TRUE),
          prior_belief_s =  (prior_belief - mean(prior_belief, na.rm = TRUE)) / sd(prior_belief,  na.rm = TRUE)
-         )
+         ) %>% 
+  # ignore the outlier for now
+  filter(animal != "gymnothorax_spinulosus")
 
 predictors_bm_rintercepts <- brm(
   estimate | se(se) ~
@@ -239,7 +241,7 @@ predictors_bm_rintercepts <- brm(
   cores = 4,
   threads = threading(2),
   backend = "cmdstanr",
-  file = "./data/meta_analysis/predictors_bm_rintercepts_priors.rds"
+  file = "./data/meta_analysis/predictors_bm_rintercepts.rds"
 )
 
 ```
@@ -311,29 +313,7 @@ post_pred_agg <-  post_pred %>%
             higher95 = quantile(posterior, probs = .975)
             )
 
-# years_from_phd
-## define range
-years = seq(-4,12,0.2)
 
-## extract
-post_conservatives <- predictors_bm_rintercepts %>%
-  spread_draws(b_Intercept, b_n_random_s) %>%
-  ## make a list of relevant value range of b_years_from_phd
-  mutate(years = list(seq(-4, 13, 0.5))) %>% 
-  unnest(years) %>%
-  mutate(prediction = b_Intercept + b_years_from_phd_s * years) %>%
-  group_by(years) %>%
-  summarise(pred_mean = mean(prediction, na.rm = TRUE),
-            l95 = quantile(prediction, prob = 0.025),
-            l80 = quantile(prediction, prob = 0.1),
-            h80 = quantile(prediction, prob = 0.9),
-            h95 = quantile(prediction, prob = 0.975))
-
-msa_agg_years <- msa_models %>% 
-  group_by(animal, years_from_phd) %>% 
-  summarise(years_from_phd = mean(years_from_phd),
-            estimate_m = mean(estimate),
-            number = n())
 
 # subset for quicker plotting
 post_pred_outcome <- post_pred %>% 
@@ -561,13 +541,44 @@ ggsave(filename = "./plots/alltogether.png",
        units = "mm", 
        dpi = 500)
 
-
 ```
 
 
 ```{r}
 
+# conservativeness
+## define range
+random = seq(-2, 6, 0.1)
+
+## extract
+post_conservatives <- predictors_bm_rintercepts %>%
+  spread_draws(b_Intercept, b_n_random_s) %>%
+  ## make a list of relevant value range of b_years_from_phd
+  mutate(random = list(seq(min(msa_models$n_random_s), max(msa_models$n_random_s), 0.1)))%>%
+  unnest(random) %>%
+  mutate(prediction = b_Intercept + b_n_random_s * random) %>%
+  group_by(random) %>%
+  summarise(pred_mean = mean(prediction, na.rm = TRUE),
+            l95 = quantile(prediction, prob = 0.025),
+            l80 = quantile(prediction, prob = 0.1),
+            h80 = quantile(prediction, prob = 0.9),
+            h95 = quantile(prediction, prob = 0.975))
+
+msa_agg_conservative <- msa_models %>% 
+  group_by(animal, n_random_s) %>% 
+  summarise(estimate_m = mean(estimate),
+            random_m = mean(n_random_s),
+            number = n())
+
 # look at model conservatives
+ggplot(post_conservatives,
+       aes(x = random,
+           y = pred_mean)) +
+  geom_line() +
+  geom_point(data = msa_agg_conservative,
+             aes(x = random_m,
+                 y = estimate_m,
+                 size = number))  
 
 
 ```
@@ -595,6 +606,13 @@ ggcorrplot(cor(msa_models_corr),
            type = "lower",
            outline.color = "black",
            lab_size = 6)
+
+# higher ratings for more models somehow
+ggplot(msa_models_corr,
+       aes(x = n_models_s,
+                 y = all_rating_s)) +
+  geom_point() + 
+  geom_smooth(method = "lm")
 
 # run lm equivalent in order to extract vif
 predictors_lm <- lm(

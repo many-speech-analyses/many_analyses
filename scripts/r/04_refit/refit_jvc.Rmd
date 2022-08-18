@@ -683,11 +683,12 @@ comp_mult
 MSA_gymnothorax_spinulosus_df <- gymnothorax_spinulosus_int %>% 
   mutate(measure_z = (measure - mean(measure)) / sd(measure),
     effect_con = (typ_mean - mean(typ_mean)) / sd(typ_mean), 
-    typ_mean_z = (typ_mean - mean(typ_mean)) / sd(typ_mean)) %>% 
-  filter(condition == "AF")
+    condition_s = as.factor(condition),
+    condition_s = C(condition_s, sum))
+#  filter(condition == "AF")
 
 gymnothorax_spinulosus_1_intdiff_con <- brm(
-  measure_z ~ effect_con * typ_mean_z + 
+  measure_z ~ effect_con * condition_s + 
     (1|target_colour) + 
     (1|speaker), 
   data = MSA_gymnothorax_spinulosus_df, 
