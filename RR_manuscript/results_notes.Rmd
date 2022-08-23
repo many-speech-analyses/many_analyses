@@ -128,42 +128,46 @@ In the following, we will describe the characteristics of our ananlyst teams and
 `r no_teams` teams initially signed up to participate. xx dropped out of the project during the analysis phase^[ADD REASONS]. 
 The remaining xx teams submitted their analysis in time and were coded by the three initiating authors (SC, JC, TR). 
 
-Of the submitted teams, teams consisted of an average of xx analysts (sd = xx) <!-- TR: Where is this info? -->, with an average of post PhD experience of `r round(phd_mean[[1]],1)` years (sd = `r round(phd_mean[[2]],1)`) ranging from `r round(phd_mean[[3]],1)` years, i.e. PhD students (or younger) to `r round(phd_mean[[4]],1)` years.
+<!-- TR: not just 30 right? Please add the accurate infor here -->
 
-Analysts prior belief in the effect under investigation ranged from `r round(prior_mean[[3]],1)`  to `r round(prior_mean[[4]],1)` with an average of `r round(prior_mean[[1]],1)` (sd = `r round(prior_mean[[2]],1)`), indicating an overall rather high prior plausibility of the hypothesis.  
+Of the submitted teams, teams consisted of an average of xx analysts (sd = xx) <!-- TR: Where is this info? -->. Analysts had on average `r round(phd_mean[[1]],1)` years (sd = `r round(phd_mean[[2]],1)`) post PhD experience, ranging from `r round(phd_mean[[3]],1)` years, i.e. PhD students (or younger) to `r round(phd_mean[[4]],1)` years.
 
-## Acoustic analysis 
-The teams have submitted `r no_analyses` to answer the research question. 
+Analysts prior belief in the effect under investigation ranged from `r round(prior_mean[[3]],1)`  to `r round(prior_mean[[4]],1)` with an average of `r round(prior_mean[[1]],1)` (sd = `r round(prior_mean[[2]],1)`), indicating that analysts had an overall rather high prior plausibility of the hypothesis (scale ranged from 0 to 100).  
+
+The teams have submitted `r no_analyses` models to answer the research question. 
 On average, teams submitted `r round(mean_analyses[[1]], 1)` models. 
 Analytical approaches widely varied along the following dimensions: 
-Teams differed in what and how they measured the acoustic signal, including chosing different aspects of the acoustic signal, the temporal window over which they measured, the concrete operationalization of how they measured said acoustic properties.
+First, teams differed in what and how they measured the acoustic signal, including choosing different aspects of the acoustic signal, the temporal window over which they measured, the concrete operationalization of how they measured said acoustic properties.
 
+## Acoustic analysis 
 `r round(outcome_n[[1,1]],2) * 100`\% of models used a duration measure as the outcome variable, `r round(outcome_n[[2,1]],2) * 100`\% used a f0 measure, `r round(outcome_n[[3,1]],2) * 100`\% used a formant measure, `r round(outcome_n[[4,1]],2) * 100`\% used an intensity measure, and `r round(outcome_n[[5,1]],2) * 100`\% used a different measure. 
 
-`r round(window_n[[1,1]],2) * 100`\% of models measured acoustic properties on the level of the segment (e.g. one vowel), `r round(window_n[[2,1]],2) * 100`\% on the level of the word (e.g. the noun), `r round(window_n[[3,1]],2) * 100`\% on the level of the phrase (e.g. the noun phrase including determiner and adjective, e.g. "the green banana"), `r round(window_n[[4,1]],2) * 100`\% on the level of the whole sentence, and `r round(window_n[[5,1]],2) * 100`\% used a different time window. 
+`r round(window_n[[1,1]],2) * 100`\% of models measured acoustic properties at the level of the segment (e.g. comparing the acoustic profile of a vowel), `r round(window_n[[2,1]],2) * 100`\% at the level of the word (e.g. comparing the acoustic profile of "banana"), `r round(window_n[[3,1]],2) * 100`\% at the level of the phrase (e.g. the noun phrase including determiner and adjective, e.g. "the green banana"), `r round(window_n[[4,1]],2) * 100`\% at the level of the whole sentence, and `r round(window_n[[5,1]],2) * 100`\% used a different time window. 
 
 TO ADD: LOOK AT OPERATIONALIZATIONS AND SEE HOW MANY UNIQUE MEASUREMENTS SPECIFICATIONS WERE DONE
 
-Teams also differed in what predictors they chose and how they operationalized them.
-On average, models included `r predictor_n` different predictors (counting only conceptually different predictors), i.e. in addition to the critical predictor, typicality of the adjective noun combinations, on average, each teams included one additional predictor in their models, including LIST CO-OCCURING IVS
-
-The most relevant predictor, typicality, was operationalized in different ways. 
-It was operationalized as categorical in `r round(typicality_n[[1,1]],2) * 100`\% of models, continuous with the mean typicality rating in `r round(typicality_n[[2,1]],2) * 100`\% of models, and continuous with the median typicality rating in `r round(typicality_n[[3,1]],2) * 100`\% of models.
 
 ## Statistical analysis 
-This multiverse of measurement choices is exponentiated with choices during the statistical analysis, including the chosen inferential framework, the type of model, and their model architecture, specifically how they accounted for dependencies in the data via random effect specifications in their multilevel models.
+Second, this multiverse of measurement choices is exponentiated with choices during the statistical analysis, including the choice of predictor and their operationalization, the chosen inferential framework, the type of model, and their model architecture, specifically how they accounted for dependencies in the data via random effect specifications in their multilevel models.
 
-The majority of models were rooted in the frequentist framework (`r round(framework_n[[2,1]],2) * 100`\%). (`r round(framework_n[[1,1]],2) * 100`\% were rooted in a Bayesian framework. 
+On average, models included `r round(predictor_n,2)` different predictors (counting only conceptually different predictors), i.e. in addition to the critical predictor, typicality of the adjective noun combinations, most teams included additional predictors in their models. Predictors included LIST CO-OCCURING IVS...
+
+The original dataset allowed to operationalize the most relevant predictor, typicality, in different ways. 
+It was operationalized as categorical (e.g. typical vs. atypical) in `r round(typicality_n[[1,1]],2) * 100`\% of models, continuous (on a scale from 0-100) with the mean typicality rating in `r round(typicality_n[[2,1]],2) * 100`\% of models, and continuous with the median typicality rating in `r round(typicality_n[[3,1]],2) * 100`\% of models.
+
+The majority of models were rooted in the frequentist framework (`r round(framework_n[[2,1]],2) * 100`\%). `r round(framework_n[[1,1]],2) * 100`\% were rooted in a Bayesian framework. 
 While teams almost exclusively used linear models to analyze their data (`r round(model_n[[2,1]],2) * 100`\%, with a few exception using machine learning techniques or GAMs as a special case of a linear model), teams differed drastically in how they accounted for dependencies within the data. 
 The data contains several dependencies between data points, with multiple data points coming from the same subject and with multiple data points being associated with the same adjective or noun. 
 The appropriate way to account for this non-independence is by using multi-level models and specifying so-called random effects (REFERENCE). 
-`r round(random_n[[3,1]],2) * 100`\% of linear models specified no random effects, `r round(random_n[[1,1]],2) * 100`\% specified random intercepts only, and `r round(random_n[[2,1]],2) * 100`\% specified random intercepts and random slopes to account for the non-independence.
-On average, teams that specified random effects, included `r rterms_n` random terms in their models. 
+`r round(random_n[[3,1]],2) * 100`\% of linear models specified no random effects at all, so effectively ignoring these non-independences.
+`r round(random_n[[1,1]],2) * 100`\% specified random intercepts only, and `r round(random_n[[2,1]],2) * 100`\% specified random intercepts and random slopes to account for the non-independence.
+On average, teams that specified random effects, included `r round(rterms_n,1)` random terms in their models. 
 
 TO ADD: LOOK AT MODELS AND COUNT UNIQUE MODELS.
 
 ## Review ratings 
-The mean rating of the quality of acoustic analyses was `r round(review_mean[[1]],1)` (sd = `r round(review_mean[[2]],1)`); the mean rating of the queality of statistical analysis was `r round(review_mean[[3]],1)` (sd = `r round(review_mean[[4]],1)`). For reference, the scale of the rating anchored a point grade of 75 as "an imperfect analysis but the needed changes are unlikely to dramatically alter final interpretation" indicating a rather high confidence of reviewers that the provided analyses yield appropriate answers to the research question. 
+Teams reviewed each other analyses for both the acoustic analysis and the statistical analysis. 
+The mean rating of the quality of the acoustic analyses was `r round(review_mean[[1]],1)` (sd = `r round(review_mean[[2]],1)`); the mean rating of the quality of the statistical analysis was `r round(review_mean[[3]],1)` (sd = `r round(review_mean[[4]],1)`). For reference, the scale of the rating anchored a point grade of 75 as "an imperfect analysis but the needed changes are unlikely to dramatically alter final interpretation", indicating a rather high confidence of reviewers that the provided analyses yield appropriate (yet "imperfect") answers to the research question. 
 
 # Meta analysis
 ```{r}
@@ -199,14 +203,16 @@ compelling_count <- table(post_meta$compelling)
 
 The Bayesian random effects meta analysis estimates the range of probable values of the standardized effect size of `r round(meta_intercept[1],3)` (95\% CrI = [`r round(meta_intercept[3],3)`, `r round(meta_intercept[3],4)`]). 
 In other words, if we were to assume that there is a true underlying effect and we consider each model an attempt to estimate this effect randomly drawn from a population of models, our best guess about the underlying effect is that it is `r round(meta_intercept[1],3)` standard deviations above zero, corresponding to atypical word combinations having `r round(meta_intercept[1],3)` standard deviations higher acoustic values (e.g. duration) than typical word combinations. 
-CONTEXTUALIZE IN CONCRETE ACOUSTIC VALUES (ALTERNATIVELY IN IQ VALUES). 
-This is not only a extremely small effect <!-- TR: cannot really talk about tiny effects because we have the continuous typicality included and that looks at a difference of one unit (which is 1 in a 1-100 scale -->, but the range of probably values also includes zero. 
-So, given the data, the model, and our prior assumptions, we cannot be very certain that there actually is an effect that is not point zero to begin with.
-This population effect is dwarfed by the estimated standard deviation between different models (EXTRACT BETA AND CRIS). 
-(ref:meta_plot1) plots the estimated model outputs for all submitted models according to size. 
-Note that given the nature of acoustic operationalization, there is not always a natural interpretation of the scale, but in most cases a positive effect corresponds to atypical word combinations eliciting higher acoustic values (e.g. longer duration, or higher f0).
-Notably, while the majority of models yielded inconclusive results, there are `r compelling_count[[1]] + compelling_count[[3]]` model estimates for which the 95\% credible interval does not overlap with zero (`r round((compelling_results[[1,1]] + compelling_results[[3,1]]), 2) * 100`\%).
 
+CONTEXTUALIZE IN CONCRETE ACOUSTIC VALUES (ALTERNATIVELY IN IQ VALUES). 
+
+This is not only an extremely small effect <!-- TR: cannot really talk about tiny effects because we have the continuous typicality included and that looks at a difference of one unit (which is 1 in a 1-100 scale -->, but the range of probably values also includes zero. 
+So, given the data, the model, and our prior assumptions, we cannot be very certain that there actually is an effect that is not point zero to begin with.
+Moreover, the population effect is dwarfed by the estimated standard deviation between different models (EXTRACT BETA AND CRIS). 
+(ref:meta_plot1) plots the estimated model outputs for all submitted models according to size. 
+Note that given the nature and wide variety of acoustic operationalization, there is not always a natural interpretation of the scale. 
+However, in most cases a positive effect corresponds to atypical word combinations eliciting higher acoustic values (e.g. longer duration, higher f0, etc.).
+Notably, while the majority of models yielded inconclusive results, there are `r compelling_count[[1]] + compelling_count[[3]]` model estimates for which the 95\% credible interval does not overlap with zero (`r round((compelling_results[[1,1]] + compelling_results[[3,1]]), 2) * 100`\%).
 
 ```{r 'plot_meta1', echo = FALSE, fig.cap="(ref:meta_plot1)", out.width="100%"}
 
@@ -215,7 +221,7 @@ knitr::include_graphics("./plots/meta_plot1.png")
 ```
 
 ## SUBHEADER 2
-After assessing the variability across models, we now turn towards estiamting the impact of a series of predictors to predict model outcomes. 
+After assessing the variability across models, we now turn towards estimating the impact of a series of predictors to predict model outcomes. 
 
 
 
