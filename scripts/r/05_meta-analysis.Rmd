@@ -215,10 +215,9 @@ msa_models <- msa_models %>%
          n_models_s =(n_models - mean(n_models, na.rm = TRUE)) / sd(n_models,  na.rm = TRUE),
          all_rating_s = (all_rating - mean(all_rating, na.rm = TRUE)) / sd(all_rating,  na.rm = TRUE),
          years_from_phd_s = (years_from_phd - mean(years_from_phd, na.rm = TRUE)) / sd(years_from_phd,  na.rm = TRUE),
-         prior_belief_s =  (prior_belief - mean(prior_belief, na.rm = TRUE)) / sd(prior_belief,  na.rm = TRUE)
-         ) %>% 
-  # ignore the outlier for now
-  filter(animal != "gymnothorax_spinulosus")
+         prior_belief_s =  (prior_belief - mean(prior_belief, na.rm = TRUE)) / sd(prior_belief,  na.rm = TRUE),
+         # contrast code cat predictor
+         ) 
 
 predictors_bm_rintercepts <- brm(
   estimate | se(se) ~
@@ -236,12 +235,12 @@ predictors_bm_rintercepts <- brm(
   prior = preds_priors,
   chain = 4,
   iter = 4000,
-  control = list(adapt_delta = 0.99999, max_treedepth = 20),
+  control = list(adapt_delta = 0.9, max_treedepth = 13),
   seed = my_seed,
   cores = 4,
   threads = threading(2),
   backend = "cmdstanr",
-  file = "./data/meta_analysis/predictors_bm_rintercepts.rds"
+  file = "./data/meta_analysis/predictors_bm_rintercepts_x.rds"
 )
 
 ```
@@ -461,7 +460,7 @@ post_pred_forest <- predictors_bm_rintercepts %>%
                b_pop_sdi_s,
                b_n_random_s,
                b_n_models_s,
-               b_all_rating_s,
+               #b_all_rating_s,
                b_years_from_phd_s,
                b_prior_belief_s
                ) %>%
@@ -484,7 +483,7 @@ post_pred_forest <- predictors_bm_rintercepts %>%
                                 "model conservativeness"  = "b_n_random_s",
                                 "team's number of models"  = "b_n_models_s",
                                 "typicality operationalization" = "b_typicality.categoricalMintercept",
-                                "peer rating" = "b_all_rating_s",
+                                #"peer rating" = "b_all_rating_s",
                                 "years after Phd" = "b_years_from_phd_s",
                                 "prior belief" = "b_prior_belief_s"
                                 )
@@ -556,7 +555,7 @@ post_conservatives <- predictors_bm_rintercepts %>%
   ## make a list of relevant value range of b_years_from_phd
   mutate(random = list(seq(min(msa_models$n_random_s), max(msa_models$n_random_s), 0.1)))%>%
   unnest(random) %>%
-  mutate(prediction = b_Intercept + b_n_random_s * random) %>%
+  mutate(prediction = b_Intercept + (b_n_random_s * random)) %>%
   group_by(random) %>%
   summarise(pred_mean = mean(prediction, na.rm = TRUE),
             l95 = quantile(prediction, prob = 0.025),
@@ -565,8 +564,10 @@ post_conservatives <- predictors_bm_rintercepts %>%
             h95 = quantile(prediction, prob = 0.975))
 
 msa_agg_conservative <- msa_models %>% 
-  group_by(animal, n_random_s) %>% 
+  group_by(animal) %>% 
   summarise(estimate_m = mean(estimate),
+            se_m = mean(se),
+            meas_error = estimate_m / se_m,
             random_m = mean(n_random_s),
             number = n())
 
@@ -574,12 +575,34 @@ msa_agg_conservative <- msa_models %>%
 ggplot(post_conservatives,
        aes(x = random,
            y = pred_mean)) +
-  geom_line() +
+  # model SE
+  geom_ribbon(aes(ymin = l95, 
+                  ymax = h95),
+              color = "grey",
+              alpha = 0.3) +
+  # model prediction
+  geom_line(size = 2) +
+  # raw data grouped by team and sized by number of models
   geom_point(data = msa_agg_conservative,
              aes(x = random_m,
-                 y = estimate_m,
-                 size = number))  
+                 y = meas_error,
+                 size = number,
+                 color = animal
+                 ),
+             alpha = 0.5) +
+  # linear smooth of raw data
+  geom_smooth(data = msa_agg_conservative,
+              method = "lm",
+             aes(x = random_m,
+                 y = meas_error,
+                 size = number,
+                 color = animal
+                 ),
+             color = "red", se = F,
+             alpha = 0.5) +
+  theme(legend.position = "none")
 
+# wtf? does not make sense. 
 
 ```
 

@@ -18,7 +18,6 @@ library(tidybayes)
 
 ```
 
-## Sample Charactaristics
 
 ```{r}
 
