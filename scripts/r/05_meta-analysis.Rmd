@@ -220,7 +220,8 @@ msa_models <- msa_models %>%
          ) 
 
 predictors_bm_rintercepts <- brm(
-  estimate | se(se) ~
+  #estimate | se(se) ~
+  estimate ~
     pop_sdi_s +
     n_random_s +
     n_models_s +
@@ -240,7 +241,7 @@ predictors_bm_rintercepts <- brm(
   cores = 4,
   threads = threading(2),
   backend = "cmdstanr",
-  file = "./data/meta_analysis/predictors_bm_rintercepts_x.rds"
+  file = "./data/meta_analysis/predictors_bm_rintercepts_only_est.rds"
 )
 
 ```
@@ -460,7 +461,7 @@ post_pred_forest <- predictors_bm_rintercepts %>%
                b_pop_sdi_s,
                b_n_random_s,
                b_n_models_s,
-               #b_all_rating_s,
+               b_all_rating_s,
                b_years_from_phd_s,
                b_prior_belief_s
                ) %>%
@@ -478,12 +479,11 @@ post_pred_forest <- predictors_bm_rintercepts %>%
                                 "word" = "b_temporal_window.wordMintercept",
                                 "phrase" = "b_temporal_window.phraseMintercept",
                                 "sentence" = "b_temporal_window.sentenceMintercept",
-                                "years_from_phd" = "b_years_from_phd_s",
                                 "model uniqueness" = "b_pop_sdi_s",
                                 "model conservativeness"  = "b_n_random_s",
                                 "team's number of models"  = "b_n_models_s",
                                 "typicality operationalization" = "b_typicality.categoricalMintercept",
-                                #"peer rating" = "b_all_rating_s",
+                                "peer rating" = "b_all_rating_s",
                                 "years after Phd" = "b_years_from_phd_s",
                                 "prior belief" = "b_prior_belief_s"
                                 )
@@ -496,24 +496,48 @@ post_pred_forest <- predictors_bm_rintercepts %>%
             higher95 = quantile(posterior, probs = .975)
             )
 
+# order predictors
+post_pred_forest$predictor <- factor(post_pred_forest$predictor, levels = c(# team-level predictors
+                                                                            "years after Phd",
+                                                                            "team's number of models",
+                                                                            "prior belief",
+                                                                            "peer rating", 
+                                                                            # model-level predictors
+                                                                            "model conservativeness",
+                                                                            "model uniqueness",
+                                                                            "typicality operationalization",
+                                                                            # temporal window
+                                                                            "segment",
+                                                                            "sentence",
+                                                                            "phrase",
+                                                                            "word",
+                                                                            # outcome
+                                                                            "f0",
+                                                                            "intensity",
+                                                                            "duration",
+                                                                            "formants"
+))
 
-forest <- 
+
+# to do: color code four different types of predictors
+
+#forest <- 
 ggplot(post_pred_forest %>% filter(predictor != "Intercept"),
        aes(x = post_mean,
-           #y = predictor)
-           y = reorder(predictor, post_mean))
+           y = predictor)
+           #y = reorder(predictor, post_mean))
        ) +
   geom_vline(xintercept = 0,
              lty = "dotted") +
   geom_segment(aes(x = lower95,
-                   y = reorder(predictor, post_mean),
+                   #y = reorder(predictor, post_mean),
                    xend = higher95,
-                   yend = reorder(predictor, post_mean)),
+                   yend = predictor),
                size = 1) +
   geom_segment(aes(x = lower80,
-                   y = reorder(predictor, post_mean),
+                   #y = reorder(predictor, post_mean),
                    xend = higher80,
-                   yend = reorder(predictor, post_mean)),
+                   yend = predictor),
                size = 2) +
   geom_point(pch = 21,
              fill = "white",
