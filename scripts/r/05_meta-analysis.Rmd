@@ -219,6 +219,32 @@ msa_models <- msa_models %>%
          # contrast code cat predictor
          ) 
 
+predictors_bm_rintercepts_me <- brm(
+  estimate | se(se) ~
+  #estimate ~
+    pop_sdi_s +
+    n_random_s +
+    n_models_s +
+    outcome +                  # major dimension
+    temporal_window +          # temporal window
+    typicality +
+    all_rating_s +
+    years_from_phd_s +
+    prior_belief_s +
+    (1 | animal),
+  data = msa_models,
+  prior = preds_priors,
+  chain = 4,
+  iter = 4000,
+  control = list(adapt_delta = 0.9, max_treedepth = 13),
+  seed = my_seed,
+  cores = 4,
+  threads = threading(2),
+  backend = "cmdstanr",
+  file = "./data/meta_analysis/predictors_bm_rintercepts.rds"
+)
+
+
 predictors_bm_rintercepts <- brm(
   #estimate | se(se) ~
   estimate ~
@@ -244,10 +270,11 @@ predictors_bm_rintercepts <- brm(
   file = "./data/meta_analysis/predictors_bm_rintercepts_only_est.rds"
 )
 
+
 ```
 
 ```{r}
-print(predictors_bm_rintercepts, digits = 4)
+print(predictors_bm_rintercepts_me, digits = 4)
 
 # notable for paper:
 # the more models in analysis, the smaller the more negative the effect. note: not really interpretable I think
@@ -261,7 +288,7 @@ print(predictors_bm_rintercepts, digits = 4)
 
 #plot(conditional_effects(predictors_bm), ask = FALSE)
 
-post_pred <- predictors_bm_rintercepts %>%
+post_pred <- predictors_bm_rintercepts_me %>%
   spread_draws(b_Intercept, 
                b_outcome.durationMintercept,
                b_outcome.f0Mintercept,
@@ -447,7 +474,7 @@ ggsave(filename = "./plots/predictor_plot.png",
 
 ```{r}
 
-post_pred_forest <- predictors_bm_rintercepts %>%
+post_pred_forest <- predictors_bm_rintercepts_me %>%
   spread_draws(b_Intercept, 
                b_outcome.durationMintercept,
                b_outcome.f0Mintercept,
@@ -685,3 +712,29 @@ car::vif(predictors_lm)
 ```
 
 
+```{r}
+
+# ricardo fusarolli
+#"Could you plot the raw outcome measure w uncertainty, the mean without me and the mean of the model w me? No predictors for now"
+
+ggplot(msa_models,
+       aes(x = estimate,
+           y = reorder(model_id, estimate))
+       ) +
+  geom_point(size = 0.5) +
+  geom_errorbar(aes(xmin = estimate - se,
+                    xmax = estimate + se),
+                 width = 0,
+                alpha = 0.45) +
+  geom_vline(xintercept = mean(msa_models$estimate),
+             color = "darkred",
+             size = 1) +
+  geom_vline( xintercept = mean(post_pred_forest[post_pred_forest$predictor == "Intercept",]$post_mean),
+             color = "blue",
+             lty = "dashed",
+             size = 1) + 
+  labs(y = "") +
+  theme_minimal() + theme(axis.text.y = element_blank())
+
+
+```
