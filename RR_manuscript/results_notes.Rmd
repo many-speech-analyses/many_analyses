@@ -20,7 +20,7 @@ library(here)
 ```
 
 
-```{r}
+```{r, 'load-data'}
 
 msa_models <- readRDS(here("./data/analyses/msa_models.rds")) %>%
   mutate(
@@ -151,6 +151,7 @@ Analytical approaches widely varied along the following dimensions:
 First, teams differed in what and how they measured the acoustic signal, including choosing different aspects of the acoustic signal, the temporal window over which they measured, the concrete operationalization of how they measured said acoustic properties.
 
 ## Acoustic analysis 
+
 `r round(outcome_n[[1,1]],2) * 100`\% of models used a duration measure as the outcome variable, `r round(outcome_n[[2,1]],2) * 100`\% used a f0 measure, `r round(outcome_n[[3,1]],2) * 100`\% used a formant measure, `r round(outcome_n[[4,1]],2) * 100`\% used an intensity measure, and `r round(outcome_n[[5,1]],2) * 100`\% used a different measure. 
 
 `r round(window_n[[1,1]],2) * 100`\% of models measured acoustic properties at the level of the segment (e.g. comparing the acoustic profile of a vowel), `r round(window_n[[2,1]],2) * 100`\% at the level of the word (e.g. comparing the acoustic profile of "banana"), `r round(window_n[[3,1]],2) * 100`\% at the level of the phrase (e.g. the noun phrase including determiner and adjective, e.g. "the green banana"), `r round(window_n[[4,1]],2) * 100`\% at the level of the whole sentence, and `r round(window_n[[5,1]],2) * 100`\% used a different time window. 
@@ -181,7 +182,8 @@ Teams reviewed each other analyses for both the acoustic analysis and the statis
 The mean rating of the quality of the acoustic analyses was `r round(review_mean[[1]],1)` (sd = `r round(review_mean[[2]],1)`); the mean rating of the quality of the statistical analysis was `r round(review_mean[[3]],1)` (sd = `r round(review_mean[[4]],1)`). For reference, the scale of the rating anchored a point grade of 75 as "an imperfect analysis but the needed changes are unlikely to dramatically alter final interpretation", indicating a rather high confidence of reviewers that the provided analyses yield appropriate (yet "imperfect") answers to the research question. 
 
 # Meta analysis
-```{r}
+
+```{r, 'load-meta-analysis'}
 
 meta_bm <- readRDS(here("./data/meta_analysis/meta_bm.rds"))
 
@@ -261,7 +263,9 @@ knitr::include_graphics(here("./plots/alltogether.png"))
 ```
 
 # Discussion drafty
+
 ## Summary
+
 We gave XX analyst teams the same acoustic dataset to answer the same research question. 
 In order to answer the question, teams had to operationalize latent variables within a multidimensional signal, operationalize and chose appropriate predictors, and construct an appropriate statistical model to answer the research question. 
 This complex process led to a large garden of forking paths.  
