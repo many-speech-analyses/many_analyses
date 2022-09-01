@@ -15,13 +15,14 @@ library(faux)
 library(dplyr)
 library(ggplot2)
 library(tidybayes)
+library(here)
 
 ```
 
 
 ```{r}
 
-msa_models <- readRDS("./data/analyses/msa_models.rds") %>%
+msa_models <- readRDS(here("./data/analyses/msa_models.rds")) %>%
   mutate(
     outcome = as.factor(outcome),
     typicality = as.factor(typicality),
@@ -51,8 +52,17 @@ prior_mean <- msa_models %>%
             min_prior = min(prior_belief, na.rm = TRUE),
             max_prior = max(prior_belief, na.rm = TRUE)) 
 
-# number of teams
+# number of teams (final)
 no_teams = length(unique(msa_models$team))
+
+# number of teams (initially)
+no_teams_init <- readr::read_csv(
+  here::here("data", "questionnaires", "msa_intake_form.csv")) %>% 
+  select(Q6) %>% # Questions asking for team leader
+  filter(!(row_number() %in% c(1, 2))) %>% 
+  distinct() %>% 
+  nrow
+
 
 # number of analyses
 no_analyses = nrow(msa_models)
@@ -118,14 +128,16 @@ review_mean <- msa_models %>%
 ```
 
 # Sample characteristics
-In the following, we will describe the characteristics of our ananlyst teams and their models in order to give an overview over the sample and the large variation across analysis strategies.  
+
+In the following, we will describe the characteristics of our analyst teams and their models in order to give an overview over the sample and the large variation across analysis strategies.  
 
 <!-- TR: some of this or most of this should go into a nice overview table -->
 
 ## Team properties
 
-`r no_teams` teams initially signed up to participate. xx dropped out of the project during the analysis phase^[ADD REASONS]. 
-The remaining xx teams submitted their analysis in time and were coded by the three initiating authors (SC, JC, TR). 
+`r no_teams_init %>% xfun::numbers_to_words() %>% stringr::str_to_title()` teams initially signed up to participate. 
+`r (no_teams_init - no_teams) %>% xfun::numbers_to_words() %>% stringr::str_to_title()` of the proposed teams dropped out of the project during the analysis phase^[ADD REASONS]. 
+The remaining `r no_teams` teams submitted their analysis in time and were coded by the three initiating authors (SC, JC, TR). 
 
 <!-- TR: not just 30 right? Please add the accurate info here -->
 
@@ -171,7 +183,7 @@ The mean rating of the quality of the acoustic analyses was `r round(review_mean
 # Meta analysis
 ```{r}
 
-meta_bm <- readRDS("./data/meta_analysis/meta_bm.rds")
+meta_bm <- readRDS(here("./data/meta_analysis/meta_bm.rds"))
 
 meta_intercept <- fixef(meta_bm)
 meta_random <- ranef(meta_bm)
@@ -218,7 +230,7 @@ Notably, while the majority of models yielded inconclusive results, there are `r
 
 ```{r 'plot_meta1', echo = FALSE, fig.cap="(ref:meta_plot1)", out.width="100%"}
 
-knitr::include_graphics("./plots/meta_plot1.png")
+knitr::include_graphics(here("./plots/meta_plot1.png"))
 
 ```
 
@@ -244,7 +256,7 @@ In other words, depending on the choice of measurement, analysts arrived at oppo
 
 ```{r 'plot_meta2', echo = FALSE, fig.cap="(ref:meta_plot1)", out.width="100%"}
 
-knitr::include_graphics("./plots/alltogether.png")
+knitr::include_graphics(here("./plots/alltogether.png"))
 
 ```
 
