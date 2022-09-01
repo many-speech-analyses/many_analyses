@@ -223,7 +223,6 @@ predictors_bm_rintercepts_me <- brm(
   estimate | se(se) ~
   #estimate ~
     pop_sdi_s +
-    n_random_s +
     n_models_s +
     outcome +                  # major dimension
     temporal_window +          # temporal window
@@ -245,49 +244,12 @@ predictors_bm_rintercepts_me <- brm(
 )
 
 
-predictors_bm_rintercepts <- brm(
-  #estimate | se(se) ~
-  estimate ~
-    pop_sdi_s +
-    n_random_s +
-    n_models_s +
-    outcome +                  # major dimension
-    temporal_window +          # temporal window
-    typicality +
-    all_rating_s +
-    years_from_phd_s +
-    prior_belief_s +
-    (1 | animal),
-  data = msa_models,
-  prior = preds_priors,
-  chain = 4,
-  iter = 4000,
-  control = list(adapt_delta = 0.9, max_treedepth = 13),
-  seed = my_seed,
-  cores = 4,
-  threads = threading(2),
-  backend = "cmdstanr",
-  file = "./data/meta_analysis/predictors_bm_rintercepts_only_est.rds"
-)
-
-
 ```
 
-```{r}
-print(predictors_bm_rintercepts_me, digits = 4)
-
-# notable for paper:
-# the more models in analysis, the smaller the more negative the effect. note: not really interpretable I think
-# both outcome and window, two prime dfs for phonetic analysis, seems to affect the outcome. Useful to make raw-data plot with model estimate overlaid
-# ratings and prior belief have no effect, so quality seems to have no effect, in line with previous literature
-# years_from_phd more negative with more seniority. Interpretation? 
-
-```
 
 ```{r}
 
-#plot(conditional_effects(predictors_bm), ask = FALSE)
-
+# extract posteriors
 post_pred <- predictors_bm_rintercepts_me %>%
   spread_draws(b_Intercept, 
                b_outcome.durationMintercept,
@@ -300,7 +262,6 @@ post_pred <- predictors_bm_rintercepts_me %>%
                b_temporal_window.sentenceMintercept,
                b_typicality.categoricalMintercept,
                b_pop_sdi_s,
-               b_n_random_s,
                b_n_models_s,
                b_all_rating_s,
                b_years_from_phd_s,
@@ -320,9 +281,7 @@ post_pred <- predictors_bm_rintercepts_me %>%
                                 "word" = "b_temporal_window.wordMintercept",
                                 "phrase" = "b_temporal_window.phraseMintercept",
                                 "sentence" = "b_temporal_window.sentenceMintercept",
-                                "years_from_phd" = "b_years_from_phd_s",
                                 "model uniqueness" = "b_pop_sdi_s",
-                                "model conservativeness"  = "b_n_random_s",
                                 "team's number of models"  = "b_n_models_s",
                                 "typicality operationalization" = "b_typicality.categoricalMintercept",
                                 "peer rating" = "b_all_rating_s",
@@ -382,8 +341,8 @@ ggplot(post_pred_outcome,
            size = 2.5,
            label = "analyzing f0 tends to provide\nmore negative effect sizes") +
   annotate("curve",
-           x = 1.7, y = -0.05,
-           xend = 1.25, yend = -0.045, 
+           x = 1.7, y = -0.045,
+           xend = 1.35, yend = -0.035, 
            arrow = arrow(angle = 45, 
                          length = unit(.2, "cm"))) +
   # plot raw data, doesnt make sense right now because models are too confident
@@ -433,7 +392,7 @@ ggplot(post_pred_window,
            label = "e.g. analyzing segmental patterns tends\nto provide more negative effect sizes") +
   annotate("curve",
            x = 1.5, y = 0.1,
-           xend = 1, yend = -0.03, 
+           xend = 1, yend = -0.015, 
            curvature = 0.3,
            arrow = arrow(angle = 45, 
                          length = unit(.2, "cm"))) +
@@ -486,7 +445,6 @@ post_pred_forest <- predictors_bm_rintercepts_me %>%
                b_temporal_window.sentenceMintercept,
                b_typicality.categoricalMintercept,
                b_pop_sdi_s,
-               b_n_random_s,
                b_n_models_s,
                b_all_rating_s,
                b_years_from_phd_s,
@@ -507,7 +465,6 @@ post_pred_forest <- predictors_bm_rintercepts_me %>%
                                 "phrase" = "b_temporal_window.phraseMintercept",
                                 "sentence" = "b_temporal_window.sentenceMintercept",
                                 "model uniqueness" = "b_pop_sdi_s",
-                                "model conservativeness"  = "b_n_random_s",
                                 "team's number of models"  = "b_n_models_s",
                                 "typicality operationalization" = "b_typicality.categoricalMintercept",
                                 "peer rating" = "b_all_rating_s",
@@ -523,35 +480,13 @@ post_pred_forest <- predictors_bm_rintercepts_me %>%
             higher95 = quantile(posterior, probs = .975)
             )
 
-# order predictors
-post_pred_forest$predictor <- factor(post_pred_forest$predictor, levels = c(# team-level predictors
-                                                                            "years after Phd",
-                                                                            "team's number of models",
-                                                                            "prior belief",
-                                                                            "peer rating", 
-                                                                            # model-level predictors
-                                                                            "model conservativeness",
-                                                                            "model uniqueness",
-                                                                            "typicality operationalization",
-                                                                            # temporal window
-                                                                            "segment",
-                                                                            "sentence",
-                                                                            "phrase",
-                                                                            "word",
-                                                                            # outcome
-                                                                            "f0",
-                                                                            "intensity",
-                                                                            "duration",
-                                                                            "formants"
-))
-
 
 # to do: color code four different types of predictors
 
-#forest <- 
+forest <- 
 ggplot(post_pred_forest %>% filter(predictor != "Intercept"),
        aes(x = post_mean,
-           y = predictor)
+           y = reorder(predictor, post_mean))
            #y = reorder(predictor, post_mean))
        ) +
   geom_vline(xintercept = 0,
@@ -559,12 +494,12 @@ ggplot(post_pred_forest %>% filter(predictor != "Intercept"),
   geom_segment(aes(x = lower95,
                    #y = reorder(predictor, post_mean),
                    xend = higher95,
-                   yend = predictor),
+                   yend = reorder(predictor, post_mean)),
                size = 1) +
   geom_segment(aes(x = lower80,
                    #y = reorder(predictor, post_mean),
                    xend = higher80,
-                   yend = predictor),
+                   yend = reorder(predictor, post_mean)),
                size = 2) +
   geom_point(pch = 21,
              fill = "white",
@@ -593,67 +528,17 @@ ggsave(filename = "./plots/alltogether.png",
 
 ```
 
-
 ```{r}
 
-# conservativeness
-## define range
-random = seq(-2, 6, 0.1)
+# plot model uniqueness
 
-## extract
-post_conservatives <- predictors_bm_rintercepts %>%
-  spread_draws(b_Intercept, b_n_random_s) %>%
-  ## make a list of relevant value range of b_years_from_phd
-  mutate(random = list(seq(min(msa_models$n_random_s), max(msa_models$n_random_s), 0.1)))%>%
-  unnest(random) %>%
-  mutate(prediction = b_Intercept + (b_n_random_s * random)) %>%
-  group_by(random) %>%
-  summarise(pred_mean = mean(prediction, na.rm = TRUE),
-            l95 = quantile(prediction, prob = 0.025),
-            l80 = quantile(prediction, prob = 0.1),
-            h80 = quantile(prediction, prob = 0.9),
-            h95 = quantile(prediction, prob = 0.975))
+ggplot(msa_models,
+       aes(x = pop_sdi_s,
+           y = estimate,
+           size = -se)) +
+  geom_point(alpha = 0.2) + 
+  geom_smooth(method = "lm")
 
-msa_agg_conservative <- msa_models %>% 
-  group_by(animal) %>% 
-  summarise(estimate_m = mean(estimate),
-            se_m = mean(se),
-            meas_error = estimate_m / se_m,
-            random_m = mean(n_random_s),
-            number = n())
-
-# look at model conservatives
-ggplot(post_conservatives,
-       aes(x = random,
-           y = pred_mean)) +
-  # model SE
-  geom_ribbon(aes(ymin = l95, 
-                  ymax = h95),
-              color = "grey",
-              alpha = 0.3) +
-  # model prediction
-  geom_line(size = 2) +
-  # raw data grouped by team and sized by number of models
-  geom_point(data = msa_agg_conservative,
-             aes(x = random_m,
-                 y = meas_error,
-                 size = number,
-                 color = animal
-                 ),
-             alpha = 0.5) +
-  # linear smooth of raw data
-  geom_smooth(data = msa_agg_conservative,
-              method = "lm",
-             aes(x = random_m,
-                 y = meas_error,
-                 size = number,
-                 color = animal
-                 ),
-             color = "red", se = F,
-             alpha = 0.5) +
-  theme(legend.position = "none")
-
-# wtf? does not make sense. 
 
 ```
 
@@ -666,7 +551,6 @@ msa_models_corr <- msa_models %>%
   dplyr::select(
          years_from_phd_s,
          pop_sdi_s,
-         n_random_s,
          n_models_s,
          all_rating_s,
          prior_belief_s) %>% 
@@ -692,8 +576,6 @@ ggplot(msa_models_corr,
 predictors_lm <- lm(
   estimate ~
     pop_sdi_s +
-    # phoc_n +
-    n_random_s +
     n_models_s +
     outcome +                  # major dimension
     temporal_window +          # temporal window
@@ -707,34 +589,8 @@ predictors_lm <- lm(
 #calculate vif
 car::vif(predictors_lm)
 
-# looks like n_models has the highest vif (~3), which is moderate (Zuur, 2010)
+# looks like predictors do not have concering VIFs
 
 ```
 
 
-```{r}
-
-# ricardo fusarolli
-#"Could you plot the raw outcome measure w uncertainty, the mean without me and the mean of the model w me? No predictors for now"
-
-ggplot(msa_models,
-       aes(x = estimate,
-           y = reorder(model_id, estimate))
-       ) +
-  geom_point(size = 0.5) +
-  geom_errorbar(aes(xmin = estimate - se,
-                    xmax = estimate + se),
-                 width = 0,
-                alpha = 0.45) +
-  geom_vline(xintercept = mean(msa_models$estimate),
-             color = "darkred",
-             size = 1) +
-  geom_vline( xintercept = mean(post_pred_forest[post_pred_forest$predictor == "Intercept",]$post_mean),
-             color = "blue",
-             lty = "dashed",
-             size = 1) + 
-  labs(y = "") +
-  theme_minimal() + theme(axis.text.y = element_blank())
-
-
-```

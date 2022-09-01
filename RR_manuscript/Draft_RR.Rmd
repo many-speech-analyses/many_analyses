@@ -58,7 +58,7 @@ Along the way, different methodological and analytic choices need to be made, al
 These researcher degrees of freedom are both a blessing and a curse.
 They are a blessing because they afford us the opportunity to look at nature from different angles, which, in turn, allows us to make important discoveries and generate new hypotheses [e.g., @box1976science; @tukey1977exploratory; @de2014thought].
 They are a curse because idiosyncratic choices can lead to categorically different interpretations, which eventually find their way into the publication record where they are taken for granted [@simmons2011false].
-Recent projects have shown that the variability between different data analysts is vast and can lead independent researchers to draw different conclusions from the same data set [e.g., @silberzahn2018many; @starns2019assessing; @botvinik2020variability].
+Recent projects have shown that the variability between different data analysts is vast and can lead independent researchers to draw different conclusions from the same data set [e.g., @silberzahn2018many; @starns2019assessing; @botvinik-nezer2020].
 These studies, however, might still underestimate the extent to which analysts vary because data analysis is not restricted to the statistical analysis of ready-made numeric data.
 These data can in fact be the result of complex measurement processes that translate a phenomenon, such as human behavior, into numbers.
 This is particularly true for fields that draw conclusions about human behavior and cognition from multidimensional data like audio or video data.

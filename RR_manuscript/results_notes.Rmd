@@ -127,7 +127,7 @@ In the following, we will describe the characteristics of our ananlyst teams and
 `r no_teams` teams initially signed up to participate. xx dropped out of the project during the analysis phase^[ADD REASONS]. 
 The remaining xx teams submitted their analysis in time and were coded by the three initiating authors (SC, JC, TR). 
 
-<!-- TR: not just 30 right? Please add the accurate infor here -->
+<!-- TR: not just 30 right? Please add the accurate info here -->
 
 Of the submitted teams, teams consisted of an average of xx analysts (sd = xx) <!-- TR: Where is this info? -->. Analysts had on average `r round(phd_mean[[1]],1)` years (sd = `r round(phd_mean[[2]],1)`) post PhD experience, ranging from `r round(phd_mean[[3]],1)` years, i.e. PhD students (or younger) to `r round(phd_mean[[4]],1)` years.
 
@@ -143,7 +143,7 @@ First, teams differed in what and how they measured the acoustic signal, includi
 
 `r round(window_n[[1,1]],2) * 100`\% of models measured acoustic properties at the level of the segment (e.g. comparing the acoustic profile of a vowel), `r round(window_n[[2,1]],2) * 100`\% at the level of the word (e.g. comparing the acoustic profile of "banana"), `r round(window_n[[3,1]],2) * 100`\% at the level of the phrase (e.g. the noun phrase including determiner and adjective, e.g. "the green banana"), `r round(window_n[[4,1]],2) * 100`\% at the level of the whole sentence, and `r round(window_n[[5,1]],2) * 100`\% used a different time window. 
 
-TO ADD: LOOK AT OPERATIONALIZATIONS AND SEE HOW MANY UNIQUE MEASUREMENTS SPECIFICATIONS WERE DONE
+<!-- TR: TO ADD: LOOK AT OPERATIONALIZATIONS AND SEE HOW MANY UNIQUE MEASUREMENTS SPECIFICATIONS WERE DONE-->
 
 
 ## Statistical analysis 
@@ -162,7 +162,7 @@ The appropriate way to account for this non-independence is by using multi-level
 `r round(random_n[[1,1]],2) * 100`\% specified random intercepts only, and `r round(random_n[[2,1]],2) * 100`\% specified random intercepts and random slopes to account for the non-independence.
 On average, teams that specified random effects, included `r round(rterms_n,1)` random terms in their models. 
 
-TO ADD: LOOK AT MODELS AND COUNT UNIQUE MODELS.
+<!-- TR: TO ADD: TO ADD: LOOK AT MODELS AND COUNT UNIQUE MODELS.-->
 
 ## Review ratings 
 Teams reviewed each other analyses for both the acoustic analysis and the statistical analysis. 
@@ -198,20 +198,23 @@ compelling_count <- table(post_meta$compelling)
 
 ```
 
-## SUBHEADER 1
+## Estimating the crowd sourced effect size
 
-The Bayesian random effects meta analysis estimates the range of probable values of the standardized effect size of `r round(meta_intercept[1],3)` (95\% CrI = [`r round(meta_intercept[3],3)`, `r round(meta_intercept[3],4)`]). 
-In other words, if we were to assume that there is a true underlying effect and we consider each model an attempt to estimate this effect randomly drawn from a population of models, our best guess about the underlying effect is that it is `r round(meta_intercept[1],3)` standard deviations above zero, corresponding to atypical word combinations having `r round(meta_intercept[1],3)` standard deviations higher acoustic values (e.g. duration) than typical word combinations. 
+The Bayesian random effects model estimates the range of probable values of the standardized effect size between `r round(meta_intercept[3],3)` and `r round(meta_intercept[4],3)` (95\% CrI, mean = `r round(meta_intercept[1],3)`)
+In other words, if we were to assume that there is a true underlying effect of typicality and we consider each analysis randomly drawn from a population of possible analysis attempts, our best guess about the underlying effect is that it is `r round(meta_intercept[1],3)` standard deviations above zero. This outcome thus estimates that atypical word combinations have `r round(meta_intercept[1],3)` standard deviations higher acoustic values (e.g. duration, f0 etc,) than typical word combinations. 
 
-CONTEXTUALIZE IN CONCRETE ACOUSTIC VALUES (ALTERNATIVELY IN IQ VALUES). 
+<!-- TR: CONTEXTUALIZE IN CONCRETE ACOUSTIC VALUES (ALTERNATIVELY IN IQ VALUES).--> 
 
-This is not only an extremely small effect <!-- TR: cannot really talk about tiny effects because we have the continuous typicality included and that looks at a difference of one unit (which is 1 in a 1-100 scale -->, but the range of probably values also includes zero. 
-So, given the data, the model, and our prior assumptions, we cannot be very certain that there actually is an effect that is not point zero to begin with.
-Moreover, the population effect is dwarfed by the estimated standard deviation between different models (EXTRACT BETA AND CRIS). 
-(ref:meta_plot1) plots the estimated model outputs for all submitted models according to size. 
-Note that given the nature and wide variety of acoustic operationalization, there is not always a natural interpretation of the scale. 
-However, in most cases a positive effect corresponds to atypical word combinations eliciting higher acoustic values (e.g. longer duration, higher f0, etc.).
-Notably, while the majority of models yielded inconclusive results, there are `r compelling_count[[1]] + compelling_count[[3]]` model estimates for which the 95\% credible interval does not overlap with zero (`r round((compelling_results[[1,1]] + compelling_results[[3,1]]), 2) * 100`\%).
+This is not only an extremely small effect <!-- TR: cannot really talk about tiny effects because we have the continuous typicality included and that looks at a difference of one unit (which is 1 in a 1-100 scale -->, but there is also much uncertainty around this estimate and the range of probably values includes zero. 
+Thus, given the data, the model, and our prior assumptions, we cannot be very certain that there actually is an effect that is not point zero to begin with. 
+Since we do not know the true value of the underlying effect, we cannot conclude anything from this finding, but 
+if there is an effect of typicality, it is very small.
+Moreover, this population estimate is half the size of the estimated standard deviation between different models <!-- TR: EXTRACT BETA AND CRIS).--> 
+(ref:meta_plot1) illustrates the estimated model outputs for all submitted models according to size. 
+Note that given the nature and wide variety of acoustic operationalizations, there is not always a natural interpretation of the scale, but in most cases a positive effect corresponds to atypical word combinations eliciting higher acoustic values (e.g. longer duration, higher f0, etc.).
+Notably, while the majority of models yielded inconclusive results, there are `r compelling_count[[1]] + compelling_count[[3]]` model estimates for which the 95\% credible interval does not contain zero (`r round((compelling_results[[1,1]] + compelling_results[[3,1]]), 2) * 100`\%).
+
+<!-- TR: ADD PARAGRAPH ON HOW MANY CLAIMED THERE TO BE AN EFFECT.--> 
 
 ```{r 'plot_meta1', echo = FALSE, fig.cap="(ref:meta_plot1)", out.width="100%"}
 
@@ -219,8 +222,102 @@ knitr::include_graphics("./plots/meta_plot1.png")
 
 ```
 
-## SUBHEADER 2
-After assessing the variability across models, we now turn towards estimating the impact of a series of predictors to predict model outcomes. 
+## Can we predict the estimate?
+After assessing the variability across models, we now turn toward estimating the impact of a series of predictors the analysts model estimates 
+There is a lot of variation, raising the question as to whether we can explain some of this variation or whether it is idiosyncratic (REF)?
+
+(ref:meta_plot1), panel C, displays the coefficients alongside 80% and 95% credible intervals for all model predictors. 
+
+<!-- TR: ADD TABLE HERE TOO?--> 
+
+The model suggests that most team-specific predictors yield very small mean estimates and 95% credibile intervals that include zero, leaving us highly uncertain about their direction. 
+Neither analysts' prior beliefs in the phenomenon (ADD EST + 95CrI), nor their seniority in terms of years after completing their PhD (ADD EST + 95CrI) seem to compellingly affect model estimates.
+Similarly, the evaluation of the quality of the analysis from their peers yielded a rather small effect magnitude, again characterized by large uncertainty (ADD EST + 95CrI). 
+Interestingly, the model uniqueness, i.e. how unique the choice and combination of predictors is, affects the analysts estimate, with more unique models producing higher positive estimates. 
+This suggests that the analysts' results very much depend on the choice of predictors. 
+Looking at the most important choices during measurement, both the acoustic parameter under investigation (e.g. duration or f0) and the choice of temporal window affected the results. 
+(ref:meta_plot1) displays the posterior estimates for the measurement outcome (i.e. what acoustic dimension was measured, panel A) and measurement window (i.e. what is the unit over which was measured, panel B). 
+If an acoustic dimension related to f0 was measured, estimates are lower than the meta analytical estimate.
+If on the other hand, vowel formants were measured, estimates are higher than the meta analytical estimate.
+Similarly, if acoustic parameters were measured within individual segments (e.g. the vowel of the noun), estimates are lower than the meta analytical estimate, and if acoustic parameters were measured across whole phrases (e.g. "the blue banana"), the estimates are generally higher.
+In other words, depending on the choice of measurement, analysts arrived at opposite conclusions about how and if typicality is expressed acoustically. 
+
+```{r 'plot_meta2', echo = FALSE, fig.cap="(ref:meta_plot1)", out.width="100%"}
+
+knitr::include_graphics("./plots/alltogether.png")
+
+```
+
+# Discussion drafty
+## Summary
+We gave XX analyst teams the same acoustic dataset to answer the same research question. 
+In order to answer the question, teams had to operationalize latent variables within a multidimensional signal, operationalize and chose appropriate predictors, and construct an appropriate statistical model to answer the research question. 
+This complex process led to a large garden of forking paths.  
+Each individual analyst team chose unique paths to acoustically measure, operationalize and statistical analyse the data.
+Interestingly, the observed variation in reported effect sizes was not predicted by the analysts' prior expectations about the phenomenon.
+In fact, teams on average rated the plausibility of the effect as rather high before receiving access to the data.
+The variation in reported effect sizes was neither predicted by the analysts' experience in the field nor by the perceived quality of the analysis as judged by other teams. 
+Analyses received overall high peer ratings for both the acoustic and the statistical analysis, suggesting that reviewers were generally satisfied with the other teams' approaches.
+These findings are very much in line with previous crowd-sourced projects that suggested variation between teams is neither driven by perceived quality of the analysis nor by analysts biases or experience (REF,REF,REF). 
+Given the mounting evidence, Breznau et al. (2021) concluded that "[...] we are left to believe that idiosyncratic uncertainty is a fundamental feature of the scientific process that is not easily explained by typically observed researcher characteristics or analytical decisions." 
+Idiosyncratic variation across researchers might be a fact of life which researchers have to acknowledge and integrate into how they evaluate and present evidence.
+
+While properties of the teams did not seem to systematically affect results, teams' estimates seem to depend on certain measurement choices. 
+Human speech is a complex multidimensional signal. 
+Researchers need to make choices about what to measure, how to measure it and which temporal unit to measure it in. 
+Some outcome choices seem to bias the estimates in our data in one direction while others seem to bias estimates into another. 
+For example, measurements related to fundamental frequency tended to results in lower estimates while measurements related to vowel formants tended to yield higher estimates. 
+This asymmetry can have several causes: 
+First, there could be a true underlying relationship between typicality and the speech signal that manifests itself in some measures but not others and / or manifests itself negatively in one acoustic measure but positively in another. 
+Second, certain measurement choices might be associated with stronger expectations relative to the research question and lead to strong bias. 
+Many researchers targeted f0-related measures since similar functional relationships like information structure and predictability can be expressed via f0 [e.g. @grice2017integrating; @turnbull2017role]. 
+Third, ADD REASONS. 
+Regardless of its cause, we have to conclude that depending on the choice of how the speech signal is operationalized, researchers might find evidence for or against an theoretically relevant effect.
+
+## Lessons for the methodological reform movement
+The current results point to important barriers for successful knowledge accumulation. 
+The replication crisis has brought attention to scientific practices that lead to unreliable and biased claims in the literature (REFS).
+One of the suggested paths forward is for researchers to directly replicate more [@open2015estimating; REFS, REFS].
+While we agree with the importance of direct replications, our study (and similar crowd-sourced analyses before us) show that replicating more is not enough.
+There is only limited value in learning that a particular procedure is replicable if the idiosyncratic nature of the procedure itself might not yield a representative results relative to all possible procedures that could have been applied to the research question. 
+Well-trained and experienced speech researchers not only applied completely different approaches to the same analytical question, they also seem to consider all these alternative approaches applied by other teams acceptable. 
+Being aware of this idiosyncratic variation between analysts should lead to more nuanced claims and what Breznau et al. refers to as "epistemic humility". 
+Now that researchers know that different but reasonable measurement choices or statistical approaches might lead to entirely different interpretations of their data, they should calibrate their (un)certainty in the strength of the evidence and, in turn, communicate that uncertainty appropriately. 
+The fact that the choice of measurement, measurement window, and predictor choice affect the answer to the research question further suggest that we need stronger quantitative theories about how measurement systems (here the acoustic signal) and underlying theoretical construct (here the phonetic expression of typicality) relate to each other.
+Researchers ideally specify the derivation chain [@dubin1970theory;@meehl1990summaries], i.e. the link between theoretical construct and quantitative system, prior to data collection and analysis, including defining concepts and their relationship within the quantitative system, specifying auxiliary assumptions and boundary conditions, defining target measurements and statistical predictions, including possible (and impossible) effect magnitudes.
+Without well defined derivation chains, researchers "are not even wrong" [@scheel2022most] because falsified predictions cannot  tell us much about the theoretical constructs that they are after. 
+
+In light of the observed analytical flexibility, what can researchers do to appropriately calibrate their confidence in their claims?
+First of all, through sharing of materials, data and statistical protocols, researchers can make their idiosyncratic choices transparent to others (REF). 
+This enables critical evaluation and robustness checks by other researchers (REF).
+Given that minor procedural changes can sometimes drastically affect the final interpretation of the results [@breznau2021observing], researches should ideally share a detailed documentation of the data collection procedure, the measurement choices, the data extraction, and statistical analysis. 
+Within fields that deal with speech data, open source software that allows to extract acoustic parameters via reproducible scripts can help other researchers to trace back seemingly inconsequential choices during the measurement process [e.g., CITE Praat, EMU CITE)]].
+
+ADD
+
+Second, making analytical pathways completely re-traceable does not change the fact that analysts apply different analytical approaches. 
+Crowd-sourcing projects such as the current one can shed light on the range of degrees of freedom during analysis and help producing a consensus estimate using meta-analytical techniques. 
+This is obviously not always feasible in terms of required resources and time, but could be a consideration for claims that have large theoretical or practical consequences. 
+
+Third, if researchers have a good understanding of relevant analytical degrees of freedom, they could apply all conceivable analytical strategies and compare the results across all combinations of these choices.
+This approach is called multiverse analysis [e.g, @steegen2016increasing; @harder2020multiverse] and has recently gained popularity across disciplines. 
+Finally, neither crowd-sourcing nor multiverse analyses will guarantee that all relevant pathways are explored. 
+Crowd-sourcing is limited by the sampled analyst and their biases. 
+Multiverse analysis is limited even further by the one group of researchers who define possible analytical pathways. 
+Eventually, a mature scientific discipline should develop strong quantitative theories of how theoretical constructs manifest themselves in the measurement system, i.e. in the present case how communicative pressures of functions are expressed in the acoustic signal. 
+Recently, researchers across the cognitive science have raised awareness of a general lack of quantitative theory, calling for establishing appropriate derivation chains and formalizing verbal theories mathematically [e.g., @van2020formalizing; @guest2021computational; @scheel2021hypothesis; @devezer2021case].
+
+## Caveats
+Our study has several limitations that need to be considered when evaluating our results. 
+First of all, our sample is an opportunity sample. 
+We have advertise the project through online platforms which might lead to the exclusion of certain potential researcher groups.
+Moreover, while the number of participating teams is larger than most earlier crowdsourcing projects, it is likely too small to estimate meta-analytical estimates reliably.
+This is particularly important for the predictor evaluation.
+Since predictor levels were not systematically distributed across teams, our estimates are characterized by large uncertainty. 
+
+ADD
+
+# Conclusion
 
 
 
