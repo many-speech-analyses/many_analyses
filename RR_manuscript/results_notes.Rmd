@@ -2,7 +2,9 @@
 title: "results notes"
 author: "Timo Roettger"
 date: "2022-08-13"
-output: html_document
+output:
+  html_document:
+    number_sections: true
 ---
 
 ```{r setup, include=FALSE}
@@ -256,6 +258,10 @@ compelling_results <- post_meta %>%
 compelling_count <- table(post_meta$compelling)
 
 ```
+
+## Between-team variability
+
+<!-- TODO: discuss between-team variability -->
 
 ## Estimating the crowd sourced effect size
 
