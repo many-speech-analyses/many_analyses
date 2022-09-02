@@ -389,6 +389,16 @@ Since predictor levels were not systematically distributed across teams, our est
 
 ADD
 
+<!-- Brainstorm of ideas -->
+
+- Analytic flexibility applies to us (as principal investigators) too.
+- Research question was vague enough to possibily inflate between-team variability (REF, Hannah Fraser; although it is a typical kind of question, as found in the literature). We do relate analytical flexibility with underspecified hypothesis in the previous section.
+- This should be replicated with a different question/data set.
+- With this study, we can suggest that at a minimum this is the between-team variability, but need more studies like this one.
+- Generalisability to linguistics/language sciences tout-court is limited. Need to do same with other fields, like language development, historical data, sociolinguistics, etc.
+- The focus is on quantitative data analysis, so that we expect the issues raised here to apply differently or not at all to qualitative data analysis.
+- We have not investigated researcher positionality, which is known to be an important factor.
+
 # Conclusion
 
 
