@@ -192,7 +192,7 @@ Analysts prior belief in the effect under investigation ranged from `r round(pri
 
 The teams have submitted `r no_analyses` models to answer the research question. 
 On average, teams submitted `r round(mean_analyses[[1]], 1)` models. 
-Analytical approaches widely varied along the following dimensions: 
+analytic approaches widely varied along the following dimensions:
 First, teams differed in what and how they measured the acoustic signal, including choosing different aspects of the acoustic signal, the temporal window over which they measured, the concrete operationalization of how they measured said acoustic properties.
 
 ## Acoustic analysis 
@@ -296,9 +296,9 @@ Interestingly, the model uniqueness, i.e. how unique the choice and combination 
 This suggests that the analysts' results very much depend on the choice of predictors. 
 Looking at the most important choices during measurement, both the acoustic parameter under investigation (e.g. duration or f0) and the choice of temporal window affected the results. 
 (ref:meta_plot1) displays the posterior estimates for the measurement outcome (i.e. what acoustic dimension was measured, panel A) and measurement window (i.e. what is the unit over which was measured, panel B). 
-If an acoustic dimension related to f0 was measured, estimates are lower than the meta analytical estimate.
-If on the other hand, vowel formants were measured, estimates are higher than the meta analytical estimate.
-Similarly, if acoustic parameters were measured within individual segments (e.g. the vowel of the noun), estimates are lower than the meta analytical estimate, and if acoustic parameters were measured across whole phrases (e.g. "the blue banana"), the estimates are generally higher.
+If an acoustic dimension related to f0 was measured, estimates are lower than the meta analytic estimate.
+If on the other hand, vowel formants were measured, estimates are higher than the meta analytic estimate.
+Similarly, if acoustic parameters were measured within individual segments (e.g. the vowel of the noun), estimates are lower than the meta analytic estimate, and if acoustic parameters were measured across whole phrases (e.g. "the blue banana"), the estimates are generally higher.
 In other words, depending on the choice of measurement, analysts arrived at opposite conclusions about how and if typicality is expressed acoustically. 
 
 ```{r 'plot_meta2', echo = FALSE, fig.cap="(ref:meta_plot1)", out.width="100%"}
@@ -311,68 +311,73 @@ knitr::include_graphics(here("./plots/alltogether.png"))
 
 ## Summary
 
-We gave XX analyst teams the same acoustic dataset to answer the same research question. 
-In order to answer the question, teams had to operationalize latent variables within a multidimensional signal, operationalize and chose appropriate predictors, and construct an appropriate statistical model to answer the research question. 
-This complex process led to a large garden of forking paths.  
-Each individual analyst team chose unique paths to acoustically measure, operationalize and statistical analyse the data.
+We gave XX analyst teams the same speech dataset to answer the same research question: *Do speakers acoustically modify utterances to signal atypical word combinations?*.
+In order to answer this question, teams had to operationalize latent variables within a multidimensional signal, operationalize and chose appropriate predictors, and construct an appropriate statistical model to answer the research question.
+As shown by the results of this meta-anlyitic study, such complex process has led to a wide "garden of forking paths", i.e. to a wide range of combinations of possible analitic decisions.
+Each individual analyst team has chosen unique paths to acoustically measure, operationalize and statistical analyse the data.
 Interestingly, the observed variation in reported effect sizes was not predicted by the analysts' prior expectations about the phenomenon.
 In fact, teams on average rated the plausibility of the effect as rather high before receiving access to the data.
 The variation in reported effect sizes was neither predicted by the analysts' experience in the field nor by the perceived quality of the analysis as judged by other teams. 
 Analyses received overall high peer ratings for both the acoustic and the statistical analysis, suggesting that reviewers were generally satisfied with the other teams' approaches.
-These findings are very much in line with previous crowd-sourced projects that suggested variation between teams is neither driven by perceived quality of the analysis nor by analysts biases or experience (REF,REF,REF). 
-Given the mounting evidence, Breznau et al. (2021) concluded that "[...] we are left to believe that idiosyncratic uncertainty is a fundamental feature of the scientific process that is not easily explained by typically observed researcher characteristics or analytical decisions." 
+These findings are very much in line with previous crowd-sourced projects that suggest variation between teams is neither driven by perceived quality of the analysis nor by analysts biases or experience (REF,REF,REF).
+Given the mounting evidence, Breznau et al. (2021) conclude that "[...] we are left to believe that idiosyncratic uncertainty is a fundamental feature of the scientific process that is not easily explained by typically observed researcher characteristics or analytic decisions."
 Idiosyncratic variation across researchers might be a fact of life which researchers have to acknowledge and integrate into how they evaluate and present evidence.
 
 While properties of the teams did not seem to systematically affect results, teams' estimates seem to depend on certain measurement choices. 
-Human speech is a complex multidimensional signal. 
+Human speech is a complex multidimensional signal.
 Researchers need to make choices about what to measure, how to measure it and which temporal unit to measure it in. 
 Some outcome choices seem to bias the estimates in our data in one direction while others seem to bias estimates into another. 
-For example, measurements related to fundamental frequency tended to results in lower estimates while measurements related to vowel formants tended to yield higher estimates. 
-This asymmetry can have several causes: 
-First, there could be a true underlying relationship between typicality and the speech signal that manifests itself in some measures but not others and / or manifests itself negatively in one acoustic measure but positively in another. 
-Second, certain measurement choices might be associated with stronger expectations relative to the research question and lead to strong bias. 
-Many researchers targeted f0-related measures since similar functional relationships like information structure and predictability can be expressed via f0 [e.g. @grice2017integrating; @turnbull2017role]. 
+For example, measurements related to fundamental frequency tended to result in lower estimates while measurements related to vowel formants tended to yield higher estimates.
+This asymmetry can have several causes.
+First, there could be a true underlying relationship between typicality and the speech signal that manifests itself in some measures but not others and/or manifests itself negatively in one acoustic measure but positively in another.
+Second, certain measurement choices might be associated with stronger expectations relative to the research question, which might lead to strong biases.
+Many researchers targeted measures related to voice fundamental frequency (f0) since similar functional relationships like information structure and predictability can be expressed via f0 [e.g. @grice2017integrating; @turnbull2017role].
 Third, ADD REASONS. 
-Regardless of its cause, we have to conclude that depending on the choice of how the speech signal is operationalized, researchers might find evidence for or against an theoretically relevant effect.
+Regardless of its cause, we have to conclude that depending on the choice of how the speech signal is operationalized, researchers might find evidence for or against a theoretically relevant effect.
 
 ## Lessons for the methodological reform movement
-The current results point to important barriers for successful knowledge accumulation. 
-The replication crisis has brought attention to scientific practices that lead to unreliable and biased claims in the literature (REFS).
-One of the suggested paths forward is for researchers to directly replicate more [@open2015estimating; REFS, REFS].
-While we agree with the importance of direct replications, our study (and similar crowd-sourced analyses before us) show that replicating more is not enough.
-There is only limited value in learning that a particular procedure is replicable if the idiosyncratic nature of the procedure itself might not yield a representative results relative to all possible procedures that could have been applied to the research question. 
-Well-trained and experienced speech researchers not only applied completely different approaches to the same analytical question, they also seem to consider all these alternative approaches applied by other teams acceptable. 
-Being aware of this idiosyncratic variation between analysts should lead to more nuanced claims and what Breznau et al. refers to as "epistemic humility". 
-Now that researchers know that different but reasonable measurement choices or statistical approaches might lead to entirely different interpretations of their data, they should calibrate their (un)certainty in the strength of the evidence and, in turn, communicate that uncertainty appropriately. 
-The fact that the choice of measurement, measurement window, and predictor choice affect the answer to the research question further suggest that we need stronger quantitative theories about how measurement systems (here the acoustic signal) and underlying theoretical construct (here the phonetic expression of typicality) relate to each other.
-Researchers ideally specify the derivation chain [@dubin1970theory;@meehl1990summaries], i.e. the link between theoretical construct and quantitative system, prior to data collection and analysis, including defining concepts and their relationship within the quantitative system, specifying auxiliary assumptions and boundary conditions, defining target measurements and statistical predictions, including possible (and impossible) effect magnitudes.
-Without well defined derivation chains, researchers "are not even wrong" [@scheel2022most] because falsified predictions cannot  tell us much about the theoretical constructs that they are after. 
 
-In light of the observed analytical flexibility, what can researchers do to appropriately calibrate their confidence in their claims?
-First of all, through sharing of materials, data and statistical protocols, researchers can make their idiosyncratic choices transparent to others (REF). 
-This enables critical evaluation and robustness checks by other researchers (REF).
-Given that minor procedural changes can sometimes drastically affect the final interpretation of the results [@breznau2021observing], researches should ideally share a detailed documentation of the data collection procedure, the measurement choices, the data extraction, and statistical analysis. 
+The current results point to important barriers for successful accumulation of knowledge.
+The replication crisis has brought attention to scientific practices that lead to unreliable and biased claims in the literature (REFS).
+One of the suggested paths forward is for researchers to directly replicate previous study more often [@open2015estimating; REFS, REFS].
+While we agree with the importance of direct replications, our study (and similar crowd-sourced analyses before us) suggest that replicating more is not enough.
+There is only limited value in learning that a particular procedure is replicable if the idiosyncratic nature of the procedure itself might not yield a representative result relative to all possible procedures that could have been applied to the research question.
+Well-trained and experienced speech researchers in this study not only applied completely different approaches to the same research question, they also seemed to consider all these alternative approaches acceptable, as the peer-ratings suggest.
+Being aware of this idiosyncratic variation between analysts should lead to more nuanced claims and what Breznau et al. refers to as "epistemic humility". 
+
+A desired outcome of knowomg that different but reasonable measurement choices or statistical approaches might lead to entirely different interpretations of research data is to calibrate our (un)certainty in the strength of the collected evidence and, in turn, communicate that (un)certainty appropriately.
+The fact that the choice of measurement, measurement window, and predictor choice affect the answer to the research question further suggests that research assumptions and hypotheses should be formulated with much greater detail, particularly so in regards to how measurement systems (here, the acoustic signal) and underlying conceptual constructs (here, the phonetic expression of typicality) relate to each other.
+<!-- TODO: add ref to "process and statistical model" in McElreath -->
+We should ideally specify the link between conceptual construct and quantitative system---the "derivation chain" [@dubin1970theory; @meehl1990summaries]---prior to data collection and analysis, including defining constructs and their relationship within the quantitative system, specifying auxiliary assumptions and boundary conditions, and defining target measurements, statistical expectations and possible (and impossible) effect magnitudes.
+Without well defined derivation chains, we "are not even wrong" [@scheel2022most] because falsified expectations cannot tell us much about the conceptual constructs they are based on when the relationship between the two is underspecified.
+
+In light of the observed analytic flexibility, what can we do to appropriately calibrate our confidence in our claims?
+First of all, through sharing of materials, data and statistical protocols, we can make our idiosyncratic choices transparent to others (REF).
+This enables critical evaluation and robustness checks by other fellow researchers (REF).
+Given that minor procedural changes can sometimes drastically affect the final interpretation of the results [@breznau2021observing], we should ideally share a detailed documentation of the data collection procedure, the measurement choices, the data extraction, and statistical analyses.
+<!-- TODO: cite Praat, EMU, MFA, Formant tracking etc -->
 Within fields that deal with speech data, open source software that allows to extract acoustic parameters via reproducible scripts can help other researchers to trace back seemingly inconsequential choices during the measurement process [e.g., CITE Praat, EMU CITE)]].
 
 ADD
 
-Second, making analytical pathways completely re-traceable does not change the fact that analysts apply different analytical approaches. 
-Crowd-sourcing projects such as the current one can shed light on the range of degrees of freedom during analysis and help producing a consensus estimate using meta-analytical techniques. 
-This is obviously not always feasible in terms of required resources and time, but could be a consideration for claims that have large theoretical or practical consequences. 
+Second, making analytic pathways completely re-traceable does not change the fact that analysts apply different analytic approaches.
+Crowd-source projects such as the current one can shed light on the range of degrees of freedom during analysis and help producing a consensual estimated effect using meta-analytic techniques.
+This is obviously not always feasible in terms of required resources and time, but could be a consideration for claims that have large epistemological or practical consequences.
 
-Third, if researchers have a good understanding of relevant analytical degrees of freedom, they could apply all conceivable analytical strategies and compare the results across all combinations of these choices.
-This approach is called multiverse analysis [e.g, @steegen2016increasing; @harder2020multiverse] and has recently gained popularity across disciplines. 
+Third, if researchers have a good understanding of relevant analytic degrees of freedom, they could apply all conceivable analytic strategies and compare the results across all combinations of these choices.
+This approach is called "multiverse analysis" [e.g, @steegen2016increasing; @harder2020multiverse] and has recently gained popularity across disciplines.
 Finally, neither crowd-sourcing nor multiverse analyses will guarantee that all relevant pathways are explored. 
-Crowd-sourcing is limited by the sampled analyst and their biases. 
-Multiverse analysis is limited even further by the one group of researchers who define possible analytical pathways. 
-Eventually, a mature scientific discipline should develop strong quantitative theories of how theoretical constructs manifest themselves in the measurement system, i.e. in the present case how communicative pressures of functions are expressed in the acoustic signal. 
-Recently, researchers across the cognitive science have raised awareness of a general lack of quantitative theory, calling for establishing appropriate derivation chains and formalizing verbal theories mathematically [e.g., @van2020formalizing; @guest2021computational; @scheel2021hypothesis; @devezer2021case].
+Crowd-sourcing is limited by the sampled analysts and their biases.
+Multiverse analysis is limited even further by the one group of researchers who define possible analytic pathways.
+Eventually, a mature scientific discipline should develop a set of detailed quantitative hypotheses of how conceptual constructs manifest themselves in the measured system, i.e. in the present case how communicative pressures of functions are expressed in the acoustic signal.
+More recently, researchers across the cognitive sciences have also raised awareness of a general lack of detailed quantitative hypotheses, calling for establishing appropriate derivation chains and formalizing verbal expectations mathematically [e.g., @van2020formalizing; @guest2021computational; @scheel2021hypothesis; @devezer2021case].
 
 ## Caveats
+
 Our study has several limitations that need to be considered when evaluating our results. 
 First of all, our sample is an opportunity sample. 
 We have advertise the project through online platforms which might lead to the exclusion of certain potential researcher groups.
-Moreover, while the number of participating teams is larger than most earlier crowdsourcing projects, it is likely too small to estimate meta-analytical estimates reliably.
+Moreover, while the number of participating teams is larger than most earlier crowdsourcing projects, it is likely too small to estimate meta-analytic estimates reliably.
 This is particularly important for the predictor evaluation.
 Since predictor levels were not systematically distributed across teams, our estimates are characterized by large uncertainty. 
 
