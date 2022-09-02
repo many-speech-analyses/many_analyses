@@ -16,6 +16,7 @@ library(dplyr)
 library(ggplot2)
 library(tidybayes)
 library(here)
+library(googlesheets4)
 
 ```
 
@@ -55,55 +56,108 @@ prior_mean <- msa_models %>%
 # number of teams (final)
 no_teams = length(unique(msa_models$team))
 
+# Helper function to print table data easier
+split_to_list <- function(.data, ...) {
+  dots <- rlang::enquos(...)
+  for (var in seq_along(dots)) {
+    var_name <- rlang::as_name(dots[[var]])
+    .data <- purrr::map_depth(
+      .x = .data,
+      .depth = var - 1,
+      .f = function(xs) split(xs, xs[var_name])
+    )
+  }
+  .data
+}
+
+team_sheet <- "https://docs.google.com/spreadsheets/d/1w39rU7O5ijzPmCpClVt5LEDIhzaLBDNrwfdMJUP86q8/edit?usp=sharing"
+teams <- read_sheet(team_sheet) 
+
 # Get DF of all members with leader names
-#
-# NOTE: This can be simplified using 03_analyses_coding.Rmd
-# I'll come back to this later and rewrite
-#
 team_leaders <- readr::read_csv(
   here::here("data", "questionnaires", "msa_intake_form.csv")) %>% 
   select(ResponseId, Q6) %>% # Questions asking for team leader
   filter(!(row_number() %in% c(1, 2))) %>% 
   mutate(leader = Q6, 
-    leader = case_when(
-    Q6 %in% c("Ali A-Hoorie", "Ali Al-Hoorie", "Ali H. Al-Hoorie") ~ "Ali Al-Hoorie", 
-    Q6 %in% c("Alicea Megan Brown", "Alicia Brown") ~ "Alicia Brown", 
-    Q6 %in% c("Dr Rory Turnbull", "Rory Turnbull") ~ "Rory Turnbull", 
-    Q6 %in% c("Dr. Reenu Punnoose", "Reenu Punnoose") ~ "Reenu Punnoose", 
-    Q6 %in% c("Dušan Nickolić", "Dušan Nikolić", "Dusan Nikolic", "Dusan Nikolic (dusan.nikolic1@ucalgary.ca)") ~ "Dusan Nikolic", 
-    Q6 %in% c("Michael Gradoville (Arizona State Univ.)", "Michael Gradoville") ~ "Michael Gradoville", 
-    Q6 %in% c("Nicole Rodriquez", "Nicole Rodriguez") ~ "Nicole Rodriguez", 
-    Q6 %in% c("Scott James Perru", "Scott Perry") ~ "Scott James Perru", 
-    Q6 %in% c("Tiphaine Caudrelier", "Tiphaine Cordelier") ~ "Tiphaine Caudrelier", 
-    Q6 %in% c("University of Birmingham team under the team coordinator Zlatomira IIchovska", "Zlatomira IIchovska", "Zlatomira Ilchovska") ~ "Zlatomira Ilchovska", 
-    Q6 %in% c("Vincent Hughes", "Vince Hughes") ~ "Vincent Hughes", 
-    TRUE ~ leader
-  )) %>% 
+         leader = case_when(
+           Q6 %in% c("Ali A-Hoorie", "Ali Al-Hoorie", "Ali H. Al-Hoorie") ~ "Ali H. Al-Hoorie", 
+           Q6 %in% c("Alicea Megan Brown", "Alicia Brown") ~ "Alicia M Brown", 
+           Q6 %in% c("Dr Rory Turnbull", "Rory Turnbull") ~ "Rory Turnbull", 
+           Q6 %in% c("Dr. Reenu Punnoose", "Reenu Punnoose") ~ "Reenu Punnoose", 
+           Q6 %in% c("Dušan Nickolić", "Dušan Nikolić", "Dusan Nikolic", "Dusan Nikolic (dusan.nikolic1@ucalgary.ca)") ~ "Dušan Nikolić", 
+           Q6 %in% c("Michael Gradoville (Arizona State Univ.)", "Michael Gradoville") ~ "Michael Gradoville", 
+           Q6 %in% c("Nicole Rodriquez", "Nicole Rodriguez") ~ "Nicole Rodriguez", 
+           Q6 %in% c("Scott James Perru", "Scott Perry") ~ "Scott James Perry", 
+           Q6 %in% c("Tiphaine Caudrelier", "Tiphaine Cordelier") ~ "Tiphaine Caudrelier", 
+           Q6 %in% c("University of Birmingham team under the team coordinator Zlatomira IIchovska", "Zlatomira IIchovska", "Zlatomira Ilchovska") ~ "Zlatomira Ilchovska", 
+           Q6 %in% c("Vincent Hughes", "Vince Hughes") ~ "Vince Hughes", 
+           Q6 == "Joey Stanley" ~ "Joseph A. Stanley",
+           TRUE ~ leader
+         )) %>% 
   select(ResponseId, leader) 
+
+# Teams on OSF
+teams_on_osf <- teams %>% 
+  filter(added_on_osf == "yes") %>% 
+  pull(coordinator)
+
+# Teams with submitted analyses
+teams_used_in_analysis <- teams %>% 
+  filter(animal %in% msa_models$animal) %>% 
+  pull(coordinator)
 
 # Team descriptives
 #  - number of teams (initially)
 #  - Avg size of each team
-team_desc <- team_leaders %>% 
-  group_by(leader) %>% 
-  mutate(member_num = seq_along(ResponseId)) %>% 
-  group_by(leader) %>% 
-  mutate(n_members = max(member_num)) %>% 
-  distinct(leader, n_members) %>% 
-  ungroup() %>% 
-  summarize(n_teams = nrow(.), 
-            mean_size = mean(n_members), 
-            sd_size = sd(n_members), 
-            median_size = median(n_members))
+team_desc_df <- bind_rows(
+  team_leaders %>% 
+    group_by(leader) %>% 
+    mutate(member_num = seq_along(ResponseId)) %>% 
+    group_by(leader) %>% 
+    mutate(n_members = max(member_num)) %>% 
+    distinct(leader, n_members) %>% 
+    ungroup() %>% 
+    summarize(n_teams = nrow(.), 
+              mean_size = mean(n_members), 
+              sd_size = sd(n_members), 
+              median_size = median(n_members)) %>% 
+    mutate(stage = "Initial"), 
+  team_leaders %>% 
+    filter(leader %in% teams_on_osf) %>% 
+    group_by(leader) %>% 
+    mutate(member_num = seq_along(ResponseId)) %>% 
+    group_by(leader) %>% 
+    mutate(n_members = max(member_num)) %>% 
+    distinct(leader, n_members) %>% 
+    ungroup() %>% 
+    summarize(n_teams = nrow(.), 
+              mean_size = mean(n_members), 
+              sd_size = sd(n_members), 
+              median_size = median(n_members)) %>% 
+    mutate(stage = "Submitted"), 
+  team_leaders %>% 
+    filter(leader %in% teams_used_in_analysis) %>% 
+    group_by(leader) %>% 
+    mutate(member_num = seq_along(ResponseId)) %>% 
+    group_by(leader) %>% 
+    mutate(n_members = max(member_num)) %>% 
+    distinct(leader, n_members) %>% 
+    ungroup() %>% 
+    summarize(n_teams = nrow(.), 
+              mean_size = mean(n_members), 
+              sd_size = sd(n_members), 
+              median_size = median(n_members)) %>% 
+    mutate(stage = "Final")
+  ) %>% 
+  mutate_if(is.numeric, round, digits = 2)
 
-# Need to join team leaders with msa_models$team to get the number of members on 
-# each team (unless this data already lives somewhere else) 
-# We could use : 
-# https://docs.google.com/spreadsheets/d/1w39rU7O5ijzPmCpClVt5LEDIhzaLBDNrwfdMJUP86q8/edit#gid=0 
-# But I'm thinking we need to make anonymous the team leader name info (offline) 
-# for any of this to be a permanent solution. 
 
+team_desc_list <- team_desc_df %>% 
+  tidyr::pivot_longer(cols = n_teams:median_size, names_to = "metric", values_to = "val") %>% 
+  split_to_list(stage, metric)
 
+# Example usage
+# team_desc_list$Initial$n_teams$val
 
 # number of analyses
 no_analyses = nrow(msa_models)
@@ -176,17 +230,26 @@ In the following, we will describe the characteristics of our analyst teams and 
 
 ## Team properties
 
-`r team_desc$n_teams %>% xfun::numbers_to_words() %>% stringr::str_to_title()` teams initially signed up to participate. 
-`r (team_desc$n_teams - no_teams) %>% xfun::numbers_to_words() %>% stringr::str_to_title()` of the proposed teams dropped out of the project during the analysis phase^[ADD REASONS]. 
-The remaining `r no_teams` teams submitted their analysis in time and were coded by the three initiating authors (SC, JC, TR). 
+`r team_desc_list$Initial$n_teams$val %>% xfun::numbers_to_words() %>% stringr::str_to_title()` teams initially signed up to participate. 
+`r (team_desc_list$Initial$n_teams$val - team_desc_list$Final$n_teams$val) %>% xfun::numbers_to_words() %>% stringr::str_to_title()` of the proposed teams dropped out of the project during the analysis phase^[ADD REASONS]. 
+The remaining `r team_desc_list$Final$n_teams$val` teams submitted their analysis in time and were coded by the three initiating authors (SC, JC, TR). 
 
-<!-- TR: not just 30 right? Please add the accurate info here -->
-<!-- 
-JVC: I pulled the initial total from the uptake doc (see line 58-n) 
-I think this is the most accurate count, by Stef might have another way
---> 
+Of the submitted teams, teams consisted of an average of `r team_desc_list$Final$mean_size$val` analysts (sd = `r team_desc_list$Final$sd_size$val`). 
+Analysts had on average `r round(phd_mean[[1]],1)` years (sd = `r round(phd_mean[[2]],1)`) post PhD experience, ranging from `r round(phd_mean[[3]],1)` years, i.e. PhD students (or younger) to `r round(phd_mean[[4]],1)` years.
 
-Of the submitted teams, teams consisted of an average of xx analysts (sd = xx) <!-- TR: Where is this info? -->. Analysts had on average `r round(phd_mean[[1]],1)` years (sd = `r round(phd_mean[[2]],1)`) post PhD experience, ranging from `r round(phd_mean[[3]],1)` years, i.e. PhD students (or younger) to `r round(phd_mean[[4]],1)` years.
+
+```{r}
+#| label: team-descriptives-table
+#| echo: false
+#| eval: false
+team_desc_df %>% 
+  mutate(Mean = glue::glue("{mean_size} ({sd_size})")) %>% 
+  select(Stage = stage, n = n_teams, Mean, Median = median_size) %>% 
+  knitr::kable(align = c("l", "r", "r", "r"), 
+               caption = "Caption test", 
+               label = "team-descriptives-table")
+```
+
 
 Analysts prior belief in the effect under investigation ranged from `r round(prior_mean[[3]],1)`  to `r round(prior_mean[[4]],1)` with an average of `r round(prior_mean[[1]],1)` (sd = `r round(prior_mean[[2]],1)`), indicating that analysts had an overall rather high prior plausibility of the hypothesis (scale ranged from 0 to 100).  
 
