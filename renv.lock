@@ -1309,6 +1309,17 @@
         "zip"
       ]
     },
+    "ggcorrplot": {
+      "Package": "ggcorrplot",
+      "Version": "0.1.3",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "5d6f67b947e0962cf93208f139acd475",
+      "Requirements": [
+        "ggplot2",
+        "reshape2"
+      ]
+    },
     "ggdist": {
       "Package": "ggdist",
       "Version": "3.1.1",

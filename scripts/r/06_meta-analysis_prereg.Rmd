@@ -1,0 +1,586 @@
+---
+title: "06 - Meta-analysis as pre-registered"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_knit$set(root.dir = here::here())
+library(tidyverse)
+library(brms)
+library(tidybayes)
+library(faux)
+library(betapart)
+library(modelr)
+library(ggdist)
+library(patchwork)
+library(ggcorrplot)
+
+my_seed <- 99
+set.seed(my_seed)
+b4ss_colors <- c(purple = "#8970FF", orange = "#FFA70B", pink = "#dd1c77")
+
+```
+
+
+```{r} 
+
+# Read data
+
+msa_models <- readRDS("./data/analyses/msa_models.rds") %>%
+  mutate(
+    outcome = as.factor(outcome),
+    typicality = as.factor(typicality),
+    temporal_window = as.factor(temporal_window)
+  ) %>%
+  droplevels() %>%
+  mutate(
+    outcome = contr_code_sum(outcome),
+    typicality = contr_code_sum(typicality),
+    temporal_window = contr_code_sum(temporal_window)
+  )
+
+# bpair <- tibble::tibble(preds) %>% tidyr::unnest_wider(preds, names_sep = ".") %>%
+#     as.matrix() %>%
+#     betapart::beta.pair(.)
+#   sdim <- as.matrix(bpair$beta.sor)
+#   diag(sdim) <- NA
+#   rowSums(sdim, na.rm = T) / length(preds)
+```
+
+```{r} 
+# Meta-analysis
+
+priors <- c(
+  prior(normal(0, 1), class = Intercept),
+  prior(cauchy(0, 1), class = sd)
+)
+
+meta_bm <- brm(
+  estimate | se(se) ~ (1 | animal),
+  data = msa_models,
+  prior = priors,
+  chain = 4,
+  seed = my_seed,
+  cores = 4,
+  backend = "cmdstanr",
+  threads = threading(2),
+  file = "./data/meta_analysis/meta_bm_prereg.rds"
+)
+```
+
+```{r} 
+meta_bm
+```
+
+```{r} 
+# wrangle by hand 
+post_meta <- meta_bm %>%
+  spread_draws(b_Intercept, r_animal[model,]) %>%
+  mutate(model_mean = b_Intercept + r_animal) %>% 
+  group_by(model) %>% 
+  dplyr::summarise(post_mean = mean(model_mean),
+            lower95 = quantile(model_mean, probs = .025),
+            higher95 = quantile(model_mean, probs = .975)
+            ) %>% 
+  # this basically needs to be fed by whether or not the authors considered there to be an effect
+  mutate(compelling = as.factor(case_when(lower95 > 0 ~ "negative",
+                                          higher95 < 0 ~ "positive",
+                                          TRUE ~ "not compelling"))) 
+  
+# extract model mean and CrIs
+population_mean = fixef(meta_bm)[1,1]
+population_lower95 = fixef(meta_bm)[1,3]
+population_higher95 = fixef(meta_bm)[1,4]
+
+meta_plot1 <- 
+ggplot(post_meta,
+       aes(x = reorder(model, post_mean), 
+             y = post_mean, 
+             colour = compelling)) +
+  geom_hline(yintercept = 0,
+             lty = "dotted") +
+  geom_point(size = 0.5) +
+  geom_errorbar(aes(ymin = lower95,
+                    ymax = higher95),
+                 width = 0) +
+  scale_y_continuous(limits = c(-0.5, 1),
+                     breaks = c(-0.5, 0, 0.5, 1)) + 
+  annotate("text",
+           x = c(1, 15, 28),
+           y = 0.8,
+           hjust = c(0, 0.5, 1),
+           color = c(b4ss_colors[[2]], "black", b4ss_colors[[1]]),
+           label = c("Negative (95% CrI)",
+                     "Not compelling",
+                     "Positive (95% CrI)")
+           ) +
+  labs(x = "submitted statistical models",
+       y = "standardized posterior effect size\n") +
+  scale_color_manual(values = c(b4ss_colors[[1]], "black", b4ss_colors[[2]])) + 
+  theme_classic() +
+  theme(legend.position = "none",
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank(),
+        axis.line = element_blank()
+        )
+
+ggsave(filename = "./plots/meta_plot1_prereg.png",
+       plot = meta_plot1,
+       device = "png",
+       width = 200, 
+       height = 75,
+       units = "mm", 
+       dpi = 500)
+
+# alternative visualization with absolute values
+post_meta_abs <- post_meta %>% 
+  mutate(post_mean_abs = case_when(post_mean > 0 ~ post_mean,
+                                   post_mean < 0 ~ abs(post_mean)),
+         low_to_mean = post_mean - lower95,
+         mean_to_high = higher95 - post_mean,
+         l95_abs = post_mean_abs - low_to_mean,
+         h95_abs = post_mean_abs + mean_to_high,
+         compelling_abs = case_when(compelling == "negative" ~ "positive",
+                                    compelling == "positive" ~ "positive",
+                                    compelling == "not compelling" ~ "not compelling")
+         )
+
+
+meta_plot2 <- 
+ggplot(post_meta_abs,
+       aes(x = reorder(model, post_mean_abs), 
+             y = post_mean_abs, 
+             colour = compelling_abs)) +
+  geom_hline(yintercept = 0,
+             lty = "dotted") +
+  geom_point(size = 0.5) +
+  geom_errorbar(aes(ymin = l95_abs,
+                    ymax = h95_abs),
+                 width = 0) +
+  scale_y_continuous(limits = c(-0.5, 1),
+                     breaks = c(-0.5, 0, 0.5, 1)) + 
+  annotate("text",
+           x = c(10,28),
+           y = 0.8,
+           hjust = c(0.5, 0.5),
+           color = c("black", b4ss_colors[[3]]),
+           label = c("Not compelling",
+                     "Claimed effect")
+           ) +
+  labs(x = "submitted statistical models",
+       y = "abs(standardized posterior effect size)\n") +
+  scale_color_manual(values = c("black", b4ss_colors[[3]])) + 
+  theme_classic() +
+  theme(legend.position = "none",
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank(),
+        axis.line = element_blank()
+        )
+
+ggsave(filename = "./plots/meta_plot2_prereg.png",
+       plot = meta_plot2,
+       device = "png",
+       width = 200, 
+       height = 75,
+       units = "mm", 
+       dpi = 500)
+
+```
+
+# Analytic and researcher-related predictors model
+
+Weakly-informative regularising priors.
+
+```{r preds-priors}
+preds_priors <- c(
+  prior(normal(0, 1), class = Intercept),
+  prior(normal(0, 1), class = b),
+  prior(normal(0, 1), class = meanme),
+  prior(cauchy(0, 1), class = sdme),
+  prior(lkj(2), class = corme)
+)
+```
+
+```{r predictors-bm}
+# contrast code
+msa_models <- msa_models %>% 
+  mutate(
+    # Measurement error cannot be 0 (model doesn't run), so adding a small number to it.
+    all_sd = ifelse(is.na(all_sd), 0.0001, all_sd),
+    years_from_phd_sd = ifelse(is.na(years_from_phd_sd) | years_from_phd_sd == 0, 0.0001, years_from_phd_sd),
+    prior_belief_sd = ifelse(is.na(prior_belief_sd) | prior_belief_sd == 0, 0.0001, prior_belief_sd)
+  ) 
+
+predictors_bm_rintercepts_me <- brm(
+  estimate | se(se) ~
+    pop_sdi +
+    n_random +
+    n_models +
+    outcome +                  # major dimension
+    temporal_window +          # temporal window
+    typicality +
+    me(all_rating, all_sd) +
+    me(years_from_phd, years_from_phd_sd) +
+    me(prior_belief, prior_belief_sd),
+  data = msa_models,
+  prior = preds_priors,
+  chain = 4,
+  iter = 4000,
+  control = list(adapt_delta = 0.9, max_treedepth = 13),
+  seed = my_seed,
+  cores = 4,
+  threads = threading(2),
+  backend = "cmdstanr",
+  file = "./data/meta_analysis/predictors_bm_rintercepts_prereg.rds"
+)
+```
+
+
+```{r}
+# extract posteriors
+post_pred <- predictors_bm_rintercepts_me %>%
+  spread_draws(b_Intercept, 
+               b_outcome.durationMintercept,
+               b_outcome.f0Mintercept,
+               b_outcome.formantsMintercept,
+               b_outcome.intensityMintercept,
+               b_temporal_window.segmentMintercept,
+               b_temporal_window.wordMintercept,
+               b_temporal_window.phraseMintercept,
+               b_temporal_window.sentenceMintercept,
+               b_typicality.categoricalMintercept,
+               b_pop_sdi,
+               b_n_models,
+               bsp_meall_ratingall_sd,
+               bsp_meyears_from_phdyears_from_phd_sd,
+               bsp_meprior_beliefprior_belief_sd
+               ) %>%
+  select(-.chain, -.iteration) %>% 
+  pivot_longer(-.draw,
+               names_to = "predictor", 
+               values_to = "posterior") %>% 
+  mutate(predictor = fct_recode(predictor, 
+                                "Intercept" = "b_Intercept",
+                                "duration" = "b_outcome.durationMintercept", 
+                                "f0" = "b_outcome.f0Mintercept", 
+                                "intensity" = "b_outcome.intensityMintercept",
+                                "formants" = "b_outcome.formantsMintercept",
+                                "segment" = "b_temporal_window.segmentMintercept",
+                                "word" = "b_temporal_window.wordMintercept",
+                                "phrase" = "b_temporal_window.phraseMintercept",
+                                "sentence" = "b_temporal_window.sentenceMintercept",
+                                "model uniqueness" = "b_pop_sdi",
+                                "team's number of models"  = "b_n_models",
+                                "typicality operationalization" = "b_typicality.categoricalMintercept",
+                                "peer rating" = "bsp_meall_ratingall_sd",
+                                "years after Phd" = "bsp_meyears_from_phdyears_from_phd_sd",
+                                "prior belief" = "bsp_meprior_beliefprior_belief_sd"
+                                )
+         ) 
+
+post_pred_agg <-  post_pred %>%
+  group_by(predictor) %>%
+  dplyr::summarise(post_mean = mean(posterior),
+            lower95 = quantile(posterior, probs = .025),
+            lower50 = quantile(posterior, probs = .25),
+            higher50 = quantile(posterior, probs = .75),
+            higher95 = quantile(posterior, probs = .975)
+            )
+
+
+
+# subset for quicker plotting
+post_pred_outcome <- post_pred %>% 
+  filter(predictor %in% c("duration", "f0", "intensity", "formants"))
+post_pred_window <- post_pred %>% 
+  filter(predictor %in% c("segment", "word", "phrase", "sentence"))
+post_pred_outcome_agg <- post_pred_agg %>% 
+  filter(predictor %in% c("duration", "f0", "intensity", "formants"))
+post_pred_window_agg <- post_pred_agg %>% 
+  filter(predictor %in% c("segment", "word", "phrase", "sentence"))
+
+
+# plot outcome plot
+outcome <- 
+ggplot(post_pred_outcome,
+       aes(x = reorder(predictor, posterior),
+           y = posterior)) +
+  geom_hline(yintercept = 0,
+             lty = "dotted") +
+  stat_slab(aes(y = posterior,
+                fill = predictor,
+                fill_ramp = stat(cut_cdf_qi(cdf, 
+                                            .width = c(.5, .8, .95),
+                                            labels = scales::percent_format()))), 
+            color = NA, 
+            scale = 0.5, 
+            side = "both") +
+  scale_fill_ramp_discrete(from = "white", 
+                           range = c(0.8,0.3)) +
+  geom_point(data = post_pred_outcome_agg,
+             aes(x = predictor,
+                 y = post_mean)) +
+  scale_fill_viridis_d(begin = 0,
+                       end = 0.8) +
+  annotate("text",
+           x = 1.6,
+           y = -0.055,
+           hjust= 0, 
+           size = 2.5,
+           label = "analyzing f0 tends to provide\nmore negative effect sizes") +
+  annotate("curve",
+           x = 1.7, y = -0.045,
+           xend = 1.35, yend = -0.035, 
+           arrow = arrow(angle = 45, 
+                         length = unit(.2, "cm"))) +
+  # plot raw data, doesnt make sense right now because models are too confident
+  # geom_point(data = msa_models[msa_models$animal != "polymetme_brevirostrum",],
+  #            aes(x = outcome,
+  #                y = estimate),
+  #            )
+  #scale_y_continuous(limits = c(-0.5, 1),
+  #                   breaks = c(-0.5, 0, 0.5, 1)) + 
+  labs(title = "A: Measurement choice matters.",
+       subtitle = "Posterior predictions for different outcome variables",
+       x = "\npredictors",
+       y = "effect size difference to the overall mean\n") +
+  #scale_color_manual(values = c("black", b4ss_colors[[3]])) + 
+  theme_classic() +
+  theme(legend.position = "none",
+        axis.line = element_blank()
+        )
+
+# plot time window plot
+window <- 
+ggplot(post_pred_window,
+       aes(x = reorder(predictor, posterior),
+           y = posterior)) +
+  geom_hline(yintercept = 0,
+             lty = "dotted") +
+  stat_slab(aes(y = posterior,
+                fill = predictor,
+                fill_ramp = stat(cut_cdf_qi(cdf, 
+                                            .width = c(.5, .8, .95),
+                                            labels = scales::percent_format()))), 
+            color = NA, 
+            scale = 0.5, 
+            side = "both") +
+  scale_fill_ramp_discrete(from = "white", 
+                           range = c(0.8,0.3)) +
+  geom_point(data = post_pred_window_agg,
+             aes(x = predictor,
+                 y = post_mean)) +
+  scale_fill_viridis_d(begin = 0,
+                       end = 0.8) +
+  annotate("text",
+           x = 1.6,
+           y = 0.1,
+           hjust= 0, 
+           size = 2.5,
+           label = "e.g. analyzing segmental patterns tends\nto provide more negative effect sizes") +
+  annotate("curve",
+           x = 1.5, y = 0.1,
+           xend = 1, yend = -0.015, 
+           curvature = 0.3,
+           arrow = arrow(angle = 45, 
+                         length = unit(.2, "cm"))) +
+  # plot raw data, doesnt make sense right now because models are too confident
+   # geom_point(data = msa_models[msa_models$animal != "polymetme_brevirostrum" & 
+   #                              msa_models$temporal_window != "other" ,],
+   #            aes(x = temporal_window,
+   #                y = estimate, 
+   #                fill = temporal_window),
+   #            pch = 21,
+   #            alpha = 0.5
+   #            ) +
+  #scale_y_continuous(limits = c(-0.5, 1),
+  #                   breaks = c(-0.5, 0, 0.5, 1)) + 
+  labs(title = "B: Measurement window matters.",
+       subtitle = "Posterior predictions for different analysis windows",
+       x = "\npredictors",
+       y = "effect size difference to the overall mean\n") +
+  #scale_color_manual(values = c("black", b4ss_colors[[3]])) + 
+  theme_classic() +
+  theme(legend.position = "none",
+        axis.line = element_blank()
+        )
+
+# combine
+predictor_plot <- outcome + window
+
+ggsave(filename = "./plots/predictor_plot_prereg.png",
+       plot = predictor_plot,
+       device = "png",
+       width = 300, 
+       height = 125,
+       units = "mm", 
+       dpi = 500)
+
+
+```
+
+```{r}
+
+post_pred_forest <- predictors_bm_rintercepts_me %>%
+  spread_draws(b_Intercept, 
+               b_outcome.durationMintercept,
+               b_outcome.f0Mintercept,
+               b_outcome.formantsMintercept,
+               b_outcome.intensityMintercept,
+               b_temporal_window.segmentMintercept,
+               b_temporal_window.wordMintercept,
+               b_temporal_window.phraseMintercept,
+               b_temporal_window.sentenceMintercept,
+               b_typicality.categoricalMintercept,
+               b_pop_sdi_s,
+               b_n_models_s,
+               b_all_rating_s,
+               b_years_from_phd_s,
+               b_prior_belief_s
+               ) %>%
+  select(-.chain, -.iteration) %>% 
+  pivot_longer(-.draw,
+               names_to = "predictor", 
+               values_to = "posterior") %>% 
+ mutate(predictor = fct_recode(predictor, 
+                                "Intercept" = "b_Intercept",
+                                "duration" = "b_outcome.durationMintercept", 
+                                "f0" = "b_outcome.f0Mintercept", 
+                                "intensity" = "b_outcome.intensityMintercept",
+                                "formants" = "b_outcome.formantsMintercept",
+                                "segment" = "b_temporal_window.segmentMintercept",
+                                "word" = "b_temporal_window.wordMintercept",
+                                "phrase" = "b_temporal_window.phraseMintercept",
+                                "sentence" = "b_temporal_window.sentenceMintercept",
+                                "model uniqueness" = "b_pop_sdi_s",
+                                "team's number of models"  = "b_n_models_s",
+                                "typicality operationalization" = "b_typicality.categoricalMintercept",
+                                "peer rating" = "b_all_rating_s",
+                                "years after Phd" = "b_years_from_phd_s",
+                                "prior belief" = "b_prior_belief_s"
+                                )
+         ) %>% 
+  group_by(predictor) %>%
+  dplyr::summarise(post_mean = mean(posterior),
+            lower95 = quantile(posterior, probs = .025),
+            lower80 = quantile(posterior, probs = .10),
+            higher80 = quantile(posterior, probs = .90),
+            higher95 = quantile(posterior, probs = .975)
+            )
+
+
+# to do: color code four different types of predictors
+
+forest <- 
+ggplot(post_pred_forest %>% filter(predictor != "Intercept"),
+       aes(x = post_mean,
+           y = reorder(predictor, post_mean))
+           #y = reorder(predictor, post_mean))
+       ) +
+  geom_vline(xintercept = 0,
+             lty = "dotted") +
+  geom_segment(aes(x = lower95,
+                   #y = reorder(predictor, post_mean),
+                   xend = higher95,
+                   yend = reorder(predictor, post_mean)),
+               size = 1) +
+  geom_segment(aes(x = lower80,
+                   #y = reorder(predictor, post_mean),
+                   xend = higher80,
+                   yend = reorder(predictor, post_mean)),
+               size = 2) +
+  geom_point(pch = 21,
+             fill = "white",
+             color = "black",
+             size = 4) +
+  labs(title = "C: Forest plot",
+       subtitle = "Model coefficients for all predictors",
+       y = "",
+       x = "\neffect size difference to the overall mean\n") +
+  #scale_color_manual(values = c("black", b4ss_colors[[3]])) + 
+  theme_classic() +
+  theme(legend.position = "none",
+        axis.line = element_blank()
+        )
+
+
+alltogether <- ( outcome / window ) | forest
+
+ggsave(filename = "./plots/alltogether.png",
+       plot = alltogether,
+       device = "png",
+       width = 250, 
+       height = 200,
+       units = "mm", 
+       dpi = 500)
+
+```
+
+```{r}
+
+# plot model uniqueness
+
+ggplot(msa_models,
+       aes(x = pop_sdi_s,
+           y = estimate,
+           size = -se)) +
+  geom_point(alpha = 0.2) + 
+  geom_smooth(method = "lm")
+
+
+```
+
+```{r}
+
+# check covariance structure:
+
+# select variables
+msa_models_corr <- msa_models %>% 
+  dplyr::select(
+         years_from_phd_s,
+         pop_sdi_s,
+         n_models_s,
+         all_rating_s,
+         prior_belief_s) %>% 
+  drop_na()
+
+# plot correlations between cont variables
+ggcorrplot(cor(msa_models_corr), 
+           method = "circle",
+           hc.order = TRUE,
+           lab = TRUE,
+           type = "lower",
+           outline.color = "black",
+           lab_size = 6)
+
+# higher ratings for more models somehow
+ggplot(msa_models_corr,
+       aes(x = n_models_s,
+                 y = all_rating_s)) +
+  geom_point() + 
+  geom_smooth(method = "lm")
+
+# run lm equivalent in order to extract vif
+predictors_lm <- lm(
+  estimate ~
+    pop_sdi_s +
+    n_models_s +
+    outcome +                  # major dimension
+    temporal_window +          # temporal window
+    typicality +
+    all_rating_s +
+    years_from_phd_s +
+    prior_belief_s,
+  data = msa_models
+)
+
+#calculate vif
+car::vif(predictors_lm)
+
+# looks like predictors do not have concering VIFs
+
+```
+
+
