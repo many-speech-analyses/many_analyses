@@ -468,6 +468,23 @@ research question.</p>
 <h2><span class="header-section-number">2.1</span> Between-team
 variability</h2>
 <!-- TODO: discuss between-team variability -->
+<!-- TODO: This is more like between-model variability -->
+<p>As explained in the <strong>Methods</strong> section, the primary aim
+of this is to assess the variability of the reported effects or, in
+other words, the degree of between-team variability. As a measure of
+between-team variability, we chose to use the meta-analytic group-level
+standard deviation <span class="math inline">\(\sigma_{\alpha_{\text{t}}}\)</span>), i.e. the
+standard deviation of the group-level effect of team
+<code>(!!! we have now model_id)</code> returned by the meta-analytic
+model.</p>
+<p>According to the meta-analytic model, the group-level standard
+deviation is between 0.11 and 0.15 standard units, at 95% confidence.
+This means that the deviations of any individual model from the
+meta-analytic effect estimate range between ±0.22 to ±0.3 (0.11 * 2,
+0.15 * 2) in standard units. We illustrate what this means in actual
+acoustic measures by means of examples, taking the mean sample standard
+deviation of each measure from the sample data.</p>
+<!-- TODO: Add table with different outcomes, means (?) and SDs plus estimated deviations based on ±0.22/0.33 SDs. -->
 </div>
 <div id="estimating-the-crowd-sourced-effect-size" class="section level2" number="2.2">
 <h2><span class="header-section-number">2.2</span> Estimating the crowd
@@ -731,6 +748,9 @@ issues raised here to apply differently or not at all to qualitative
 data analysis.</li>
 <li>We have not investigated researcher positionality, which is known to
 be an important factor.</li>
+<li>Meta-analytic model has model_id instead of team, so we are not
+accounting for the fact that teams have submitted multiple analyses (but
+not all of them did).</li>
 </ul>
 </div>
 </div>
