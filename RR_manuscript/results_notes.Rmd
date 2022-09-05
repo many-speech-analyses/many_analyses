@@ -15,6 +15,7 @@ knitr::opts_chunk$set(echo = FALSE,
 library(brms)
 library(faux)
 library(dplyr)
+library(tidyr)
 library(ggplot2)
 library(tidybayes)
 library(here)
@@ -23,7 +24,7 @@ library(googlesheets4)
 ```
 
 
-```{r, 'load-data'}
+```{r load-data}
 
 msa_models <- readRDS(here("./data/analyses/msa_models.rds")) %>%
   mutate(
@@ -164,6 +165,12 @@ team_desc_list <- team_desc_df %>%
 # number of analyses
 no_analyses = nrow(msa_models)
 
+# acoustic operationalizations
+# Gross operationalization of acoustic operationalization
+unique_acou_oper <- msa_models %>%
+  unite("unique_oper", outcome, operationalisation, operationalisation_notes, na.rm = TRUE) %>%
+  count(unique_oper)
+
 # average analyses
 mean_analyses <- msa_models %>% 
   group_by(team) %>% 
@@ -211,8 +218,11 @@ rterms_n <- msa_models %>%
   filter(n_random != 0) %>% 
   summarise(mean_rterms = mean(n_random, na.rm = TRUE)) 
 
-# unique models
-#msa_models %>% distinct(n_coefficients, n_random, random_effects)
+# unique model specs, discarding random effects
+unique_model_specs <- msa_models %>%
+  select(framework:outcome, pop_pred) %>%
+  unnest(pop_pred) %>%
+  distinct()
 
 # review ratings
 review_mean <- msa_models %>% 
@@ -264,14 +274,16 @@ First, teams differed in what and how they measured the acoustic signal, includi
 
 `r round(outcome_n[[1,1]],2) * 100`\% of models used a duration measure as the outcome variable, `r round(outcome_n[[2,1]],2) * 100`\% used a f0 measure, `r round(outcome_n[[3,1]],2) * 100`\% used a formant measure, `r round(outcome_n[[4,1]],2) * 100`\% used an intensity measure, and `r round(outcome_n[[5,1]],2) * 100`\% used a different measure. 
 
-`r round(window_n[[1,1]],2) * 100`\% of models measured acoustic properties at the level of the segment (e.g. comparing the acoustic profile of a vowel), `r round(window_n[[2,1]],2) * 100`\% at the level of the word (e.g. comparing the acoustic profile of "banana"), `r round(window_n[[3,1]],2) * 100`\% at the level of the phrase (e.g. the noun phrase including determiner and adjective, e.g. "the green banana"), `r round(window_n[[4,1]],2) * 100`\% at the level of the whole sentence, and `r round(window_n[[5,1]],2) * 100`\% used a different time window. 
+`r round(window_n[[1,1]],2) * 100`\% of models measured acoustic properties at the level of the segment (e.g. comparing the acoustic profile of a vowel), `r round(window_n[[2,1]],2) * 100`\% at the level of the word (e.g. comparing the acoustic profile of "banana"), `r round(window_n[[3,1]],2) * 100`\% at the level of the phrase (e.g. the noun phrase including determiner and adjective, e.g. "the green banana"), `r round(window_n[[4,1]],2) * 100`\% at the level of the whole sentence, and `r round(window_n[[5,1]],2) * 100`\% used a different time window. Based on a coarse coding of how acoustic measures were operationalized, we find a total of `r nrow(unique_acou_oper)` different measurement specifications.
 
 <!-- TR: TO ADD: LOOK AT OPERATIONALIZATIONS AND SEE HOW MANY UNIQUE MEASUREMENTS SPECIFICATIONS WERE DONE-->
+<!-- SC: I have added the number of unique meas. specs but we might want to discuss this. -->
 
+## Statistical analysis
 
-## Statistical analysis 
 Second, this multiverse of measurement choices is exponentiated with choices during the statistical analysis, including the choice of predictor and their operationalization, the chosen inferential framework, the type of model, and their model architecture, specifically how they accounted for dependencies in the data via random effect specifications in their multilevel models.
 
+<!-- TODO: list co-occurring predictors -->
 On average, models included `r round(predictor_n,2)` different predictors (counting only conceptually different predictors), i.e. in addition to the critical predictor, typicality of the adjective noun combinations, most teams included additional predictors in their models. Predictors included LIST CO-OCCURING IVS...
 
 The original dataset allowed to operationalize the most relevant predictor, typicality, in different ways. 
@@ -284,10 +296,10 @@ The appropriate way to account for this non-independence is by using multi-level
 `r round(random_n[[3,1]],2) * 100`\% of linear models specified no random effects at all, so effectively ignoring these non-independences.
 `r round(random_n[[1,1]],2) * 100`\% specified random intercepts only, and `r round(random_n[[2,1]],2) * 100`\% specified random intercepts and random slopes to account for the non-independence.
 On average, teams that specified random effects, included `r round(rterms_n,1)` random terms in their models. 
+Based on statistical framework, type of model, distribution family, fixed terms, and discarding random effects, there were a total of `r nrow(unique_model_specs)` different model specifications.
 
-<!-- TR: TO ADD: TO ADD: LOOK AT MODELS AND COUNT UNIQUE MODELS.-->
+## Review ratings
 
-## Review ratings 
 Teams reviewed each other analyses for both the acoustic analysis and the statistical analysis. 
 The mean rating of the quality of the acoustic analyses was `r round(review_mean[[1]],1)` (sd = `r round(review_mean[[2]],1)`); the mean rating of the quality of the statistical analysis was `r round(review_mean[[3]],1)` (sd = `r round(review_mean[[4]],1)`). For reference, the scale of the rating anchored a point grade of 75 as "an imperfect analysis but the needed changes are unlikely to dramatically alter final interpretation", indicating a rather high confidence of reviewers that the provided analyses yield appropriate (yet "imperfect") answers to the research question. 
 
