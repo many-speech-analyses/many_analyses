@@ -190,6 +190,31 @@ ggsave(filename = "./plots/meta_plot2.png",
 
 ```
 
+## Include nested effects
+
+```{r}
+priors_nest <- c(
+  prior(normal(0, 1), class = Intercept),
+  prior(cauchy(0, 1), class = sd)
+)
+
+meta_bm_nest <- brm(
+  estimate | se(se) ~ (1 | animal) + (1 | animal:model_id),
+  data = msa_models,
+  prior = priors_nest,
+  chain = 4,
+  seed = my_seed,
+  cores = 4,
+  backend = "cmdstanr",
+  threads = threading(2),
+  control = list(adapt_delta = 0.999),
+  file = "./data/meta_analysis/meta_bm_nest.rds"
+)
+
+meta_bm_nest
+```
+
+
 # Analytic and researcher-related predictors model
 
 Weakly-informative regularising priors.
