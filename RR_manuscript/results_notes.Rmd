@@ -466,30 +466,32 @@ Finally, neither crowd-sourcing nor multiverse analyses will guarantee that all 
 Crowd-sourcing is limited by the sampled analysts and their biases.
 Multiverse analysis is limited even further by the one group of researchers who define possible analytic pathways.
 Eventually, a mature scientific discipline should develop a set of detailed quantitative hypotheses of how conceptual constructs manifest themselves in the measured system, i.e. in the present case how communicative pressures of functions are expressed in the acoustic signal.
-More recently, researchers across the cognitive sciences have also raised awareness of a general lack of detailed quantitative hypotheses, calling for establishing appropriate derivation chains and formalizing verbal expectations mathematically [e.g., @van2020formalizing; @guest2021computational; @scheel2021hypothesis; @devezer2021case].
-The presented data clearly support a call of improving the link between our theoretical constructs and our quantitative predictions.  
+This can be achieved by formalizing verbal expectations mathematically or using computational models [e.g., @van2020formalizing; @guest2021computational; @scheel2021hypothesis; @devezer2021case].
 
 ## Caveats
-
 Our study has several limitations that need to be considered when evaluating our results. 
-First of all, our sample is an opportunity sample. 
+First, there is potential for bias. The coordinating authors have engaged with metascientific research before and have been actively involved in methodological debates about scientific practices including transparency and statistical methods. We have in the past used the lack of standardized analytical approaches as an argument for proposing behavior and policy changes in the field. 
+This might have biased our own judgment during the analysis which itself came with many researcher degrees of freedom. 
+We hope we were able to make these degrees of freedom as well as the timing and reasoning of our analytical choices detectable. 
+However, our results should be independently re-analysed and replicated using a different research question.
+Moreover, our sample is an opportunity sample. 
 We have advertised the project through online platforms which might have led to the exclusion of certain potential researcher groups.
 Moreover, while the number of participating teams is larger than most earlier crowdsourcing projects, it is likely to be too small to estimate meta-analytic estimates reliably.
 This is particularly important for the predictor evaluation.
 Since predictor levels were not systematically distributed across teams, our estimates are characterized by large uncertainty. 
+This uncertainty is possibly further inflated by the fact that he research question presented to the teams was vague: *Do speakers acoustically modify utterances to signal atypical word combinations?* 
+Interpreting the research question/hypothesis differently in terms of its statistical consequences has recently been shown to explain some variation between analysis teams in many-analysis projects [@auspurg2021has]. 
+However, we consider this very underspecification of research hypotheses in the field of speech science (and beyond, see @scheel2022most) a common phenomenon. 
+For example, researchers seem to have not yet agreed on how to acoustically measure cross linguistically common phenomena such as word stress [e.g. @gordon2017acoustic]. 
+<!-- TR: still adding this? Meta-analytic model has model_id instead of team, so we are not accounting for the fact that teams have submitted multiple analyses (but not all of them did). -->
+- We have not investigated researcher positionality, which is known to be an important factor.  <!-- TR:@stef explain here -->
 
-ADD
+Despite these possible sources of uncertainty and bias, our study suggest that at a minimum we can expect the between-team variability that we have observed, which is quite substantial and possibly amplifying biases. 
 
-<!-- Brainstorm of ideas -->
+Second, the generalizability of our findings to other disciplines on the one hand and specifically other sub-disciplines of the language sciences is, of course, limited.
+Our focus was on quantitative analyses that require operationalization of a multidimensional signal. While some of our results can be informative for other disciplines working with speech or video signals, they are not very informative for expected variation between analysts working in qualitative fields of research.
+This is an important point to make because the cognitive sciences in general, and the language sciences in particular have many research areas that are explored with qualitative methods. It is conceivable that the issues raised here to apply differently or not at all to qualitative data analysis.
 
-- Analytic flexibility applies to us (as principal investigators) too.
-- Research question was vague enough to possibily inflate between-team variability (REF, Hannah Fraser; although it is a typical kind of question, as found in the literature). We do relate analytical flexibility with underspecified hypothesis in the previous section.
-- This should be replicated with a different question/data set.
-- With this study, we can suggest that at a minimum this is the between-team variability, but need more studies like this one.
-- Generalisability to linguistics/language sciences tout-court is limited. Need to do same with other fields, like language development, historical data, sociolinguistics, etc.
-- The focus is on quantitative data analysis, so that we expect the issues raised here to apply differently or not at all to qualitative data analysis.
-- We have not investigated researcher positionality, which is known to be an important factor.
-- Meta-analytic model has model_id instead of team, so we are not accounting for the fact that teams have submitted multiple analyses (but not all of them did).
 
 # Conclusion
 

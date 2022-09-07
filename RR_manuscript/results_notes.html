@@ -384,28 +384,31 @@ the proposed teams dropped out of the project during the analysis
 phase<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>.
 The remaining 30 teams submitted their analysis in time and were coded
 by the three initiating authors (SC, JC, TR).</p>
-<p>Of the submitted teams, teams consisted of an average of 3.63
-analysts (sd = 2.8). Analysts had on average 4.8 years (sd = 4.2) post
-PhD experience, ranging from -3.8 years, i.e. PhD students (or younger)
-to 12.4 years.</p>
+<p>Submitting teams consisted of an average of 3.63 analysts (sd = 2.8).
+Analysts had on average 4.8 years (sd = 4.2) post PhD experience,
+ranging from -3.8 years, i.e. PhD students (or younger) to 12.4
+years.</p>
 <p>Analysts prior belief in the effect under investigation ranged from
 48.5 to 92 with an average of 69.2 (sd = 11.3), indicating that analysts
-had an overall rather high prior plausibility of the hypothesis (scale
-ranged from 0 to 100).</p>
+had an overall rather high prior plausibility of the investigated
+relationship between prosody and typicality (scale ranged from 0 to
+100).</p>
 <p>The teams have submitted 170 models to answer the research question.
-On average, teams submitted 3.6 models. analytic approaches widely
-varied along the following dimensions: First, teams differed in what and
-how they measured the acoustic signal, including choosing different
-aspects of the acoustic signal, the temporal window over which they
-measured, the concrete operationalization of how they measured said
-acoustic properties.</p>
+On average, teams submitted 3.6 models. Crucially, analytic approaches
+widely varied in how they acoustically analysed the speech signal and
+how the statistically analysed the extracted values.</p>
 </div>
 <div id="acoustic-analysis" class="section level2" number="1.2">
 <h2><span class="header-section-number">1.2</span> Acoustic
 analysis</h2>
-<p>33% of models used a duration measure as the outcome variable, 36%
-used a f0 measure, 15% used a formant measure, 14% used an intensity
-measure, and 3% used a different measure.</p>
+<p>Teams differed in what and how they measured the acoustic signal,
+including choosing different aspects of the acoustic signal, the
+temporal window over which they measured, and the concrete
+operationalization of how they measured those acoustic properties. 33%
+of models used a duration measure as the outcome variable, 36% used a f0
+measure, 15% used a formant measure, 14% used an intensity measure, and
+3% used a different measure.
+<!-- TR: Do we want to list some of them?--></p>
 <p>45% of models measured acoustic properties at the level of the
 segment (e.g. comparing the acoustic profile of a vowel), 44% at the
 level of the word (e.g. comparing the acoustic profile of “banana”), 4%
@@ -414,31 +417,31 @@ and adjective, e.g. “the green banana”), 2% at the level of the whole
 sentence, and 5% used a different time window. Based on a coarse coding
 of how acoustic measures were operationalized, we find a total of 55
 different measurement specifications.</p>
-<!-- TR: TO ADD: LOOK AT OPERATIONALIZATIONS AND SEE HOW MANY UNIQUE MEASUREMENTS SPECIFICATIONS WERE DONE-->
 <!-- SC: I have added the number of unique meas. specs but we might want to discuss this. -->
+<!-- TR: How did you do this?-->
 </div>
 <div id="statistical-analysis" class="section level2" number="1.3">
 <h2><span class="header-section-number">1.3</span> Statistical
 analysis</h2>
-<p>Second, this multiverse of measurement choices is exponentiated with
-choices during the statistical analysis, including the choice of
-predictor and their operationalization, the chosen inferential
-framework, the type of model, and their model architecture, specifically
-how they accounted for dependencies in the data via random effect
-specifications in their multilevel models.</p>
-<!-- TODO: list co-occurring predictors -->
-<p>On average, models included 1.91 different predictors (counting only
+<p>The multiverse of acoustic measurement choices is exponentiated with
+choices during the statistical analysis, including the predictors and
+their operationalization, the chosen inferential framework, the type of
+model, and their model architecture, specifically how they accounted for
+dependencies in the data via random effect specifications in their
+multilevel models.</p>
+<p>On average, models included 1.9 different predictors (counting only
 conceptually different predictors), i.e. in addition to the critical
 predictor, typicality of the adjective noun combinations, most teams
-included additional predictors in their models. Predictors included LIST
-CO-OCCURING IVS…</p>
+included additional predictors in their models. Predictors included the
+information structure of the sentence, trial number, semantic dimensions
+of the referent, part of speech, or gender of the speaker.</p>
 <p>The original dataset allowed to operationalize the most relevant
 predictor, typicality, in different ways. It was operationalized as
 categorical (e.g. typical vs. atypical) in 78% of models, continuous (on
 a scale from 0-100) with the mean typicality rating in 19% of models,
 and continuous with the median typicality rating in 1% of models.</p>
 <p>The majority of models were rooted in the frequentist framework
-(80%). 20% were rooted in a Bayesian framework. While teams almost
+(80%). 20% were operating in a Bayesian framework. While teams almost
 exclusively used linear models to analyze their data (98%, with a few
 exception using machine learning techniques or GAMs as a special case of
 a linear model), teams differed drastically in how they accounted for
@@ -447,23 +450,27 @@ between data points, with multiple data points coming from the same
 subject and with multiple data points being associated with the same
 adjective or noun. The appropriate way to account for this
 non-independence is by using multi-level models and specifying so-called
-random effects (REFERENCE). 7% of linear models specified no random
-effects at all, so effectively ignoring these non-independences. 64%
-specified random intercepts only, and 29% specified random intercepts
-and random slopes to account for the non-independence. On average, teams
-that specified random effects, included 2.4 random terms in their
-models. Based on statistical framework, type of model, distribution
-family, fixed terms, and discarding random effects, there were a total
-of 45 different model specifications.</p>
+random effects <span class="citation">[e.g., @gelman2006data;
+@schielzeth2009conclusions]</span>. 7% of linear models specified no
+random effects at all (without pooling their data), so effectively
+ignoring these non-independences <span class="citation">[@hurlbert1984pseudoreplication]</span>.
+<!-- TODO: We need to check if these model pooled --> 64% specified
+random intercepts only, and 29% specified random intercepts and random
+slopes to account for the non-independence. On average, teams that
+specified random effects, included 2.4 random terms in their models.
+Based on statistical framework, type of model, distribution family,
+fixed terms, and discarding random effects, there were a total of 45
+different model specifications.
+<!-- TR: If done on team level did every team have a different mdoel?  --></p>
 </div>
 <div id="review-ratings" class="section level2" number="1.4">
 <h2><span class="header-section-number">1.4</span> Review ratings</h2>
-<p>Teams reviewed each other analyses for both the acoustic analysis and
-the statistical analysis. The mean rating of the quality of the acoustic
-analyses was 74.6 (sd = 11.1); the mean rating of the quality of the
-statistical analysis was 73.9 (sd = 14.1). For reference, the scale of
-the rating anchored a point grade of 75 as “an imperfect analysis but
-the needed changes are unlikely to dramatically alter final
+<p>Teams reviewed each others’ analyses for both the acoustic analysis
+and the statistical analysis. The mean rating of the quality of the
+acoustic analyses was 74.6 (sd = 11.1); the mean rating of the quality
+of the statistical analysis was 73.9 (sd = 14.1). For reference, the
+scale of the rating anchored a point grade of 75 as “an imperfect
+analysis but the needed changes are unlikely to dramatically alter final
 interpretation”, indicating a rather high confidence of reviewers that
 the provided analyses yield appropriate (yet “imperfect”) answers to the
 research question.</p>
@@ -485,7 +492,7 @@ standard deviation of the group-level effect of team
 <code>(!!! we have now model_id)</code> returned by the meta-analytic
 model.</p>
 <p>According to the meta-analytic model, the group-level standard
-deviation is between 0.11 and 0.15 standard units, at 95% confidence.
+deviation is between 0.11 and 0.15 standard units, at 95% credibility.
 This means that the deviations of any individual model from the
 meta-analytic effect estimate range between ±0.22 to ±0.3 (0.11 * 2,
 0.15 * 2) in standard units. We illustrate what this means in actual
@@ -501,70 +508,72 @@ values of the standardized effect size between -0.01 and 0.04 (95% CrI,
 mean = 0.016) In other words, if we were to assume that there is a true
 underlying effect of typicality and we consider each analysis randomly
 drawn from a population of possible analysis attempts, our best guess
-about the underlying effect is that it is 0.016 standard deviations
-above zero. This outcome thus estimates that atypical word combinations
-have 0.016 standard deviations higher acoustic values (e.g. duration, f0
-etc,) than typical word combinations.</p>
+about the underlying effect is that it is 0.02 standard deviations above
+zero. This outcome thus estimates that atypical word combinations have
+0.02 standard deviations higher acoustic values (e.g. duration, f0 etc,)
+than typical word combinations.</p>
 <!-- TR: CONTEXTUALIZE IN CONCRETE ACOUSTIC VALUES (ALTERNATIVELY IN IQ VALUES).-->
 <p>This is not only an extremely small effect
 <!-- TR: cannot really talk about tiny effects because we have the continuous typicality included and that looks at a difference of one unit (which is 1 in a 1-100 scale -->,
 but there is also much uncertainty around this estimate and the range of
 probably values includes zero. Thus, given the data, the model, and our
 prior assumptions, we cannot be very certain that there actually is an
-effect that is not point zero to begin with. Since we do not know the
-true value of the underlying effect, we cannot conclude anything from
-this finding, but if there is an effect of typicality, it is very small.
+effect that is not zero to begin with. Since we do not know the true
+value of the underlying effect, we cannot conclude anything from this
+finding, but if there is an effect of typicality, it is very small.
 Moreover, this population estimate is half the size of the estimated
 standard deviation between different models
-<!-- TR: EXTRACT BETA AND CRIS).--> (ref:meta_plot1) illustrates the
-estimated model outputs for all submitted models according to size. Note
-that given the nature and wide variety of acoustic operationalizations,
-there is not always a natural interpretation of the scale, but in most
-cases a positive effect corresponds to atypical word combinations
-eliciting higher acoustic values (e.g. longer duration, higher f0,
-etc.). Notably, while the majority of models yielded inconclusive
-results, there are 28 model estimates for which the 95% credible
-interval does not contain zero (16%).</p>
+<!-- TR: EXTRACT BETA AND CRIS).--></p>
+<p>(ref:meta_plot1) illustrates the estimated model outputs for all
+submitted models according to size. Given the nature and wide variety of
+acoustic operationalizations, there is not always a natural
+interpretation of the scale, but in most cases a positive effect
+corresponds to atypical word combinations eliciting higher acoustic
+values (e.g. longer duration, higher f0, etc.). Notably, while the
+majority of models yielded inconclusive results, there are 28 model
+estimates for which the 95% credible interval does not contain zero
+(16%).</p>
 <!-- TR: ADD PARAGRAPH ON HOW MANY CLAIMED THERE TO BE AN EFFECT.-->
 </div>
 <div id="can-we-predict-the-estimate" class="section level2" number="2.3">
 <h2><span class="header-section-number">2.3</span> Can we predict the
 estimate?</h2>
 <p>After assessing the variability across models, we now turn toward
-estimating the impact of a series of predictors the analysts model
-estimates There is a lot of variation, raising the question as to
+estimating the impact of a series of predictors on the analysts’ model
+estimates. There is a lot of variation, raising the question as to
 whether we can explain some of this variation or whether it is
-idiosyncratic (REF)?</p>
+idiosyncratic <span class="citation">[@breznau2021observing]</span>?</p>
 <p>(ref:meta_plot1), panel C, displays the coefficients alongside 80%
 and 95% credible intervals for all model predictors.</p>
 <!-- TR: ADD TABLE HERE TOO?-->
 <p>The model suggests that most team-specific predictors yield very
-small mean estimates and 95% credibile intervals that include zero,
-leaving us highly uncertain about their direction. Neither analysts’
-prior beliefs in the phenomenon (ADD EST + 95CrI), nor their seniority
-in terms of years after completing their PhD (ADD EST + 95CrI) seem to
-compellingly affect model estimates. Similarly, the evaluation of the
-quality of the analysis from their peers yielded a rather small effect
-magnitude, again characterized by large uncertainty (ADD EST + 95CrI).
-Interestingly, the model uniqueness, i.e. how unique the choice and
-combination of predictors is, affects the analysts estimate, with more
-unique models producing higher positive estimates. This suggests that
-the analysts’ results very much depend on the choice of predictors.
-Looking at the most important choices during measurement, both the
-acoustic parameter under investigation (e.g. duration or f0) and the
-choice of temporal window affected the results. (ref:meta_plot1)
-displays the posterior estimates for the measurement outcome (i.e. what
-acoustic dimension was measured, panel A) and measurement window
-(i.e. what is the unit over which was measured, panel B). If an acoustic
-dimension related to f0 was measured, estimates are lower than the meta
-analytic estimate. If on the other hand, vowel formants were measured,
-estimates are higher than the meta analytic estimate. Similarly, if
-acoustic parameters were measured within individual segments (e.g. the
-vowel of the noun), estimates are lower than the meta analytic estimate,
-and if acoustic parameters were measured across whole phrases (e.g. “the
-blue banana”), the estimates are generally higher. In other words,
-depending on the choice of measurement, analysts arrived at opposite
-conclusions about how and if typicality is expressed acoustically.</p>
+small deviations from the meta-analytical estimate and their 95%
+credible intervals include zero, leaving us highly uncertain about their
+direction. Neither analysts’ prior beliefs in the phenomenon (ADD EST +
+95CrI), nor their seniority in terms of years after completing their PhD
+(ADD EST + 95CrI) seem to compellingly affect model estimates.
+Similarly, the evaluation of the quality of the analysis from their
+peers yielded a rather small effect magnitude, again characterized by
+large uncertainty (ADD EST + 95CrI). Interestingly, the model
+uniqueness, i.e. how unique the choice and combination of predictors is,
+affects the analysts estimate, with more unique models producing higher
+positive estimates. This suggests that the analysts’ results very much
+depend on their choice of predictors. Looking at the most important
+choices during measurement, both the acoustic parameter under
+investigation (e.g. duration or f0) and the choice of temporal window
+affected the results. (ref:meta_plot1) displays the posterior estimates
+for the measurement outcome (i.e. what acoustic dimension was measured,
+panel A) and measurement window (i.e. what is the unit over which was
+measured, panel B). If an acoustic dimension related to f0 was measured,
+estimates are lower than the meta analytic estimate. If on the other
+hand, vowel formants were measured, estimates are higher than the meta
+analytic estimate. Similarly, if acoustic parameters were measured
+within individual segments (e.g. the vowel of the noun), estimates are
+lower than the meta analytic estimate, and if acoustic parameters were
+measured across whole phrases (e.g. “the blue banana”), the estimates
+are generally higher. In other words, depending on the choice of
+measurement, analysts arrived at opposite conclusions about how and if
+typicality is expressed acoustically.</p>
 </div>
 </div>
 <div id="discussion-drafty" class="section level1" number="3">
@@ -577,10 +586,10 @@ signal atypical word combinations?</em>. In order to answer this
 question, teams had to operationalize latent variables within a
 multidimensional signal, operationalize and chose appropriate
 predictors, and construct an appropriate statistical model to answer the
-research question. As shown by the results of this meta-anlyitic study,
+research question. As shown by the results of this meta-analytic study,
 such complex process has led to a wide “garden of forking paths”,
-i.e. to a wide range of combinations of possible analitic decisions.
-Each individual analyst team has chosen unique paths to acoustically
+i.e. to a wide range of combinations of possible analytical decisions.
+Every individual analyst team has chosen unique paths to acoustically
 measure, operationalize and statistical analyse the data. Interestingly,
 the observed variation in reported effect sizes was not predicted by the
 analysts’ prior expectations about the phenomenon. In fact, teams on
@@ -593,14 +602,15 @@ statistical analysis, suggesting that reviewers were generally satisfied
 with the other teams’ approaches. These findings are very much in line
 with previous crowd-sourced projects that suggest variation between
 teams is neither driven by perceived quality of the analysis nor by
-analysts biases or experience (REF,REF,REF). Given the mounting
-evidence, Breznau et al. (2021) conclude that “[…] we are left to
-believe that idiosyncratic uncertainty is a fundamental feature of the
-scientific process that is not easily explained by typically observed
-researcher characteristics or analytic decisions.” Idiosyncratic
-variation across researchers might be a fact of life which researchers
-have to acknowledge and integrate into how they evaluate and present
-evidence.</p>
+analysts biases or experience <span class="citation">[e.g.,
+@silberzahn2018many, @breznau2021observing]</span>. Given the mounting
+evidence, <span class="citation">@breznau2021observing</span> conclude
+that “[…] we are left to believe that idiosyncratic uncertainty is a
+fundamental feature of the scientific process that is not easily
+explained by typically observed researcher characteristics or analytic
+decisions.” Idiosyncratic variation across researchers might be a fact
+of life which researchers have to acknowledge and integrate into how
+they evaluate and present evidence.</p>
 <p>While properties of the teams did not seem to systematically affect
 results, teams’ estimates seem to depend on certain measurement choices.
 Human speech is a complex multidimensional signal. Researchers need to
@@ -623,6 +633,21 @@ predictability can be expressed via f0 <span class="citation">[e.g.
 Regardless of its cause, we have to conclude that depending on the
 choice of how the speech signal is operationalized, researchers might
 find evidence for or against a theoretically relevant effect.</p>
+<p>It particularly struck us that teams did not follow our instructions
+to only submit a single effect size. Teams submitted up to 16 different
+models to test for a possible relationship between typicality and the
+speech signal. Obviously, the complexity of the speech signal lends
+itself to multiple approaches, but this plurality of hypothesis tests
+invites bias and can dramatically increase the rate of falsely claiming
+the presence of an effect <span class="citation">[@roettger2019researcher]</span>. When operating within
+the frequentist inferential framework, testing the same hypothesis with
+different dependent variables, increases the Type-I error rate if not
+corrected for (Tukey 1954, Benjamini &amp; Hochberg 1995). It also
+invites bias, leading to the selective reporting of those tests that
+yield a desirable outcome (Kerr 1998, John et al. 2012, Simmon et
+al. 2011) while null results remain unreported (Sterling 1959, REF). Our
+data suggest that fields that use highly complex raw data such as speech
+should be particularly cautious when analyzing their data.</p>
 </div>
 <div id="lessons-for-the-methodological-reform-movement" class="section level2" number="3.2">
 <h2><span class="header-section-number">3.2</span> Lessons for the
@@ -633,18 +658,18 @@ to scientific practices that lead to unreliable and biased claims in the
 literature (REFS). One of the suggested paths forward is for researchers
 to directly replicate previous study more often [<span class="citation">@open2015estimating</span>; REFS, REFS]. While we agree
 with the importance of direct replications, our study (and similar
-crowd-sourced analyses before us) suggest that replicating more is not
-enough. There is only limited value in learning that a particular
-procedure is replicable if the idiosyncratic nature of the procedure
-itself might not yield a representative result relative to all possible
-procedures that could have been applied to the research question.
-Well-trained and experienced speech researchers in this study not only
-applied completely different approaches to the same research question,
-they also seemed to consider all these alternative approaches
+crowd-sourced analyses before us) suggest that replicating more is
+simply not enough. There is only limited value in learning that a
+particular procedure is replicable if the idiosyncratic nature of the
+procedure itself might not yield a representative result relative to all
+possible procedures that could have been applied to the research
+question. Well-trained and experienced speech researchers in this study
+not only applied completely different approaches to the same research
+question, they also seemed to consider all these alternative approaches
 acceptable, as the peer-ratings suggest. Being aware of this
 idiosyncratic variation between analysts should lead to more nuanced
 claims and what Breznau et al. refers to as “epistemic humility”.</p>
-<p>A desired outcome of knowomg that different but reasonable
+<p>A desired outcome of knowing that different but reasonable
 measurement choices or statistical approaches might lead to entirely
 different interpretations of research data is to calibrate our
 (un)certainty in the strength of the collected evidence and, in turn,
@@ -703,50 +728,61 @@ researchers who define possible analytic pathways. Eventually, a mature
 scientific discipline should develop a set of detailed quantitative
 hypotheses of how conceptual constructs manifest themselves in the
 measured system, i.e. in the present case how communicative pressures of
-functions are expressed in the acoustic signal. More recently,
-researchers across the cognitive sciences have also raised awareness of
-a general lack of detailed quantitative hypotheses, calling for
-establishing appropriate derivation chains and formalizing verbal
-expectations mathematically <span class="citation">[e.g.,
-@van2020formalizing; @guest2021computational; @scheel2021hypothesis;
+functions are expressed in the acoustic signal. This can be achieved by
+formalizing verbal expectations mathematically or using computational
+models <span class="citation">[e.g., @van2020formalizing;
+@guest2021computational; @scheel2021hypothesis;
 @devezer2021case]</span>.</p>
 </div>
 <div id="caveats" class="section level2" number="3.3">
 <h2><span class="header-section-number">3.3</span> Caveats</h2>
 <p>Our study has several limitations that need to be considered when
 evaluating our results. First of all, our sample is an opportunity
-sample. We have advertise the project through online platforms which
-might lead to the exclusion of certain potential researcher groups.
+sample. We have advertised the project through online platforms which
+might have led to the exclusion of certain potential researcher groups.
 Moreover, while the number of participating teams is larger than most
-earlier crowdsourcing projects, it is likely too small to estimate
+earlier crowdsourcing projects, it is likely to be too small to estimate
 meta-analytic estimates reliably. This is particularly important for the
 predictor evaluation. Since predictor levels were not systematically
 distributed across teams, our estimates are characterized by large
-uncertainty.</p>
-<p>ADD</p>
-<!-- Brainstorm of ideas -->
+uncertainty. This uncertainty is possibly further inflated by the fact
+that he research question presented to the teams was vague: <em>Do
+speakers acoustically modify utterances to signal atypical word
+combinations?</em> Misundertsanding the research question in terms of
+its statistical interpretation has recently been shown to explain some
+variation between many-analysis projects <span class="citation">[@auspurg2021has]</span>. However, we consider this
+very underspecification of research hypotheses in the field of speech
+science a common phenomenon. For example, researchers seem to have not
+agreed on how to acoustically measure cross linguistically common
+phenomena such as word stress <span class="citation">[e.g.
+@gordon2017acoustic]</span> which reflect the general lack of strong
+quantitative theories, as discussed above. Despite these sources of
+uncertainty, our study suggest that at a minimum we can expect the
+between-team variability that we have observed, which is quite
+subtantial.</p>
 <ul>
-<li>Analytic flexibility applies to us (as principal investigators)
-too.</li>
-<li>Research question was vague enough to possibily inflate between-team
-variability (REF, Hannah Fraser; although it is a typical kind of
-question, as found in the literature). We do relate analytical
-flexibility with underspecified hypothesis in the previous section.</li>
-<li>This should be replicated with a different question/data set.</li>
-<li>With this study, we can suggest that at a minimum this is the
-between-team variability, but need more studies like this one.</li>
-<li>Generalisability to linguistics/language sciences tout-court is
-limited. Need to do same with other fields, like language development,
-historical data, sociolinguistics, etc.</li>
-<li>The focus is on quantitative data analysis, so that we expect the
+<li><p>The generalizability of our findings to other disciplines on the
+one hand and specifically other sub-disciplines of the language sciences
+is, of course, limited.</p></li>
+<li><p>The focus is on quantitative data analysis, so that we expect the
 issues raised here to apply differently or not at all to qualitative
-data analysis.</li>
-<li>We have not investigated researcher positionality, which is known to
-be an important factor.</li>
-<li>Meta-analytic model has model_id instead of team, so we are not
+data analysis.</p></li>
+<li><p>We have not investigated researcher positionality, which is known
+to be an important factor.</p></li>
+<li><p>Meta-analytic model has model_id instead of team, so we are not
 accounting for the fact that teams have submitted multiple analyses (but
-not all of them did).</li>
+not all of them did).</p></li>
 </ul>
+<p>The coordinating authors have engaged with metascientific research
+before and have been actively involved in methodological debates about
+scientific practices including transparency. We have in the past used
+the lack of transparency as an argument for proposing behavior and
+policy changes. This might have biased our own judgment during the
+analysis which itself came with many researcher degrees of freedom. We
+hope we were able to make these degrees of freedom as well as the timing
+and reasoning of our analytical choices detectable. However, our results
+should be independently re-analysed and replicated with a different
+research question.</p>
 </div>
 </div>
 <div id="conclusion" class="section level1" number="4">
