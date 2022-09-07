@@ -427,18 +427,18 @@ Regardless of its cause, we have to conclude that depending on the choice of how
 It particularly struck us that teams did not follow our instructions to only submit a single effect size. 
 Teams submitted up to 16 different models to test for a possible relationship between typicality and the speech signal.
 Obviously, the complexity of the speech signal lends itself to multiple approaches, but this plurality of hypothesis tests invites bias and can dramatically increase the rate of falsely claiming the presence of an effect [@roettger2019researcher]. 
-When operating within the frequentist inferential framework, testing the same hypothesis with different dependent variables, increases the Type-I error rate if not corrected for (Tukey 1954, Benjamini & Hochberg 1995). 
-It also invites bias, leading to the selective reporting of those tests that yield a desirable outcome (Kerr 1998, John et al. 2012, Simmon et al. 2011) while null results remain unreported (Sterling 1959, REF). 
-Our data suggest that fields that use highly complex raw data such as speech should be particularly cautious when analyzing their data. 
+When operating within the frequentist inferential framework, testing the same hypothesis with different dependent variables, increases the Type-I error rate if not corrected for [Tukey 1953, @benjamini1995controlling]
+<!-- TR: couldnt find bibtex of tukey: Tukey, J. W. (1953). The problem of multiple comparisons. Multiple comparisons. -->
+It also invites bias, possibly leading to the selective reporting of those tests that yield a desirable outcome [@kerr1998harking, @john2012measuring, @simmons2011false] while null results remain unreported [e.g., @sterling1959publication, @rosenthal1979file]. 
 
 ## Lessons for the methodological reform movement
-
 The current results point to important barriers for successful accumulation of knowledge.
-The replication crisis has brought attention to scientific practices that lead to unreliable and biased claims in the literature (REFS).
-One of the suggested paths forward is for researchers to directly replicate previous study more often [@open2015estimating; REFS, REFS].
+The replication crisis has brought attention to scientific practices that lead to unreliable and biased claims in the literature [e.g., REFERENCE].
+One of the suggested paths forward is for researchers to directly replicate previous study more often [e.g., @open2015estimating; @camerer2018evaluating].
 While we agree with the importance of direct replications, our study (and similar crowd-sourced analyses before us) suggest that replicating more is simply not enough.
 There is only limited value in learning that a particular procedure is replicable if the idiosyncratic nature of the procedure itself might not yield a representative result relative to all possible procedures that could have been applied to the research question.
-Well-trained and experienced speech researchers in this study not only applied completely different approaches to the same research question, they also seemed to consider all these alternative approaches acceptable, as the peer-ratings suggest.
+The quantitative sciences are in an inference crisis [@rotello2015more; @starns2019assessing].
+Well-trained and experienced speech researchers not only applied completely different approaches to the same research question, they also seemed to consider all these alternative approaches acceptable, as their peer-ratings suggest.
 Being aware of this idiosyncratic variation between analysts should lead to more nuanced claims and what Breznau et al. refers to as "epistemic humility". 
 
 A desired outcome of knowing that different but reasonable measurement choices or statistical approaches might lead to entirely different interpretations of research data is to calibrate our (un)certainty in the strength of the collected evidence and, in turn, communicate that (un)certainty appropriately.
@@ -448,7 +448,11 @@ We should ideally specify the link between conceptual construct and quantitative
 Without well defined derivation chains, we "are not even wrong" [@scheel2022most] because falsified expectations cannot tell us much about the conceptual constructs they are based on when the relationship between the two is underspecified.
 
 In light of the observed analytic flexibility, what can we do to appropriately calibrate our confidence in our claims?
-First of all, through sharing of materials, data and statistical protocols, we can make our idiosyncratic choices transparent to others (REF).
+First of all, through sharing of materials, data and statistical protocols, we can make our idiosyncratic choices transparent to others [@munafo2017manifesto; @vazire2017quality].
+It furtherenables the evaluation and verification of underlying claims and allows for the evaluation of empirical, computational and statistical reproducibility (LeBel et al., 2018). 
+It allows for alternative analyses to establish analytic robustness (Steegen et al., 2016) and strengthens attempts to synthesize evidence via meta-analyses (Nicenboim et al., 2018)
+
+
 This enables critical evaluation and robustness checks by other fellow researchers (REF).
 Given that minor procedural changes can sometimes drastically affect the final interpretation of the results [@breznau2021observing], we should ideally share a detailed documentation of the data collection procedure, the measurement choices, the data extraction, and statistical analyses.
 <!-- TODO: cite Praat, EMU, MFA, Formant tracking etc -->
