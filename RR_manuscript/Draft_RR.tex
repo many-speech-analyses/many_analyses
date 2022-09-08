@@ -532,8 +532,8 @@ Analysts and initiating authors will discuss the limitations, results, and impli
 \hypertarget{results}{%
 \section{Results}\label{results}}
 
-\hypertarget{sample-description}{%
-\subsection{Sample description}\label{sample-description}}
+\hypertarget{descriptive-statistics-1}{%
+\subsection{Descriptive statistics}\label{descriptive-statistics-1}}
 
 In the following, we will describe the characteristics of our analyst teams and their models in order to give an overview over the sample and the large variation across analysis strategies.
 
@@ -586,49 +586,65 @@ Based on statistical framework, type of model, distribution family, fixed terms,
 Teams reviewed each others' analyses for both the acoustic analysis and the statistical analysis.
 The mean rating of the quality of the acoustic analyses was 74.6 (sd = 11.1); the mean rating of the quality of the statistical analysis was 73.9 (sd = 14.1). For reference, the scale of the rating anchored a point grade of 75 as ``an imperfect analysis but the needed changes are unlikely to dramatically alter final interpretation'', indicating a rather high confidence of reviewers that the provided analyses yield appropriate (yet ``imperfect'') answers to the research question.
 
-\hypertarget{meta-analysis}{%
-\subsection{Meta analysis}\label{meta-analysis}}
+\hypertarget{meta-analytic-estimation}{%
+\subsection{Meta-analytic estimation}\label{meta-analytic-estimation}}
 
-\begin{verbatim}
-## Warning: `gather_()` was deprecated in tidyr 1.2.0.
-## Please use `gather()` instead.
-## This warning is displayed once every 8 hours.
-## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.
-\end{verbatim}
+This section deals with the meta-analytic analysis of the results submitted by the teams.
+We first report on the between-team variability estimate, which is the focus of this study, followed by the meta-analytic intercept estimate.
 
 \hypertarget{between-team-variability}{%
 \subsubsection{Between-team variability}\label{between-team-variability}}
 
 As explained in the \textbf{Methods} section, the primary aim of this is to assess the variability of the reported effects or, in other words, the degree of between-team variability.
-As a measure of between-team variability, we chose to use the meta-analytic group-level standard deviation \(\sigma_{\alpha_{\text{t}}}\)), i.e.~the standard deviation of the group-level effect of team \texttt{(!!!\ we\ have\ now\ model\_id)} returned by the meta-analytic model.
+As a measure of between-team variability, we chose to use the meta-analytic group-level standard deviation \(\sigma_{\alpha_{\text{t}}}\)), i.e.~the standard deviation of the group-level effect of team returned by the meta-analytic model.
 
-According to the meta-analytic model, the group-level standard deviation is between 0.11 and 0.15 standard units, at 95\% credibility.
-This means that the deviations of any individual model from the meta-analytic effect estimate range between ±0.22 to ±0.3 (0.11 * 2, 0.15 * 2) in standard units.
-We illustrate what this means in actual acoustic measures by means of examples, taking the mean sample standard deviation of each measure from the sample data.
+According to the meta-analytic model, the group-level standard deviation for team is between 0.03 and 0.07 standard units, at 95\% credibility.
+This means that the mean deviations of any individual team from the meta-analytic effect estimate range between ±0.06 to ±0.14 (0.3 * 2, 0.07 * 2) in standard units.
 
-\hypertarget{estimating-the-crowd-sourced-effect-size}{%
-\subsubsection{Estimating the crowd sourced effect size}\label{estimating-the-crowd-sourced-effect-size}}
+\textbf{Non-preregistered}. In our preregistration we did not take into account the possibility that teams might submit multiple analyses/models.
+We have run two further non-preregistered meta-analytic models:
 
-The Bayesian random effects model estimates the range of probable values of the standardized effect size between -0.01 and 0.04 (95\% CrI, mean = 0.016)
-In other words, if we were to assume that there is a true underlying effect of typicality and we consider each analysis randomly drawn from a population of possible analysis attempts, our best guess about the underlying effect is that it is 0.02 standard deviations above zero. This outcome thus estimates that atypical word combinations have 0.02 standard deviations higher acoustic values (e.g.~duration, f0 etc,) than typical word combinations.
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  A model with model ID instead of team as the group-level effect (\texttt{(1\textbar{}model\_id)}).
+\item
+  A model with team and model ID nested within team as group-level effects (\texttt{(1\textbar{}team)\ +\ (1\textbar{}team:model\_id}).
+\end{enumerate}
 
-This is not only an extremely small effect , but there is also much uncertainty around this estimate and the range of probably values includes zero.
-Thus, given the data, the model, and our prior assumptions, we cannot be very certain that there actually is an effect that is not zero to begin with.
-Since we do not know the true value of the underlying effect, we cannot conclude anything from this finding, but if there is an effect of typicality, it is very small.
-Moreover, this population estimate is half the size of the estimated standard deviation between different models
+Based on the first non-preregistered model, the group-level standard deviation for model ID is between 0.11 and 0.15 standard units, at 95\% credibility.
+This means that the deviations of any individual analysis model from the meta-analytic effect estimate range between ±0.22 to ±0.3 (0.11 * 2, 0.15 * 2) in standard units.
 
-(ref:meta\_plot1) illustrates the estimated model outputs for all submitted models according to size.
-Given the nature and wide variety of acoustic operationalizations, there is not always a natural interpretation of the scale, but in most cases a positive effect corresponds to atypical word combinations eliciting higher acoustic values (e.g.~longer duration, higher f0, etc.).
-Notably, while the majority of models yielded inconclusive results, there are 28 model estimates for which the 95\% credible interval does not contain zero (16\%).
+As for the second non-preregistered model, the posterior estimate for model ID is identical to that of the first non-preregistered model.
+On the other hand, the posterior 95\% CrI for team in the second non-preregistered model is 0-0.05 standard units (\(\beta\) = 0.02, SD = 0.01), corresponding to a mean deviation range of ±0.1 standard units.
+
+We illustrate what all this means in actual acoustic measures by means of examples, taking the minimum and maximum sample standard deviation of each measure from our data.
+
+\hypertarget{meta-analytic-intercept}{%
+\subsubsection{Meta-analytic intercept}\label{meta-analytic-intercept}}
+
+The meta-analytic model estimates the range of probable values of the standardized effect size to be between -0.022 and 0.023 standard units (95\% CrI, mean = 0.001).
+In other words, our best guess is that typical and atypical word combinations might not differ in acoustic measures (e.g.~duration, f0 etc,) or, if they do, they do so by a maximum of ±0.02 standard units.
+
+\textbf{Non-preregistered}. As mentioned in the previous section, we have run two further models, one using model ID instead of team and the second using team and model ID nested within team.
+In the first model, the meta-analytic intercept estimate is between -0.01 and 0.04 standard units (95\% CrI, mean = 0.016).
+This suggests that the acoustic measures of typical word combinations are 0.01 standard units lower to 0.04 standard units higher than the measures of atypical word combinations, at 95\% confidence.
+Relative to the preregistered model, this model suggests a somewhat positive effect of typicality (although small negative effects are also possible).
+The estimated intercept from the second model (with nested group-level effects) is virtually identical to the first (with only model ID as group-level effect).
+
+(ref:meta\_plot1) illustrates the individual model intercepts, sorted in ascending order based on their mean.
+Given the nature and wide variety of acoustic operationalizations, there is not always a natural interpretation of the scale, but in most cases a positive effect corresponds to typical word combinations eliciting higher acoustic values (e.g.~longer duration, higher f0, etc.), as mentioned above.
+Notably, while the majority of models yields inconclusive results, there are 25 model estimates for which the 95\% credible interval does not contain zero (15\%).
 
 \begin{figure}
-\includegraphics[width=1\linewidth]{../plots/meta_plot1} \caption{(ref:metaPlot1)}\label{fig:plot-meta1}
+\includegraphics[width=1\linewidth]{../figs/meta_plot1_nest} \caption{(ref:metaPlot1)}\label{fig:plot-meta1}
 \end{figure}
 
-\hypertarget{can-we-predict-the-estimate}{%
-\subsubsection{Can we predict the estimate?}\label{can-we-predict-the-estimate}}
+\hypertarget{analytic-and-researcher-related-predictors}{%
+\subsection{Analytic and researcher-related predictors}\label{analytic-and-researcher-related-predictors}}
 
-After assessing the variability across models, we now turn toward estimating the impact of a series of predictors on the analysts' model estimates.
+After assessing the variability across teams and models, we now turn toward estimating the impact of a series of predictors on the estimated intercept.
 There is a lot of variation, raising the question as to whether we can explain some of this variation or whether it is idiosyncratic \citep{breznau2021observing}?
 
 (ref:meta\_plot1), panel C, displays the coefficients alongside 80\% and 95\% credible intervals for all model predictors.
@@ -646,7 +662,7 @@ Similarly, if acoustic parameters were measured within individual segments (e.g.
 In other words, depending on the choice of measurement, analysts arrived at opposite conclusions about how and if typicality is expressed acoustically.
 
 \begin{figure}
-\includegraphics[width=1\linewidth]{../plots/alltogether} \caption{(ref:metaPlot2)}\label{fig:plot-meta2}
+\includegraphics[width=1\linewidth]{../figs/alltogether} \caption{(ref:metaPlot2)}\label{fig:plot-meta2}
 \end{figure}
 
 \hypertarget{discussion}{%
@@ -682,19 +698,19 @@ Regardless of its cause, we have to conclude that depending on the choice of how
 It particularly struck us that teams did not follow our instructions to only submit a single effect size.
 Teams submitted up to 16 different models to test for a possible relationship between typicality and the speech signal.
 Obviously, the complexity of the speech signal lends itself to multiple approaches, but this plurality of hypothesis tests invites bias and can dramatically increase the rate of falsely claiming the presence of an effect \citep{roettger2019researcher}.
-When operating within the frequentist inferential framework, testing the same hypothesis with different dependent variables, increases the Type-I error rate if not corrected for (Tukey 1954, Benjamini \& Hochberg 1995).
-It also invites bias, leading to the selective reporting of those tests that yield a desirable outcome (Kerr 1998, John et al.~2012, Simmon et al.~2011) while null results remain unreported (Sterling 1959, REF).
-Our data suggest that fields that use highly complex raw data such as speech should be particularly cautious when analyzing their data.
+When operating within the frequentist inferential framework, testing the same hypothesis with different dependent variables, increases the Type-I error rate if not corrected for \citep[Tukey 1953,][]{benjamini1995controlling}.
+It also invites bias, possibly leading to the selective reporting of those tests that yield a desirable outcome \citep[\citet{john2012measuring}, \citet{simmons2011false}]{kerr1998harking} while null results remain unreported \citep[e.g.,][\citet{rosenthal1979file}]{sterling1959publication}.
 
 \hypertarget{lessons-for-the-methodological-reform-movement}{%
 \subsection{Lessons for the methodological reform movement}\label{lessons-for-the-methodological-reform-movement}}
 
 The current results point to important barriers for successful accumulation of knowledge.
-The replication crisis has brought attention to scientific practices that lead to unreliable and biased claims in the literature (REFS).
-One of the suggested paths forward is for researchers to directly replicate previous study more often {[}\citet{open2015estimating}; REFS, REFS{]}.
+The replication crisis has brought attention to scientific practices that lead to unreliable and biased claims in the literature {[}e.g., REFERENCE{]}.
+One of the suggested paths forward is for researchers to directly replicate previous study more often \citep[e.g.,][]{open2015estimating, camerer2018evaluating}.
 While we agree with the importance of direct replications, our study (and similar crowd-sourced analyses before us) suggest that replicating more is simply not enough.
 There is only limited value in learning that a particular procedure is replicable if the idiosyncratic nature of the procedure itself might not yield a representative result relative to all possible procedures that could have been applied to the research question.
-Well-trained and experienced speech researchers in this study not only applied completely different approaches to the same research question, they also seemed to consider all these alternative approaches acceptable, as the peer-ratings suggest.
+The quantitative sciences are in an inference crisis \citep{rotello2015more, starns2019assessing}.
+Well-trained and experienced speech researchers not only applied completely different approaches to the same research question, they also seemed to consider all these alternative approaches acceptable, as their peer-ratings suggest.
 Being aware of this idiosyncratic variation between analysts should lead to more nuanced claims and what Breznau et al.~refers to as ``epistemic humility''.
 
 A desired outcome of knowing that different but reasonable measurement choices or statistical approaches might lead to entirely different interpretations of research data is to calibrate our (un)certainty in the strength of the collected evidence and, in turn, communicate that (un)certainty appropriately.
@@ -703,7 +719,9 @@ We should ideally specify the link between conceptual construct and quantitative
 Without well defined derivation chains, we ``are not even wrong'' \citep{scheel2022most} because falsified expectations cannot tell us much about the conceptual constructs they are based on when the relationship between the two is underspecified.
 
 In light of the observed analytic flexibility, what can we do to appropriately calibrate our confidence in our claims?
-First of all, through sharing of materials, data and statistical protocols, we can make our idiosyncratic choices transparent to others (REF).
+First of all, through sharing of materials, data and statistical protocols, we can make our idiosyncratic choices transparent to others \citep{munafo2017manifesto, vazire2017quality}.
+It further enables the evaluation and verification of underlying claims and allows for the evaluation of empirical, computational and statistical reproducibility (LeBel et al., 2018).
+It allows for alternative analyses to establish analytic robustness (Steegen et al., 2016) and strengthens attempts to synthesize evidence via meta-analyses (Nicenboim et al., 2018)
 This enables critical evaluation and robustness checks by other fellow researchers (REF).
 Given that minor procedural changes can sometimes drastically affect the final interpretation of the results \citep{breznau2021observing}, we should ideally share a detailed documentation of the data collection procedure, the measurement choices, the data extraction, and statistical analyses.
 Within fields that deal with speech data, open source software that allows to extract acoustic parameters via reproducible scripts can help other researchers to trace back seemingly inconsequential choices during the measurement process {[}e.g., CITE Praat, EMU CITE){]}{]}.

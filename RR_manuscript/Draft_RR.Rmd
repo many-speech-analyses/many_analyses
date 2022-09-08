@@ -708,7 +708,7 @@ review_mean <- msa_models %>%
             sd_srating = sd(stat_rating, na.rm = TRUE))
 ```
 
-## Sample description
+## Descriptive statistics
 
 In the following, we will describe the characteristics of our analyst teams and their models in order to give an overview over the sample and the large variation across analysis strategies.  
 
@@ -778,9 +778,41 @@ Based on statistical framework, type of model, distribution family, fixed terms,
 Teams reviewed each others' analyses for both the acoustic analysis and the statistical analysis. 
 The mean rating of the quality of the acoustic analyses was `r round(review_mean[[1]],1)` (sd = `r round(review_mean[[2]],1)`); the mean rating of the quality of the statistical analysis was `r round(review_mean[[3]],1)` (sd = `r round(review_mean[[4]],1)`). For reference, the scale of the rating anchored a point grade of 75 as "an imperfect analysis but the needed changes are unlikely to dramatically alter final interpretation", indicating a rather high confidence of reviewers that the provided analyses yield appropriate (yet "imperfect") answers to the research question. 
 
-## Meta analysis
+## Meta-analytic estimation
+
+<!-- TODO: add background info and use consistent terminology -->
+This section deals with the meta-analytic analysis of the results submitted by the teams.
+We first report on the between-team variability estimate, which is the focus of this study, followed by the meta-analytic intercept estimate.
 
 ```{r load-meta-analysis}
+# Preregistered ----
+meta_bm_prereg <- readRDS(here("./data/meta_analysis/meta_bm_prereg.rds"))
+
+meta_intercept_prereg <- fixef(meta_bm_prereg)
+meta_random_prereg <- ranef(meta_bm_prereg)
+
+# wrangle by hand 
+post_meta_prereg <- meta_bm_prereg %>%
+  spread_draws(b_Intercept, r_animal[team,]) %>%
+  mutate(team_mean = b_Intercept + r_animal) %>% 
+  group_by(team) %>% 
+  dplyr::summarise(post_mean = mean(team_mean),
+            lower95 = quantile(team_mean, probs = .025),
+            higher95 = quantile(team_mean, probs = .975)
+            ) %>% 
+  # this basically needs to be fed by whether or not the authors considered there to be an effect
+  mutate(compelling = as.factor(case_when(lower95 > 0 ~ "negative",
+                                          higher95 < 0 ~ "positive",
+                                          TRUE ~ "not compelling"))) 
+
+compelling_results_prereg <- post_meta_prereg %>% 
+  count(compelling) %>% 
+  summarise(prop = n / sum(n))
+
+compelling_count_prereg <- table(post_meta_prereg$compelling)
+
+# Model ID ----
+
 meta_bm <- readRDS(here("./data/meta_analysis/meta_bm.rds"))
 
 meta_intercept <- fixef(meta_bm)
@@ -805,46 +837,87 @@ compelling_results <- post_meta %>%
   summarise(prop = n / sum(n))
 
 compelling_count <- table(post_meta$compelling)
+
+# Nested ----
+
+meta_bm_nest <- readRDS(here("./data/meta_analysis/meta_bm_nest.rds"))
+
+meta_intercept_nest <- fixef(meta_bm_nest)
+meta_random_nest <- ranef(meta_bm_nest)
+
+# wrangle by hand 
+post_meta_nest <- meta_bm_nest %>%
+  spread_draws(b_Intercept, `r_animal:model_id`[model,]) %>%
+  mutate(model_mean = b_Intercept + `r_animal:model_id`) %>% 
+  group_by(model) %>% 
+  dplyr::summarise(post_mean = mean(model_mean),
+            lower95 = quantile(model_mean, probs = .025),
+            higher95 = quantile(model_mean, probs = .975)
+            ) %>% 
+  # this basically needs to be fed by whether or not the authors considered there to be an effect
+  mutate(compelling = as.factor(case_when(lower95 > 0 ~ "negative",
+                                          higher95 < 0 ~ "positive",
+                                          TRUE ~ "not compelling"))) 
+
+compelling_results_nest <- post_meta_nest %>% 
+  count(compelling) %>% 
+  summarise(prop = n / sum(n))
+
+compelling_count_nest <- table(post_meta_nest$compelling)
 ```
 
 ### Between-team variability
 
-<!-- TODO: discuss between-team variability -->
-<!-- TODO: This is more like between-model variability -->
-
 As explained in the **Methods** section, the primary aim of this is to assess the variability of the reported effects or, in other words, the degree of between-team variability.
-As a measure of between-team variability, we chose to use the meta-analytic group-level standard deviation $\sigma_{\alpha_{\text{t}}}$), i.e. the standard deviation of the group-level effect of team `(!!! we have now model_id)` returned by the meta-analytic model.
+As a measure of between-team variability, we chose to use the meta-analytic group-level standard deviation $\sigma_{\alpha_{\text{t}}}$), i.e. the standard deviation of the group-level effect of team returned by the meta-analytic model.
 
-According to the meta-analytic model, the group-level standard deviation is between 0.11 and 0.15 standard units, at 95% credibility.
-This means that the deviations of any individual model from the meta-analytic effect estimate range between ±0.22 to ±0.3 (0.11 * 2, 0.15 * 2) in standard units.
-We illustrate what this means in actual acoustic measures by means of examples, taking the mean sample standard deviation of each measure from the sample data.
+According to the meta-analytic model, the group-level standard deviation for team is between 0.03 and 0.07 standard units, at 95% credibility.
+This means that the mean deviations of any individual team from the meta-analytic effect estimate range between ±0.06 to ±0.14 (0.3 * 2, 0.07 * 2) in standard units.
+
+**Non-preregistered**. In our preregistration we did not take into account the possibility that teams might submit multiple analyses/models.
+We have run two further non-preregistered meta-analytic models:
+
+1. A model with model ID instead of team as the group-level effect (`(1|model_id)`).
+2. A model with team and model ID nested within team as group-level effects (`(1|team) + (1|team:model_id`).
+
+Based on the first non-preregistered model, the group-level standard deviation for model ID is between 0.11 and 0.15 standard units, at 95% credibility.
+This means that the deviations of any individual analysis model from the meta-analytic effect estimate range between ±0.22 to ±0.3 (0.11 * 2, 0.15 * 2) in standard units.
+
+As for the second non-preregistered model, the posterior estimate for model ID is identical to that of the first non-preregistered model.
+On the other hand, the posterior 95% CrI for team in the second non-preregistered model is 0-0.05 standard units ($\beta$ = 0.02, SD = 0.01), corresponding to a mean deviation range of ±0.1 standard units.
+
+We illustrate what all this means in actual acoustic measures by means of examples, taking the minimum and maximum sample standard deviation of each measure from our data.
 
 <!-- TODO: Add table with different outcomes, means (?) and SDs plus estimated deviations based on ±0.22/0.33 SDs. -->
 
-### Estimating the crowd sourced effect size
+### Meta-analytic intercept
 
-The Bayesian random effects model estimates the range of probable values of the standardized effect size between `r round(meta_intercept[3],3)` and `r round(meta_intercept[4],3)` (95\% CrI, mean = `r round(meta_intercept[1],3)`)
-In other words, if we were to assume that there is a true underlying effect of typicality and we consider each analysis randomly drawn from a population of possible analysis attempts, our best guess about the underlying effect is that it is `r round(meta_intercept[1],2)` standard deviations above zero. This outcome thus estimates that atypical word combinations have `r round(meta_intercept[1],2)` standard deviations higher acoustic values (e.g. duration, f0 etc,) than typical word combinations. 
+The meta-analytic model estimates the range of probable values of the standardized effect size to be between `r round(meta_intercept_prereg[3],3)` and `r round(meta_intercept_prereg[4],3)` standard units (95\% CrI, mean = `r round(meta_intercept_prereg[1],3)`).
+In other words, our best guess is that typical and atypical word combinations might not differ in acoustic measures (e.g. duration, f0 etc,) or, if they do, they do so by a maximum of ±0.02 standard units.
 
-<!-- TR: CONTEXTUALIZE IN CONCRETE ACOUSTIC VALUES (ALTERNATIVELY IN IQ VALUES).--> 
+<!-- TR: CONTEXTUALIZE IN CONCRETE ACOUSTIC VALUES, like we do with team variability (ALTERNATIVELY IN IQ VALUES).--> 
 
-This is not only an extremely small effect <!-- TR: cannot really talk about tiny effects because we have the continuous typicality included and that looks at a difference of one unit (which is 1 in a 1-100 scale -->, but there is also much uncertainty around this estimate and the range of probably values includes zero. 
-Thus, given the data, the model, and our prior assumptions, we cannot be very certain that there actually is an effect that is not zero to begin with. 
-Since we do not know the true value of the underlying effect, we cannot conclude anything from this finding, but if there is an effect of typicality, it is very small.
-Moreover, this population estimate is half the size of the estimated standard deviation between different models <!-- TR: EXTRACT BETA AND CRIS).--> 
+<!-- TR: cannot really talk about tiny effects because we have the continuous typicality included and that looks at a difference of one unit (which is 1 in a 1-100 scale -->
 
-(ref:meta_plot1) illustrates the estimated model outputs for all submitted models according to size. 
-Given the nature and wide variety of acoustic operationalizations, there is not always a natural interpretation of the scale, but in most cases a positive effect corresponds to atypical word combinations eliciting higher acoustic values (e.g. longer duration, higher f0, etc.).
-Notably, while the majority of models yielded inconclusive results, there are `r compelling_count[[1]] + compelling_count[[3]]` model estimates for which the 95\% credible interval does not contain zero (`r round((compelling_results[[1,1]] + compelling_results[[3,1]]), 2) * 100`\%).
+**Non-preregistered**. As mentioned in the previous section, we have run two further models, one using model ID instead of team and the second using team and model ID nested within team.
+In the first model, the meta-analytic intercept estimate is between `r round(meta_intercept[3],3)` and `r round(meta_intercept[4],3)` standard units (95\% CrI, mean = `r round(meta_intercept[1],3)`).
+This suggests that the acoustic measures of typical word combinations are 0.01 standard units lower to 0.04 standard units higher than the measures of atypical word combinations, at 95% confidence.
+Relative to the preregistered model, this model suggests a somewhat positive effect of typicality (although small negative effects are also possible).
+The estimated intercept from the second model (with nested group-level effects) is virtually identical to the first (with only model ID as group-level effect).
+
+(ref:meta_plot1) illustrates the individual model intercepts, sorted in ascending order based on their mean.
+Given the nature and wide variety of acoustic operationalizations, there is not always a natural interpretation of the scale, but in most cases a positive effect corresponds to typical word combinations eliciting higher acoustic values (e.g. longer duration, higher f0, etc.), as mentioned above.
+Notably, while the majority of models yields inconclusive results, there are `r compelling_count_nest[[1]] + compelling_count_nest[[3]]` model estimates for which the 95\% credible interval does not contain zero (`r round((compelling_results_nest[[1,1]] + compelling_results_nest[[3,1]]), 2) * 100`\%).
 
 <!-- TR: ADD PARAGRAPH ON HOW MANY CLAIMED THERE TO BE AN EFFECT.--> 
 
-```{r 'plot-meta1', echo = FALSE, fig.cap="(ref:metaPlot1)", out.width="100%"}
-knitr::include_graphics(here::here("./plots/meta_plot1.png"), error = FALSE)
+```{r plot-meta1, echo = FALSE, fig.cap="(ref:metaPlot1)", out.width="100%"}
+knitr::include_graphics(here::here("./figs/meta_plot1_nest.png"), error = FALSE)
 ```
 
-### Can we predict the estimate?
-After assessing the variability across models, we now turn toward estimating the impact of a series of predictors on the analysts' model estimates.
+## Analytic and researcher-related predictors
+
+After assessing the variability across teams and models, we now turn toward estimating the impact of a series of predictors on the estimated intercept.
 There is a lot of variation, raising the question as to whether we can explain some of this variation or whether it is idiosyncratic [@breznau2021observing]?
 
 (ref:meta_plot1), panel C, displays the coefficients alongside 80% and 95% credible intervals for all model predictors. 
@@ -863,8 +936,8 @@ If on the other hand, vowel formants were measured, estimates are higher than th
 Similarly, if acoustic parameters were measured within individual segments (e.g. the vowel of the noun), estimates are lower than the meta analytic estimate, and if acoustic parameters were measured across whole phrases (e.g. "the blue banana"), the estimates are generally higher.
 In other words, depending on the choice of measurement, analysts arrived at opposite conclusions about how and if typicality is expressed acoustically. 
 
-```{r 'plot-meta2', echo = FALSE, fig.cap="(ref:metaPlot2)", out.width="100%"}
-knitr::include_graphics(here::here("./plots/alltogether.png"), error = FALSE)
+```{r plot-meta2, echo = FALSE, fig.cap="(ref:metaPlot2)", out.width="100%"}
+knitr::include_graphics(here::here("./figs/alltogether.png"), error = FALSE)
 ```
 
 # Discussion
@@ -943,6 +1016,7 @@ Eventually, a mature scientific discipline should develop a set of detailed quan
 This can be achieved by formalizing verbal expectations mathematically or using computational models [e.g., @van2020formalizing; @guest2021computational; @scheel2021hypothesis; @devezer2021case].
 
 ## Caveats
+
 Our study has several limitations that need to be considered when evaluating our results. 
 First, there is potential for bias. The coordinating authors have engaged with metascientific research before and have been actively involved in methodological debates about scientific practices including transparency and statistical methods. We have in the past used the lack of standardized analytical approaches as an argument for proposing behavior and policy changes in the field. 
 This might have biased our own judgment during the analysis which itself came with many researcher degrees of freedom. 
