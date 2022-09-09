@@ -557,8 +557,8 @@ anomalocaris_ornata</h3>
 
 # Means and SDs
 anomalocaris_ornata_df &lt;- tribble(
-  ~&quot;team&quot;, ~&quot;model_n&quot;, ~&quot;dv&quot;, ~&quot;mean&quot;, ~&quot;sd&quot;, 
-  &quot;anomalocaris_ornata&quot;, 1, &quot;intensity&quot;, mean(df.int$Mean_dB^2),        sd(df.int$Mean_dB^2), 
+  ~&quot;animal&quot;, ~&quot;model_n&quot;, ~&quot;dv&quot;, ~&quot;mean&quot;, ~&quot;sd&quot;, 
+  &quot;anomalocaris_ornata&quot;, 1, &quot;intensity&quot;, mean(df.int$Mean_dB),        sd(df.int$Mean_dB), 
   &quot;anomalocaris_ornata&quot;, 2, &quot;f0&quot;,        mean(under$f0sem),             sd(under$f0sem), 
   &quot;anomalocaris_ornata&quot;, 3, &quot;f0&quot;,        mean(over$f0sem),              sd(over$f0sem), 
   &quot;anomalocaris_ornata&quot;, 4, &quot;duration&quot;,  mean(vowel.df$Duration_in_ms), sd(vowel.df$Duration_in_ms)
@@ -581,7 +581,7 @@ anthracoceros_coronata</h3>
 
 # Means and SDs
 anthracoceros_coronata_df &lt;- tribble(
-  ~&quot;team&quot;, ~&quot;model_n&quot;, ~&quot;dv&quot;, ~&quot;mean&quot;, ~&quot;sd&quot;, 
+  ~&quot;animal&quot;, ~&quot;model_n&quot;, ~&quot;dv&quot;, ~&quot;mean&quot;, ~&quot;sd&quot;, 
   &quot;anthracoceros_coronata&quot;, 1, &quot;f0&quot;,        mean(data_long$A_max_pitch),  sd(data_long$A_max_pitch), 
   &quot;anthracoceros_coronata&quot;, 2, &quot;f0&quot;,        mean(data_long$N_max_pitch, na.rm = T),  sd(data_long$N_max_pitch, na.rm = T), 
   &quot;anthracoceros_coronata&quot;, 3, &quot;intensity&quot;, mean(data_long$A_max_intens), sd(data_long$A_max_intens), 
@@ -608,7 +608,7 @@ arapaima_modularis</h3>
 
 # Means and SDs
 arapaima_modularis_df &lt;- tribble(
-  ~&quot;team&quot;, ~&quot;model_n&quot;, ~&quot;dv&quot;, ~&quot;mean&quot;, ~&quot;sd&quot;, 
+  ~&quot;animal&quot;, ~&quot;model_n&quot;, ~&quot;dv&quot;, ~&quot;mean&quot;, ~&quot;sd&quot;, 
   &quot;arapaima_modularis&quot;, 1, &quot;f0&quot;, mean(data_for_analysis_noOL$mean_pitch), sd(data_for_analysis_noOL$mean_pitch)
 )
 
@@ -630,7 +630,7 @@ clione_dorsalis</h3>
 
 # Means and SDs
 clione_dorsalis_df &lt;- tribble(
-  ~&quot;team&quot;, ~&quot;model_n&quot;, ~&quot;dv&quot;, ~&quot;mean&quot;, ~&quot;sd&quot;, 
+  ~&quot;animal&quot;, ~&quot;model_n&quot;, ~&quot;dv&quot;, ~&quot;mean&quot;, ~&quot;sd&quot;, 
   &quot;clione_dorsalis&quot;, 1, &quot;duration&quot;, mean(data_formant_midpoint$word.duration), sd(data_formant_midpoint$word.duration)
 )
 
@@ -652,7 +652,7 @@ comanthina_maculatus</h3>
 
 # Means and SDs
 comanthina_maculatus_df &lt;- tribble(
-  ~&quot;team&quot;, ~&quot;model_n&quot;, ~&quot;dv&quot;, ~&quot;mean&quot;, ~&quot;sd&quot;, 
+  ~&quot;animal&quot;, ~&quot;model_n&quot;, ~&quot;dv&quot;, ~&quot;mean&quot;, ~&quot;sd&quot;, 
   &quot;comanthina_maculatus&quot;, 1, &quot;duration&quot;, mean(MSA_comanthina_maculatus_df$tonic_vowel_duration), sd(MSA_comanthina_maculatus_df$tonic_vowel_duration), 
   &quot;comanthina_maculatus&quot;, 2, &quot;intensity&quot;, mean(MSA_comanthina_maculatus_df$tonic_vowel_intensity), sd(MSA_comanthina_maculatus_df$tonic_vowel_intensity),  
   &quot;comanthina_maculatus&quot;, 3, &quot;f0&quot;, mean(MSA_comanthina_maculatus_df$tonic_vowel_F0), sd(MSA_comanthina_maculatus_df$tonic_vowel_F0), 
@@ -676,7 +676,7 @@ cromileptes_saxatilis</h3>
 
 # Means and SDs
 cromileptes_saxatilis_df &lt;- tribble(
-  ~&quot;team&quot;, ~&quot;model_n&quot;, ~&quot;dv&quot;, ~&quot;mean&quot;, ~&quot;sd&quot;, 
+  ~&quot;animal&quot;, ~&quot;model_n&quot;, ~&quot;dv&quot;, ~&quot;mean&quot;, ~&quot;sd&quot;, 
   &quot;cromileptes_saxatilis&quot;, 1, &quot;duration&quot;, mean(cromileptes_saxatilis_durs$colour_dur), sd(cromileptes_saxatilis_durs$colour_dur)
 )
 
@@ -698,7 +698,7 @@ gnathosaurus_canadensis</h3>
 
 # Means and SDs
 gnathosaurus_canadensis_df &lt;- tribble(
-  ~&quot;team&quot;, ~&quot;model_n&quot;, ~&quot;dv&quot;, ~&quot;mean&quot;, ~&quot;sd&quot;, 
+  ~&quot;animal&quot;, ~&quot;model_n&quot;, ~&quot;dv&quot;, ~&quot;mean&quot;, ~&quot;sd&quot;, 
   &quot;gnathosaurus_canadensis&quot;, 1, &quot;f0&quot;, mean(gnathosaurus_canadensis_typ$median_st_diff), sd(gnathosaurus_canadensis_typ$median_st_diff)
 )
 
@@ -720,7 +720,7 @@ gymnothorax_spinulosus</h3>
 
 # Means and SDs
 gymnothorax_spinulosus_df &lt;- tribble(
-  ~&quot;team&quot;, ~&quot;model_n&quot;, ~&quot;dv&quot;, ~&quot;mean&quot;, ~&quot;sd&quot;, 
+  ~&quot;animal&quot;, ~&quot;model_n&quot;, ~&quot;dv&quot;, ~&quot;mean&quot;, ~&quot;sd&quot;, 
   &quot;gymnothorax_spinulosus&quot;, 1, &quot;intensity&quot;, mean(gymnothorax_spinulosus_int$measure), sd(gymnothorax_spinulosus_int$measure)
 )
 
@@ -742,7 +742,7 @@ haematopus_fossor</h3>
 <pre><code>## Warning: One or more parsing issues, see `problems()` for details</code></pre>
 <pre class="r"><code># Means and SDs
 haematopus_fossor_df &lt;- tribble(
-  ~&quot;team&quot;, ~&quot;model_n&quot;, ~&quot;dv&quot;, ~&quot;mean&quot;, ~&quot;sd&quot;, 
+  ~&quot;animal&quot;, ~&quot;model_n&quot;, ~&quot;dv&quot;, ~&quot;mean&quot;, ~&quot;sd&quot;, 
   &quot;haematopus_fossor&quot;, 1, &quot;duration&quot;, mean(duration_full$framedur), sd(duration_full$framedur), 
   &quot;haematopus_fossor&quot;, 2, &quot;duration&quot;, mean(duration_full$adjdur), sd(duration_full$adjdur), 
   &quot;haematopus_fossor&quot;, 3, &quot;duration&quot;, mean(duration_full$noundur), sd(duration_full$noundur), 
@@ -770,7 +770,7 @@ lasionycteris_altavela</h3>
 
 # Means and SDs
 lasionycteris_altavela_df &lt;- tribble(
-  ~&quot;team&quot;, ~&quot;model_n&quot;, ~&quot;dv&quot;, ~&quot;mean&quot;, ~&quot;sd&quot;, 
+  ~&quot;animal&quot;, ~&quot;model_n&quot;, ~&quot;dv&quot;, ~&quot;mean&quot;, ~&quot;sd&quot;, 
   &quot;lasionycteris_altavela&quot;, 1, &quot;intensity&quot;, mean(intensity_DF$Intensity), sd(intensity_DF$Intensity),
 )
 
@@ -792,9 +792,9 @@ naso_cassivellaunos</h3>
 
 # Means and SDs
 naso_cassivellaunos_df &lt;- tribble(
-  ~&quot;team&quot;, ~&quot;model_n&quot;, ~&quot;dv&quot;, ~&quot;mean&quot;, ~&quot;sd&quot;, 
-  &quot;naso_cassivellaunos&quot;, 1, &quot;f0&quot;, mean(msa$DeltaF0_rel), sd(msa$DeltaF0_rel), 
-  &quot;naso_cassivellaunos&quot;, 2, &quot;f0&quot;, mean(msa$sync_rel), sd(msa$sync_rel),
+  ~&quot;animal&quot;, ~&quot;model_n&quot;, ~&quot;dv&quot;, ~&quot;mean&quot;, ~&quot;sd&quot;, 
+  &quot;naso_cassivellaunos&quot;, 2, &quot;f0&quot;, mean(msa$DeltaF0_rel), sd(msa$DeltaF0_rel), 
+  &quot;naso_cassivellaunos&quot;, 3, &quot;f0&quot;, mean(msa$sync_rel), sd(msa$sync_rel),
 )
 
 # Check n models == n DVs
@@ -815,7 +815,7 @@ psittacula_scabriculus</h3>
 
 # Means and SDs
 psittacula_scabriculus_df &lt;- tribble(
-  ~&quot;team&quot;, ~&quot;model_n&quot;, ~&quot;dv&quot;, ~&quot;mean&quot;, ~&quot;sd&quot;, 
+  ~&quot;animal&quot;, ~&quot;model_n&quot;, ~&quot;dv&quot;, ~&quot;mean&quot;, ~&quot;sd&quot;, 
   &quot;psittacula_scabriculus&quot;, 1, &quot;duration&quot;, mean(MSAcomplete$avgdur), sd(MSAcomplete$avgdur), 
 )
 
@@ -837,8 +837,8 @@ trapezia_cantonensis</h3>
 
 # Means and SDs
 trapezia_cantonensis_df &lt;- tribble(
-  ~&quot;team&quot;, ~&quot;model_n&quot;, ~&quot;dv&quot;, ~&quot;mean&quot;, ~&quot;sd&quot;, 
-  &quot;trapezia_cantonensis&quot;, 1, &quot;duration&quot;, mean(MSA_trapezia_cantonensis_data$dur), sd(MSA_trapezia_cantonensis_data$dur), 
+  ~&quot;animal&quot;, ~&quot;model_n&quot;, ~&quot;dv&quot;, ~&quot;mean&quot;, ~&quot;sd&quot;, 
+  &quot;trapezia_cantonensis&quot;, 4, &quot;duration&quot;, mean(MSA_trapezia_cantonensis_data$dur), sd(MSA_trapezia_cantonensis_data$dur), 
 )
 
 # Check n models == n DVs
@@ -866,12 +866,11 @@ final_teams %&gt;% filter(animal == &quot;trapezia_cantonensis&quot;) %&gt;% pul
 <div id="dermatolepis_aculeatus" class="section level3" number="4.2.1">
 <h3><span class="header-section-number">4.2.1</span>
 dermatolepis_aculeatus</h3>
-<pre class="r"><code># This part won&#39;t work because some coders refuse to use `here`
-# source_part(
-#  file = here(&quot;scripts&quot;, &quot;r&quot;, &quot;04_refit&quot;, &quot;refit_sc.Rmd&quot;), 
-#  start = 21, 
-#  end = 32
-#  )
+<pre class="r"><code>source_part(
+ file = here(&quot;scripts&quot;, &quot;r&quot;, &quot;04_refit&quot;, &quot;refit_sc.Rmd&quot;), 
+ start = 21, 
+ end = 32
+)
 
 msa_data &lt;- read_csv(here(&quot;data&quot;, &quot;analyses&quot;, &quot;sc&quot;, &quot;dermatolepis_aculeatus&quot;, 
   &quot;Many Speech Analyses_measurements.csv&quot;)) %&gt;%
@@ -880,7 +879,7 @@ msa_data &lt;- read_csv(here(&quot;data&quot;, &quot;analyses&quot;, &quot;sc&qu
 
 # Means and SDs
 dermatolepis_aculeatus_df &lt;- tribble(
-  ~&quot;team&quot;, ~&quot;model_n&quot;, ~&quot;dv&quot;, ~&quot;mean&quot;, ~&quot;sd&quot;, 
+  ~&quot;animal&quot;, ~&quot;model_n&quot;, ~&quot;dv&quot;, ~&quot;mean&quot;, ~&quot;sd&quot;, 
   &quot;dermatolepis_aculeatus&quot;, 1, &quot;f0&quot;, mean(msa_data$noun_pitch_max), sd(msa_data$noun_pitch_max), 
   &quot;dermatolepis_aculeatus&quot;, 2, &quot;f0&quot;, mean(msa_data$adj_pitch_max), sd(msa_data$adj_pitch_max), 
   &quot;dermatolepis_aculeatus&quot;, 3, &quot;f0&quot;, mean(msa_data$phrase_pitch_max), sd(msa_data$phrase_pitch_max), 
@@ -926,10 +925,10 @@ msa_data &lt;- read.csv(here(&quot;data&quot;, &quot;analyses&quot;, &quot;sc&qu
 
 # Means and SDs
 eriphia_laterispinis_df &lt;- tribble(
-  ~&quot;team&quot;, ~&quot;model_n&quot;, ~&quot;dv&quot;, ~&quot;mean&quot;, ~&quot;sd&quot;, 
+  ~&quot;animal&quot;, ~&quot;model_n&quot;, ~&quot;dv&quot;, ~&quot;mean&quot;, ~&quot;sd&quot;, 
   &quot;eriphia_laterispinis&quot;, 1, &quot;f0&quot;,        mean(msa_data$mean_f0), sd(msa_data$mean_f0), 
-  &quot;eriphia_laterispinis&quot;, 2, &quot;intensity&quot;, mean(msa_data$mean_int), sd(msa_data$mean_int), 
-  &quot;eriphia_laterispinis&quot;, 3, &quot;duration&quot;,  mean(msa_data$duration), sd(msa_data$duration), 
+  &quot;eriphia_laterispinis&quot;, 1, &quot;intensity&quot;, mean(msa_data$mean_int), sd(msa_data$mean_int), 
+  &quot;eriphia_laterispinis&quot;, 1, &quot;duration&quot;,  mean(msa_data$duration), sd(msa_data$duration), 
 )
 
 # Check n models == n DVs
@@ -958,7 +957,7 @@ msa_data &lt;- read_csv(here(&quot;data&quot;, &quot;analyses&quot;, &quot;sc&qu
 
 # Means and SDs
 hoplostethus_macrosteus_df &lt;- tribble(
-  ~&quot;team&quot;, ~&quot;model_n&quot;, ~&quot;dv&quot;, ~&quot;mean&quot;, ~&quot;sd&quot;, 
+  ~&quot;animal&quot;, ~&quot;model_n&quot;, ~&quot;dv&quot;, ~&quot;mean&quot;, ~&quot;sd&quot;, 
   &quot;hoplostethus_macrosteus&quot;, 1, &quot;duration&quot;,  mean(msa_data$durmsec), sd(msa_data$durmsec), 
   &quot;hoplostethus_macrosteus&quot;, 2, &quot;intensity&quot;, mean(msa_data$intensity_maximum), sd(msa_data$intensity_maximum), 
 )
@@ -986,7 +985,7 @@ msa_data &lt;- read_csv(here(&quot;data&quot;, &quot;analyses&quot;, &quot;sc&qu
 
 # Means and SDs
 neosilurus_omanensis_df &lt;- tribble(
-  ~&quot;team&quot;, ~&quot;model_n&quot;, ~&quot;dv&quot;, ~&quot;mean&quot;, ~&quot;sd&quot;, 
+  ~&quot;animal&quot;, ~&quot;model_n&quot;, ~&quot;dv&quot;, ~&quot;mean&quot;, ~&quot;sd&quot;, 
   &quot;neosilurus_omanensis&quot;, 1, &quot;f0&quot;, mean(msa_data$PitchRatioAtoU), sd(msa_data$PitchRatioAtoU), 
   &quot;neosilurus_omanensis&quot;, 2, &quot;f0&quot;, mean(msa_data$PitchRangeRatioAtoU), sd(msa_data$PitchRangeRatioAtoU), 
   &quot;neosilurus_omanensis&quot;, 4, &quot;f0&quot;, mean(msa_data$PitchRiseRatio), sd(msa_data$PitchRiseRatio), 
@@ -1020,9 +1019,9 @@ msa_data &lt;- read_csv(here(&quot;data&quot;, &quot;analyses&quot;, &quot;sc&qu
 
 # Means and SDs
 nestor_idahoensis_df &lt;- tribble(
-  ~&quot;team&quot;, ~&quot;model_n&quot;, ~&quot;dv&quot;, ~&quot;mean&quot;, ~&quot;sd&quot;, 
+  ~&quot;animal&quot;, ~&quot;model_n&quot;, ~&quot;dv&quot;, ~&quot;mean&quot;, ~&quot;sd&quot;, 
   &quot;nestor_idahoensis&quot;, 1, &quot;duration&quot;, mean(msa_data$duration), sd(msa_data$duration), 
-  &quot;nestor_idahoensis&quot;, 2, &quot;f0&quot;,       mean(msa_data$f0), sd(msa_data$f0), 
+  &quot;nestor_idahoensis&quot;, 1, &quot;f0&quot;,       mean(msa_data$f0), sd(msa_data$f0), 
 )
 
 # Check n models == n DVs
@@ -1047,7 +1046,7 @@ msa_data &lt;- read_delim(here(&quot;data&quot;, &quot;analyses&quot;, &quot;sc&
 
 # Means and SDs
 paralichthys_undulatus_df &lt;- tribble(
-  ~&quot;team&quot;, ~&quot;model_n&quot;, ~&quot;dv&quot;, ~&quot;mean&quot;, ~&quot;sd&quot;, 
+  ~&quot;animal&quot;, ~&quot;model_n&quot;, ~&quot;dv&quot;, ~&quot;mean&quot;, ~&quot;sd&quot;, 
   &quot;paralichthys_undulatus&quot;, 1, &quot;f0&quot;, mean(msa_data$RangeST), sd(msa_data$RangeST), 
 )
 
@@ -1074,7 +1073,7 @@ msa_data &lt;- mdl_data %&gt;% drop_na()
 
 # Means and SDs
 petauroides_fistulator_df &lt;- tribble(
-  ~&quot;team&quot;, ~&quot;model_n&quot;, ~&quot;dv&quot;, ~&quot;mean&quot;, ~&quot;sd&quot;, 
+  ~&quot;animal&quot;, ~&quot;model_n&quot;, ~&quot;dv&quot;, ~&quot;mean&quot;, ~&quot;sd&quot;, 
   &quot;petauroides_fistulator&quot;, 1, &quot;f0&quot;, mean(msa_data$pitch_st), sd(msa_data$pitch_st), 
 )
 
@@ -1154,7 +1153,7 @@ msa_data &lt;- adj %&gt;% drop_na()
 
 # Means and SDs
 saron_pictus_df &lt;- tribble(
-  ~&quot;team&quot;, ~&quot;model_n&quot;, ~&quot;dv&quot;, ~&quot;mean&quot;, ~&quot;sd&quot;, 
+  ~&quot;animal&quot;, ~&quot;model_n&quot;, ~&quot;dv&quot;, ~&quot;mean&quot;, ~&quot;sd&quot;, 
   &quot;saron_pictus&quot;, 1, &quot;duration&quot;, mean(msa_data$dur_ms), sd(msa_data$dur_ms), 
 )
 
@@ -1219,7 +1218,7 @@ article &lt;- subset(data.mm, art_peakf0 &gt; art.median-(2*art.mad))
 
 # Means and SDs
 trachurus_riukiuensis_df &lt;- tribble(
-  ~&quot;team&quot;, ~&quot;model_n&quot;, ~&quot;dv&quot;, ~&quot;mean&quot;, ~&quot;sd&quot;, 
+  ~&quot;animal&quot;, ~&quot;model_n&quot;, ~&quot;dv&quot;, ~&quot;mean&quot;, ~&quot;sd&quot;, 
   &quot;trachurus_riukiuensis&quot;, 1, &quot;duration&quot;, mean(data$art_dur), sd(data$art_dur),
   &quot;trachurus_riukiuensis&quot;, 2, &quot;f0&quot;, mean(article$art_peakf0), sd(article$art_peakf0),
   &quot;trachurus_riukiuensis&quot;, 3, &quot;duration&quot;, mean(data$adj_dur), sd(data$adj_dur), 
@@ -1257,7 +1256,7 @@ msa_data &lt;- f0data_cor
 
 # Means and SDs
 varanus_eulophotes_df &lt;- tribble(
-  ~&quot;team&quot;, ~&quot;model_n&quot;, ~&quot;dv&quot;, ~&quot;mean&quot;, ~&quot;sd&quot;, 
+  ~&quot;animal&quot;, ~&quot;model_n&quot;, ~&quot;dv&quot;, ~&quot;mean&quot;, ~&quot;sd&quot;, 
   &quot;varanus_eulophotes&quot;, 1, &quot;f0&quot;, mean(msa_data$avgF0), sd(msa_data$avgF0), 
 )
 
@@ -1289,7 +1288,7 @@ final_teams %&gt;% filter(animal == &quot;varanus_eulophotes&quot;) %&gt;% pull(
 
 # Means and SDs
 alosa_atun_df &lt;- tribble(
-  ~&quot;team&quot;, ~&quot;model_n&quot;, ~&quot;dv&quot;, ~&quot;mean&quot;, ~&quot;sd&quot;, 
+  ~&quot;animal&quot;, ~&quot;model_n&quot;, ~&quot;dv&quot;, ~&quot;mean&quot;, ~&quot;sd&quot;, 
   &quot;alosa_atun&quot;, 1,  &quot;f0&quot;,        mean(MSA_finale$meanPitch), sd(MSA_finale$meanPitch), 
   &quot;alosa_atun&quot;, 2,  &quot;intensity&quot;, mean(MSA_finale$maxIntensity), sd(MSA_finale$maxIntensity), 
   &quot;alosa_atun&quot;, 3,  &quot;duration&quot;,  mean(MSA_finale$Target.segment.duration), sd(MSA_finale$Target.segment.duration), 
@@ -1321,7 +1320,7 @@ chelonia_brummeri</h3>
 
 # Means and SDs
 chelonia_brummeri_df &lt;- tribble(
-  ~&quot;team&quot;, ~&quot;model_n&quot;, ~&quot;dv&quot;, ~&quot;mean&quot;, ~&quot;sd&quot;, 
+  ~&quot;animal&quot;, ~&quot;model_n&quot;, ~&quot;dv&quot;, ~&quot;mean&quot;, ~&quot;sd&quot;, 
   &quot;chelonia_brummeri&quot;, 1,  &quot;duration&quot;,  mean(d$rel_dur), sd(d$rel_dur), 
   &quot;chelonia_brummeri&quot;, 2,  &quot;intensity&quot;, mean(d$rel_intens), sd(d$rel_intens), 
   &quot;chelonia_brummeri&quot;, 3,  &quot;f0&quot;,        mean(d$f0range_st), sd(d$f0range_st), 
@@ -1346,7 +1345,7 @@ dunkleosteus_inscriptus</h3>
 
 # Means and SDs
 dunkleosteus_inscriptus_df &lt;- tribble(
-  ~&quot;team&quot;, ~&quot;model_n&quot;, ~&quot;dv&quot;, ~&quot;mean&quot;, ~&quot;sd&quot;, 
+  ~&quot;animal&quot;, ~&quot;model_n&quot;, ~&quot;dv&quot;, ~&quot;mean&quot;, ~&quot;sd&quot;, 
   &quot;dunkleosteus_inscriptus&quot;, 1,  &quot;duration&quot;, mean(dat$rel_n), sd(dat$rel_n), 
   &quot;dunkleosteus_inscriptus&quot;, 2,  &quot;duration&quot;, mean(dat$dur_n), sd(dat$dur_n), 
   &quot;dunkleosteus_inscriptus&quot;, 3,  &quot;duration&quot;, mean(dat$rel_a), sd(dat$rel_a), 
@@ -1371,7 +1370,7 @@ final_teams %&gt;% filter(animal == &quot;dunkleosteus_inscriptus&quot;) %&gt;% 
 
 # Means and SDs
 pervagor_meeki_df &lt;- tribble(
-  ~&quot;team&quot;, ~&quot;model_n&quot;, ~&quot;dv&quot;, ~&quot;mean&quot;, ~&quot;sd&quot;, 
+  ~&quot;animal&quot;, ~&quot;model_n&quot;, ~&quot;dv&quot;, ~&quot;mean&quot;, ~&quot;sd&quot;, 
   &quot;pervagor_meeki&quot;, 1,  &quot;intensity&quot;, mean(data_int_trim[data_int_trim$word_type == &quot;target_name&quot;,]$Overall_Intensity), sd(data_int_trim[data_int_trim$word_type == &quot;target_name&quot;,]$Overall_Intensity), 
   &quot;pervagor_meeki&quot;, 2,  &quot;duration&quot;, mean(data_dur_trim[data_dur_trim$word_type == &quot;target_name&quot;,]$Duration_ms), sd(data_dur_trim[data_dur_trim$word_type == &quot;target_name&quot;,]$Duration_ms), 
   &quot;pervagor_meeki&quot;, 3,  &quot;f0&quot;, mean(data_meanf0_trim[data_meanf0_trim$word_type == &quot;target_name&quot;,]$Mean_f0_st), sd(data_meanf0_trim[data_meanf0_trim$word_type == &quot;target_name&quot;,]$Mean_f0_st), 
@@ -1400,7 +1399,7 @@ procambarus_mahogoni</h3>
 
 # Means and SDs
 procambarus_mahogoni_df &lt;- tribble(
-  ~&quot;team&quot;, ~&quot;model_n&quot;, ~&quot;dv&quot;, ~&quot;mean&quot;, ~&quot;sd&quot;, 
+  ~&quot;animal&quot;, ~&quot;model_n&quot;, ~&quot;dv&quot;, ~&quot;mean&quot;, ~&quot;sd&quot;, 
   &quot;procambarus_mahogoni&quot;, 1,  &quot;duration&quot;,  mean(msa_data_raw$v1_duration_c), sd(msa_data_raw$v1_duration_c), 
   &quot;procambarus_mahogoni&quot;, 2,  &quot;f0&quot;,        mean(msa_data_raw$v1_pitch_mean_c), sd(msa_data_raw$v1_pitch_mean_c), 
   &quot;procambarus_mahogoni&quot;, 3,  &quot;intensity&quot;, mean(msa_data_raw$v1_int_mean_c), sd(msa_data_raw$v1_int_mean_c), 
@@ -1429,7 +1428,7 @@ pitch_noun_data &lt;- pitchfile %&gt;% filter(word == 10) %&gt;% mutate(type = &
 
 # Means and SDs
 trachyphyllia_lappa_df &lt;- tribble(
-  ~&quot;team&quot;, ~&quot;model_n&quot;, ~&quot;dv&quot;, ~&quot;mean&quot;, ~&quot;sd&quot;, 
+  ~&quot;animal&quot;, ~&quot;model_n&quot;, ~&quot;dv&quot;, ~&quot;mean&quot;, ~&quot;sd&quot;, 
   &quot;trachyphyllia_lappa&quot;, 1,  &quot;duration&quot;, mean(duration_adj_data$duration), sd(duration_adj_data$duration), 
   &quot;trachyphyllia_lappa&quot;, 2,  &quot;f0&quot;,       mean(pitch_adj_data$maximum), sd(pitch_adj_data$maximum), 
   &quot;trachyphyllia_lappa&quot;, 3,  &quot;f0&quot;, mean(pitch_adj_data$minimum), sd(pitch_adj_data$minimum), 
@@ -1452,7 +1451,7 @@ final_teams %&gt;% filter(animal == &quot;trachyphyllia_lappa&quot;) %&gt;% pull
 <div id="build-table" class="section level1" number="5">
 <h1><span class="header-section-number">5</span> Build table</h1>
 <pre class="r"><code># Comnine tibbles 
-msa_mean_sd_df &lt;- bind_rows(
+msa_mean_sd &lt;- bind_rows(
   anomalocaris_ornata_df, 
   anthracoceros_coronata_df, 
   arapaima_modularis_df, 
@@ -1484,6 +1483,30 @@ msa_mean_sd_df &lt;- bind_rows(
   trachyphyllia_lappa_df
 ) 
 
+msa_mean_sd_df &lt;- left_join(
+  msa_mean_sd %&gt;% 
+    arrange(animal) %&gt;% 
+    mutate(row_n = row_number()), 
+  assigned %&gt;%
+    filter(
+      animal %in% teams, 
+      exclude == &quot;no&quot;, 
+      outcome %in% c(&quot;duration&quot;, &quot;intensity&quot;, &quot;f0&quot;)
+    ) %&gt;% 
+    select(animal, model_n, outcome, transformation) %&gt;% 
+    arrange(animal) %&gt;% 
+    mutate(row_n = row_number()), 
+  by = c(&quot;animal&quot;, &quot;row_n&quot;)
+) %&gt;% 
+  mutate(model_n_match = if_else(model_n.x == model_n.y, 1, 0), 
+    transformation = case_when(
+      is.na(transformation) ~ &#39;none&#39;, 
+      transformation == &quot;NA&quot; ~ &#39;none&#39;, 
+      TRUE ~ transformation
+    )) %&gt;% 
+  select(animal, model_n_rda = model_n.x, model_n_excel = model_n.y, model_n_match, 
+         dv, outcome, transformation, mean, sd) 
+
 # Save as .csv
 if(F) {
 write_csv(msa_mean_sd_df, here(&quot;data&quot;, &quot;analyses&quot;, &quot;msa_mean_sd_df.csv&quot;))
@@ -1494,658 +1517,1030 @@ msa_mean_sd_df %&gt;%
   knitr::kable()</code></pre>
 <table>
 <colgroup>
-<col width="35%" />
-<col width="11%" />
-<col width="14%" />
-<col width="19%" />
-<col width="17%" />
+<col width="16%" />
+<col width="8%" />
+<col width="9%" />
+<col width="9%" />
+<col width="6%" />
+<col width="6%" />
+<col width="24%" />
+<col width="8%" />
+<col width="8%" />
 </colgroup>
 <thead>
 <tr class="header">
-<th align="left">team</th>
-<th align="right">model_n</th>
+<th align="left">animal</th>
+<th align="right">model_n_rda</th>
+<th align="right">model_n_excel</th>
+<th align="right">model_n_match</th>
 <th align="left">dv</th>
+<th align="left">outcome</th>
+<th align="left">transformation</th>
 <th align="right">mean</th>
 <th align="right">sd</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">anomalocaris_ornata</td>
-<td align="right">1</td>
-<td align="left">intensity</td>
-<td align="right">3827.7477928</td>
-<td align="right">820.3609598</td>
-</tr>
-<tr class="even">
-<td align="left">anomalocaris_ornata</td>
-<td align="right">2</td>
-<td align="left">f0</td>
-<td align="right">5.5704824</td>
-<td align="right">2.9076517</td>
-</tr>
-<tr class="odd">
-<td align="left">anomalocaris_ornata</td>
-<td align="right">3</td>
-<td align="left">f0</td>
-<td align="right">15.9151913</td>
-<td align="right">2.2151811</td>
-</tr>
-<tr class="even">
-<td align="left">anomalocaris_ornata</td>
-<td align="right">4</td>
-<td align="left">duration</td>
-<td align="right">127.7291021</td>
-<td align="right">51.4437747</td>
-</tr>
-<tr class="odd">
-<td align="left">anthracoceros_coronata</td>
-<td align="right">1</td>
-<td align="left">f0</td>
-<td align="right">208.3053566</td>
-<td align="right">47.8623712</td>
-</tr>
-<tr class="even">
-<td align="left">anthracoceros_coronata</td>
-<td align="right">2</td>
-<td align="left">f0</td>
-<td align="right">212.1960642</td>
-<td align="right">85.4234208</td>
-</tr>
-<tr class="odd">
-<td align="left">anthracoceros_coronata</td>
-<td align="right">3</td>
-<td align="left">intensity</td>
-<td align="right">70.0626320</td>
-<td align="right">3.5237664</td>
-</tr>
-<tr class="even">
-<td align="left">anthracoceros_coronata</td>
-<td align="right">4</td>
-<td align="left">intensity</td>
-<td align="right">68.1200447</td>
-<td align="right">3.9644873</td>
-</tr>
-<tr class="odd">
-<td align="left">anthracoceros_coronata</td>
-<td align="right">5</td>
-<td align="left">duration</td>
-<td align="right">-0.9107715</td>
-<td align="right">0.2741313</td>
-</tr>
-<tr class="even">
-<td align="left">anthracoceros_coronata</td>
-<td align="right">6</td>
-<td align="left">duration</td>
-<td align="right">-0.7011586</td>
-<td align="right">0.2397626</td>
-</tr>
-<tr class="odd">
-<td align="left">arapaima_modularis</td>
-<td align="right">1</td>
-<td align="left">f0</td>
-<td align="right">215.2201014</td>
-<td align="right">23.9259604</td>
-</tr>
-<tr class="even">
-<td align="left">clione_dorsalis</td>
-<td align="right">1</td>
-<td align="left">duration</td>
-<td align="right">0.3731789</td>
-<td align="right">0.1242374</td>
-</tr>
-<tr class="odd">
-<td align="left">comanthina_maculatus</td>
-<td align="right">1</td>
-<td align="left">duration</td>
-<td align="right">101.7490784</td>
-<td align="right">41.2414507</td>
-</tr>
-<tr class="even">
-<td align="left">comanthina_maculatus</td>
-<td align="right">2</td>
-<td align="left">intensity</td>
-<td align="right">67.4231721</td>
-<td align="right">4.2345759</td>
-</tr>
-<tr class="odd">
-<td align="left">comanthina_maculatus</td>
-<td align="right">3</td>
-<td align="left">f0</td>
-<td align="right">193.7374473</td>
-<td align="right">42.3313001</td>
-</tr>
-<tr class="even">
-<td align="left">cromileptes_saxatilis</td>
-<td align="right">1</td>
-<td align="left">duration</td>
-<td align="right">0.4013309</td>
-<td align="right">0.1043177</td>
-</tr>
-<tr class="odd">
-<td align="left">gnathosaurus_canadensis</td>
-<td align="right">1</td>
-<td align="left">f0</td>
-<td align="right">1.5084444</td>
-<td align="right">1.2478853</td>
-</tr>
-<tr class="even">
-<td align="left">gymnothorax_spinulosus</td>
-<td align="right">1</td>
-<td align="left">intensity</td>
-<td align="right">2.1404754</td>
-<td align="right">2.0883955</td>
-</tr>
-<tr class="odd">
-<td align="left">haematopus_fossor</td>
-<td align="right">1</td>
-<td align="left">duration</td>
-<td align="right">1571.8186184</td>
-<td align="right">199.2522658</td>
-</tr>
-<tr class="even">
-<td align="left">haematopus_fossor</td>
-<td align="right">2</td>
-<td align="left">duration</td>
-<td align="right">374.3645632</td>
-<td align="right">116.0547551</td>
-</tr>
-<tr class="odd">
-<td align="left">haematopus_fossor</td>
-<td align="right">3</td>
-<td align="left">duration</td>
-<td align="right">538.4044646</td>
-<td align="right">117.8526386</td>
-</tr>
-<tr class="even">
-<td align="left">haematopus_fossor</td>
-<td align="right">4</td>
-<td align="left">duration</td>
-<td align="right">124.5729579</td>
-<td align="right">38.6406433</td>
-</tr>
-<tr class="odd">
-<td align="left">haematopus_fossor</td>
-<td align="right">5</td>
-<td align="left">duration</td>
-<td align="right">131.5765968</td>
-<td align="right">48.8467436</td>
-</tr>
-<tr class="even">
-<td align="left">haematopus_fossor</td>
-<td align="right">6</td>
-<td align="left">intensity</td>
-<td align="right">66.7757949</td>
-<td align="right">3.5316814</td>
-</tr>
-<tr class="odd">
-<td align="left">haematopus_fossor</td>
-<td align="right">7</td>
-<td align="left">intensity</td>
-<td align="right">66.3608413</td>
-<td align="right">3.8752950</td>
-</tr>
-<tr class="even">
-<td align="left">lasionycteris_altavela</td>
-<td align="right">1</td>
-<td align="left">intensity</td>
-<td align="right">72.2511911</td>
-<td align="right">3.4099168</td>
-</tr>
-<tr class="odd">
-<td align="left">naso_cassivellaunos</td>
-<td align="right">1</td>
-<td align="left">f0</td>
-<td align="right">-5.2584252</td>
-<td align="right">18.6781790</td>
-</tr>
-<tr class="even">
-<td align="left">naso_cassivellaunos</td>
-<td align="right">2</td>
-<td align="left">f0</td>
-<td align="right">-1.7179244</td>
-<td align="right">5.3394480</td>
-</tr>
-<tr class="odd">
-<td align="left">psittacula_scabriculus</td>
-<td align="right">1</td>
-<td align="left">duration</td>
-<td align="right">0.0878772</td>
-<td align="right">0.0359935</td>
-</tr>
-<tr class="even">
-<td align="left">trapezia_cantonensis</td>
-<td align="right">1</td>
-<td align="left">duration</td>
-<td align="right">0.1276422</td>
-<td align="right">0.0326302</td>
-</tr>
-<tr class="odd">
-<td align="left">dermatolepis_aculeatus</td>
-<td align="right">1</td>
-<td align="left">f0</td>
-<td align="right">240.6523319</td>
-<td align="right">104.5190794</td>
-</tr>
-<tr class="even">
-<td align="left">dermatolepis_aculeatus</td>
-<td align="right">2</td>
-<td align="left">f0</td>
-<td align="right">210.9713826</td>
-<td align="right">54.8191290</td>
-</tr>
-<tr class="odd">
-<td align="left">dermatolepis_aculeatus</td>
-<td align="right">3</td>
-<td align="left">f0</td>
-<td align="right">99.8726385</td>
-<td align="right">30.3595610</td>
-</tr>
-<tr class="even">
-<td align="left">eriphia_laterispinis</td>
-<td align="right">1</td>
-<td align="left">f0</td>
-<td align="right">177.1403697</td>
-<td align="right">34.6943770</td>
-</tr>
-<tr class="odd">
-<td align="left">eriphia_laterispinis</td>
-<td align="right">2</td>
-<td align="left">intensity</td>
-<td align="right">56.1291899</td>
-<td align="right">3.2937208</td>
-</tr>
-<tr class="even">
-<td align="left">eriphia_laterispinis</td>
-<td align="right">3</td>
-<td align="left">duration</td>
-<td align="right">3.6568044</td>
-<td align="right">0.5644520</td>
-</tr>
-<tr class="odd">
-<td align="left">hoplostethus_macrosteus</td>
-<td align="right">1</td>
-<td align="left">duration</td>
-<td align="right">124.6666279</td>
-<td align="right">33.4088599</td>
-</tr>
-<tr class="even">
-<td align="left">hoplostethus_macrosteus</td>
-<td align="right">2</td>
-<td align="left">intensity</td>
-<td align="right">68.3570596</td>
-<td align="right">3.4420507</td>
-</tr>
-<tr class="odd">
-<td align="left">neosilurus_omanensis</td>
-<td align="right">1</td>
-<td align="left">f0</td>
-<td align="right">1.0237299</td>
-<td align="right">0.1483481</td>
-</tr>
-<tr class="even">
-<td align="left">neosilurus_omanensis</td>
-<td align="right">2</td>
-<td align="left">f0</td>
-<td align="right">0.4622232</td>
-<td align="right">0.2345493</td>
-</tr>
-<tr class="odd">
-<td align="left">neosilurus_omanensis</td>
-<td align="right">4</td>
-<td align="left">f0</td>
-<td align="right">0.1945813</td>
-<td align="right">2.3615099</td>
-</tr>
-<tr class="even">
-<td align="left">nestor_idahoensis</td>
-<td align="right">1</td>
-<td align="left">duration</td>
-<td align="right">-2.7036357</td>
-<td align="right">0.4769518</td>
-</tr>
-<tr class="odd">
-<td align="left">nestor_idahoensis</td>
-<td align="right">2</td>
-<td align="left">f0</td>
-<td align="right">5.1034471</td>
-<td align="right">0.2908381</td>
-</tr>
-<tr class="even">
-<td align="left">paralichthys_undulatus</td>
-<td align="right">1</td>
-<td align="left">f0</td>
-<td align="right">8.2062740</td>
-<td align="right">6.8564271</td>
-</tr>
-<tr class="odd">
-<td align="left">petauroides_fistulator</td>
-<td align="right">1</td>
-<td align="left">f0</td>
-<td align="right">20.8949468</td>
-<td align="right">5.6018819</td>
-</tr>
-<tr class="even">
-<td align="left">saron_pictus</td>
-<td align="right">1</td>
-<td align="left">duration</td>
-<td align="right">400.2521053</td>
-<td align="right">109.5064614</td>
-</tr>
-<tr class="odd">
-<td align="left">trachurus_riukiuensis</td>
-<td align="right">1</td>
-<td align="left">duration</td>
-<td align="right">112.9277108</td>
-<td align="right">32.6453632</td>
-</tr>
-<tr class="even">
-<td align="left">trachurus_riukiuensis</td>
-<td align="right">2</td>
-<td align="left">f0</td>
-<td align="right">202.0491803</td>
-<td align="right">41.0419403</td>
-</tr>
-<tr class="odd">
-<td align="left">trachurus_riukiuensis</td>
-<td align="right">3</td>
-<td align="left">duration</td>
-<td align="right">410.4096386</td>
-<td align="right">119.7618401</td>
-</tr>
-<tr class="even">
-<td align="left">trachurus_riukiuensis</td>
-<td align="right">4</td>
-<td align="left">f0</td>
-<td align="right">206.9080882</td>
-<td align="right">43.5579877</td>
-</tr>
-<tr class="odd">
-<td align="left">trachurus_riukiuensis</td>
-<td align="right">5</td>
-<td align="left">f0</td>
-<td align="right">206.5598504</td>
-<td align="right">47.1551961</td>
-</tr>
-<tr class="even">
-<td align="left">varanus_eulophotes</td>
-<td align="right">1</td>
-<td align="left">f0</td>
-<td align="right">181.9460544</td>
-<td align="right">38.6055403</td>
-</tr>
-<tr class="odd">
 <td align="left">alosa_atun</td>
 <td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
 <td align="left">f0</td>
+<td align="left">f0</td>
+<td align="left">none</td>
 <td align="right">183.6524855</td>
 <td align="right">44.5807228</td>
 </tr>
 <tr class="even">
 <td align="left">alosa_atun</td>
 <td align="right">2</td>
+<td align="right">2</td>
+<td align="right">1</td>
 <td align="left">intensity</td>
+<td align="left">intensity</td>
+<td align="left">none</td>
 <td align="right">67.3601068</td>
 <td align="right">3.3221182</td>
 </tr>
 <tr class="odd">
 <td align="left">alosa_atun</td>
 <td align="right">3</td>
+<td align="right">3</td>
+<td align="right">1</td>
 <td align="left">duration</td>
+<td align="left">duration</td>
+<td align="left">none</td>
 <td align="right">0.0485015</td>
 <td align="right">0.0128856</td>
 </tr>
 <tr class="even">
 <td align="left">alosa_atun</td>
 <td align="right">6</td>
+<td align="right">6</td>
+<td align="right">1</td>
 <td align="left">f0</td>
+<td align="left">f0</td>
+<td align="left">none</td>
 <td align="right">171.8659590</td>
 <td align="right">41.8950017</td>
 </tr>
 <tr class="odd">
 <td align="left">alosa_atun</td>
 <td align="right">7</td>
+<td align="right">7</td>
+<td align="right">1</td>
 <td align="left">intensity</td>
+<td align="left">intensity</td>
+<td align="left">none</td>
 <td align="right">66.2390188</td>
 <td align="right">4.4193709</td>
 </tr>
 <tr class="even">
 <td align="left">alosa_atun</td>
 <td align="right">8</td>
+<td align="right">8</td>
+<td align="right">1</td>
 <td align="left">duration</td>
+<td align="left">duration</td>
+<td align="left">none</td>
 <td align="right">0.0550490</td>
 <td align="right">0.0270442</td>
 </tr>
 <tr class="odd">
 <td align="left">alosa_atun</td>
 <td align="right">11</td>
+<td align="right">11</td>
+<td align="right">1</td>
 <td align="left">duration</td>
+<td align="left">duration</td>
+<td align="left">none</td>
 <td align="right">0.1012246</td>
 <td align="right">0.0284100</td>
 </tr>
 <tr class="even">
 <td align="left">alosa_atun</td>
 <td align="right">12</td>
+<td align="right">12</td>
+<td align="right">1</td>
 <td align="left">duration</td>
+<td align="left">duration</td>
+<td align="left">none</td>
 <td align="right">1.0382130</td>
 <td align="right">0.4890720</td>
 </tr>
 <tr class="odd">
 <td align="left">alosa_atun</td>
 <td align="right">14</td>
+<td align="right">14</td>
+<td align="right">1</td>
 <td align="left">duration</td>
+<td align="left">duration</td>
+<td align="left">none</td>
 <td align="right">0.1545638</td>
 <td align="right">0.0346244</td>
 </tr>
 <tr class="even">
 <td align="left">alosa_atun</td>
 <td align="right">15</td>
+<td align="right">15</td>
+<td align="right">1</td>
 <td align="left">duration</td>
+<td align="left">duration</td>
+<td align="left">none</td>
 <td align="right">0.0025637</td>
 <td align="right">0.0213505</td>
 </tr>
 <tr class="odd">
 <td align="left">alosa_atun</td>
 <td align="right">16</td>
+<td align="right">16</td>
+<td align="right">1</td>
 <td align="left">duration</td>
+<td align="left">duration</td>
+<td align="left">none</td>
 <td align="right">341.4548377</td>
 <td align="right">42.3987068</td>
 </tr>
 <tr class="even">
-<td align="left">chelonia_brummeri</td>
+<td align="left">anomalocaris_ornata</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="left">intensity</td>
+<td align="left">intensity</td>
+<td align="left">intensity squared</td>
+<td align="right">61.4962843</td>
+<td align="right">6.7793024</td>
+</tr>
+<tr class="odd">
+<td align="left">anomalocaris_ornata</td>
+<td align="right">2</td>
+<td align="right">2</td>
+<td align="right">1</td>
+<td align="left">f0</td>
+<td align="left">f0</td>
+<td align="left">Median split above and below 150 hz</td>
+<td align="right">5.5704824</td>
+<td align="right">2.9076517</td>
+</tr>
+<tr class="even">
+<td align="left">anomalocaris_ornata</td>
+<td align="right">3</td>
+<td align="right">3</td>
+<td align="right">1</td>
+<td align="left">f0</td>
+<td align="left">f0</td>
+<td align="left">Median split above and below 150 hz</td>
+<td align="right">15.9151913</td>
+<td align="right">2.2151811</td>
+</tr>
+<tr class="odd">
+<td align="left">anomalocaris_ornata</td>
+<td align="right">4</td>
+<td align="right">4</td>
 <td align="right">1</td>
 <td align="left">duration</td>
+<td align="left">duration</td>
+<td align="left">none</td>
+<td align="right">127.7291021</td>
+<td align="right">51.4437747</td>
+</tr>
+<tr class="even">
+<td align="left">anthracoceros_coronata</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="left">f0</td>
+<td align="left">f0</td>
+<td align="left">normalized</td>
+<td align="right">208.3053566</td>
+<td align="right">47.8623712</td>
+</tr>
+<tr class="odd">
+<td align="left">anthracoceros_coronata</td>
+<td align="right">2</td>
+<td align="right">2</td>
+<td align="right">1</td>
+<td align="left">f0</td>
+<td align="left">f0</td>
+<td align="left">normalized</td>
+<td align="right">212.1960642</td>
+<td align="right">85.4234208</td>
+</tr>
+<tr class="even">
+<td align="left">anthracoceros_coronata</td>
+<td align="right">3</td>
+<td align="right">3</td>
+<td align="right">1</td>
+<td align="left">intensity</td>
+<td align="left">intensity</td>
+<td align="left">normalized</td>
+<td align="right">70.0626320</td>
+<td align="right">3.5237664</td>
+</tr>
+<tr class="odd">
+<td align="left">anthracoceros_coronata</td>
+<td align="right">4</td>
+<td align="right">4</td>
+<td align="right">1</td>
+<td align="left">intensity</td>
+<td align="left">intensity</td>
+<td align="left">normalized</td>
+<td align="right">68.1200447</td>
+<td align="right">3.9644873</td>
+</tr>
+<tr class="even">
+<td align="left">anthracoceros_coronata</td>
+<td align="right">5</td>
+<td align="right">5</td>
+<td align="right">1</td>
+<td align="left">duration</td>
+<td align="left">duration</td>
+<td align="left">log transformed</td>
+<td align="right">-0.9107715</td>
+<td align="right">0.2741313</td>
+</tr>
+<tr class="odd">
+<td align="left">anthracoceros_coronata</td>
+<td align="right">6</td>
+<td align="right">6</td>
+<td align="right">1</td>
+<td align="left">duration</td>
+<td align="left">duration</td>
+<td align="left">log transformed</td>
+<td align="right">-0.7011586</td>
+<td align="right">0.2397626</td>
+</tr>
+<tr class="even">
+<td align="left">arapaima_modularis</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="left">f0</td>
+<td align="left">f0</td>
+<td align="left">none</td>
+<td align="right">215.2201014</td>
+<td align="right">23.9259604</td>
+</tr>
+<tr class="odd">
+<td align="left">chelonia_brummeri</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="left">duration</td>
+<td align="left">duration</td>
+<td align="left">none</td>
 <td align="right">-45.4846905</td>
 <td align="right">61.2254342</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">chelonia_brummeri</td>
 <td align="right">2</td>
+<td align="right">2</td>
+<td align="right">1</td>
 <td align="left">intensity</td>
+<td align="left">intensity</td>
+<td align="left">none</td>
 <td align="right">1.7890469</td>
 <td align="right">1.9610771</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">chelonia_brummeri</td>
 <td align="right">3</td>
+<td align="right">3</td>
+<td align="right">1</td>
 <td align="left">f0</td>
+<td align="left">f0</td>
+<td align="left">none</td>
 <td align="right">5.5494795</td>
 <td align="right">4.9147006</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">chelonia_brummeri</td>
 <td align="right">4</td>
+<td align="right">4</td>
+<td align="right">1</td>
 <td align="left">f0</td>
+<td align="left">f0</td>
+<td align="left">none</td>
 <td align="right">205.9956293</td>
 <td align="right">43.8263797</td>
 </tr>
-<tr class="even">
-<td align="left">dunkleosteus_inscriptus</td>
+<tr class="odd">
+<td align="left">clione_dorsalis</td>
+<td align="right">1</td>
+<td align="right">1</td>
 <td align="right">1</td>
 <td align="left">duration</td>
+<td align="left">duration</td>
+<td align="left">none</td>
+<td align="right">0.3731789</td>
+<td align="right">0.1242374</td>
+</tr>
+<tr class="even">
+<td align="left">comanthina_maculatus</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="left">duration</td>
+<td align="left">duration</td>
+<td align="left">none</td>
+<td align="right">101.7490784</td>
+<td align="right">41.2414507</td>
+</tr>
+<tr class="odd">
+<td align="left">comanthina_maculatus</td>
+<td align="right">2</td>
+<td align="right">2</td>
+<td align="right">1</td>
+<td align="left">intensity</td>
+<td align="left">intensity</td>
+<td align="left">none</td>
+<td align="right">67.4231721</td>
+<td align="right">4.2345759</td>
+</tr>
+<tr class="even">
+<td align="left">comanthina_maculatus</td>
+<td align="right">3</td>
+<td align="right">3</td>
+<td align="right">1</td>
+<td align="left">f0</td>
+<td align="left">f0</td>
+<td align="left">none</td>
+<td align="right">193.7374473</td>
+<td align="right">42.3313001</td>
+</tr>
+<tr class="odd">
+<td align="left">cromileptes_saxatilis</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="left">duration</td>
+<td align="left">duration</td>
+<td align="left">none</td>
+<td align="right">0.4013309</td>
+<td align="right">0.1043177</td>
+</tr>
+<tr class="even">
+<td align="left">dermatolepis_aculeatus</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="left">f0</td>
+<td align="left">f0</td>
+<td align="left">normalised</td>
+<td align="right">240.6523319</td>
+<td align="right">104.5190794</td>
+</tr>
+<tr class="odd">
+<td align="left">dermatolepis_aculeatus</td>
+<td align="right">2</td>
+<td align="right">2</td>
+<td align="right">1</td>
+<td align="left">f0</td>
+<td align="left">f0</td>
+<td align="left">normalised</td>
+<td align="right">210.9713826</td>
+<td align="right">54.8191290</td>
+</tr>
+<tr class="even">
+<td align="left">dermatolepis_aculeatus</td>
+<td align="right">3</td>
+<td align="right">3</td>
+<td align="right">1</td>
+<td align="left">f0</td>
+<td align="left">f0</td>
+<td align="left">normalised</td>
+<td align="right">99.8726385</td>
+<td align="right">30.3595610</td>
+</tr>
+<tr class="odd">
+<td align="left">dunkleosteus_inscriptus</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="left">duration</td>
+<td align="left">duration</td>
+<td align="left">none</td>
 <td align="right">0.4599368</td>
 <td align="right">0.0922763</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">dunkleosteus_inscriptus</td>
 <td align="right">2</td>
+<td align="right">2</td>
+<td align="right">1</td>
 <td align="left">duration</td>
+<td align="left">duration</td>
+<td align="left">none</td>
 <td align="right">0.4935987</td>
 <td align="right">0.1411160</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">dunkleosteus_inscriptus</td>
 <td align="right">3</td>
+<td align="right">3</td>
+<td align="right">1</td>
 <td align="left">duration</td>
+<td align="left">duration</td>
+<td align="left">none</td>
 <td align="right">0.3767236</td>
 <td align="right">0.0982503</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">dunkleosteus_inscriptus</td>
 <td align="right">4</td>
+<td align="right">4</td>
+<td align="right">1</td>
 <td align="left">duration</td>
+<td align="left">duration</td>
+<td align="left">none</td>
 <td align="right">0.4034349</td>
 <td align="right">0.1379422</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">dunkleosteus_inscriptus</td>
 <td align="right">5</td>
+<td align="right">5</td>
+<td align="right">1</td>
 <td align="left">duration</td>
+<td align="left">duration</td>
+<td align="left">none</td>
 <td align="right">0.8970336</td>
 <td align="right">0.1999600</td>
+</tr>
+<tr class="even">
+<td align="left">eriphia_laterispinis</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="left">f0</td>
+<td align="left">f0</td>
+<td align="left">none</td>
+<td align="right">177.1403697</td>
+<td align="right">34.6943770</td>
+</tr>
+<tr class="odd">
+<td align="left">eriphia_laterispinis</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="left">intensity</td>
+<td align="left">intensity</td>
+<td align="left">none</td>
+<td align="right">56.1291899</td>
+<td align="right">3.2937208</td>
+</tr>
+<tr class="even">
+<td align="left">eriphia_laterispinis</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="left">duration</td>
+<td align="left">duration</td>
+<td align="left">none</td>
+<td align="right">3.6568044</td>
+<td align="right">0.5644520</td>
+</tr>
+<tr class="odd">
+<td align="left">gnathosaurus_canadensis</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="left">f0</td>
+<td align="left">f0</td>
+<td align="left">none</td>
+<td align="right">1.5084444</td>
+<td align="right">1.2478853</td>
+</tr>
+<tr class="even">
+<td align="left">gymnothorax_spinulosus</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="left">intensity</td>
+<td align="left">intensity</td>
+<td align="left">Intensity difference</td>
+<td align="right">2.1404754</td>
+<td align="right">2.0883955</td>
+</tr>
+<tr class="odd">
+<td align="left">haematopus_fossor</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="left">duration</td>
+<td align="left">duration</td>
+<td align="left">centered</td>
+<td align="right">1571.8186184</td>
+<td align="right">199.2522658</td>
+</tr>
+<tr class="even">
+<td align="left">haematopus_fossor</td>
+<td align="right">2</td>
+<td align="right">2</td>
+<td align="right">1</td>
+<td align="left">duration</td>
+<td align="left">duration</td>
+<td align="left">centered</td>
+<td align="right">374.3645632</td>
+<td align="right">116.0547551</td>
+</tr>
+<tr class="odd">
+<td align="left">haematopus_fossor</td>
+<td align="right">3</td>
+<td align="right">3</td>
+<td align="right">1</td>
+<td align="left">duration</td>
+<td align="left">duration</td>
+<td align="left">centered</td>
+<td align="right">538.4044646</td>
+<td align="right">117.8526386</td>
+</tr>
+<tr class="even">
+<td align="left">haematopus_fossor</td>
+<td align="right">4</td>
+<td align="right">4</td>
+<td align="right">1</td>
+<td align="left">duration</td>
+<td align="left">duration</td>
+<td align="left">centered</td>
+<td align="right">124.5729579</td>
+<td align="right">38.6406433</td>
+</tr>
+<tr class="odd">
+<td align="left">haematopus_fossor</td>
+<td align="right">5</td>
+<td align="right">5</td>
+<td align="right">1</td>
+<td align="left">duration</td>
+<td align="left">duration</td>
+<td align="left">centered</td>
+<td align="right">131.5765968</td>
+<td align="right">48.8467436</td>
+</tr>
+<tr class="even">
+<td align="left">haematopus_fossor</td>
+<td align="right">6</td>
+<td align="right">6</td>
+<td align="right">1</td>
+<td align="left">intensity</td>
+<td align="left">intensity</td>
+<td align="left">centered</td>
+<td align="right">66.7757949</td>
+<td align="right">3.5316814</td>
+</tr>
+<tr class="odd">
+<td align="left">haematopus_fossor</td>
+<td align="right">7</td>
+<td align="right">7</td>
+<td align="right">1</td>
+<td align="left">intensity</td>
+<td align="left">intensity</td>
+<td align="left">centered</td>
+<td align="right">66.3608413</td>
+<td align="right">3.8752950</td>
+</tr>
+<tr class="even">
+<td align="left">hoplostethus_macrosteus</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="left">duration</td>
+<td align="left">duration</td>
+<td align="left">none</td>
+<td align="right">124.6666279</td>
+<td align="right">33.4088599</td>
+</tr>
+<tr class="odd">
+<td align="left">hoplostethus_macrosteus</td>
+<td align="right">2</td>
+<td align="right">2</td>
+<td align="right">1</td>
+<td align="left">intensity</td>
+<td align="left">intensity</td>
+<td align="left">none</td>
+<td align="right">68.3570596</td>
+<td align="right">3.4420507</td>
+</tr>
+<tr class="even">
+<td align="left">lasionycteris_altavela</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="left">intensity</td>
+<td align="left">intensity</td>
+<td align="left">none</td>
+<td align="right">72.2511911</td>
+<td align="right">3.4099168</td>
+</tr>
+<tr class="odd">
+<td align="left">naso_cassivellaunos</td>
+<td align="right">2</td>
+<td align="right">2</td>
+<td align="right">1</td>
+<td align="left">f0</td>
+<td align="left">f0</td>
+<td align="left">none</td>
+<td align="right">-5.2584252</td>
+<td align="right">18.6781790</td>
+</tr>
+<tr class="even">
+<td align="left">naso_cassivellaunos</td>
+<td align="right">3</td>
+<td align="right">3</td>
+<td align="right">1</td>
+<td align="left">f0</td>
+<td align="left">f0</td>
+<td align="left">none</td>
+<td align="right">-1.7179244</td>
+<td align="right">5.3394480</td>
+</tr>
+<tr class="odd">
+<td align="left">neosilurus_omanensis</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="left">f0</td>
+<td align="left">f0</td>
+<td align="left">none</td>
+<td align="right">1.0237299</td>
+<td align="right">0.1483481</td>
+</tr>
+<tr class="even">
+<td align="left">neosilurus_omanensis</td>
+<td align="right">2</td>
+<td align="right">2</td>
+<td align="right">1</td>
+<td align="left">f0</td>
+<td align="left">f0</td>
+<td align="left">none</td>
+<td align="right">0.4622232</td>
+<td align="right">0.2345493</td>
+</tr>
+<tr class="odd">
+<td align="left">neosilurus_omanensis</td>
+<td align="right">4</td>
+<td align="right">4</td>
+<td align="right">1</td>
+<td align="left">f0</td>
+<td align="left">f0</td>
+<td align="left">none</td>
+<td align="right">0.1945813</td>
+<td align="right">2.3615099</td>
+</tr>
+<tr class="even">
+<td align="left">nestor_idahoensis</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="left">duration</td>
+<td align="left">duration</td>
+<td align="left">none</td>
+<td align="right">-2.7036357</td>
+<td align="right">0.4769518</td>
+</tr>
+<tr class="odd">
+<td align="left">nestor_idahoensis</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="left">f0</td>
+<td align="left">f0</td>
+<td align="left">none</td>
+<td align="right">5.1034471</td>
+<td align="right">0.2908381</td>
+</tr>
+<tr class="even">
+<td align="left">paralichthys_undulatus</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="left">f0</td>
+<td align="left">f0</td>
+<td align="left">none</td>
+<td align="right">8.2062740</td>
+<td align="right">6.8564271</td>
 </tr>
 <tr class="odd">
 <td align="left">pervagor_meeki</td>
 <td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
 <td align="left">intensity</td>
+<td align="left">intensity</td>
+<td align="left">none</td>
 <td align="right">64.0663328</td>
 <td align="right">3.8933591</td>
 </tr>
 <tr class="even">
 <td align="left">pervagor_meeki</td>
 <td align="right">2</td>
+<td align="right">2</td>
+<td align="right">1</td>
 <td align="left">duration</td>
+<td align="left">duration</td>
+<td align="left">none</td>
 <td align="right">496.6350336</td>
 <td align="right">112.1571591</td>
 </tr>
 <tr class="odd">
 <td align="left">pervagor_meeki</td>
 <td align="right">3</td>
+<td align="right">3</td>
+<td align="right">1</td>
 <td align="left">f0</td>
+<td align="left">f0</td>
+<td align="left">none</td>
 <td align="right">14.1095415</td>
 <td align="right">4.0073631</td>
 </tr>
 <tr class="even">
 <td align="left">pervagor_meeki</td>
 <td align="right">4</td>
+<td align="right">4</td>
+<td align="right">1</td>
 <td align="left">f0</td>
+<td align="left">f0</td>
+<td align="left">none</td>
 <td align="right">17.5046356</td>
 <td align="right">4.2727438</td>
 </tr>
 <tr class="odd">
 <td align="left">pervagor_meeki</td>
 <td align="right">5</td>
+<td align="right">5</td>
+<td align="right">1</td>
 <td align="left">intensity</td>
+<td align="left">intensity</td>
+<td align="left">none</td>
 <td align="right">65.7351803</td>
 <td align="right">3.4584971</td>
 </tr>
 <tr class="even">
 <td align="left">pervagor_meeki</td>
 <td align="right">6</td>
+<td align="right">6</td>
+<td align="right">1</td>
 <td align="left">duration</td>
+<td align="left">duration</td>
+<td align="left">none</td>
 <td align="right">402.9497825</td>
 <td align="right">102.7230104</td>
 </tr>
 <tr class="odd">
 <td align="left">pervagor_meeki</td>
 <td align="right">7</td>
+<td align="right">7</td>
+<td align="right">1</td>
 <td align="left">f0</td>
+<td align="left">f0</td>
+<td align="left">none</td>
 <td align="right">14.9480142</td>
 <td align="right">4.0739976</td>
 </tr>
 <tr class="even">
 <td align="left">pervagor_meeki</td>
 <td align="right">8</td>
+<td align="right">8</td>
+<td align="right">1</td>
 <td align="left">f0</td>
+<td align="left">f0</td>
+<td align="left">none</td>
 <td align="right">17.2774047</td>
 <td align="right">4.1514477</td>
 </tr>
 <tr class="odd">
-<td align="left">procambarus_mahogoni</td>
+<td align="left">petauroides_fistulator</td>
 <td align="right">1</td>
-<td align="left">duration</td>
-<td align="right">0.3039037</td>
-<td align="right">5.9515441</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="left">f0</td>
+<td align="left">f0</td>
+<td align="left">none</td>
+<td align="right">20.8949468</td>
+<td align="right">5.6018819</td>
 </tr>
 <tr class="even">
 <td align="left">procambarus_mahogoni</td>
-<td align="right">2</td>
-<td align="left">f0</td>
-<td align="right">177.0702841</td>
-<td align="right">40.2339907</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="left">duration</td>
+<td align="left">duration</td>
+<td align="left">none</td>
+<td align="right">0.3039037</td>
+<td align="right">5.9515441</td>
 </tr>
 <tr class="odd">
 <td align="left">procambarus_mahogoni</td>
+<td align="right">2</td>
+<td align="right">2</td>
+<td align="right">1</td>
+<td align="left">f0</td>
+<td align="left">f0</td>
+<td align="left">none</td>
+<td align="right">177.0702841</td>
+<td align="right">40.2339907</td>
+</tr>
+<tr class="even">
+<td align="left">procambarus_mahogoni</td>
 <td align="right">3</td>
+<td align="right">3</td>
+<td align="right">1</td>
 <td align="left">intensity</td>
+<td align="left">intensity</td>
+<td align="left">none</td>
 <td align="right">67.7754555</td>
 <td align="right">7.1075468</td>
+</tr>
+<tr class="odd">
+<td align="left">psittacula_scabriculus</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="left">duration</td>
+<td align="left">duration</td>
+<td align="left">none</td>
+<td align="right">0.0878772</td>
+<td align="right">0.0359935</td>
+</tr>
+<tr class="even">
+<td align="left">saron_pictus</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="left">duration</td>
+<td align="left">duration</td>
+<td align="left">none</td>
+<td align="right">400.2521053</td>
+<td align="right">109.5064614</td>
+</tr>
+<tr class="odd">
+<td align="left">trachurus_riukiuensis</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="left">duration</td>
+<td align="left">duration</td>
+<td align="left">none</td>
+<td align="right">112.9277108</td>
+<td align="right">32.6453632</td>
+</tr>
+<tr class="even">
+<td align="left">trachurus_riukiuensis</td>
+<td align="right">2</td>
+<td align="right">2</td>
+<td align="right">1</td>
+<td align="left">f0</td>
+<td align="left">f0</td>
+<td align="left">none</td>
+<td align="right">202.0491803</td>
+<td align="right">41.0419403</td>
+</tr>
+<tr class="odd">
+<td align="left">trachurus_riukiuensis</td>
+<td align="right">3</td>
+<td align="right">3</td>
+<td align="right">1</td>
+<td align="left">duration</td>
+<td align="left">duration</td>
+<td align="left">none</td>
+<td align="right">410.4096386</td>
+<td align="right">119.7618401</td>
+</tr>
+<tr class="even">
+<td align="left">trachurus_riukiuensis</td>
+<td align="right">4</td>
+<td align="right">4</td>
+<td align="right">1</td>
+<td align="left">f0</td>
+<td align="left">f0</td>
+<td align="left">none</td>
+<td align="right">206.9080882</td>
+<td align="right">43.5579877</td>
+</tr>
+<tr class="odd">
+<td align="left">trachurus_riukiuensis</td>
+<td align="right">5</td>
+<td align="right">5</td>
+<td align="right">1</td>
+<td align="left">f0</td>
+<td align="left">f0</td>
+<td align="left">none</td>
+<td align="right">206.5598504</td>
+<td align="right">47.1551961</td>
 </tr>
 <tr class="even">
 <td align="left">trachyphyllia_lappa</td>
 <td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
 <td align="left">duration</td>
+<td align="left">duration</td>
+<td align="left">none</td>
 <td align="right">0.4067928</td>
 <td align="right">0.1188363</td>
 </tr>
 <tr class="odd">
 <td align="left">trachyphyllia_lappa</td>
 <td align="right">2</td>
+<td align="right">2</td>
+<td align="right">1</td>
 <td align="left">f0</td>
+<td align="left">f0</td>
+<td align="left">none</td>
 <td align="right">205.6300916</td>
 <td align="right">41.5967491</td>
 </tr>
 <tr class="even">
 <td align="left">trachyphyllia_lappa</td>
 <td align="right">3</td>
+<td align="right">3</td>
+<td align="right">1</td>
 <td align="left">f0</td>
+<td align="left">f0</td>
+<td align="left">none</td>
 <td align="right">153.3330699</td>
 <td align="right">44.9163631</td>
 </tr>
 <tr class="odd">
 <td align="left">trachyphyllia_lappa</td>
 <td align="right">4</td>
+<td align="right">4</td>
+<td align="right">1</td>
 <td align="left">f0</td>
+<td align="left">f0</td>
+<td align="left">none</td>
 <td align="right">52.2970217</td>
 <td align="right">40.5895986</td>
 </tr>
 <tr class="even">
 <td align="left">trachyphyllia_lappa</td>
 <td align="right">5</td>
+<td align="right">5</td>
+<td align="right">1</td>
 <td align="left">duration</td>
+<td align="left">duration</td>
+<td align="left">none</td>
 <td align="right">0.4958843</td>
 <td align="right">0.1188456</td>
 </tr>
 <tr class="odd">
 <td align="left">trachyphyllia_lappa</td>
 <td align="right">6</td>
+<td align="right">6</td>
+<td align="right">1</td>
 <td align="left">f0</td>
+<td align="left">f0</td>
+<td align="left">none</td>
 <td align="right">206.6101181</td>
 <td align="right">42.9529158</td>
 </tr>
 <tr class="even">
 <td align="left">trachyphyllia_lappa</td>
 <td align="right">7</td>
+<td align="right">7</td>
+<td align="right">1</td>
 <td align="left">f0</td>
+<td align="left">f0</td>
+<td align="left">none</td>
 <td align="right">122.1617470</td>
 <td align="right">39.6257113</td>
 </tr>
 <tr class="odd">
 <td align="left">trachyphyllia_lappa</td>
 <td align="right">8</td>
+<td align="right">8</td>
+<td align="right">1</td>
 <td align="left">f0</td>
+<td align="left">f0</td>
+<td align="left">none</td>
 <td align="right">84.4483711</td>
 <td align="right">45.6753014</td>
+</tr>
+<tr class="even">
+<td align="left">trapezia_cantonensis</td>
+<td align="right">4</td>
+<td align="right">4</td>
+<td align="right">1</td>
+<td align="left">duration</td>
+<td align="left">duration</td>
+<td align="left">none</td>
+<td align="right">0.1276422</td>
+<td align="right">0.0326302</td>
+</tr>
+<tr class="odd">
+<td align="left">varanus_eulophotes</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="left">f0</td>
+<td align="left">f0</td>
+<td align="left">none</td>
+<td align="right">181.9460544</td>
+<td align="right">38.6055403</td>
 </tr>
 </tbody>
 </table>

@@ -14,7 +14,12 @@ date: "Last update: `r Sys.Date()`"
 #| include: false
 
 # Knitr options
-knitr::opts_chunk$set(echo = TRUE, message = FALSE)
+knitr::opts_chunk$set(
+  echo = TRUE, 
+  message = FALSE
+  )
+
+knitr::opts_knit$set(root.dir = here::here())
 
 # Load libs
 library("here")
@@ -202,8 +207,8 @@ source_part(
 
 # Means and SDs
 anomalocaris_ornata_df <- tribble(
-  ~"team", ~"model_n", ~"dv", ~"mean", ~"sd", 
-  "anomalocaris_ornata", 1, "intensity", mean(df.int$Mean_dB^2),        sd(df.int$Mean_dB^2), 
+  ~"animal", ~"model_n", ~"dv", ~"mean", ~"sd", 
+  "anomalocaris_ornata", 1, "intensity", mean(df.int$Mean_dB),        sd(df.int$Mean_dB), 
   "anomalocaris_ornata", 2, "f0",        mean(under$f0sem),             sd(under$f0sem), 
   "anomalocaris_ornata", 3, "f0",        mean(over$f0sem),              sd(over$f0sem), 
   "anomalocaris_ornata", 4, "duration",  mean(vowel.df$Duration_in_ms), sd(vowel.df$Duration_in_ms)
@@ -229,7 +234,7 @@ data_long <- read_csv(here("data", "analyses", "jvc", "anthracoceros_coronata",
 
 # Means and SDs
 anthracoceros_coronata_df <- tribble(
-  ~"team", ~"model_n", ~"dv", ~"mean", ~"sd", 
+  ~"animal", ~"model_n", ~"dv", ~"mean", ~"sd", 
   "anthracoceros_coronata", 1, "f0",        mean(data_long$A_max_pitch),  sd(data_long$A_max_pitch), 
   "anthracoceros_coronata", 2, "f0",        mean(data_long$N_max_pitch, na.rm = T),  sd(data_long$N_max_pitch, na.rm = T), 
   "anthracoceros_coronata", 3, "intensity", mean(data_long$A_max_intens), sd(data_long$A_max_intens), 
@@ -258,7 +263,7 @@ source_part(
 
 # Means and SDs
 arapaima_modularis_df <- tribble(
-  ~"team", ~"model_n", ~"dv", ~"mean", ~"sd", 
+  ~"animal", ~"model_n", ~"dv", ~"mean", ~"sd", 
   "arapaima_modularis", 1, "f0", mean(data_for_analysis_noOL$mean_pitch), sd(data_for_analysis_noOL$mean_pitch)
 )
 
@@ -282,7 +287,7 @@ source_part(
 
 # Means and SDs
 clione_dorsalis_df <- tribble(
-  ~"team", ~"model_n", ~"dv", ~"mean", ~"sd", 
+  ~"animal", ~"model_n", ~"dv", ~"mean", ~"sd", 
   "clione_dorsalis", 1, "duration", mean(data_formant_midpoint$word.duration), sd(data_formant_midpoint$word.duration)
 )
 
@@ -306,7 +311,7 @@ source_part(
 
 # Means and SDs
 comanthina_maculatus_df <- tribble(
-  ~"team", ~"model_n", ~"dv", ~"mean", ~"sd", 
+  ~"animal", ~"model_n", ~"dv", ~"mean", ~"sd", 
   "comanthina_maculatus", 1, "duration", mean(MSA_comanthina_maculatus_df$tonic_vowel_duration), sd(MSA_comanthina_maculatus_df$tonic_vowel_duration), 
   "comanthina_maculatus", 2, "intensity", mean(MSA_comanthina_maculatus_df$tonic_vowel_intensity), sd(MSA_comanthina_maculatus_df$tonic_vowel_intensity),  
   "comanthina_maculatus", 3, "f0", mean(MSA_comanthina_maculatus_df$tonic_vowel_F0), sd(MSA_comanthina_maculatus_df$tonic_vowel_F0), 
@@ -332,7 +337,7 @@ source_part(
 
 # Means and SDs
 cromileptes_saxatilis_df <- tribble(
-  ~"team", ~"model_n", ~"dv", ~"mean", ~"sd", 
+  ~"animal", ~"model_n", ~"dv", ~"mean", ~"sd", 
   "cromileptes_saxatilis", 1, "duration", mean(cromileptes_saxatilis_durs$colour_dur), sd(cromileptes_saxatilis_durs$colour_dur)
 )
 
@@ -356,7 +361,7 @@ source_part(
 
 # Means and SDs
 gnathosaurus_canadensis_df <- tribble(
-  ~"team", ~"model_n", ~"dv", ~"mean", ~"sd", 
+  ~"animal", ~"model_n", ~"dv", ~"mean", ~"sd", 
   "gnathosaurus_canadensis", 1, "f0", mean(gnathosaurus_canadensis_typ$median_st_diff), sd(gnathosaurus_canadensis_typ$median_st_diff)
 )
 
@@ -380,7 +385,7 @@ source_part(
 
 # Means and SDs
 gymnothorax_spinulosus_df <- tribble(
-  ~"team", ~"model_n", ~"dv", ~"mean", ~"sd", 
+  ~"animal", ~"model_n", ~"dv", ~"mean", ~"sd", 
   "gymnothorax_spinulosus", 1, "intensity", mean(gymnothorax_spinulosus_int$measure), sd(gymnothorax_spinulosus_int$measure)
 )
 
@@ -404,7 +409,7 @@ source_part(
 
 # Means and SDs
 haematopus_fossor_df <- tribble(
-  ~"team", ~"model_n", ~"dv", ~"mean", ~"sd", 
+  ~"animal", ~"model_n", ~"dv", ~"mean", ~"sd", 
   "haematopus_fossor", 1, "duration", mean(duration_full$framedur), sd(duration_full$framedur), 
   "haematopus_fossor", 2, "duration", mean(duration_full$adjdur), sd(duration_full$adjdur), 
   "haematopus_fossor", 3, "duration", mean(duration_full$noundur), sd(duration_full$noundur), 
@@ -434,7 +439,7 @@ source_part(
 
 # Means and SDs
 lasionycteris_altavela_df <- tribble(
-  ~"team", ~"model_n", ~"dv", ~"mean", ~"sd", 
+  ~"animal", ~"model_n", ~"dv", ~"mean", ~"sd", 
   "lasionycteris_altavela", 1, "intensity", mean(intensity_DF$Intensity), sd(intensity_DF$Intensity),
 )
 
@@ -458,9 +463,9 @@ source_part(
 
 # Means and SDs
 naso_cassivellaunos_df <- tribble(
-  ~"team", ~"model_n", ~"dv", ~"mean", ~"sd", 
-  "naso_cassivellaunos", 1, "f0", mean(msa$DeltaF0_rel), sd(msa$DeltaF0_rel), 
-  "naso_cassivellaunos", 2, "f0", mean(msa$sync_rel), sd(msa$sync_rel),
+  ~"animal", ~"model_n", ~"dv", ~"mean", ~"sd", 
+  "naso_cassivellaunos", 2, "f0", mean(msa$DeltaF0_rel), sd(msa$DeltaF0_rel), 
+  "naso_cassivellaunos", 3, "f0", mean(msa$sync_rel), sd(msa$sync_rel),
 )
 
 # Check n models == n DVs
@@ -483,7 +488,7 @@ source_part(
 
 # Means and SDs
 psittacula_scabriculus_df <- tribble(
-  ~"team", ~"model_n", ~"dv", ~"mean", ~"sd", 
+  ~"animal", ~"model_n", ~"dv", ~"mean", ~"sd", 
   "psittacula_scabriculus", 1, "duration", mean(MSAcomplete$avgdur), sd(MSAcomplete$avgdur), 
 )
 
@@ -507,8 +512,8 @@ source_part(
 
 # Means and SDs
 trapezia_cantonensis_df <- tribble(
-  ~"team", ~"model_n", ~"dv", ~"mean", ~"sd", 
-  "trapezia_cantonensis", 1, "duration", mean(MSA_trapezia_cantonensis_data$dur), sd(MSA_trapezia_cantonensis_data$dur), 
+  ~"animal", ~"model_n", ~"dv", ~"mean", ~"sd", 
+  "trapezia_cantonensis", 4, "duration", mean(MSA_trapezia_cantonensis_data$dur), sd(MSA_trapezia_cantonensis_data$dur), 
 )
 
 # Check n models == n DVs
@@ -540,12 +545,11 @@ final_team_name_and_coder %>%
 #| label: dermatolepis_aculeatus
 #| eval: true
 
-# This part won't work because some coders refuse to use `here`
-# source_part(
-#  file = here("scripts", "r", "04_refit", "refit_sc.Rmd"), 
-#  start = 21, 
-#  end = 32
-#  )
+source_part(
+ file = here("scripts", "r", "04_refit", "refit_sc.Rmd"), 
+ start = 21, 
+ end = 32
+)
 
 msa_data <- read_csv(here("data", "analyses", "sc", "dermatolepis_aculeatus", 
   "Many Speech Analyses_measurements.csv")) %>%
@@ -554,7 +558,7 @@ msa_data <- read_csv(here("data", "analyses", "sc", "dermatolepis_aculeatus",
 
 # Means and SDs
 dermatolepis_aculeatus_df <- tribble(
-  ~"team", ~"model_n", ~"dv", ~"mean", ~"sd", 
+  ~"animal", ~"model_n", ~"dv", ~"mean", ~"sd", 
   "dermatolepis_aculeatus", 1, "f0", mean(msa_data$noun_pitch_max), sd(msa_data$noun_pitch_max), 
   "dermatolepis_aculeatus", 2, "f0", mean(msa_data$adj_pitch_max), sd(msa_data$adj_pitch_max), 
   "dermatolepis_aculeatus", 3, "f0", mean(msa_data$phrase_pitch_max), sd(msa_data$phrase_pitch_max), 
@@ -603,10 +607,10 @@ msa_data <- read.csv(here("data", "analyses", "sc", "eriphia_laterispinis",
 
 # Means and SDs
 eriphia_laterispinis_df <- tribble(
-  ~"team", ~"model_n", ~"dv", ~"mean", ~"sd", 
+  ~"animal", ~"model_n", ~"dv", ~"mean", ~"sd", 
   "eriphia_laterispinis", 1, "f0",        mean(msa_data$mean_f0), sd(msa_data$mean_f0), 
-  "eriphia_laterispinis", 2, "intensity", mean(msa_data$mean_int), sd(msa_data$mean_int), 
-  "eriphia_laterispinis", 3, "duration",  mean(msa_data$duration), sd(msa_data$duration), 
+  "eriphia_laterispinis", 1, "intensity", mean(msa_data$mean_int), sd(msa_data$mean_int), 
+  "eriphia_laterispinis", 1, "duration",  mean(msa_data$duration), sd(msa_data$duration), 
 )
 
 # Check n models == n DVs
@@ -638,7 +642,7 @@ msa_data <- read_csv(here("data", "analyses", "sc", "hoplostethus_macrosteus",
 
 # Means and SDs
 hoplostethus_macrosteus_df <- tribble(
-  ~"team", ~"model_n", ~"dv", ~"mean", ~"sd", 
+  ~"animal", ~"model_n", ~"dv", ~"mean", ~"sd", 
   "hoplostethus_macrosteus", 1, "duration",  mean(msa_data$durmsec), sd(msa_data$durmsec), 
   "hoplostethus_macrosteus", 2, "intensity", mean(msa_data$intensity_maximum), sd(msa_data$intensity_maximum), 
 )
@@ -669,7 +673,7 @@ msa_data <- read_csv(here("data", "analyses", "sc", "neosilurus_omanensis",
 
 # Means and SDs
 neosilurus_omanensis_df <- tribble(
-  ~"team", ~"model_n", ~"dv", ~"mean", ~"sd", 
+  ~"animal", ~"model_n", ~"dv", ~"mean", ~"sd", 
   "neosilurus_omanensis", 1, "f0", mean(msa_data$PitchRatioAtoU), sd(msa_data$PitchRatioAtoU), 
   "neosilurus_omanensis", 2, "f0", mean(msa_data$PitchRangeRatioAtoU), sd(msa_data$PitchRangeRatioAtoU), 
   "neosilurus_omanensis", 4, "f0", mean(msa_data$PitchRiseRatio), sd(msa_data$PitchRiseRatio), 
@@ -706,9 +710,9 @@ msa_data <- read_csv(here("data", "analyses", "sc", "nestor_idahoensis",
 
 # Means and SDs
 nestor_idahoensis_df <- tribble(
-  ~"team", ~"model_n", ~"dv", ~"mean", ~"sd", 
+  ~"animal", ~"model_n", ~"dv", ~"mean", ~"sd", 
   "nestor_idahoensis", 1, "duration", mean(msa_data$duration), sd(msa_data$duration), 
-  "nestor_idahoensis", 2, "f0",       mean(msa_data$f0), sd(msa_data$f0), 
+  "nestor_idahoensis", 1, "f0",       mean(msa_data$f0), sd(msa_data$f0), 
 )
 
 # Check n models == n DVs
@@ -736,7 +740,7 @@ msa_data <- read_delim(here("data", "analyses", "sc", "paralichthys_undulatus",
 
 # Means and SDs
 paralichthys_undulatus_df <- tribble(
-  ~"team", ~"model_n", ~"dv", ~"mean", ~"sd", 
+  ~"animal", ~"model_n", ~"dv", ~"mean", ~"sd", 
   "paralichthys_undulatus", 1, "f0", mean(msa_data$RangeST), sd(msa_data$RangeST), 
 )
 
@@ -766,7 +770,7 @@ msa_data <- mdl_data %>% drop_na()
 
 # Means and SDs
 petauroides_fistulator_df <- tribble(
-  ~"team", ~"model_n", ~"dv", ~"mean", ~"sd", 
+  ~"animal", ~"model_n", ~"dv", ~"mean", ~"sd", 
   "petauroides_fistulator", 1, "f0", mean(msa_data$pitch_st), sd(msa_data$pitch_st), 
 )
 
@@ -850,7 +854,7 @@ msa_data <- adj %>% drop_na()
 
 # Means and SDs
 saron_pictus_df <- tribble(
-  ~"team", ~"model_n", ~"dv", ~"mean", ~"sd", 
+  ~"animal", ~"model_n", ~"dv", ~"mean", ~"sd", 
   "saron_pictus", 1, "duration", mean(msa_data$dur_ms), sd(msa_data$dur_ms), 
 )
 
@@ -918,7 +922,7 @@ article <- subset(data.mm, art_peakf0 > art.median-(2*art.mad))
 
 # Means and SDs
 trachurus_riukiuensis_df <- tribble(
-  ~"team", ~"model_n", ~"dv", ~"mean", ~"sd", 
+  ~"animal", ~"model_n", ~"dv", ~"mean", ~"sd", 
   "trachurus_riukiuensis", 1, "duration", mean(data$art_dur), sd(data$art_dur),
   "trachurus_riukiuensis", 2, "f0", mean(article$art_peakf0), sd(article$art_peakf0),
   "trachurus_riukiuensis", 3, "duration", mean(data$adj_dur), sd(data$adj_dur), 
@@ -959,7 +963,7 @@ msa_data <- f0data_cor
 
 # Means and SDs
 varanus_eulophotes_df <- tribble(
-  ~"team", ~"model_n", ~"dv", ~"mean", ~"sd", 
+  ~"animal", ~"model_n", ~"dv", ~"mean", ~"sd", 
   "varanus_eulophotes", 1, "f0", mean(msa_data$avgF0), sd(msa_data$avgF0), 
 )
 
@@ -1001,7 +1005,7 @@ source_part(
 
 # Means and SDs
 alosa_atun_df <- tribble(
-  ~"team", ~"model_n", ~"dv", ~"mean", ~"sd", 
+  ~"animal", ~"model_n", ~"dv", ~"mean", ~"sd", 
   "alosa_atun", 1,  "f0",        mean(MSA_finale$meanPitch), sd(MSA_finale$meanPitch), 
   "alosa_atun", 2,  "intensity", mean(MSA_finale$maxIntensity), sd(MSA_finale$maxIntensity), 
   "alosa_atun", 3,  "duration",  mean(MSA_finale$Target.segment.duration), sd(MSA_finale$Target.segment.duration), 
@@ -1035,7 +1039,7 @@ source_part(
 
 # Means and SDs
 chelonia_brummeri_df <- tribble(
-  ~"team", ~"model_n", ~"dv", ~"mean", ~"sd", 
+  ~"animal", ~"model_n", ~"dv", ~"mean", ~"sd", 
   "chelonia_brummeri", 1,  "duration",  mean(d$rel_dur), sd(d$rel_dur), 
   "chelonia_brummeri", 2,  "intensity", mean(d$rel_intens), sd(d$rel_intens), 
   "chelonia_brummeri", 3,  "f0",        mean(d$f0range_st), sd(d$f0range_st), 
@@ -1062,7 +1066,7 @@ source_part(
 
 # Means and SDs
 dunkleosteus_inscriptus_df <- tribble(
-  ~"team", ~"model_n", ~"dv", ~"mean", ~"sd", 
+  ~"animal", ~"model_n", ~"dv", ~"mean", ~"sd", 
   "dunkleosteus_inscriptus", 1,  "duration", mean(dat$rel_n), sd(dat$rel_n), 
   "dunkleosteus_inscriptus", 2,  "duration", mean(dat$dur_n), sd(dat$dur_n), 
   "dunkleosteus_inscriptus", 3,  "duration", mean(dat$rel_a), sd(dat$rel_a), 
@@ -1090,7 +1094,7 @@ source_part(
 
 # Means and SDs
 pervagor_meeki_df <- tribble(
-  ~"team", ~"model_n", ~"dv", ~"mean", ~"sd", 
+  ~"animal", ~"model_n", ~"dv", ~"mean", ~"sd", 
   "pervagor_meeki", 1,  "intensity", mean(data_int_trim[data_int_trim$word_type == "target_name",]$Overall_Intensity), sd(data_int_trim[data_int_trim$word_type == "target_name",]$Overall_Intensity), 
   "pervagor_meeki", 2,  "duration", mean(data_dur_trim[data_dur_trim$word_type == "target_name",]$Duration_ms), sd(data_dur_trim[data_dur_trim$word_type == "target_name",]$Duration_ms), 
   "pervagor_meeki", 3,  "f0", mean(data_meanf0_trim[data_meanf0_trim$word_type == "target_name",]$Mean_f0_st), sd(data_meanf0_trim[data_meanf0_trim$word_type == "target_name",]$Mean_f0_st), 
@@ -1121,7 +1125,7 @@ source_part(
 
 # Means and SDs
 procambarus_mahogoni_df <- tribble(
-  ~"team", ~"model_n", ~"dv", ~"mean", ~"sd", 
+  ~"animal", ~"model_n", ~"dv", ~"mean", ~"sd", 
   "procambarus_mahogoni", 1,  "duration",  mean(msa_data_raw$v1_duration_c), sd(msa_data_raw$v1_duration_c), 
   "procambarus_mahogoni", 2,  "f0",        mean(msa_data_raw$v1_pitch_mean_c), sd(msa_data_raw$v1_pitch_mean_c), 
   "procambarus_mahogoni", 3,  "intensity", mean(msa_data_raw$v1_int_mean_c), sd(msa_data_raw$v1_int_mean_c), 
@@ -1152,7 +1156,7 @@ pitch_noun_data <- pitchfile %>% filter(word == 10) %>% mutate(type = "noun")
 
 # Means and SDs
 trachyphyllia_lappa_df <- tribble(
-  ~"team", ~"model_n", ~"dv", ~"mean", ~"sd", 
+  ~"animal", ~"model_n", ~"dv", ~"mean", ~"sd", 
   "trachyphyllia_lappa", 1,  "duration", mean(duration_adj_data$duration), sd(duration_adj_data$duration), 
   "trachyphyllia_lappa", 2,  "f0",       mean(pitch_adj_data$maximum), sd(pitch_adj_data$maximum), 
   "trachyphyllia_lappa", 3,  "f0", mean(pitch_adj_data$minimum), sd(pitch_adj_data$minimum), 
@@ -1178,7 +1182,7 @@ final_teams %>% filter(animal == "trachyphyllia_lappa") %>% pull(outcome) == tra
 #| label: build-tibble
 
 # Comnine tibbles 
-msa_mean_sd_df <- bind_rows(
+msa_mean_sd <- bind_rows(
   anomalocaris_ornata_df, 
   anthracoceros_coronata_df, 
   arapaima_modularis_df, 
@@ -1209,6 +1213,30 @@ msa_mean_sd_df <- bind_rows(
   procambarus_mahogoni_df, 
   trachyphyllia_lappa_df
 ) 
+
+msa_mean_sd_df <- left_join(
+  msa_mean_sd %>% 
+    arrange(animal) %>% 
+    mutate(row_n = row_number()), 
+  assigned %>%
+    filter(
+      animal %in% teams, 
+      exclude == "no", 
+      outcome %in% c("duration", "intensity", "f0")
+    ) %>% 
+    select(animal, model_n, outcome, transformation) %>% 
+    arrange(animal) %>% 
+    mutate(row_n = row_number()), 
+  by = c("animal", "row_n")
+) %>% 
+  mutate(model_n_match = if_else(model_n.x == model_n.y, 1, 0), 
+    transformation = case_when(
+      is.na(transformation) ~ 'none', 
+      transformation == "NA" ~ 'none', 
+      TRUE ~ transformation
+    )) %>% 
+  select(animal, model_n_rda = model_n.x, model_n_excel = model_n.y, model_n_match, 
+         dv, outcome, transformation, mean, sd) 
 
 # Save as .csv
 if(F) {
