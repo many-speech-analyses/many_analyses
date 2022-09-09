@@ -1,0 +1,1222 @@
+---
+title: "Extract team means and SDs"
+author: "Joseph V. Casillas"
+output: 
+  html_document: 
+    toc: yes
+    toc_depth: 1
+    number_sections: yes
+date: "Last update: `r Sys.Date()`"
+---
+
+```{r}
+#| label: setup
+#| include: false
+
+# Knitr options
+knitr::opts_chunk$set(echo = TRUE, message = FALSE)
+
+# Load libs
+library("here")
+library("tidyr")
+library("dplyr")
+library("osfr")
+library("speakr")
+library("glue")
+library("googlesheets4")
+library("forcats")
+library("readr")
+library("readxl")
+library("brms")
+library("lme4")
+library("purrr")
+
+```
+
+# Overview
+
+The purpose of this script is to extract the mean and standard deviation of every dependent variable (if it is f0, duration, or intensity) from each team included in the meta-analysis (`05_meta-analyses.Rmd`). 
+Most of the code needed to accomplish this is already written, thus the script recycles already completed work and, where necessary, we use a few helpers to reduce work. 
+The workflow is the following: 
+
+1. Get a list of the subset of teams that need to be downloaded (Max = 30 because the final model only includes 30 teams). 
+2. Download the OSF components of the aforementioned subset of teams.
+3. Use the code found in `04_refit` (i.e., `refit_jvc.Rmd`, `refit_sc.Rmd` and `refit_tr.Rmd`) to get the final data frames used in the original analyses. 
+4. Calculate mean/SD of the raw DVs (only f0, duration, and intensity). 
+5. Store means/SDs in a separate .csv file in `data/analyses`.
+
+
+# List of teams
+
+```{r}
+#| label: get-teams
+#| message: false
+#| warning: false
+
+# Get team names from final meta-analytic model
+teams <- readRDS(here("./data/analyses/msa_models.rds")) %>% 
+  pull(animal) %>% 
+  unique
+
+# Get coding excel from google drive
+assigned <- read_sheet("https://docs.google.com/spreadsheets/d/1OOXB-8Uk-fh_urw0Lm4DC0jBueXLIb4Bm-a9--UVXOw/edit?usp=sharing")
+
+# Use teams to subset excel file with all analyses, get those that include f0, 
+# duration, and intensity
+final_teams <- assigned %>% 
+  filter(animal %in% teams, outcome %in% c("f0", "duration", "intensity"), 
+         exclude == "no") 
+
+# Just the names
+final_team_names <- final_teams %>% 
+  pull(animal) %>% 
+  unique
+
+# Create dataframe (lookup table) with final teams names and the assigned coder 
+final_team_name_and_coder <- final_teams %>% 
+  select(animal, assigned_to) %>% 
+  distinct()
+```
+
+Of the 30 teams included in the meta-analysis, `r length(final_team_names)` included either F0, duration or intensity in the analyses. 
+Next, we download the OSF components of those `r length(final_team_names)` teams.
+
+# Download OSF team components
+
+```{r}
+#| label: download-setup
+#| eval: false
+
+# Get OSF team components
+osf_teams <- osf_retrieve_node("n3fyd")
+teams_comps <- osf_ls_nodes(osf_teams, n_max = Inf)
+
+# Function to download team components
+#  - only those in final analysis
+#  - only those including F0, pitch, duration
+#  - separate by coder and put components in coder-specific directories
+download_components <- function(coder) {
+  # Get vector of team names by coder assignment
+  my_assignment <- filter(final_team_name_and_coder, assigned_to == coder) %>% 
+    pull(animal)
+
+  # Loop through teams in my_assignment and download the corresponding OSF comp
+  # to /data/analyses/{coder}
+  for (team in 1:length(my_assignment)) {
+    skip_to_next <- FALSE
+    
+    name <- my_assignment[team]
+    dir.create(glue("./data/analyses/{coder}/{name}"), 
+               recursive = TRUE, showWarnings = FALSE)
+  
+    tryCatch(
+      osf_ls_files(teams_comps[team,], type = "folder") %>%
+        osf_download(
+          path = glue("./data/analyses/{coder}/{name}"),
+            recurse = TRUE, verbose = TRUE, progress = TRUE, conflicts = "skip"
+          ),
+      error = function(e) {skip_to_next <<- TRUE}
+    )
+  
+    if(skip_to_next) { next }
+  }
+}
+```
+
+```{r}
+#| label: download-components
+#| eval: false
+
+# Download JVC
+download_components(coder = "jvc")
+
+# Download SC
+download_components(coder = "sc")
+
+# Download TR
+download_components(coder = "tr")
+```
+
+
+
+# Get means and SDs
+
+In order to get the data frame from each teams analysis, we will recycle code from `04_refit` (i.e., `refit_jvc.Rmd`, `refit_sc.Rmd` and `refit_tr.Rmd`). 
+We can pull in specific lines of code with the `source_part` function. 
+If we can't source the lines directly without touching the refit_xx.Rmd files (because *some* people refuse to use `here`), then we will have to copy/paste code to this file and adjusts the paths like heathens. 
+
+
+```{r}
+#| label: source-part
+source_part <- function(file, start, end, ...) {
+  # Set lines
+  file.lines <- scan(
+    file, 
+    what = character(), 
+    skip = start - 1, 
+    nlines = end - start + 1, 
+    sep = '\n'
+    )
+  # Collapse lines
+  file.lines.collapsed <- paste(file.lines, collapse = '\n')
+  # Source selection
+  source(textConnection(file.lines.collapsed), ...)
+}
+```
+
+We have the following number of OSF components for each coder: 
+
+```{r}
+#| label: breakdown-by-coder
+final_team_name_and_coder %>% 
+  group_by(assigned_to) %>% 
+  summarize(n = n_distinct(animal)) %>% 
+  knitr::kable()
+```
+
+## JVC
+
+```{r}
+#| label: jvc-teams
+#| echo: false
+#| results: 'asis'
+final_team_name_and_coder %>% 
+  filter(assigned_to == "jvc") %>% 
+  select(animal) %>% 
+  arrange(animal) %>% 
+  mutate(animal = glue("- {animal}")) %>% 
+  pull
+
+```
+
+### anomalocaris_ornata
+
+```{r}
+#| label: anomalocaris_ornata
+#| eval: true
+source_part(
+  file = here("scripts", "r", "04_refit", "refit_jvc.Rmd"), 
+  start = 131, 
+  end = 181
+  )
+
+# Means and SDs
+anomalocaris_ornata_df <- tribble(
+  ~"team", ~"model_n", ~"dv", ~"mean", ~"sd", 
+  "anomalocaris_ornata", 1, "intensity", mean(df.int$Mean_dB^2),        sd(df.int$Mean_dB^2), 
+  "anomalocaris_ornata", 2, "f0",        mean(under$f0sem),             sd(under$f0sem), 
+  "anomalocaris_ornata", 3, "f0",        mean(over$f0sem),              sd(over$f0sem), 
+  "anomalocaris_ornata", 4, "duration",  mean(vowel.df$Duration_in_ms), sd(vowel.df$Duration_in_ms)
+)
+
+# Check n models == n DVs
+final_teams %>% filter(animal == "anomalocaris_ornata") %>% nrow == nrow(anomalocaris_ornata_df)
+
+# Check DVs are the same as those listen in model excel
+final_teams %>% filter(animal == "anomalocaris_ornata") %>% pull(outcome) == anomalocaris_ornata_df %>% pull(dv)
+```
+
+### anthracoceros_coronata
+
+```{r}
+#| label: anthracoceros_coronata
+#| eval: true
+
+data_long <- read_csv(here("data", "analyses", "jvc", "anthracoceros_coronata", 
+  "data", "data_from_tgs.csv")) %>% 
+  mutate(A_dur_log = log(A_end - A_start), 
+         N_dur_log = log(N_end - N_start))
+
+# Means and SDs
+anthracoceros_coronata_df <- tribble(
+  ~"team", ~"model_n", ~"dv", ~"mean", ~"sd", 
+  "anthracoceros_coronata", 1, "f0",        mean(data_long$A_max_pitch),  sd(data_long$A_max_pitch), 
+  "anthracoceros_coronata", 2, "f0",        mean(data_long$N_max_pitch, na.rm = T),  sd(data_long$N_max_pitch, na.rm = T), 
+  "anthracoceros_coronata", 3, "intensity", mean(data_long$A_max_intens), sd(data_long$A_max_intens), 
+  "anthracoceros_coronata", 4, "intensity", mean(data_long$N_max_intens), sd(data_long$N_max_intens), 
+  "anthracoceros_coronata", 5, "duration",  mean(data_long$A_dur_log),    sd(data_long$A_dur_log), 
+  "anthracoceros_coronata", 6, "duration",  mean(data_long$N_dur_log),    sd(data_long$N_dur_log), 
+)
+
+# Check n models == n DVs
+final_teams %>% filter(animal == "anthracoceros_coronata") %>% nrow == nrow(anthracoceros_coronata_df)
+
+# Check DVs are the same as those listen in model excel
+final_teams %>% filter(animal == "anthracoceros_coronata") %>% pull(outcome) == anthracoceros_coronata_df %>% pull(dv)
+```
+
+### arapaima_modularis
+
+```{r}
+#| label: arapaima_modularis
+#| eval: true
+source_part(
+  file = here("scripts", "r", "04_refit", "refit_jvc.Rmd"), 
+  start = 392, 
+  end = 441
+  )
+
+# Means and SDs
+arapaima_modularis_df <- tribble(
+  ~"team", ~"model_n", ~"dv", ~"mean", ~"sd", 
+  "arapaima_modularis", 1, "f0", mean(data_for_analysis_noOL$mean_pitch), sd(data_for_analysis_noOL$mean_pitch)
+)
+
+# Check n models == n DVs
+final_teams %>% filter(animal == "arapaima_modularis") %>% nrow == nrow(arapaima_modularis_df)
+
+# Check DVs are the same as those listen in model excel
+final_teams %>% filter(animal == "arapaima_modularis") %>% pull(outcome) == arapaima_modularis_df %>% pull(dv)
+```
+
+### clione_dorsalis
+
+```{r}
+#| label: clione_dorsalis
+#| eval: true
+source_part(
+  file = here("scripts", "r", "04_refit", "refit_jvc.Rmd"), 
+  start = 1379, 
+  end = 1395
+  )
+
+# Means and SDs
+clione_dorsalis_df <- tribble(
+  ~"team", ~"model_n", ~"dv", ~"mean", ~"sd", 
+  "clione_dorsalis", 1, "duration", mean(data_formant_midpoint$word.duration), sd(data_formant_midpoint$word.duration)
+)
+
+# Check n models == n DVs
+final_teams %>% filter(animal == "clione_dorsalis") %>% nrow == nrow(clione_dorsalis_df)
+
+# Check DVs are the same as those listen in model excel
+final_teams %>% filter(animal == "clione_dorsalis") %>% pull(outcome) == clione_dorsalis_df %>% pull(dv)
+```
+
+### comanthina_maculatus
+
+```{r}
+#| label: comanthina_maculatus
+#| eval: true
+source_part(
+  file = here("scripts", "r", "04_refit", "refit_jvc.Rmd"), 
+  start = 478, 
+  end = 489
+  )
+
+# Means and SDs
+comanthina_maculatus_df <- tribble(
+  ~"team", ~"model_n", ~"dv", ~"mean", ~"sd", 
+  "comanthina_maculatus", 1, "duration", mean(MSA_comanthina_maculatus_df$tonic_vowel_duration), sd(MSA_comanthina_maculatus_df$tonic_vowel_duration), 
+  "comanthina_maculatus", 2, "intensity", mean(MSA_comanthina_maculatus_df$tonic_vowel_intensity), sd(MSA_comanthina_maculatus_df$tonic_vowel_intensity),  
+  "comanthina_maculatus", 3, "f0", mean(MSA_comanthina_maculatus_df$tonic_vowel_F0), sd(MSA_comanthina_maculatus_df$tonic_vowel_F0), 
+)
+
+# Check n models == n DVs
+final_teams %>% filter(animal == "comanthina_maculatus") %>% nrow == nrow(comanthina_maculatus_df)
+
+# Check DVs are the same as those listen in model excel
+final_teams %>% filter(animal == "comanthina_maculatus") %>% pull(outcome) == comanthina_maculatus_df %>% pull(dv)
+```
+
+### cromileptes_saxatilis
+
+```{r}
+#| label: cromileptes_saxatilis
+#| eval: true
+source_part(
+  file = here("scripts", "r", "04_refit", "refit_jvc.Rmd"), 
+  start = 527, 
+  end = 530
+  )
+
+# Means and SDs
+cromileptes_saxatilis_df <- tribble(
+  ~"team", ~"model_n", ~"dv", ~"mean", ~"sd", 
+  "cromileptes_saxatilis", 1, "duration", mean(cromileptes_saxatilis_durs$colour_dur), sd(cromileptes_saxatilis_durs$colour_dur)
+)
+
+# Check n models == n DVs
+final_teams %>% filter(animal == "cromileptes_saxatilis") %>% nrow == nrow(cromileptes_saxatilis_df)
+
+# Check DVs are the same as those listen in model excel
+final_teams %>% filter(animal == "cromileptes_saxatilis") %>% pull(outcome) == cromileptes_saxatilis_df %>% pull(dv)
+```
+
+### gnathosaurus_canadensis
+
+```{r}
+#| label: gnathosaurus_canadensis
+#| eval: true
+source_part(
+  file = here("scripts", "r", "04_refit", "refit_jvc.Rmd"), 
+  start = 602, 
+  end = 606
+  )
+
+# Means and SDs
+gnathosaurus_canadensis_df <- tribble(
+  ~"team", ~"model_n", ~"dv", ~"mean", ~"sd", 
+  "gnathosaurus_canadensis", 1, "f0", mean(gnathosaurus_canadensis_typ$median_st_diff), sd(gnathosaurus_canadensis_typ$median_st_diff)
+)
+
+# Check n models == n DVs
+final_teams %>% filter(animal == "gnathosaurus_canadensis") %>% nrow == nrow(gnathosaurus_canadensis_df)
+
+# Check DVs are the same as those listen in model excel
+final_teams %>% filter(animal == "gnathosaurus_canadensis") %>% pull(outcome) == gnathosaurus_canadensis_df %>% pull(dv)
+```
+
+### gymnothorax_spinulosus
+
+```{r}
+#| label: gymnothorax_spinulosus
+#| eval: true
+source_part(
+  file = here("scripts", "r", "04_refit", "refit_jvc.Rmd"), 
+  start = 644, 
+  end = 662
+  )
+
+# Means and SDs
+gymnothorax_spinulosus_df <- tribble(
+  ~"team", ~"model_n", ~"dv", ~"mean", ~"sd", 
+  "gymnothorax_spinulosus", 1, "intensity", mean(gymnothorax_spinulosus_int$measure), sd(gymnothorax_spinulosus_int$measure)
+)
+
+# Check n models == n DVs
+final_teams %>% filter(animal == "gymnothorax_spinulosus") %>% nrow == nrow(gymnothorax_spinulosus_df)
+
+# Check DVs are the same as those listen in model excel
+final_teams %>% filter(animal == "gymnothorax_spinulosus") %>% pull(outcome) == gymnothorax_spinulosus_df %>% pull(dv)
+```
+
+### haematopus_fossor
+
+```{r}
+#| label: haematopus_fossor
+#| eval: true
+source_part(
+  file = here("scripts", "r", "04_refit", "refit_jvc.Rmd"), 
+  start = 714, 
+  end = 845
+  )
+
+# Means and SDs
+haematopus_fossor_df <- tribble(
+  ~"team", ~"model_n", ~"dv", ~"mean", ~"sd", 
+  "haematopus_fossor", 1, "duration", mean(duration_full$framedur), sd(duration_full$framedur), 
+  "haematopus_fossor", 2, "duration", mean(duration_full$adjdur), sd(duration_full$adjdur), 
+  "haematopus_fossor", 3, "duration", mean(duration_full$noundur), sd(duration_full$noundur), 
+  "haematopus_fossor", 4, "duration", mean(adj_full$duration), sd(adj_full$duration), 
+  "haematopus_fossor", 5, "duration", mean(noun_full$duration), sd(noun_full$duration), 
+  "haematopus_fossor", 6, "intensity", mean(adj_full$intensity), sd(adj_full$intensity), 
+  "haematopus_fossor", 7, "intensity", mean(noun_full$intensity), sd(noun_full$intensity), 
+)
+
+# Check n models == n DVs
+final_teams %>% filter(animal == "haematopus_fossor") %>% nrow == nrow(haematopus_fossor_df)
+
+# Check DVs are the same as those listen in model excel
+final_teams %>% filter(animal == "haematopus_fossor") %>% pull(outcome) == haematopus_fossor_df %>% pull(dv)
+```
+
+### lasionycteris_altavela
+
+```{r}
+#| label: lasionycteris_altavela
+#| eval: true
+source_part(
+  file = here("scripts", "r", "04_refit", "refit_jvc.Rmd"), 
+  start = 955, 
+  end = 962
+  )
+
+# Means and SDs
+lasionycteris_altavela_df <- tribble(
+  ~"team", ~"model_n", ~"dv", ~"mean", ~"sd", 
+  "lasionycteris_altavela", 1, "intensity", mean(intensity_DF$Intensity), sd(intensity_DF$Intensity),
+)
+
+# Check n models == n DVs
+final_teams %>% filter(animal == "lasionycteris_altavela") %>% nrow == nrow(lasionycteris_altavela_df)
+
+# Check DVs are the same as those listen in model excel
+final_teams %>% filter(animal == "lasionycteris_altavela") %>% pull(outcome) == lasionycteris_altavela_df %>% pull(dv)
+```
+
+### naso_cassivellaunos
+
+```{r}
+#| label: naso_cassivellaunos
+#| eval: true
+source_part(
+  file = here("scripts", "r", "04_refit", "refit_jvc.Rmd"), 
+  start = 1054, 
+  end = 1067
+  )
+
+# Means and SDs
+naso_cassivellaunos_df <- tribble(
+  ~"team", ~"model_n", ~"dv", ~"mean", ~"sd", 
+  "naso_cassivellaunos", 1, "f0", mean(msa$DeltaF0_rel), sd(msa$DeltaF0_rel), 
+  "naso_cassivellaunos", 2, "f0", mean(msa$sync_rel), sd(msa$sync_rel),
+)
+
+# Check n models == n DVs
+final_teams %>% filter(animal == "naso_cassivellaunos") %>% nrow == nrow(naso_cassivellaunos_df)
+
+# Check DVs are the same as those listen in model excel
+final_teams %>% filter(animal == "naso_cassivellaunos") %>% pull(outcome) == naso_cassivellaunos_df %>% pull(dv)
+```
+
+### psittacula_scabriculus
+
+```{r}
+#| label: psittacula_scabriculus
+#| eval: true
+source_part(
+  file = here("scripts", "r", "04_refit", "refit_jvc.Rmd"), 
+  start = 1295, 
+  end = 1327
+  )
+
+# Means and SDs
+psittacula_scabriculus_df <- tribble(
+  ~"team", ~"model_n", ~"dv", ~"mean", ~"sd", 
+  "psittacula_scabriculus", 1, "duration", mean(MSAcomplete$avgdur), sd(MSAcomplete$avgdur), 
+)
+
+# Check n models == n DVs
+final_teams %>% filter(animal == "psittacula_scabriculus") %>% nrow == nrow(psittacula_scabriculus_df)
+
+# Check DVs are the same as those listen in model excel
+final_teams %>% filter(animal == "psittacula_scabriculus") %>% pull(outcome) == psittacula_scabriculus_df %>% pull(dv)
+```
+
+### trapezia_cantonensis
+
+```{r}
+#| label: trapezia_cantonensis
+#| eval: true
+source_part(
+  file = here("scripts", "r", "04_refit", "refit_jvc.Rmd"), 
+  start = 1206, 
+  end = 1214
+  )
+
+# Means and SDs
+trapezia_cantonensis_df <- tribble(
+  ~"team", ~"model_n", ~"dv", ~"mean", ~"sd", 
+  "trapezia_cantonensis", 1, "duration", mean(MSA_trapezia_cantonensis_data$dur), sd(MSA_trapezia_cantonensis_data$dur), 
+)
+
+# Check n models == n DVs
+final_teams %>% filter(animal == "trapezia_cantonensis") %>% nrow == nrow(trapezia_cantonensis_df)
+
+# Check DVs are the same as those listen in model excel
+final_teams %>% filter(animal == "trapezia_cantonensis") %>% pull(outcome) == trapezia_cantonensis_df %>% pull(dv)
+```
+
+
+
+## SC
+
+```{r}
+#| label: sc-teams
+#| echo: false
+#| results: 'asis'
+final_team_name_and_coder %>% 
+  filter(assigned_to == "sc") %>% 
+  select(animal) %>% 
+  arrange(animal) %>% 
+  mutate(animal = glue("- {animal}")) %>% 
+  pull
+```
+
+### dermatolepis_aculeatus
+
+```{r}
+#| label: dermatolepis_aculeatus
+#| eval: true
+
+# This part won't work because some coders refuse to use `here`
+# source_part(
+#  file = here("scripts", "r", "04_refit", "refit_sc.Rmd"), 
+#  start = 21, 
+#  end = 32
+#  )
+
+msa_data <- read_csv(here("data", "analyses", "sc", "dermatolepis_aculeatus", 
+  "Many Speech Analyses_measurements.csv")) %>%
+  filter(exclude == "N", condition == "NF") %>%
+  drop_na()
+
+# Means and SDs
+dermatolepis_aculeatus_df <- tribble(
+  ~"team", ~"model_n", ~"dv", ~"mean", ~"sd", 
+  "dermatolepis_aculeatus", 1, "f0", mean(msa_data$noun_pitch_max), sd(msa_data$noun_pitch_max), 
+  "dermatolepis_aculeatus", 2, "f0", mean(msa_data$adj_pitch_max), sd(msa_data$adj_pitch_max), 
+  "dermatolepis_aculeatus", 3, "f0", mean(msa_data$phrase_pitch_max), sd(msa_data$phrase_pitch_max), 
+)
+
+# Check n models == n DVs
+final_teams %>% filter(animal == "dermatolepis_aculeatus") %>% nrow == nrow(dermatolepis_aculeatus_df)
+
+# Check DVs are the same as those listen in model excel
+final_teams %>% filter(animal == "dermatolepis_aculeatus") %>% pull(outcome) == dermatolepis_aculeatus_df %>% pull(dv)
+```
+
+### eriphia_laterispinis
+
+```{r}
+#| label: eriphia_laterispinis
+#| eval: true
+
+# Can't source code because of path issues
+# source_part(
+#  file = here("scripts", "r", "04_refit", "refit_sc.Rmd"), 
+#  start = 77, 
+#  end = 88
+#  )
+
+# listing all available csv files (30 participants in the production study)
+trials_files <- list.files(
+    path = here("data", "osf", "production", "trial-lists/"),
+    pattern = ".csv", full.names = TRUE
+    )
+
+# importing and reshaping all csv files at once
+trials <- map_dfr(
+    .x = trials_files,
+    .f = read.csv
+    )
+
+# Importing manually because `refit_sc.Rmd` overwrites original DVs with std DVs
+msa_data <- read.csv(here("data", "analyses", "sc", "eriphia_laterispinis", 
+    "processed_data", "summary_data.csv")) %>%
+  filter(Condition == "NF") %>%
+  left_join(x = ., y = trials, by = c("speaker", "trial") ) %>%
+  select(speaker, trial, condition, mean_f0, mean_int, duration, typicality, 
+    typ_mean, typ_sd, typ_median) %>%
+  filter(typicality != "medium") 
+
+# Means and SDs
+eriphia_laterispinis_df <- tribble(
+  ~"team", ~"model_n", ~"dv", ~"mean", ~"sd", 
+  "eriphia_laterispinis", 1, "f0",        mean(msa_data$mean_f0), sd(msa_data$mean_f0), 
+  "eriphia_laterispinis", 2, "intensity", mean(msa_data$mean_int), sd(msa_data$mean_int), 
+  "eriphia_laterispinis", 3, "duration",  mean(msa_data$duration), sd(msa_data$duration), 
+)
+
+# Check n models == n DVs
+final_teams %>% filter(animal == "eriphia_laterispinis") %>% nrow == nrow(eriphia_laterispinis_df)
+
+# Check DVs are the same as those listen in model excel
+final_teams %>% filter(animal == "eriphia_laterispinis") %>% pull(outcome) == eriphia_laterispinis_df %>% pull(dv)
+```
+
+### hoplostethus_macrosteus
+
+```{r}
+#| label: hoplostethus_macrosteus
+#| eval: true
+
+# Importing manually because `refit_sc.Rmd` overwrites original DVs with std DVs
+# source_part(
+#  file = here("scripts", "r", "04_refit", "refit_sc.Rmd"), 
+#  start = , 
+#  end = 
+#  )
+
+msa_data <- read_csv(here("data", "analyses", "sc", "hoplostethus_macrosteus", 
+    "Analysis materials", "Results_clean.csv")) %>%
+  mutate(
+    effect_cat = factor(typicality, levels = c("atypical", "medium", "typical")),
+    color = factor(color)
+  )
+
+# Means and SDs
+hoplostethus_macrosteus_df <- tribble(
+  ~"team", ~"model_n", ~"dv", ~"mean", ~"sd", 
+  "hoplostethus_macrosteus", 1, "duration",  mean(msa_data$durmsec), sd(msa_data$durmsec), 
+  "hoplostethus_macrosteus", 2, "intensity", mean(msa_data$intensity_maximum), sd(msa_data$intensity_maximum), 
+)
+
+# Check n models == n DVs
+final_teams %>% filter(animal == "hoplostethus_macrosteus") %>% nrow == nrow(hoplostethus_macrosteus_df)
+
+# Check DVs are the same as those listen in model excel
+final_teams %>% filter(animal == "hoplostethus_macrosteus") %>% pull(outcome) == hoplostethus_macrosteus_df %>% pull(dv)
+```
+
+### neosilurus_omanensis
+
+```{r}
+#| label: neosilurus_omanensis
+#| eval: true
+
+# Importing manually because `refit_sc.Rmd` overwrites original DVs with std DVs
+# source_part(
+#  file = here("scripts", "r", "04_refit", "refit_sc.Rmd"), 
+#  start = , 
+#  end = 
+#  )
+
+msa_data <- read_csv(here("data", "analyses", "sc", "neosilurus_omanensis", 
+    "annotated_cleaned_data_v7.csv")) %>% 
+  drop_na()
+
+# Means and SDs
+neosilurus_omanensis_df <- tribble(
+  ~"team", ~"model_n", ~"dv", ~"mean", ~"sd", 
+  "neosilurus_omanensis", 1, "f0", mean(msa_data$PitchRatioAtoU), sd(msa_data$PitchRatioAtoU), 
+  "neosilurus_omanensis", 2, "f0", mean(msa_data$PitchRangeRatioAtoU), sd(msa_data$PitchRangeRatioAtoU), 
+  "neosilurus_omanensis", 4, "f0", mean(msa_data$PitchRiseRatio), sd(msa_data$PitchRiseRatio), 
+)
+
+# Check n models == n DVs
+final_teams %>% filter(animal == "neosilurus_omanensis") %>% nrow == nrow(neosilurus_omanensis_df)
+
+# Check DVs are the same as those listen in model excel
+final_teams %>% filter(animal == "neosilurus_omanensis") %>% pull(outcome) == neosilurus_omanensis_df %>% pull(dv)
+```
+
+### nestor_idahoensis
+
+```{r}
+#| label: nestor_idahoensis
+#| eval: true
+
+# Importing manually because `refit_sc.Rmd` overwrites original DVs with std DVs
+# source_part(
+#  file = here("scripts", "r", "04_refit", "refit_sc.Rmd"), 
+#  start = , 
+#  end = 
+#  )
+
+msa_data <- read_csv(here("data", "analyses", "sc", "nestor_idahoensis", 
+    "msa_data_v2.csv"), na = c("", "--undefined--")) %>%
+  mutate(
+    f0 = log(f0) %>% as.numeric(),
+    duration = log(duration) %>% as.numeric(),
+    f15 = log(f15) %>% as.numeric(),
+    f25 = log(f25) %>% as.numeric()
+  )
+
+# Means and SDs
+nestor_idahoensis_df <- tribble(
+  ~"team", ~"model_n", ~"dv", ~"mean", ~"sd", 
+  "nestor_idahoensis", 1, "duration", mean(msa_data$duration), sd(msa_data$duration), 
+  "nestor_idahoensis", 2, "f0",       mean(msa_data$f0), sd(msa_data$f0), 
+)
+
+# Check n models == n DVs
+final_teams %>% filter(animal == "nestor_idahoensis") %>% nrow == nrow(nestor_idahoensis_df)
+
+# Check DVs are the same as those listen in model excel
+final_teams %>% filter(animal == "nestor_idahoensis") %>% pull(outcome) == nestor_idahoensis_df %>% pull(dv)
+```
+
+### paralichthys_undulatus
+
+```{r}
+#| label: paralichthys_undulatus
+#| eval: true
+
+# Importing manually because `refit_sc.Rmd` overwrites original DVs with std DVs
+# source_part(
+#  file = here("scripts", "r", "04_refit", "refit_sc.Rmd"), 
+#  start = , 
+#  end = 
+#  )
+
+msa_data <- read_delim(here("data", "analyses", "sc", "paralichthys_undulatus", 
+    "Data files", "MSA-measurements.txt"), delim = "\t")
+
+# Means and SDs
+paralichthys_undulatus_df <- tribble(
+  ~"team", ~"model_n", ~"dv", ~"mean", ~"sd", 
+  "paralichthys_undulatus", 1, "f0", mean(msa_data$RangeST), sd(msa_data$RangeST), 
+)
+
+# Check n models == n DVs
+final_teams %>% filter(animal == "paralichthys_undulatus") %>% nrow == nrow(paralichthys_undulatus_df)
+
+# Check DVs are the same as those listen in model excel
+final_teams %>% filter(animal == "paralichthys_undulatus") %>% pull(outcome) == paralichthys_undulatus_df %>% pull(dv)
+```
+
+### petauroides_fistulator
+
+```{r}
+#| label: petauroides_fistulator
+#| eval: true
+
+# Importing manually because `refit_sc.Rmd` overwrites original DVs with std DVs
+# source_part(
+#  file = here("scripts", "r", "04_refit", "refit_sc.Rmd"), 
+#  start = , 
+#  end = 
+#  )
+
+load(here("data", "analyses", "sc", "petauroides_fistulator", "mdl_data.RData"))
+
+msa_data <- mdl_data %>% drop_na()
+
+# Means and SDs
+petauroides_fistulator_df <- tribble(
+  ~"team", ~"model_n", ~"dv", ~"mean", ~"sd", 
+  "petauroides_fistulator", 1, "f0", mean(msa_data$pitch_st), sd(msa_data$pitch_st), 
+)
+
+# Check n models == n DVs
+final_teams %>% filter(animal == "petauroides_fistulator") %>% nrow == nrow(petauroides_fistulator_df)
+
+# Check DVs are the same as those listen in model excel
+final_teams %>% filter(animal == "petauroides_fistulator") %>% pull(outcome) == petauroides_fistulator_df %>% pull(dv)
+```
+
+### saron_pictus
+
+```{r}
+#| label: saron_pictus
+#| eval: true
+
+# Importing manually because `refit_sc.Rmd` overwrites original DVs with std DVs
+# source_part(
+#  file = here("scripts", "r", "04_refit", "refit_sc.Rmd"), 
+#  start = , 
+#  end = 
+#  )
+
+# Super long because somebody refuses to use `here` and I don't want to modify `refit_sc.Rmd`
+# The following code reads in the thirty different .csv files with the trial-level data and merges them into a single dataframe
+trial_dat <- list.files(path = here("data", "osf", "production", "trial-lists"),
+                       pattern = "*.csv",
+                       full.names = TRUE) %>%
+  lapply(read_csv) %>%                              
+  bind_rows
+
+# Reading in the results file output by the Praat script
+d <- read.delim(here("data", "analyses", "sc", "saron_pictus", "results.txt"),
+                fileEncoding = "UTF-16")
+
+# Saving original number of rows
+N <- nrow(d)
+
+# Getting rid of columns we won't need from trial_dat
+trial_dat <- trial_dat[trial_dat$condition == "NF",]
+
+# Changing the trial_dat colours to the inflected forms to match the utterances
+trial_dat$target_colour[trial_dat$target_colour == "gelb"] <- "gelben"
+trial_dat$target_colour[trial_dat$target_colour == "orange"] <- "orangen"
+trial_dat$target_colour[trial_dat$target_colour == "braun"] <- "braunen"
+trial_dat$target_colour[trial_dat$target_colour == "rot"] <- "roten"
+trial_dat$target_colour[trial_dat$target_colour == "gruen"] <- "gruenen"
+
+# Saving the target colours present in the data-set into a vector
+colours <- c("gelben", "orangen", "braunen", "roten", "gruenen")
+
+# Subsetting to only target nouns and adjectives
+d <- d[d$word_label %in% trial_dat$target_name | d$word_label %in% trial_dat$target_colour,]
+d <- droplevels(d)
+
+# Merging the data from Praat with the trial data
+d <- merge(d, trial_dat, 
+            by = c("speaker", "trial", "condition"))
+
+# Lumping all trial problems together
+d$trial_status <- ifelse(d$notes == "", "Good", "Bad")
+
+# Creating a column specifying whether a word is an adjective or noun
+d$word_class <- ifelse(d$word_label %in% colours, "adjective", "noun")
+
+# Creating a column with duration in milliseconds instead of seconds
+d$dur_ms <- d$word_duration*1000
+
+# Transforming trial to have a max value of 1
+d$trial_minmax <- (d$trial - min(d$trial)) / (max(d$trial) - min(d$trial))
+
+# Creating a data-set that is only adjectives
+adj <- d[d$word_class == "adjective",]
+
+# Removing trials with problems
+adj <- adj[adj$notes == "",]
+adj$effect_cat <- factor(adj$typicality,
+                         levels = c("atypical", "medium", "typical"))
+
+msa_data <- adj %>% drop_na()
+
+# Means and SDs
+saron_pictus_df <- tribble(
+  ~"team", ~"model_n", ~"dv", ~"mean", ~"sd", 
+  "saron_pictus", 1, "duration", mean(msa_data$dur_ms), sd(msa_data$dur_ms), 
+)
+
+# Check n models == n DVs
+final_teams %>% filter(animal == "saron_pictus") %>% nrow == nrow(saron_pictus_df)
+
+# Check DVs are the same as those listen in model excel
+final_teams %>% filter(animal == "saron_pictus") %>% pull(outcome) == saron_pictus_df %>% pull(dv)
+```
+
+### trachurus_riukiuensis
+
+```{r}
+#| label: trachurus_riukiuensis
+#| eval: true
+
+# Importing manually because `refit_sc.Rmd` overwrites original DVs with std DVs
+# source_part(
+#  file = here("scripts", "r", "04_refit", "refit_sc.Rmd"), 
+#  start = , 
+#  end = 
+#  )
+
+#Read in output file from Praat script
+msa <- read.delim(here("data", "analyses", "sc", "trachurus_riukiuensis", 
+  "MSA-Praat-output.txt"), na.strings = "--undefined--")
+
+#Read in list of NF trials (this is an edited version of one of the trial-lists on OSF)
+triallist <- read.csv(here("data", "analyses", "sc", "trachurus_riukiuensis", 
+  "MSA-triallist.csv"))
+
+#Merge them together
+msa2 <- merge(msa, triallist, by=c("noun","condition"))
+#Adjust factor
+msa2$comment <- as.factor(msa2$comment)
+#Remove errors (31/900) and hesitation utterances (20/900) ~ 6% of data removed
+data <- subset(msa2, comment=="NA" | comment=="noise")
+
+#Remove JW_3; too many errors and hesitations
+data <- subset(data, participant!="JW_3")
+
+#Adjust typicality variable as dummy coded factor
+data$effect_cat <- factor(data$typicality, levels = c("atypical", "medium", "typical"))
+
+#Calculate a by participant median for each f0 measure and the median absolute deviation
+#See Leys, C., Ley, C., Klein, O., Bernard, P., & Licata, L. (2013). Detecting outliers: Do not use standard deviation around the mean, use absolute deviation around the median. Journal of Experimental Social Psychology, 49(4), 764-766.
+by.participant.median <- data %>%
+  group_by(participant) %>%
+  dplyr::summarise( n.mad = mad(noun_peakf0), n.median = median(noun_peakf0),
+             adj.mad = mad(adj_peakf0), adj.median = median(adj_peakf0),
+             art.mad = mad(art_peakf0), art.median = median(art_peakf0),)
+
+#Merge by participant with full data
+data.mm <- merge(by.participant.median, data)
+
+#Create new dataframes for each f0 measure by removing less than 2.5 times median absolute deviation
+noun <- subset(data.mm, noun_peakf0 > n.median-(2.5*n.mad))
+#noun peak f0 removed 28 data points
+
+adjective <- subset(data.mm, adj_peakf0 > adj.median-(2.5*adj.mad))
+#adj peak f0 removed 14 data points
+
+article <- subset(data.mm, art_peakf0 > art.median-(2*art.mad))
+#art peak f0 removed 160 data points NOTE we use 2 times median absolute deviation to remove all creaky voice tokens
+
+# Means and SDs
+trachurus_riukiuensis_df <- tribble(
+  ~"team", ~"model_n", ~"dv", ~"mean", ~"sd", 
+  "trachurus_riukiuensis", 1, "duration", mean(data$art_dur), sd(data$art_dur),
+  "trachurus_riukiuensis", 2, "f0", mean(article$art_peakf0), sd(article$art_peakf0),
+  "trachurus_riukiuensis", 3, "duration", mean(data$adj_dur), sd(data$adj_dur), 
+  "trachurus_riukiuensis", 4, "f0", mean(adjective$adj_peakf0), sd(adjective$adj_peakf0),
+  "trachurus_riukiuensis", 5, "f0", mean(noun$noun_peakf0), sd(noun$noun_peakf0),
+)
+
+# Check n models == n DVs
+final_teams %>% filter(animal == "trachurus_riukiuensis") %>% nrow == nrow(trachurus_riukiuensis_df)
+
+# Check DVs are the same as those listen in model excel
+final_teams %>% filter(animal == "trachurus_riukiuensis") %>% pull(outcome) == trachurus_riukiuensis_df %>% pull(dv)
+```
+
+### varanus_eulophotes
+
+```{r}
+#| label: varanus_eulophotes
+#| eval: true
+
+# Importing manually because `refit_sc.Rmd` overwrites original DVs with std DVs
+# source_part(
+#  file = here("scripts", "r", "04_refit", "refit_sc.Rmd"), 
+#  start = , 
+#  end = 
+#  )
+
+
+# reading in data
+f0data <- read.csv(here("data", "analyses", "sc", "varanus_eulophotes", 
+    "analysis", "f0data-complete.csv"), header = T)
+
+# new dataframe with only typicality-rated data
+f0data_cor <- f0data[f0data$typicality !="NA" & !is.na(f0data$typicality),]
+f0data_cor$avgF0 <- as.numeric(f0data_cor$avgF0) # coercing types...
+f0data_cor$effect_cat <- factor(f0data_cor$typicality, levels = c("atypical", "medium", "typical"))
+msa_data <- f0data_cor
+
+# Means and SDs
+varanus_eulophotes_df <- tribble(
+  ~"team", ~"model_n", ~"dv", ~"mean", ~"sd", 
+  "varanus_eulophotes", 1, "f0", mean(msa_data$avgF0), sd(msa_data$avgF0), 
+)
+
+# Check n models == n DVs
+final_teams %>% filter(animal == "varanus_eulophotes") %>% nrow == nrow(varanus_eulophotes_df)
+
+# Check DVs are the same as those listen in model excel
+final_teams %>% filter(animal == "varanus_eulophotes") %>% pull(outcome) == varanus_eulophotes_df %>% pull(dv)
+```
+
+
+
+## TR
+
+```{r}
+#| label: tr-teams
+#| echo: false
+#| results: 'asis'
+final_team_name_and_coder %>% 
+  filter(assigned_to == "tr") %>% 
+  select(animal) %>% 
+  arrange(animal) %>% 
+  mutate(animal = glue("- {animal}")) %>% 
+  pull
+```
+
+### alosa_atun
+
+```{r}
+#| label: alosa_atun
+#| eval: true
+#| message: false
+#| warning: false
+source_part(
+  file = here("scripts", "r", "04_refit", "refit_tr.Rmd"), 
+  start = 353, 
+  end = 507
+  )
+
+# Means and SDs
+alosa_atun_df <- tribble(
+  ~"team", ~"model_n", ~"dv", ~"mean", ~"sd", 
+  "alosa_atun", 1,  "f0",        mean(MSA_finale$meanPitch), sd(MSA_finale$meanPitch), 
+  "alosa_atun", 2,  "intensity", mean(MSA_finale$maxIntensity), sd(MSA_finale$maxIntensity), 
+  "alosa_atun", 3,  "duration",  mean(MSA_finale$Target.segment.duration), sd(MSA_finale$Target.segment.duration), 
+  "alosa_atun", 6,  "f0",        mean(MSA_finalschwa$meanPitch), sd(MSA_finalschwa$meanPitch), 
+  "alosa_atun", 7,  "intensity", mean(MSA_finalschwa$maxIntensity), sd(MSA_finalschwa$maxIntensity), 
+  "alosa_atun", 8,  "duration",  mean(MSA_finalschwa$Target.segment.duration), sd(MSA_finalschwa$Target.segment.duration), 
+  "alosa_atun", 11, "duration",  mean(MSA_both$DiphDur), sd(MSA_both$DiphDur), 
+  "alosa_atun", 12, "duration",  mean(MSA_both$DurRat), sd(MSA_both$DurRat), 
+  "alosa_atun", 14, "duration",  mean(MSA_finale$Target.word.duration), sd(MSA_finale$Target.word.duration), 
+  "alosa_atun", 15, "duration",  mean(MSA_finale$Pause.duration, na.rm = T), sd(MSA_finale$Pause.duration, na.rm = T), 
+  "alosa_atun", 16, "duration",  mean(MSA_both$syllablesPerMinute), sd(MSA_both$syllablesPerMinute), 
+)
+
+# Check n models == n DVs
+final_teams %>% filter(animal == "alosa_atun") %>% nrow == nrow(alosa_atun_df)
+
+# Check DVs are the same as those listen in model excel
+final_teams %>% filter(animal == "alosa_atun") %>% pull(outcome) == alosa_atun_df %>% pull(dv)
+```
+
+### chelonia_brummeri
+
+```{r}
+#| label: chelonia_brummeri
+#| eval: true
+source_part(
+  file = here("scripts", "r", "04_refit", "refit_tr.Rmd"), 
+  start = 1532, 
+  end = 1601
+  )
+
+# Means and SDs
+chelonia_brummeri_df <- tribble(
+  ~"team", ~"model_n", ~"dv", ~"mean", ~"sd", 
+  "chelonia_brummeri", 1,  "duration",  mean(d$rel_dur), sd(d$rel_dur), 
+  "chelonia_brummeri", 2,  "intensity", mean(d$rel_intens), sd(d$rel_intens), 
+  "chelonia_brummeri", 3,  "f0",        mean(d$f0range_st), sd(d$f0range_st), 
+  "chelonia_brummeri", 4,  "f0",        mean(d$adj_maxf0), sd(d$adj_maxf0), 
+)
+
+# Check n models == n DVs
+final_teams %>% filter(animal == "chelonia_brummeri") %>% nrow == nrow(chelonia_brummeri_df)
+
+# Check DVs are the same as those listen in model excel
+final_teams %>% filter(animal == "chelonia_brummeri") %>% pull(outcome) == chelonia_brummeri_df %>% pull(dv)
+```
+
+### dunkleosteus_inscriptus
+
+```{r}
+#| label: dunkleosteus_inscriptus
+#| eval: true
+source_part(
+  file = here("scripts", "r", "04_refit", "refit_tr.Rmd"), 
+  start = 1309, 
+  end = 1420
+  )
+
+# Means and SDs
+dunkleosteus_inscriptus_df <- tribble(
+  ~"team", ~"model_n", ~"dv", ~"mean", ~"sd", 
+  "dunkleosteus_inscriptus", 1,  "duration", mean(dat$rel_n), sd(dat$rel_n), 
+  "dunkleosteus_inscriptus", 2,  "duration", mean(dat$dur_n), sd(dat$dur_n), 
+  "dunkleosteus_inscriptus", 3,  "duration", mean(dat$rel_a), sd(dat$rel_a), 
+  "dunkleosteus_inscriptus", 4,  "duration", mean(dat$dur_a), sd(dat$dur_a), 
+  "dunkleosteus_inscriptus", 5,  "duration", mean(dat$dur_np), sd(dat$dur_np),
+)
+
+# Check n models == n DVs
+final_teams %>% filter(animal == "dunkleosteus_inscriptus") %>% nrow == nrow(dunkleosteus_inscriptus_df)
+
+# Check DVs are the same as those listen in model excel
+final_teams %>% filter(animal == "dunkleosteus_inscriptus") %>% pull(outcome) == dunkleosteus_inscriptus_df %>% pull(dv)
+```
+
+### pervagor_meeki
+
+```{r}
+#| label: pervagor_meeki
+#| eval: true
+source_part(
+  file = here("scripts", "r", "04_refit", "refit_tr.Rmd"), 
+  start = 896, 
+  end = 949
+  )
+
+# Means and SDs
+pervagor_meeki_df <- tribble(
+  ~"team", ~"model_n", ~"dv", ~"mean", ~"sd", 
+  "pervagor_meeki", 1,  "intensity", mean(data_int_trim[data_int_trim$word_type == "target_name",]$Overall_Intensity), sd(data_int_trim[data_int_trim$word_type == "target_name",]$Overall_Intensity), 
+  "pervagor_meeki", 2,  "duration", mean(data_dur_trim[data_dur_trim$word_type == "target_name",]$Duration_ms), sd(data_dur_trim[data_dur_trim$word_type == "target_name",]$Duration_ms), 
+  "pervagor_meeki", 3,  "f0", mean(data_meanf0_trim[data_meanf0_trim$word_type == "target_name",]$Mean_f0_st), sd(data_meanf0_trim[data_meanf0_trim$word_type == "target_name",]$Mean_f0_st), 
+  "pervagor_meeki", 4,  "f0", mean(data_maxf0_trim[data_maxf0_trim$word_type == "target_name",]$Max_f0_st), sd(data_maxf0_trim[data_maxf0_trim$word_type == "target_name",]$Max_f0_st), 
+  "pervagor_meeki", 5,  "intensity", mean(data_int_trim[data_int_trim$word_type == "target_colour",]$Overall_Intensity), sd(data_int_trim[data_int_trim$word_type == "target_colour",]$Overall_Intensity), 
+  "pervagor_meeki", 6,  "duration",  mean(data_dur_trim[data_dur_trim$word_type == "target_colour",]$Duration_ms), sd(data_dur_trim[data_dur_trim$word_type == "target_colour",]$Duration_ms),
+  "pervagor_meeki", 7,  "f0", mean(data_meanf0_trim[data_meanf0_trim$word_type == "target_colour",]$Mean_f0_st), sd(data_meanf0_trim[data_meanf0_trim$word_type == "target_colour",]$Mean_f0_st),
+  "pervagor_meeki", 8,  "f0", mean(data_maxf0_trim[data_maxf0_trim$word_type == "target_colour",]$Max_f0_st), sd(data_maxf0_trim[data_maxf0_trim$word_type == "target_colour",]$Max_f0_st),
+)
+
+# Check n models == n DVs
+final_teams %>% filter(animal == "pervagor_meeki") %>% nrow == nrow(pervagor_meeki_df)
+
+# Check DVs are the same as those listen in model excel
+final_teams %>% filter(animal == "pervagor_meeki") %>% pull(outcome) == pervagor_meeki_df %>% pull(dv)
+```
+
+### procambarus_mahogoni
+
+```{r}
+#| label: procambarus_mahogoni
+#| eval: true
+source_part(
+  file = here("scripts", "r", "04_refit", "refit_tr.Rmd"), 
+  start = 1742, 
+  end = 1745
+  )
+
+# Means and SDs
+procambarus_mahogoni_df <- tribble(
+  ~"team", ~"model_n", ~"dv", ~"mean", ~"sd", 
+  "procambarus_mahogoni", 1,  "duration",  mean(msa_data_raw$v1_duration_c), sd(msa_data_raw$v1_duration_c), 
+  "procambarus_mahogoni", 2,  "f0",        mean(msa_data_raw$v1_pitch_mean_c), sd(msa_data_raw$v1_pitch_mean_c), 
+  "procambarus_mahogoni", 3,  "intensity", mean(msa_data_raw$v1_int_mean_c), sd(msa_data_raw$v1_int_mean_c), 
+)
+
+# Check n models == n DVs
+final_teams %>% filter(animal == "procambarus_mahogoni") %>% nrow == nrow(procambarus_mahogoni_df)
+
+# Check DVs are the same as those listen in model excel
+final_teams %>% filter(animal == "procambarus_mahogoni") %>% pull(outcome) == procambarus_mahogoni_df %>% pull(dv)
+```
+
+### trachyphyllia_lappa
+
+```{r}
+#| label: trachyphyllia_lappa
+#| eval: true
+source_part(
+  file = here("scripts", "r", "04_refit", "refit_tr.Rmd"), 
+  start = 49, 
+  end = 134
+  )
+
+duration_adj_data <- durations %>% filter(word == 9) %>% mutate(type = "adjective")
+duration_noun_data <- durations %>% filter(word == 10) %>% mutate(type = "noun")
+pitch_adj_data <- pitchfile %>% filter(word == 9) %>% mutate(type = "adjective")
+pitch_noun_data <- pitchfile %>% filter(word == 10) %>% mutate(type = "noun")
+
+# Means and SDs
+trachyphyllia_lappa_df <- tribble(
+  ~"team", ~"model_n", ~"dv", ~"mean", ~"sd", 
+  "trachyphyllia_lappa", 1,  "duration", mean(duration_adj_data$duration), sd(duration_adj_data$duration), 
+  "trachyphyllia_lappa", 2,  "f0",       mean(pitch_adj_data$maximum), sd(pitch_adj_data$maximum), 
+  "trachyphyllia_lappa", 3,  "f0", mean(pitch_adj_data$minimum), sd(pitch_adj_data$minimum), 
+  "trachyphyllia_lappa", 4,  "f0", mean(pitch_adj_data$range), sd(pitch_adj_data$range), 
+  "trachyphyllia_lappa", 5,  "duration", mean(duration_noun_data$duration), sd(duration_noun_data$duration), 
+  "trachyphyllia_lappa", 6,  "f0", mean(pitch_noun_data$maximum), sd(pitch_noun_data$maximum), 
+  "trachyphyllia_lappa", 7,  "f0", mean(pitch_noun_data$minimum), sd(pitch_noun_data$minimum), 
+  "trachyphyllia_lappa", 8,  "f0", mean(pitch_noun_data$range), sd(pitch_noun_data$range), 
+)
+
+# Check n models == n DVs
+final_teams %>% filter(animal == "trachyphyllia_lappa") %>% nrow == nrow(trachyphyllia_lappa_df)
+
+# Check DVs are the same as those listen in model excel
+final_teams %>% filter(animal == "trachyphyllia_lappa") %>% pull(outcome) == trachyphyllia_lappa_df %>% pull(dv)
+```
+
+
+
+# Build table
+
+```{r}
+#| label: build-tibble
+
+# Comnine tibbles 
+msa_mean_sd_df <- bind_rows(
+  anomalocaris_ornata_df, 
+  anthracoceros_coronata_df, 
+  arapaima_modularis_df, 
+  clione_dorsalis_df, 
+  comanthina_maculatus_df, 
+  cromileptes_saxatilis_df, 
+  gnathosaurus_canadensis_df, 
+  gymnothorax_spinulosus_df, 
+  haematopus_fossor_df, 
+  lasionycteris_altavela_df, 
+  naso_cassivellaunos_df, 
+  psittacula_scabriculus_df, 
+  trapezia_cantonensis_df, 
+  dermatolepis_aculeatus_df, 
+  eriphia_laterispinis_df, 
+  hoplostethus_macrosteus_df, 
+  neosilurus_omanensis_df, 
+  nestor_idahoensis_df, 
+  paralichthys_undulatus_df, 
+  petauroides_fistulator_df, 
+  saron_pictus_df, 
+  trachurus_riukiuensis_df, 
+  varanus_eulophotes_df, 
+  alosa_atun_df, 
+  chelonia_brummeri_df, 
+  dunkleosteus_inscriptus_df, 
+  pervagor_meeki_df, 
+  procambarus_mahogoni_df, 
+  trachyphyllia_lappa_df
+) 
+
+# Save as .csv
+if(F) {
+write_csv(msa_mean_sd_df, here("data", "analyses", "msa_mean_sd_df.csv"))
+}
+
+# Print to html for funsies
+msa_mean_sd_df %>% 
+  knitr::kable()
+```
+
