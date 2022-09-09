@@ -47,7 +47,7 @@ clean_up <- . %>%
 
 ```{r trachyphyllia_lappa_setup}
 
-path <- "./data/analyses/tr/trachyphyllia_lappa"
+path <- here("data", "analyses", "tr", "trachyphyllia_lappa")
 
 path_trial = paste0(path, "/trial_level_data/")
 msa <- list.files(path = path_trial, pattern = "*.csv", full.names = TRUE) %>% 
@@ -351,7 +351,7 @@ trachyphyllia_lappa_8_f0rangenoun_cat <- brm(
 
 ```{r alosa_atun_setup}
 
-MSA_combined <- readRDS("./data/analyses/tr/alosa_atun/alosa_atun_data.rds", refhook = NULL)
+MSA_combined <- readRDS(here("data", "analyses", "tr", "alosa_atun", "alosa_atun_data.rds"), refhook = NULL)
 
 MSA_combined$meanPitch = as.numeric(MSA_combined$meanPitch)
 
@@ -894,7 +894,7 @@ alosa_atun_16_speechrate_con <- brm(
 
 ```{r pervagor_meeki_setup}
 
-data = read.csv("./data/analyses/tr/pervagor_meeki/Data/ManySpeech_Praat_merged_data.csv", header=T)
+data = read.csv(here("data", "analyses", "tr", "pervagor_meeki", "Data", "ManySpeech_Praat_merged_data.csv"), header=T)
 
 data$Duration_ms = data$Duration*1000
 data_to_analyze <- data
@@ -1307,13 +1307,13 @@ ggsave(filename = "./PCcurves_col.png", plot = pl, width = 20, height = 12, unit
 
 ```{r dunkleosteus_inscriptus_setup}
 
-path <- "./data/analyses/tr/dunkleosteus_inscriptus/data/"
+path <- here("data", "analyses", "tr", "dunkleosteus_inscriptus", "data/")
 
-flist_times  <- list.files(path = "./data/analyses/tr/dunkleosteus_inscriptus/data/", pattern = "^timings(.*)xlsx")
+flist_times  <- list.files(path = here("data", "analyses", "tr", "dunkleosteus_inscriptus", "data"), pattern = "^timings(.*)xlsx")
 get_times    <- lapply(paste0(path, flist_times), read_excel)
 times        <- bind_rows(get_times)
 
-flist_trials <- list.files(path = "./data/analyses/tr/dunkleosteus_inscriptus/data/", pattern = "^trials(.*)xlsx")
+flist_trials <- list.files(path = here("data", "analyses", "tr", "dunkleosteus_inscriptus", "data"), pattern = "^trials(.*)xlsx")
 get_trials   <- lapply(paste0(path, flist_trials), read_excel)
 trials       <- bind_rows(get_trials)
 
@@ -1512,7 +1512,7 @@ dunkleosteus_inscriptus_4_adur_cat <- brm(
   )
   
 dunkleosteus_inscriptus_5_npdur_cat <- brm(
-  dur_a_s ~ 
+  dur_np_s ~ 
          effect_cat + 
          (1|speaker) + 
          (1|target_name) + 
@@ -1539,8 +1539,8 @@ f2st <- function(hz, base) {
 #################
 ### Load data ###
 #################
-d <- read_delim("./data/analyses/tr/chelonia_brummeri/analysis/german_msa_prosody.txt", delim = "\t", escape_double = FALSE, trim_ws = TRUE)
-syll <- read_csv("./data/analyses/tr/chelonia_brummeri/analysis/syllables.csv")
+d <- read_delim(here("data", "analyses", "tr", "chelonia_brummeri", "analysis", "german_msa_prosody.txt"), delim = "\t", escape_double = FALSE, trim_ws = TRUE)
+syll <- read_csv(here("data", "analyses", "tr", "chelonia_brummeri", "analysis", "syllables.csv"))
 
 
 #######################
@@ -1741,7 +1741,7 @@ chelonia_brummeri_4_f0max_cat <- brm(
 ```{r procambarus_mahogoni_setup}
 
 # read csv
-msa_data_raw <- read_csv("./data/analyses/tr/procambarus_mahogoni/MSA-data.csv")
+msa_data_raw <- read_csv(here("data", "analyses", "tr", "procambarus_mahogoni", "MSA-data.csv"))
 
 # transform raw data 
 msa_data <- msa_data_raw %>%
