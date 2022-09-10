@@ -10,7 +10,7 @@
 
 
 
-<meta name="date" content="2022-09-08" />
+<meta name="date" content="2022-09-10" />
 
 <title>06 - Meta-analysis as preregistered</title>
 
@@ -356,7 +356,7 @@ display: none;
 
 
 <h1 class="title toc-ignore">06 - Meta-analysis as preregistered</h1>
-<h4 class="date">2022-09-08</h4>
+<h4 class="date">2022-09-10</h4>
 
 </div>
 
@@ -398,18 +398,18 @@ meta_bm_prereg &lt;- brm(
 <pre><code>##  Family: gaussian 
 ##   Links: mu = identity; sigma = identity 
 ## Formula: estimate | se(se) ~ (1 | animal) 
-##    Data: msa_models (Number of observations: 170) 
+##    Data: msa_models (Number of observations: 181) 
 ##   Draws: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
 ##          total post-warmup draws = 4000
 ## 
 ## Group-Level Effects: 
 ## ~animal (Number of levels: 30) 
 ##               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-## sd(Intercept)     0.05      0.01     0.03     0.07 1.00     1308     2193
+## sd(Intercept)     0.05      0.01     0.03     0.07 1.00     1353     1936
 ## 
 ## Population-Level Effects: 
 ##           Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-## Intercept     0.00      0.01    -0.02     0.02 1.00     1135     1734
+## Intercept    -0.00      0.01    -0.02     0.02 1.00      930     1655
 ## 
 ## Family Specific Parameters: 
 ##       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
@@ -465,51 +465,51 @@ predictors_bm_rintercepts_prereg</code></pre>
 <pre><code>## Warning: Parts of the model have not converged (some Rhats are &gt; 1.05). Be
 ## careful when analysing the results! We recommend running more iterations and/or
 ## setting stronger priors.</code></pre>
-<pre><code>## Warning: There were 15 divergent transitions after warmup. Increasing
+<pre><code>## Warning: There were 22 divergent transitions after warmup. Increasing
 ## adapt_delta above may help. See http://mc-stan.org/misc/warnings.html#divergent-
 ## transitions-after-warmup</code></pre>
 <pre><code>##  Family: gaussian 
 ##   Links: mu = identity; sigma = identity 
 ## Formula: estimate | se(se) ~ pop_sdi + n_random + n_models + outcome + temporal_window + typicality + me(all_rating, all_sd) + me(years_from_phd, years_from_phd_sd) + me(prior_belief, prior_belief_sd) 
-##    Data: msa_models (Number of observations: 167) 
+##    Data: msa_models (Number of observations: 178) 
 ##   Draws: 4 chains, each with iter = 4000; warmup = 2000; thin = 1;
 ##          total post-warmup draws = 8000
 ## 
 ## Population-Level Effects: 
 ##                                    Estimate Est.Error l-95% CI u-95% CI  Rhat
-## Intercept                              2.10      5.40    -5.24     9.83  5.39
-## pop_sdi                                0.25      1.25    -1.41     1.91  8.61
-## n_random                               0.58      0.67    -0.44     1.44  4.89
-## n_models                              -0.77      0.67    -1.42     0.25  5.02
-## outcome.durationMintercept             0.63      1.16    -1.22     1.85  8.58
-## outcome.f0Mintercept                  -0.19      1.00    -1.47     1.15  7.17
-## outcome.formantsMintercept             0.08      1.02    -0.84     1.76  5.11
-## outcome.intensityMintercept            0.06      0.32    -0.39     0.44  4.14
-## temporal_window.segmentMintercept      0.72      1.19    -1.25     1.72  5.92
-## temporal_window.wordMintercept         0.10      1.10    -1.07     1.52  6.76
-## temporal_window.phraseMintercept      -0.28      1.52    -1.84     1.88  9.71
-## temporal_window.sentenceMintercept    -0.81      1.20    -2.00     1.18  7.54
-## typicality.categoricalMintercept      -0.13      1.10    -1.43     1.61  5.56
-## meall_ratingall_sd                     0.79      1.11    -1.07     1.71 11.67
-## meyears_from_phdyears_from_phd_sd      0.02      1.30    -1.19     1.92  6.61
-## meprior_beliefprior_belief_sd          0.23      0.29    -0.08     0.55  4.52
+## Intercept                              2.19      5.43    -5.06    10.14  4.99
+## pop_sdi                                0.25      1.25    -1.41     1.91  4.57
+## n_random                               0.58      0.67    -0.44     1.44  4.52
+## n_models                              -0.78      0.67    -1.45     0.23  5.83
+## outcome.durationMintercept             0.63      1.16    -1.22     1.85 11.06
+## outcome.f0Mintercept                  -0.19      1.00    -1.47     1.15  4.95
+## outcome.formantsMintercept             0.08      1.02    -0.84     1.76  4.02
+## outcome.intensityMintercept            0.06      0.32    -0.39     0.44  3.44
+## temporal_window.segmentMintercept      0.72      1.19    -1.25     1.72  5.65
+## temporal_window.wordMintercept         0.10      1.10    -1.07     1.52  3.79
+## temporal_window.phraseMintercept      -0.28      1.52    -1.84     1.88  7.46
+## temporal_window.sentenceMintercept    -0.81      1.20    -2.00     1.18  9.56
+## typicality.categoricalMintercept      -0.13      1.10    -1.43     1.61  5.78
+## meall_ratingall_sd                     0.79      1.11    -1.07     1.70  4.25
+## meyears_from_phdyears_from_phd_sd      0.03      1.32    -1.20     1.96  4.17
+## meprior_beliefprior_belief_sd          0.20      0.20     0.03     0.52  3.89
 ##                                    Bulk_ESS Tail_ESS
-## Intercept                                 4       11
-## pop_sdi                                   4        4
-## n_random                                  4       NA
-## n_models                                  4        5
+## Intercept                                 4       NA
+## pop_sdi                                   4       20
+## n_random                                  4        9
+## n_models                                  4        4
 ## outcome.durationMintercept                4       NA
-## outcome.f0Mintercept                      4       NA
-## outcome.formantsMintercept                4       11
-## outcome.intensityMintercept               4       12
+## outcome.f0Mintercept                      4        4
+## outcome.formantsMintercept                4       NA
+## outcome.intensityMintercept               4       19
 ## temporal_window.segmentMintercept         4       NA
-## temporal_window.wordMintercept            4       NA
+## temporal_window.wordMintercept            4        5
 ## temporal_window.phraseMintercept          4       NA
-## temporal_window.sentenceMintercept        4        4
-## typicality.categoricalMintercept          4       NA
+## temporal_window.sentenceMintercept        4       NA
+## typicality.categoricalMintercept          4        4
 ## meall_ratingall_sd                        4       NA
 ## meyears_from_phdyears_from_phd_sd         4       NA
-## meprior_beliefprior_belief_sd             4       11
+## meprior_beliefprior_belief_sd             4       12
 ## 
 ## Family Specific Parameters: 
 ##       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
