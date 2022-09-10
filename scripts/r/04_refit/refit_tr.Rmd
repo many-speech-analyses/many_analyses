@@ -18,6 +18,7 @@ library(tidyverse)
 library(brms)
 library(readxl)
 library(lme4)
+library(here)
 
 # NOTE: one of the many packages interferes with tidyverse, so the select function throws an error!
 
@@ -41,7 +42,6 @@ clean_up <- . %>%
   dplyr::select(term, estimate, se = std.error)
 
 ```
-
 
 # trachyphyllia_lappa
 
@@ -323,7 +323,6 @@ trachyphyllia_lappa_6_f0maxnoun_cat <- brm(
   cores = 4,  
   file = "./data/analyses/models/trachyphyllia_lappa_6_f0maxnoun_cat"
   )
-  
   
 trachyphyllia_lappa_7_f0minnoun_cat <- brm(
   minimum_s ~  effect_cat + target_colour_s + 
@@ -1069,36 +1068,35 @@ pervagor_meeki_1_intnoun_cat <- brm(
   file = "./data/analyses/models/pervagor_meeki_1_intnoun_cat"
   )
 
-pervagor_meeki_2_f0meannoun_cat <- brm(
-  Mean_f0_st_s ~ 
-         effect_cat + 
-         + (effect_cat | speaker),
-  seed = 111,
-  data = data_meanf0_trim[data_meanf0_trim$word_type == "target_name",], 
-  cores = 4,  
-  file = "./data/analyses/models/pervagor_meeki_2_f0meannoun_cat"
-  )
-
-pervagor_meeki_3_f0maxnoun_cat <- brm(
-  Max_f0_st_s ~ 
-         effect_cat + 
-         + (1| speaker),
-  seed = 111,
-  data = data_maxf0_trim[data_maxf0_trim$word_type == "target_name",], 
-  cores = 4,  
-  file = "./data/analyses/models/pervagor_meeki_3_f0maxnoun_cat"
-  )
-
-pervagor_meeki_4_durnoun_cat <- brm(
+pervagor_meeki_2_durnoun_cat <- brm(
   Duration_ms_s ~ 
          effect_cat + 
          + (1| speaker),
   seed = 111,
   data = data_dur_trim[data_dur_trim$word_type == "target_name",], 
   cores = 4,  
-  file = "./data/analyses/models/pervagor_meeki_4_durnoun_cat"
+  file = "./data/analyses/models/pervagor_meeki_2_durnoun_cat"
   )
 
+pervagor_meeki_3_f0meannoun_cat <- brm(
+  Mean_f0_st_s ~ 
+         effect_cat + 
+         + (effect_cat | speaker),
+  seed = 111,
+  data = data_meanf0_trim[data_meanf0_trim$word_type == "target_name",], 
+  cores = 4,  
+  file = "./data/analyses/models/pervagor_meeki_3_f0meannoun_cat"
+  )
+
+pervagor_meeki_4_f0maxnoun_cat <- brm(
+  Max_f0_st_s ~ 
+         effect_cat + 
+         + (1| speaker),
+  seed = 111,
+  data = data_maxf0_trim[data_maxf0_trim$word_type == "target_name",], 
+  cores = 4,  
+  file = "./data/analyses/models/pervagor_meeki_4_f0maxnoun_cat"
+  )
 
 pervagor_meeki_5_intadj_cat <- brm(
   Overall_Intensity_s ~ 
@@ -1111,29 +1109,7 @@ pervagor_meeki_5_intadj_cat <- brm(
   file = "./data/analyses/models/pervagor_meeki_5_intadj_cat"
   )
 
-pervagor_meeki_6_f0meanadj_cat <- brm(
-  Mean_f0_st_s ~ 
-         effect_cat + 
-         + (1 | speaker)
-         + (1 | target_word),
-  seed = 111,
-  data = data_meanf0_trim[data_meanf0_trim$word_type == "target_colour",], 
-  cores = 4,  
-  file = "./data/analyses/models/pervagor_meeki_6_f0meanadj_cat"
-  )
-
-pervagor_meeki_7_f0maxadj_cat <- brm(
-  Max_f0_st_s ~ 
-         effect_cat + 
-         + (1 | speaker)
-         + (1 | target_word),
-  seed = 111,
-  data = data_maxf0_trim[data_maxf0_trim$word_type == "target_colour",], 
-  cores = 4,  
-  file = "./data/analyses/models/pervagor_meeki_7_f0maxadj_cat"
-  )
-
-pervagor_meeki_8_duradj_cat <- brm(
+pervagor_meeki_6_duradj_cat <- brm(
   Duration_ms_s ~ 
          effect_cat + 
           + (1 | speaker)
@@ -1141,8 +1117,32 @@ pervagor_meeki_8_duradj_cat <- brm(
   seed = 111,
   data = data_dur_trim[data_dur_trim$word_type == "target_colour",], 
   cores = 4,  
-  file = "./data/analyses/models/pervagor_meeki_8_duradj_cat"
+  file = "./data/analyses/models/pervagor_meeki_6_duradj_cat"
   )
+
+pervagor_meeki_7_f0meanadj_cat <- brm(
+  Mean_f0_st_s ~ 
+         effect_cat + 
+         + (1 | speaker)
+         + (1 | target_word),
+  seed = 111,
+  data = data_meanf0_trim[data_meanf0_trim$word_type == "target_colour",], 
+  cores = 4,  
+  file = "./data/analyses/models/pervagor_meeki_7_f0meanadj_cat"
+  )
+
+pervagor_meeki_8_f0maxadj_cat <- brm(
+  Max_f0_st_s ~ 
+         effect_cat + 
+         + (1 | speaker)
+         + (1 | target_word),
+  seed = 111,
+  data = data_maxf0_trim[data_maxf0_trim$word_type == "target_colour",], 
+  cores = 4,  
+  file = "./data/analyses/models/pervagor_meeki_8_f0maxadj_cat"
+  )
+
+
 
 ```
 
@@ -1301,7 +1301,6 @@ ggsave(filename = "./PCcurves_col.png", plot = pl, width = 20, height = 12, unit
 
 
 ```
-
 
 # dunkleosteus_inscriptus
 
