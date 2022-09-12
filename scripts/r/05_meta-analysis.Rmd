@@ -237,18 +237,46 @@ population_higher95_nest = fixef(meta_bm_nest)[1,4]
 ```
 
 ```{r meta-plot-1-nest}
-post_meta_nest %>%
-  ggplot(aes(x = reorder(model, post_mean), y = post_mean, colour = compelling)) +
+
+# merge dataset and model output (awkward)
+merged <- 
+  post_meta_nest %>%
+  #rename(model = model) %>% 
+  separate(model, sep = "_", into = c("t1","t2","t3","t4","t5", "t6", "t7", "t8")) %>% 
+  mutate(model_id = ifelse(is.na(t8) & is.na(t7) & is.na(t6),
+                           paste0(t3, "_", t4, "_", t5),
+                           ifelse(is.na(t8) & is.na(t7),
+                                  paste0(t3, "_", t4, "_", t5, "_", t6),
+                                  ifelse(is.na(t8),
+                                         paste0(t3, "_", t4, "_", t5, "_", t6, "_", t7),
+                                         paste0(t3, "_", t4, "_", t5, "_", t6, "_", t7, "_", t8)
+                )))) %>% 
+  select(-c("t1","t2","t3","t4","t5", "t6", "t7", "t8")) %>% 
+  full_join(msa_models) %>% 
+  mutate(lowerCI = estimate - 1.96*se,
+         higherCI = estimate + 1.96*se,
+         compelling_raw = as.factor(
+           case_when(
+            lowerCI > 0 ~ "negative", higherCI < 0 ~ "positive",
+            TRUE ~ "not compelling"
+            )
+         ))
+  
+meta_shrinkage <- 
+  ggplot(data = merged,
+    aes(x = reorder(model_id, post_mean), y = post_mean, colour = compelling)) +
   geom_hline(yintercept = 0, lty = "dotted") +
   geom_point(size = 0.5) +
-  geom_errorbar(aes(ymin = lower95, ymax = higher95), width = 0) +
-  scale_y_continuous(limits = c(-0.5, 1), breaks = c(-0.5, 0, 0.5, 1)) + 
+  geom_errorbar(aes(ymin = lower95, ymax = higher95), 
+                width = 0) +
+  scale_y_continuous(limits = c(-0.3, 1), breaks = c(-0.25, 0, 0.25, 0.5, 0.75)) + 
   annotate("text", x = c(30, 90, 150), y = 0.8,
            hjust = c(0, 0.5, 1),
            color = c(b4ss_colors[[2]], "black", b4ss_colors[[1]]),
            label = c("Negative (95% CrI)", "Not compelling", "Positive (95% CrI)")
            ) +
-  labs(x = "Submitted statistical models", y = "Standardized posterior effect size") +
+  labs(x = "Submitted typicality effect", 
+       y = "Standardized posterior effect size\n") +
   scale_color_manual(values = c(b4ss_colors[[1]], "black", b4ss_colors[[2]])) + 
   theme_classic() +
   theme(legend.position = "none",
@@ -257,12 +285,50 @@ post_meta_nest %>%
         axis.line = element_blank()
         )
 
-ggsave(filename = "figs/meta_plot1_nest.png",
+meta_raw <- 
+  ggplot(data = merged,
+    aes(x = reorder(model_id, estimate), 
+        y = estimate,
+        color = compelling_raw)) +
+  geom_hline(yintercept = 0, lty = "dotted") +
+  geom_errorbar(aes(x = reorder(model_id, estimate),
+                    ymin = estimate - 1.96*se, 
+                    ymax = estimate + 1.96*se), 
+                alpha = 0.5,
+                width = 0) +
+  geom_point(size = 0.5) +
+  annotate("text", x = c(30, 90, 150), y = 2,
+           hjust = c(0, 0.5, 1),
+           color = c(b4ss_colors[[2]], "black", b4ss_colors[[1]]),
+           label = c("Negative (95% CI)", "Not compelling", "Positive (95% CI)")
+           ) +
+  labs(x = "Submitted typicality effect", 
+       y = "Standardized posterior effect size\n") +
+  scale_color_manual(values = c(b4ss_colors[[1]], "black", b4ss_colors[[2]])) + 
+  theme_classic() +
+  theme(legend.position = "none",
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank(),
+        axis.line = element_blank()
+        )
+
+
+ggsave(filename = "figs/meta_plot1_shrinkage.png",
+       plot = meta_shrinkage,
        device = "png",
        width = 200, 
        height = 75,
        units = "mm", 
        dpi = 500)
+
+ggsave(filename = "figs/meta_plot1_raw.png",
+       plot = meta_raw,
+       device = "png",
+       width = 200, 
+       height = 75,
+       units = "mm", 
+       dpi = 500)
+
 ```
 
 # Analytic and researcher-related predictors model
@@ -390,18 +456,20 @@ outcome <- post_pred_outcome %>%
     geom_point(data = post_pred_outcome_agg,
                aes(x = predictor, y = post_mean)) +
     scale_fill_viridis_d(begin = 0, end = 0.8) +
-    annotate("text", x = 1.6, y = -0.055,
+    annotate("text", x = 1.6, y = -0.02,
              hjust= 0, 
              size = 2.5,
-             label = "analyzing f0 tends to provide\nmore negative effect sizes") +
+             label = "e.g. analyzing f0 tends to provide\nmore negative effect sizes") +
     annotate("curve",
-             x = 1.7, y = -0.045,
-             xend = 1.35, yend = -0.035, 
+             x = 1.5, y = -0.02,
+             xend = 1, yend = -0.045, 
              arrow = arrow(angle = 45, length = unit(.2, "cm"))) +
     labs(title = "A: Measurement choice matters.",
          subtitle = "Posterior predictions for different outcome variables",
-         x = "Predictors",
+         x = "\nPredictors",
          y = "Effect size difference to the overall mean\n") +
+    scale_y_continuous(limits = c(-0.08, 0.06),
+                       breaks = c(-0.05, 0, 0.05)) +
     theme_classic() +
     theme(legend.position = "none", axis.line = element_blank())
 
@@ -426,19 +494,21 @@ window <- post_pred_window %>%
                        end = 0.8) +
   annotate("text",
            x = 1.6,
-           y = 0.1,
+           y = 0.12,
            hjust= 0, 
            size = 2.5,
-           label = "e.g. analyzing segmental patterns tends\nto provide more negative effect sizes") +
+           label = "e.g. analyzing sentence patterns tends\nto provide more negative effect sizes") +
   annotate("curve",
-           x = 1.5, y = 0.1,
-           xend = 1, yend = -0.015, 
+           x = 1.5, y = 0.12,
+           xend = 1, yend = 0.01, 
            curvature = 0.3,
            arrow = arrow(angle = 45, 
                          length = unit(.2, "cm"))) +
+  scale_y_continuous(limits = c(-0.2, 0.2),
+                       breaks = c(-0.2, -0.1, 0, 0.1, 0.2)) +
   labs(title = "B: Measurement window matters.",
        subtitle = "Posterior predictions for different analysis windows",
-       x = "Predictors",
+       x = "\nPredictors",
        y = "Effect size difference to the overall mean\n") +
   theme_classic() +
   theme(legend.position = "none",axis.line = element_blank())
@@ -516,7 +586,7 @@ forest <- post_pred_forest %>%
     geom_point(pch = 21, fill = "white", color = "black", size = 4) +
     labs(title = "C: Forest plot",
          subtitle = "Model coefficients for all predictors",
-         y = "", x = "Effect size difference to the overall mean\n") +
+         y = "", x = "\nEffect size difference to the overall mean") +
     theme_classic() +
     theme(legend.position = "none", axis.line = element_blank())
 
@@ -530,6 +600,7 @@ ggsave(filename = "figs/alltogether.png",
        height = 200,
        units = "mm", 
        dpi = 500)
+
 ```
 
 ## Check correlation between predictors
