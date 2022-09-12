@@ -44,6 +44,7 @@ library(faux)
 library(tidybayes)
 library(here)
 library(googlesheets4)
+library(broom.mixed)
 ```
 
 ```{r analysis-preferences}
@@ -191,7 +192,7 @@ Do we measure fundamental frequency, intensity, or something else [@stevens2000]
 <!-- FIGURE -->
 (ref:forkingPaths) Illustration of the analytic flexibility associated with acoustic analyses. (A) An example of multiple possible and justifiable decisions when comparing two utterances; (B) Waveform and fundamental frequency (f0) track of the utterances *I can't bear ANOTHER meeting on Zoom* and *I can't bear another meeting on ZOOM*. The green boxes mark the word *another* in both sentences; (C) Spectrogram and f0 track of the word *another*, exemplifying possible operationalizations of differences in f0.
 
-```{r 'forkingPaths', echo=FALSE, fig.cap="(ref:forkingPaths)", out.width="100%"}
+```{r forkingPaths, echo=FALSE, fig.cap="(ref:forkingPaths)", out.width="100%"}
 knitr::include_graphics(here::here("figs", "ForkingPaths.tiff"), error = FALSE)
 ```
 <!-- END:FIGURE -->
@@ -251,7 +252,7 @@ Objects were referred to using noun phrases consisting of an adjective modifier 
 <!-- FIGURE -->
 (ref:procedural) Experimental procedure. The upper row illustrates the trial sequence for the speaker (participant) and the lower row illustrates the trial sequence for the confederate. After a preview of 1500ms the speaker sees an arrow indicating one of the referent (b). Reading the orthographic instructions out loud, the speaker gives the confederate verbal instructions onto which referent they should drag the cube (c). The confederate, in turn, drags the black cube onto the target referent (d). Both the arrow and the orthographic instruction disappear from the speaker's screen and a new referent is indicated by an arrow on the same display alongside a new orthographic instruction (e). The speaker gives the confederate verbal instructions (f) which the confederate follows by dragging the cube onto the next referent (g).
 
-```{r 'procedural', echo=FALSE, fig.cap="(ref:procedural)", out.width="100%"}
+```{r procedural, echo=FALSE, fig.cap="(ref:procedural)", out.width="100%"}
 knitr::include_graphics(here::here("figs", "procedure_plot.png"), error = FALSE)
 ```
 <!-- END: FIGURE -->
@@ -502,6 +503,9 @@ Analysts and initiating authors will discuss the limitations, results, and impli
 # Results
 
 ```{r load-models, message=FALSE, warning=FALSE}
+msa_mean_sd_df <- read_csv("data/analyses/msa_mean_sd_df.csv") %>%
+  filter(transformation == "none", mean > 10)
+
 msa_models <- readRDS(here("./data/analyses/msa_models.rds")) %>%
   mutate(
     outcome = as.factor(outcome),
@@ -639,7 +643,10 @@ team_desc_list <- team_desc_df %>%
 # team_desc_list$Initial$n_teams$val
 
 # number of analyses
-no_analyses = nrow(msa_models)
+no_analyses <- msa_models %>%
+  select(animal, model_n) %>%
+  distinct() %>%
+  nrow()
 
 # average analyses
 mean_analyses <- msa_models %>% 
@@ -804,6 +811,7 @@ meta_bm_prereg <- readRDS(here("./data/meta_analysis/meta_bm_prereg.rds"))
 
 meta_intercept_prereg <- fixef(meta_bm_prereg)
 meta_random_prereg <- ranef(meta_bm_prereg)
+meta_bm_prereg_tidy <- tidy(meta_bm_prereg)
 
 # wrangle by hand 
 post_meta_prereg <- meta_bm_prereg %>%
@@ -831,6 +839,7 @@ meta_bm <- readRDS(here("./data/meta_analysis/meta_bm.rds"))
 
 meta_intercept <- fixef(meta_bm)
 meta_random <- ranef(meta_bm)
+meta_bm_tidy <- tidy(meta_bm)
 
 # wrangle by hand 
 post_meta <- meta_bm %>%
@@ -858,6 +867,7 @@ meta_bm_nest <- readRDS(here("./data/meta_analysis/meta_bm_nest.rds"))
 
 meta_intercept_nest <- fixef(meta_bm_nest)
 meta_random_nest <- ranef(meta_bm_nest)
+meta_bm_nest_tidy <- tidy(meta_bm_nest)
 
 # wrangle by hand 
 post_meta_nest <- meta_bm_nest %>%
@@ -885,7 +895,7 @@ compelling_count_nest <- table(post_meta_nest$compelling)
 As explained in the **Methods** section, the primary aim of this is to assess the variability of the reported effects or, in other words, the degree of between-team variability.
 As a measure of between-team variability, we chose to use the meta-analytic group-level standard deviation $\sigma_{\alpha_{\text{t}}}$), i.e. the standard deviation of the group-level effect of team returned by the meta-analytic model.
 
-According to the meta-analytic model, the group-level standard deviation for team is between 0.03 and 0.07 standard units, at 95% credibility.
+According to the meta-analytic model, the group-level standard deviation for team is between `r round(meta_bm_prereg_tidy$conf.low[["sd_animal__Intercept"]], 2)` and `r round(meta_bm_prereg_tidy$conf.high[["sd_animal__Intercept"]], 2)` standard units, at 95% credibility.
 This means that the mean deviations of any individual team from the meta-analytic effect estimate range between ±0.06 to ±0.14 (0.3 * 2, 0.07 * 2) in standard units.
 
 **Non-preregistered**. In our preregistration we did not take into account the possibility that teams might submit multiple analyses/models.
@@ -894,11 +904,11 @@ We have run two further non-preregistered meta-analytic models:
 1. A model with model ID instead of team as the group-level effect (`(1|model_id)`).
 2. A model with team and model ID nested within team as group-level effects (`(1|team) + (1|team:model_id`).
 
-Based on the first non-preregistered model, the group-level standard deviation for model ID is between 0.11 and 0.15 standard units, at 95% credibility.
+Based on the first non-preregistered model, the group-level standard deviation for model ID is between `r round(meta_bm_tidy$conf.low[["sd_model_id__Intercept"]], 2)` and `r round(meta_bm_tidy$conf.high[["sd_model_id__Intercept"]], 2)` standard units, at 95% credibility.
 This means that the deviations of any individual analysis model from the meta-analytic effect estimate range between ±0.22 to ±0.3 (0.11 * 2, 0.15 * 2) in standard units.
 
 As for the second non-preregistered model, the posterior estimate for model ID is identical to that of the first non-preregistered model.
-On the other hand, the posterior 95% CrI for team in the second non-preregistered model is 0-0.05 standard units ($\beta$ = 0.02, SD = 0.01), corresponding to a mean deviation range of ±0.1 standard units.
+On the other hand, the posterior 95% CrI for team in the second non-preregistered model is `r round(meta_bm_nest_tidy$conf.low[["sd_animal__Intercept"]], 2)` and `r round(meta_bm_nest_tidy$conf.high[["sd_animal__Intercept"]], 2)` standard units ($\beta$ = 0.02, SD = 0.01), corresponding to a mean deviation range of ±0.1 standard units.
 
 We illustrate what all this means in actual acoustic measures by means of examples, taking the minimum and maximum sample standard deviation of each measure from our data.
 

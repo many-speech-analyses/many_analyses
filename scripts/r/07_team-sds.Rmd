@@ -1034,7 +1034,7 @@ final_teams %>% filter(animal == "alosa_atun") %>% pull(outcome) == alosa_atun_d
 source_part(
   file = here("scripts", "r", "04_refit", "refit_tr.Rmd"), 
   start = 1532, 
-  end = 1601
+  end = 1600
   )
 
 # Means and SDs
@@ -1224,7 +1224,7 @@ msa_mean_sd_df <- left_join(
       exclude == "no", 
       outcome %in% c("duration", "intensity", "f0")
     ) %>% 
-    select(animal, model_n, outcome, transformation) %>% 
+    select(animal, model_n, temporal_window, outcome, transformation) %>% 
     arrange(animal) %>% 
     mutate(row_n = row_number()), 
   by = c("animal", "row_n")
@@ -1236,7 +1236,7 @@ msa_mean_sd_df <- left_join(
       TRUE ~ transformation
     )) %>% 
   select(animal, model_n_rda = model_n.x, model_n_excel = model_n.y, model_n_match, 
-         dv, outcome, transformation, mean, sd) 
+         temporal_window, dv, outcome, transformation, mean, sd) 
 
 # Save as .csv
 if(F) {
