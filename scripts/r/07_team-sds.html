@@ -364,7 +364,7 @@ pre code {
 
 <h1 class="title toc-ignore">Extract team means and SDs</h1>
 <h4 class="author">Joseph V. Casillas</h4>
-<h4 class="date">Last update: 2022-09-09</h4>
+<h4 class="date">Last update: 2022-09-12</h4>
 
 </div>
 
@@ -1315,7 +1315,7 @@ chelonia_brummeri</h3>
 <pre class="r"><code>source_part(
   file = here(&quot;scripts&quot;, &quot;r&quot;, &quot;04_refit&quot;, &quot;refit_tr.Rmd&quot;), 
   start = 1532, 
-  end = 1601
+  end = 1600
   )
 
 # Means and SDs
@@ -1493,7 +1493,7 @@ msa_mean_sd_df &lt;- left_join(
       exclude == &quot;no&quot;, 
       outcome %in% c(&quot;duration&quot;, &quot;intensity&quot;, &quot;f0&quot;)
     ) %&gt;% 
-    select(animal, model_n, outcome, transformation) %&gt;% 
+    select(animal, model_n, temporal_window, outcome, transformation) %&gt;% 
     arrange(animal) %&gt;% 
     mutate(row_n = row_number()), 
   by = c(&quot;animal&quot;, &quot;row_n&quot;)
@@ -1505,7 +1505,7 @@ msa_mean_sd_df &lt;- left_join(
       TRUE ~ transformation
     )) %&gt;% 
   select(animal, model_n_rda = model_n.x, model_n_excel = model_n.y, model_n_match, 
-         dv, outcome, transformation, mean, sd) 
+         temporal_window, dv, outcome, transformation, mean, sd) 
 
 # Save as .csv
 if(F) {
@@ -1517,15 +1517,16 @@ msa_mean_sd_df %&gt;%
   knitr::kable()</code></pre>
 <table>
 <colgroup>
-<col width="16%" />
+<col width="14%" />
+<col width="7%" />
 <col width="8%" />
-<col width="9%" />
+<col width="8%" />
 <col width="9%" />
 <col width="6%" />
 <col width="6%" />
-<col width="24%" />
+<col width="22%" />
 <col width="8%" />
-<col width="8%" />
+<col width="7%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -1533,6 +1534,7 @@ msa_mean_sd_df %&gt;%
 <th align="right">model_n_rda</th>
 <th align="right">model_n_excel</th>
 <th align="right">model_n_match</th>
+<th align="left">temporal_window</th>
 <th align="left">dv</th>
 <th align="left">outcome</th>
 <th align="left">transformation</th>
@@ -1546,6 +1548,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">1</td>
 <td align="right">1</td>
 <td align="right">1</td>
+<td align="left">segment</td>
 <td align="left">f0</td>
 <td align="left">f0</td>
 <td align="left">none</td>
@@ -1557,6 +1560,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">2</td>
 <td align="right">2</td>
 <td align="right">1</td>
+<td align="left">segment</td>
 <td align="left">intensity</td>
 <td align="left">intensity</td>
 <td align="left">none</td>
@@ -1568,6 +1572,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">3</td>
 <td align="right">3</td>
 <td align="right">1</td>
+<td align="left">segment</td>
 <td align="left">duration</td>
 <td align="left">duration</td>
 <td align="left">none</td>
@@ -1579,6 +1584,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">6</td>
 <td align="right">6</td>
 <td align="right">1</td>
+<td align="left">segment</td>
 <td align="left">f0</td>
 <td align="left">f0</td>
 <td align="left">none</td>
@@ -1590,6 +1596,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">7</td>
 <td align="right">7</td>
 <td align="right">1</td>
+<td align="left">segment</td>
 <td align="left">intensity</td>
 <td align="left">intensity</td>
 <td align="left">none</td>
@@ -1601,6 +1608,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">8</td>
 <td align="right">8</td>
 <td align="right">1</td>
+<td align="left">segment</td>
 <td align="left">duration</td>
 <td align="left">duration</td>
 <td align="left">none</td>
@@ -1612,6 +1620,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">11</td>
 <td align="right">11</td>
 <td align="right">1</td>
+<td align="left">segment</td>
 <td align="left">duration</td>
 <td align="left">duration</td>
 <td align="left">none</td>
@@ -1623,6 +1632,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">12</td>
 <td align="right">12</td>
 <td align="right">1</td>
+<td align="left">segment</td>
 <td align="left">duration</td>
 <td align="left">duration</td>
 <td align="left">none</td>
@@ -1634,6 +1644,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">14</td>
 <td align="right">14</td>
 <td align="right">1</td>
+<td align="left">word</td>
 <td align="left">duration</td>
 <td align="left">duration</td>
 <td align="left">none</td>
@@ -1645,6 +1656,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">15</td>
 <td align="right">15</td>
 <td align="right">1</td>
+<td align="left">pause</td>
 <td align="left">duration</td>
 <td align="left">duration</td>
 <td align="left">none</td>
@@ -1656,6 +1668,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">16</td>
 <td align="right">16</td>
 <td align="right">1</td>
+<td align="left">sentence</td>
 <td align="left">duration</td>
 <td align="left">duration</td>
 <td align="left">none</td>
@@ -1667,6 +1680,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">1</td>
 <td align="right">1</td>
 <td align="right">1</td>
+<td align="left">word</td>
 <td align="left">intensity</td>
 <td align="left">intensity</td>
 <td align="left">intensity squared</td>
@@ -1678,6 +1692,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">2</td>
 <td align="right">2</td>
 <td align="right">1</td>
+<td align="left">segment</td>
 <td align="left">f0</td>
 <td align="left">f0</td>
 <td align="left">Median split above and below 150 hz</td>
@@ -1689,6 +1704,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">3</td>
 <td align="right">3</td>
 <td align="right">1</td>
+<td align="left">segment</td>
 <td align="left">f0</td>
 <td align="left">f0</td>
 <td align="left">Median split above and below 150 hz</td>
@@ -1700,6 +1716,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">4</td>
 <td align="right">4</td>
 <td align="right">1</td>
+<td align="left">segment</td>
 <td align="left">duration</td>
 <td align="left">duration</td>
 <td align="left">none</td>
@@ -1711,6 +1728,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">1</td>
 <td align="right">1</td>
 <td align="right">1</td>
+<td align="left">word</td>
 <td align="left">f0</td>
 <td align="left">f0</td>
 <td align="left">normalized</td>
@@ -1722,6 +1740,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">2</td>
 <td align="right">2</td>
 <td align="right">1</td>
+<td align="left">word</td>
 <td align="left">f0</td>
 <td align="left">f0</td>
 <td align="left">normalized</td>
@@ -1733,6 +1752,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">3</td>
 <td align="right">3</td>
 <td align="right">1</td>
+<td align="left">word</td>
 <td align="left">intensity</td>
 <td align="left">intensity</td>
 <td align="left">normalized</td>
@@ -1744,6 +1764,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">4</td>
 <td align="right">4</td>
 <td align="right">1</td>
+<td align="left">word</td>
 <td align="left">intensity</td>
 <td align="left">intensity</td>
 <td align="left">normalized</td>
@@ -1755,6 +1776,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">5</td>
 <td align="right">5</td>
 <td align="right">1</td>
+<td align="left">word</td>
 <td align="left">duration</td>
 <td align="left">duration</td>
 <td align="left">log transformed</td>
@@ -1766,6 +1788,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">6</td>
 <td align="right">6</td>
 <td align="right">1</td>
+<td align="left">word</td>
 <td align="left">duration</td>
 <td align="left">duration</td>
 <td align="left">log transformed</td>
@@ -1777,6 +1800,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">1</td>
 <td align="right">1</td>
 <td align="right">1</td>
+<td align="left">word</td>
 <td align="left">f0</td>
 <td align="left">f0</td>
 <td align="left">none</td>
@@ -1788,6 +1812,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">1</td>
 <td align="right">1</td>
 <td align="right">1</td>
+<td align="left">segment</td>
 <td align="left">duration</td>
 <td align="left">duration</td>
 <td align="left">none</td>
@@ -1799,6 +1824,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">2</td>
 <td align="right">2</td>
 <td align="right">1</td>
+<td align="left">segment</td>
 <td align="left">intensity</td>
 <td align="left">intensity</td>
 <td align="left">none</td>
@@ -1810,6 +1836,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">3</td>
 <td align="right">3</td>
 <td align="right">1</td>
+<td align="left">word</td>
 <td align="left">f0</td>
 <td align="left">f0</td>
 <td align="left">none</td>
@@ -1821,6 +1848,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">4</td>
 <td align="right">4</td>
 <td align="right">1</td>
+<td align="left">word</td>
 <td align="left">f0</td>
 <td align="left">f0</td>
 <td align="left">none</td>
@@ -1832,6 +1860,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">1</td>
 <td align="right">1</td>
 <td align="right">1</td>
+<td align="left">word</td>
 <td align="left">duration</td>
 <td align="left">duration</td>
 <td align="left">none</td>
@@ -1843,6 +1872,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">1</td>
 <td align="right">1</td>
 <td align="right">1</td>
+<td align="left">segment</td>
 <td align="left">duration</td>
 <td align="left">duration</td>
 <td align="left">none</td>
@@ -1854,6 +1884,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">2</td>
 <td align="right">2</td>
 <td align="right">1</td>
+<td align="left">segment</td>
 <td align="left">intensity</td>
 <td align="left">intensity</td>
 <td align="left">none</td>
@@ -1865,6 +1896,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">3</td>
 <td align="right">3</td>
 <td align="right">1</td>
+<td align="left">segment</td>
 <td align="left">f0</td>
 <td align="left">f0</td>
 <td align="left">none</td>
@@ -1876,6 +1908,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">1</td>
 <td align="right">1</td>
 <td align="right">1</td>
+<td align="left">word</td>
 <td align="left">duration</td>
 <td align="left">duration</td>
 <td align="left">none</td>
@@ -1887,6 +1920,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">1</td>
 <td align="right">1</td>
 <td align="right">1</td>
+<td align="left">word</td>
 <td align="left">f0</td>
 <td align="left">f0</td>
 <td align="left">normalised</td>
@@ -1898,6 +1932,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">2</td>
 <td align="right">2</td>
 <td align="right">1</td>
+<td align="left">word</td>
 <td align="left">f0</td>
 <td align="left">f0</td>
 <td align="left">normalised</td>
@@ -1909,6 +1944,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">3</td>
 <td align="right">3</td>
 <td align="right">1</td>
+<td align="left">phrase</td>
 <td align="left">f0</td>
 <td align="left">f0</td>
 <td align="left">normalised</td>
@@ -1920,6 +1956,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">1</td>
 <td align="right">1</td>
 <td align="right">1</td>
+<td align="left">word</td>
 <td align="left">duration</td>
 <td align="left">duration</td>
 <td align="left">none</td>
@@ -1931,6 +1968,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">2</td>
 <td align="right">2</td>
 <td align="right">1</td>
+<td align="left">word</td>
 <td align="left">duration</td>
 <td align="left">duration</td>
 <td align="left">none</td>
@@ -1942,6 +1980,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">3</td>
 <td align="right">3</td>
 <td align="right">1</td>
+<td align="left">word</td>
 <td align="left">duration</td>
 <td align="left">duration</td>
 <td align="left">none</td>
@@ -1953,6 +1992,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">4</td>
 <td align="right">4</td>
 <td align="right">1</td>
+<td align="left">word</td>
 <td align="left">duration</td>
 <td align="left">duration</td>
 <td align="left">none</td>
@@ -1964,6 +2004,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">5</td>
 <td align="right">5</td>
 <td align="right">1</td>
+<td align="left">phrase</td>
 <td align="left">duration</td>
 <td align="left">duration</td>
 <td align="left">none</td>
@@ -1975,6 +2016,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">1</td>
 <td align="right">1</td>
 <td align="right">1</td>
+<td align="left">sentence</td>
 <td align="left">f0</td>
 <td align="left">f0</td>
 <td align="left">none</td>
@@ -1986,6 +2028,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">1</td>
 <td align="right">1</td>
 <td align="right">1</td>
+<td align="left">sentence</td>
 <td align="left">intensity</td>
 <td align="left">intensity</td>
 <td align="left">none</td>
@@ -1997,6 +2040,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">1</td>
 <td align="right">1</td>
 <td align="right">1</td>
+<td align="left">sentence</td>
 <td align="left">duration</td>
 <td align="left">duration</td>
 <td align="left">none</td>
@@ -2008,6 +2052,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">1</td>
 <td align="right">1</td>
 <td align="right">1</td>
+<td align="left">word</td>
 <td align="left">f0</td>
 <td align="left">f0</td>
 <td align="left">none</td>
@@ -2019,6 +2064,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">1</td>
 <td align="right">1</td>
 <td align="right">1</td>
+<td align="left">segment</td>
 <td align="left">intensity</td>
 <td align="left">intensity</td>
 <td align="left">Intensity difference</td>
@@ -2030,6 +2076,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">1</td>
 <td align="right">1</td>
 <td align="right">1</td>
+<td align="left">phrase</td>
 <td align="left">duration</td>
 <td align="left">duration</td>
 <td align="left">centered</td>
@@ -2041,6 +2088,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">2</td>
 <td align="right">2</td>
 <td align="right">1</td>
+<td align="left">word</td>
 <td align="left">duration</td>
 <td align="left">duration</td>
 <td align="left">centered</td>
@@ -2052,6 +2100,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">3</td>
 <td align="right">3</td>
 <td align="right">1</td>
+<td align="left">word</td>
 <td align="left">duration</td>
 <td align="left">duration</td>
 <td align="left">centered</td>
@@ -2063,6 +2112,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">4</td>
 <td align="right">4</td>
 <td align="right">1</td>
+<td align="left">segment</td>
 <td align="left">duration</td>
 <td align="left">duration</td>
 <td align="left">centered</td>
@@ -2074,6 +2124,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">5</td>
 <td align="right">5</td>
 <td align="right">1</td>
+<td align="left">segment</td>
 <td align="left">duration</td>
 <td align="left">duration</td>
 <td align="left">centered</td>
@@ -2085,6 +2136,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">6</td>
 <td align="right">6</td>
 <td align="right">1</td>
+<td align="left">segment</td>
 <td align="left">intensity</td>
 <td align="left">intensity</td>
 <td align="left">centered</td>
@@ -2096,6 +2148,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">7</td>
 <td align="right">7</td>
 <td align="right">1</td>
+<td align="left">segment</td>
 <td align="left">intensity</td>
 <td align="left">intensity</td>
 <td align="left">centered</td>
@@ -2107,6 +2160,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">1</td>
 <td align="right">1</td>
 <td align="right">1</td>
+<td align="left">segment</td>
 <td align="left">duration</td>
 <td align="left">duration</td>
 <td align="left">none</td>
@@ -2118,6 +2172,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">2</td>
 <td align="right">2</td>
 <td align="right">1</td>
+<td align="left">segment</td>
 <td align="left">intensity</td>
 <td align="left">intensity</td>
 <td align="left">none</td>
@@ -2129,6 +2184,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">1</td>
 <td align="right">1</td>
 <td align="right">1</td>
+<td align="left">segment</td>
 <td align="left">intensity</td>
 <td align="left">intensity</td>
 <td align="left">none</td>
@@ -2140,6 +2196,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">2</td>
 <td align="right">2</td>
 <td align="right">1</td>
+<td align="left">segment</td>
 <td align="left">f0</td>
 <td align="left">f0</td>
 <td align="left">none</td>
@@ -2151,6 +2208,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">3</td>
 <td align="right">3</td>
 <td align="right">1</td>
+<td align="left">segment</td>
 <td align="left">f0</td>
 <td align="left">f0</td>
 <td align="left">none</td>
@@ -2162,6 +2220,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">1</td>
 <td align="right">1</td>
 <td align="right">1</td>
+<td align="left">other</td>
 <td align="left">f0</td>
 <td align="left">f0</td>
 <td align="left">none</td>
@@ -2173,6 +2232,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">2</td>
 <td align="right">2</td>
 <td align="right">1</td>
+<td align="left">other</td>
 <td align="left">f0</td>
 <td align="left">f0</td>
 <td align="left">none</td>
@@ -2184,6 +2244,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">4</td>
 <td align="right">4</td>
 <td align="right">1</td>
+<td align="left">other</td>
 <td align="left">f0</td>
 <td align="left">f0</td>
 <td align="left">none</td>
@@ -2195,6 +2256,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">1</td>
 <td align="right">1</td>
 <td align="right">1</td>
+<td align="left">segment</td>
 <td align="left">duration</td>
 <td align="left">duration</td>
 <td align="left">none</td>
@@ -2206,6 +2268,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">1</td>
 <td align="right">1</td>
 <td align="right">1</td>
+<td align="left">segment</td>
 <td align="left">f0</td>
 <td align="left">f0</td>
 <td align="left">none</td>
@@ -2217,6 +2280,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">1</td>
 <td align="right">1</td>
 <td align="right">1</td>
+<td align="left">word</td>
 <td align="left">f0</td>
 <td align="left">f0</td>
 <td align="left">none</td>
@@ -2228,6 +2292,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">1</td>
 <td align="right">1</td>
 <td align="right">1</td>
+<td align="left">word</td>
 <td align="left">intensity</td>
 <td align="left">intensity</td>
 <td align="left">none</td>
@@ -2239,6 +2304,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">2</td>
 <td align="right">2</td>
 <td align="right">1</td>
+<td align="left">word</td>
 <td align="left">duration</td>
 <td align="left">duration</td>
 <td align="left">none</td>
@@ -2250,6 +2316,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">3</td>
 <td align="right">3</td>
 <td align="right">1</td>
+<td align="left">word</td>
 <td align="left">f0</td>
 <td align="left">f0</td>
 <td align="left">none</td>
@@ -2261,6 +2328,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">4</td>
 <td align="right">4</td>
 <td align="right">1</td>
+<td align="left">word</td>
 <td align="left">f0</td>
 <td align="left">f0</td>
 <td align="left">none</td>
@@ -2272,6 +2340,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">5</td>
 <td align="right">5</td>
 <td align="right">1</td>
+<td align="left">word</td>
 <td align="left">intensity</td>
 <td align="left">intensity</td>
 <td align="left">none</td>
@@ -2283,6 +2352,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">6</td>
 <td align="right">6</td>
 <td align="right">1</td>
+<td align="left">word</td>
 <td align="left">duration</td>
 <td align="left">duration</td>
 <td align="left">none</td>
@@ -2294,6 +2364,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">7</td>
 <td align="right">7</td>
 <td align="right">1</td>
+<td align="left">word</td>
 <td align="left">f0</td>
 <td align="left">f0</td>
 <td align="left">none</td>
@@ -2305,6 +2376,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">8</td>
 <td align="right">8</td>
 <td align="right">1</td>
+<td align="left">word</td>
 <td align="left">f0</td>
 <td align="left">f0</td>
 <td align="left">none</td>
@@ -2316,6 +2388,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">1</td>
 <td align="right">1</td>
 <td align="right">1</td>
+<td align="left">word</td>
 <td align="left">f0</td>
 <td align="left">f0</td>
 <td align="left">none</td>
@@ -2327,6 +2400,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">1</td>
 <td align="right">1</td>
 <td align="right">1</td>
+<td align="left">segment</td>
 <td align="left">duration</td>
 <td align="left">duration</td>
 <td align="left">none</td>
@@ -2338,6 +2412,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">2</td>
 <td align="right">2</td>
 <td align="right">1</td>
+<td align="left">segment</td>
 <td align="left">f0</td>
 <td align="left">f0</td>
 <td align="left">none</td>
@@ -2349,6 +2424,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">3</td>
 <td align="right">3</td>
 <td align="right">1</td>
+<td align="left">segment</td>
 <td align="left">intensity</td>
 <td align="left">intensity</td>
 <td align="left">none</td>
@@ -2360,6 +2436,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">1</td>
 <td align="right">1</td>
 <td align="right">1</td>
+<td align="left">segment</td>
 <td align="left">duration</td>
 <td align="left">duration</td>
 <td align="left">none</td>
@@ -2371,6 +2448,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">1</td>
 <td align="right">1</td>
 <td align="right">1</td>
+<td align="left">word</td>
 <td align="left">duration</td>
 <td align="left">duration</td>
 <td align="left">none</td>
@@ -2382,6 +2460,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">1</td>
 <td align="right">1</td>
 <td align="right">1</td>
+<td align="left">word</td>
 <td align="left">duration</td>
 <td align="left">duration</td>
 <td align="left">none</td>
@@ -2393,6 +2472,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">2</td>
 <td align="right">2</td>
 <td align="right">1</td>
+<td align="left">word</td>
 <td align="left">f0</td>
 <td align="left">f0</td>
 <td align="left">none</td>
@@ -2404,6 +2484,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">3</td>
 <td align="right">3</td>
 <td align="right">1</td>
+<td align="left">word</td>
 <td align="left">duration</td>
 <td align="left">duration</td>
 <td align="left">none</td>
@@ -2415,6 +2496,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">4</td>
 <td align="right">4</td>
 <td align="right">1</td>
+<td align="left">word</td>
 <td align="left">f0</td>
 <td align="left">f0</td>
 <td align="left">none</td>
@@ -2426,6 +2508,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">5</td>
 <td align="right">5</td>
 <td align="right">1</td>
+<td align="left">word</td>
 <td align="left">f0</td>
 <td align="left">f0</td>
 <td align="left">none</td>
@@ -2437,6 +2520,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">1</td>
 <td align="right">1</td>
 <td align="right">1</td>
+<td align="left">word</td>
 <td align="left">duration</td>
 <td align="left">duration</td>
 <td align="left">none</td>
@@ -2448,6 +2532,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">2</td>
 <td align="right">2</td>
 <td align="right">1</td>
+<td align="left">word</td>
 <td align="left">f0</td>
 <td align="left">f0</td>
 <td align="left">none</td>
@@ -2459,6 +2544,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">3</td>
 <td align="right">3</td>
 <td align="right">1</td>
+<td align="left">word</td>
 <td align="left">f0</td>
 <td align="left">f0</td>
 <td align="left">none</td>
@@ -2470,6 +2556,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">4</td>
 <td align="right">4</td>
 <td align="right">1</td>
+<td align="left">word</td>
 <td align="left">f0</td>
 <td align="left">f0</td>
 <td align="left">none</td>
@@ -2481,6 +2568,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">5</td>
 <td align="right">5</td>
 <td align="right">1</td>
+<td align="left">word</td>
 <td align="left">duration</td>
 <td align="left">duration</td>
 <td align="left">none</td>
@@ -2492,6 +2580,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">6</td>
 <td align="right">6</td>
 <td align="right">1</td>
+<td align="left">word</td>
 <td align="left">f0</td>
 <td align="left">f0</td>
 <td align="left">none</td>
@@ -2503,6 +2592,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">7</td>
 <td align="right">7</td>
 <td align="right">1</td>
+<td align="left">word</td>
 <td align="left">f0</td>
 <td align="left">f0</td>
 <td align="left">none</td>
@@ -2514,6 +2604,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">8</td>
 <td align="right">8</td>
 <td align="right">1</td>
+<td align="left">word</td>
 <td align="left">f0</td>
 <td align="left">f0</td>
 <td align="left">none</td>
@@ -2525,6 +2616,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">4</td>
 <td align="right">4</td>
 <td align="right">1</td>
+<td align="left">segment</td>
 <td align="left">duration</td>
 <td align="left">duration</td>
 <td align="left">none</td>
@@ -2536,6 +2628,7 @@ msa_mean_sd_df %&gt;%
 <td align="right">1</td>
 <td align="right">1</td>
 <td align="right">1</td>
+<td align="left">word</td>
 <td align="left">f0</td>
 <td align="left">f0</td>
 <td align="left">none</td>
