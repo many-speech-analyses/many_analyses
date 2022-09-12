@@ -639,7 +639,10 @@ team_desc_list <- team_desc_df %>%
 # team_desc_list$Initial$n_teams$val
 
 # number of analyses
-no_analyses = nrow(msa_models)
+no_analyses <- msa_models %>%
+  select(animal, model_n) %>%
+  distinct() %>%
+  nrow()
 
 # average analyses
 mean_analyses <- msa_models %>% 
