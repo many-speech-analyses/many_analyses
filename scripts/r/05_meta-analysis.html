@@ -640,8 +640,10 @@ merged &lt;-
              pch = 17,
              fill = &quot;black&quot;,
              alpha = 0.2) +
-  geom_errorbar(aes(ymin = estimate - 1.96*se, 
-                    ymax = estimate + 1.96*se),
+  geom_segment(aes(xend = reorder(model_id, post_mean), 
+                   y = estimate - 1.96*se, 
+                   yend = estimate + 1.96*se),
+                lineend = &quot;round&quot;,
                 size = 1.1,
                 width = 0,
                 color = &quot;black&quot;,
@@ -652,7 +654,7 @@ merged &lt;-
   scale_x_discrete(expand =  c(0.05,0.05)) + 
   annotate(&quot;text&quot;, x = c(30, 90, 150), y = 2.2,
            hjust = c(0, 0.5, 1),
-           color = c(b4ss_colors[[2]], &quot;black&quot;, b4ss_colors[[1]]),
+           color = c(&quot;#ef8a62&quot;, &quot;black&quot;, &quot;#67a9cf&quot;),
            label = c(&quot;Negative (95% CrI)&quot;, &quot;Not compelling&quot;, &quot;Positive (95% CrI)&quot;)
            ) +
   # annotate(&quot;text&quot;, x = 151, y = 1.5,
@@ -675,16 +677,15 @@ merged &lt;-
        subtitle = &quot;Raw estimates extracted from teams&#39; models (grey),\nshrunken estimates from meta-analytical model (black)\n&quot;,
        x = &quot;Submitted typicality effect&quot;, 
        y = &quot;Standardized posterior effect size\n&quot;) +
-  scale_color_manual(values = c(b4ss_colors[[1]], &quot;black&quot;, b4ss_colors[[2]])) + 
+  scale_color_manual(values = c(&quot;#67a9cf&quot;,&quot;black&quot;,&quot;#ef8a62&quot;)) + 
   theme_classic() +
   theme(legend.position = &quot;none&quot;,
         axis.text.x = element_blank(),
         axis.ticks.x = element_blank(),
         axis.line = element_blank()
-        )
-
-
-meta_raw &lt;- 
+        )</code></pre>
+<pre><code>## Warning: Ignoring unknown parameters: width</code></pre>
+<pre class="r"><code>meta_raw &lt;- 
   ggplot(data = merged,
     aes(x = reorder(model_id, estimate), 
         y = estimate,
