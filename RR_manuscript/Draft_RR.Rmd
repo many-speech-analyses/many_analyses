@@ -897,12 +897,25 @@ meta_sd_chi <- meta_bm_tidy$conf.high[["sd_model_id__Intercept"]]
 msa_sd <- msa_mean_sd_df %>% group_by(outcome, temporal_window) %>%
   summarise(
     sd_min = min(sd),
-    sd_med = mean(sd),
+    # sd_mean = mean(sd),
     sd_max = max(sd),
     .groups = "drop"
   )
 
-msa_sd_
+msa_sd_sd_lo <- msa_sd %>%
+  mutate(
+    across(starts_with("sd_"), ~.x * meta_sd_clo),
+    ci = "low"
+  ) %>%
+  pivot_longer(sd_min:sd_max, names_to = "sd")
+msa_sd_sd_hi <- msa_sd %>%
+  mutate(
+    across(starts_with("sd_"), ~.x * meta_sd_chi),
+    ci = "high"
+  ) %>%
+  pivot_longer(sd_min:sd_max, names_to = "sd")
+
+msa_sd_sd <- bind_rows(msa_sd_sd_lo, msa_sd_sd_hi)
 ```
 
 ### Between-team variability
@@ -951,7 +964,7 @@ Notably, while the majority of models yields inconclusive results, there are `r 
 <!-- TR: ADD PARAGRAPH ON HOW MANY CLAIMED THERE TO BE AN EFFECT.--> 
 
 ```{r plot-meta1, echo = FALSE, fig.cap="(ref:metaPlot1)", out.width="100%"}
-knitr::include_graphics(here::here("./figs/meta_plot1_nest.png"), error = FALSE)
+knitr::include_graphics(here::here("./figs/meta_plot1_shrinkage.png"), error = FALSE)
 ```
 
 ## Analytic and researcher-related predictors
