@@ -635,7 +635,44 @@ This means that the deviations of any individual analysis model from the meta-an
 As for the second non-preregistered model, the posterior estimate for model ID is identical to that of the first non-preregistered model.
 On the other hand, the posterior 95\% CrI for team in the second non-preregistered model is 0 and 0.05 standard units (\(\beta\) = 0.02, SD = 0.01), corresponding to a mean deviation range of ±0.1 standard units.
 
-We illustrate what all this means in actual acoustic measures by means of examples, taking the minimum and maximum sample standard deviation of each measure from our data.
+\begin{tabular}{l|l|r|r}
+\hline
+outcome & temporal\_window & sd\_min & sd\_max\\
+\hline
+duration & segment & 33.4 & 51.4\\
+\hline
+duration & word & 32.6 & 119.8\\
+\hline
+f0 & segment & 40.2 & 44.6\\
+\hline
+f0 & word & 4.0 & 47.2\\
+\hline
+intensity & segment & 3.3 & 7.1\\
+\hline
+intensity & word & 3.5 & 3.9\\
+\hline
+\end{tabular}
+
+We illustrate what this means in actual acoustic measures by means of examples.
+For each of the submitted analyses that included duration, fundamental frequency or intensity as outcome, we have calculated the standard deviation of those measures in the submitted data table.
+We then selected representative values of standard deviations for the three outcome measurements extracted either from specific segments or words.
+
+Table XXX reports the minimum and maximum SD values taken from a representative range.
+If we take segments, we have found duration measurements (as taken by the teams who used duration) to have standard deviations that range between 33.4 and 51.4 ms.
+Given that the estimated between-model variability in standard units as we obtained from the meta-analytic estimate is between 0.11 and 0.15, we can convert the standard units into milliseconds by multiplying them with the standard deviation values in milliseconds: \(33.4 * 0.11 = 3.8\) ms, \(51.4 * 0.11 = 5.7\) ms; \(33.4 * 0.15 = 5\) ms, \(51.4 * 0.15 = 7.7\) ms.
+We can thus calculate 95\% intervals of the estimated between-model variability in milliseconds: 7.4-11.2 ms based on the low CI estimate 0.11, 9.8-15.1 ms based on the high CI estimate 0.15.
+
+\begin{verbatim}
+## # A tibble: 6 x 5
+##   outcome   temporal_window low      high     unit 
+##   <chr>     <chr>           <chr>    <chr>    <chr>
+## 1 duration  segment         7.4-11.4 10-15.4  ms   
+## 2 duration  word            7.2-26.5 9.8-35.8 ms   
+## 3 f0        segment         8.9-9.8  12-13.3  hz   
+## 4 f0        word            0.9-10.4 1.2-14.1 hz   
+## 5 intensity segment         0.7-1.6  1-2.1    dB   
+## 6 intensity word            0.8-0.9  1-1.2    dB
+\end{verbatim}
 
 \hypertarget{meta-analytic-intercept}{%
 \subsubsection{Meta-analytic intercept}\label{meta-analytic-intercept}}

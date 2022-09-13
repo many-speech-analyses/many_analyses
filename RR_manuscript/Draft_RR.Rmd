@@ -904,18 +904,25 @@ msa_sd <- msa_mean_sd_df %>% group_by(outcome, temporal_window) %>%
 
 msa_sd_sd_lo <- msa_sd %>%
   mutate(
-    across(starts_with("sd_"), ~.x * meta_sd_clo),
+    across(starts_with("sd_"), ~.x * meta_sd_clo * 1.96),
     ci = "low"
   ) %>%
   pivot_longer(sd_min:sd_max, names_to = "sd")
 msa_sd_sd_hi <- msa_sd %>%
   mutate(
-    across(starts_with("sd_"), ~.x * meta_sd_chi),
+    across(starts_with("sd_"), ~.x * meta_sd_chi * 1.96),
     ci = "high"
   ) %>%
   pivot_longer(sd_min:sd_max, names_to = "sd")
 
-msa_sd_sd <- bind_rows(msa_sd_sd_lo, msa_sd_sd_hi)
+msa_sd_sd <- bind_rows(msa_sd_sd_lo, msa_sd_sd_hi) %>%
+  mutate(value = round(value, 1)) %>%
+  pivot_wider(names_from = c(ci, sd), values_from = value) %>%
+  unite("low", low_sd_min, low_sd_max, sep = "-") %>%
+  unite("high", high_sd_min, high_sd_max, sep = "-") %>%
+  mutate(
+    unit = c("ms", "ms", "hz", "hz", "dB", "dB")
+  )
 ```
 
 ### Between-team variability
@@ -938,7 +945,23 @@ This means that the deviations of any individual analysis model from the meta-an
 As for the second non-preregistered model, the posterior estimate for model ID is identical to that of the first non-preregistered model.
 On the other hand, the posterior 95% CrI for team in the second non-preregistered model is `r round(meta_bm_nest_tidy$conf.low[["sd_animal__Intercept"]], 2)` and `r round(meta_bm_nest_tidy$conf.high[["sd_animal__Intercept"]], 2)` standard units ($\beta$ = 0.02, SD = 0.01), corresponding to a mean deviation range of ±0.1 standard units.
 
-We illustrate what all this means in actual acoustic measures by means of examples, taking the minimum and maximum sample standard deviation of each measure from our data.
+```{r}
+knitr::kable(msa_sd, digits = 1)
+```
+
+We illustrate what this means in actual acoustic measures by means of examples.
+For each of the submitted analyses that included duration, fundamental frequency or intensity as outcome, we have calculated the standard deviation of those measures in the submitted data table.
+We then selected representative values of standard deviations for the three outcome measurements extracted either from specific segments or words.
+
+Table XXX reports the minimum and maximum SD values taken from a representative range.
+If we take segments, we have found duration measurements (as taken by the teams who used duration) to have standard deviations that range between 33.4 and 51.4 ms.
+Given that the estimated between-model variability in standard units as we obtained from the meta-analytic estimate is between `r round(meta_bm_tidy$conf.low[["sd_model_id__Intercept"]], 2)` and `r round(meta_bm_tidy$conf.high[["sd_model_id__Intercept"]], 2)`, we can convert the standard units into milliseconds by multiplying them with the standard deviation values in milliseconds: $33.4 * 0.11 = 3.8$ ms, $51.4 * 0.11 = 5.7$ ms;  $33.4 * 0.15 = 5$ ms, $51.4 * 0.15 = 7.7$ ms.
+We can thus calculate 95% intervals of the estimated between-model variability in milliseconds: `r round(3.8*1.96, 1)`-`r round(5.7*1.96, 1)` ms based on the low CI estimate 0.11, `r round(5*1.96, 1)`-`r round(7.7*1.96, 1)` ms based on the high CI estimate 0.15.
+
+```{r}
+msa_sd_sd
+```
+
 
 <!-- TODO: Add table with different outcomes, means (?) and SDs plus estimated deviations based on ±0.22/0.33 SDs. -->
 
@@ -948,8 +971,6 @@ The meta-analytic model estimates the range of probable values of the standardiz
 In other words, our best guess is that typical and atypical word combinations might not differ in acoustic measures (e.g. duration, f0 etc,) or, if they do, they do so by a maximum of ±0.02 standard units.
 
 <!-- TR: CONTEXTUALIZE IN CONCRETE ACOUSTIC VALUES, like we do with team variability (ALTERNATIVELY IN IQ VALUES).--> 
-
-<!-- TR: cannot really talk about tiny effects because we have the continuous typicality included and that looks at a difference of one unit (which is 1 in a 1-100 scale -->
 
 **Non-preregistered**. As mentioned in the previous section, we have run two further models, one using model ID instead of team and the second using team and model ID nested within team.
 In the first model, the meta-analytic intercept estimate is between `r round(meta_intercept[3],3)` and `r round(meta_intercept[4],3)` standard units (95\% CrI, mean = `r round(meta_intercept[1],3)`).
