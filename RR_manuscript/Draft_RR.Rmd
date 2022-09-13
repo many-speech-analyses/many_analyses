@@ -503,9 +503,6 @@ Analysts and initiating authors will discuss the limitations, results, and impli
 # Results
 
 ```{r load-models, message=FALSE, warning=FALSE}
-msa_mean_sd_df <- read_csv("data/analyses/msa_mean_sd_df.csv") %>%
-  filter(transformation == "none", mean > 10)
-
 msa_models <- readRDS(here("./data/analyses/msa_models.rds")) %>%
   mutate(
     outcome = as.factor(outcome),
@@ -888,6 +885,24 @@ compelling_results_nest <- post_meta_nest %>%
   summarise(prop = n / sum(n))
 
 compelling_count_nest <- table(post_meta_nest$compelling)
+
+# MSA SD ----
+
+msa_mean_sd_df <- read_csv("data/analyses/msa_mean_sd_df.csv") %>%
+  filter(transformation == "none", mean > 10, temporal_window != "sentence")
+
+meta_sd_clo <- meta_bm_tidy$conf.low[["sd_model_id__Intercept"]] 
+meta_sd_chi <- meta_bm_tidy$conf.high[["sd_model_id__Intercept"]] 
+
+msa_sd <- msa_mean_sd_df %>% group_by(outcome, temporal_window) %>%
+  summarise(
+    sd_min = min(sd),
+    sd_med = mean(sd),
+    sd_max = max(sd),
+    .groups = "drop"
+  )
+
+msa_sd_
 ```
 
 ### Between-team variability
