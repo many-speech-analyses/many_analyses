@@ -673,8 +673,8 @@ merged &lt;-
   #            x = 25, y = -0.9,
   #            xend = 42, yend = -0.7, 
   #            arrow = arrow(angle = 45, length = unit(.2, &quot;cm&quot;))) +
-  labs(title = &quot;Effect estimates across all submitted effects&quot;,
-       subtitle = &quot;Raw estimates extracted from teams&#39; models (grey),\nshrunken estimates from meta-analytical model (black)\n&quot;,
+  labs(# title = &quot;Effect estimates across all submitted effects&quot;,
+       caption = &quot;Raw estimates extracted from teams&#39; models (grey),\nshrunken estimates from meta-analytical model (black)\n&quot;,
        x = &quot;Submitted typicality effect&quot;, 
        y = &quot;Standardized posterior effect size\n&quot;) +
   scale_color_manual(values = c(&quot;#67a9cf&quot;,&quot;black&quot;,&quot;#ef8a62&quot;)) + 
@@ -682,9 +682,17 @@ merged &lt;-
   theme(legend.position = &quot;none&quot;,
         axis.text.x = element_blank(),
         axis.ticks.x = element_blank(),
-        axis.line = element_blank()
+        axis.line = element_blank(),
+        plot.caption = element_text(vjust = -5)
         )</code></pre>
 <pre><code>## Warning: Ignoring unknown parameters: width</code></pre>
+<pre class="r"><code>ggsave(filename = &quot;figs/meta_plot1_shrinkage.png&quot;,
+       plot = meta_shrinkage,
+       device = &quot;png&quot;,
+       width = 200, 
+       height = 75,
+       units = &quot;mm&quot;, 
+       dpi = 500)</code></pre>
 <pre class="r"><code>meta_raw &lt;- 
   ggplot(data = merged,
     aes(x = reorder(model_id, estimate), 
@@ -711,15 +719,6 @@ merged &lt;-
         axis.ticks.x = element_blank(),
         axis.line = element_blank()
         )
-
-
-ggsave(filename = &quot;figs/meta_plot1_shrinkage.png&quot;,
-       plot = meta_shrinkage,
-       device = &quot;png&quot;,
-       width = 200, 
-       height = 75,
-       units = &quot;mm&quot;, 
-       dpi = 500)
 
 ggsave(filename = &quot;figs/meta_plot1_raw.png&quot;,
        plot = meta_raw,
