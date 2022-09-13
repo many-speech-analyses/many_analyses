@@ -271,8 +271,10 @@ meta_shrinkage <-
              pch = 17,
              fill = "black",
              alpha = 0.2) +
-  geom_errorbar(aes(ymin = estimate - 1.96*se, 
-                    ymax = estimate + 1.96*se),
+  geom_segment(aes(xend = reorder(model_id, post_mean), 
+                   y = estimate - 1.96*se, 
+                   yend = estimate + 1.96*se),
+                lineend = "round",
                 size = 1.1,
                 width = 0,
                 color = "black",
@@ -283,7 +285,7 @@ meta_shrinkage <-
   scale_x_discrete(expand =  c(0.05,0.05)) + 
   annotate("text", x = c(30, 90, 150), y = 2.2,
            hjust = c(0, 0.5, 1),
-           color = c(b4ss_colors[[2]], "black", b4ss_colors[[1]]),
+           color = c("#ef8a62", "black", "#67a9cf"),
            label = c("Negative (95% CrI)", "Not compelling", "Positive (95% CrI)")
            ) +
   # annotate("text", x = 151, y = 1.5,
@@ -306,7 +308,7 @@ meta_shrinkage <-
        subtitle = "Raw estimates extracted from teams' models (grey),\nshrunken estimates from meta-analytical model (black)\n",
        x = "Submitted typicality effect", 
        y = "Standardized posterior effect size\n") +
-  scale_color_manual(values = c(b4ss_colors[[1]], "black", b4ss_colors[[2]])) + 
+  scale_color_manual(values = c("#67a9cf","black","#ef8a62")) + 
   theme_classic() +
   theme(legend.position = "none",
         axis.text.x = element_blank(),
