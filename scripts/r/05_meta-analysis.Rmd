@@ -284,7 +284,8 @@ meta_shrinkage <-
   geom_errorbar(aes(ymin = lower95, ymax = higher95), 
                 width = 0) +
   scale_x_discrete(expand =  c(0.05,0.05)) + 
-  annotate("text", x = c(30, 90, 150), y = 2.2,
+  scale_y_continuous(limits =  c(-1.5, 2.5)) + 
+  annotate("text", x = c(10, 85, 160), y = 2.5,
            hjust = c(0, 0.5, 1),
            color = c("#ef8a62", "black", "#67a9cf"),
            label = c("Negative (95% CrI)", "Not compelling", "Positive (95% CrI)")
@@ -321,8 +322,8 @@ meta_shrinkage <-
 ggsave(filename = "figs/meta_plot1_shrinkage.png",
        plot = meta_shrinkage,
        device = "png",
-       width = 200, 
-       height = 75,
+       width = 150, 
+       height = 65,
        units = "mm", 
        dpi = 500)
 ```

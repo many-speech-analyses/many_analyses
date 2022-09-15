@@ -533,8 +533,8 @@ Analysts and initiating authors will discuss the limitations, results, and impli
 \section{Results}\label{results}}
 
 The results section is divided into three parts.
-We first provide a statistical description of team composition, nature of acoustic analyses and statistical approaches, and peer-review ratings of these two as obtained by the team members.
-Second, we report the results of the meta-analytic model, focussing on between-team variability and the estimated meta-analytic effect of word combination typicality on speech acoustics.
+We first provide a statistical description of team composition, nature of acoustic analyses and statistical approaches, and peer-review ratings of these two as obtained by other teams.
+Second, we report the results of the meta-analytic model, focusing on between-team variability and the estimated meta-analytic effect of word combination typicality on speech acoustics.
 Finally, we present the analysis of the effect of analytic and researcher-related predictors on the meta-analytic effect.
 
 \hypertarget{descriptive-statistics-1}{%
@@ -552,7 +552,6 @@ The remaining 30 teams submitted their analysis by the established deadline.
 These are the teams that are included in this study.
 
 Submitting teams consisted of an average of 3.63 individual analysts (SD = 2.8).
-
 Upon sign-up, we collected background information from each analyst through the intake form, which was administered during Phase 1, prior to the distribution of the data to the teams.
 Analysts had on average 4.8 years (SD = 4.2) of experience after completing their PhD, ranging from -3.8 years, i.e.~PhD students (or younger) to 12.4 years.
 The analysts' prior belief in the effect under investigation on a scale from 0 to 100 ranged from 48.5 to 92 with an average of 69.2 (SD = 11.3).
@@ -570,6 +569,7 @@ The analytic teams differed in their approach to the acoustic analysis of the sp
 
 45\% of models obtained acoustic measures at the level of the segment (e.g.~comparing the acoustic profile of a vowel), 44\% from the word level (e.g.~comparing the acoustic profile of \emph{Banane} `banana'), 4\% at the level of the phrase (e.g.~the noun phrase including determiner and adjective, e.g.~``the green banana''), 2\% from the whole sentence, and 5\% used a different time window.
 Based on a coarse coding of how acoustic measures were operationalized, we find a total of 52 different measurement specifications.
+For example,
 
 \hypertarget{statistical-analysis}{%
 \subsubsection{Statistical analysis}\label{statistical-analysis}}
@@ -578,7 +578,7 @@ The high variability of acoustic measurements is multiplied by the choices of st
 
 The models included a mean of 2 different predictors (defined as variables or columns in the data table).
 This means that, in addition to the critical predictor (typicality of the adjective noun combinations), there was on average at least an additional predictor.
-Among the predictors included in the models there were information structure of the sentence, trial number, semantic dimensions of the referent, part of speech, or speaker gender.
+Possible information that was used as predictors included the information structure of the sentence, trial number, semantic dimensions of the referent, part of speech, and speaker gender.
 
 The data given to the teams allowed them to operationalize the predictor of interest, word typicality, in different ways.
 Among the possible operationalizations, 79\% of models contained typicality as a categorical variable (e.g.~atypical vs.~typical), 18\% used a continuous typicality scale from 0-100 by calculating the mean typicality for each word combination as obtained from the norming study, while 2\% of the models used the median typicality rating.
@@ -590,7 +590,7 @@ While teams almost exclusively used linear models to analyze their data (98\%, w
 The data contains several dependencies between data points, with multiple data points coming from the same subject and with multiple data points being associated with the same adjective or noun.
 The appropriate way to account for this non-independence is by using multi-level models and specifying so-called random effects \citep[e.g.,][]{gelman2006data, schielzeth2009conclusions}.
 5\% of linear models specified no random effects at all (without pooling their data), so effectively ignoring these non-independences \citep{hurlbert1984pseudoreplication}.
-66\% specified random intercepts only, and 29\% specified random intercepts and random slopes to account for the non-independence.
+66\% specified random intercepts only, and 29\% specified both random intercepts and random slopes to account for the non-independence.
 On average, teams that specified random effects, included 2.4 random terms in their models.
 Based on statistical framework, type of model, distribution family, fixed terms, and discarding random effects, there were a total of 45 different model specifications.
 
@@ -632,7 +632,7 @@ We have run two further non-preregistered meta-analytic models:
 Based on the first non-preregistered model, the group-level standard deviation for model ID is between 0.11 and 0.15 standard units, at 95\% credibility.
 This means that the deviations of any individual analysis model from the meta-analytic effect estimate range between ±0.22 to ±0.3 (0.11 * 2, 0.15 * 2) in standard units.
 
-As for the second non-preregistered model, the posterior estimate for model ID is identical to that of the first non-preregistered model.
+On the one hand, the second non-preregistered model reveals that the posterior estimate for model ID is identical to that of the first non-preregistered model.
 On the other hand, the posterior 95\% CrI for team in the second non-preregistered model is 0 and 0.05 standard units (\(\beta\) = 0.02, SD = 0.01), corresponding to a mean deviation range of ±0.1 standard units.
 
 \begin{tabular}{l|l|r|r}
@@ -655,10 +655,10 @@ intensity & word & 3.5 & 3.9\\
 
 We illustrate what this means in actual acoustic measures by means of examples.
 For each of the submitted analyses that included duration, fundamental frequency or intensity as outcome, we have calculated the standard deviation of those measures in the submitted data table.
-We then selected representative values of standard deviations for the three outcome measurements extracted either from specific segments or words.
+We then selected values of standard deviations for the three outcome measurements extracted either from specific segments or words across the data tables submitted by the teams (i.e.~how variable were their raw measures).
 
 Table XXX reports the minimum and maximum SD values taken from a representative range.
-If we take segments, we have found duration measurements (as taken by the teams who used duration) to have standard deviations that range between 33.4 and 51.4 ms.
+If we look at segments (e.g.~measures of individual vowels), duration measurements (as taken by the teams who used duration) have standard deviations that range between 33.4 and 51.4 ms.
 Given that the estimated between-model variability in standard units as we obtained from the meta-analytic estimate is between 0.11 and 0.15, we can convert the standard units into milliseconds by multiplying them with the standard deviation values in milliseconds: \(33.4 * 0.11 = 3.8\) ms, \(51.4 * 0.11 = 5.7\) ms; \(33.4 * 0.15 = 5\) ms, \(51.4 * 0.15 = 7.7\) ms.
 We can thus calculate 95\% intervals of the estimated between-model variability in milliseconds: 7.4-11.2 ms based on the low CI estimate 0.11, 9.8-15.1 ms based on the high CI estimate 0.15.
 
@@ -686,7 +686,7 @@ This suggests that the acoustic measures of typical word combinations are 0.01 s
 Relative to the preregistered model, this model suggests a somewhat positive effect of typicality (although small negative effects are also possible).
 The estimated intercept from the second model (with nested group-level effects) is virtually identical to the first (with only model ID as group-level effect).
 
-(ref:meta\_plot1) illustrates the individual model intercepts, sorted in ascending order based on their mean.
+(ref:meta\_plot1) illustrates the individual intercepts for critical typicality coefficients across models and teams, sorted in ascending order based on their mean.
 Given the nature and wide variety of acoustic operationalizations, there is not always a natural interpretation of the scale, but in most cases a positive effect corresponds to typical word combinations eliciting higher acoustic values (e.g.~longer duration, higher f0, etc.), as mentioned above.
 Notably, while the majority of models yields inconclusive results, there are 27 model estimates for which the 95\% credible interval does not contain zero (16\%).
 

@@ -707,8 +707,8 @@ review_mean <- msa_models %>%
 ```
 
 The results section is divided into three parts.
-We first provide a statistical description of team composition, nature of acoustic analyses and statistical approaches, and peer-review ratings of these two as obtained by the team members.
-Second, we report the results of the meta-analytic model, focussing on between-team variability and the estimated meta-analytic effect of word combination typicality on speech acoustics.
+We first provide a statistical description of team composition, nature of acoustic analyses and statistical approaches, and peer-review ratings of these two as obtained by other teams.
+Second, we report the results of the meta-analytic model, focusing on between-team variability and the estimated meta-analytic effect of word combination typicality on speech acoustics.
 Finally, we present the analysis of the effect of analytic and researcher-related predictors on the meta-analytic effect.
 
 ## Descriptive statistics
@@ -739,7 +739,6 @@ The remaining `r team_desc_list$Final$n_teams$val` teams submitted their analysi
 These are the teams that are included in this study.
 
 Submitting teams consisted of an average of `r team_desc_list$Final$mean_size$val` individual analysts (SD = `r team_desc_list$Final$sd_size$val`).
-
 Upon sign-up, we collected background information from each analyst through the intake form, which was administered during Phase 1, prior to the distribution of the data to the teams.
 Analysts had on average `r round(phd_mean[[1]],1)` years (SD = `r round(phd_mean[[2]],1)`) of experience after completing their PhD, ranging from `r round(phd_mean[[3]],1)` years, i.e. PhD students (or younger) to `r round(phd_mean[[4]],1)` years.
 The analysts' prior belief in the effect under investigation on a scale from 0 to 100 ranged from `r round(prior_mean[[3]],1)`  to `r round(prior_mean[[4]],1)` with an average of `r round(prior_mean[[1]],1)` (SD = `r round(prior_mean[[2]],1)`).
@@ -765,6 +764,9 @@ unique_acou_oper <- msa_models %>%
 
 `r round(window_n[[1,1]],2) * 100`\% of models obtained acoustic measures at the level of the segment (e.g. comparing the acoustic profile of a vowel), `r round(window_n[[2,1]],2) * 100`\% from the word level (e.g. comparing the acoustic profile of *Banane* 'banana'), `r round(window_n[[3,1]],2) * 100`\% at the level of the phrase (e.g. the noun phrase including determiner and adjective, e.g. "the green banana"), `r round(window_n[[4,1]],2) * 100`\% from the whole sentence, and `r round(window_n[[5,1]],2) * 100`\% used a different time window.
 Based on a coarse coding of how acoustic measures were operationalized, we find a total of `r nrow(unique_acou_oper)` different measurement specifications.
+For example, if we look at those analyses who targeted fundamental frequency (f0), it was operationalized in a myriad of ways including as the minimum, the maximum, the mean, the median, as a range in an interval or a ratio between two intervals. 
+The measurement was taken from the interval of a vowel in the article, the adjective or noun, or in the word interval of article, adjective or noun, or the noun phrase interval or the entire phrase. 
+Some of these measures were normalized relative to other elements in the sentence or relative to the speaker.
 
 ### Statistical analysis
 
@@ -772,7 +774,7 @@ The high variability of acoustic measurements is multiplied by the choices of st
 
 The models included a mean of `r round(predictor_n)` different predictors (defined as variables or columns in the data table).
 This means that, in addition to the critical predictor (typicality of the adjective noun combinations), there was on average at least an additional predictor.
-Among the predictors included in the models there were information structure of the sentence, trial number, semantic dimensions of the referent, part of speech, or speaker gender.
+Possible information that was used as predictors included the information structure of the sentence, trial number, semantic dimensions of the referent, part of speech, and speaker gender.
 
 The data given to the teams allowed them to operationalize the predictor of interest, word typicality, in different ways.
 Among the possible operationalizations, `r round(typicality_n[[1,1]],2) * 100`\% of models contained typicality as a categorical variable (e.g. atypical vs. typical), `r round(typicality_n[[2,1]],2) * 100`\%  used a continuous typicality scale from 0-100 by calculating the mean typicality for each word combination as obtained from the norming study, while `r round(typicality_n[[3,1]],2) * 100`\% of the models used the median typicality rating.
@@ -781,13 +783,16 @@ The majority of models were run within a frequentist framework (`r round(framewo
 `r round(framework_n[[1,1]],2) * 100`\% were run within a Bayesian framework.
 While teams almost exclusively used linear models to analyze their data (`r round(model_n[[2,1]],2) * 100`\%, with a few exception using machine learning techniques or GAMs as a special case of linear models), teams differed drastically in how they accounted for dependencies within the data.
 
+<!-- TR: I count 9 GAMS, how can that amount to only 2%  -->
+
 The data contains several dependencies between data points, with multiple data points coming from the same subject and with multiple data points being associated with the same adjective or noun.
 The appropriate way to account for this non-independence is by using multi-level models and specifying so-called random effects [e.g., @gelman2006data; @schielzeth2009conclusions]. 
-`r round(random_n[[3,1]],2) * 100`\% of linear models specified no random effects at all (without pooling their data), so effectively ignoring these non-independences [@hurlbert1984pseudoreplication]. <!-- TODO: We need to check if these model pooled -->
-`r round(random_n[[1,1]],2) * 100`\% specified random intercepts only, and `r round(random_n[[2,1]],2) * 100`\% specified random intercepts and random slopes to account for the non-independence.
+`r round(random_n[[3,1]],2) * 100`\% of linear models specified no random effects at all (without pooling their data), so effectively ignoring these non-independences [@hurlbert1984pseudoreplication]. <!-- TR: Did we confirm this? -->
+`r round(random_n[[1,1]],2) * 100`\% specified random intercepts only, and `r round(random_n[[2,1]],2) * 100`\% specified both random intercepts and random slopes to account for the non-independence.
 On average, teams that specified random effects, included `r round(rterms_n,1)` random terms in their models. 
 Based on statistical framework, type of model, distribution family, fixed terms, and discarding random effects, there were a total of `r nrow(unique_model_specs)` different model specifications. 
-<!-- TR: If done on team level did every team have a different mdoel?  -->
+<!-- TR: what do you mean with "discarding random effect? Do you mean if we ignore the variation there?  The sentence does compute for me-->
+<!-- TR: Now that we have the number for different acoustic operationalizations and the number for different statistical models we can calculate the possible unique combinations r nrow(unique_model_specs) * nrow(unique_acou_oper). I mention this in the discussion. If ok, delete comment-->
 
 ### Review ratings
 
@@ -927,14 +932,14 @@ msa_sd_sd <- bind_rows(msa_sd_sd_lo, msa_sd_sd_hi) %>%
 
 ### Between-team variability
 
-As explained in the **Methods** section, the primary aim of this is to assess the variability of the reported effects or, in other words, the degree of between-team variability.
+As explained in the **Methods** section, the primary aim of this analysis is to assess the degree of between-team variability.
 As a measure of between-team variability, we chose to use the meta-analytic group-level standard deviation $\sigma_{\alpha_{\text{t}}}$), i.e. the standard deviation of the group-level effect of team returned by the meta-analytic model.
 
 According to the meta-analytic model, the group-level standard deviation for team is between `r round(meta_bm_prereg_tidy$conf.low[["sd_animal__Intercept"]], 2)` and `r round(meta_bm_prereg_tidy$conf.high[["sd_animal__Intercept"]], 2)` standard units, at 95% credibility.
 This means that the mean deviations of any individual team from the meta-analytic effect estimate range between ±0.06 to ±0.14 (0.3 * 2, 0.07 * 2) in standard units.
 
 **Non-preregistered**. In our preregistration we did not take into account the possibility that teams might submit multiple analyses/models.
-We have run two further non-preregistered meta-analytic models:
+We have run two further non-preregistered meta-analytic models to account for this added hierarchical layer:
 
 1. A model with model ID instead of team as the group-level effect (`(1|model_id)`).
 2. A model with team and model ID nested within team as group-level effects (`(1|team) + (1|team:model_id`).
@@ -942,8 +947,11 @@ We have run two further non-preregistered meta-analytic models:
 Based on the first non-preregistered model, the group-level standard deviation for model ID is between `r round(meta_bm_tidy$conf.low[["sd_model_id__Intercept"]], 2)` and `r round(meta_bm_tidy$conf.high[["sd_model_id__Intercept"]], 2)` standard units, at 95% credibility.
 This means that the deviations of any individual analysis model from the meta-analytic effect estimate range between ±0.22 to ±0.3 (0.11 * 2, 0.15 * 2) in standard units.
 
-As for the second non-preregistered model, the posterior estimate for model ID is identical to that of the first non-preregistered model.
-On the other hand, the posterior 95% CrI for team in the second non-preregistered model is `r round(meta_bm_nest_tidy$conf.low[["sd_animal__Intercept"]], 2)` and `r round(meta_bm_nest_tidy$conf.high[["sd_animal__Intercept"]], 2)` standard units ($\beta$ = 0.02, SD = 0.01), corresponding to a mean deviation range of ±0.1 standard units.
+The second non-preregistered model yields a similar model ID estimate to that of the first non-preregistered model.
+However, the posterior 95% CrI for between-team variability in the second non-preregistered model is `r round(meta_bm_nest_tidy$conf.low[["sd_animal__Intercept"]], 2)` and `r round(meta_bm_nest_tidy$conf.high[["sd_animal__Intercept"]], 2)` standard units ($\beta$ = 0.02, SD = 0.01), corresponding to a mean deviation range of ±0.1 standard units.
+One interpretation of these estimates is that the variability of effects is larger within teams than it is across teams. 
+
+<!-- TR: follow up on this within team variability-->
 
 ```{r}
 knitr::kable(msa_sd, digits = 1)
@@ -951,12 +959,17 @@ knitr::kable(msa_sd, digits = 1)
 
 We illustrate what this means in actual acoustic measures by means of examples.
 For each of the submitted analyses that included duration, fundamental frequency or intensity as outcome, we have calculated the standard deviation of those measures in the submitted data table.
-We then selected representative values of standard deviations for the three outcome measurements extracted either from specific segments or words.
+We then selected values of standard deviations for the three outcome measurements extracted either from specific segments or words across the data tables submitted by the teams (i.e. how variable were their raw measures).
+
+<!-- TR: This is all really confusing. I know what you mean only because we talked about it.-->
 
 Table XXX reports the minimum and maximum SD values taken from a representative range.
-If we take segments, we have found duration measurements (as taken by the teams who used duration) to have standard deviations that range between 33.4 and 51.4 ms.
+If we look at segments (e.g. measures of individual vowels), duration measurements (as taken by the teams who used duration) have standard deviations that range between 33.4 and 51.4 ms.
 Given that the estimated between-model variability in standard units as we obtained from the meta-analytic estimate is between `r round(meta_bm_tidy$conf.low[["sd_model_id__Intercept"]], 2)` and `r round(meta_bm_tidy$conf.high[["sd_model_id__Intercept"]], 2)`, we can convert the standard units into milliseconds by multiplying them with the standard deviation values in milliseconds: $33.4 * 0.11 = 3.8$ ms, $51.4 * 0.11 = 5.7$ ms;  $33.4 * 0.15 = 5$ ms, $51.4 * 0.15 = 7.7$ ms.
 We can thus calculate 95% intervals of the estimated between-model variability in milliseconds: `r round(3.8*1.96, 1)`-`r round(5.7*1.96, 1)` ms based on the low CI estimate 0.11, `r round(5*1.96, 1)`-`r round(7.7*1.96, 1)` ms based on the high CI estimate 0.15.
+
+<!-- TR: Sorry but this is unreadable. I will completely overhaul it.-->
+
 
 ```{r}
 msa_sd_sd
@@ -970,15 +983,13 @@ msa_sd_sd
 The meta-analytic model estimates the range of probable values of the standardized effect size to be between `r round(meta_intercept_prereg[3],3)` and `r round(meta_intercept_prereg[4],3)` standard units (95\% CrI, mean = `r round(meta_intercept_prereg[1],3)`).
 In other words, our best guess is that typical and atypical word combinations might not differ in acoustic measures (e.g. duration, f0 etc,) or, if they do, they do so by a maximum of ±0.02 standard units.
 
-<!-- TR: CONTEXTUALIZE IN CONCRETE ACOUSTIC VALUES, like we do with team variability (ALTERNATIVELY IN IQ VALUES).--> 
-
 **Non-preregistered**. As mentioned in the previous section, we have run two further models, one using model ID instead of team and the second using team and model ID nested within team.
 In the first model, the meta-analytic intercept estimate is between `r round(meta_intercept[3],3)` and `r round(meta_intercept[4],3)` standard units (95\% CrI, mean = `r round(meta_intercept[1],3)`).
 This suggests that the acoustic measures of typical word combinations are 0.01 standard units lower to 0.04 standard units higher than the measures of atypical word combinations, at 95% confidence.
 Relative to the preregistered model, this model suggests a somewhat positive effect of typicality (although small negative effects are also possible).
 The estimated intercept from the second model (with nested group-level effects) is virtually identical to the first (with only model ID as group-level effect).
 
-(ref:meta_plot1) illustrates the individual model intercepts, sorted in ascending order based on their mean.
+(ref:meta_plot1) illustrates the individual intercepts for critical typicality coefficients across models and teams, sorted in ascending order based on their mean.
 Given the nature and wide variety of acoustic operationalizations, there is not always a natural interpretation of the scale, but in most cases a positive effect corresponds to typical word combinations eliciting higher acoustic values (e.g. longer duration, higher f0, etc.), as mentioned above.
 Notably, while the majority of models yields inconclusive results, there are `r compelling_count_nest[[1]] + compelling_count_nest[[3]]` model estimates for which the 95\% credible interval does not contain zero (`r round((compelling_results_nest[[1,1]] + compelling_results_nest[[3,1]]), 2) * 100`\%).
 
@@ -1017,13 +1028,15 @@ knitr::include_graphics(here::here("./figs/alltogether.png"), error = FALSE)
 
 ## Summary
 
-We gave XX analyst teams the same speech dataset to answer the same research question: *Do speakers acoustically modify utterances to signal atypical word combinations?*.
-In order to answer this question, teams had to operationalize latent variables within a multidimensional signal, operationalize and chose appropriate predictors, and construct an appropriate statistical model to answer the research question.
-As shown by the results of this meta-analytic study, such complex process has led to a wide "garden of forking paths", i.e. to a wide range of combinations of possible analytical decisions.
-Every individual analyst team has chosen unique paths to acoustically measure, operationalize and statistical analyse the data.
+We gave `r team_desc_list$Final$n_teams$val` analyst teams the same speech dataset to answer the same research question: *Do speakers acoustically modify utterances to signal atypical word combinations?*.
+In order to answer this question, teams had to operationalize latent variables within a multidimensional signal, operationalize and chose appropriate predictors, and construct appropriate statistical models to answer the research question.
+This complex process has led to a vast "garden of forking paths", i.e. to a wide range of combinations of possible analytical decisions.
+Analyses exhibited at least `r nrow(unique_model_specs)` unique ways of operationalizing the acoustic signal alongside `r nrow(unique_acou_oper)` unique ways of constructing their statistical model, amounting to `r nrow(unique_model_specs) * nrow(unique_acou_oper)` possible unique combinations. 
+This is just a bare minimum estimate for the vast multiverse of analytical decisions, ignoring for example detailed ways of extracting the chosen acoustic parameters.
+
 Interestingly, the observed variation in reported effect sizes was not predicted by the analysts' prior expectations about the phenomenon.
 In fact, teams on average rated the plausibility of the effect as rather high before receiving access to the data.
-The variation in reported effect sizes was neither predicted by the analysts' experience in the field nor by the perceived quality of the analysis as judged by other teams. 
+The observed variation was neither predicted by the analysts' experience in the field nor by the perceived quality of the analysis as judged by other teams. 
 Analyses received overall high peer ratings for both the acoustic and the statistical analysis, suggesting that reviewers were generally satisfied with the other teams' approaches.
 These findings are very much in line with previous crowd-sourced projects that suggest variation between teams is neither driven by perceived quality of the analysis nor by analysts biases or experience [e.g., @silberzahn2018many, @breznau2021observing].
 Given the mounting evidence, @breznau2021observing conclude that "[...] we are left to believe that idiosyncratic uncertainty is a fundamental feature of the scientific process that is not easily explained by typically observed researcher characteristics or analytic decisions."
@@ -1036,45 +1049,45 @@ Some outcome choices seem to bias the estimates in our data in one direction whi
 For example, measurements related to fundamental frequency tended to result in lower estimates while measurements related to vowel formants tended to yield higher estimates.
 This asymmetry can have several causes.
 First, there could be a true underlying relationship between typicality and the speech signal that manifests itself in some measures but not others and/or manifests itself negatively in one acoustic measure but positively in another.
-Second, certain measurement choices might be associated with stronger expectations relative to the research question, which might lead to strong biases.
+Second, certain measurement choices might be associated with stronger expectations relative to the research question, which might lead to stronger biases.
 Many researchers targeted measures related to voice fundamental frequency (f0) since similar functional relationships like information structure and predictability can be expressed via f0 [e.g. @grice2017integrating; @turnbull2017role].
-Third, ADD REASONS. 
 Regardless of its cause, we have to conclude that depending on the choice of how the speech signal is operationalized, researchers might find evidence for or against a theoretically relevant effect.
 
-It particularly struck us that teams did not follow our instructions to only submit a single effect size. 
+It particularly struck us that most teams submitted many different models. 
 Teams submitted up to 16 different models to test for a possible relationship between typicality and the speech signal.
 Obviously, the complexity of the speech signal lends itself to multiple approaches, but this plurality of hypothesis tests invites bias and can dramatically increase the rate of falsely claiming the presence of an effect [@roettger2019researcher]. 
 When operating within the frequentist inferential framework, testing the same hypothesis with different dependent variables, increases the Type-I error rate if not corrected for [Tukey 1953, @benjamini1995controlling].
 <!-- TR: couldnt find bibtex of tukey: Tukey, J. W. (1953). The problem of multiple comparisons. Multiple comparisons. -->
-It also invites bias, possibly leading to the selective reporting of those tests that yield a desirable outcome [@kerr1998harking, @john2012measuring, @simmons2011false] while null results remain unreported [e.g., @sterling1959publication, @rosenthal1979file].
+It also invites bias, possibly leading to the selective reporting of those tests that yield a desirable outcome [@kerr1998harking, @john2012measuring, @simmons2011false] while null results remain unreported [e.g., @sterling1959publication, @rosenthal1979file]. 
+Fields such as the speech sciences who generate knowledge based on multidimensional data, should be aware of this flexibility and calibrate their confidence in empirical claims accordingly. 
 
 ## Lessons for the methodological reform movement
 
 The current results point to important barriers for successful accumulation of knowledge.
-The replication crisis has brought attention to scientific practices that lead to unreliable and biased claims in the literature [e.g., REFERENCE].
+The replication crisis has brought attention to scientific practices that lead to unreliable and biased claims in the literature [e.g., @vazire2017quality, @fidler2018reproducibility].
 One of the suggested paths forward is for researchers to directly replicate previous study more often [e.g., @open2015estimating; @camerer2018evaluating].
 While we agree with the importance of direct replications, our study (and similar crowd-sourced analyses before us) suggest that replicating more is simply not enough.
 There is only limited value in learning that a particular procedure is replicable if the idiosyncratic nature of the procedure itself might not yield a representative result relative to all possible procedures that could have been applied to the research question.
-The quantitative sciences are in an inference crisis [@rotello2015more; @starns2019assessing].
-Well-trained and experienced speech researchers not only applied completely different approaches to the same research question, they also seemed to consider all these alternative approaches acceptable, as their peer-ratings suggest.
+Beyond a replication crisis, the quantitative sciences are in an inference crisis [@rotello2015more; @starns2019assessing].
+Well-trained and experienced speech researchers not only applied completely different approaches to the same research question, peer ratings also suggest that they considered most of these alternative approaches acceptable.
 Being aware of this idiosyncratic variation between analysts should lead to more nuanced claims and what Breznau et al. refers to as "epistemic humility". 
 
-A desired outcome of knowing that different but reasonable measurement choices or statistical approaches might lead to entirely different interpretations of research data is to calibrate our (un)certainty in the strength of the collected evidence and, in turn, communicate that (un)certainty appropriately.
-The fact that the choice of measurement, measurement window, and predictor choice affect the answer to the research question further suggests that research assumptions and hypotheses should be formulated with much greater detail, particularly so in regards to how measurement systems (here, the acoustic signal) and underlying conceptual constructs (here, the phonetic expression of typicality) relate to each other.
+A desired outcome of knowing that different but reasonable measurement choices or statistical approaches might lead to  different interpretations of research data is to calibrate our (un)certainty in the strength of the collected evidence and, in turn, communicate that (un)certainty appropriately.
+The fact that the choice of measurement, measurement window, and predictor choice affect the answer to the research question further suggests that research assumptions and hypotheses should be formulated in much greater detail, particularly so in regards to how measurement systems (here, the acoustic signal) and underlying conceptual constructs (here, the phonetic expression of typicality) relate to each other.
 <!-- TODO: add ref to "process and statistical model" in McElreath -->
 We should ideally specify the link between conceptual construct and quantitative system---the "derivation chain" [@dubin1970theory; @meehl1990summaries]---prior to data collection and analysis, including defining constructs and their relationship within the quantitative system, specifying auxiliary assumptions and boundary conditions, and defining target measurements, statistical expectations and possible (and impossible) effect magnitudes.
 Without well defined derivation chains, we "are not even wrong" [@scheel2022most] because falsified expectations cannot tell us much about the conceptual constructs they are based on when the relationship between the two is underspecified.
 
+<!-- TR: This preceding section rocks IMO -->
+
 In light of the observed analytic flexibility, what can we do to appropriately calibrate our confidence in our claims?
 First of all, through sharing of materials, data and statistical protocols, we can make our idiosyncratic choices transparent to others [@munafo2017manifesto; @vazire2017quality].
-It further enables the evaluation and verification of underlying claims and allows for the evaluation of empirical, computational and statistical reproducibility (LeBel et al., 2018). 
-It allows for alternative analyses to establish analytic robustness (Steegen et al., 2016) and strengthens attempts to synthesize evidence via meta-analyses (Nicenboim et al., 2018)
-This enables critical evaluation and robustness checks by other fellow researchers (REF).
+It further enables the evaluation and verification of underlying claims and allows for the evaluation of empirical, computational and statistical reproducibility [@lebel2018unified]. 
+It allows for alternative analyses to establish analytic robustness [@steegen2016increasing] and strengthens attempts to synthesize evidence via meta-analyses [e.g., @nicenboim2018using]
 Given that minor procedural changes can sometimes drastically affect the final interpretation of the results [@breznau2021observing], we should ideally share a detailed documentation of the data collection procedure, the measurement choices, the data extraction, and statistical analyses.
-<!-- TODO: cite Praat, EMU, MFA, Formant tracking etc -->
-Within fields that deal with speech data, open source software that allows to extract acoustic parameters via reproducible scripts can help other researchers to trace back seemingly inconsequential choices during the measurement process [e.g., CITE Praat, EMU CITE)]].
+Within fields that deal with speech data, open source software that allows to extract acoustic parameters via reproducible scripts can help other researchers to trace back seemingly inconsequential choices during the measurement process [e.g., Praat: @boersma2021praat, EMU: @winkelmann2017emu].
 
-ADD
+<!-- TODO: MFA, Formant tracking etc -->
 
 Second, making analytic pathways completely re-traceable does not change the fact that analysts apply different analytic approaches.
 Crowd-source projects such as the current one can shed light on the range of degrees of freedom during analysis and help producing a consensual estimated effect using meta-analytic techniques.
@@ -1082,37 +1095,39 @@ This is obviously not always feasible in terms of required resources and time, b
 
 Third, if researchers have a good understanding of relevant analytic degrees of freedom, they could apply all conceivable analytic strategies and compare the results across all combinations of these choices.
 This approach is called "multiverse analysis" [e.g, @steegen2016increasing; @harder2020multiverse] and has recently gained popularity across disciplines.
+
 Finally, neither crowd-sourcing nor multiverse analyses will guarantee that all relevant pathways are explored. 
 Crowd-sourcing is limited by the sampled analysts and their biases.
 Multiverse analysis is limited even further by the one group of researchers who define possible analytic pathways.
-Eventually, a mature scientific discipline should develop a set of detailed quantitative hypotheses of how conceptual constructs manifest themselves in the measured system, i.e. in the present case how communicative pressures of functions are expressed in the acoustic signal.
-This can be achieved by formalizing verbal expectations mathematically or using computational models [e.g., @van2020formalizing; @guest2021computational; @scheel2021hypothesis; @devezer2021case].
+Eventually, a mature scientific discipline needs to develop a set of detailed quantitative hypotheses of how conceptual constructs manifest themselves in the measured system, i.e. in the present case how communicative pressures of functions are expressed in the acoustic signal.
+This can be achieved by mathematically formalizing verbal expectations  or using computational models [e.g., @van2020formalizing; @guest2021computational; @scheel2021hypothesis; @devezer2021case].
 
 ## Caveats
-
 Our study has several limitations that need to be considered when evaluating our results. 
-First, there is potential for bias. The coordinating authors have engaged with metascientific research before and have been actively involved in methodological debates about scientific practices including transparency and statistical methods. We have in the past used the lack of standardized analytical approaches as an argument for proposing behavior and policy changes in the field. 
+First, there is potential for bias. 
+The coordinating authors have engaged with metascientific research before and have been actively involved in methodological debates about scientific practices including transparency and statistical methods. 
+We have in the past used the lack of standardized analytical approaches as an argument for proposing behavior and policy changes in the field. 
 This might have biased our own judgment during the analysis which itself came with many researcher degrees of freedom. 
-We hope we were able to make these degrees of freedom as well as the timing and reasoning of our analytical choices detectable. 
+We hope we were able to make these degrees of freedom as well as the timing and reasoning of our analytical choices at least detectable. 
 However, our results should be independently re-analysed and replicated using a different research question.
 Moreover, our sample is an opportunity sample. 
 We have advertised the project through online platforms which might have led to the exclusion of certain potential researcher groups.
-Moreover, while the number of participating teams is larger than most earlier crowdsourcing projects, it is likely to be too small to estimate meta-analytic estimates reliably.
-This is particularly important for the predictor evaluation.
+While the number of participating teams is larger than most earlier crowdsourcing projects, it is likely to be too small to estimate for example the impact of certain predictors reliably.
 Since predictor levels were not systematically distributed across teams, our estimates are characterized by large uncertainty. 
 This uncertainty is possibly further inflated by the fact that he research question presented to the teams was vague: *Do speakers acoustically modify utterances to signal atypical word combinations?* 
 Interpreting the research question/hypothesis differently in terms of its statistical consequences has recently been shown to explain some variation between analysis teams in many-analysis projects [@auspurg2021has]. 
 However, we consider this very underspecification of research hypotheses in the field of speech science (and beyond, see @scheel2022most) a common phenomenon. 
 For example, researchers seem to have not yet agreed on how to acoustically measure cross linguistically common phenomena such as word stress [e.g. @gordon2017acoustic]. 
-<!-- TR: still adding this? Meta-analytic model has model_id instead of team, so we are not accounting for the fact that teams have submitted multiple analyses (but not all of them did). -->
+
 - We have not investigated researcher positionality, which is known to be an important factor.  <!-- TR:@stef explain here -->
 
-Despite these possible sources of uncertainty and bias, our study suggest that at a minimum we can expect the between-team variability that we have observed, which is quite substantial and possibly amplifying biases. 
+Despite these all of these possible sources of bias and uncertainty, our study suggest that at a minimum we can expect the between-team and between-analysis variability that we have observed, which is quite substantial and possibly amplifying biases. 
 
 Second, the generalizability of our findings to other disciplines on the one hand and specifically other sub-disciplines of the language sciences is, of course, limited.
-Our focus was on quantitative analyses that require operationalization of a multidimensional signal. While some of our results can be informative for other disciplines working with speech or video signals, they are not very informative for expected variation between analysts working in qualitative fields of research.
-This is an important point to make because the cognitive sciences in general, and the language sciences in particular have many research areas that are explored with qualitative methods. It is conceivable that the issues raised here to apply differently or not at all to qualitative data analysis.
-
+We focused on quantitative analyses that require operationalization of a multidimensional signal. 
+While some of our results can be informative for other disciplines that worke with speech or video signals, they might not be very informative for expected variation between analysts working in qualitative research fields.
+This is an important point to make because the cognitive sciences in general, and the language sciences in particular have many research areas that are explored with qualitative methods. 
+It is conceivable that the discussed issues apply differently or not at all to qualitative data analysis.
 
 # Conclusion
 
