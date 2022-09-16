@@ -640,61 +640,69 @@ team_desc_list <- team_desc_df %>%
 # team_desc_list$Initial$n_teams$val
 
 # number of analyses
-no_analyses <- msa_models %>%
-  select(animal, model_n) %>%
-  distinct() %>%
+msa_models_unique <- msa_models %>%
+  select(animal, model_n, outcome, typicality_operationalization, framework, model, temporal_window, random_effects, n_random, phon_rating, stat_rating, n_predictors, pop_pred, operationalisation, operationalisation_notes) %>%
+  distinct()
+
+no_analyses <- msa_models_unique %>%
   nrow()
 
 # average analyses
-mean_analyses <- msa_models %>% 
-  group_by(team) %>% 
+mean_analyses <- msa_models_unique %>% 
+  group_by(animal) %>% 
   summarise(max_models = max(model_n)) %>% 
   group_by() %>% 
   summarise(mean_models = mean(max_models))
 
 # outcomes
-outcome_n <- msa_models %>% 
+outcome_n <- msa_models_unique %>% 
   count(outcome) %>% 
   summarise(prop = n / sum(n))
 
 # windows
-window_n <- msa_models %>% 
+window_n <- msa_models_unique %>% 
   count(temporal_window) %>% 
   summarise(prop = n / sum(n))
 
 # predictors
-predictor_n <- msa_models %>% 
+predictor_n <- msa_models_unique %>% 
   summarise(mean_predictor = mean(n_predictors, na.rm = TRUE)) 
 
 # typicality op
-typicality_n <- msa_models %>% 
+typicality_n <- msa_models_unique %>% 
   count(typicality_operationalization) %>% 
   summarise(prop = n / sum(n))
 
 # framework
-framework_n <- msa_models %>% 
+framework_n <- msa_models_unique %>% 
   count(framework) %>% 
   summarise(prop = n / sum(n))
 
 # model
-model_n <- msa_models %>% 
+model_n <- msa_models_unique %>% 
   count(model) %>% 
   summarise(prop = n / sum(n))
 
 # random
-random_n <- msa_models %>% 
+random_n <- msa_models_unique %>% 
   filter(model == "linear model") %>% 
   count(random_effects) %>% 
   summarise(prop = n / sum(n))
 
 # random terms
-rterms_n <- msa_models %>% 
+rterms_n <- msa_models_unique %>% 
   filter(n_random != 0) %>% 
   summarise(mean_rterms = mean(n_random, na.rm = TRUE)) 
 
-# unique model specs, discarding random effects
-unique_model_specs <- msa_models %>%
+# unique model specs, NOT including random effects
+unique_model_specs <- msa_models_unique %>%
   select(framework:outcome, pop_pred) %>%
+  unnest(pop_pred) %>%
+  distinct()
+
+# unique acoustic and model specs, NOT including random effects
+unique_acou_stat <- msa_models %>%
+  select(model_n, outcome, typicality_operationalization, framework, model, temporal_window, random_effects, n_random, phon_rating, stat_rating, n_predictors, pop_pred, operationalisation, operationalisation_notes) %>%
   unnest(pop_pred) %>%
   distinct()
 
@@ -733,7 +741,6 @@ team_desc_df %>%
 ```
 
 `r team_desc_list$Initial$n_teams$val %>% xfun::numbers_to_words() %>% stringr::str_to_title()` teams initially signed up to participate in the study.
-<!-- TODO: Add reasons for dropping out -->
 `r (team_desc_list$Initial$n_teams$val - team_desc_list$Final$n_teams$val) %>% xfun::numbers_to_words() %>% stringr::str_to_title()` of the signed-up teams dropped out during the analysis phase.
 One Team Coordinator, Wim van Dommelen (who agreed to their feedback being shared), gave the following reason: "The reason is that [...] the project's approach is too much top-down instead of bottom-up. [...] I would rather prefer to explore the collected utterances and run different types of acoustic analyses, which would then be followed by statistical evaluation of the data."
 We find this contribution to clearly speak to the main objective of the current study: investigate researcher's degrees of freedom in the speech sciences.
@@ -760,7 +767,7 @@ The analytic teams differed in their approach to the acoustic analysis of the sp
 ```{r unique-acou-oper}
 # acoustic operationalizations
 # Gross operationalization of acoustic operationalization
-unique_acou_oper <- msa_models %>%
+unique_acou_oper <- msa_models_unique %>%
   unite("unique_oper", outcome, operationalisation, operationalisation_notes, na.rm = TRUE) %>%
   count(unique_oper)
 ```
@@ -784,18 +791,18 @@ Among the possible operationalizations, `r round(typicality_n[[1,1]],2) * 100`\%
 
 The majority of models were run within a frequentist framework (`r round(framework_n[[2,1]],2) * 100`\%).
 `r round(framework_n[[1,1]],2) * 100`\% were run within a Bayesian framework.
-While teams almost exclusively used linear models to analyze their data (`r round(model_n[[2,1]],2) * 100`\%, with a few exception using machine learning techniques or GAMs as a special case of linear models), teams differed drastically in how they accounted for dependencies within the data.
-
-<!-- TR: I count 9 GAMS, how can that amount to only 2%  -->
+While teams almost exclusively used linear models to analyze their data (`r round(model_n[[2,1]],2) * 100`\%, teams differed drastically in how they accounted for dependencies within the data.
+<!-- TODO: The calculations in these sections are based on the INCLUDED models only. We are not counting the SUBMITTED models that have been excluded. We might want to add counts for when including the excluded models -->
 
 The data contains several dependencies between data points, with multiple data points coming from the same subject and with multiple data points being associated with the same adjective or noun.
 The appropriate way to account for this non-independence is by using multi-level models and specifying so-called random effects [e.g., @gelman2006data; @schielzeth2009conclusions]. 
 `r round(random_n[[3,1]],2) * 100`\% of linear models specified no random effects at all (without pooling their data), so effectively ignoring these non-independences [@hurlbert1984pseudoreplication]. <!-- TR: Did we confirm this? -->
 `r round(random_n[[1,1]],2) * 100`\% specified random intercepts only, and `r round(random_n[[2,1]],2) * 100`\% specified both random intercepts and random slopes to account for the non-independence.
 On average, teams that specified random effects, included `r round(rterms_n,1)` random terms in their models. 
-Based on statistical framework, type of model, distribution family, fixed terms, and discarding random effects, there were a total of `r nrow(unique_model_specs)` different model specifications. 
-<!-- TR: what do you mean with "discarding random effect? Do you mean if we ignore the variation there?  The sentence does compute for me-->
-<!-- TR: Now that we have the number for different acoustic operationalizations and the number for different statistical models we can calculate the possible unique combinations r nrow(unique_model_specs) * nrow(unique_acou_oper). I mention this in the discussion. If ok, delete comment-->
+
+Based on statistical framework, type of model, distribution family, fixed terms, and not including random effects, there were a total of `r nrow(unique_model_specs)` different model specifications.
+When considering both acoustic and statistical analysis, we have found a grand total of `r nrow(unique_acou_stat)`, i.e. each submitted analysis was unique.
+
 
 ### Review ratings
 

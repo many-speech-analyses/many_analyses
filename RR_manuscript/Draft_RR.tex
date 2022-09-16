@@ -560,7 +560,7 @@ Analysts had on average 4.8 years (SD = 4.2) of experience after completing thei
 The analysts' prior belief in the effect under investigation on a scale from 0 to 100 ranged from 48.5 to 92 with an average of 69.2 (SD = 11.3).
 We take this to suggest that analysts had an overall rather high positive prior belief in the investigated relationship between prosody and word combination typicality.
 
-At the end of Phase 2 (primary data analysis), the teams have submitted a grand total 100 individual models to answer the research question, with a mean of 3.6 models per team.
+At the end of Phase 2 (primary data analysis), the teams have submitted a grand total 104 individual models to answer the research question, with a mean of 3.6 models per team.
 Crucially, the analytic approaches employed by the teams varied widely both in the acoustical analyses of the speech signal and in the statistical analyses of the obtained measures.
 We proceed to discuss these in the following sections, after which we provide an overview of the peer-review ratings.
 
@@ -568,9 +568,9 @@ We proceed to discuss these in the following sections, after which we provide an
 \subsubsection{Acoustic analysis}\label{acoustic-analysis}}
 
 The analytic teams differed in their approach to the acoustic analysis of the speech signal, including choosing specific acoustic measures, the temporal window over which they are taken from and how the measures are transformed.
-34\% of models used a measure of duration as the outcome variable, 36\% used fundamental frequency (f0), 14\% used vowel formants, 13\% intensity, and 3\% other measures.
+35\% of models used a measure of duration as the outcome variable, 36\% used fundamental frequency (f0), 12\% used vowel formants, 14\% intensity, and 3\% other measures.
 
-45\% of models obtained acoustic measures at the level of the segment (e.g.~comparing the acoustic profile of a vowel), 44\% from the word level (e.g.~comparing the acoustic profile of \emph{Banane} `banana'), 4\% at the level of the phrase (e.g.~the noun phrase including determiner and adjective, e.g.~``the green banana''), 2\% from the whole sentence, and 5\% used a different time window.
+45\% of models obtained acoustic measures at the level of the segment (e.g.~comparing the acoustic profile of a vowel), 43\% from the word level (e.g.~comparing the acoustic profile of \emph{Banane} `banana'), 3\% at the level of the phrase (e.g.~the noun phrase including determiner and adjective, e.g.~``the green banana''), 4\% from the whole sentence, and 4\% used a different time window.
 Based on a coarse coding of how acoustic measures were operationalized, we find a total of 52 different measurement specifications.
 For example, if we look at those analyses who targeted fundamental frequency (f0), it was operationalized in a myriad of ways including as the minimum, the maximum, the mean, the median, as a range in an interval or a ratio between two intervals.
 The measurement was taken from the interval of a vowel in the article, the adjective or noun, or in the word interval of article, adjective or noun, or the noun phrase interval or the entire phrase.
@@ -586,18 +586,20 @@ This means that, in addition to the critical predictor (typicality of the adject
 Possible information that was used as predictors included the information structure of the sentence, trial number, semantic dimensions of the referent, part of speech, and speaker gender.
 
 The data given to the teams allowed them to operationalize the predictor of interest, word typicality, in different ways.
-Among the possible operationalizations, 79\% of models contained typicality as a categorical variable (e.g.~atypical vs.~typical), 18\% used a continuous typicality scale from 0-100 by calculating the mean typicality for each word combination as obtained from the norming study, while 2\% of the models used the median typicality rating.
+Among the possible operationalizations, 72\% of models contained typicality as a categorical variable (e.g.~atypical vs.~typical), 24\% used a continuous typicality scale from 0-100 by calculating the mean typicality for each word combination as obtained from the norming study, while 3\% of the models used the median typicality rating.
 
-The majority of models were run within a frequentist framework (80\%).
-20\% were run within a Bayesian framework.
-While teams almost exclusively used linear models to analyze their data (98\%, with a few exception using machine learning techniques or GAMs as a special case of linear models), teams differed drastically in how they accounted for dependencies within the data.
+The majority of models were run within a frequentist framework (83\%).
+17\% were run within a Bayesian framework.
+While teams almost exclusively used linear models to analyze their data (98\%, teams differed drastically in how they accounted for dependencies within the data.
 
 The data contains several dependencies between data points, with multiple data points coming from the same subject and with multiple data points being associated with the same adjective or noun.
 The appropriate way to account for this non-independence is by using multi-level models and specifying so-called random effects \citep[e.g.,][]{gelman2006data, schielzeth2009conclusions}.
-5\% of linear models specified no random effects at all (without pooling their data), so effectively ignoring these non-independences \citep{hurlbert1984pseudoreplication}.
-66\% specified random intercepts only, and 29\% specified both random intercepts and random slopes to account for the non-independence.
-On average, teams that specified random effects, included 2.4 random terms in their models.
-Based on statistical framework, type of model, distribution family, fixed terms, and discarding random effects, there were a total of 45 different model specifications.
+8\% of linear models specified no random effects at all (without pooling their data), so effectively ignoring these non-independences \citep{hurlbert1984pseudoreplication}.
+65\% specified random intercepts only, and 27\% specified both random intercepts and random slopes to account for the non-independence.
+On average, teams that specified random effects, included 2.5 random terms in their models.
+
+Based on statistical framework, type of model, distribution family, fixed terms, and not including random effects, there were a total of 47 different model specifications.
+When considering both acoustic and statistical analysis, we have found a grand total of 104, i.e.~each submitted analysis was unique.
 
 \hypertarget{review-ratings}{%
 \subsubsection{Review ratings}\label{review-ratings}}
@@ -733,7 +735,7 @@ In other words, depending on the choice of measurement, analysts arrived at oppo
 We gave 30 analyst teams the same speech dataset to answer the same research question: \emph{Do speakers acoustically modify utterances to signal atypical word combinations?}.
 In order to answer this question, teams had to operationalize latent variables within a multidimensional signal, operationalize and chose appropriate predictors, and construct appropriate statistical models to answer the research question.
 This complex process has led to a vast ``garden of forking paths'', i.e.~to a wide range of combinations of possible analytical decisions.
-Analyses exhibited at least 45 unique ways of operationalizing the acoustic signal alongside 52 unique ways of constructing their statistical model, amounting to 2340 possible unique combinations.
+Analyses exhibited at least 47 unique ways of operationalizing the acoustic signal alongside 52 unique ways of constructing their statistical model, amounting to 2444 possible unique combinations.
 This is just a bare minimum estimate for the vast multiverse of analytical decisions, ignoring for example detailed ways of extracting the chosen acoustic parameters.
 
 Interestingly, the observed variation in reported effect sizes was not predicted by the analysts' prior expectations about the phenomenon.
