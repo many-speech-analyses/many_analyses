@@ -734,7 +734,10 @@ team_desc_df %>%
 
 `r team_desc_list$Initial$n_teams$val %>% xfun::numbers_to_words() %>% stringr::str_to_title()` teams initially signed up to participate in the study.
 <!-- TODO: Add reasons for dropping out -->
-`r (team_desc_list$Initial$n_teams$val - team_desc_list$Final$n_teams$val) %>% xfun::numbers_to_words() %>% stringr::str_to_title()` of the signed-up teams dropped out during the analysis phase^[ADD REASONS]. 
+`r (team_desc_list$Initial$n_teams$val - team_desc_list$Final$n_teams$val) %>% xfun::numbers_to_words() %>% stringr::str_to_title()` of the signed-up teams dropped out during the analysis phase.
+One Team Coordinator, Wim van Dommelen (who agreed to their feedback being shared), gave the following reason: "The reason is that [...] the project's approach is too much top-down instead of bottom-up. [...] I would rather prefer to explore the collected utterances and run different types of acoustic analyses, which would then be followed by statistical evaluation of the data."
+We find this contribution to clearly speak to the main objective of the current study: investigate researcher's degrees of freedom in the speech sciences.
+Based on our personal experience with research in the field, it is common practice to test as many different types of models, using as many different types of measurements, to asnwer one research question.
 The remaining `r team_desc_list$Final$n_teams$val` teams submitted their analysis by the established deadline.
 These are the teams that are included in this study.
 
