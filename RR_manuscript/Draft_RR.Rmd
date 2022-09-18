@@ -141,7 +141,7 @@ Research on speech lies at the intersection of the cognitive sciences, informing
 One major challenge in the speech sciences is the mapping between communicative intentions (the unobserved behavior) and their physical manifestation (the observed behavior).
 
 Speech is a complex signal that is characterized by structurally different acoustic landmarks distributed throughout different temporal domains.
-Thus, choosing how to measure a communictive intention of interest is an important analytic step.
+Thus, choosing how to measure a communicative intention of interest is an important analytic step.
 Take for example the following sentence in (1).
 
 \vspace{1em}
@@ -728,23 +728,96 @@ An important aspect that emerges from the descriptive analysis is the large vari
 
 ### Characteristics of analytic teams
 
+\phantom{.}
+
 ```{r}
 #| label: team-descriptives-table
 #| echo: false
-#| eval: false
-team_desc_df %>% 
-  mutate(Mean = glue::glue("{mean_size} ({sd_size})")) %>% 
-  select(Stage = stage, n = n_teams, Mean, Median = median_size) %>% 
-  knitr::kable(align = c("l", "r", "r", "r"), 
-               caption = "Caption test", 
-               label = "team-descriptives-table")
+#| results: 'asis'
+#| eval: true
+
+# team_desc_df %>% 
+#   mutate(Mean = glue::glue("{mean_size} ({sd_size})")) %>% 
+#   select(Stage = stage, n = n_teams, Mean, Median = median_size) %>% 
+#   knitr::kable(align = c("l", "r", "r", "r"), 
+#                caption = "Caption test", 
+#                label = "team-descriptives-table")
+
+# Team descriptives
+tbl_team_desc <- msa_models %>% 
+  select(animal, years_from_phd, prior_belief, phon_rating, stat_rating, 
+         all_rating) %>% 
+  group_by(animal) %>% 
+  summarize(across(years_from_phd:all_rating, mean)) %>% 
+  pivot_longer(cols = -animal, names_to = "metric", values_to = "vals") %>% 
+  na.omit() %>% 
+  group_by(metric) %>% 
+  summarize(min = min(vals), max = max(vals), avg = mean(vals), sd = sd(vals)) %>% 
+  mutate_if(is.numeric, round, digits = 2) %>% 
+  mutate(desc = "team_desc", 
+    metric = fct_relevel(metric, "years_from_phd"), 
+   `Mean (SD)` = glue::glue("{avg} ({sd})"), 
+    Metric = case_when(
+      metric == "years_from_phd" ~ "Years since PhD", 
+      metric == "stat_rating" ~ "Statistical ability", 
+      metric == "prior_belief" ~ "Prior belief of $H_{1}$", 
+      metric == "phon_rating" ~ "Phon rating", 
+      metric == "all_rating" ~ "all rating"), 
+    label = glue::glue("{desc}_{metric}")) %>% 
+  select(label, desc, Metric, Min. = min, Max = max, `Mean (SD)`, avg, sd) %>% 
+  add_row(label = " ", desc = "team_desc", Metric = " ", 
+          Min. = NA, Max = NA, `Mean (SD)` = NA, avg = NA, sd = NA) %>% 
+  mutate(across(-c("label", "desc", "Metric"), ~replace(., is.na(.), " ")))
+
+# Model descriptives 
+tbl_model_desc <- msa_models %>% 
+  select(animal, n_predictors:n_random, n_models) %>% 
+  group_by(animal) %>% 
+  summarize(across(everything(), mean)) %>% 
+  pivot_longer(cols = -animal, names_to = "metric", values_to = "vals") %>% 
+  na.omit() %>% 
+  group_by(metric) %>% 
+  summarize(min = min(vals), max = max(vals), avg = mean(vals), sd = sd(vals)) %>% 
+  mutate_if(is.numeric, round, digits = 2) %>% 
+  mutate(desc = "model_desc", 
+    metric = fct_relevel(metric, "n_models"), 
+    `Mean (SD)` = glue::glue("{avg} ({sd})"), 
+    Metric = case_when(
+      metric == "n_coefficients" ~ "n. coefficients", 
+      metric == "n_models" ~ "n. models", 
+      metric == "n_predictors" ~ "n. predictors", 
+      metric == "n_random" ~ "n. random effects", 
+      metric == "n_random_int" ~ "n. random intercepts", 
+      metric == "n_random_slo" ~ "n. random slopes", 
+      metric == "n_random_smooth" ~ "n. random smooths",
+      metric == "n_terms" ~ "n. terms"), 
+    label = glue::glue("{desc}_{metric}")) %>% 
+  select(label, desc, Metric, Min. = min, Max = max, `Mean (SD)`, avg, sd) %>% 
+  mutate(across(-c("desc", "Metric"), as.character))
+
+# Combine in single tibble (for printing in prose and table)
+tbl_team_model_desc <- bind_rows(tbl_team_desc, tbl_model_desc) %>% 
+  mutate(desc = case_when(
+    Metric != "all rating" & desc == "team_desc" ~ " ", 
+    Metric != "n. coefficients" & desc == "model_desc" ~ " ", 
+    TRUE ~ desc), 
+    desc = case_when(
+      desc == "team_desc" ~ "Teams", 
+      desc == "model_desc" ~ "Models", 
+      TRUE ~ " ")) 
+
+tbl_team_model_desc %>% 
+  select(Descriptives = desc, Metric, Min., Max, `Mean (SD)`) %>% 
+  knitr::kable(format = "latex", booktabs = T, escape = F, 
+    linesep = "", align = c("l", "l", "r", "r", "r"))
+
 ```
 
-`r team_desc_list$Initial$n_teams$val %>% xfun::numbers_to_words() %>% stringr::str_to_title()` teams initially signed up to participate in the study.
-`r (team_desc_list$Initial$n_teams$val - team_desc_list$Final$n_teams$val) %>% xfun::numbers_to_words() %>% stringr::str_to_title()` of the signed-up teams dropped out during the analysis phase.
+`r team_desc_list$Initial$n_teams$val %>% xfun::numbers_to_words() %>% stringr::str_to_sentence()` teams initially signed up to participate in the study.
+`r (team_desc_list$Initial$n_teams$val - team_desc_list$Final$n_teams$val) %>% xfun::numbers_to_words() %>% stringr::str_to_sentence()` of the signed-up teams dropped out during the analysis phase.
 One Team Coordinator, Wim van Dommelen (who agreed to their feedback being shared), gave the following reason: "The reason is that [...] the project's approach is too much top-down instead of bottom-up. [...] I would rather prefer to explore the collected utterances and run different types of acoustic analyses, which would then be followed by statistical evaluation of the data."
 We find this contribution to clearly speak to the main objective of the current study: investigate researcher's degrees of freedom in the speech sciences.
-Based on our personal experience with research in the field, it is common practice to test as many different types of models, using as many different types of measurements, to asnwer one research question.
+Based on our personal experience with research in the field, it is common practice to test as many different types of models, using as many different types of measurements, to answer one research question.
 The remaining `r team_desc_list$Final$n_teams$val` teams submitted their analysis by the established deadline.
 These are the teams that are included in this study.
 
@@ -771,9 +844,9 @@ unique_acou_oper <- msa_models_unique %>%
   count(unique_oper)
 ```
 
-`r round(window_n[[1,1]],2) * 100`\% of models obtained acoustic measures at the level of the segment (e.g. comparing the acoustic profile of a vowel), `r round(window_n[[2,1]],2) * 100`\% from the word level (e.g. comparing the acoustic profile of *Banane* 'banana'), `r round(window_n[[3,1]],2) * 100`\% at the level of the phrase (e.g. the noun phrase including determiner and adjective, e.g. "the green banana"), `r round(window_n[[4,1]],2) * 100`\% from the whole sentence, and `r round(window_n[[5,1]],2) * 100`\% used a different time window.
+`r (round(window_n[[1,1]],2) * 100) %>% xfun::numbers_to_words() %>% stringr::str_to_sentence()` percent of models obtained acoustic measures at the level of the segment (e.g. comparing the acoustic profile of a vowel), `r round(window_n[[2,1]],2) * 100`\% from the word level (e.g. comparing the acoustic profile of *Banane* 'banana'), `r round(window_n[[3,1]],2) * 100`\% at the level of the phrase (e.g. the noun phrase including determiner and adjective, e.g. "the green banana"), `r round(window_n[[4,1]],2) * 100`\% from the whole sentence, and `r round(window_n[[5,1]],2) * 100`\% used a different time window.
 Based on a coarse coding of how acoustic measures were operationalized, we find a total of `r nrow(unique_acou_oper)` different measurement specifications.
-For example, if we consider those analyses who targetfundamental frequency (f0), we find that it is operationalized in a myriad of ways including the minimum, the maximum, the mean, the median, as a range in an interval or a ratio between two intervals. 
+For example, if we consider those analyses that target fundamental frequency (f0), we find that it is operationalized in a myriad of ways including the minimum, the maximum, the mean, the median, as a range in an interval or a ratio between two intervals. 
 The measurement is sometimes taken from the interval of a vowel in the article, the adjective or noun; it is sometimes taken from the word interval of article, adjective or noun; or it is taken from either the noun phrase interval or the entire sentence. 
 Some of these measures were normalized relative to other elements in the sentence or relative to the speaker.
 
@@ -1130,7 +1203,7 @@ This uncertainty is possibly further inflated by the fact that he research quest
 Interpreting the research question/hypothesis differently in terms of its statistical consequences has recently been shown to explain some variation between analysis teams in many-analysis projects [@auspurg2021has]. 
 However, we consider this very underspecification of research hypotheses in the field of speech science (and beyond, see @scheel2022most) a common phenomenon. 
 For example, researchers seem to have not yet agreed on how to acoustically measure cross linguistically common phenomena such as word stress [e.g. @gordon2017acoustic]. 
-In light of these possible sources of bias, a field can benefit from explicit positionality statement [e.g., @fox2021open]
+In light of these possible sources of bias, a field can benefit from explicit positionality statements [e.g., @fox2021open]
 Researchers do not analyse data in a vaccuum.
 It is important recognize and disclose one’s positionality, i.e., a reflection about how educational background, social identity, power, experience and context might influence researchers approaches and interpretations.
 Despite these all of these possible sources of bias and uncertainty, our study suggest that at a minimum we can expect the between-team and between-analysis variability that we have observed, which is quite substantial and possibly amplifying biases. 
