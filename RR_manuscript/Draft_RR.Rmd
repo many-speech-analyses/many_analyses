@@ -707,6 +707,7 @@ unique_acou_stat <- msa_models %>%
   distinct()
 
 # review ratings
+# NOTE: Stef or Timo, this doesnt take into account repeated values per team
 review_mean <- msa_models %>% 
   summarise(mean_prating = mean(phon_rating, na.rm = TRUE),
             sd_prating = sd(phon_rating, na.rm = TRUE),
@@ -728,8 +729,28 @@ An important aspect that emerges from the descriptive analysis is the large vari
 
 ### Characteristics of analytic teams
 
-\phantom{.}
+`r team_desc_list$Initial$n_teams$val %>% xfun::numbers_to_words() %>% stringr::str_to_sentence()` teams initially signed up to participate in the study.
+`r (team_desc_list$Initial$n_teams$val - team_desc_list$Final$n_teams$val) %>% xfun::numbers_to_words() %>% stringr::str_to_sentence()` of the signed-up teams dropped out during the analysis phase.
+One Team Coordinator, Wim van Dommelen (who agreed to their feedback being shared), gave the following reason: "The reason is that [...] the project's approach is too much top-down instead of bottom-up. [...] I would rather prefer to explore the collected utterances and run different types of acoustic analyses, which would then be followed by statistical evaluation of the data."
+We find this contribution to clearly speak to the main objective of the current study: investigate researcher's degrees of freedom in the speech sciences.
+Based on our personal experience with research in the field, it is common practice to test as many different types of models, using as many different types of measurements, to answer one research question.
+The remaining `r team_desc_list$Final$n_teams$val` teams submitted their analysis by the established deadline.
+These are the teams that are included in this study.
+Table \@ref(tab:team-descriptives-table) provides a summary of the contributing teams and their analyses. 
 
+Submitting teams consisted of an average of `r team_desc_list$Final$mean_size$val` individual analysts (SD = `r team_desc_list$Final$sd_size$val`).
+Upon sign-up, we collected background information from each analyst through the intake form, which was administered during Phase 1, prior to the distribution of the data to the teams.
+Analysts had on average `r round(phd_mean[[1]],1)` years (SD = `r round(phd_mean[[2]],1)`) of experience after completing their PhD, ranging from `r round(phd_mean[[3]],1)` years, i.e. PhD students (or younger) to `r round(phd_mean[[4]],1)` years.
+The analysts' prior belief in the effect under investigation on a scale from 0 to 100 ranged from `r round(prior_mean[[3]],1)`  to `r round(prior_mean[[4]],1)` with an average of `r round(prior_mean[[1]],1)` (SD = `r round(prior_mean[[2]],1)`).
+We take this to suggest that analysts had an overall rather high positive prior belief in the investigated relationship between prosody and word combination typicality.
+
+At the end of Phase 2 (primary data analysis), the teams have submitted a grand total `r no_analyses` individual models to answer the research question, with a mean of `r round(mean_analyses[[1]], 1)` models per team. 
+Crucially, the analytic approaches employed by the teams varied widely both in the acoustical analyses of the speech signal and in the statistical analyses of the obtained measures.
+We proceed to discuss these in the following sections, after which we provide an overview of the peer-review ratings.
+
+
+<!-- Begin Table --> 
+\vspace{0.2in}
 ```{r}
 #| label: team-descriptives-table
 #| echo: false
@@ -743,6 +764,12 @@ An important aspect that emerges from the descriptive analysis is the large vari
 #                caption = "Caption test", 
 #                label = "team-descriptives-table")
 
+# Round and format numbers to exactly N digits
+specify_decimal <- function(x, k) {
+  out <- trimws(format(round(x, k), nsmall = k))
+  return(out)
+}
+
 # Team descriptives
 tbl_team_desc <- msa_models %>% 
   select(animal, years_from_phd, prior_belief, phon_rating, stat_rating, 
@@ -752,21 +779,24 @@ tbl_team_desc <- msa_models %>%
   pivot_longer(cols = -animal, names_to = "metric", values_to = "vals") %>% 
   na.omit() %>% 
   group_by(metric) %>% 
-  summarize(min = min(vals), max = max(vals), avg = mean(vals), sd = sd(vals)) %>% 
-  mutate_if(is.numeric, round, digits = 2) %>% 
+  summarize(min = min(vals), max = max(vals), avg = mean(vals, na.rm = T), 
+            sd = sd(vals, na.rm = T)) %>% 
+  mutate(across(-c("metric", "avg", "sd"), round)) %>% 
+  mutate(across(-c("metric", "min", "max"), specify_decimal, k = 2)) %>% 
   mutate(desc = "team_desc", 
     metric = fct_relevel(metric, "years_from_phd"), 
    `Mean (SD)` = glue::glue("{avg} ({sd})"), 
+    Range = glue::glue("{min}--{max}"), 
     Metric = case_when(
       metric == "years_from_phd" ~ "Years since PhD", 
-      metric == "stat_rating" ~ "Statistical ability", 
-      metric == "prior_belief" ~ "Prior belief of $H_{1}$", 
-      metric == "phon_rating" ~ "Phon rating", 
-      metric == "all_rating" ~ "all rating"), 
+      metric == "stat_rating" ~ "Self-report statistical ability", 
+      metric == "prior_belief" ~ "Prior belief in $H_{1}$", 
+      metric == "phon_rating" ~ "Acoustic analysis rating", 
+      metric == "all_rating" ~ "Overall peer review rating"), 
     label = glue::glue("{desc}_{metric}")) %>% 
-  select(label, desc, Metric, Min. = min, Max = max, `Mean (SD)`, avg, sd) %>% 
+  select(label, desc, Metric, Min. = min, Max = max, `Mean (SD)`, avg, sd, Range) %>% 
   add_row(label = " ", desc = "team_desc", Metric = " ", 
-          Min. = NA, Max = NA, `Mean (SD)` = NA, avg = NA, sd = NA) %>% 
+          Min. = NA, Max = NA, `Mean (SD)` = NA, avg = NA, sd = NA, Range = NA) %>% 
   mutate(across(-c("label", "desc", "Metric"), ~replace(., is.na(.), " ")))
 
 # Model descriptives 
@@ -777,11 +807,14 @@ tbl_model_desc <- msa_models %>%
   pivot_longer(cols = -animal, names_to = "metric", values_to = "vals") %>% 
   na.omit() %>% 
   group_by(metric) %>% 
-  summarize(min = min(vals), max = max(vals), avg = mean(vals), sd = sd(vals)) %>% 
-  mutate_if(is.numeric, round, digits = 2) %>% 
+  summarize(min = min(vals), max = max(vals), avg = mean(vals, na.rm = T), 
+            sd = sd(vals, na.rm = T)) %>% 
+  mutate(across(-c("metric", "avg", "sd"), round)) %>% 
+  mutate(across(-c("metric", "min", "max"), specify_decimal, k = 2)) %>% 
   mutate(desc = "model_desc", 
     metric = fct_relevel(metric, "n_models"), 
     `Mean (SD)` = glue::glue("{avg} ({sd})"), 
+    Range = glue::glue("{min}--{max}"), 
     Metric = case_when(
       metric == "n_coefficients" ~ "n. coefficients", 
       metric == "n_models" ~ "n. models", 
@@ -792,44 +825,35 @@ tbl_model_desc <- msa_models %>%
       metric == "n_random_smooth" ~ "n. random smooths",
       metric == "n_terms" ~ "n. terms"), 
     label = glue::glue("{desc}_{metric}")) %>% 
-  select(label, desc, Metric, Min. = min, Max = max, `Mean (SD)`, avg, sd) %>% 
+  select(label, desc, Metric, Min. = min, Max = max, `Mean (SD)`, avg, sd, Range) %>% 
   mutate(across(-c("desc", "Metric"), as.character))
 
 # Combine in single tibble (for printing in prose and table)
 tbl_team_model_desc <- bind_rows(tbl_team_desc, tbl_model_desc) %>% 
   mutate(desc = case_when(
-    Metric != "all rating" & desc == "team_desc" ~ " ", 
+    Metric != "Overall peer review rating" & desc == "team_desc" ~ " ", 
     Metric != "n. coefficients" & desc == "model_desc" ~ " ", 
     TRUE ~ desc), 
     desc = case_when(
       desc == "team_desc" ~ "Teams", 
       desc == "model_desc" ~ "Models", 
-      TRUE ~ " ")) 
+      TRUE ~ " ")
+    ) 
 
 tbl_team_model_desc %>% 
-  select(Descriptives = desc, Metric, Min., Max, `Mean (SD)`) %>% 
+  select(Descriptives = desc, Metric, Range, `Mean (SD)`) %>% 
   knitr::kable(format = "latex", booktabs = T, escape = F, 
-    linesep = "", align = c("l", "l", "r", "r", "r"))
+    linesep = "", align = c("l", "l", "c", "r"), 
+    caption = "Descriptive statistics for teams and models included in the 
+    meta-analysis (n = 30).",
+    label = "team-descriptives-table"
+    ) %>% 
+  kableExtra::kable_styling(., font_size = 11)
 
 ```
+\vspace{0.2in}
+<!-- END: Table --> 
 
-`r team_desc_list$Initial$n_teams$val %>% xfun::numbers_to_words() %>% stringr::str_to_sentence()` teams initially signed up to participate in the study.
-`r (team_desc_list$Initial$n_teams$val - team_desc_list$Final$n_teams$val) %>% xfun::numbers_to_words() %>% stringr::str_to_sentence()` of the signed-up teams dropped out during the analysis phase.
-One Team Coordinator, Wim van Dommelen (who agreed to their feedback being shared), gave the following reason: "The reason is that [...] the project's approach is too much top-down instead of bottom-up. [...] I would rather prefer to explore the collected utterances and run different types of acoustic analyses, which would then be followed by statistical evaluation of the data."
-We find this contribution to clearly speak to the main objective of the current study: investigate researcher's degrees of freedom in the speech sciences.
-Based on our personal experience with research in the field, it is common practice to test as many different types of models, using as many different types of measurements, to answer one research question.
-The remaining `r team_desc_list$Final$n_teams$val` teams submitted their analysis by the established deadline.
-These are the teams that are included in this study.
-
-Submitting teams consisted of an average of `r team_desc_list$Final$mean_size$val` individual analysts (SD = `r team_desc_list$Final$sd_size$val`).
-Upon sign-up, we collected background information from each analyst through the intake form, which was administered during Phase 1, prior to the distribution of the data to the teams.
-Analysts had on average `r round(phd_mean[[1]],1)` years (SD = `r round(phd_mean[[2]],1)`) of experience after completing their PhD, ranging from `r round(phd_mean[[3]],1)` years, i.e. PhD students (or younger) to `r round(phd_mean[[4]],1)` years.
-The analysts' prior belief in the effect under investigation on a scale from 0 to 100 ranged from `r round(prior_mean[[3]],1)`  to `r round(prior_mean[[4]],1)` with an average of `r round(prior_mean[[1]],1)` (SD = `r round(prior_mean[[2]],1)`).
-We take this to suggest that analysts had an overall rather high positive prior belief in the investigated relationship between prosody and word combination typicality.
-
-At the end of Phase 2 (primary data analysis), the teams have submitted a grand total `r no_analyses` individual models to answer the research question, with a mean of `r round(mean_analyses[[1]], 1)` models per team. 
-Crucially, the analytic approaches employed by the teams varied widely both in the acoustical analyses of the speech signal and in the statistical analyses of the obtained measures.
-We proceed to discuss these in the following sections, after which we provide an overview of the peer-review ratings.
 
 ### Acoustic analysis
 
@@ -872,9 +896,41 @@ The appropriate way to account for this non-independence is by using multi-level
 `r round(random_n[[1,1]],2) * 100`\% specified random intercepts only, and `r round(random_n[[2,1]],2) * 100`\% specified both random intercepts and random slopes to account for the non-independence.
 On average, teams that specified random effects, included `r round(rterms_n,1)` random terms in their models. 
 
+<!-- Found effect 
+JVC: this code is ready to go, but not all the rows in the google sheet are 
+filled out (approx. 40 missing)
+--> 
+```{r}
+#| label: found-effect
+#| echo: false
+
+found_effect <- msa_models %>% 
+  select(animal, model_n, found_effect) %>% 
+  na.omit() %>% 
+  mutate(effect = if_else(found_effect == "yes", 1, 0))
+
+atleast_1_effect <- found_effect %>% 
+  group_by(animal) %>% 
+  summarize(total = sum(effect)) %>% 
+  filter(total != 0)
+
+# Overall N of analyses claiming an effect
+n_effects <- sum(found_effect$effect)
+
+# Percent of effects
+perc_effects <- (n_effects / nrow(msa_models) * 100) %>% round(., 2)
+
+# N of teams claiming an effect
+n_atleast_1 <- nrow(atleast_1_effect)
+
+# Percent of teams claiming an effect
+perc_atleast_1 <- (n_atleast_1 / length(unique(msa_models$animal))) * 100
+```
+
 Based on statistical framework, type of model, distribution family, fixed terms, and not including random effects, there were a total of `r nrow(unique_model_specs)` different model specifications.
 When considering both acoustic and statistical analysis, we have found a grand total of `r nrow(unique_acou_stat)`, i.e. each submitted analysis was unique.
-
+Of the submitted analyses, `r n_effects` claimed to have found a statistically reliable effect (`r perc_effects`%). 
+`r n_atleast_1 %>% xfun::numbers_to_words() %>% str_to_sentence()` teams out of the `r length(unique(msa_models$animal)) %>% xfun::numbers_to_words()` (`r perc_atleast_1`%) submitting analyses reported at least one found effect. 
 
 ### Review ratings
 

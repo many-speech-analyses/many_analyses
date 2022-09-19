@@ -9,6 +9,20 @@
 \usepackage{cleveref}
 \providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{xcolor}
 
 
 \begin{document}
@@ -546,29 +560,6 @@ An important aspect that emerges from the descriptive analysis is the large vari
 \hypertarget{characteristics-of-analytic-teams}{%
 \subsubsection{Characteristics of analytic teams}\label{characteristics-of-analytic-teams}}
 
-\phantom{.}
-
-\begin{tabular}{llrrr}
-\toprule
-Descriptives & Metric & Min. & Max & Mean (SD)\\
-\midrule
-Teams & all rating & 39 & 88.67 & 69.95 (14.34)\\
- & Phon rating & 41.25 & 88.33 & 71.51 (13.92)\\
- & Prior belief of $H_{1}$ & 48.5 & 92 & 69.19 (11.33)\\
- & Statistical ability & 33 & 93.33 & 69.46 (16.52)\\
- & Years since PhD & -3.75 & 12.38 & 4.77 (4.16)\\
- &  &  &  & \\
-Models & n. coefficients & 1 & 11 & 3.5 (2.75)\\
- & n. models & 1 & 16 & 3.67 (3.44)\\
- & n. predictors & 1 & 4.2 & 1.59 (0.85)\\
- & n. random effects & 0 & 10 & 2.47 (2.05)\\
- & n. random intercepts & 0 & 10 & 1.91 (1.77)\\
- & n. random slopes & 0 & 4 & 0.63 (1.07)\\
- & n. random smooths & 0 & 0 & 0 (0)\\
- & n. terms & 1 & 4.27 & 1.78 (1.08)\\
-\bottomrule
-\end{tabular}
-
 Eighty-four teams initially signed up to participate in the study.
 Fifty-four of the signed-up teams dropped out during the analysis phase.
 One Team Coordinator, Wim van Dommelen (who agreed to their feedback being shared), gave the following reason: ``The reason is that {[}\ldots{]} the project's approach is too much top-down instead of bottom-up. {[}\ldots{]} I would rather prefer to explore the collected utterances and run different types of acoustic analyses, which would then be followed by statistical evaluation of the data.''
@@ -576,6 +567,7 @@ We find this contribution to clearly speak to the main objective of the current 
 Based on our personal experience with research in the field, it is common practice to test as many different types of models, using as many different types of measurements, to answer one research question.
 The remaining 30 teams submitted their analysis by the established deadline.
 These are the teams that are included in this study.
+Table \ref{tab:team-descriptives-table} provides a summary of the contributing teams and their analyses.
 
 Submitting teams consisted of an average of 3.63 individual analysts (SD = 2.8).
 Upon sign-up, we collected background information from each analyst through the intake form, which was administered during Phase 1, prior to the distribution of the data to the teams.
@@ -586,6 +578,36 @@ We take this to suggest that analysts had an overall rather high positive prior 
 At the end of Phase 2 (primary data analysis), the teams have submitted a grand total 104 individual models to answer the research question, with a mean of 3.6 models per team.
 Crucially, the analytic approaches employed by the teams varied widely both in the acoustical analyses of the speech signal and in the statistical analyses of the obtained measures.
 We proceed to discuss these in the following sections, after which we provide an overview of the peer-review ratings.
+
+\vspace{0.2in}
+\begin{table}
+
+\caption{\label{tab:team-descriptives-table}Descriptive statistics for teams and models included in the 
+    meta-analysis (n = 30).}
+\centering
+\fontsize{11}{13}\selectfont
+\begin{tabular}[t]{llcr}
+\toprule
+Descriptives & Metric & Range & Mean (SD)\\
+\midrule
+Teams & Overall peer review rating & 39--89 & 69.95 (14.34)\\
+ & Acoustic analysis rating & 41--88 & 71.51 (13.92)\\
+ & Prior belief in $H_{1}$ & 48--92 & 69.19 (11.33)\\
+ & Self-report statistical ability & 33--93 & 69.46 (16.52)\\
+ & Years since PhD & -4--12 & 4.77 (4.16)\\
+ &  &  & \\
+Models & n. coefficients & 1--11 & 3.50 (2.75)\\
+ & n. models & 1--16 & 3.67 (3.44)\\
+ & n. predictors & 1--4 & 1.59 (0.85)\\
+ & n. random effects & 0--10 & 2.47 (2.05)\\
+ & n. random intercepts & 0--10 & 1.91 (1.77)\\
+ & n. random slopes & 0--4 & 0.63 (1.07)\\
+ & n. random smooths & 0--0 & 0.00 (0.00)\\
+ & n. terms & 1--4 & 1.78 (1.08)\\
+\bottomrule
+\end{tabular}
+\end{table}
+\vspace{0.2in}
 
 \hypertarget{acoustic-analysis}{%
 \subsubsection{Acoustic analysis}\label{acoustic-analysis}}
@@ -623,6 +645,8 @@ On average, teams that specified random effects, included 2.5 random terms in th
 
 Based on statistical framework, type of model, distribution family, fixed terms, and not including random effects, there were a total of 47 different model specifications.
 When considering both acoustic and statistical analysis, we have found a grand total of 104, i.e.~each submitted analysis was unique.
+Of the submitted analyses, 37 claimed to have found a statistically reliable effect (21.76\%).
+Nine teams out of the thirty (30\%) submitting analyses reported at least one found effect.
 
 \hypertarget{review-ratings}{%
 \subsubsection{Review ratings}\label{review-ratings}}
