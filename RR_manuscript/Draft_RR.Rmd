@@ -640,6 +640,7 @@ team_desc_list <- team_desc_df %>%
 # team_desc_list$Initial$n_teams$val
 
 # number of analyses
+# JVC: Why is this the number of total analyses and not nrow(msa_models)?
 msa_models_unique <- msa_models %>%
   select(animal, model_n, outcome, typicality_operationalization, framework, model, temporal_window, random_effects, n_random, phon_rating, stat_rating, n_predictors, pop_pred, operationalisation, operationalisation_notes) %>%
   distinct()
@@ -725,7 +726,6 @@ Finally, we present the analysis of the effect of analytic and researcher-relate
 In the following sections, we will describe the characteristics of the analysis teams that participated in the study and the analytic approaches they adopted.
 An important aspect that emerges from the descriptive analysis is the large variation in analytic strategies. 
 
-<!-- TODO: some of this or most of this should go into a nice overview table -->
 
 ### Characteristics of analytic teams
 
@@ -768,6 +768,15 @@ We proceed to discuss these in the following sections, after which we provide an
 specify_decimal <- function(x, k) {
   out <- trimws(format(round(x, k), nsmall = k))
   return(out)
+}
+
+# Print values from tibble for article
+pull_from_tib <- function(df, col, row, val) {
+  col <- enquo(col)
+  row <- enquo(row)
+  val <- enquo(val)
+  val <- filter(df, !!col == !!row) %>% pull(!!val)
+  return(val)
 }
 
 # Team descriptives
@@ -848,12 +857,72 @@ tbl_team_model_desc %>%
     meta-analysis (n = 30).",
     label = "team-descriptives-table"
     ) %>% 
-  kableExtra::kable_styling(., font_size = 11)
+  kableExtra::kable_styling(., font_size = 10)
 
 ```
 \vspace{0.2in}
 <!-- END: Table --> 
 
+
+<!-- Begin Table 2 --> 
+\vspace{0.2in}
+```{r}
+#| label: categorical-descriptives-table
+#| echo: false
+#| results: 'asis'
+#| eval: true
+
+# Descriptives of categorical variables
+tbl_categorical_desc <- msa_models %>% 
+  select(animal, outcome, temporal_window, typicality_operationalization, 
+  framework, model) %>% 
+  pivot_longer(cols = -animal, names_to = "metric", values_to = "val") %>% 
+  na.omit() %>% 
+  group_by(metric) %>% 
+  count(val) %>% 
+  group_by(metric) %>% 
+  mutate(prop = n / sum(n), perc = prop * 100, 
+    Metric = case_when(
+      metric == "temporal_window" ~ "Temporal window", 
+      metric == "typicality_operationalization" ~ "Typicality operationalization", 
+      TRUE ~ metric
+    ), 
+    Metric = str_to_sentence(Metric), 
+    Type = case_when(
+      val != "GAM" ~ str_to_sentence(val), 
+      TRUE ~ val
+    )) %>% 
+  mutate(across(c("prop", "perc"), specify_decimal, k = 2)) %>% 
+  unite(label, c("metric", "val")) %>% 
+  mutate(label = str_replace_all(label, " ", "_"), 
+         label = str_remove_all(label, "\\(|\\)"))
+
+tbl_categorical_desc %>% 
+  select(Metric, Type, n, `\\%` = perc) %>% 
+  mutate(Metric = case_when(
+    Type != "Bayesian" & Metric == "Framework" ~ " ", 
+    Type != "GAM" & Metric == "Model" ~ " ", 
+    Type != "Duration" & Metric == "Outcome" ~ " ", 
+    Type != "Other" & Metric == "Temporal window" ~ " ", 
+    Type != "Categorical" & Metric == "Typicality operationalization" ~ " ", 
+    TRUE ~ Metric)
+    ) %>% 
+  add_row(Metric = " ", Type = " ", n = NA, `\\%` = NA, .after = 2) %>%
+  add_row(Metric = " ", Type = " ", n = NA, `\\%` = NA, .after = 6) %>%
+  add_row(Metric = " ", Type = " ", n = NA, `\\%` = NA, .after = 12) %>%
+  add_row(Metric = " ", Type = " ", n = NA, `\\%` = NA, .after = 18) %>%
+  mutate(across(-c("Metric", "Type"), ~replace(., is.na(.), " "))) %>% 
+  knitr::kable(format = "latex", booktabs = T, escape = F, 
+    linesep = "", align = c("l", "l", "r", "r"), 
+    caption = "Descriptive statistics for model stuff.",
+    label = "categorical-descriptives-table"
+    ) %>% 
+  kableExtra::kable_styling(., font_size = 10)
+
+# pull_from_tib(tbl_categorical_desc, label, "framework_bayesian", n)
+
+```
+<!-- END Table 2 --> 
 
 ### Acoustic analysis
 
