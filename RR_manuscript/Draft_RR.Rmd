@@ -51,6 +51,25 @@ library(broom.mixed)
 my_seed <- 115116106
 ```
 
+```{r}
+#| label: helper-functions
+# Round and format numbers to exactly N digits
+specify_decimal <- function(x, k) {
+  out <- trimws(format(round(x, k), nsmall = k))
+  return(out)
+}
+
+# Print values from tibble for article
+pull_from_tib <- function(df, col, row, val) {
+  col <- enquo(col)
+  row <- enquo(row)
+  val <- enquo(val)
+  val <- filter(df, !!col == !!row) %>% pull(!!val)
+  return(val)
+}
+```
+
+
 # Introduction
 
 In order to effectively accumulate knowledge, science needs (i) to produce data that can be replicated using the original methods and (ii) to arrive at robust conclusions substantiated by such data.
@@ -626,10 +645,12 @@ team_desc_df <- bind_rows(
     summarize(n_teams = nrow(.), 
               mean_size = mean(n_members), 
               sd_size = sd(n_members), 
-              median_size = median(n_members)) %>% 
+              median_size = median(n_members), 
+              min = min(n_members), 
+              max = max(n_members)) %>% 
     mutate(stage = "Final")
   ) %>% 
-  mutate_if(is.numeric, round, digits = 2)
+  mutate_if(is.numeric, round, digits = 1)
 
 
 team_desc_list <- team_desc_df %>% 
@@ -640,9 +661,11 @@ team_desc_list <- team_desc_df %>%
 # team_desc_list$Initial$n_teams$val
 
 # number of analyses
-# JVC: Why is this the number of total analyses and not nrow(msa_models)?
 msa_models_unique <- msa_models %>%
-  select(animal, model_n, outcome, typicality_operationalization, framework, model, temporal_window, random_effects, n_random, phon_rating, stat_rating, n_predictors, pop_pred, operationalisation, operationalisation_notes) %>%
+  select(animal, model_n, outcome, typicality_operationalization, framework, 
+         model, temporal_window, random_effects, n_random, phon_rating, 
+         stat_rating, n_predictors, pop_pred, operationalisation, 
+         operationalisation_notes) %>%
   distinct()
 
 no_analyses <- msa_models_unique %>%
@@ -703,17 +726,124 @@ unique_model_specs <- msa_models_unique %>%
 
 # unique acoustic and model specs, NOT including random effects
 unique_acou_stat <- msa_models %>%
-  select(model_n, outcome, typicality_operationalization, framework, model, temporal_window, random_effects, n_random, phon_rating, stat_rating, n_predictors, pop_pred, operationalisation, operationalisation_notes) %>%
+  select(model_n, outcome, typicality_operationalization, framework, model, 
+         temporal_window, random_effects, n_random, phon_rating, stat_rating, 
+         n_predictors, pop_pred, operationalisation, operationalisation_notes) %>%
   unnest(pop_pred) %>%
   distinct()
 
 # review ratings
 # NOTE: Stef or Timo, this doesnt take into account repeated values per team
+# so the denominator is inflated (alosa_atun has 16 models but the phon_rating 
+# is the same for each so the mean is dividing by an inflated denominator)
+# I suggest using the following: 
+#  `pull_from_tib(tbl_team_desc, label, "team_desc_phon_rating", avg)`
+#  `pull_from_tib(tbl_team_desc, label, "team_desc_phon_rating", sd)`
+
 review_mean <- msa_models %>% 
   summarise(mean_prating = mean(phon_rating, na.rm = TRUE),
             sd_prating = sd(phon_rating, na.rm = TRUE),
             mean_srating = mean(stat_rating, na.rm = TRUE),
             sd_srating = sd(stat_rating, na.rm = TRUE))
+
+
+#
+# TABLE 1 PREP
+#
+
+# Team descriptives
+tbl_team_desc <- msa_models %>% 
+  select(animal, years_from_phd, prior_belief, phon_rating, stat_rating, 
+         all_rating) %>% 
+  group_by(animal) %>% 
+  summarize(across(years_from_phd:all_rating, mean)) %>% 
+  pivot_longer(cols = -animal, names_to = "metric", values_to = "vals") %>% 
+  na.omit() %>% 
+  group_by(metric) %>% 
+  summarize(min = min(vals), max = max(vals), avg = mean(vals, na.rm = T), 
+            sd = sd(vals, na.rm = T)) %>% 
+  add_row(.before = 1, 
+    metric = "size", 
+    min = team_desc_df %>% filter(stage == "Final") %>% pull(min), 
+    max = team_desc_df %>% filter(stage == "Final") %>% pull(max), 
+    avg = team_desc_df %>% filter(stage == "Final") %>% pull(mean_size), 
+    sd =  team_desc_df %>% filter(stage == "Final") %>% pull(sd_size)) %>% 
+  mutate(across(-metric, specify_decimal, k = 1)) %>% 
+  mutate(desc = "team_desc", 
+   `Mean (SD)` = glue::glue("{avg} ({sd})"), 
+    Range = glue::glue("{min}--{max}"), 
+    Metric = case_when(
+      metric == "size" ~ "Team size", 
+      metric == "years_from_phd" ~ "Years since PhD", 
+      metric == "stat_rating" ~ "Self-report statistical ability", 
+      metric == "prior_belief" ~ "Prior belief in $H_{1}$", 
+      metric == "phon_rating" ~ "Acoustic analysis rating", 
+      metric == "all_rating" ~ "Overall peer review rating"), 
+    label = glue::glue("{desc}_{metric}")) %>% 
+  select(label, desc, Metric, Min. = min, Max = max, `Mean (SD)`, avg, sd, Range)
+
+#
+# TABLE 2 PREP
+#
+
+# Descriptives of categorical variables in acoustic analyses
+tbl_categorical_desc <- msa_models_unique %>% 
+  select(animal, outcome, temporal_window, typicality_operationalization, 
+  framework, model) %>% 
+  pivot_longer(cols = -animal, names_to = "metric", values_to = "val") %>% 
+  na.omit() %>% 
+  group_by(metric) %>% 
+  count(val) %>% 
+  group_by(metric) %>% 
+  mutate(prop = n / sum(n), perc = prop * 100, 
+    Metric = case_when(
+      metric == "temporal_window" ~ "Temporal window", 
+      metric == "typicality_operationalization" ~ "Typicality operationalization", 
+      TRUE ~ metric
+    ), 
+    Metric = str_to_sentence(Metric), 
+    Type = case_when(
+      val != "GAM" ~ str_to_sentence(val), 
+      TRUE ~ val
+    )) %>% 
+  mutate(across(c("prop", "perc"), specify_decimal, k = 1)) %>% 
+  unite(label, c("metric", "val")) %>% 
+  mutate(label = str_replace_all(label, " ", "_"), 
+         label = str_remove_all(label, "\\(|\\)"))
+
+#
+# TABLE 3 PREP
+#
+
+# Model descriptives 
+tbl_model_desc <- msa_models %>% 
+  select(animal, n_predictors:n_random, n_models) %>% 
+  group_by(animal) %>% 
+  summarize(across(everything(), mean)) %>% 
+  pivot_longer(cols = -animal, names_to = "metric", values_to = "vals") %>% 
+  na.omit() %>% 
+  group_by(metric) %>% 
+  summarize(min = min(vals), max = max(vals), avg = mean(vals, na.rm = T), 
+            sd = sd(vals, na.rm = T)) %>% 
+  mutate(across(-c("metric", "avg", "sd"), round)) %>% 
+  mutate(across(c("avg", "sd"), specify_decimal, k = 1)) %>% 
+  mutate(desc = "model_desc", 
+    metric = fct_relevel(metric, "n_models"), 
+    `Mean (SD)` = glue::glue("{avg} ({sd})"), 
+    Range = glue::glue("{min}--{max}"), 
+    Metric = case_when(
+      metric == "n_coefficients" ~ "n. coefficients", 
+      metric == "n_models" ~ "n. models", 
+      metric == "n_predictors" ~ "n. predictors", 
+      metric == "n_random" ~ "n. random effects", 
+      metric == "n_random_int" ~ "n. random intercepts", 
+      metric == "n_random_slo" ~ "n. random slopes", 
+      metric == "n_random_smooth" ~ "n. random smooths",
+      metric == "n_terms" ~ "n. terms"), 
+    label = glue::glue("{desc}_{metric}")) %>% 
+  select(label, desc, Metric, Min. = min, Max = max, `Mean (SD)`, avg, sd, Range) %>% 
+  mutate(across(-c("desc", "Metric"), as.character))
+
 ```
 
 The results section is divided into three parts.
@@ -736,197 +866,41 @@ We find this contribution to clearly speak to the main objective of the current 
 Based on our personal experience with research in the field, it is common practice to test as many different types of models, using as many different types of measurements, to answer one research question.
 The remaining `r team_desc_list$Final$n_teams$val` teams submitted their analysis by the established deadline.
 These are the teams that are included in this study.
-Table \@ref(tab:team-descriptives-table) provides a summary of the contributing teams and their analyses. 
 
-Submitting teams consisted of an average of `r team_desc_list$Final$mean_size$val` individual analysts (SD = `r team_desc_list$Final$sd_size$val`).
+Submitting teams consisted of an average of `r pull_from_tib(tbl_team_desc, label, "team_desc_size", avg)` individual analysts (SD = `r pull_from_tib(tbl_team_desc, label, "team_desc_size", sd)`).
 Upon sign-up, we collected background information from each analyst through the intake form, which was administered during Phase 1, prior to the distribution of the data to the teams.
-Analysts had on average `r round(phd_mean[[1]],1)` years (SD = `r round(phd_mean[[2]],1)`) of experience after completing their PhD, ranging from `r round(phd_mean[[3]],1)` years, i.e. PhD students (or younger) to `r round(phd_mean[[4]],1)` years.
-The analysts' prior belief in the effect under investigation on a scale from 0 to 100 ranged from `r round(prior_mean[[3]],1)`  to `r round(prior_mean[[4]],1)` with an average of `r round(prior_mean[[1]],1)` (SD = `r round(prior_mean[[2]],1)`).
+Analysts had on average `r pull_from_tib(tbl_team_desc, label, "team_desc_years_from_phd", avg)` years (SD = `r pull_from_tib(tbl_team_desc, label, "team_desc_years_from_phd", sd)`) of experience after completing their PhD, ranging from `r pull_from_tib(tbl_team_desc, label, "team_desc_years_from_phd", Min.)` years, i.e. PhD students (or younger) to `r pull_from_tib(tbl_team_desc, label, "team_desc_years_from_phd", Max)` years.
+The analysts' prior belief in the effect under investigation on a scale from 0 to 100 ranged from `r pull_from_tib(tbl_team_desc, label, "team_desc_prior_belief", Min.)` to `r pull_from_tib(tbl_team_desc, label, "team_desc_prior_belief", Max)` with an average of `r pull_from_tib(tbl_team_desc, label, "team_desc_prior_belief", avg)` (SD = `r pull_from_tib(tbl_team_desc, label, "team_desc_prior_belief", sd)`).
 We take this to suggest that analysts had an overall rather high positive prior belief in the investigated relationship between prosody and word combination typicality.
 
-At the end of Phase 2 (primary data analysis), the teams have submitted a grand total `r no_analyses` individual models to answer the research question, with a mean of `r round(mean_analyses[[1]], 1)` models per team. 
+At the end of Phase 2 (primary data analysis), the teams have submitted a grand total `r no_analyses` individual models to answer the research question, with a mean of `r pull_from_tib(tbl_team_desc, label, "model_desc_n_models", avg)` (SD: `r pull_from_tib(tbl_team_desc, label, "model_desc_n_models", sd)`) models per team. 
+Table \@ref(tab:team-descriptives-table) provides a summary of the contributing teams and their analyses. 
 Crucially, the analytic approaches employed by the teams varied widely both in the acoustical analyses of the speech signal and in the statistical analyses of the obtained measures.
 We proceed to discuss these in the following sections, after which we provide an overview of the peer-review ratings.
 
-
-<!-- Begin Table --> 
+<!-- Begin Table 1 --> 
 \vspace{0.2in}
 ```{r}
 #| label: team-descriptives-table
-#| echo: false
 #| results: 'asis'
-#| eval: true
-
-# team_desc_df %>% 
-#   mutate(Mean = glue::glue("{mean_size} ({sd_size})")) %>% 
-#   select(Stage = stage, n = n_teams, Mean, Median = median_size) %>% 
-#   knitr::kable(align = c("l", "r", "r", "r"), 
-#                caption = "Caption test", 
-#                label = "team-descriptives-table")
-
-# Round and format numbers to exactly N digits
-specify_decimal <- function(x, k) {
-  out <- trimws(format(round(x, k), nsmall = k))
-  return(out)
-}
-
-# Print values from tibble for article
-pull_from_tib <- function(df, col, row, val) {
-  col <- enquo(col)
-  row <- enquo(row)
-  val <- enquo(val)
-  val <- filter(df, !!col == !!row) %>% pull(!!val)
-  return(val)
-}
-
-# Team descriptives
-tbl_team_desc <- msa_models %>% 
-  select(animal, years_from_phd, prior_belief, phon_rating, stat_rating, 
-         all_rating) %>% 
-  group_by(animal) %>% 
-  summarize(across(years_from_phd:all_rating, mean)) %>% 
-  pivot_longer(cols = -animal, names_to = "metric", values_to = "vals") %>% 
-  na.omit() %>% 
-  group_by(metric) %>% 
-  summarize(min = min(vals), max = max(vals), avg = mean(vals, na.rm = T), 
-            sd = sd(vals, na.rm = T)) %>% 
-  mutate(across(-c("metric", "avg", "sd"), round)) %>% 
-  mutate(across(-c("metric", "min", "max"), specify_decimal, k = 2)) %>% 
-  mutate(desc = "team_desc", 
-    metric = fct_relevel(metric, "years_from_phd"), 
-   `Mean (SD)` = glue::glue("{avg} ({sd})"), 
-    Range = glue::glue("{min}--{max}"), 
-    Metric = case_when(
-      metric == "years_from_phd" ~ "Years since PhD", 
-      metric == "stat_rating" ~ "Self-report statistical ability", 
-      metric == "prior_belief" ~ "Prior belief in $H_{1}$", 
-      metric == "phon_rating" ~ "Acoustic analysis rating", 
-      metric == "all_rating" ~ "Overall peer review rating"), 
-    label = glue::glue("{desc}_{metric}")) %>% 
-  select(label, desc, Metric, Min. = min, Max = max, `Mean (SD)`, avg, sd, Range) %>% 
-  add_row(label = " ", desc = "team_desc", Metric = " ", 
-          Min. = NA, Max = NA, `Mean (SD)` = NA, avg = NA, sd = NA, Range = NA) %>% 
-  mutate(across(-c("label", "desc", "Metric"), ~replace(., is.na(.), " ")))
-
-# Model descriptives 
-tbl_model_desc <- msa_models %>% 
-  select(animal, n_predictors:n_random, n_models) %>% 
-  group_by(animal) %>% 
-  summarize(across(everything(), mean)) %>% 
-  pivot_longer(cols = -animal, names_to = "metric", values_to = "vals") %>% 
-  na.omit() %>% 
-  group_by(metric) %>% 
-  summarize(min = min(vals), max = max(vals), avg = mean(vals, na.rm = T), 
-            sd = sd(vals, na.rm = T)) %>% 
-  mutate(across(-c("metric", "avg", "sd"), round)) %>% 
-  mutate(across(-c("metric", "min", "max"), specify_decimal, k = 2)) %>% 
-  mutate(desc = "model_desc", 
-    metric = fct_relevel(metric, "n_models"), 
-    `Mean (SD)` = glue::glue("{avg} ({sd})"), 
-    Range = glue::glue("{min}--{max}"), 
-    Metric = case_when(
-      metric == "n_coefficients" ~ "n. coefficients", 
-      metric == "n_models" ~ "n. models", 
-      metric == "n_predictors" ~ "n. predictors", 
-      metric == "n_random" ~ "n. random effects", 
-      metric == "n_random_int" ~ "n. random intercepts", 
-      metric == "n_random_slo" ~ "n. random slopes", 
-      metric == "n_random_smooth" ~ "n. random smooths",
-      metric == "n_terms" ~ "n. terms"), 
-    label = glue::glue("{desc}_{metric}")) %>% 
-  select(label, desc, Metric, Min. = min, Max = max, `Mean (SD)`, avg, sd, Range) %>% 
-  mutate(across(-c("desc", "Metric"), as.character))
-
-# Combine in single tibble (for printing in prose and table)
-tbl_team_model_desc <- bind_rows(tbl_team_desc, tbl_model_desc) %>% 
-  mutate(desc = case_when(
-    Metric != "Overall peer review rating" & desc == "team_desc" ~ " ", 
-    Metric != "n. coefficients" & desc == "model_desc" ~ " ", 
-    TRUE ~ desc), 
-    desc = case_when(
-      desc == "team_desc" ~ "Teams", 
-      desc == "model_desc" ~ "Models", 
-      TRUE ~ " ")
-    ) 
-
-tbl_team_model_desc %>% 
-  select(Descriptives = desc, Metric, Range, `Mean (SD)`) %>% 
+bind_rows(
+  tbl_team_desc, 
+  filter(tbl_model_desc, label == "model_desc_n_models")
+  ) %>% 
+  select(Metric, Range, `Mean (SD)`) %>% 
   knitr::kable(format = "latex", booktabs = T, escape = F, 
-    linesep = "", align = c("l", "l", "c", "r"), 
-    caption = "Descriptive statistics for teams and models included in the 
+    linesep = "", align = c("l", "c", "r"), 
+    caption = "Descriptive statistics for teams included in the 
     meta-analysis (n = 30).",
     label = "team-descriptives-table"
     ) %>% 
-  kableExtra::kable_styling(., font_size = 10)
-
+  kableExtra::kable_styling(., font_size = 11)
 ```
-\vspace{0.2in}
 <!-- END: Table --> 
-
-
-<!-- Begin Table 2 --> 
-\vspace{0.2in}
-```{r}
-#| label: categorical-descriptives-table
-#| echo: false
-#| results: 'asis'
-#| eval: true
-
-# Descriptives of categorical variables
-tbl_categorical_desc <- msa_models %>% 
-  select(animal, outcome, temporal_window, typicality_operationalization, 
-  framework, model) %>% 
-  pivot_longer(cols = -animal, names_to = "metric", values_to = "val") %>% 
-  na.omit() %>% 
-  group_by(metric) %>% 
-  count(val) %>% 
-  group_by(metric) %>% 
-  mutate(prop = n / sum(n), perc = prop * 100, 
-    Metric = case_when(
-      metric == "temporal_window" ~ "Temporal window", 
-      metric == "typicality_operationalization" ~ "Typicality operationalization", 
-      TRUE ~ metric
-    ), 
-    Metric = str_to_sentence(Metric), 
-    Type = case_when(
-      val != "GAM" ~ str_to_sentence(val), 
-      TRUE ~ val
-    )) %>% 
-  mutate(across(c("prop", "perc"), specify_decimal, k = 2)) %>% 
-  unite(label, c("metric", "val")) %>% 
-  mutate(label = str_replace_all(label, " ", "_"), 
-         label = str_remove_all(label, "\\(|\\)"))
-
-tbl_categorical_desc %>% 
-  select(Metric, Type, n, `\\%` = perc) %>% 
-  mutate(Metric = case_when(
-    Type != "Bayesian" & Metric == "Framework" ~ " ", 
-    Type != "GAM" & Metric == "Model" ~ " ", 
-    Type != "Duration" & Metric == "Outcome" ~ " ", 
-    Type != "Other" & Metric == "Temporal window" ~ " ", 
-    Type != "Categorical" & Metric == "Typicality operationalization" ~ " ", 
-    TRUE ~ Metric)
-    ) %>% 
-  add_row(Metric = " ", Type = " ", n = NA, `\\%` = NA, .after = 2) %>%
-  add_row(Metric = " ", Type = " ", n = NA, `\\%` = NA, .after = 6) %>%
-  add_row(Metric = " ", Type = " ", n = NA, `\\%` = NA, .after = 12) %>%
-  add_row(Metric = " ", Type = " ", n = NA, `\\%` = NA, .after = 18) %>%
-  mutate(across(-c("Metric", "Type"), ~replace(., is.na(.), " "))) %>% 
-  knitr::kable(format = "latex", booktabs = T, escape = F, 
-    linesep = "", align = c("l", "l", "r", "r"), 
-    caption = "Descriptive statistics for model stuff.",
-    label = "categorical-descriptives-table"
-    ) %>% 
-  kableExtra::kable_styling(., font_size = 10)
-
-# pull_from_tib(tbl_categorical_desc, label, "framework_bayesian", n)
-
-```
-<!-- END Table 2 --> 
 
 ### Acoustic analysis
 
-The analytic teams differed in their approach to the acoustic analysis of the speech signal, including choices related to specific acoustic measures, the temporal window over which they are taken from and how the measures are transformed.
+The analytic teams differed in their approach to the acoustic analysis of the speech signal, including choices related to specific acoustic measures, the temporal window over which they are taken from and how the measures are transformed. 
 `r round(outcome_n[[1,1]],2) * 100`\% of models used a measure of duration as the outcome variable, `r round(outcome_n[[2,1]],2) * 100`\% used fundamental frequency (f0), `r round(outcome_n[[3,1]],2) * 100`\% used vowel formants, `r round(outcome_n[[4,1]],2) * 100`\% intensity, and `r round(outcome_n[[5,1]],2) * 100`\% other measures. <!-- TODO: check that all proportions refer to models and not to coefficients -->
 
 ```{r unique-acou-oper}
@@ -942,6 +916,42 @@ Based on a coarse coding of how acoustic measures were operationalized, we find 
 For example, if we consider those analyses that target fundamental frequency (f0), we find that it is operationalized in a myriad of ways including the minimum, the maximum, the mean, the median, as a range in an interval or a ratio between two intervals. 
 The measurement is sometimes taken from the interval of a vowel in the article, the adjective or noun; it is sometimes taken from the word interval of article, adjective or noun; or it is taken from either the noun phrase interval or the entire sentence. 
 Some of these measures were normalized relative to other elements in the sentence or relative to the speaker.
+Table \@ref(tab:categorical-descriptives-table) provides a summary of the acoustic analyses. 
+
+<!-- Begin Table 2 --> 
+\vspace{0.2in}
+```{r}
+#| label: categorical-descriptives-table
+#| results: 'asis'
+
+tbl_categorical_desc %>% 
+  select(Metric, Type, n, `\\%` = perc) %>% 
+  group_by(Metric) %>% 
+  arrange(desc(n), .by_group = T) %>% 
+  ungroup() %>% 
+  mutate(Metric = case_when(
+    Type != "Frequentist" & Metric == "Framework" ~ " ", 
+    Type != "Linear model" & Metric == "Model" ~ " ", 
+    Type != "F0" & Metric == "Outcome" ~ " ", 
+    Type != "Segment" & Metric == "Temporal window" ~ " ", 
+    Type != "Categorical" & Metric == "Typicality operationalization" ~ " ", 
+    TRUE ~ Metric)
+    ) %>% 
+  add_row(Metric = " ", Type = " ", n = NA, `\\%` = NA, .after = 2) %>%
+  add_row(Metric = " ", Type = " ", n = NA, `\\%` = NA, .after = 6) %>%
+  add_row(Metric = " ", Type = " ", n = NA, `\\%` = NA, .after = 12) %>%
+  add_row(Metric = " ", Type = " ", n = NA, `\\%` = NA, .after = 18) %>%
+  mutate(across(-c("Metric", "Type"), ~replace(., is.na(.), " "))) %>% 
+  knitr::kable(format = "latex", booktabs = T, escape = F, 
+    linesep = "", align = c("l", "l", "r", "r"), 
+    caption = "Descriptive statistics for model stuff.",
+    label = "categorical-descriptives-table"
+    ) %>% 
+  kableExtra::kable_styling(., font_size = 11)
+
+```
+<!-- END Table 2 --> 
+
 
 ### Statistical analysis
 
@@ -964,6 +974,7 @@ The appropriate way to account for this non-independence is by using multi-level
 `r round(random_n[[3,1]],2) * 100`\% of linear models specified no random effects at all (without pooling their data), so effectively ignoring these non-independences [@hurlbert1984pseudoreplication]. <!-- TR: Did we confirm this? -->
 `r round(random_n[[1,1]],2) * 100`\% specified random intercepts only, and `r round(random_n[[2,1]],2) * 100`\% specified both random intercepts and random slopes to account for the non-independence.
 On average, teams that specified random effects, included `r round(rterms_n,1)` random terms in their models. 
+Table \@ref(tab:stats-descriptives-table) provides a summary of the statistical analyses. 
 
 <!-- Found effect 
 JVC: this code is ready to go, but not all the rows in the google sheet are 
@@ -985,13 +996,10 @@ atleast_1_effect <- found_effect %>%
 
 # Overall N of analyses claiming an effect
 n_effects <- sum(found_effect$effect)
-
 # Percent of effects
 perc_effects <- (n_effects / nrow(msa_models) * 100) %>% round(., 2)
-
 # N of teams claiming an effect
 n_atleast_1 <- nrow(atleast_1_effect)
-
 # Percent of teams claiming an effect
 perc_atleast_1 <- (n_atleast_1 / length(unique(msa_models$animal))) * 100
 ```
@@ -1001,10 +1009,29 @@ When considering both acoustic and statistical analysis, we have found a grand t
 Of the submitted analyses, `r n_effects` claimed to have found a statistically reliable effect (`r perc_effects`%). 
 `r n_atleast_1 %>% xfun::numbers_to_words() %>% str_to_sentence()` teams out of the `r length(unique(msa_models$animal)) %>% xfun::numbers_to_words()` (`r perc_atleast_1`%) submitting analyses reported at least one found effect. 
 
+<!-- Begin Table 3 --> 
+```{r}
+#| label: stats-descriptives-table
+#| results: 'asis'
+tbl_model_desc %>% 
+  select(Metric, Range, `Mean (SD)`) %>% 
+  filter(Metric != "n. random smooths") %>% 
+  mutate(Metric = str_remove_all(Metric, "n. "), 
+         Metric = str_to_sentence(Metric)) %>% 
+  knitr::kable(format = "latex", booktabs = T, escape = F, 
+    linesep = "", align = c("l", "c", "r"), 
+    caption = "Descriptive statistics for statistical analyses included in the 
+    meta-analysis (n = 30).",
+    label = "stats-descriptives-table"
+    ) %>% 
+  kableExtra::kable_styling(., font_size = 11)
+```
+<!-- END: Table --> 
+
 ### Review ratings
 
 Teams reviewed each others' acoustic and statistical analyses.
-The mean rating of the acoustic analyses, on a scale from 0 to 100, is `r round(review_mean[[1]],1)` (SD = `r round(review_mean[[2]],1)`).
+The mean rating of the acoustic analyses, on a scale from 0 to 100, is `r round(review_mean[[1]],1)` (SD = `r round(review_mean[[2]],1)`, see Table \@ref(tab:team-descriptives-table)).
 The mean rating of the statistical analysis is `r round(review_mean[[3]],1)` (SD = `r round(review_mean[[4]],1)`).
 For reference, as mentioned in the Methods section, a score of 75 was defined as "an imperfect analysis but the needed changes are unlikely to dramatically alter the final interpretation", indicating that on average reviewers judged the provided analyses to be appropriate, although "imperfect".
 
