@@ -9,6 +9,20 @@
 \usepackage{cleveref}
 \providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{xcolor}
 
 
 \begin{document}
@@ -124,7 +138,7 @@ Research on speech lies at the intersection of the cognitive sciences, informing
 One major challenge in the speech sciences is the mapping between communicative intentions (the unobserved behavior) and their physical manifestation (the observed behavior).
 
 Speech is a complex signal that is characterized by structurally different acoustic landmarks distributed throughout different temporal domains.
-Thus, choosing how to measure a communictive intention of interest is an important analytic step.
+Thus, choosing how to measure a communicative intention of interest is an important analytic step.
 Take for example the following sentence in (1).
 
 \vspace{1em}
@@ -546,23 +560,46 @@ An important aspect that emerges from the descriptive analysis is the large vari
 \hypertarget{characteristics-of-analytic-teams}{%
 \subsubsection{Characteristics of analytic teams}\label{characteristics-of-analytic-teams}}
 
-Eighty-Four teams initially signed up to participate in the study.
-Fifty-Four of the signed-up teams dropped out during the analysis phase.
+Eighty-four teams initially signed up to participate in the study.
+Fifty-four of the signed-up teams dropped out during the analysis phase.
 One Team Coordinator, Wim van Dommelen (who agreed to their feedback being shared), gave the following reason: ``The reason is that {[}\ldots{]} the project's approach is too much top-down instead of bottom-up. {[}\ldots{]} I would rather prefer to explore the collected utterances and run different types of acoustic analyses, which would then be followed by statistical evaluation of the data.''
 We find this contribution to clearly speak to the main objective of the current study: investigate researcher's degrees of freedom in the speech sciences.
-Based on our personal experience with research in the field, it is common practice to test as many different types of models, using as many different types of measurements, to asnwer one research question.
+Based on our personal experience with research in the field, it is common practice to test as many different types of models, using as many different types of measurements, to answer one research question.
 The remaining 30 teams submitted their analysis by the established deadline.
 These are the teams that are included in this study.
 
-Submitting teams consisted of an average of 3.63 individual analysts (SD = 2.8).
+Submitting teams consisted of an average of 3.6 individual analysts (SD = 2.8).
 Upon sign-up, we collected background information from each analyst through the intake form, which was administered during Phase 1, prior to the distribution of the data to the teams.
 Analysts had on average 4.8 years (SD = 4.2) of experience after completing their PhD, ranging from -3.8 years, i.e.~PhD students (or younger) to 12.4 years.
-The analysts' prior belief in the effect under investigation on a scale from 0 to 100 ranged from 48.5 to 92 with an average of 69.2 (SD = 11.3).
+The analysts' prior belief in the effect under investigation on a scale from 0 to 100 ranged from 48.5 to 92.0 with an average of 69.2 (SD = 11.3).
 We take this to suggest that analysts had an overall rather high positive prior belief in the investigated relationship between prosody and word combination typicality.
 
-At the end of Phase 2 (primary data analysis), the teams have submitted a grand total 104 individual models to answer the research question, with a mean of 3.6 models per team.
+At the end of Phase 2 (primary data analysis), the teams have submitted a grand total 104 individual models to answer the research question, with a mean of (SD: ) models per team.
+Table \ref{tab:team-descriptives-table} provides a summary of the contributing teams and their analyses.
 Crucially, the analytic approaches employed by the teams varied widely both in the acoustical analyses of the speech signal and in the statistical analyses of the obtained measures.
 We proceed to discuss these in the following sections, after which we provide an overview of the peer-review ratings.
+
+\vspace{0.2in}
+\begin{table}
+
+\caption{\label{tab:team-descriptives-table}Descriptive statistics for teams included in the 
+    meta-analysis (n = 30).}
+\centering
+\fontsize{11}{13}\selectfont
+\begin{tabular}[t]{lcr}
+\toprule
+Metric & Range & Mean (SD)\\
+\midrule
+Team size & 1.0--12.0 & 3.6 (2.8)\\
+Overall peer review rating & 39.0--88.7 & 70.0 (14.3)\\
+Acoustic analysis rating & 41.2--88.3 & 71.5 (13.9)\\
+Prior belief in $H_{1}$ & 48.5--92.0 & 69.2 (11.3)\\
+Self-report statistical ability & 33.0--93.3 & 69.5 (16.5)\\
+Years since PhD & -3.8--12.4 & 4.8 (4.2)\\
+n. models & 1--16 & 3.7 (3.4)\\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \hypertarget{acoustic-analysis}{%
 \subsubsection{Acoustic analysis}\label{acoustic-analysis}}
@@ -570,11 +607,48 @@ We proceed to discuss these in the following sections, after which we provide an
 The analytic teams differed in their approach to the acoustic analysis of the speech signal, including choices related to specific acoustic measures, the temporal window over which they are taken from and how the measures are transformed.
 35\% of models used a measure of duration as the outcome variable, 36\% used fundamental frequency (f0), 12\% used vowel formants, 14\% intensity, and 3\% other measures.
 
-45\% of models obtained acoustic measures at the level of the segment (e.g.~comparing the acoustic profile of a vowel), 43\% from the word level (e.g.~comparing the acoustic profile of \emph{Banane} `banana'), 3\% at the level of the phrase (e.g.~the noun phrase including determiner and adjective, e.g.~``the green banana''), 4\% from the whole sentence, and 4\% used a different time window.
+Forty-five percent of models obtained acoustic measures at the level of the segment (e.g.~comparing the acoustic profile of a vowel), 43\% from the word level (e.g.~comparing the acoustic profile of \emph{Banane} `banana'), 3\% at the level of the phrase (e.g.~the noun phrase including determiner and adjective, e.g.~``the green banana''), 4\% from the whole sentence, and 4\% used a different time window.
 Based on a coarse coding of how acoustic measures were operationalized, we find a total of 52 different measurement specifications.
-For example, if we consider those analyses who targetfundamental frequency (f0), we find that it is operationalized in a myriad of ways including the minimum, the maximum, the mean, the median, as a range in an interval or a ratio between two intervals.
+For example, if we consider those analyses that target fundamental frequency (f0), we find that it is operationalized in a myriad of ways including the minimum, the maximum, the mean, the median, as a range in an interval or a ratio between two intervals.
 The measurement is sometimes taken from the interval of a vowel in the article, the adjective or noun; it is sometimes taken from the word interval of article, adjective or noun; or it is taken from either the noun phrase interval or the entire sentence.
 Some of these measures were normalized relative to other elements in the sentence or relative to the speaker.
+Table \ref{tab:categorical-descriptives-table} provides a summary of the acoustic analyses.
+
+\vspace{0.2in}
+\begin{table}
+
+\caption{\label{tab:categorical-descriptives-table}Descriptive statistics for model stuff.}
+\centering
+\fontsize{11}{13}\selectfont
+\begin{tabular}[t]{llrr}
+\toprule
+Metric & Type & n & \%\\
+\midrule
+Framework & Frequentist & 86 & 82.7\\
+ & Bayesian & 18 & 17.3\\
+ &  &  & \\
+Model & Linear model & 102 & 98.1\\
+ & GAM & 1 & 1.0\\
+ & Other & 1 & 1.0\\
+ &  &  & \\
+Outcome & F0 & 37 & 35.6\\
+ & Duration & 36 & 34.6\\
+ & Intensity & 15 & 14.4\\
+ & Formants & 13 & 12.5\\
+ & Other & 3 & 2.9\\
+ &  &  & \\
+Temporal window & Segment & 47 & 45.6\\
+ & Word & 45 & 43.7\\
+ & Other & 4 & 3.9\\
+ & Sentence & 4 & 3.9\\
+ & Phrase & 3 & 2.9\\
+ &  &  & \\
+Typicality operationalization & Categorical & 75 & 72.8\\
+ & Continuous (mean) & 25 & 24.3\\
+ & Continuous (median) & 3 & 2.9\\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \hypertarget{statistical-analysis}{%
 \subsubsection{Statistical analysis}\label{statistical-analysis}}
@@ -597,15 +671,39 @@ The appropriate way to account for this non-independence is by using multi-level
 8\% of linear models specified no random effects at all (without pooling their data), so effectively ignoring these non-independences \citep{hurlbert1984pseudoreplication}.
 65\% specified random intercepts only, and 27\% specified both random intercepts and random slopes to account for the non-independence.
 On average, teams that specified random effects, included 2.5 random terms in their models.
+Table \ref{tab:stats-descriptives-table} provides a summary of the statistical analyses.
 
 Based on statistical framework, type of model, distribution family, fixed terms, and not including random effects, there were a total of 47 different model specifications.
 When considering both acoustic and statistical analysis, we have found a grand total of 104, i.e.~each submitted analysis was unique.
+Of the submitted analyses, 37 claimed to have found a statistically reliable effect (21.76\%).
+Nine teams out of the thirty (30\%) submitting analyses reported at least one found effect.
+
+\begin{table}
+
+\caption{\label{tab:stats-descriptives-table}Descriptive statistics for statistical analyses included in the 
+    meta-analysis (n = 30).}
+\centering
+\fontsize{11}{13}\selectfont
+\begin{tabular}[t]{lcr}
+\toprule
+Metric & Range & Mean (SD)\\
+\midrule
+Coefficients & 1--11 & 3.5 (2.7)\\
+Models & 1--16 & 3.7 (3.4)\\
+Predictors & 1--4 & 1.6 (0.9)\\
+Random effects & 0--10 & 2.5 (2.1)\\
+Random intercepts & 0--10 & 1.9 (1.8)\\
+Random slopes & 0--4 & 0.6 (1.1)\\
+Terms & 1--4 & 1.8 (1.1)\\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \hypertarget{review-ratings}{%
 \subsubsection{Review ratings}\label{review-ratings}}
 
 Teams reviewed each others' acoustic and statistical analyses.
-The mean rating of the acoustic analyses, on a scale from 0 to 100, is 74.5 (SD = 11.2).
+The mean rating of the acoustic analyses, on a scale from 0 to 100, is 74.5 (SD = 11.2, see Table \ref{tab:team-descriptives-table}).
 The mean rating of the statistical analysis is 73.8 (SD = 14.1).
 For reference, as mentioned in the Methods section, a score of 75 was defined as ``an imperfect analysis but the needed changes are unlikely to dramatically alter the final interpretation'', indicating that on average reviewers judged the provided analyses to be appropriate, although ``imperfect''.
 
@@ -734,7 +832,7 @@ This conclusion is further supported by the fact that between-team variability w
 This is an important observation when put into context of the fact that most teams submitted many different models.
 Teams submitted up to 16 different models to test for a possible relationship between typicality and the speech signal.
 The complexity of the speech signal lends itself to multiple approaches, but this plurality of hypothesis tests invites bias and can dramatically increase the rate of falsely claiming the presence of an effect \citep{roettger2019researcher}.
-When operating within the frequentist inferential framework, testing the same hypothesis with different dependent variables, increases the Type-I error rate if not corrected for \citep[Tukey 1953,][]{benjamini1995controlling}.
+When operating within the frequentist inferential framework, testing the same hypothesis with different dependent variables, increases the Type-I error rate if not corrected for \citep{tukey1953}.
 It also invites bias, possibly leading to the selective reporting of those tests that yield a desirable outcome \citep[\citet{john2012measuring}, \citet{simmons2011false}]{kerr1998harking} while null results remain unreported \citep[e.g.,][\citet{rosenthal1979file}]{sterling1959publication}.
 Fields such as the speech sciences that advance their theories based on multidimensional data should be aware of this flexibility and calibrate their confidence in empirical claims accordingly.
 
@@ -793,7 +891,7 @@ This uncertainty is possibly further inflated by the fact that he research quest
 Interpreting the research question/hypothesis differently in terms of its statistical consequences has recently been shown to explain some variation between analysis teams in many-analysis projects \citep{auspurg2021has}.
 However, we consider this very underspecification of research hypotheses in the field of speech science (and beyond, see \citet{scheel2022most}) a common phenomenon.
 For example, researchers seem to have not yet agreed on how to acoustically measure cross linguistically common phenomena such as word stress \citep[e.g.][]{gordon2017acoustic}.
-In light of these possible sources of bias, a field can benefit from explicit positionality statement \citep[e.g.,][]{fox2021open}
+In light of these possible sources of bias, a field can benefit from explicit positionality statements \citep[e.g.,][]{fox2021open}
 Researchers do not analyse data in a vaccuum.
 It is important recognize and disclose one's positionality, i.e., a reflection about how educational background, social identity, power, experience and context might influence researchers approaches and interpretations.
 Despite these all of these possible sources of bias and uncertainty, our study suggest that at a minimum we can expect the between-team and between-analysis variability that we have observed, which is quite substantial and possibly amplifying biases.

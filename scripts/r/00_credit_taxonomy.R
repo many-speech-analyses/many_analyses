@@ -2,7 +2,7 @@
 
 library(tidyverse)
 
-credit <- read_csv(here::here("./data/meta/credit-taxonomy.csv")) %>%
+credit <- read_csv(here::here("./data/metadata/credit-taxonomy.csv")) %>%
   pivot_longer(SC:TR, names_to = "author", values_to = "value") %>%
   mutate(
     author = factor(author, levels = c("SC", "JVC", "TR")),
