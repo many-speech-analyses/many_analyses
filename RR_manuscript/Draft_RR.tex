@@ -417,67 +417,63 @@ This same sequence was followed until all analyses allocated to a given reviewer
 \hypertarget{phase-4-evaluating-variation}{%
 \subsection{Phase 4: Evaluating variation}\label{phase-4-evaluating-variation}}
 
-The initiating authors (SC, JC, TR) will conduct the analyses outlined in this section.
-We will not conduct confirmatory tests of any a priori hypotheses.
+The initiating authors (SC, JC, TR) conducted the analyses outlined in this section.
+We did not conduct confirmatory tests of any a priori hypotheses.
 We consider our analysis exploratory.
 
 \hypertarget{descriptive-statistics}{%
 \subsubsection{Descriptive statistics}\label{descriptive-statistics}}
 
-We will calculate summary statistics describing variation among analyses, including (a) the nature and number of acoustic measures (e.g.~f0 or duration), (b) the operationalization and the temporal domain of measurement (e.g.~mean of an interval or value at specified point in time), (c) the nature and number of model parameters for both fixed and random effects (if applicable), (d) the nature and reasoning behind inferential assessments (e.g.~dichotomous decision based on \emph{p}-values, ordinal decision based on a Bayes factor), as well as the (e) mean, (f) standard deviation and (g) range of the standardized effect sizes (see the next section for the standardization procedure).
+We calculated summary statistics describing variation among analyses, including (a) the nature and number of acoustic measures (e.g.~f0 or duration), (b) the operationalization and the temporal domain of measurement (e.g.~mean of an interval or value at specified point in time), (c) the nature and number of model parameters for both fixed and random effects (if applicable), (d) the nature and reasoning behind inferential assessments (e.g.~dichotomous decision based on \emph{p}-values, ordinal decision based on a Bayes factor), as well as the (e) mean, (f) standard deviation and (g) range of the standardized effect sizes (see the next section for the standardization procedure).
+These summary statistics are reported in @ref\{descr-stats\} of the Results section.
 
 \hypertarget{s:meta-est}{%
 \subsubsection{Meta-analytic estimation}\label{s:meta-est}}
 
-We will investigate the variability in \textsc{reported effect sizes} using Bayesian meta-analytic techniques.
-As the measure of variability, we will take the meta-analytic \textsc{group-level standard deviation} (\(\sigma_{\alpha_{\text{t}}}\), see below), where the groups are the analysis teams.
+We investigated the variability in \textsc{reported effect sizes} using Bayesian meta-analytic techniques.
+As the measure of variability, we took the meta-analytic \textsc{group-level standard deviation} (\(\sigma_{\alpha_{\text{t}}}\), see below), where the groups are the analysis teams.
+As we detail in Section @ref\{meta-est\}, we have also run further non-preregistered analyses.
+For these we refer the reader to that section, while we only describe the preregistered analyses in the following paragraphs.
 
-Based on the common practices currently in place within the field, we anticipate that researchers will use multilevel regression models, thus common measurements of effect size, such as Cohen's \(d\), may be inappropriate.
+Based on the common practices currently in place within the field, we anticipated that researchers would use multilevel regression models, thus common measurements of effect size, such as Cohen's \(d\), might have been inappropriate.
 Furthermore, \citet{aczel2021} suggest that directly asking analysts to report standardized effect sizes could bias the choice of analyses towards types that more straightforwardly return a standardized effect.
-Since the variables used by the analysis teams might substantially differ in their measurement scales (e.g, Hertz for frequency vs milliseconds for duration), we will standardize all reported effects by refitting each \textsc{reported model} with centered and scaled continuous variables (\emph{z}-scores, i.e.~the observed values subtracted from the mean divided by the standard deviation) and sum-coded factor variables.
-Factor-level ordering for each categorical variable will mirror that of the original analyses.
-Each \textsc{standardized model} will be fitted as a Bayesian regression model with Stan \citep{stan2021}, RStan \citep{stan2020a}, and brms \citep{burkner2017} in R \citep{R-base}.
-For those reported models that were originally fitted within a frequentist approach, uniform distributions will be used as the priors of all parameters (with the restriction that only positive numbers will be included for scale parameters), to approximate the estimation procedure of frequentist models (i.e.~only the distribution of the data determines the posterior distribution).
-If a team has fitted Bayesian models, the same priors as reported by the team will be used in fitting the respective standardized model.
-Model refitting will also constitute a way of validating the reported analyses, a step recommended by \citet{aczel2021}.
+Since the variables used by the analysis teams might have substantially differed in their measurement scales (e.g, Hertz for frequency vs milliseconds for duration) and that was indeed the case, we have standardized all reported effects by refitting each \textsc{reported model} with centered and scaled continuous variables (\emph{z}-scores, i.e.~the observed values subtracted from the mean divided by the standard deviation) and sum-coded factor variables.
+Each \textsc{standardized model} was fitted as a Bayesian regression model with Stan \citep{stan2021}, RStan \citep{stan2020a}, and brms \citep{burkner2017} in R \citep{R-base}.
+Model refitting also constituted a way of validating the reported analyses, a step recommended by \citet{aczel2021}.
+Details about the refitting procedure can be found at LINK.
 
-The coefficients of the critical predictors (i.e.~critical according to the analysis teams' self-reported inferential criteria) obtained from the standardized models will be used as the \textsc{standardized effect size} (\(\eta_i\)) of each reported model.
-If multiple predictors within a single analysis have been reported as critical, each will be included in the meta-analytic model (described in details in the next paragraph).
-Moreover, to account for the differing degree of uncertainty around each standardized effect size, we will use the standard deviation of each standardized effect size as the \textsc{standardized standard error} (\(\text{se}_i\)).
-This will enable us to fit a so-called ``measurement-error'' model, in which both the standardized effect sizes and their respective standard errors are entered in the meta-analytic model.
-As a desired consequence, effect sizes with a greater standard error will be weighted less than those with a smaller standard error in the meta-analytic calculations.
+The coefficients of the critical predictors (i.e.~critical according to the analysis teams' self-reported inferential criteria) obtained from the standardized models were used as the \textsc{standardized effect size} (\(\eta_i\)) of each reported model.
+Moreover, to account for the differing degree of uncertainty around each standardized effect size, we used the standard deviation of each standardized effect size as the \textsc{standardized standard error} (\(\text{se}_i\)).
+This enabled us to fit a so-called ``measurement-error'' model, in which both the standardized effect sizes and their respective standard errors are entered in the meta-analytic model.
+As a desired consequence, effect sizes with a greater standard error are weighted less than those with a smaller standard error in the meta-analytic calculations.
 
-After having obtained the standardized effect sizes \(\eta_i\) with related standard errors \(\text{se}_i\), for each critical predictor of the individual reported model, we will conduct a \textsc{Bayesian random-effects meta-analysis} using a multilevel (intercept-only) regression model.
-The outcome variable will be the set of standardized effect sizes \(\eta_i\).
-The likelihood of \(\eta_i\) is assumed to correspond to a normal distribution \citep{knight2000}.
-The analysis teams will be entered as a group-level effect (i.e., \texttt{(1\ \textbar{}\ team)}, called \emph{random effect} in the frequentist literature).
-The standard errors \(\text{se}_i\) will be included as the standard deviation of \(\eta_i\) to fit a measurement-error model, as discussed above.
-We will use regularizing weakly-informative priors for the intercept \(\alpha\) (\(Normal(0, 1)\)) and for the group-level standard deviation \(\sigma_{\alpha_{\text{t}}}\) (\(HalfCauchy(0, 1)\)).
-We will fit this model with 4 chains of Hamiltonian Monte-Carlo sampling for the estimation of the joint posterior distribution, using the No U-Turn Sampler (NUTS) as implemented in Stan \citep{stan2021}, and 4000 iterations (2000 for warm-up) per chain, distributed across 4 processing cores.
-In case of divergent transitions, we will increase \texttt{adapt\_delta}, \texttt{tree\_depth}, and the number of iterations in this order until we obtain a model fit with no divergent transitions.
-The code used to run the model can be found at \url{https://many-speech-analyses.github.io/suppl/simulations.html}.
+After having obtained the standardized effect sizes \(\eta_i\) with related standard errors \(\text{se}_i\), for each critical predictor of the individual reported model, we conducted a \textsc{Bayesian random-effects meta-analysis} using a multi-level (intercept-only) regression model.
+The outcome variable was the set of standardized effect sizes \(\eta_i\).
+The likelihood of \(\eta_i\) was assumed to correspond to a normal distribution \citep{knight2000}.
+The analysis teams were entered as a group-level effect (i.e., \texttt{(1\ \textbar{}\ team)}, called \emph{random effect} in the frequentist literature).
+The standard errors \(\text{se}_i\) were included as the standard deviation of \(\eta_i\) to fit a measurement-error model, as discussed above.
+We used regularizing weakly-informative priors for the intercept \(\alpha\) (\(Normal(0, 1)\)) and for the group-level standard deviation \(\sigma_{\alpha_{\text{t}}}\) (\(HalfCauchy(0, 1)\)).
+We fitted this model with 4 chains of Hamiltonian Monte-Carlo sampling for the estimation of the joint posterior distribution, using the No U-Turn Sampler (NUTS) as implemented in Stan \citep{stan2021}, and 4000 iterations (2000 for warm-up) per chain, distributed across 8 processing cores and 2 threads in within-chain parallelization.
+The model did not incur in divergent transitions (\(\hat{R}\) was equal or lower than 1) and the estimated sample sizes were sufficient.
+The code used to run the model can be found at \textless\textgreater.
 
-The posterior distribution of the population-level intercept \(\alpha\) will allow us to estimate the range of probable values of the standardized effect size \(\hat{\eta}\).
-The posterior distribution will further allow us to investigate the effect of a set of analytic and researcher-related predictors, detailed in the next section.
-Crucially, the posterior distribution of the \href{.smallcaps}{group-level standard deviation} \(\sigma_{\alpha_{\text{t}}}\) (i.e.~the standard deviation of the group-level effect of team) will allow us to quantify the degree of variation between the teams' analyses on a standardized scale.
+The posterior distribution of the population-level intercept \(\alpha\) allowed us to estimate the range of probable values of the standardized effect size \(\hat{\eta}\).
+The posterior distribution further allowed us to investigate the effect of a set of analytic and researcher-related predictors, detailed in the next section.
+Crucially, the posterior distribution of the \href{.smallcaps}{group-level standard deviation} \(\sigma_{\alpha_{\text{t}}}\) (i.e.~the standard deviation of the group-level effect of team) allowed us to quantify the degree of variation between the teams' analyses on a standardized scale.
 
 \hypertarget{anares-preds}{%
 \subsubsection{Analytic and researcher-related predictors affecting effect sizes}\label{anares-preds}}
 
-As a second step, we will investigate the extent to which the individual standardized effect sizes are affected by a series of \textsc{analytic and researcher-related predictors}.
+As a second step, we investigated the extent to which the individual standardized effect sizes are affected by a series of \textsc{analytic and researcher-related predictors}.
 
-\textbf{Analytic predictors}. We will estimate the influence of the following predictors related to the analytic characteristics of each team's reported analysis:
+\textbf{Analytic predictors}. We estimated the influence of the following predictors related to the analytic characteristics of each team's reported analysis:
 
 \begin{itemize}
 \tightlist
 \item
   \emph{Measure of uniqueness} of individual analyses for the set of predictors in each model {[}numeric{]}.
 \item
-  \emph{Measure of conservativeness} of the model specification, as the number of random/group-level effects included {[}numeric{]}.
-\item
-  \emph{Number of post-hoc changes to the acoustic measurements} the teams will report to have carried out {[}numeric{]}.
-\item
-  \emph{Number of models} the teams will report to have run {[}numeric{]}.
+  \emph{Number of models} the teams reported to have run {[}numeric{]}.
 \item
   \emph{Major dimension} that has been measured to answer the research question {[}categorical{]}.
 \item
@@ -486,24 +482,24 @@ As a second step, we will investigate the extent to which the individual standar
   \emph{Average peer-review rating}, as the mean of the overall peer-review ratings for each analysis {[}numeric{]}.
 \end{itemize}
 
-Following \citet{Parker2020}, the measure of uniqueness of predictors will be assessed by the Sørensen-Dice Index \citep[SDI,][]{dice1945, sorensen1948}.
+Following \citet{Parker2020}, the measure of uniqueness of predictors was assessed by the Sørensen-Dice Index \citep[SDI,][]{dice1945, sorensen1948}.
 The SDI is an index typically used in ecology research to compare species composition across sites.
-For our purposes, we will treat predictors as species and individual analyses as sites.
-For each pair of analyses \((X, Y)\), the SDI will be obtained using the following formula:
+For our purposes, we treated predictors as species and individual analyses as sites.
+For each pair of analyses \((X, Y)\), the SDI was obtained using the following formula:
 
 \[\text{SDI} = \frac{2|X \cap Y|}{|X|+|Y|}\]
 
 where \(|X \cap Y|\) is the number of variables common to both models in the pair, and \(|X|+|Y|\) is the sum of the number of variables that occur in each model.
 
-In order to generate a unique SDI for each analysis team, we will calculate the average of all pairwise SDIs for all pairs of analyses using the \texttt{beta.pair()} function in the betapart R package \citep{baselga2020}.
+In order to generate a unique SDI for each analysis team, we calculated the average of all pairwise SDIs for all pairs of analyses using the \texttt{beta.pair()} function in the betapart R package \citep{baselga2020}.
 
-The major measurement dimension of each analysis will be categorized according to the following possible groups: \emph{duration}, \emph{amplitude}, \emph{fundamental frequency}, \emph{other spectral properties} (e.g.~frequency, center of gravity, harmonics difference, etc.), and \emph{other measures} (e.g.~principal components, vowel dispersion, etc.).
+The major measurement dimension of each analysis was categorized according to the following possible groups: \emph{duration}, \emph{intensity}, \emph{fundamental frequency} (f0), \emph{other spectral properties} (e.g.~frequency, center of gravity, harmonics difference, etc.), and \emph{other measures} (e.g.~principal components, vowel dispersion, etc.).
 The temporal window that the measurement is taken over is defined by the target linguistic unit.
-We assume the following relevant linguistic units: \emph{segment}, \emph{syllable}, \emph{word}, \emph{phrase}.
-Since each analysis will receive more than one peer-review rating, we will calculate the mean rating and its standard deviation for each.
-These will be entered in the model formula as a measurement-error term (\texttt{me(mean,\ sd)} in brms).
+We assume the following relevant linguistic units: \emph{segment}, \emph{syllable}, \emph{word}, \emph{phrase}, \emph{sentence}.
+Since each analysis received more than one peer-review rating, we calculated the mean rating and its standard deviation for each.
+These were entered in the model formula as a measurement-error term (\texttt{me(mean,\ sd)} in brms).
 
-\textbf{Researcher-related factors}. We will also include the following predictors:
+\textbf{Researcher-related factors}. We also included the following predictors:
 
 \begin{itemize}
 \tightlist
@@ -513,35 +509,39 @@ These will be entered in the model formula as a measurement-error term (\texttt{
   \emph{Initial belief} in the presence of an effect of atypical noun-adjective pairs on acoustics, as answered during the intake questionnaire {[}numeric{]}.
 \end{itemize}
 
-To obtain an aggregated research experience score and initial belief score for each team based on the members' individual scores, we will calculate the mean and standard deviation of these predictors for each team.
-These will be entered in the model formula as a measurement-error term (\texttt{me(mean,\ sd)} in brms).
+To obtain an aggregated research experience score and initial belief score for each team based on the members' individual scores, we calculated the mean and standard deviation of these predictors for each team.
+These were entered in the model formula as a measurement-error term (\texttt{me(mean,\ sd)} in brms).
 The expedient of using a measurement-error term (which includes the teams' standard deviation) ensures information about within-team variance is not lost (which would be the case if including the mean only).
 
-\textbf{Model specification}. The model will be fitted as a measurement-error model, with the predictors detailed in the preceding paragraphs.
-The outcome variable of the model will be the standardized effect sizes and related standard deviation.
+We had initially planned to also include a measure of conservativeness of the model specification, as the number of random/group-level effects included and the number of post-hoc changes to the acoustic measurements the teams reported to have carried out.
+We realised when fitting the model that the measure of conservativeness is related to the standard error of the estimates (i.e.~more group-level effects = higher standard error).
+There was no team that declared to have made post-hoc changes to the analyses.
 
-A normal distribution will be used as the likelihood function of \(\alpha_{t[i]}\).
-The mean of \(\alpha_{t[i]}\) is modeled on the basis of the overall intercept \(\beta\) and on the coefficients of each predictor.
-The numeric predictors will be centered and scaled and the categorical predictors will be sum coded.
-As the prior for the intercept and the predictors we will use a normal distribution with mean 0 and standard deviation 1.
-The model will be run with the same settings as with the meta-analytic model.
-The code used to run the model can be found at \url{https://many-speech-analyses.github.io/suppl/simulations.html}.
+\textbf{Model specification}. The model was fitted as a measurement-error model, with the predictors detailed in the preceding paragraphs.
+The outcome variable of the model was the standardized effect sizes and related standard deviation.
+
+A normal distribution was used as the likelihood function of \(\alpha_{t[i]}\).
+The mean of \(\alpha_{t[i]}\) was modeled on the basis of the overall intercept \(\beta\) and on the coefficients of each predictor.
+The numeric predictors were centered and scaled and the categorical predictors were sum coded.
+As the prior for the intercept and the predictors we used a normal distribution with mean 0 and standard deviation 1.
+The model was run with the same settings as with the meta-analytic model.
+The code used to run the model can be found at .
 
 \hypertarget{ana-archive}{%
 \subsubsection{Data management}\label{ana-archive}}
 
-All relevant data, code, and materials will be publicly archived on the Open Science Framework (\url{https://osf.io/3bmcp/}, link for peer-review: \url{https://bit.ly/3AqU1ul}).
-Archived data will include the original data set distributed to all analysts, any edited versions of the data analyzed by individual teams, and the data we analyze with our meta-analyses, which include the standardized effect sizes, the statistics describing variation in model structure among analysis teams, and the anonymized answers to our questionnaires of analysts.
-Similarly, we will archive both the analysis code used for each individual analysis and the code from our meta-analyses.
-We will also archive copies of our survey instruments from analysts and peer-reviewers.
+All relevant data, code, and materials have been publicly archived on the Open Science Framework (\url{https://osf.io/3bmcp/}).
+Archived data includea the original data set distributed to all analysts, any edited versions of the data analyzed by individual teams, and the data we analyzed with our meta-analyses, which include the standardized effect sizes, the statistics describing variation in model structure among analysis teams, and the anonymized answers to our questionnaires of analysts.
+Similarly, we archived both the analysis code used for each individual analysis and the code from our meta-analyses.
+We also archived copies of our survey instruments from analysts and peer-reviewers.
 
-We will exclude from our synthesis any individual analysis submitted after we have completed peer review or those unaccompanied by analysis files that allow us to understand what the analysts did.
-We will also exclude any individual analysis that does not produce an outcome that can be interpreted as an answer to our primary question.
+We have exclude from our synthesis any individual analysis submitted after we have completed peer review or those unaccompanied by analysis files that allow us to understand what the analysts did.
+We also excluded any individual analysis that does not produce an outcome that can be interpreted as an answer to our primary question.
 
 \hypertarget{phase-5-collaborative-write-up-of-manuscript}{%
 \subsection{Phase 5: Collaborative Write-Up of Manuscript}\label{phase-5-collaborative-write-up-of-manuscript}}
 
-Analysts and initiating authors will discuss the limitations, results, and implications of the study and collaborate on writing the final manuscript for review as a stage-2 Registered Report.
+The initiating authors discussed the limitations, results, and implications of the study and collaborated with the analysts on writing the final manuscript for review as a stage-2 Registered Report.
 
 \hypertarget{results}{%
 \section{Results}\label{results}}
@@ -553,8 +553,8 @@ Finally, we present the analysis of the effect of analytic and researcher-relate
 
 The research compendium of study contains all the code and data presented here and can be found at \url{https://osf.io/3bmcp/}.
 
-\hypertarget{descriptive-statistics-1}{%
-\subsection{Descriptive statistics}\label{descriptive-statistics-1}}
+\hypertarget{descr-stats}{%
+\subsection{Descriptive statistics}\label{descr-stats}}
 
 In the following sections, we will describe the characteristics of the analysis teams that participated in the study and the analytic approaches they adopted.
 An important aspect that emerges from the descriptive analysis is the large variation in analytic strategies.
@@ -690,11 +690,11 @@ The mean rating of the acoustic analyses, on a scale from 0 to 100, is 74.5 (SD 
 The mean rating of the statistical analysis is 73.8 (SD = 14.1).
 For reference, as mentioned in the Methods section, a score of 75 was defined as ``an imperfect analysis but the needed changes are unlikely to dramatically alter the final interpretation'', indicating that on average reviewers judged the provided analyses to be appropriate, although ``imperfect''.
 
-\hypertarget{meta-analytic-estimation}{%
-\subsection{Meta-analytic estimation}\label{meta-analytic-estimation}}
+\hypertarget{meta-est}{%
+\subsection{Meta-analytic estimation}\label{meta-est}}
 
 This section deals with the meta-analytic analysis of the results submitted by the teams.
-First, we report on the between-team variability estimate (i.e.~the meta-analytic group-level standard deviation \[\sigma_{\alpha_{\text{t}}}\]), which is the focus of this study, followed by the meta-analytic estimate (i.e.~the intercept of the meta-analytic model, in other words, the estimated effect of typicality on the acoustic production of adjective-noun combinations).
+First, we report on the between-team variability estimate (i.e.~the meta-analytic group-level standard deviation \(\sigma_{\alpha_{\text{t}}}\)), which is the focus of this study, followed by the meta-analytic estimate (i.e.~the intercept of the meta-analytic model, in other words, the estimated effect of typicality on the acoustic production of adjective-noun combinations).
 
 \hypertarget{between-team-variability}{%
 \subsubsection{Between-team variability}\label{between-team-variability}}
