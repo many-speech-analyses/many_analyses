@@ -771,7 +771,7 @@ tbl_team_desc <- msa_models %>%
   mutate(across(-metric, specify_decimal, k = 1)) %>% 
   mutate(desc = "team_desc", 
    `Mean (SD)` = glue::glue("{avg} ({sd})"), 
-    Range = glue::glue("{min}--{max}"), 
+    Range = glue::glue("{min} -- {max}"), 
     Metric = case_when(
       metric == "size" ~ "Team size", 
       metric == "years_from_phd" ~ "Years since PhD", 
@@ -830,7 +830,7 @@ tbl_model_desc <- msa_models %>%
   mutate(desc = "model_desc", 
     metric = fct_relevel(metric, "n_models"), 
     `Mean (SD)` = glue::glue("{avg} ({sd})"), 
-    Range = glue::glue("{min}--{max}"), 
+    Range = glue::glue("{min} -- {max}"), 
     Metric = case_when(
       metric == "n_coefficients" ~ "n. coefficients", 
       metric == "n_models" ~ "n. models", 
@@ -876,7 +876,7 @@ The analysts' prior belief in the effect under investigation, on a scale from 0 
 We take this to suggest that analysts had an overall rather high positive prior belief in the investigated relationship between prosody and word combination typicality.
 
 At the end of Phase 2 (primary data analysis), the teams have submitted a grand total `r no_analyses` individual models to answer the research question, with a mean of `r pull_from_tib(tbl_model_desc, label, "model_desc_n_models", avg)` (SD: `r pull_from_tib(tbl_model_desc, label, "model_desc_n_models", sd)`) models per team. 
-Table \@ref(tab:team-descriptives-table) provides a summary of the contributing teams and their analyses. 
+Table \@ref(tab:descriptives-table) provides a summary of the contributing teams and their analyses. 
 Crucially, the analytic approaches employed by the teams varied widely both in the acoustical analyses of the speech signal and in the statistical analyses of the obtained measures.
 We proceed to discuss these in the following sections, after which we provide an overview of the peer-review ratings.
 
@@ -885,13 +885,11 @@ We proceed to discuss these in the following sections, after which we provide an
 ```{r}
 #| label: team-descriptives-table
 #| results: 'asis'
-bind_rows(
-  tbl_team_desc, 
-  filter(tbl_model_desc, label == "model_desc_n_models")
-  ) %>% 
+#| eval: false
+  tbl_team_desc %>% 
   select(Metric, Range, `Mean (SD)`) %>% 
   knitr::kable(format = "latex", booktabs = T, escape = F, 
-    linesep = "", align = c("l", "c", "r"), 
+    linesep = "", align = c("l", "r", "r"), 
     caption = "Descriptive statistics for teams included in the 
     meta-analysis (n = 30).",
     label = "team-descriptives-table"
@@ -918,13 +916,14 @@ Based on a coarse coding of how acoustic measures were operationalized, we find 
 For example, if we consider those analyses that target fundamental frequency (f0), we find that it is operationalized in many different ways including the minimum, the maximum, the mean, the median, as a range in an interval or a ratio between two intervals.
 The measurement is sometimes taken from the interval of a vowel in the article, the adjective or noun; it is sometimes taken from the word interval of article, adjective or noun; or it is taken from either the noun phrase interval or the entire sentence. 
 Some of these measures were normalized relative to other elements in the sentence or relative to the speaker.
-Table \@ref(tab:categorical-descriptives-table) provides a summary of the acoustic analyses. 
+Table \@ref(tab:descriptives-table) provides a summary of the acoustic analyses. 
 
 <!-- Begin Table 2 --> 
 \vspace{0.2in}
 ```{r}
 #| label: categorical-descriptives-table
 #| results: 'asis'
+#| eval: false
 
 tbl_categorical_desc %>% 
   select(Metric, Type, n, `\\%` = perc) %>% 
@@ -976,7 +975,7 @@ An appropriate way to account for this non-independence is by using models that 
 `r round(random_n[[3,1]],2) * 100`\% of linear models specified no random effects at all (without pooling their data), so effectively ignoring these non-independences [@hurlbert1984pseudoreplication]. <!-- TR: Did we confirm this? -->
 `r round(random_n[[1,1]],2) * 100`\% specified random intercepts only, and `r round(random_n[[2,1]],2) * 100`\% specified both random intercepts and random slopes to account for the non-independence.
 On average, teams that specified random effects, included `r round(rterms_n,1)` random terms in their models. 
-Table \@ref(tab:stats-descriptives-table) provides a summary of the statistical analyses. 
+Table \@ref(tab:descriptives-table) provides a summary of the statistical analyses. 
 
 <!-- Found effect 
 JVC: this code is ready to go, but not all the rows in the google sheet are 
@@ -984,7 +983,6 @@ filled out (approx. 40 missing)
 --> 
 ```{r}
 #| label: found-effect
-#| echo: false
 
 found_effect <- msa_models %>% 
   select(animal, model_n, found_effect) %>% 
@@ -1015,13 +1013,14 @@ Of the 104 submitted models, `r n_effects` include a statistically reliable effe
 ```{r}
 #| label: stats-descriptives-table
 #| results: 'asis'
+#| eval: false
 tbl_model_desc %>% 
   select(Metric, Range, `Mean (SD)`) %>% 
   filter(Metric != "n. random smooths") %>% 
   mutate(Metric = str_remove_all(Metric, "n. "), 
          Metric = str_to_sentence(Metric)) %>% 
   knitr::kable(format = "latex", booktabs = T, escape = F, 
-    linesep = "", align = c("l", "c", "r"), 
+    linesep = "", align = c("l", "l", "r"), 
     caption = "Descriptive statistics for statistical analyses included in the 
     meta-analysis (n = 30).",
     label = "stats-descriptives-table"
@@ -1030,10 +1029,81 @@ tbl_model_desc %>%
 ```
 <!-- END: Table --> 
 
+
+```{r}
+#| label: descriptives-table
+#| results: 'asis'
+library(kableExtra)
+bind_rows(
+  tbl_team_desc %>% 
+    select(desc, Metric, val1 = Range, val2 = `Mean (SD)`), 
+  tbl_categorical_desc %>% 
+    select(desc = Metric, Metric = Type, val1 = n, val2 = perc) %>% 
+    mutate(val1 = glue::glue("{val1}")), 
+  tbl_model_desc %>% 
+    select(desc, Metric, val1 = Range, val2 = `Mean (SD)`)
+) %>% 
+  mutate(order = c(
+    1, 6, 5, 4, 3, 2, 
+    21, 20, 23, 22, 24, 
+    8, 7, 10, 9, 11, 
+    16, 15, 12, 14, 13, 
+    17, 18, 19, 
+    26, 25, 27, 28, 29, 30, 31, 32
+    )
+  ) %>% 
+  arrange(order) %>% 
+  select(-order) %>% 
+  mutate(desc = str_replace_all(desc, "team_desc", " "), 
+    desc = str_replace_all(desc, "model_desc", "N"), 
+    desc = case_when(
+      Metric != "n. models" & desc == "N" ~ " ", 
+      Metric != "Frequentist" & desc == "Framework" ~ " ", 
+      Metric != "Linear model" & desc == "Model" ~ " ", 
+      Metric != "F0" & desc == "Outcome" ~ " ", 
+      Metric != "Segment" & desc == "Temporal window" ~ " ", 
+      Metric != "Categorical" & desc == "Typicality operationalization" ~ " ", 
+      TRUE ~ desc)
+    ) %>% 
+  filter(Metric != "n. random smooths") %>% 
+  mutate(Metric = str_remove_all(Metric, "n. "), 
+         Metric = str_to_sentence(Metric)) %>% 
+  rename("\\bf{Team characteristics}" = desc, "  " = Metric, `\\bf{Range}` = val1, 
+    `\\bf{Mean (SD)}` = val2) %>% 
+  add_row(`\\bf{Team characteristics}` = " ", `  ` = " ", `\\bf{Range}` = " ", 
+    `\\bf{Mean (SD)}` = " ", .before = 7) %>%
+  add_row(`\\bf{Team characteristics}` = "\\bf{Acoustic analyses}", `  ` = " ", 
+    `\\bf{Range}` = "\\bf{n}", `\\bf{Mean (SD)}` = "\\bf{\\%}", .before = 8) %>%
+  add_row(`\\bf{Team characteristics}` = " ", `  ` = " ", `\\bf{Range}` = " ", 
+    `\\bf{Mean (SD)}` = " ",  .before = 14) %>%
+  add_row(`\\bf{Team characteristics}` = " ", `  ` = " ", `\\bf{Range}` = " ", 
+    `\\bf{Mean (SD)}` = " ", .before = 20) %>%
+  add_row(`\\bf{Team characteristics}` = " ", `  ` = " ", `\\bf{Range}` = " ", 
+    `\\bf{Mean (SD)}` = " ", .before = 24) %>%
+  add_row(`\\bf{Team characteristics}` = "\\bf{Statistical analyses}", `  ` = " ", 
+    `\\bf{Range}` = "\\bf{n}", `\\bf{Mean (SD)}` = "\\bf{\\%}", .before = 25) %>%
+  add_row(`\\bf{Team characteristics}` = " ", `  ` = " ", `\\bf{Range}` = " ",
+    `\\bf{Mean (SD)}` = " ", .before = 28) %>%
+  add_row(`\\bf{Team characteristics}` = " ", `  ` = " ", `\\bf{Range}` = " ", 
+    `\\bf{Mean (SD)}` = " ", .before = 32) %>%
+  add_row(`\\bf{Team characteristics}` = " ", `  ` = " ", 
+    `\\bf{Range}` = "\\bf{Range}", `\\bf{Mean (SD)}` = "\\bf{Mean (SD)}", 
+    .before = 33) %>%
+  kbl(., booktabs = T, align = c("l", "l", "r", "r"), escape = F, 
+    longtable = F, linesep = "", 
+    caption = "Descriptive statistics of contributing teams (n = 30), acoustic 
+    analyses, and statistical analyses.",
+    label = "descriptives-table") %>% 
+  kable_styling(full_width = F, latex_options = "scale_down") %>% 
+  add_indent(c(9, 15, 21, 26, 29, 34)) %>% 
+  row_spec(8, hline_after = T) %>% 
+  row_spec(25, hline_after = T)
+```
+
 ### Review ratings
 
 Teams reviewed each others' acoustic and statistical analyses.
-The mean rating of the acoustic analyses, on a scale from 0 to 100, is `r round(review_mean[[1]],1)` (SD = `r round(review_mean[[2]],1)`, see Table \@ref(tab:team-descriptives-table)).
+The mean rating of the acoustic analyses, on a scale from 0 to 100, is `r round(review_mean[[1]],1)` (SD = `r round(review_mean[[2]],1)`, see Table \@ref(tab:descriptives-table)).
 The mean rating of the statistical analysis is `r round(review_mean[[3]],1)` (SD = `r round(review_mean[[4]],1)`).
 For reference, as mentioned in the Methods section, a score of 75 was defined as "an imperfect analysis but the needed changes are unlikely to dramatically alter the final interpretation", indicating that on average reviewers judged the provided analyses to be appropriate, although "imperfect".
 
