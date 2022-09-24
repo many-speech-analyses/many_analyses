@@ -1,0 +1,413 @@
+---
+title: "Supplementary materials"
+output: pdf_document
+date: "`r Sys.Date()`"
+---
+
+```{r}
+#| label: setup
+#| include: false
+knitr::opts_chunk$set(echo = F, message = F, warning = F)
+knitr::opts_knit$set(root.dir = here::here())
+library("dplyr")
+library("ggplot2")
+library("tidyr")
+library("readr")
+library("googlesheets4")
+library("glue")
+library("here")
+library("fs")
+library("forcats")
+library("purrr")
+library("stringr")
+library("kableExtra")
+```
+
+
+```{r}
+#| label: helpers
+
+# Round and format numbers to exactly N digits
+specify_decimal <- function(x, k) {
+  out <- trimws(format(round(x, k), nsmall = k))
+  return(out)
+}
+
+# Pull values from tibbles
+pull_from_tib <- function(df, col, row, val) {
+  col <- enquo(col)
+  row <- enquo(row)
+  val <- enquo(val)
+  val <- filter(df, !!col == !!row) %>% pull(!!val)
+  return(val)
+}
+```
+
+
+
+```{r}
+#| label: get-data
+
+# Read in primary coding sheet
+the_sheet <- "https://docs.google.com/spreadsheets/d/1OOXB-8Uk-fh_urw0Lm4DC0jBueXLIb4Bm-a9--UVXOw/edit?usp=sharing"
+
+# Read in google sheet and join it with review data and phd/prior belief
+# data
+msa_models_unique <- left_join(
+  read_sheet(the_sheet) %>% 
+    filter(added_on_osf == "yes") %>% 
+    select(
+      animal, model_n, outcome, typicality_operationalization, 
+      framework, model, temporal_window, random_effects, n_random, 
+      n_predictors, operationalisation, n_terms, n_coefficients, n_random_int, 
+      n_random_slo, n_random_smooth, n_models
+      ) %>%
+    distinct(), 
+  readRDS("./data/peer_review/msa_reviews.rds") %>% 
+    select(animal = Q3, phon_rating = Q5_2, stat_rating = Q5_3, 
+           all_rating = Q5_4) %>% 
+    group_by(animal) %>% 
+    # Remove ratings from 2 teams that dropped
+    filter(!(animal %in% c("pervagor_adscensionis", "pseudodax_euryzona"))) %>% 
+    summarize(phon_rating = mean(phon_rating), 
+              stat_rating = mean(stat_rating), 
+              all_rating = mean(all_rating)), 
+  by = "animal"
+) %>% 
+  left_join(., 
+    read_csv("./data/questionnaires/msa_intake_form_untidy.csv") %>%
+      filter(added_on_osf == "yes", 
+        !(animal %in% c("pervagor_adscensionis", "pseudodax_euryzona"))) %>% 
+      select(animal, years_from_phd, prior_belief), 
+    by = "animal"
+  )
+
+#
+# Create data frame with N of teams/team members at each phase of project
+#
+
+# Get google sheet
+team_sheet <- "https://docs.google.com/spreadsheets/d/1w39rU7O5ijzPmCpClVt5LEDIhzaLBDNrwfdMJUP86q8/edit?usp=sharing"
+
+# Read in teams
+teams <- read_sheet(team_sheet) 
+
+# Create DF of all members with leader names
+team_leaders <- readr::read_csv(
+  here::here("data", "questionnaires", "msa_intake_form.csv")) %>% 
+  select(ResponseId, Q6) %>% # Questions asking for team leader
+  filter(!(row_number() %in% c(1, 2))) %>% 
+  mutate(leader = Q6, 
+         leader = case_when(
+           Q6 %in% c("Ali A-Hoorie", "Ali Al-Hoorie", "Ali H. Al-Hoorie") ~ "Ali H. Al-Hoorie", 
+           Q6 %in% c("Alicea Megan Brown", "Alicia Brown") ~ "Alicia M Brown", 
+           Q6 %in% c("Dr Rory Turnbull", "Rory Turnbull") ~ "Rory Turnbull", 
+           Q6 %in% c("Dr. Reenu Punnoose", "Reenu Punnoose") ~ "Reenu Punnoose", 
+           Q6 %in% c("Dušan Nickolić", "Dušan Nikolić", "Dusan Nikolic", "Dusan Nikolic (dusan.nikolic1@ucalgary.ca)") ~ "Dušan Nikolić", 
+           Q6 %in% c("Michael Gradoville (Arizona State Univ.)", "Michael Gradoville") ~ "Michael Gradoville", 
+           Q6 %in% c("Nicole Rodriquez", "Nicole Rodriguez") ~ "Nicole Rodriguez", 
+           Q6 %in% c("Scott James Perru", "Scott Perry") ~ "Scott James Perry", 
+           Q6 %in% c("Tiphaine Caudrelier", "Tiphaine Cordelier") ~ "Tiphaine Caudrelier", 
+           Q6 %in% c("University of Birmingham team under the team coordinator Zlatomira IIchovska", "Zlatomira IIchovska", "Zlatomira Ilchovska") ~ "Zlatomira Ilchovska", 
+           Q6 %in% c("Vincent Hughes", "Vince Hughes") ~ "Vince Hughes", 
+           Q6 == "Joey Stanley" ~ "Joseph A. Stanley",
+           TRUE ~ leader
+         )) %>% 
+  select(ResponseId, leader) 
+
+# Vector of teams on OSF (for subsetting)
+teams_on_osf <- teams %>% 
+  filter(added_on_osf == "yes") %>% 
+  pull(coordinator)
+
+# Vector of teams with submitted analyses (for subsetting)
+submitted_animals <- readRDS(here("./data/analyses/msa_models.rds")) %>% 
+  pull(animal) %>% 
+  unique
+teams_used_in_analysis <- teams %>% 
+  filter(animal %in% submitted_animals) %>% 
+  pull(coordinator)
+
+# Data frame of general team descriptives at each phase of project
+#  - number of teams (initially, submitted and final)
+#  - Avg size of each team
+team_desc_df <- bind_rows(
+  team_leaders %>% 
+    group_by(leader) %>% 
+    mutate(member_num = seq_along(ResponseId)) %>% 
+    group_by(leader) %>% 
+    mutate(n_members = max(member_num)) %>% 
+    distinct(leader, n_members) %>% 
+    ungroup() %>% 
+    summarize(n_teams = nrow(.), 
+              n_analysts = sum(n_members), 
+              mean_size = mean(n_members), 
+              sd_size = sd(n_members), 
+              median_size = median(n_members), 
+              min = min(n_members), 
+              max = max(n_members)) %>% 
+    mutate(stage = "Initial"), 
+  team_leaders %>% 
+    filter(leader %in% teams_on_osf) %>% 
+    group_by(leader) %>% 
+    mutate(member_num = seq_along(ResponseId)) %>% 
+    group_by(leader) %>% 
+    mutate(n_members = max(member_num)) %>% 
+    distinct(leader, n_members) %>% 
+    ungroup() %>% 
+    summarize(n_teams = nrow(.), 
+              n_analysts = sum(n_members), 
+              mean_size = mean(n_members), 
+              sd_size = sd(n_members), 
+              median_size = median(n_members), 
+              min = min(n_members), 
+              max = max(n_members)) %>% 
+    mutate(stage = "Submitted"), 
+  team_leaders %>% 
+    filter(leader %in% teams_used_in_analysis) %>% 
+    group_by(leader) %>% 
+    mutate(member_num = seq_along(ResponseId)) %>% 
+    group_by(leader) %>% 
+    mutate(n_members = max(member_num)) %>% 
+    distinct(leader, n_members) %>% 
+    ungroup() %>% 
+    summarize(n_teams = nrow(.), 
+              n_analysts = sum(n_members), 
+              mean_size = mean(n_members), 
+              sd_size = sd(n_members), 
+              median_size = median(n_members), 
+              min = min(n_members), 
+              max = max(n_members)) %>% 
+    mutate(stage = "Final")
+  ) %>% 
+  mutate_if(is.numeric, round, digits = 1)
+
+#
+# TABLE PREP
+#
+
+# Team descriptives
+tbl_team_desc <- msa_models_unique %>% 
+  select(animal, years_from_phd, prior_belief, phon_rating, stat_rating, 
+         all_rating) %>% 
+  group_by(animal) %>% 
+  summarize(across(years_from_phd:all_rating, mean)) %>% 
+  pivot_longer(cols = -animal, names_to = "metric", values_to = "vals") %>% 
+  na.omit() %>% 
+  group_by(metric) %>% 
+  summarize(min = min(vals), max = max(vals), avg = mean(vals, na.rm = T), 
+            sd = sd(vals, na.rm = T)) %>% 
+  add_row(.before = 1, 
+    metric = "size", 
+    min = team_desc_df %>% filter(stage == "Submitted") %>% pull(min), 
+    max = team_desc_df %>% filter(stage == "Submitted") %>% pull(max), 
+    avg = team_desc_df %>% filter(stage == "Submitted") %>% pull(mean_size), 
+    sd =  team_desc_df %>% filter(stage == "Submitted") %>% pull(sd_size)) %>% 
+  mutate(across(-metric, specify_decimal, k = 1)) %>% 
+  mutate(desc = "team_desc", 
+   `Mean (SD)` = glue::glue("{avg} ({sd})"), 
+    Range = glue::glue("{min} -- {max}"), 
+    Metric = case_when(
+      metric == "size" ~ "Team size", 
+      metric == "years_from_phd" ~ "Years after PhD", 
+      metric == "stat_rating" ~ "Statistical analysis peer rating", 
+      metric == "prior_belief" ~ "Prior belief", 
+      metric == "phon_rating" ~ "Acoustic analysis peer rating", 
+      metric == "all_rating" ~ "Overall peer rating"), 
+    label = glue::glue("{desc}_{metric}")) %>% 
+  select(label, desc, Metric, Min. = min, Max = max, `Mean (SD)`, avg, sd, Range)
+
+#
+# Descriptives of categorical variables in acoustic analyses
+#
+tbl_categorical_desc <- msa_models_unique %>% 
+  select(animal, outcome, temporal_window, typicality_operationalization, 
+  framework, model) %>% 
+  pivot_longer(cols = -animal, names_to = "metric", values_to = "val") %>% 
+  na.omit() %>% 
+  group_by(metric) %>% 
+  count(val) %>% 
+  group_by(metric) %>% 
+  mutate(prop = n / sum(n), perc = prop * 100, 
+    Metric = case_when(
+      metric == "temporal_window" ~ "Temporal window", 
+      metric == "typicality_operationalization" ~ "Typicality operationalization", 
+      TRUE ~ metric
+    ), 
+    Metric = str_to_sentence(Metric), 
+    Type = case_when(
+      val != "GAM" ~ str_to_sentence(val), 
+      TRUE ~ val
+    )) %>% 
+  mutate(across(c("prop", "perc"), specify_decimal, k = 1)) %>% 
+  unite(label, c("metric", "val")) %>% 
+  mutate(label = str_replace_all(label, " ", "_"), 
+         label = str_remove_all(label, "\\(|\\)"))
+
+
+#
+# Model descriptives 
+#
+
+# Requires some annoying wrangling to get the right subtables
+mean_analyses <- msa_models_unique %>% 
+  group_by(animal) %>% 
+  summarise(max_n_models = max(model_n)) %>% 
+  summarise(
+    mean_models = mean(max_n_models, na.rm = T), 
+    sd_models = sd(max_n_models, na.rm = T), 
+    min_models = min(max_n_models, na.rm = T), 
+    max_models = max(max_n_models, na.rm = T), 
+    n_models = sum(max_n_models, na.rm = T)
+  )
+
+predictor_n <- msa_models_unique %>% 
+  summarise(
+    mean_predictor = mean(n_predictors, na.rm = TRUE), 
+    sd_predictor = sd(n_predictors, na.rm = TRUE), 
+    min_predictor = min(n_predictors, na.rm = TRUE), 
+    max_predictor = max(n_predictors, na.rm = TRUE), 
+    n_predictor = sum(n_predictors, na.rm = TRUE)
+    ) 
+
+rterms_n <- msa_models_unique %>% 
+  filter(n_random != 0) %>% 
+  summarise(
+    mean_rterms = mean(n_random, na.rm = TRUE), 
+    sd_rterms = sd(n_random, na.rm = TRUE), 
+    min_rterms = min(n_random, na.rm = TRUE), 
+    max_rterms = max(n_random, na.rm = TRUE), 
+    n_rterms = sum(n_random, na.rm = TRUE)
+    ) 
+
+# random intercepts
+rterms_int_n <- msa_models_unique %>% 
+  filter(n_random_int != 0) %>% 
+  summarise(
+    mean_rint = mean(n_random_int, na.rm = TRUE), 
+    sd_rint = sd(n_random_int, na.rm = TRUE), 
+    min_rint = min(n_random_int, na.rm = TRUE), 
+    max_rint = max(n_random_int, na.rm = TRUE), 
+    n_rint = sum(n_random_int, na.rm = TRUE)
+    ) 
+
+# random slopes
+rterms_slope_n <- msa_models_unique %>% 
+  filter(n_random != 0) %>% 
+  summarise(
+    mean_rslope = mean(n_random_slo, na.rm = TRUE), 
+    sd_rslope = sd(n_random_slo, na.rm = TRUE), 
+    min_rslope = min(n_random_slo, na.rm = TRUE), 
+    max_rslope = max(n_random_slo, na.rm = TRUE), 
+    n_rslope = sum(n_random_slo, na.rm = TRUE)
+    )
+
+# Now join them all together
+tbl_model_desc <- bind_rows(
+  mean_analyses %>% 
+  pivot_longer(cols = everything(), names_to = "label", values_to = "vals"), 
+  predictor_n %>% 
+  pivot_longer(cols = everything(), names_to = "label", values_to = "vals"), 
+  rterms_n %>% 
+  pivot_longer(cols = everything(), names_to = "label", values_to = "vals"), 
+  rterms_int_n %>% 
+  pivot_longer(cols = everything(), names_to = "label", values_to = "vals"), 
+  rterms_slope_n %>% 
+  pivot_longer(cols = everything(), names_to = "label", values_to = "vals")
+) %>% 
+  separate(label, c("Metric", "item"), sep = "_") %>% 
+  pivot_wider(names_from = Metric, values_from = vals) %>% 
+  mutate(across(c("mean", "sd"), specify_decimal, k = 1)) %>% 
+  mutate(
+    Metric = item, 
+    Metric = case_when(
+      Metric == "models" ~ "Models", 
+      Metric == "predictor" ~ "Predictors", 
+      Metric == "rterms" ~ "Random terms", 
+      Metric == "rint" ~ "Intercept", 
+      Metric == "rslope" ~ "Slope"
+    ), 
+    desc = "model_desc", 
+    label = glue::glue("{desc}_{item}"), 
+    `Mean (SD)` = glue::glue("{mean} ({sd})"), 
+    Range = glue::glue("{min} -- {max}")) %>% 
+  select(label, desc, Metric, Min. = min, Max = max, `Mean (SD)`, avg = mean, 
+         sd, Range) %>% 
+  mutate(across(-c("desc", "Metric"), as.character))
+
+```
+
+
+
+
+<!-- Begin Table --> 
+```{r}
+#| label: descriptives-table
+#| results: 'asis'
+bind_rows(
+  tbl_team_desc %>% 
+    select(desc, Metric, val1 = Range, val2 = `Mean (SD)`), 
+  tbl_categorical_desc %>% 
+    select(desc = Metric, Metric = Type, val1 = n, val2 = perc) %>% 
+    mutate(val1 = glue::glue("{val1}")), 
+  tbl_model_desc %>% 
+    select(desc, Metric, val1 = Range, val2 = `Mean (SD)`)
+) %>% 
+  mutate(order = c(
+    1, 6, 4, 3, 5, 2, 
+    25, 24, 26, 28, 27, 29, 
+    30, 8, 7, 10, 9, 11, 
+    12, 18, 17, 15, 14, 
+    16, 13, 19, 
+    20, 22, 21, 23, 
+    31, 32, 33, 34, 35
+    )
+  ) %>% 
+  arrange(order) %>% 
+  select(-order) %>% 
+  mutate(desc = str_replace_all(desc, "team_desc", " "), 
+    desc = str_replace_all(desc, "model_desc", "N"), 
+    desc = case_when(
+      Metric != "Models" & desc == "N" ~ " ", 
+      Metric != "Frequentist" & desc == "Framework" ~ " ", 
+      Metric != "Linear model" & desc == "Model" ~ " ", 
+      Metric != "F0" & desc == "Outcome" ~ " ", 
+      Metric != "Word" & desc == "Temporal window" ~ " ", 
+      Metric != "Categorical" & desc == "Typicality operationalization" ~ " ", 
+      TRUE ~ desc)
+    ) %>% 
+  filter(Metric != "n. random smooths") %>% 
+  mutate(Metric = str_remove_all(Metric, "n. "), 
+         Metric = str_to_sentence(Metric)) %>% 
+  rename("\\bf{Team characteristics}" = desc, "  " = Metric, `\\bf{Range}` = val1, 
+    `\\bf{Mean (SD)}` = val2) %>% 
+  add_row(`\\bf{Team characteristics}` = " ", `  ` = " ", `\\bf{Range}` = " ", 
+    `\\bf{Mean (SD)}` = " ", .before = 7) %>%
+  add_row(`\\bf{Team characteristics}` = "\\bf{Acoustic analyses}", `  ` = " ", 
+    `\\bf{Range}` = "\\bf{n}", `\\bf{Mean (SD)}` = "\\bf{\\%}", .before = 8) %>%
+  add_row(`\\bf{Team characteristics}` = " ", `  ` = " ", `\\bf{Range}` = " ", 
+    `\\bf{Mean (SD)}` = " ",  .before = 15) %>%
+  add_row(`\\bf{Team characteristics}` = " ", `  ` = " ", `\\bf{Range}` = " ", 
+    `\\bf{Mean (SD)}` = " ", .before = 22) %>%
+  add_row(`\\bf{Team characteristics}` = " ", `  ` = " ", `\\bf{Range}` = " ", 
+    `\\bf{Mean (SD)}` = " ", .before = 28) %>%
+  add_row(`\\bf{Team characteristics}` = "\\bf{Statistical analyses}", `  ` = " ", 
+    `\\bf{Range}` = "\\bf{n}", `\\bf{Mean (SD)}` = "\\bf{\\%}", .before = 29) %>%
+  add_row(`\\bf{Team characteristics}` = " ", `  ` = " ", `\\bf{Range}` = " ",
+    `\\bf{Mean (SD)}` = " ", .before = 33) %>%
+  add_row(`\\bf{Team characteristics}` = " ", `  ` = " ", `\\bf{Range}` = " ", 
+    `\\bf{Mean (SD)}` = " ", .before = 38) %>%
+  add_row(`\\bf{Team characteristics}` = " ", `  ` = " ", 
+    `\\bf{Range}` = "\\bf{Range}", `\\bf{Mean (SD)}` = "\\bf{Mean (SD)}", 
+    .before = 39) %>% 
+  kbl(., booktabs = T, align = c("l", "l", "r", "r"), escape = F, 
+    longtable = F, linesep = "", 
+    caption = glue::glue("Descriptive statistics of all contributing teams and their acoustic and statistical analyses. The summary includes data from {pull_from_tib(team_desc_df, stage, 'Submitted', n_teams)} teams and  {pull_from_tib(team_desc_df, stage, 'Submitted', n_analysts)} analysts."), 
+    label = "descriptives-table") %>%
+  kable_styling(full_width = F, latex_options = "scale_down") %>% 
+  add_indent(c(9, 16, 23, 30, 34, 40)) %>% 
+  add_indent(43:44, all_cols = T) %>% 
+  row_spec(8, hline_after = T) %>% 
+  row_spec(29, hline_after = T)
+```
+<!-- END TABLE --> 
