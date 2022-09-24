@@ -609,7 +609,9 @@ team_desc_df <- bind_rows(
               n_analysts = sum(n_members), 
               mean_size = mean(n_members), 
               sd_size = sd(n_members), 
-              median_size = median(n_members)) %>% 
+              median_size = median(n_members), 
+              min = min(n_members), 
+              max = max(n_members)) %>% 
     mutate(stage = "Initial"), 
   team_leaders %>% 
     filter(leader %in% teams_on_osf) %>% 
@@ -623,7 +625,9 @@ team_desc_df <- bind_rows(
               n_analysts = sum(n_members), 
               mean_size = mean(n_members), 
               sd_size = sd(n_members), 
-              median_size = median(n_members)) %>% 
+              median_size = median(n_members), 
+              min = min(n_members), 
+              max = max(n_members)) %>% 
     mutate(stage = "Submitted"), 
   team_leaders %>% 
     filter(leader %in% teams_used_in_analysis) %>% 
@@ -870,36 +874,6 @@ tbl_model_desc <- bind_rows(
   select(label, desc, Metric, Min. = min, Max = max, `Mean (SD)`, avg = mean, 
          sd, Range) %>% 
   mutate(across(-c("desc", "Metric"), as.character))
-
-
-#tbl_model_desc <- msa_models_unique %>% 
-#  select(animal, starts_with("n_")) %>% 
-#  group_by(animal) %>% 
-#  summarize(across(everything(), mean)) %>% 
-#  pivot_longer(cols = -animal, names_to = "metric", values_to = "vals") %>% 
-#  na.omit() %>% 
-#  group_by(metric) %>% 
-#  summarize(min = min(vals), max = max(vals), avg = mean(vals, na.rm = T), 
-#            sd = sd(vals, na.rm = T)) %>% 
-#  mutate(across(-c("metric", "avg", "sd"), round)) %>% 
-#  mutate(across(c("avg", "sd"), specify_decimal, k = 1)) %>% 
-#  mutate(desc = "model_desc", 
-#    metric = fct_relevel(metric, "n_models"), 
-#    `Mean (SD)` = glue::glue("{avg} ({sd})"), 
-#    Range = glue::glue("{min} -- {max}"), 
-#    Metric = case_when(
-#      metric == "n_coefficients" ~ "n. coefficients", 
-#      metric == "n_models" ~ "n. models", 
-#      metric == "n_predictors" ~ "n. predictors", 
-#      metric == "n_random" ~ "n. random effects", 
-#      metric == "n_random_int" ~ "n. random intercepts", 
-#      metric == "n_random_slo" ~ "n. random slopes", 
-#      metric == "n_random_smooth" ~ "n. random smooths",
-#      metric == "n_terms" ~ "n. terms"), 
-#    label = glue::glue("{desc}_{metric}")) %>% 
-#  select(label, desc, Metric, Min. = min, Max = max, `Mean (SD)`, avg, 
-#    sd, Range) %>% 
-#  mutate(across(-c("desc", "Metric"), as.character))
 
 ```
 
