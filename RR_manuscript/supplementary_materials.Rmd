@@ -377,8 +377,6 @@ bind_rows(
       TRUE ~ desc)
     ) %>% 
   filter(Metric != "n. random smooths") %>% 
-  mutate(Metric = str_remove_all(Metric, "n. "), 
-         Metric = str_to_sentence(Metric)) %>% 
   rename("\\bf{Team characteristics}" = desc, "  " = Metric, `\\bf{Range}` = val1, 
     `\\bf{Mean (SD)}` = val2) %>% 
   add_row(`\\bf{Team characteristics}` = " ", `  ` = " ", `\\bf{Range}` = " ", 
