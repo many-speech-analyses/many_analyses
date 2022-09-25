@@ -19,7 +19,7 @@ address:
   org: Department of Linguistics and Scandinavian Studies, University of Oslo, Oslo, Norway
 corrauth: "Timo B. Roettger"
 email: "timo.b.roettger@iln.uio.no"
-abstract: "Recent efforts to replicate published findings have uncovered surprisingly low success rates across disciplines. Moreover, several studies have highlighted the large degree of analytic flexibility in data analysis which can lead to substantially different conclusions based on the same data set. Thus, researchers have expressed their concerns that these researcher degrees of freedom might facilitate bias and can lead to claims that do not stand the test of time. Even greater flexibility is to be expected in fields in which the primary data lend themselves to a variety of possible operationalizations. The multidimensional, temporally extended nature of speech constitutes an ideal testing ground for assessing the variability in analytic approaches that derives not only from aspects of statistical modelling but also from decisions regarding the quantification of the measured behavior. In the present study, we gave the same speech production dataset to 30 teams of researchers and asked them to answer the same research question. Using Bayesian meta-analytic tools, we have observed substantial variability between teams and submitted analyses, with analytic and researcher-related predictors having little or no effect on the reported effects."
+abstract: "Recent efforts to replicate published findings have uncovered surprisingly low success rates across disciplines. Moreover, several studies have highlighted the large degree of analytic flexibility in data analysis which can lead to substantially different conclusions based on the same data set. Thus, researchers have expressed their concerns that these researcher degrees of freedom might facilitate bias and can lead to claims that do not stand the test of time. Even greater flexibility is to be expected in fields in which the primary data lend themselves to a variety of possible operationalizations. The multidimensional, temporally extended nature of speech constitutes an ideal testing ground for assessing the variability in analytic approaches that derives not only from aspects of statistical modelling but also from decisions regarding the quantification of the measured behavior. In the present study, we gave the same speech production data set to 30 teams of researchers and asked them to answer the same research question. Using Bayesian meta-analytic tools, we have observed substantial variability between teams and submitted analyses, with analytic and researcher-related predictors having little or no effect on the reported effects."
 keywords: "crowdsourcing science, data analysis, scientific transparency, speech, acoustic analysis"
 classoption:
   - Review
@@ -102,14 +102,14 @@ Recent projects have shown that the variability between different data analysts 
 These studies, however, might still underestimate the extent to which analysts vary because data analysis is not restricted to the statistical analysis of ready-made numeric data.
 These data can in fact be the result of complex measurement processes that translate a phenomenon, such as human behavior, into numbers.
 This is particularly true for fields that draw conclusions about human behavior and cognition from multidimensional data like audio or video data.
-In fields working on human speech production, for example, researchers need to make numerous decisions about what to measure and how to measure it, in other words, how to operationalise the phenomenon under investigation.
+In fields working on human speech production, for example, researchers need to make numerous decisions about what to measure and how to measure it, in other words, how to operationalize the phenomenon under investigation.
 This is not trivial, given the temporal extension of the acoustic signal and its complex structural composition.
 <!-- Not only can decisions about measuring the signal influence downstream decisions about statistical modeling, but statistical results or modeling issues can also lead researchers to go back and revise earlier decisions about the measuring process itself. -->
 
 In this article, we investigate the impact of analytic choices on research results when many analyst teams analyze the same speech production data set, a process that involves both decisions regarding the *operationalization* of a complex signal and decisions regarding *statistical analysis*.
-Specifically, we discuss the degree of variability in research results obtained by 30 teams who had to choose the operationalisation and statistical procedures to answer the same research question, on the basis of the same set of raw data (here, speech recordings).
+Specifically, we discuss the degree of variability in research results obtained by 30 teams who had to choose the operationalization and statistical procedures to answer the same research question, on the basis of the same set of raw data (here, speech recordings).
 Our goals are twofold: (i) our study conceptually replicates previous many-analyses projects, by probing the effects of different statistical analyses and by assessing the generalizability of published findings to other disciplines (here, the speech sciences);
-(ii) our study extends the scope of inquiry to include flexibility in the operationalisation of complex human behavior (here, human speech).
+(ii) our study extends the scope of inquiry to include flexibility in the operationalization of complex human behavior (here, human speech).
 This is an important addition in that the increased number of "forking paths" in the "garden of analytic choices", deriving from the many decisions involved in quantification, might reveal a higher degree of variability across analysts than what previously observed, thus giving us a more realistic estimate of variability across analysts. 
 
 ## Researcher degrees of freedom
@@ -242,7 +242,7 @@ We could summarize f0 across the entire window and extract the mean, median or s
 But the journey in the garden of analytic paths goes on.
 Other important operationalization steps could involve filtering the audio signal, smoothing the extracted f0 track, removing values that substantially deviate from surrounding values or expectations, either manually or automatically, and so on.
 
-These decisions are intended to be made prior to any statistical analysis, but are at times revised a posteriori in light of unforeseen or surprising outcomes (i.e. after data collection and/or preliminary analyses).
+These decisions are intended to be made prior to any statistical analysis, but are at times revised *a posteriori* in light of unforeseen or surprising outcomes (i.e. after data collection and/or preliminary analyses).
 These myriads of possible decisions are multiplied by those researcher degrees of freedom related to statistical analysis [e.g. @wicherts2016].
 
 In sum, speech data is made of complex physical signals that generates an as-of-yet unappreciated amount of analytic flexibility in the choice of measures and operationalizations.
@@ -404,7 +404,7 @@ This same sequence was followed until all analyses allocated to a given reviewer
 ## Phase 4: Evaluating variation
 
 The initiating authors (SC, JC, TR) conducted the analyses outlined in this section.
-We did not conduct confirmatory tests of any a priori hypotheses.
+We did not conduct confirmatory tests of any *a priori* hypotheses.
 We consider our analysis exploratory.
 
 ### Descriptive statistics
@@ -513,7 +513,7 @@ These were entered in the model formula as a measurement-error term (`me(mean, s
 The expedient of using a measurement-error term (which includes the teams' standard deviation) ensures information about within-team variance is not lost (which would be the case if including the mean only).
 
 We had initially planned to also include a measure of conservativeness of the model specification, as the number of random/group-level effects included and the number of post-hoc changes to the acoustic measurements the teams reported to have carried out.
-We realised when fitting the model that the measure of conservativeness is related to the standard error of the estimates (i.e. more group-level effects = higher standard error).
+We realized when fitting the model that the measure of conservativeness is related to the standard error of the estimates (i.e. more group-level effects = higher standard error).
 There was no team that declared to have made post-hoc changes to the analyses.
 
 **Model specification**. The model was fitted as a measurement-error model, with the predictors detailed in the preceding paragraphs.
@@ -1197,7 +1197,7 @@ We come back to this important observation later.
 
 ### Meta-analytic intercept
 
-After assessing the variation between teams and analyses, we now turn to the meta-analytic estimate of the effect of typicality on the acoustic realisation of sentences with adjective-noun combinations.
+After assessing the variation between teams and analyses, we now turn to the meta-analytic estimate of the effect of typicality on the acoustic realization of sentences with adjective-noun combinations.
 The meta-analytic model estimates the range of probable values of the standardized effect size to be between `r round(meta_intercept_prereg[3],3)` and `r round(meta_intercept_prereg[4],3)` standard units (95\% CrI, mean = `r round(meta_intercept_prereg[1],3)`).
 In other words, our best guess is that speakers might not encode typicality in the acoustic signal (e.g. by duration, f0 etc,) or, if they do, they do so by a maximum of ±0.02 standard units.
 
@@ -1398,7 +1398,7 @@ The coordinating authors have engaged with meta-scientific research before and h
 We have in the past used the lack of standardized analytical approaches as an argument for proposing behavior and policy changes in the field. 
 This might have biased our own judgement during the analysis which itself came with many researcher degrees of freedom.
 We hope we were able to make these degrees of freedom as well as the timing and reasoning of our analytical choices at least detectable. 
-We invite other researchers to re-analyse our data and try to replicate our results using a different research question.
+We invite other researchers to re-analyze our data and try to replicate our results using a different research question.
 
 Moreover, our sample is an opportunity sample. 
 We have advertised the project through online platforms which might have led to the exclusion of certain potential researcher groups.
@@ -1411,7 +1411,7 @@ However, we consider this very underspecification of research hypotheses in the 
 For example, researchers seem to have not yet agreed on how to acoustically measure cross linguistically common phenomena such as word stress [e.g. @gordon2017acoustic].
 
 In light of these possible sources of bias, a field can benefit from explicit positionality statements [e.g., @jafar2018; @darwin2020; @fox2021open].
-Researchers do not analyse data in a vacuum.
+Researchers do not analyze data in a vacuum.
 It is important recognize and disclose one's positionality, i.e., a reflection about how educational background, social identity, power, experience and context might influence researchers' approaches and interpretations.
 
 Despite of all these possible sources of bias and uncertainty, our study suggests that at least the minimum variability that we can expect to find across researchers is the rather concerning variability that we have observed.
@@ -1426,7 +1426,7 @@ It is conceivable that the discussed issues apply differently or not at all to q
 # Conclusion
 
 In recent efforts, several studies have highlighted the large degree of analytic flexibility in data analysis. 
-When many different analysts have to analyse the same data set to answer the same research questions, analysts drastically differ in how they approach this task, leading to vastly different answers to that research question. 
+When many different analysts have to analyze the same data set to answer the same research questions, analysts drastically differ in how they approach this task, leading to vastly different answers to that research question. 
 This is concerning, as it can lead to substantially different conclusions based on the same data set, a state of affairs that can generate biased inferential decisions and might weaken the strength of confidence in the published literature.
 
 Going beyond previous empirical studies, the current paper looked at many analyses of speech data.
@@ -1439,7 +1439,7 @@ Quantitatively, the between-team and between-model variation of estimates crosse
 In line with previous findings, neither the perceived quality of analyses, nor the experience or prior beliefs of teams explained the observed variation.
 Importantly however, we found some evidence for systematic effects on team's estimates based on what and how they measured the speech signal, biasing their estimates in one or the other direction.
 That taken together with the meaningful between-model variation and the tendency to test the same research question on multiple outcome variables suggests that the vast plurality of acceptable approaches is expected to frequently lead to inconclusive results.
-We suggest that fields based on multidimensional data need to acknowledge these degrees of freedom, consider crowd-sourcing and multiverse analyses when evaluating epistemologically or practically important phenomena, and strengthen the link between theoretical predictions and the measurement system by means of mathematical formalisation and computational modelling. 
+We suggest that fields based on multidimensional data need to acknowledge these degrees of freedom, consider crowd-sourcing and multiverse analyses when evaluating epistemologically or practically important phenomena, and strengthen the link between theoretical predictions and the measurement system by means of mathematical formalization and computational modelling. 
 
 # Author contributions
 
