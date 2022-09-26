@@ -946,7 +946,7 @@ While teams almost exclusively used linear models to analyze their data (`r roun
 
 The data contains several dependencies between data points, with multiple data points coming from the same subject and with multiple data points being associated with the same adjective or noun.
 An appropriate way to account for this non-independence is by using models that include so-called random or group level effects [e.g., @gelman2006data; @schielzeth2009conclusions], variably known as mixed-effects, hierarchical, multi-level, or nested models (among other names).
-`r (round(random_n[[3,1]],2) * 100) %>% xfun::numbers_to_words() %>% str_to_sentence()` percent of linear models specified no random effects at all (without pooling their data), so effectively ignoring these non-independences [@hurlbert1984pseudoreplication].
+`r (round(random_n[[3,1]],2) * 100) %>% xfun::numbers_to_words() %>% str_to_sentence()` percent of the linear models specified no random effects at all (without pooling their data), so effectively ignoring these non-independences [@hurlbert1984pseudoreplication].
 `r (round(random_n[[1,1]],2) * 100) %>% xfun::numbers_to_words() %>% str_to_sentence()` percent specified random intercepts only, and `r round(random_n[[2,1]],2) * 100`\% specified both random intercepts and random slopes to account for the non-independence.
 On average, teams that specified random effects, included `r round(rterms_n$mean_rterms,1)` random terms in their models. 
 Table \@ref(tab:descriptives-table) provides a summary of the statistical analyses. 
@@ -976,7 +976,7 @@ n_atleast_1 <- nrow(atleast_1_effect)
 perc_atleast_1 <- (n_atleast_1 / length(unique(msa_models$animal))) * 100
 ```
 
-When considering both acoustic and statistical analysis, we have found a grand total of `r nrow(unique_acou_stat)` different analytic pipelines.
+When considering both acoustic and statistical analyses, we have found a grand total of `r nrow(unique_acou_stat)` different analytic pipelines.
 In other words, each individual submitted analysis was unique.
 Of the 104 submitted models, `r n_effects` were reported to show a statistically reliable effect (`r round(perc_effects,1)`%). 
 `r n_atleast_1 %>% xfun::numbers_to_words() %>% str_to_sentence()` teams out of the `r length(unique(msa_models$animal)) %>% xfun::numbers_to_words()` (`r perc_atleast_1`%) reported to have found at least one statistically reliable effect. 
@@ -1055,7 +1055,7 @@ bind_rows(
 ### Review ratings
 
 Teams reviewed each others' acoustic and statistical analyses.
-The mean rating of the acoustic analyses, on a scale from 0 to 100, is `r round(review_mean$mean_prating,1)` (SD = `r round(review_mean$sd_prating,1)`, see Table \@ref(tab:descriptives-table)).
+The mean rating of the acoustic analyses, on a scale from 0 to 100, is `r round(review_mean$mean_prating,1)` (SD = `r round(review_mean$sd_prating,1)`).
 The mean rating of the statistical analysis is `r round(review_mean$mean_srating,1)` (SD = `r round(review_mean$sd_srating,1)`).
 For reference, as mentioned in the Methods section, a score of 75 was defined as "an imperfect analysis but the needed changes are unlikely to dramatically alter the final interpretation", indicating that on average reviewers judged the provided analyses to be appropriate, although "imperfect".
 
@@ -1176,8 +1176,8 @@ predictors_bm_rintercepts <-
 The primary aim of this analysis is to assess the degree of between-team variability.
 As a measure of between-team variability, we chose to use the meta-analytic group-level standard deviation $\sigma_{\alpha_{\text{t}}}$).
 
-According to the preregistered meta-analytic model, the group-level standard deviation for team is between `r round(meta_bm_prereg_tidy$conf.low[["sd_animal__Intercept"]], 2)` and `r round(meta_bm_prereg_tidy$conf.high[["sd_animal__Intercept"]], 2)` standard units, at 95% credibility.
-This means that the mean deviations of any individual team from the meta-analytic effect estimate range between ±0.06 to ±0.14 (0.3 * 1.96, 0.07 * 1.96) in standard units at 95% probability.
+According to the preregistered meta-analytic model, the group-level standard deviation for teams is between `r round(meta_bm_prereg_tidy$conf.low[["sd_animal__Intercept"]], 2)` and `r round(meta_bm_prereg_tidy$conf.high[["sd_animal__Intercept"]], 2)` standard units, at 95% credibility.
+This means that the mean deviations of any individual team from the meta-analytic effect estimate range between $\pm$ `r round((meta_bm_prereg_tidy$conf.low[['sd_animal__Intercept']] * 1.96), 2)` to $\pm$ `r round((meta_bm_prereg_tidy$conf.high[["sd_animal__Intercept"]] * 1.96), 2)` (0.3 * 1.96, 0.07 * 1.96) in standard units at 95% probability.
 
 **Non-preregistered**. However, we did not take into account that teams might submit multiple analyses/models in our preregistration which, if unaccounted for, violates the independence assumption. 
 To account for this added layer of dependency, we have run a model with team and model ID nested within team as group-level effects (`(1|team) + (1|team:model_id`), which allows us to estimate both the between-team variation along with the between-analysis variation.

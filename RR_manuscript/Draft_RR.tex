@@ -610,13 +610,13 @@ While teams almost exclusively used linear models to analyze their data (98\%), 
 
 The data contains several dependencies between data points, with multiple data points coming from the same subject and with multiple data points being associated with the same adjective or noun.
 An appropriate way to account for this non-independence is by using models that include so-called random or group level effects \citep[e.g.,][]{gelman2006data, schielzeth2009conclusions}, variably known as mixed-effects, hierarchical, multi-level, or nested models (among other names).
-Eight percent of linear models specified no random effects at all (without pooling their data), so effectively ignoring these non-independences \citep{hurlbert1984pseudoreplication}.
+Eight percent of the linear models specified no random effects at all (without pooling their data), so effectively ignoring these non-independences \citep{hurlbert1984pseudoreplication}.
 Sixty-five percent specified random intercepts only, and 27\% specified both random intercepts and random slopes to account for the non-independence.
 On average, teams that specified random effects, included 2.5 random terms in their models.
 Table \ref{tab:descriptives-table} provides a summary of the statistical analyses.
 Based on statistical framework, type of model, distribution family, fixed terms, and not including random effects, there were a total of 47 different model specifications.
 
-When considering both acoustic and statistical analysis, we have found a grand total of 104 different analytic pipelines.
+When considering both acoustic and statistical analyses, we have found a grand total of 104 different analytic pipelines.
 In other words, each individual submitted analysis was unique.
 Of the 104 submitted models, 37 were reported to show a statistically reliable effect (21.8\%).
 Nine teams out of the thirty (30\%) reported to have found at least one statistically reliable effect.
@@ -678,7 +678,7 @@ Nine teams out of the thirty (30\%) reported to have found at least one statisti
 \subsubsection{Review ratings}\label{review-ratings}}
 
 Teams reviewed each others' acoustic and statistical analyses.
-The mean rating of the acoustic analyses, on a scale from 0 to 100, is 71.5 (SD = 13.9, see Table \ref{tab:descriptives-table}).
+The mean rating of the acoustic analyses, on a scale from 0 to 100, is 71.5 (SD = 13.9).
 The mean rating of the statistical analysis is 69.5 (SD = 16.5).
 For reference, as mentioned in the Methods section, a score of 75 was defined as ``an imperfect analysis but the needed changes are unlikely to dramatically alter the final interpretation'', indicating that on average reviewers judged the provided analyses to be appropriate, although ``imperfect''.
 
@@ -694,8 +694,8 @@ First, we report on the between-team variability estimate (i.e.~the meta-analyti
 The primary aim of this analysis is to assess the degree of between-team variability.
 As a measure of between-team variability, we chose to use the meta-analytic group-level standard deviation \(\sigma_{\alpha_{\text{t}}}\)).
 
-According to the preregistered meta-analytic model, the group-level standard deviation for team is between 0.03 and 0.07 standard units, at 95\% credibility.
-This means that the mean deviations of any individual team from the meta-analytic effect estimate range between ±0.06 to ±0.14 (0.3 * 1.96, 0.07 * 1.96) in standard units at 95\% probability.
+According to the preregistered meta-analytic model, the group-level standard deviation for teams is between 0.03 and 0.07 standard units, at 95\% credibility.
+This means that the mean deviations of any individual team from the meta-analytic effect estimate range between \(\pm\) 0.06 to \(\pm\) 0.14 (0.3 * 1.96, 0.07 * 1.96) in standard units at 95\% probability.
 
 \textbf{Non-preregistered}. However, we did not take into account that teams might submit multiple analyses/models in our preregistration which, if unaccounted for, violates the independence assumption.
 To account for this added layer of dependency, we have run a model with team and model ID nested within team as group-level effects (\texttt{(1\textbar{}team)\ +\ (1\textbar{}team:model\_id}), which allows us to estimate both the between-team variation along with the between-analysis variation.
