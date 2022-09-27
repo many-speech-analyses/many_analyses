@@ -2,7 +2,14 @@
 
 Welcome!
 
-This project also lives on the [OSF](https://osf.io/3bmcp/). 
+This project also lives on the [OSF](https://osf.io/3bmcp/).  
+General project information can be found [here](https://many-speech-analyses.github.io).
+
+## Brief summary
+
+We recruted collaborators interested in forming data analysis teams to examine the same dataset.
+The data analysis teams wrote a journal-ready methods and results section and then peer-reviewed each others analyses.
+Next, we used meta-analytic techniques to explore the data analysis teams' findings. 
 
 ## Overview
 
@@ -13,4 +20,3 @@ Even greater flexibility is to be expected in fields in which the primary data l
 The multidimensional, temporally extended nature of speech constitutes an ideal testing ground for assessing the variability in analytic approaches that derives not only from aspects of statistical modelling but also from decisions regarding the quantification of the measured behavior. 
 In the present study, we gave the same speech production data set to 30 teams of researchers and asked them to answer the same research question. 
 Using Bayesian meta-analytic tools, we have observed substantial variability between teams and submitted analyses, with analytic and researcher-related predictors having little or no effect on the reported effects.
-
