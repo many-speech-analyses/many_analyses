@@ -128,7 +128,7 @@ affiliations %>%
 
 There were `r nrow(contributors)` contributors from `r nrow(affiliations)` institutions. 
 `r filter(affiliations, is.na(primary_affiliation)) %>% pull(n) %>% xfun::numbers_to_words() %>% str_to_sentence()` analysts did not include their primary affiliation. 
-There were `r filter(contributors, is.na(email_address)) %>% nrow` assholes that didn't include their email (`r filter(contributors, is.na(email_address)) %>% pull(name) %>% knitr::combine_words(words = .)`). 
+There were `r filter(contributors, is.na(email_address)) %>% nrow` individuals that didn't include their email (`r filter(contributors, is.na(email_address)) %>% pull(name) %>% knitr::combine_words(words = .)`). 
 
 
 ## Contributor roles taxonomy
