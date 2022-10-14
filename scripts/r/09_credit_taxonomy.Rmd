@@ -79,10 +79,15 @@ analysts <- all_data_temp %>%
 
 # Combine dfs in correct order
 contributors <- bind_rows(initiators, analysts) %>% 
-  mutate(middle_name = replace_na(middle_name, ""), 
-         is_initiating = if_else(surname %in% initiating_authors, 1, 0)) %>% 
+  mutate(middle_name = replace_na(middle_name, ""),
+    is_initiating = if_else(surname %in% initiating_authors, 1, 0)) %>% 
   unite(name, c("firstname", "middle_name", "surname"), sep = " ") %>% 
-  mutate(name = str_replace_all(name, "  ", " ")) 
+  mutate(name = str_replace_all(name, "  ", " ")) %>% 
+  bind_rows(
+    slice(., which(name != "Timo B. Roettger")), 
+    slice(., which(name == "Timo B. Roettger"))
+    ) %>%
+  tail(nrow(.) / 2)
 
 ```
 
@@ -128,8 +133,6 @@ affiliations %>%
 
 There were `r nrow(contributors)` contributors from `r nrow(affiliations)` institutions. 
 `r filter(affiliations, is.na(primary_affiliation)) %>% pull(n) %>% xfun::numbers_to_words() %>% str_to_sentence()` analysts did not include their primary affiliation. 
-There were `r filter(contributors, is.na(email_address)) %>% nrow` individuals that didn't include their email (`r filter(contributors, is.na(email_address)) %>% pull(name) %>% knitr::combine_words(words = .)`). 
-
 
 ## Contributor roles taxonomy
 
