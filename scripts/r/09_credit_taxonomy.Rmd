@@ -1,0 +1,221 @@
+---
+title: "Get CRediT"
+author: "Joseph V. Casillas"
+output: html_document
+date: "Last upate: `r Sys.Date()`"
+---
+
+## Load libraries
+
+```{r}
+#| label: setup
+#| include: false
+knitr::opts_chunk$set(
+  echo = TRUE, 
+  message = FALSE, 
+  warning = FALSE
+  )
+
+knitr::opts_knit$set(root.dir = here::here())
+```
+
+```{r}
+#| label: load-libs
+library("googledrive")
+library("xml2")
+library("dplyr")
+library("tidyr")
+library("stringr")
+library("ggplot2")
+library("forcats")
+library("readr")
+library("kableExtra")
+```
+
+## Get google sheet and tidy
+
+```{r}
+#| label: identify-download
+# give gargle permission
+drive_auth(email = TRUE)
+
+# Locate file, check ID
+drive_find(n_max = 5, type = "spreadsheet")
+
+# Search by id (just checking)
+drive_get(id = "1lXmubF42sTCoOaECXGzo20GCFxX51MWFOKhX8euNtuA")
+
+# Download to doc folder
+drive_download(
+  file = "MSA_tenzing_contribution", 
+  path = "./data/CRediT/MSA_tenzing_contribution.csv", 
+  type = "csv",
+  overwrite = T
+  )
+```
+
+
+
+```{r}
+#| label: load-tidy-csv
+
+# Create vector of surnames of initiating authors
+initiating_authors <- c("Coretta", "Casillas", "Roessig", "Franke", "Roettger")
+
+# Load data
+all_data_temp <- read_csv("./data/CRediT/MSA_tenzing_contribution.csv") %>% 
+  janitor::clean_names() 
+
+# Subset initiating authors
+initiators <- all_data_temp %>% 
+  filter(surname %in% initiating_authors) %>% 
+  mutate(is_initiating = 1)
+
+# Subset analysts
+analysts <- all_data_temp %>% 
+  filter(!(surname %in% initiating_authors)) %>% 
+  mutate(is_initiating = 0) %>% 
+  arrange(surname)
+
+# Combine dfs in correct order
+contributors <- bind_rows(initiators, analysts) %>% 
+  mutate(middle_name = replace_na(middle_name, ""),
+    is_initiating = if_else(surname %in% initiating_authors, 1, 0)) %>% 
+  unite(name, c("firstname", "middle_name", "surname"), sep = " ") %>% 
+  mutate(name = str_replace_all(name, "  ", " ")) %>% 
+  bind_rows(
+    slice(., which(name != "Timo B. Roettger")), 
+    slice(., which(name == "Timo B. Roettger"))
+    ) %>%
+  tail(nrow(.) / 2)
+
+```
+
+
+
+## Author list
+
+```{r}
+#| label: print-names
+
+author_list <- contributors %>% 
+  pull(name) %>% 
+  knitr::combine_words(words = .)
+```
+
+These are the authors:  
+`r author_list`
+
+
+## Institutions
+
+```{r}
+#| label: institutions
+#| out.width: 100%
+#| fig.height: 8
+
+# Get count of unique affiliations
+affiliations <- contributors %>% 
+  count(primary_affiliation) %>% 
+  arrange(n) 
+
+# Plot affiliations as a function of n
+affiliations %>% 
+  mutate(lab_truc = str_sub(primary_affiliation, 1, 30),
+    lab_truc = fct_reorder(lab_truc, n, min)) %>% 
+  ggplot() + 
+  aes(x = n, y = lab_truc) + 
+  geom_segment(aes(x = 0, xend = n, yend = lab_truc)) + 
+  geom_point() + 
+  labs(y = NULL) + 
+  theme_bw(base_size = 9)
+```
+
+There were `r nrow(contributors)` contributors from `r nrow(affiliations)` institutions. 
+`r filter(affiliations, is.na(primary_affiliation)) %>% pull(n) %>% xfun::numbers_to_words() %>% str_to_sentence()` analysts did not include their primary affiliation. 
+
+## Contributor roles taxonomy
+
+```{r}
+#| label: contributor-roles-plot-initiators
+#| out.width: 100%
+#| fig.height: 4
+
+# Vector of formated contributor roles
+contributor_roles <- c(
+    "Conceptualization", "Data curation", "Formal Analysis",
+    "Funding acquisition", "Investigation", "Methodology",
+    "Project administration", "Resources", "Software", "Supervision",
+    "Validation", "Visualization", "Writing - original draft",
+    "Writing - review & editing"
+  )
+
+# Format contributors for plotting
+cr_prep <- contributors %>% 
+  select(name:writing_review_editing, is_initiating) %>% 
+  pivot_longer(
+    cols = -c("name", "is_initiating"), 
+    names_to = "contributor_roles", 
+    values_to = "val"
+    ) %>% 
+  mutate(val = as.numeric(val)) %>% 
+  group_by(name, contributor_roles) %>% 
+  mutate(order_x = seq_along(name)) %>% 
+  group_by(name) %>% 
+  mutate(order_y = seq_along(name)) %>% 
+  ungroup() %>% 
+  mutate(initials = gsub('\\b(\\pL)\\pL{2,}|.','\\U\\1', name, perl = TRUE), 
+    contributor_roles = fct_rev(contributor_roles))
+
+# Plot initiating authors
+cr_prep %>% 
+  filter(is_initiating == 1) %>% 
+  mutate(name = fct_relevel(name, "Stefano Coretta", "Joseph V. Casillas", 
+                            "Simon Roessig", "Michael Franke")) %>% 
+  ggplot() +
+  aes(x = name, y = contributor_roles, alpha = val) +
+    geom_point(size = 3.5, pch = 18, show.legend = F) +
+    scale_x_discrete(position = "top") + 
+    scale_y_discrete(limits = rev, labels = rev(contributor_roles)) + 
+    scale_alpha_continuous(range = c(0.05, 1)) +
+    labs(x = "Initiating authors", y = "Contributor roles",
+         caption = "Author contributions based on CRediT taxonomy") +
+    theme_minimal(base_size = 12, base_family = "Times") +
+    theme(
+      axis.title.y = element_text(size = rel(.9), hjust = 0.95),
+      axis.title.x = element_text(size = rel(.9), hjust = 0.95),
+      panel.grid.major = element_line(colour = 'grey90', size = 0.15),
+      panel.grid.minor = element_line(colour = 'grey90', size = 0.15)
+    )
+
+```
+
+
+
+```{r}
+#| label: contributor-roles-plot-analysts
+#| out.width: 100%
+#| fig.height: 10
+
+cr_prep %>% 
+  filter(is_initiating == 0) %>% 
+  ggplot() +
+  aes(y = initials, x = contributor_roles, alpha = val) +
+    geom_point(size = 1.75, pch = 18, show.legend = F) +
+    scale_x_discrete(labels = contributor_roles) + 
+    scale_alpha_continuous(range = c(0.05, 1)) +
+    labs(x = NULL, y = "Analysts",
+         caption = "Contributor roles\nAuthor contributions based on CRediT taxonomy") +
+    theme_minimal(base_size = 12, base_family = "Times") +
+    theme(
+      axis.title.y = element_text(size = rel(.9), hjust = 0.95),
+      axis.title.x = element_text(size = rel(.9), hjust = 0.95),
+      panel.grid.major = element_line(colour = 'grey90', size = 0.15),
+      panel.grid.minor = element_line(colour = 'grey90', size = 0.15), 
+      axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1, 
+                                     size = rel(0.6)), 
+      axis.text.y = element_text(size = rel(0.5))
+    )
+
+```
+

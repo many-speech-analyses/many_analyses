@@ -1,0 +1,132 @@
+---
+title: "Get co-author comments on draft"
+author: "Joseph V. Casillas"
+output: html_document
+date: "Last upate: `r Sys.Date()`"
+---
+
+
+```{r}
+#| label: setup
+#| include: false
+knitr::opts_chunk$set(
+  echo = TRUE, 
+  message = FALSE, 
+  warning = FALSE
+  )
+
+knitr::opts_knit$set(root.dir = here::here())
+```
+
+```{r}
+#| label: load-libs
+library("googledrive")
+library("xml2")
+library("dplyr")
+library("tidyr")
+library("ggplot2")
+library("forcats")
+library("readr")
+library("kableExtra")
+```
+
+```{r}
+#| label: identify-download
+# give gargle permission
+drive_auth(email = TRUE)
+
+# Locate file, check ID
+drive_find(n_max = 5, type = "document")
+
+# Search by id (just checking)
+drive_get(id = "1CFgRo93mRgifpuFOuQE3vNBeMW-H7ps9eD--vxH-6CQ")
+
+# Download to doc folder
+drive_download(
+  file = "Draft_RR", 
+  path = "./RR_manuscript/commented_draft/Draft_RR.docx", 
+  type = "docx",
+  overwrite = T
+  )
+```
+
+
+```{r}
+#| label: unzip-word
+# Get word doc and unzip to 'unzipped' folder, will create if doesn't exist
+system("unzip -o ./RR_manuscript/commented_draft/Draft_RR.docx -d ./RR_manuscript/commented_draft/unzipped/")
+```
+ 
+ 
+```{r}
+#| label: get-xml
+# Load xml file
+comments_xml <- read_xml("./RR_manuscript/commented_draft/unzipped/word/comments.xml")
+
+# Explore structure
+xml_name(comments_xml)
+xml_children(comments_xml) %>% head
+# xml_structure(comments_xml) 
+# Key structure is: <comment [author, id, date]>
+
+# Get all comments
+comments <- xml_find_all(comments_xml, ".//w:comment")
+```
+
+```{r}
+#| label: create-df
+# Create df
+comments_df <- tibble(
+  commenter = trimws(xml_attr(comments, "author")), 
+  date = trimws(xml_attr(comments, "date")), 
+  comment = trimws(xml_text(comments)), 
+  type = "", 
+  assigned = "", 
+  solution = "", 
+  done = "", 
+  notes = ""
+  ) %>% 
+  arrange(commenter, date) %>% 
+  write_csv("./data/rr_comments/comment_log.csv")
+```
+
+```{r}
+#| label: comment-descriptives
+
+# N commenters
+comments_df$commenter %>% unique() %>% length
+
+# N comments
+nrow(comments_df)
+
+# N comments per commenter
+comments_df %>% 
+  count(commenter) %>% 
+  mutate(commenter = fct_reorder(commenter, n, min)) %>% 
+  ggplot() + 
+  aes(x = n, y = commenter) + 
+  geom_segment(aes(x = 0, xend = n, yend = commenter)) + 
+  geom_point() 
+```
+
+
+```{r}
+#| label: print-df
+comments_df %>% 
+  kbl() %>%
+  kable_paper("hover", full_width = F) %>% 
+  scroll_box(height = "500px")
+```
+
+
+```{r}
+#| label: upload-to-drive
+#| eval: false
+drive_upload(
+  media = "./data/rr_comments/comment_log.csv", 
+  path = "many_analyses_docs/rr_submission", 
+  name = "comment_log", 
+  type = "spreadsheet", 
+  overwrite = TRUE
+)
+```
