@@ -19,7 +19,7 @@ address:
   org: Department of Linguistics and Scandinavian Studies, University of Oslo, Oslo, Norway
 corrauth: "Timo B. Roettger"
 email: "timo.b.roettger@iln.uio.no"
-abstract: "Recent efforts to replicate published findings have uncovered surprisingly low success rates across disciplines. Moreover, several studies have highlighted the large degree of analytic flexibility in data analysis which can lead to substantially different conclusions based on the same data set. Thus, researchers have expressed their concerns that these researcher degrees of freedom might facilitate bias and can lead to claims that do not stand the test of time. Even greater flexibility is to be expected in fields in which the primary data lend themselves to a variety of possible operationalizations. The multidimensional, temporally extended nature of speech constitutes an ideal testing ground for assessing the variability in analytic approaches, which derives not only from aspects of statistical modeling, but also from decisions regarding the quantification of the measured behavior. In the present study, we gave the same speech production data set to 46 teams of researchers and asked them to answer the same research question. Using Bayesian meta-analytic tools, we have observed substantial variability between teams and submitted analyses, with analytic and researcher-related predictors having little or no effect on the reported effects."
+abstract: "Recent efforts to replicate published findings have uncovered surprisingly low success rates across disciplines. Moreover, several studies have highlighted the large degree of analytic flexibility in data analysis which can lead to substantially different conclusions based on the same data set. Thus, researchers have expressed their concerns that these researcher degrees of freedom might facilitate bias and can lead to claims that do not stand the test of time. Even greater flexibility is to be expected in fields in which the primary data lend themselves to a variety of possible operationalizations. The multidimensional, temporally extended nature of speech constitutes an ideal testing ground for assessing the variability in analytic approaches, which derives not only from aspects of statistical modeling, but also from decisions regarding the quantification of the measured behavior. In the present study, we gave the same speech production data set to 46 teams of researchers and asked them to answer the same research question. Using Bayesian meta-analytic tools, we have observed substantial variability in reported effect sizes and their interpretation. We further find little to no evidence that the observed variability can be explained by analysts' prior beliefs, expertise or the perceived quality of their analyses."
 keywords: "crowdsourcing science, data analysis, scientific transparency, speech, acoustic analysis"
 classoption:
   - Review
@@ -111,7 +111,7 @@ In fields working on human speech production, for example, researchers need to m
 This is not trivial, given the temporal extension of the acoustic signal and its complex structural composition.
 <!-- Not only can decisions about measuring the signal influence downstream decisions about statistical modeling, but statistical results or modeling issues can also lead researchers to go back and revise earlier decisions about the measuring process itself. -->
 
-In this article, we investigate the impact of analytic choices on research results when many analyst teams examine the same speech production data set, a process that involves both decisions regarding the *operationalization* of a complex signal and decisions regarding *statistical analysis*.
+In this article, we investigate the impact of analytic choices on research results when many analyst teams examine the same speech production data set, a process that involves both decisions regarding the *operationalization* of a linguistically relevant construct and decisions regarding *statistical analysis*.
 Specifically, we discuss the degree of variability in research results obtained by 30 teams who had to choose the operationalization and statistical procedures to answer the same research question, on the basis of the same set of raw data (here, speech recordings).
 Our goals are twofold: (i) our study conceptually replicates previous many-analyses projects, by probing the effects of different statistical analyses and by assessing the generalizability of published findings to other disciplines (here, the speech sciences);
 (ii) our study extends the scope of inquiry to include flexibility in the operationalization of complex human behavior (here, human speech).
@@ -121,7 +121,7 @@ This is an important addition in that the increased number of "forking paths" in
 
 Data analysis comes with many decisions, for example how to measure a given phenomenon or behavior, which data to submit to statistical modeling and which to exclude in the final analysis, or what inferential decision-making procedure to apply.
 This can be problematic because humans show cognitive biases that can lead to erroneous inferences.
-Humans filter the world in irrational ways [e.g., @tversky1974judgment], see coherent patterns in randomness [@brugger2001], convince themselves of the validity of prior expectations ["I knew it", @nickerson1998confirmation], and perceive events as being plausible in hindsight ["I knew it all along", @fischhoff1975hindsight].
+Humans are biased [e.g., @tversky1974judgment], e.g. they see coherent patterns in randomness [@brugger2001], convince themselves of the validity of prior expectations ["I knew it", @nickerson1998confirmation], and perceive events as being plausible in hindsight ["I knew it all along", @fischhoff1975hindsight].
 In conjunction with an academic incentive system that rewards certain discovery processes more than others [@sterling1959publication; @koole2012rewarding], we often find ourselves exploring many possible analytic pipelines, but only reporting a selected few.
 
 This issue is particularly amplified in fields in which the raw data lend themselves to many possible ways of being measured [@roettger2019researcher].
@@ -138,7 +138,7 @@ Despite recent efforts to improve transparency and reproducibility [e.g. @miguel
 ## Crowdsourcing alternative analyses
 
 Recent collaborative attempts have started to shed light on how different analysts tackle the same data set and have revealed a large amount of variability.
-In a seminal collaborative effort, @silberzahn2018many let twenty-nine independent analysis teams address the same research hypothesis.
+In a seminal collaborative effort, @silberzahn2018many let twenty-nine independent analysis teams address the same research hypothesis: whether soccer referees are more likely to give red cards to dark-skin-toned players than to light-skin-toned players.
 The analytic approaches and, consequently, the results varied widely between teams.
 Sixty-nine percent of the teams found support for the hypothesis, and 31% did not.
 Out of the 29 analytic strategies, there were 21 unique combinations of covariates.
@@ -311,7 +311,7 @@ The combinations were either typical (e.g. *orange mandarin*), medium typical (e
 Each subject produced 15 critical trials (NF condition).
 Each trial was repeated twice, yielding a total of 30 trials per participant and a grand-total of 900 ($15 \times 2 \times 30$ participants) spoken utterances.
 
-For the present study, 30 analysis teams have received access to the entire data set generated by the production study.
+For the present study, 46 analysis teams have received access to the entire data set generated by the production study.
 The data set is constituted by audio recordings and annotation files in a format that is typical for the field.
 The teams were instructed to answer the following research question, using the provided data set: *Do speakers acoustically modify utterances to signal atypical word combinations?*
 
@@ -485,7 +485,7 @@ As a second step, we investigated the extent to which the individual standardize
 Following @Parker2020, the measure of uniqueness of predictors was assessed by the Sørensen-Dice Index [SDI, @dice1945; @sorensen1948].
 The SDI is an index typically used in ecology research to compare species composition across sites.
 For our purposes, we treated predictors as *species* and individual analyses as *sites*.
-For each pair of analyses $(X, Y)$, the SDI was obtained using the following formula:
+For each pair of analyses $(X, Y)$ (across and within teams), the SDI was obtained using the following formula:
 
 $$\text{SDI} = \frac{2|X \cap Y|}{|X|+|Y|}$$
 \vspace{0.05in}
@@ -499,7 +499,7 @@ y <- c("b", "d", "e", "f")
 \noindent where $|X \cap Y|$ is the number of variables common to both models in the pair, and $|X|+|Y|$ is the sum of the number of variables that occur in each model.
 In order to generate a unique SDI for each analysis team, we calculated the average of all pairwise SDIs for all pairs of analyses using the `beta.pair()` function in the betapart R package [@baselga2020].
 
-The major measurement dimension of each analysis was categorized according to the following possible groups: *duration*, *intensity*, *fundamental frequency* (f0), *other spectral properties* (e.g. frequency, center of gravity, harmonics difference, etc.), and *other measures* (e.g. principal components, vowel dispersion, etc.).
+The major measurement dimension of each analysis was categorized according to the following possible groups: *duration*, *intensity*, *fundamental frequency* (f0), *other spectral properties* (e.g. frequency, center of gravity, harmonics difference, etc.), and *other measures* (e.g. derived measures such principal components, vowel dispersion, etc.).
 The temporal window that the measurement is taken over is defined by the target linguistic unit.
 We assume the following relevant linguistic units: *segment*, *syllable*, *word*, *phrase*, *sentence*.
 Since each analysis received more than one peer-review rating, we calculated the mean rating and its standard deviation for each.
