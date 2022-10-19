@@ -782,6 +782,28 @@ review_mean <- msa_models %>%
     n_srating = sum(stat_rating, na.rm = TRUE)
     )
 
+# found-effect
+found_effect <- msa_models %>% 
+  select(animal, model_n, found_effect) %>% 
+  na.omit() %>% 
+  mutate(effect = if_else(found_effect == "yes", 1, 0))
+
+atleast_1_effect <- found_effect %>% 
+  group_by(animal) %>% 
+  summarize(total = sum(effect)) %>% 
+  filter(total != 0)
+
+# Overall N of analyses claiming an effect
+n_effects <- sum(found_effect$effect)
+# Percent of effects
+perc_effects <- (n_effects / nrow(msa_models) * 100) %>% round(., 2)
+# N of teams claiming an effect
+n_atleast_1 <- nrow(atleast_1_effect)
+# Percent of teams claiming an effect
+perc_atleast_1 <- (n_atleast_1 / length(unique(msa_models$animal))) * 100
+
+
+
 #
 # TABLE PREP
 #
@@ -959,28 +981,7 @@ Based on statistical framework, type of model, distribution family, fixed terms,
   
 <!-- TR: I am still confused, so if we were to ignore different random effect specifications that the number is x? Can we find a clearer way to express this, e.g. "When considering choices related to only statistical framework, type of model, distribution family and fixed terms, there were..." --> 
 
-```{r}
-#| label: found-effect
-
-found_effect <- msa_models %>% 
-  select(animal, model_n, found_effect) %>% 
-  na.omit() %>% 
-  mutate(effect = if_else(found_effect == "yes", 1, 0))
-
-atleast_1_effect <- found_effect %>% 
-  group_by(animal) %>% 
-  summarize(total = sum(effect)) %>% 
-  filter(total != 0)
-
-# Overall N of analyses claiming an effect
-n_effects <- sum(found_effect$effect)
-# Percent of effects
-perc_effects <- (n_effects / nrow(msa_models) * 100) %>% round(., 2)
-# N of teams claiming an effect
-n_atleast_1 <- nrow(atleast_1_effect)
-# Percent of teams claiming an effect
-perc_atleast_1 <- (n_atleast_1 / length(unique(msa_models$animal))) * 100
-```
+<!-- Moved 'found-effect' code to beginning of results section --> 
 
 When considering both acoustic and statistical analyses, we have found a grand total of `r nrow(unique_acou_stat)` different analytic pipelines.
 In other words, each individual analysis submitted was unique.
@@ -1228,7 +1229,10 @@ We will interpret these standard units relative to phonetic measures in the disc
 The observed variability of estimates between teams corresponds to variability in IQ measures up to 14.9 IQ points.
 While the majority of model estimates and their uncertainty after shrinkage (in black) yields inconclusive results (i.e. are compatible with a point null hypothesis), there are `r compelling_count_nest[[1]] + compelling_count_nest[[3]]` model estimates for which the 95\% credible interval does not contain zero (in blue, `r round((compelling_results_nest[[1,1]] + compelling_results_nest[[3,1]]), 2) * 100`\%).
 
-```{r plot-meta1, echo = FALSE, fig.cap="Standardized effect sizes across all critical coefficients provided by the teams. Raw estimates are displayed in grey. Estimates after shrinkage as provided by the meta-analytic model are displayed in black/orange.", out.width="100%"}
+<!-- FIGURE -->
+(ref:plot-meta1) Standardized effect sizes across all critical coefficients provided by the teams. Raw estimates are displayed in grey. Estimates after shrinkage as provided by the meta-analytic model are displayed in black/orange.
+
+```{r plot-meta1, echo = FALSE, fig.cap="(ref:plot-meta1)", out.width="100%"}
 knitr::include_graphics(here::here("./figs/meta_plot1_shrinkage.png"), error = FALSE)
 ```
 
@@ -1255,7 +1259,10 @@ Since there are combinations of analytic choices that appear to systematically r
 This bias might be amplified by the fact that the scale has no natural way of being interpreted across all teams with different measurements cancelling each other out. 
 We checked correlations between predictors and while predictors do not seem to be highly collinear, the estimates might still be biased.  
 
-```{r plot-meta2, echo = FALSE, fig.cap="The effects of analytic and researcher-related predictors on the reported standardized effect sizes. (A) Posterior samples for the four most frequent outcome variables; (B) Posterior samples for the four most frequent temporal windows: Black points indicate medians; shaded areas represents 50/80/95% highest density intervals. (C) Mean posterior samples (white circles) and 80/95% credible intervals for all predictors", out.width="100%"}
+<!-- Figure --> 
+(ref:plot-meta2) The effects of analytic and researcher-related predictors on the reported standardized effect sizes. (A) Posterior samples for the four most frequent outcome variables; (B) Posterior samples for the four most frequent temporal windows: Black points indicate medians; shaded areas represents 50/80/95% highest density intervals. (C) Mean posterior samples (white circles) and 80/95% credible intervals for all predictors.
+
+```{r plot-meta2, echo = FALSE, fig.cap="(ref:plot-meta2)", out.width="100%"}
 knitr::include_graphics(here::here("./figs/alltogether.png"), error = FALSE)
 ```
 
