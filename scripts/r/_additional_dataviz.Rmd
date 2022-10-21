@@ -1,5 +1,5 @@
 ---
-title: "DataViz_for_presentations"
+title: "DataViz for presentations"
 author: "Timo Roettger"
 date: "2022-09-22"
 output: html_document
