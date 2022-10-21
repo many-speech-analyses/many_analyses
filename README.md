@@ -7,7 +7,7 @@ General project information can be found [here](https://many-speech-analyses.git
 
 ## Brief summary
 
-We recruted collaborators interested in forming data analysis teams to examine the same dataset.
+We recruited collaborators interested in forming data analysis teams to examine the same dataset.
 The data analysis teams wrote a journal-ready methods and results section and then peer-reviewed each others analyses.
 Next, we used meta-analytic techniques to explore the data analysis teams' findings. 
 
