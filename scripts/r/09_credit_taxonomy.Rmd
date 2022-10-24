@@ -7,7 +7,7 @@ date: "Last upate: `r Sys.Date()`"
 
 ## Load libraries
 
-```{r}
+```{r setup}
 #| label: setup
 #| include: false
 knitr::opts_chunk$set(
@@ -21,7 +21,7 @@ knitr::opts_knit$set(root.dir = here::here())
 
 ```{r}
 #| label: load-libs
-library("googledrive")
+library(googlesheets4)
 library("xml2")
 library("dplyr")
 library("tidyr")
@@ -36,22 +36,12 @@ library("kableExtra")
 
 ```{r}
 #| label: identify-download
-# give gargle permission
-drive_auth(email = TRUE)
 
-# Locate file, check ID
-drive_find(n_max = 5, type = "spreadsheet")
-
-# Search by id (just checking)
-drive_get(id = "1lXmubF42sTCoOaECXGzo20GCFxX51MWFOKhX8euNtuA")
+all_data_temp <- read_sheet("1lXmubF42sTCoOaECXGzo20GCFxX51MWFOKhX8euNtuA") %>% 
+  janitor::clean_names()
 
 # Download to doc folder
-drive_download(
-  file = "MSA_tenzing_contribution", 
-  path = "./data/CRediT/MSA_tenzing_contribution.csv", 
-  type = "csv",
-  overwrite = T
-  )
+write_csv(all_data_temp, "data/CRediT/MSA_tenzing_contribution.csv")
 ```
 
 
@@ -61,10 +51,6 @@ drive_download(
 
 # Create vector of surnames of initiating authors
 initiating_authors <- c("Coretta", "Casillas", "Roessig", "Franke", "Roettger")
-
-# Load data
-all_data_temp <- read_csv("./data/CRediT/MSA_tenzing_contribution.csv") %>% 
-  janitor::clean_names() 
 
 # Subset initiating authors
 initiators <- all_data_temp %>% 
@@ -206,7 +192,7 @@ cr_prep %>%
     scale_alpha_continuous(range = c(0.05, 1)) +
     labs(x = NULL, y = "Analysts",
          caption = "Contributor roles\nAuthor contributions based on CRediT taxonomy") +
-    theme_minimal(base_size = 12, base_family = "Times") +
+    theme_light(base_size = 12, base_family = "Times") +
     theme(
       axis.title.y = element_text(size = rel(.9), hjust = 0.95),
       axis.title.x = element_text(size = rel(.9), hjust = 0.95),
@@ -217,5 +203,6 @@ cr_prep %>%
       axis.text.y = element_text(size = rel(0.5))
     )
 
+ggsave("figs/credit-taxonomy.png", width = 14, height = 10)
 ```
 
