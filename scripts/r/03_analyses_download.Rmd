@@ -1,5 +1,5 @@
 ---
-title: "03 - Analyses coding"
+title: "03 - Download teams analyses components"
 output: html_document
 date: "`r Sys.Date()`"
 ---
@@ -170,5 +170,5 @@ for (comp in 1:nrow(your_comps)) {
 
 ## Refit models
 
-Now that the components have been downloaded, we can refit the models using the scripts in `scripts/r/04-refit/`.
+Now that the components have been downloaded, we can refit the models following the instructions in `04-1_refit_workflow`.
 

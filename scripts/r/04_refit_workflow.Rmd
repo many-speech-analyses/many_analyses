@@ -99,4 +99,4 @@ directory. (Total size will be ~1 to 4 GB).
 
 1. Repeat for all analyses of MSA team member's subset.
 
-2. Run `report.Rmd` file, commit/push to GitHub
+1. Once you have refitted the models, check instructions on how to **Upload refitted models to OSF** in `04-1_refitted.Rmd`.
