@@ -204,7 +204,7 @@ Furthermore, correlates of the contrast can even be found away from the consonan
 For example, the initial /l/ of the English words *led* and *let* is affected by the voicing of the final consonant (/d, t/) [@hawkins2004influence].
 
 The multiplicity of phonetic measurements grows exponentially if we look at larger temporal domains, as is the case with suprasegmental aspects of speech.
-For example, studies investigating acoustic correlates of word stress (e.g. the difference between *ínsight* and *incíte*) use a wide variety of measurements, including temporal characteristics (duration of certain segments or sub-segmental intervals), spectral characteristics (intensity, formants, and spectral tilt), and measurements related to fundamental frequency (f0, closely related to pitch which is uptake) [e.g., @gordon2017acoustic].
+For example, studies investigating acoustic correlates of word stress (e.g. the difference between *ínsight* and *incíte*) use a wide variety of measurements, including temporal characteristics (duration of certain segments or sub-segmental intervals), spectral characteristics (intensity, formants, and spectral tilt), and measurements related to fundamental frequency (f0) [e.g., @gordon2017acoustic].
 Moving on to the expression of higher-level communicative functions, like information structure and discourse pragmatics, relevant acoustic cues can be distributed throughout even larger domains, such as phrases and whole utterances [e.g., @ladd2008intonational].
 Differences in position, shape, and alignment of f0 modulations over multiple locations within a sentence are correlated with differences in discourse functions [e.g., @niebuhr2011].
 The latter can also be expressed by global vs. local pitch modulations [@heuven2002], as well as acoustic information within the temporal or spectral domain [e.g., @van2005speech].
@@ -612,7 +612,7 @@ team_desc_df <- bind_rows(
     ungroup() %>% 
     summarize(n_teams = nrow(.), 
               n_analysts = sum(n_members), 
-              mean_size = mean(n_members), 
+              median_size = median(n_members), 
               sd_size = sd(n_members), 
               median_size = median(n_members), 
               min = min(n_members), 
@@ -628,7 +628,7 @@ team_desc_df <- bind_rows(
     ungroup() %>% 
     summarize(n_teams = nrow(.), 
               n_analysts = sum(n_members), 
-              mean_size = mean(n_members), 
+              median_size = median(n_members), 
               sd_size = sd(n_members), 
               median_size = median(n_members), 
               min = min(n_members), 
@@ -644,7 +644,7 @@ team_desc_df <- bind_rows(
     ungroup() %>% 
     summarize(n_teams = nrow(.), 
               n_analysts = sum(n_members), 
-              mean_size = mean(n_members), 
+              median_size = median(n_members), 
               sd_size = sd(n_members), 
               median_size = median(n_members), 
               min = min(n_members), 
@@ -813,21 +813,20 @@ tbl_team_desc <- msa_models %>%
   select(animal, years_from_phd, prior_belief, phon_rating, stat_rating, 
          all_rating) %>% 
   group_by(animal) %>% 
-  summarize(across(years_from_phd:all_rating, mean)) %>% 
+  summarize(across(years_from_phd:all_rating, median)) %>% 
   pivot_longer(cols = -animal, names_to = "metric", values_to = "vals") %>% 
   na.omit() %>% 
   group_by(metric) %>% 
-  summarize(min = min(vals), max = max(vals), avg = mean(vals, na.rm = T), 
+  summarize(min = min(vals), max = max(vals), Median = median(vals, na.rm = T), 
             sd = sd(vals, na.rm = T)) %>% 
   add_row(.before = 1, 
     metric = "size", 
     min = team_desc_df %>% filter(stage == "Final") %>% pull(min), 
     max = team_desc_df %>% filter(stage == "Final") %>% pull(max), 
-    avg = team_desc_df %>% filter(stage == "Final") %>% pull(mean_size), 
+    Median = team_desc_df %>% filter(stage == "Final") %>% pull(median_size), 
     sd =  team_desc_df %>% filter(stage == "Final") %>% pull(sd_size)) %>% 
   mutate(across(-metric, specify_decimal, k = 1)) %>% 
   mutate(desc = "team_desc", 
-   `Mean (SD)` = glue::glue("{avg} ({sd})"), 
     Range = glue::glue("{min} -- {max}"), 
     Metric = case_when(
       metric == "size" ~ "Team size", 
@@ -837,7 +836,7 @@ tbl_team_desc <- msa_models %>%
       metric == "phon_rating" ~ "Acoustic analysis peer rating", 
       metric == "all_rating" ~ "Overall peer rating"), 
     label = glue::glue("{desc}_{metric}")) %>% 
-  select(label, desc, Metric, Min. = min, Max = max, `Mean (SD)`, avg, sd, Range)
+  select(label, desc, Metric, Min. = min, Max = max, Median, Range)
 
 #
 # Descriptives of categorical variables in acoustic analyses
@@ -861,7 +860,7 @@ tbl_categorical_desc <- msa_models_unique %>%
       val != "GAM" ~ str_to_sentence(val), 
       TRUE ~ val
     )) %>% 
-  mutate(across(c("prop", "perc"), specify_decimal, k = 1)) %>% 
+  mutate(across(c("prop", "perc"), specify_decimal, k = 0)) %>% 
   unite(label, c("metric", "val")) %>% 
   mutate(label = str_replace_all(label, " ", "_"), 
          label = str_remove_all(label, "\\(|\\)"))
@@ -884,7 +883,7 @@ tbl_model_desc <- bind_rows(
 ) %>% 
   separate(label, c("Metric", "item"), sep = "_") %>% 
   pivot_wider(names_from = Metric, values_from = vals) %>% 
-  mutate(across(c("mean", "sd"), specify_decimal, k = 1)) %>% 
+  mutate(across(c("mean", "sd"), specify_decimal, k = 0)) %>% 
   mutate(
     Metric = item, 
     Metric = case_when(
@@ -896,9 +895,9 @@ tbl_model_desc <- bind_rows(
     ), 
     desc = "model_desc", 
     label = glue::glue("{desc}_{item}"), 
-    `Mean (SD)` = glue::glue("{mean} ({sd})"), 
+    Median = glue::glue("{mean}"), 
     Range = glue::glue("{min} -- {max}")) %>% 
-  select(label, desc, Metric, Min. = min, Max = max, `Mean (SD)`, avg = mean, 
+  select(label, desc, Metric, Min. = min, Max = max, Median, avg = mean, 
          sd, Range) %>% 
   mutate(across(-c("desc", "Metric"), as.character))
 
@@ -923,17 +922,19 @@ An important aspect that emerges from the descriptive analysis is the large vari
 
 `r pull_from_tib(team_desc_df, stage, "Submitted", n_teams) %>% xfun::numbers_to_words() %>% stringr::str_to_sentence()` teams submitted their analyses by the established deadline. 
 Only analyses from which it was possible to extract an effect size were included in the meta-analysis. 
-Of the `r n_effects` submitted analyses, the initiating authors identified `r nrow(msa_models)` critical model coefficients from `r pull_from_tib(team_desc_df, stage, "Final", n_teams)` teams that were deemed eligible to be included in the meta-analytic synthesis. 
-In what follows, we describe the characteristics of these teams and analyses. 
-A complete summary of all the analyses from the `r pull_from_tib(team_desc_df, stage, "Submitted", n_teams)` submitting teams is available in the supplementary materials. 
+Of the analysis submitted by the `r pull_from_tib(team_desc_df, stage, "Submitted", n_teams)` teams, the initiating authors identified analyses from `r pull_from_tib(team_desc_df, stage, "Final", n_teams)` teams to be eligible to be included in the meta-analytic model.
+Reasons for exclusion were: use of Generalised Additive Models (4 teams) which do not lend themselves easily to the meta-analytic methods employed in this study, use of machine learning techniques (3 teams), use of typicality as the outcome variable/response (3 teams), or use of other methods that returned statistics that could not be included in the meta-analytic model.
 
-The included analyses were provided by `r pull_from_tib(team_desc_df, stage, "Final", n_teams)` teams, comprising `r pull_from_tib(team_desc_df, stage, "Final", n_analysts)` analysts, with an average of `r pull_from_tib(tbl_team_desc, label, "team_desc_size", avg)` (SD = `r pull_from_tib(tbl_team_desc, label, "team_desc_size", sd)`) individuals per team.
+In what follows, we describe the characteristics of those teams whose analyses were included in the meta-analytic model.
+A complete summary of all the analyses from the `r pull_from_tib(team_desc_df, stage, "Submitted", n_teams)` submitting teams is available in the supplementary materials.
+
+The included analyses were provided by `r pull_from_tib(team_desc_df, stage, "Final", n_teams)` teams, comprising `r pull_from_tib(team_desc_df, stage, "Final", n_analysts)` analysts, with a median of `r pull_from_tib(tbl_team_desc, label, "team_desc_size", Median)` individuals per team.
 Upon sign-up, we collected background information from each analyst through the intake form, which was administered during Phase 1, prior to the data being released to the teams.
-Analysts had on average `r pull_from_tib(tbl_team_desc, label, "team_desc_years_from_phd", avg)` years (SD = `r pull_from_tib(tbl_team_desc, label, "team_desc_years_from_phd", sd)`) of experience after completing their PhD, ranging from `r pull_from_tib(tbl_team_desc, label, "team_desc_years_from_phd", Min.)` years, i.e. PhD students (or less experienced) to `r pull_from_tib(tbl_team_desc, label, "team_desc_years_from_phd", Max)` years, suggesting that, on average, analysts were experienced researchers.
-The analysts' prior belief in the effect under investigation, on a scale from 0 to 100, ranged from `r pull_from_tib(tbl_team_desc, label, "team_desc_prior_belief", Min.)` to `r pull_from_tib(tbl_team_desc, label, "team_desc_prior_belief", Max)` with an average of `r pull_from_tib(tbl_team_desc, label, "team_desc_prior_belief", avg)` (SD = `r pull_from_tib(tbl_team_desc, label, "team_desc_prior_belief", sd)`).
+Analysts had a median of `r pull_from_tib(tbl_team_desc, label, "team_desc_years_from_phd", Median)` years of experience after completing their PhD, ranging from `r pull_from_tib(tbl_team_desc, label, "team_desc_years_from_phd", Min.)` years, i.e. PhD students (or less experienced) to `r pull_from_tib(tbl_team_desc, label, "team_desc_years_from_phd", Max)` years, suggesting that, on average, analysts were experienced researchers.
+The analysts' prior belief in the effect under investigation, on a scale from 0 to 100, ranged from `r pull_from_tib(tbl_team_desc, label, "team_desc_prior_belief", Min.)` to `r pull_from_tib(tbl_team_desc, label, "team_desc_prior_belief", Max)` with a median of `r pull_from_tib(tbl_team_desc, label, "team_desc_prior_belief", Median)`.
 We take this to suggest that, overall, analysts had a rather high positive prior belief in the investigated relationship between acoustics and word combination typicality.
 
-At the end of Phase 2 (primary data analysis), the teams had submitted a grand total of `r no_analyses` individual models (including `r nrow(msa_models)` critical model coefficients) to answer the research question, with a mean of `r pull_from_tib(tbl_model_desc, label, "model_desc_models", avg)` (SD: `r pull_from_tib(tbl_model_desc, label, "model_desc_models", sd)`) models per team. 
+At the end of Phase 2 (primary data analysis), the teams had submitted a grand total of `r no_analyses` individual models (including `r nrow(msa_models)` critical model coefficients, given that some models returned more than one critical coefficient) to answer the research question, with a median of `r pull_from_tib(tbl_model_desc, label, "model_desc_models", Median)` models per team. 
 Table \@ref(tab:descriptives-table) provides a summary of the contributing teams and their analyses. 
 
 ### Acoustic analysis
@@ -1000,12 +1001,12 @@ Of the 104 submitted models, `r n_effects` were reported to show a statistically
 #| results: 'asis'
 bind_rows(
   tbl_team_desc %>% 
-    select(desc, Metric, val1 = Range, val2 = `Mean (SD)`), 
+    select(desc, Metric, val1 = Range, val2 = Median), 
   tbl_categorical_desc %>% 
     select(desc = Metric, Metric = Type, val1 = n, val2 = perc) %>% 
     mutate(val1 = glue::glue("{val1}")), 
   tbl_model_desc %>% 
-    select(desc, Metric, val1 = Range, val2 = `Mean (SD)`)
+    select(desc, Metric, val1 = Range, val2 = Median)
 ) %>% 
   mutate(order = c(
     1, 6, 4, 3, 5, 2, 
@@ -1032,25 +1033,25 @@ bind_rows(
   filter(Metric != "n. random smooths") %>% 
   mutate(Metric = str_remove_all(Metric, "n. ")) %>% 
   rename("\\bf{Team characteristics}" = desc, "  " = Metric, `\\bf{Range}` = val1, 
-    `\\bf{Mean (SD)}` = val2) %>% 
+    `\\bf{Median}` = val2) %>% 
   add_row(`\\bf{Team characteristics}` = " ", `  ` = " ", `\\bf{Range}` = " ", 
-    `\\bf{Mean (SD)}` = " ", .before = 7) %>%
+    `\\bf{Median}` = " ", .before = 7) %>%
   add_row(`\\bf{Team characteristics}` = "\\bf{Acoustic analyses}", `  ` = " ", 
-    `\\bf{Range}` = "\\bf{n}", `\\bf{Mean (SD)}` = "\\bf{\\%}", .before = 8) %>%
+    `\\bf{Range}` = "\\bf{n}", `\\bf{Median}` = "\\bf{\\%}", .before = 8) %>%
   add_row(`\\bf{Team characteristics}` = " ", `  ` = " ", `\\bf{Range}` = " ", 
-    `\\bf{Mean (SD)}` = " ",  .before = 14) %>%
+    `\\bf{Median}` = " ",  .before = 14) %>%
   add_row(`\\bf{Team characteristics}` = " ", `  ` = " ", `\\bf{Range}` = " ", 
-    `\\bf{Mean (SD)}` = " ", .before = 20) %>%
+    `\\bf{Median}` = " ", .before = 20) %>%
   add_row(`\\bf{Team characteristics}` = " ", `  ` = " ", `\\bf{Range}` = " ", 
-    `\\bf{Mean (SD)}` = " ", .before = 24) %>%
+    `\\bf{Median}` = " ", .before = 24) %>%
   add_row(`\\bf{Team characteristics}` = "\\bf{Statistical analyses}", `  ` = " ", 
-    `\\bf{Range}` = "\\bf{n}", `\\bf{Mean (SD)}` = "\\bf{\\%}", .before = 25) %>%
+    `\\bf{Range}` = "\\bf{n}", `\\bf{Median}` = "\\bf{\\%}", .before = 25) %>%
   add_row(`\\bf{Team characteristics}` = " ", `  ` = " ", `\\bf{Range}` = " ",
-    `\\bf{Mean (SD)}` = " ", .before = 28) %>%
+    `\\bf{Median}` = " ", .before = 28) %>%
   add_row(`\\bf{Team characteristics}` = " ", `  ` = " ", `\\bf{Range}` = " ", 
-    `\\bf{Mean (SD)}` = " ", .before = 32) %>%
+    `\\bf{Median}` = " ", .before = 32) %>%
   add_row(`\\bf{Team characteristics}` = " ", `  ` = " ", 
-    `\\bf{Range}` = "\\bf{Range}", `\\bf{Mean (SD)}` = "\\bf{Mean (SD)}", 
+    `\\bf{Range}` = "\\bf{Range}", `\\bf{Median}` = "\\bf{Median}", 
     .before = 33) %>% 
   kbl(., booktabs = T, align = c("l", "l", "r", "r"), escape = F, 
     longtable = F, linesep = "", 
@@ -1073,9 +1074,9 @@ For reference, as mentioned in the Methods section, a score of 75 was defined as
 
 ## Meta-analytic estimation {#meta-est}
 
-<!-- TODO: add background info and use consistent terminology -->
 This section deals with the meta-analytic analysis of the results submitted by the teams.
 <!-- TODO: repeat exclusion criteria -->
+As discussed above, the analyses of only 30 teams out of all the submitted analysis were included in the meta-analytic model discussed here.
 First, we report on the between-team variability estimate (i.e. the meta-analytic group-level standard deviation $\sigma_{\alpha_{\text{t}}}$), which is the focus of this study, followed by the meta-analytic estimate (i.e. the intercept of the meta-analytic model, in other words, the estimated effect of typicality on the acoustic production of adjective-noun combinations).
 <!-- TR: remove reference to meta-analytical estimate -->
 
@@ -1205,6 +1206,9 @@ This means that the deviations of any individual analysis model from the meta-an
 
 The nested model yields a posterior 95% CrI for between-team variability of `r round(meta_bm_nest_tidy$conf.low[["sd_animal__Intercept"]], 2)` to `r round(meta_bm_nest_tidy$conf.high[["sd_animal__Intercept"]], 2)` standard units ($\beta$ = 0.02, SD = 0.01), corresponding to a mean deviation range of about `r pm(x = 0.1)` standard units and 95% probability.
 The posterior 95% CrI for between-analysis variability (nested within teams) is `r round(meta_bm_nest_tidy$conf.low[["sd_animal:model_id__Intercept"]], 2)` to `r round(meta_bm_nest_tidy$conf.high[["sd_animal:model_id__Intercept"]], 2)` standard units ($\beta$ = 0.132, SD = 0.01).
+For the sake of illustration, these would correspond to an estimate of between-model variability in milliseconds (if looking for example at segment duration) that ranges between `r round(3.8*1.96, 1)` and `r round(7.7*1.96, 1)` ms at 95% credibility.
+We discuss this in more details in the Discussion section.
+
 Taken together, the models suggest that the variability of reported effects between any model (within team or across) is substantially larger than the variability across individual teams.
 We return to this important observation later.
 
@@ -1220,13 +1224,16 @@ This suggests that the acoustic measures of typical word combinations are 0.01 s
 Relative to the preregistered model, this model suggests a somewhat positive effect of typicality (although small negative effects are also possible).
 
 <!-- TR: The meta analytical estimate is basically meaningless, given that the scale is not interpretable and artificial negative and positive estimates cancel each other out. I wonder whether we should take this out --> 
+The meta-analytic intercept conflates estimates from a variety of responses taken from very different places in the utterance (nouns, adjectives, determiners, entire phrases or sentences, etc).
+This means that some of the effects on a particular response as observed in a specific location within the utterance might naturally be positive, while other negative, resulting in a meta-analytic intercept of about zero.
+We want to stress, however, that our focus is not on the meta-analytic intercept per se, but on the fact that a seemingly straightforward research question led to so many possible outcomes.
+More on this in the Discussion section.
 
 Figure \@ref(fig:plot-meta1) illustrates the individual intercepts for critical typicality coefficients across models and teams, sorted in ascending order based on their mean.
 Given the nature and wide variety of acoustic operationalizations, there is no natural interpretation of the scale, so we cannot interpret the direction of estimates.
 When looking at the raw estimates and their variance (grey triangles and lines), it is striking how much estimates differed. 
 Estimates ranged from `r round(min(msa_models$estimate),2)` to `r round(max(msa_models$estimate),2)` standard units. 
-We will interpret these standard units relative to phonetic measures in the discussion section, but to provide an intuition about the absolute scale of variation, we can express them on a standardized scale that does not require domain expertise: The IQ scale [@kamphaus2019clinical] which is defined by a standard deviation of 15. 
-The observed variability of estimates between teams corresponds to variability in IQ measures up to 14.9 IQ points.
+
 While the majority of model estimates and their uncertainty after shrinkage (in black) yields inconclusive results (i.e. are compatible with a point null hypothesis), there are `r compelling_count_nest[[1]] + compelling_count_nest[[3]]` model estimates for which the 95\% credible interval does not contain zero (in blue, `r round((compelling_results_nest[[1,1]] + compelling_results_nest[[3,1]]), 2) * 100`\%).
 
 <!-- FIGURE -->
@@ -1283,7 +1290,7 @@ Different analysis paths led to different categorical conclusions with `r perc_a
 To gain a better understanding of whether the observed quantitative variability can result in theoretically different claims, we will contextualize them in actual acoustic measures.
 We calculated the standard deviation of a selection of acoustic measurements, as submitted by the analysis teams: duration, f0 and intensity, taken from different time windows. 
 These standard deviations can be considered as a coarse indication of the variability in the obtained acoustic measures.
-We can now use these values to interpret the meta-analytic estimates, which are in standardized units, by transforming the standardized units to measures of duration, f0 and intensity.^[Note that these categories necessarily refer to variegated sets of measures. E.g. the domain word includes words that differed along several dimensions, including their length and their metrical structure.]
+We can now use these values to interpret the meta-analytic estimates, which are in standardized units, by transforming the standardized units to measures of duration, f0 and intensity.^[Note that these categories necessarily refer to a variegated set of measures, for example the domain "word" includes words that differed along several dimensions, including their length and their metrical structure.]
 
 For example, for those analyses that investigated the duration of vowels (e.g. the duration of the stressed vowel in *Banane*), the reported duration measures exhibit standard deviations that range from 33.4 to 51.4 ms.
 These standard deviations allow us to convert the meta analytic estimates into milliseconds by multiplying those values with the standard units.

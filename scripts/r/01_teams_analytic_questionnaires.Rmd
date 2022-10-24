@@ -1,0 +1,74 @@
+---
+title: "Teams analytic questionnaires"
+output: html_document
+date: "`r Sys.Date()`"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_knit$set(root.dir = here::here())
+library(tidyverse)
+library(magrittr)
+library(glue)
+```
+
+```{r team-analyses}
+teams_analyses <- read_csv("data/questionnaires/msa_data_analysis_questionnaire_April 19, 2022_08.06.csv") %>%
+  # Get rid of unused columns
+  select(-(EndDate:UserLanguage))
+
+# Extract the full questions text for later use
+full_q_text <- teams_analyses[1,]
+
+teams_analyses %<>% slice(-(1:2)) %>%
+  # Remove test submissions
+  filter(
+    str_length(Q2) > 1,
+    Q7 != "tba",
+    StartDate != "2022-04-06 09:41:44"
+  ) %>%
+  # Clean
+  mutate(
+    Q17 = str_remove_all(Q17, '"'),
+    Q17 = str_replace(Q17, "speech-and-recreation", "procambarus_mahogoni"),
+    Q17 = str_replace(Q17, "paralichtys_undulatus", "paralichthys_undulatus")
+  )
+
+# Include missing OSF component names, due to inclusion of question after a few first submissions.
+teams_analyses$Q17[1] <- "lasionycteris_altavela"
+teams_analyses$Q16[1] <- "https://osf.io/aes8n/?view_only=232b2de4e8254af5832d63baa2a9450a"
+teams_analyses$Q17[2] <- "petauroides_fistulator"
+teams_analyses$Q16[2] <- "https://osf.io/k5bxr/?view_only=8d16018b339f4db58584bec4a89ccd0e"
+teams_analyses$Q17[3] <- "pervagor_meeki"
+teams_analyses$Q16[3] <- "https://osf.io/sfhn5/?view_only=a8cec2e3e26043f2ab0218c7a02694f2"
+
+write_csv(teams_analyses, "data/questionnaires/msa_data_analysis_questionnaire_cleaned.csv")
+```
+
+```{r analytic-quest}
+dir.create("data/questionnaires/msa_data_analysis_files/", showWarnings = FALSE)
+
+n_teams <- nrow(teams_analyses)
+
+for (team in 1:n_teams) {
+  animal <- teams_analyses$Q17[team]
+  file_name <- as.character(glue("data/questionnaires/msa_data_analysis_files/{animal}.txt"))
+  
+  txt <- ""
+  
+  for (q in 4:15) {
+    txt <- paste(
+      txt,
+      full_q_text[1,q], "\n",
+      teams_analyses[team,q],
+      "\n\n",
+      "------------------------------------------------------------------------"
+      , "\n\n",
+      sep = "\n"
+    )
+  }
+  
+  write_file(txt, file_name)
+}
+```
+
