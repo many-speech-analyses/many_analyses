@@ -19,7 +19,7 @@ address:
   org: Department of Linguistics and Scandinavian Studies, University of Oslo, Oslo, Norway
 corrauth: "Timo B. Roettger"
 email: "timo.b.roettger@iln.uio.no"
-abstract: "Recent efforts to replicate published findings have uncovered surprisingly low success rates across disciplines. Moreover, several studies have highlighted the large degree of analytic flexibility in data analysis which can lead to substantially different conclusions based on the same data set. Thus, researchers have expressed their concerns that these researcher degrees of freedom might facilitate bias and can lead to claims that do not stand the test of time. Even greater flexibility is to be expected in fields in which the primary data lend themselves to a variety of possible operationalizations. The multidimensional, temporally extended nature of speech constitutes an ideal testing ground for assessing the variability in analytic approaches, which derives not only from aspects of statistical modeling, but also from decisions regarding the quantification of the measured behavior. In the present study, we gave the same speech production data set to 46 teams of researchers and asked them to answer the same research question. Using Bayesian meta-analytic tools, we have observed substantial variability in reported effect sizes and their interpretation. We further find little to no evidence that the observed variability can be explained by analysts' prior beliefs, expertise or the perceived quality of their analyses."
+abstract: "Recent empirical studies have highlighted the large degree of analytic flexibility in data analysis which can lead to substantially different conclusions based on the same data set. Thus, researchers have expressed their concerns that these researcher degrees of freedom might facilitate bias and can lead to claims that do not stand the test of time. Even greater flexibility is to be expected in fields in which the primary data lend themselves to a variety of possible operationalizations. The multidimensional, temporally extended nature of speech constitutes an ideal testing ground for assessing the variability in analytic approaches, which derives not only from aspects of statistical modeling, but also from decisions regarding the quantification of the measured behavior. In the present study, we gave the same speech production data set to 46 teams of researchers and asked them to answer the same research question, resulting in substantial variability in reported effect sizes and their interpretation. Using Bayesian meta-analytic tools, we further find little to no evidence that the observed variability can be explained by analysts' prior beliefs, expertise or the perceived quality of their analyses. In light of this idiosyncratic variability, we recommend that researchers more transparently share details of their analysis, strengthen the link between theoretical construct and quantitative system and calibrate their (un)certainty in their conclusions"
 keywords: "crowdsourcing science, data analysis, scientific transparency, speech, acoustic analysis"
 classoption:
   - Review
@@ -138,7 +138,7 @@ Despite recent efforts to improve transparency and reproducibility [e.g. @miguel
 ## Crowd-sourcing alternative analyses
 
 Recent collaborative attempts have started to shed light on how different analysts tackle the same data set and have revealed a large amount of variability.
-In a seminal collaborative effort, @silberzahn2018many let twenty-nine independent analysis teams address the same research hypothesis: whether soccer referees are more likely to give red cards to dark-skin-toned players than to light-skin-toned players.
+In a pioneering collaborative effort, @silberzahn2018many let twenty-nine independent analysis teams address the same research hypothesis: whether soccer referees are more likely to give red cards to dark-skin-toned players than to light-skin-toned players.
 The analytic approaches and, consequently, the results varied widely between teams.
 Twenty teams (69%) found support for the hypothesis, and 9 (31%) did not.
 Out of the 29 analytic strategies, there were 21 unique combinations of covariates.
@@ -1207,7 +1207,7 @@ This means that the deviations of any individual analysis model from the meta-an
 The nested model yields a posterior 95% CrI for between-team variability of `r round(meta_bm_nest_tidy$conf.low[["sd_animal__Intercept"]], 2)` to `r round(meta_bm_nest_tidy$conf.high[["sd_animal__Intercept"]], 2)` standard units ($\beta$ = 0.02, SD = 0.01), corresponding to a mean deviation range of about `r pm(x = 0.1)` standard units and 95% probability.
 The posterior 95% CrI for between-analysis variability (nested within teams) is `r round(meta_bm_nest_tidy$conf.low[["sd_animal:model_id__Intercept"]], 2)` to `r round(meta_bm_nest_tidy$conf.high[["sd_animal:model_id__Intercept"]], 2)` standard units ($\beta$ = 0.132, SD = 0.01).
 For the sake of illustration, these would correspond to an estimate of between-model variability in milliseconds (if looking for example at segment duration) that ranges between `r round(3.8*1.96, 1)` and `r round(7.7*1.96, 1)` ms at 95% credibility.
-We discuss this in more details in the Discussion section.
+We interpret these values in more details in the Discussion section.
 
 Taken together, the models suggest that the variability of reported effects between any model (within team or across) is substantially larger than the variability across individual teams.
 We return to this important observation later.
@@ -1361,7 +1361,13 @@ msa_sd_sd %>%
 kableExtra::kable_styling(., font_size = 11)
 ```
 
-Furthermore, the observed variation does not seem to be systematic.
+While one might find it obvious that measuring different parts of the speech signal can lead to different results, the fact that analysts (and reviewer alike) considered all these data analytic pipelines valid ways of answering the same research question points to a lack of theoretical consensus on what parts of the speech signal correspond to what types of communicative functions. 
+Importantly, even if analysts choose to measure more or less the same acoustic property within the same measurement window, they arrive at different estimates: 
+For example, six teams measured f0 in the adjective and predicted f0 based on typicality as a categorical predictor. Their standardized effect estimates ranged from -0.11 to 0.38 standard deviations. 
+While these teams in principle measured the same thing, they differed in analytical details of how f0 was operationalized (i.e. mean, min, max, or range) and how their statistical model was constructed (i.e. the number of predictors ranged from 1-3 and the number of random effect terms ranged from 1-4). 
+As shown by [-@breznau2021observing], even seemingly inconsequential analytical choices can affect conclusions in non-trivial ways.
+
+The observed variation does not seem to be systematic.
 For example, variation between teams was not predicted by the analysts' prior expectations about the phenomenon.
 In fact, teams on average rated the plausibility of the effect as rather high before receiving access to the data.
 The observed variation was neither predicted by the analysts' experience in the field nor by the perceived quality of the analysis as judged by other teams. 
@@ -1410,7 +1416,7 @@ Thus, we do not think that our study provides convincing evidence that speech re
 
 ## Lessons for the methodological reform movement
 
-The current results point to important barriers for successful accumulation of knowledge.
+The current results point to important barriers to the successful accumulation of knowledge.
 The replication crisis has brought attention to scientific practices that lead to unreliable and biased claims in the literature [@vazire2017quality; @fidler2018reproducibility].
 One of the suggested paths forward is for researchers to directly replicate previous studies more often [@open2015estimating; @camerer2018evaluating].
 While we agree with the importance of direct replications, our study (and similar crowd-sourced analyses before us) suggest that replicating more is simply not enough.
