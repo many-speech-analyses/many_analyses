@@ -307,8 +307,14 @@
     "academicWriteR": {
       "Package": "academicWriteR",
       "Version": "0.4.1",
-      "Source": "unknown",
-      "Hash": "d14f608a17fb20ce0336ff7d23c3ae93",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteUsername": "jvcasillas",
+      "RemoteRepo": "academicWriteR",
+      "RemoteRef": "master",
+      "RemoteSha": "84a8ff643f7030ffba098aef2b1df4c94776a44e",
+      "Hash": "eaf06348f05a54eea14cbb391736073f",
       "Requirements": [
         "bayestestR",
         "broom",
@@ -1571,6 +1577,21 @@
         "scales",
         "shiny",
         "shinyjs"
+      ]
+    },
+    "ggalluvial": {
+      "Package": "ggalluvial",
+      "Version": "0.12.3",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "8e8537ec2a70017be8e5e20b1bbf4e98",
+      "Requirements": [
+        "dplyr",
+        "ggplot2",
+        "lazyeval",
+        "rlang",
+        "tidyr",
+        "tidyselect"
       ]
     },
     "ggbeeswarm": {
