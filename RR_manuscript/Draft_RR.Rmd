@@ -416,11 +416,11 @@ We calculated summary statistics describing variation among analyses, including 
 These summary statistics are reported in *Descriptive statistics* of the Results section.
 <!-- Add crossref to final version: \@ref(descr-stats) --> 
 
-### Meta-analytic estimation {#s:meta-est}
+### Meta-analytic estimation
 
 We investigated the variability in \textsc{reported effect sizes} using Bayesian meta-analytic techniques.
 As the measure of variability, we took the meta-analytic \textsc{group-level standard deviation} ($\sigma_{\alpha_{\text{t}}}$, see below), where each analysis team represents a group.
-As we detail in Section *Meta-analytic estimation*, we have also run further non-preregistered analyses. <!-- Add crossref to final version: \@ref(meta-est) -->
+As we detail in the Results section below, we have also run further non-preregistered analyses.
 For these we refer the reader to that section, while we only describe the preregistered analyses in the following paragraphs.
 
 Based on the common practices currently in place within the field, we anticipated that researchers would use multilevel regression models, thus common measurements of effect size, such as Cohen's $d$, might have been inappropriate.
@@ -1072,7 +1072,7 @@ The mean rating of the acoustic analyses, on a scale from 0 to 100, is `r round(
 The mean rating of the statistical analysis is `r round(review_mean$mean_srating,1)` (SD = `r round(review_mean$sd_srating,1)`).
 For reference, as mentioned in the Methods section, a score of 75 was defined as "an imperfect analysis but the needed changes are unlikely to dramatically alter the final interpretation", indicating that on average reviewers judged the provided analyses to be appropriate, although "imperfect".
 
-## Meta-analytic estimation {#meta-est}
+## Meta-analytic estimation {#meta-est-2}
 
 This section deals with the meta-analytic analysis of the results submitted by the teams.
 <!-- TODO: repeat exclusion criteria -->

@@ -40,7 +40,7 @@
 \email{\href{mailto:timo.b.roettger@iln.uio.no}{\nolinkurl{timo.b.roettger@iln.uio.no}}}
 
 \begin{abstract}
-Recent efforts to replicate published findings have uncovered surprisingly low success rates across disciplines. Moreover, several studies have highlighted the large degree of analytic flexibility in data analysis which can lead to substantially different conclusions based on the same data set. Thus, researchers have expressed their concerns that these researcher degrees of freedom might facilitate bias and can lead to claims that do not stand the test of time. Even greater flexibility is to be expected in fields in which the primary data lend themselves to a variety of possible operationalizations. The multidimensional, temporally extended nature of speech constitutes an ideal testing ground for assessing the variability in analytic approaches, which derives not only from aspects of statistical modeling, but also from decisions regarding the quantification of the measured behavior. In the present study, we gave the same speech production data set to 46 teams of researchers and asked them to answer the same research question. Using Bayesian meta-analytic tools, we have observed substantial variability in reported effect sizes and their interpretation. We further find little to no evidence that the observed variability can be explained by analysts' prior beliefs, expertise or the perceived quality of their analyses.
+Recent empirical studies have highlighted the large degree of analytic flexibility in data analysis which can lead to substantially different conclusions based on the same data set. Thus, researchers have expressed their concerns that these researcher degrees of freedom might facilitate bias and can lead to claims that do not stand the test of time. Even greater flexibility is to be expected in fields in which the primary data lend themselves to a variety of possible operationalizations. The multidimensional, temporally extended nature of speech constitutes an ideal testing ground for assessing the variability in analytic approaches, which derives not only from aspects of statistical modeling, but also from decisions regarding the quantification of the measured behavior. In the present study, we gave the same speech production data set to 46 teams of researchers and asked them to answer the same research question, resulting in substantial variability in reported effect sizes and their interpretation. Using Bayesian meta-analytic tools, we further find little to no evidence that the observed variability can be explained by analysts' prior beliefs, expertise or the perceived quality of their analyses. In light of this idiosyncratic variability, we recommend that researchers more transparently share details of their analysis, strengthen the link between theoretical construct and quantitative system and calibrate their (un)certainty in their conclusions
 \end{abstract}
 
 \keywords{crowdsourcing science, data analysis, scientific transparency, speech, acoustic analysis}
@@ -96,7 +96,7 @@ Despite recent efforts to improve transparency and reproducibility \citep[e.g.][
 \subsection{Crowd-sourcing alternative analyses}\label{crowd-sourcing-alternative-analyses}}
 
 Recent collaborative attempts have started to shed light on how different analysts tackle the same data set and have revealed a large amount of variability.
-In a seminal collaborative effort, \citet{silberzahn2018many} let twenty-nine independent analysis teams address the same research hypothesis: whether soccer referees are more likely to give red cards to dark-skin-toned players than to light-skin-toned players.
+In a pioneering collaborative effort, \citet{silberzahn2018many} let twenty-nine independent analysis teams address the same research hypothesis: whether soccer referees are more likely to give red cards to dark-skin-toned players than to light-skin-toned players.
 The analytic approaches and, consequently, the results varied widely between teams.
 Twenty teams (69\%) found support for the hypothesis, and 9 (31\%) did not.
 Out of the 29 analytic strategies, there were 21 unique combinations of covariates.
@@ -353,14 +353,14 @@ They also uploaded their analysis files (including the additionally derived data
 \hypertarget{phase-3-peer-review-of-analyses}{%
 \subsection{Phase 3: Peer Review of Analyses}\label{phase-3-peer-review-of-analyses}}
 
-Each analysis was evaluated by four different teams who functioned as peer-reviewers.
+The analyses from each team were evaluated by four different teams who functioned as peer-reviewers.
 Each peer-reviewer was randomly assigned to analyses from at least four analysis teams.
 Reviewers evaluated the methods of each of their assigned analyses one at a time in a sequence determined by the initiating authors.
 The sequences were systematically assigned so that, if possible, each analysis is allocated to each position in the sequence for at least one reviewer.
 
 The process for a single reviewer was as follows.
 First, the reviewer received a description of the methods of a single analysis.
-This included the narrative methods section, the analysis team's answers to the questionnaire regarding their methods, including analysis code and the data set.
+This included the narrative methods and results sections, the analysis team's answers to the questionnaire regarding their methods, including analysis code and the data set.
 The reviewer was then asked in an online questionnaire (\texttt{peer\_review\_quest.pdf}) to rate both the acoustic and the statistical analyses and to provide an overall rating, using a scale of 0-100, respectively.
 To help reviewers calibrate their rating, they were given the following guidelines:
 
@@ -425,12 +425,12 @@ We consider our analyses exploratory.
 We calculated summary statistics describing variation among analyses, including (a) the nature and number of acoustic measures (e.g.~f0 or duration), (b) the operationalization and the temporal domain of measurement (e.g.~mean of an interval or value at a specified point in time), (c) the nature and number of model parameters for both fixed and random effects (if applicable), (d) the nature and reasoning behind inferential assessments (e.g.~dichotomous decision based on \emph{p}-values, ordinal decision based on a Bayes factor), as well as the (e) mean, (f) standard deviation and (g) range of the standardized effect sizes (see the next section for the standardization procedure).
 These summary statistics are reported in \emph{Descriptive statistics} of the Results section.
 
-\hypertarget{s:meta-est}{%
-\subsubsection{Meta-analytic estimation}\label{s:meta-est}}
+\hypertarget{meta-analytic-estimation}{%
+\subsubsection{Meta-analytic estimation}\label{meta-analytic-estimation}}
 
 We investigated the variability in \textsc{reported effect sizes} using Bayesian meta-analytic techniques.
 As the measure of variability, we took the meta-analytic \textsc{group-level standard deviation} (\(\sigma_{\alpha_{\text{t}}}\), see below), where each analysis team represents a group.
-As we detail in Section \emph{Meta-analytic estimation}, we have also run further non-preregistered analyses.
+As we detail in the Results section below, we have also run further non-preregistered analyses.
 For these we refer the reader to that section, while we only describe the preregistered analyses in the following paragraphs.
 
 Based on the common practices currently in place within the field, we anticipated that researchers would use multilevel regression models, thus common measurements of effect size, such as Cohen's \(d\), might have been inappropriate.
@@ -688,8 +688,8 @@ The mean rating of the acoustic analyses, on a scale from 0 to 100, is 71.5 (SD 
 The mean rating of the statistical analysis is 69.5 (SD = 16.5).
 For reference, as mentioned in the Methods section, a score of 75 was defined as ``an imperfect analysis but the needed changes are unlikely to dramatically alter the final interpretation'', indicating that on average reviewers judged the provided analyses to be appropriate, although ``imperfect''.
 
-\hypertarget{meta-est}{%
-\subsection{Meta-analytic estimation}\label{meta-est}}
+\hypertarget{meta-est-2}{%
+\subsection{Meta-analytic estimation}\label{meta-est-2}}
 
 This section deals with the meta-analytic analysis of the results submitted by the teams.
 As discussed above, the analyses of only 30 teams out of all the submitted analysis were included in the meta-analytic model discussed here.
@@ -714,7 +714,7 @@ This analysis was not preregistered and should thus be interpreted with caution.
 The nested model yields a posterior 95\% CrI for between-team variability of 0 to 0.05 standard units (\(\beta\) = 0.02, SD = 0.01), corresponding to a mean deviation range of about \(\pm 0.1\) standard units and 95\% probability.
 The posterior 95\% CrI for between-analysis variability (nested within teams) is 0.11 to 0.15 standard units (\(\beta\) = 0.132, SD = 0.01).
 For the sake of illustration, these would correspond to an estimate of between-model variability in milliseconds (if looking for example at segment duration) that ranges between 7.4 and 15.1 ms at 95\% credibility.
-We discuss this in more details in the Discussion section.
+We interpret these values in more details in the Discussion section.
 
 Taken together, the models suggest that the variability of reported effects between any model (within team or across) is substantially larger than the variability across individual teams.
 We return to this important observation later.
@@ -746,7 +746,7 @@ While the majority of model estimates and their uncertainty after shrinkage (in 
 
 
 \begin{figure}
-\includegraphics[width=1\linewidth]{../figs/meta_plot1_shrinkage} \caption{Standardized effect sizes across all critical coefficients provided by the teams. Raw estimates are displayed in grey. Estimates after shrinkage as provided by the meta-analytic model are displayed in black/orange.}\label{fig:plot-meta1}
+\includegraphics[width=1\linewidth]{../figs/meta_plot1_raw} \caption{Standardized effect sizes across all critical coefficients provided by the teams. Raw estimates are displayed in grey. Estimates after shrinkage as provided by the meta-analytic model are displayed in black/orange.}\label{fig:plot-meta1}
 \end{figure}
 
 \hypertarget{analytic-and-researcher-related-predictors}{%
@@ -830,7 +830,13 @@ Intensity & Word & 0.8-0.9 & 1-1.2 & dB\\
 \end{tabular}
 \end{table}
 
-Furthermore, the observed variation does not seem to be systematic.
+While one might find it obvious that measuring different parts of the speech signal can lead to different results, the fact that analysts (and reviewer alike) considered all these data analytic pipelines valid ways of answering the same research question points to a lack of theoretical consensus on what parts of the speech signal correspond to what types of communicative functions.
+Importantly, even if analysts choose to measure more or less the same acoustic property within the same measurement window, they arrive at different estimates:
+For example, six teams measured f0 in the adjective and predicted f0 based on typicality as a categorical predictor. Their standardized effect estimates ranged from -0.11 to 0.38 standard deviations.
+While these teams in principle measured the same thing, they differed in analytical details of how f0 was operationalized (i.e.~mean, min, max, or range) and how their statistical model was constructed (i.e.~the number of predictors ranged from 1-3 and the number of random effect terms ranged from 1-4).
+As shown by \citeyearpar{breznau2021observing}, even seemingly inconsequential analytical choices can affect conclusions in non-trivial ways.
+
+The observed variation does not seem to be systematic.
 For example, variation between teams was not predicted by the analysts' prior expectations about the phenomenon.
 In fact, teams on average rated the plausibility of the effect as rather high before receiving access to the data.
 The observed variation was neither predicted by the analysts' experience in the field nor by the perceived quality of the analysis as judged by other teams.
@@ -880,7 +886,7 @@ Thus, we do not think that our study provides convincing evidence that speech re
 \hypertarget{lessons-for-the-methodological-reform-movement}{%
 \subsection{Lessons for the methodological reform movement}\label{lessons-for-the-methodological-reform-movement}}
 
-The current results point to important barriers for successful accumulation of knowledge.
+The current results point to important barriers to the successful accumulation of knowledge.
 The replication crisis has brought attention to scientific practices that lead to unreliable and biased claims in the literature \citep{vazire2017quality, fidler2018reproducibility}.
 One of the suggested paths forward is for researchers to directly replicate previous studies more often \citep{open2015estimating, camerer2018evaluating}.
 While we agree with the importance of direct replications, our study (and similar crowd-sourced analyses before us) suggest that replicating more is simply not enough.
