@@ -381,14 +381,14 @@ They also uploaded their analysis files (including the additionally derived data
 
 ## Phase 3: Peer Review of Analyses
 
-Each analysis was evaluated by four different teams who functioned as peer-reviewers.
+The analyses from each team were evaluated by four different teams who functioned as peer-reviewers.
 Each peer-reviewer was randomly assigned to analyses from at least four analysis teams.
 Reviewers evaluated the methods of each of their assigned analyses one at a time in a sequence determined by the initiating authors.
 The sequences were systematically assigned so that, if possible, each analysis is allocated to each position in the sequence for at least one reviewer.
 
 The process for a single reviewer was as follows.
 First, the reviewer received a description of the methods of a single analysis.
-This included the narrative methods section, the analysis team's answers to the questionnaire regarding their methods, including analysis code and the data set.
+This included the narrative methods and results sections, the analysis team's answers to the questionnaire regarding their methods, including analysis code and the data set.
 The reviewer was then asked in an online questionnaire (`peer_review_quest.pdf`) to rate both the acoustic and the statistical analyses and to provide an overall rating, using a scale of 0-100, respectively.
 To help reviewers calibrate their rating, they were given the following guidelines:
 
