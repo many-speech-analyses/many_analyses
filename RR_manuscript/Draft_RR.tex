@@ -445,14 +445,14 @@ Moreover, to account for the differing degree of uncertainty around each standar
 This enabled us to fit a so-called ``measurement-error'' model, in which both the standardized effect sizes and their respective standard errors are entered in the meta-analytic model.
 As a desired consequence, effect sizes with a greater standard error are weighted less than those with a smaller standard error in the meta-analytic calculations.
 
-After having obtained the standardized effect sizes \(\eta_i\) with related standard errors \(\text{se}_i\), for each critical predictor of the individual reported model, we conducted a \textsc{Bayesian random-effects meta-analysis} using a multi-level (intercept-only) regression model.
+After having obtained the standardized effect sizes \(\eta_i\) with related standard errors \(\text{se}_i\), for each critical predictor in each reported model, we conducted a \textsc{Bayesian random-effects meta-analysis} using a multi-level (intercept-only) regression model.
 The outcome variable was the set of standardized effect sizes \(\eta_i\).
 The likelihood of \(\eta_i\) was assumed to correspond to a normal distribution \citep{knight2000}.
 The analysis teams were entered as a group-level effect (i.e., \texttt{(1\ \textbar{}\ team)}, called \emph{random effect} in the frequentist literature).
 The standard errors \(\text{se}_i\) were included as the standard deviation of \(\eta_i\) to fit a measurement-error model, as discussed above.
 We used regularizing weakly-informative priors for the intercept \(\alpha\) (\(Normal(0, 1)\)) and for the group-level standard deviation \(\sigma_{\alpha_{\text{t}}}\) (\(HalfCauchy(0, 1)\)).
 We fit this model with 4 chains of Hamiltonian Monte-Carlo sampling for the estimation of the joint posterior distribution, using the No U-Turn Sampler (NUTS) as implemented in Stan \citep{stan2021}, and 4000 iterations (2000 for warm-up) per chain, distributed across 8 processing cores and 2 threads in within-chain parallelization.
-The model did not incur any divergent transitions (\(\hat{R}\) was equal or lower than 1) and the estimated sample sizes were sufficient.
+The model did not incur any divergent transitions (\(\hat{R}\) was not greater than 1) and the estimated sample sizes were sufficient.
 The code used to run the model can be found at \textless\textgreater.
 
 The posterior distribution of the population-level intercept \(\alpha\) allowed us to estimate the range of probable values of the standardized effect size \(\hat{\eta}\).
@@ -536,7 +536,8 @@ Similarly, we archived both the analysis code used for each individual analysis 
 We also archived copies of our survey instruments from analysts and peer-reviewers.
 
 We excluded from our synthesis any individual analysis submitted after peer review (Phase 3) or those unaccompanied by analysis files without which it was not possible to follow the research protocol.
-We also excluded any individual analysis that does not produce an outcome that can be interpreted as an answer to our primary question.
+We also excluded any individual analysis that does not produce an outcome that could be interpreted as an answer to our primary question.
+For a list of exlcusion criteria, see Section Descriptive statistics below.
 
 \hypertarget{phase-5-collaborative-write-up-of-manuscript}{%
 \subsection{Phase 5: Collaborative Write-Up of Manuscript}\label{phase-5-collaborative-write-up-of-manuscript}}
@@ -711,7 +712,7 @@ To account for this added layer of dependency, we have run a model with team and
 This analysis was not preregistered and should thus be interpreted with caution.\footnote{Note that before fitting this model, we fit a separate one in which model ID was the only (non-nested) group-level effect.
   The estimated group-level effect of model ID is identical to that of the nested model, so we will not discuss it further.}
 
-The nested model yields a posterior 95\% CrI for between-team variability of 0 to 0.05 standard units (\(\beta\) = 0.02, SD = 0.01), corresponding to a mean deviation range of about \(\pm 0.1\) standard units and 95\% probability.
+The nested model yields a posterior 95\% CrI for between-team variability of 0 to 0.05 standard units (\(\beta\) = 0.02, SD = 0.01), corresponding to a mean deviation range of about \(\pm 0\) to \(\pm 0.1\) standard units and 95\% probability.
 The posterior 95\% CrI for between-analysis variability (nested within teams) is 0.11 to 0.15 standard units (\(\beta\) = 0.132, SD = 0.01).
 For the sake of illustration, these would correspond to an estimate of between-model variability in milliseconds (if looking for example at segment duration) that ranges between 7.4 and 15.1 ms at 95\% credibility.
 We interpret these values in more details in the Discussion section.
@@ -755,6 +756,7 @@ While the majority of model estimates and their uncertainty after shrinkage (in 
 After assessing the variability across teams and models, we now turn to estimating the impact of a series of predictors on the reported standardized effects.
 There is a large amount of variation between and within teams, raising the question as to whether we can explain some of this variation or whether it is purely idiosyncratic \citep{breznau2021observing}.
 
+We have run a model as described in Section Analytic and researcher-related predictors affecting effect sizes above.
 Figure \ref{fig:plot-meta2}, panel C, displays the coefficients for all predictors alongside their 80\% and 95\% credible intervals.
 The model suggests that most team-specific predictors yield very small deviations from the meta-analytic estimate and their 95\% credible intervals include zero, leaving us highly uncertain about their direction.
 Neither analysts' prior beliefs in the phenomenon (\(\beta\) = 0.00, 95\% CrI = {[}-0.03, 0.03{]}), nor their seniority in terms of years after completing their PhD (\(\beta\) = 0.01, 95\% CrI = {[}-0.03, 0.04{]}) seem to affect model estimates.
@@ -865,7 +867,11 @@ This conclusion is further supported by the fact that between-team variability w
 This is an important observation when put into context of the fact that most teams submitted many different models.
 Teams submitted up to 16 different models to test for a possible relationship between typicality and the speech signal.
 The complexity of the speech signal lends itself to multiple approaches, but this plurality of hypothesis tests invites bias and can dramatically increase the rate of falsely claiming the presence of an effect \citep{roettger2019researcher, simmons2011false}.
-One team coordinator gave the following reason for dropping out of the project (and allowed us to share this statement): ``{[}T{]}he project's approach is too much top-down instead of bottom-up. {[}\ldots{]} I would rather prefer to explore the collected utterances and run different types of acoustic analyses, which would then be followed by statistical evaluation of the data.''
+We of course are not arguing that exploratory analyses should not be employed.
+Rather, we simply want to point out that if the theoretical underpinnings of the field were much clearer, different teams would have converged towards a limited set of analyses despite of a less specific research question.
+
+In relation to this aspect, one team coordinator decided to drop out of the project because of its approach being too top-down.
+The coordinator also expressed a preference to be able to explore and run a variety of descriptive analyses followed up with inferential statistics.
 We find that this statement speaks to the main objective of the current study: investigate researchers' degrees of freedom in the speech sciences.
 Based on our personal experience with research in the field, it is common practice to test many different types of models, using many different types of measurements, to answer one research hypothesis.
 While this is a valid way to explore data and generate new hypotheses, it is not suitable for hypothesis testing.
@@ -893,7 +899,7 @@ While we agree with the importance of direct replications, our study (and simila
 There is only limited value in learning that a particular procedure is replicable if the idiosyncratic nature of the procedure itself might not yield a representative result relative to all possible procedures that could have been applied to the research question.
 Beyond a replication crisis, quantitative disciplines are going through what has been called an ``inference crisis'' \citep{rotello2015more, starns2019assessing}.
 As shown by the peer-ratings of the analyses reported in this study, well-trained and experienced speech researchers not only applied completely different approaches to the same research question, but also considered most of these alternative approaches acceptable.
-Being aware of this idiosyncratic variation between analysts should lead to more nuanced claims and a certain level of epistemic humility.
+Being aware of this idiosyncratic variation between analysts should lead to more nuanced claims and a certain level of epistemic humility \citep[see][ for an overview of the concept]{campbell1975}.
 
 A desired outcome of knowing that different but reasonable measurement choices or statistical approaches might lead to different interpretations of research data is to calibrate our (un)certainty in the strength of the collected evidence and, in turn, communicate that (un)certainty appropriately.
 The fact that the choice of measurement, measurement window, and predictor choice affect the answer to the research question further suggests that research assumptions and hypotheses should be formulated in much greater detail, particularly so in regards to how measurement systems (here, the acoustic signal) and underlying conceptual constructs (here, the phonetic expression of typicality) relate to each other.
@@ -960,15 +966,18 @@ Finally, the present study focused on a particular phenomenon within the speech 
 The generalizability of our findings to other disciplines, as well as to other sub-disciplines of the language sciences specifically, is, of course, limited.
 We focused on quantitative analyses that require the operationalization of a multidimensional signal in an artificial elicitation situation (laboratory speech).
 While we do believe that our qualitative conclusions holds across fields exhibiting similar methodologies, the detailed quantitative results will only be able to directly inform similar disciplines that work with speech or audio/video signals.
-This is an important point to make because cognitive sciences in general, and the language sciences in particular, have many research areas that are based on qualitative methods.
+This is an important point to make because cognitive sciences in general, and the language sciences in particular, have many research areas that are based on qualitative methods \citep{haven2019}.
 It is conceivable that the discussed issues apply differently or not at all to qualitative data analyses.
 
 \hypertarget{conclusion}{%
 \section{Conclusion}\label{conclusion}}
 
 In recent efforts, several studies have highlighted the large degree of analytic flexibility in data analysis.
-When many different analysts have to analyze the same data set to answer the same research question, analysts differ drastically in how they approach this task, leading to both different qualitative answers (i.e.~is there evidence for a relationship or not) and vastly different effect magnitudes.
+When many different analysts have to analyze the same data set to answer the same research question, analysts differ in how they approach this task, leading to both different qualitative answers (i.e.~is there evidence for a relationship or not) and different effect magnitudes.
 This is concerning, as it can lead to substantially different conclusions based on the same data set, a state of affairs that can generate biased inferential decisions and might weaken confidence in the published literature.
+More specifically, what we find of particular relevance is the fact that commonly research proceeds based on publications from one research team at a time.
+If we imagine a situation where any of the 46 teams could have been \emph{the} team publishing a study on this topic, it is immediately clear that that single study is just a very limited view.
+In light of this we want to stress that the field has to quickly move from one-off studies to collaborative approaches like the one employed here and to more frequent replication attempts for example by incentivizing replication through dedicated funding and editorial policies, among others.
 
 Going beyond previous empirical studies, the current paper looked at many analyses of speech data.
 Speech is a multidimensional signal that allows for great flexibility because it lends itself to a variety of possible operationalizations.
