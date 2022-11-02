@@ -265,7 +265,7 @@ merged <-
 ```
 
 ```{r meta-shrinkage}
-#meta_shrinkage <- 
+meta_shrinkage <- 
   ggplot(data = merged,
     aes(x = reorder(model_id, post_mean), y = post_mean, colour = compelling)) +
   geom_hline(yintercept = 0, lty = "dotted") +
@@ -290,7 +290,7 @@ merged <-
   annotate("text", x = c(5,5), y = c(1.8,2.1),
            size = 3,
            hjust = 0,
-           color = c("#ef8a62", "black"),
+           color = c("black", "#ef8a62"),
            label = c("Not compelling = 95% CrI includes 0", "Compelling = 95% CrI does not includes 0")
            ) +
     annotate("segment", 
@@ -298,7 +298,7 @@ merged <-
              xend = c(0.5,0.5), yend = c(1.85,2.15),
            size = 2.5,
            hjust = 0,
-           color = c("#ef8a62", "black"),
+           color = c("black", "#ef8a62"),
            label = c("95% CrI includes 0", "95% CrI does not includes 0")
            ) +
   labs(# title = "Effect estimates across all submitted effects",
