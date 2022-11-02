@@ -4,7 +4,7 @@ output: pdf_document
 date: "`r Sys.Date()`"
 ---
 
-```{r}
+```{r setup}
 #| label: setup
 #| include: false
 knitr::opts_chunk$set(echo = F, message = F, warning = F)
@@ -49,12 +49,12 @@ pull_from_tib <- function(df, col, row, val) {
 #| label: get-data
 
 # Read in primary coding sheet
-the_sheet <- "https://docs.google.com/spreadsheets/d/1OOXB-8Uk-fh_urw0Lm4DC0jBueXLIb4Bm-a9--UVXOw/edit?usp=sharing"
+the_sheet <- "data/analyses/analyses_coding.csv"
 
 # Read in google sheet and join it with review data and phd/prior belief
 # data
 msa_models_unique <- left_join(
-  read_sheet(the_sheet) %>% 
+  read_csv(the_sheet) %>% 
     filter(added_on_osf == "yes") %>% 
     select(
       animal, model_n, outcome, typicality_operationalization, 
