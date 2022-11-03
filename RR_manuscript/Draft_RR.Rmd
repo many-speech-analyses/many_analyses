@@ -1232,7 +1232,7 @@ While the majority of model estimates and their uncertainty after shrinkage (in 
 (ref:plot-meta1) Standardized effect sizes across all critical coefficients provided by the teams. Raw estimates are displayed in grey. Estimates after shrinkage as provided by the meta-analytic model are displayed in black/orange.
 
 ```{r plot-meta1, echo = FALSE, fig.cap="(ref:plot-meta1)", out.width="100%"}
-knitr::include_graphics(here::here("./figs/meta_plot1_raw.png"), error = FALSE)
+knitr::include_graphics(here::here("./figs/meta_plot1_shrinkage.png"), error = FALSE)
 ```
 
 ## Analytic and researcher-related predictors
