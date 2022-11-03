@@ -299,7 +299,7 @@ meta_shrinkage <-
            size = 2.5,
            hjust = 0,
            color = c("black", "#ef8a62"),
-           label = c("95% CrI includes 0", "95% CrI does not includes 0")
+           label = c("95% CrI includes 0", "95% CrI does not include 0")
            ) +
   labs(# title = "Effect estimates across all submitted effects",
        caption = "Raw estimates extracted from teams' models (grey),\nshrunken estimates from meta-analytical model (black/orange)\n",
