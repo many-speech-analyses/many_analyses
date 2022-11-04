@@ -131,7 +131,7 @@ There were `r nrow(contributors)` contributors from `r nrow(affiliations)` insti
 #| fig.height: 4
 
 # Vector of formated contributor roles
-contributor_roles <- c(
+contributor_role <- c(
     "Conceptualization", "Data curation", "Formal Analysis",
     "Funding acquisition", "Investigation", "Methodology",
     "Project administration", "Resources", "Software", "Supervision",
@@ -160,12 +160,16 @@ cr_prep <- contributors %>%
 cr_prep %>% 
   filter(is_initiating == 1) %>% 
   mutate(name = fct_relevel(name, "Stefano Coretta", "Joseph V. Casillas", 
-                            "Simon Roessig", "Michael Franke")) %>% 
+                            "Simon Roessig", "Michael Franke"), 
+    contributor_roles = str_replace_all(contributor_roles, "_", " "), 
+    contributor_roles = str_replace_all(contributor_roles, "ting ", "ting - "), 
+    contributor_roles = str_to_title(contributor_roles)
+    ) %>% 
   ggplot() +
   aes(x = name, y = contributor_roles, alpha = val) +
     geom_point(size = 3.5, pch = 18, show.legend = F) +
     scale_x_discrete(position = "top") + 
-    scale_y_discrete(limits = rev, labels = rev(contributor_roles)) + 
+    scale_y_discrete(limits = rev) + 
     scale_alpha_continuous(range = c(0.05, 1)) +
     labs(x = "Initiating authors", y = "Contributor roles",
          caption = "Author contributions based on CRediT taxonomy") +
@@ -188,10 +192,14 @@ cr_prep %>%
 
 cr_prep %>% 
   filter(is_initiating == 0) %>% 
+   mutate(
+    contributor_roles = str_replace_all(contributor_roles, "_", " "), 
+    contributor_roles = str_replace_all(contributor_roles, "ting ", "ting - "), 
+    contributor_roles = str_to_title(contributor_roles)
+    ) %>% 
   ggplot() +
   aes(y = initials, x = contributor_roles, alpha = val) +
     geom_point(size = 1.75, pch = 18, show.legend = F) +
-    scale_x_discrete(labels = contributor_roles) + 
     scale_alpha_continuous(range = c(0.05, 1)) +
     labs(x = NULL, y = "Analysts",
          caption = "Contributor roles\nAuthor contributions based on CRediT taxonomy") +
