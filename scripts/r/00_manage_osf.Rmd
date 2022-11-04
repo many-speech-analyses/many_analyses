@@ -161,7 +161,7 @@ walk(
 osf_teams <- osf_retrieve_node("n3fyd")
 # Warning, takes a minute
 teams_comps <- osf_ls_nodes(osf_teams, n_max = Inf)
-assigned <- read_sheet("https://docs.google.com/spreadsheets/d/1OOXB-8Uk-fh_urw0Lm4DC0jBueXLIb4Bm-a9--UVXOw/edit?usp=sharing")
+assigned <- read_csv("data/analyses/analyses_coding.csv")
 ```
 
 ```{r teams-download, eval=FALSE}

@@ -44,9 +44,9 @@ clean_theme <- function(...) {
 # Read coding sheet
 
 ```{r coding}
-the_sheet <- "https://docs.google.com/spreadsheets/d/1OOXB-8Uk-fh_urw0Lm4DC0jBueXLIb4Bm-a9--UVXOw/edit?usp=sharing"
+the_sheet <- "data/analyses/analyses_coding.csv"
 
-coding <- read_sheet(the_sheet) %>%
+coding <- read_csv(the_sheet) %>%
   drop_na(model_n)
 ```
 
@@ -55,9 +55,9 @@ coding <- read_sheet(the_sheet) %>%
 We will join the intake forms with `msa_models`.
 
 ```{r intake}
-other_sheet <- "https://docs.google.com/spreadsheets/d/1KAZC2vyteTfGE6mlwOiz9b8F9VghDYLGsOzmWaNbmEE/edit?usp=sharing"
+other_sheet <- "data/metadata/team_animal_coord.csv"
 
-team_animal_coord <- read_sheet(other_sheet)
+team_animal_coord <- read_csv(other_sheet)
 
 msa_intake <- read_csv("./data/questionnaires/msa_intake_form.csv") %>%
   filter(row_number() != 2)

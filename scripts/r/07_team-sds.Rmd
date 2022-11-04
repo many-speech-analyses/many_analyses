@@ -63,8 +63,7 @@ teams <- readRDS(here("./data/analyses/msa_models.rds")) %>%
   pull(animal) %>% 
   unique
 
-# Get coding excel from google drive
-assigned <- read_sheet("https://docs.google.com/spreadsheets/d/1OOXB-8Uk-fh_urw0Lm4DC0jBueXLIb4Bm-a9--UVXOw/edit?usp=sharing")
+assigned <- read_csv("data/analyses/analyses_coding.csv")
 
 # Use teams to subset excel file with all analyses, get those that include f0, 
 # duration, and intensity
