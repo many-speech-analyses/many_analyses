@@ -231,7 +231,7 @@ Do we measure f0, intensity, or something else [@stevens2000]?
 (ref:forkingPaths) Illustration of the analytic flexibility associated with acoustic analyses. (A) An example of multiple possible and justifiable decisions when comparing two utterances; (B) Waveform and f0 track of the utterances *I can't bear ANOTHER meeting on Zoom* and *I can't bear another meeting on ZOOM*. The green boxes mark the word *another* in both sentences; (C) Spectrogram and f0 track of the word *another*, exemplifying possible operationalizations of differences in f0.
 
 ```{r forkingPaths, echo=FALSE, fig.cap="(ref:forkingPaths)", out.width="100%"}
-knitr::include_graphics(here::here("figs", "ForkingPaths.tiff"), error = FALSE)
+knitr::include_graphics(here::here("figs", "ForkingPaths.png"), error = FALSE)
 ```
 <!-- END:FIGURE -->
 
