@@ -21,7 +21,7 @@ knitr::opts_knit$set(root.dir = here::here())
 
 ```{r}
 #| label: load-libs
-library(googlesheets4)
+library("googlesheets4")
 library("xml2")
 library("dplyr")
 library("tidyr")
@@ -36,6 +36,7 @@ library("kableExtra")
 
 ```{r}
 #| label: identify-download
+#| eval: false
 
 all_data_temp <- read_sheet("1lXmubF42sTCoOaECXGzo20GCFxX51MWFOKhX8euNtuA") %>% 
   janitor::clean_names()
@@ -48,6 +49,8 @@ write_csv(all_data_temp, "data/CRediT/MSA_tenzing_contribution.csv")
 
 ```{r}
 #| label: load-tidy-csv
+# Load data
+all_data_temp <- read_csv("data/CRediT/MSA_tenzing_contribution.csv")
 
 # Create vector of surnames of initiating authors
 initiating_authors <- c("Coretta", "Casillas", "Roessig", "Franke", "Roettger")
@@ -206,3 +209,17 @@ cr_prep %>%
 ggsave("figs/credit-taxonomy.png", width = 14, height = 10)
 ```
 
+
+
+
+
+```{r}
+#| label: copy-author-list
+#| eval: false
+# Copy author list to the clipboard so it can be pasted in RR
+contributors %>% 
+  select(name) %>% 
+  mutate(name = glue::glue("- name: {name}\n")) %>% 
+  pull() %>% 
+  clipr::write_clip() 
+```
