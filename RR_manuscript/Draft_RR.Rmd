@@ -6,6 +6,158 @@ author:
   num: 1, 2
 - name: Joseph V. Casillas
   num: 3
+- name: Simon Roessig
+- name: Michael Franke
+- name: Ali H. Al-Hoorie
+- name: Jalal Al-Tamimi
+- name: Najd E. Alotaibi
+- name: Mohammed K. AlShakhori
+- name: Ruth M. Altmiller
+- name: Pablo Arantes
+- name: Angeliki Athanasopoulou
+- name: Melissa M. Baese-Berk
+- name: George Bailey
+- name: Cheman Baira A Sangma
+- name: Eleonora J. Beier
+- name: Gabriela M. Benavides
+- name: Nicole Benker
+- name: Emelia P. BensonMeyer
+- name: Nina R. Benway
+- name: Grant M. Berry
+- name: Liwen Bing
+- name: Christina Bjorndahl
+- name: Mariska Bolyanatz
+- name: Aaron Braver
+- name: Violet A. Brown
+- name: Alicia M. Brown
+- name: Alejna Brugos
+- name: Erin M. Buchanan
+- name: Tanna Butlin
+- name: Andrés Buxó-Lugo
+- name: Coline Caillol
+- name: Francesco Cangemi
+- name: Christopher Carignan
+- name: Sita Carraturo
+- name: Tiphaine Caudrelier
+- name: Eleanor Chodroff
+- name: Michelle Cohn
+- name: Johanna Cronenberg
+- name: Olivier Crouzet
+- name: Erica L. Dagar
+- name: Charlotte Dawson
+- name: Carissa A. Diantoro
+- name: Marie Dokovova
+- name: Wood Drake
+- name: Fengting Du
+- name: Margaux Dubuis
+- name: Florent Duême
+- name: Matthew Durward
+- name: Ander Egurtzegi
+- name: Mahmoud M. Elsherif
+- name: Janina Esser
+- name: Emmanuel Ferragne
+- name: Fernanda Ferreira
+- name: Lauren K. Fink
+- name: Sara Finley
+- name: Kurtis Foster
+- name: Paul Foulkes
+- name: Rosa Franzke
+- name: Gabriel Frazer-McKee
+- name: Robert Fromont
+- name: Christina García
+- name: Jason Geller
+- name: Camille L. Grasso
+- name: Pia Greca
+- name: Martine Grice
+- name: Magdalena S. Grose-Hodge
+- name: Amelia J. Gully
+- name: Caitlin Halfacre
+- name: Westerbeek Hans
+- name: Ivy Hauser
+- name: Jen Hay
+- name: Robert Haywood
+- name: Sam Hellmuth
+- name: Allison I. Hilger
+- name: Nicole Holliday
+- name: Damar Hoogland
+- name: Yaqian Huang
+- name: Vincent Hughes
+- name: Ane Icardo Isasa
+- name: Zlatomira G. Ilchovska
+- name: Hae-Sung Jeon
+- name: Jacq Jones
+- name: Mágat N. Junges
+- name: Stephanie Kaefer
+- name: Constantijn Kaland
+- name: Matthew C. Kelley
+- name: Niamh E. Kelly
+- name: Ghada Khattab
+- name: Emiel Krahmer
+- name: Dorota Krajewska
+- name: Andreas Krug
+- name: Abhilasha A. Kumar
+- name: Anna Lander
+- name: Tomas O. Lentz
+- name: Wanyin Li
+- name: Yanyu Li
+- name: Maria Lialiou
+- name: Ronaldo M. Lima Jr.
+- name: Justin J. H. Lo
+- name: Julio César López Otero
+- name: Bradley Mackay
+- name: Bethany MacLeod
+- name: Mel Mallard
+- name: Carol-Ann McConnellogue
+- name: George Moroz
+- name: Mridhula Murali
+- name: Ladislas Nalborczyk
+- name: Filip Nenadić
+- name: Jessica Nieder
+- name: Dušan Nikolić
+- name: Francisco G. S. Nogueira
+- name: Heather M. Offerman
+- name: Elisa Passoni
+- name: Maud Pélissier
+- name: Scott J. Perry
+- name: Alexandra M. Pfiffner
+- name: Michael Proctor
+- name: Ryan Rhodes
+- name: Nicole Rodríguez
+- name: Elizabeth Roepke
+- name: Jan P. Röer
+- name: Koolen Ruud
+- name: Lucia Sbacco
+- name: Rebecca Scarborough
+- name: Felix Schaeffler
+- name: Erik Schleef
+- name: Dominic Schmitz
+- name: Alexander Shiryaev
+- name: Márton Sóskuthy
+- name: Malin Spaniol
+- name: Joseph A. Stanley
+- name: Alyssa Strickler
+- name: Alessandro Tavano
+- name: Fabian Tomaschek
+- name: Benjamin V. Tucker
+- name: Rory Turnbull
+- name: Kingsley Ugwuanyi
+- name: Iñigo Urrestarazu-Porta
+- name: Ruben van de Vijver
+- name: Kristin J. Van Engen
+- name: Emiel van Miltenburg
+- name: Bruce Wang
+- name: Natasha Warner
+- name: Simon Wehrle
+- name: Seth Wiener
+- name: Stephen Winters
+- name: Sidney G.-J. Wong
+- name: Anna Wood
+- name: Jane Wottawa
+- name: Chenzi Xu
+- name: Germán Zárate-Sández
+- name: Georgia Zellou
+- name: Cong Zhang
+- name: Jian Zhu
 - name: Timo B. Roettger
   num: 4
 address:
@@ -670,6 +822,7 @@ mean_analyses <- msa_models_unique %>%
     sd_models = sd(max_n_models), 
     min_models = min(max_n_models), 
     max_models = max(max_n_models), 
+    median_models = median(max_n_models), 
     n_models = sum(max_n_models)
   )
 
@@ -690,6 +843,7 @@ predictor_n <- msa_models_unique %>%
     sd_predictor = sd(n_predictors, na.rm = TRUE), 
     min_predictor = min(n_predictors, na.rm = TRUE), 
     max_predictor = max(n_predictors, na.rm = TRUE), 
+    median_predictor = median(n_predictors, na.rm = TRUE), 
     n_predictor = sum(n_predictors, na.rm = TRUE)
     ) 
 
@@ -722,6 +876,7 @@ rterms_n <- msa_models_unique %>%
     sd_rterms = sd(n_random, na.rm = TRUE), 
     min_rterms = min(n_random, na.rm = TRUE), 
     max_rterms = max(n_random, na.rm = TRUE), 
+    median_rterms = median(n_random, na.rm = TRUE), 
     n_rterms = sum(n_random, na.rm = TRUE)
     ) 
 
@@ -733,6 +888,7 @@ rterms_int_n <- msa_models_unique %>%
     sd_rint = sd(n_random_int, na.rm = TRUE), 
     min_rint = min(n_random_int, na.rm = TRUE), 
     max_rint = max(n_random_int, na.rm = TRUE), 
+    median_rint = median(n_random_int, na.rm = TRUE), 
     n_rint = sum(n_random_int, na.rm = TRUE)
     ) 
 
@@ -744,6 +900,7 @@ rterms_slope_n <- msa_models_unique %>%
     sd_rslope = sd(n_random_slo, na.rm = TRUE), 
     min_rslope = min(n_random_slo, na.rm = TRUE), 
     max_rslope = max(n_random_slo, na.rm = TRUE), 
+    median_rslope = median(n_random_slo, na.rm = TRUE), 
     n_rslope = sum(n_random_slo, na.rm = TRUE)
     ) 
 
@@ -770,11 +927,13 @@ review_mean <- msa_models %>%
     sd_prating = sd(phon_rating, na.rm = TRUE), 
     min_prating = min(phon_rating, na.rm = TRUE),
     max_prating = max(phon_rating, na.rm = TRUE),
+    median_prating = median(phon_rating, na.rm = TRUE),
     n_prating = sum(phon_rating, na.rm = TRUE),
     mean_srating = mean(stat_rating, na.rm = TRUE),
     sd_srating = sd(stat_rating, na.rm = TRUE), 
     min_srating = min(stat_rating, na.rm = TRUE), 
     max_srating = max(stat_rating, na.rm = TRUE), 
+    median_srating = median(stat_rating, na.rm = TRUE), 
     n_srating = sum(stat_rating, na.rm = TRUE)
     )
 
@@ -891,7 +1050,7 @@ tbl_model_desc <- bind_rows(
     ), 
     desc = "model_desc", 
     label = glue::glue("{desc}_{item}"), 
-    Median = glue::glue("{mean}"), 
+    Median = glue::glue("{median}"), 
     Range = glue::glue("{min} -- {max}")) %>% 
   select(label, desc, Metric, Min. = min, Max = max, Median, avg = mean, 
          sd, Range) %>% 

@@ -21,7 +21,7 @@ knitr::opts_knit$set(root.dir = here::here())
 
 ```{r}
 #| label: load-libs
-library(googlesheets4)
+library("googlesheets4")
 library("xml2")
 library("dplyr")
 library("tidyr")
@@ -36,6 +36,7 @@ library("kableExtra")
 
 ```{r}
 #| label: identify-download
+#| eval: false
 
 all_data_temp <- read_sheet("1lXmubF42sTCoOaECXGzo20GCFxX51MWFOKhX8euNtuA") %>% 
   janitor::clean_names()
@@ -48,6 +49,8 @@ write_csv(all_data_temp, "data/CRediT/MSA_tenzing_contribution.csv")
 
 ```{r}
 #| label: load-tidy-csv
+# Load data
+all_data_temp <- read_csv("data/CRediT/MSA_tenzing_contribution.csv")
 
 # Create vector of surnames of initiating authors
 initiating_authors <- c("Coretta", "Casillas", "Roessig", "Franke", "Roettger")
@@ -128,7 +131,7 @@ There were `r nrow(contributors)` contributors from `r nrow(affiliations)` insti
 #| fig.height: 4
 
 # Vector of formated contributor roles
-contributor_roles <- c(
+contributor_role <- c(
     "Conceptualization", "Data curation", "Formal Analysis",
     "Funding acquisition", "Investigation", "Methodology",
     "Project administration", "Resources", "Software", "Supervision",
@@ -157,12 +160,16 @@ cr_prep <- contributors %>%
 cr_prep %>% 
   filter(is_initiating == 1) %>% 
   mutate(name = fct_relevel(name, "Stefano Coretta", "Joseph V. Casillas", 
-                            "Simon Roessig", "Michael Franke")) %>% 
+                            "Simon Roessig", "Michael Franke"), 
+    contributor_roles = str_replace_all(contributor_roles, "_", " "), 
+    contributor_roles = str_replace_all(contributor_roles, "ting ", "ting - "), 
+    contributor_roles = str_to_title(contributor_roles)
+    ) %>% 
   ggplot() +
   aes(x = name, y = contributor_roles, alpha = val) +
     geom_point(size = 3.5, pch = 18, show.legend = F) +
     scale_x_discrete(position = "top") + 
-    scale_y_discrete(limits = rev, labels = rev(contributor_roles)) + 
+    scale_y_discrete(limits = rev) + 
     scale_alpha_continuous(range = c(0.05, 1)) +
     labs(x = "Initiating authors", y = "Contributor roles",
          caption = "Author contributions based on CRediT taxonomy") +
@@ -185,10 +192,14 @@ cr_prep %>%
 
 cr_prep %>% 
   filter(is_initiating == 0) %>% 
+   mutate(
+    contributor_roles = str_replace_all(contributor_roles, "_", " "), 
+    contributor_roles = str_replace_all(contributor_roles, "ting ", "ting - "), 
+    contributor_roles = str_to_title(contributor_roles)
+    ) %>% 
   ggplot() +
   aes(y = initials, x = contributor_roles, alpha = val) +
     geom_point(size = 1.75, pch = 18, show.legend = F) +
-    scale_x_discrete(labels = contributor_roles) + 
     scale_alpha_continuous(range = c(0.05, 1)) +
     labs(x = NULL, y = "Analysts",
          caption = "Contributor roles\nAuthor contributions based on CRediT taxonomy") +
@@ -206,3 +217,17 @@ cr_prep %>%
 ggsave("figs/credit-taxonomy.png", width = 14, height = 10)
 ```
 
+
+
+
+
+```{r}
+#| label: copy-author-list
+#| eval: false
+# Copy author list to the clipboard so it can be pasted in RR
+contributors %>% 
+  select(name) %>% 
+  mutate(name = glue::glue("- name: {name}\n")) %>% 
+  pull() %>% 
+  clipr::write_clip() 
+```
