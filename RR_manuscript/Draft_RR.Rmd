@@ -822,6 +822,7 @@ mean_analyses <- msa_models_unique %>%
     sd_models = sd(max_n_models), 
     min_models = min(max_n_models), 
     max_models = max(max_n_models), 
+    median_models = median(max_n_models), 
     n_models = sum(max_n_models)
   )
 
@@ -842,6 +843,7 @@ predictor_n <- msa_models_unique %>%
     sd_predictor = sd(n_predictors, na.rm = TRUE), 
     min_predictor = min(n_predictors, na.rm = TRUE), 
     max_predictor = max(n_predictors, na.rm = TRUE), 
+    median_predictor = median(n_predictors, na.rm = TRUE), 
     n_predictor = sum(n_predictors, na.rm = TRUE)
     ) 
 
@@ -874,6 +876,7 @@ rterms_n <- msa_models_unique %>%
     sd_rterms = sd(n_random, na.rm = TRUE), 
     min_rterms = min(n_random, na.rm = TRUE), 
     max_rterms = max(n_random, na.rm = TRUE), 
+    median_rterms = median(n_random, na.rm = TRUE), 
     n_rterms = sum(n_random, na.rm = TRUE)
     ) 
 
@@ -885,6 +888,7 @@ rterms_int_n <- msa_models_unique %>%
     sd_rint = sd(n_random_int, na.rm = TRUE), 
     min_rint = min(n_random_int, na.rm = TRUE), 
     max_rint = max(n_random_int, na.rm = TRUE), 
+    median_rint = median(n_random_int, na.rm = TRUE), 
     n_rint = sum(n_random_int, na.rm = TRUE)
     ) 
 
@@ -896,6 +900,7 @@ rterms_slope_n <- msa_models_unique %>%
     sd_rslope = sd(n_random_slo, na.rm = TRUE), 
     min_rslope = min(n_random_slo, na.rm = TRUE), 
     max_rslope = max(n_random_slo, na.rm = TRUE), 
+    median_rslope = median(n_random_slo, na.rm = TRUE), 
     n_rslope = sum(n_random_slo, na.rm = TRUE)
     ) 
 
@@ -922,11 +927,13 @@ review_mean <- msa_models %>%
     sd_prating = sd(phon_rating, na.rm = TRUE), 
     min_prating = min(phon_rating, na.rm = TRUE),
     max_prating = max(phon_rating, na.rm = TRUE),
+    median_prating = median(phon_rating, na.rm = TRUE),
     n_prating = sum(phon_rating, na.rm = TRUE),
     mean_srating = mean(stat_rating, na.rm = TRUE),
     sd_srating = sd(stat_rating, na.rm = TRUE), 
     min_srating = min(stat_rating, na.rm = TRUE), 
     max_srating = max(stat_rating, na.rm = TRUE), 
+    median_srating = median(stat_rating, na.rm = TRUE), 
     n_srating = sum(stat_rating, na.rm = TRUE)
     )
 
@@ -1043,7 +1050,7 @@ tbl_model_desc <- bind_rows(
     ), 
     desc = "model_desc", 
     label = glue::glue("{desc}_{item}"), 
-    Median = glue::glue("{mean}"), 
+    Median = glue::glue("{median}"), 
     Range = glue::glue("{min} -- {max}")) %>% 
   select(label, desc, Metric, Min. = min, Max = max, Median, avg = mean, 
          sd, Range) %>% 
