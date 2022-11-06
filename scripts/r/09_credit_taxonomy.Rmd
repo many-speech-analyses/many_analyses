@@ -219,6 +219,7 @@ cr_prep %>%
   aes(y = name, x = contributor_roles, alpha = val) +
     geom_point(size = 1.75, pch = 18, show.legend = F) +
     scale_alpha_continuous(range = c(0.05, 1)) +
+    scale_y_discrete(limits = rev) + 
     labs(x = NULL, y = "Analysts",
          caption = "Contributor roles\nAuthor contributions based on CRediT taxonomy") +
     theme_light(base_size = 12, base_family = "Times") +
@@ -232,10 +233,45 @@ cr_prep %>%
       axis.text.y = element_text(size = rel(0.5))
     )
 
-ggsave("figs/credit-taxonomy.png", width = 14, height = 10)
+ggsave("figs/credit-taxonomy-analysts.png", width = 14, height = 10)
 ```
 
 
+
+
+
+```{r}
+#| label: contributor-roles-plot-all
+#| out.width: 100%
+#| fig.height: 11
+
+cr_prep %>% 
+   mutate(
+    name = fct_reorder(name, is_initiating), 
+    contributor_roles = str_replace_all(contributor_roles, "_", " "), 
+    contributor_roles = str_replace_all(contributor_roles, "ting ", "ting - "), 
+    contributor_roles = str_to_title(contributor_roles)
+    ) %>% 
+  ggplot() +
+  aes(y = name, x = contributor_roles, alpha = val) +
+    geom_point(size = 1.75, pch = 18, show.legend = F) + 
+    scale_y_discrete(limits = rev) + 
+    scale_alpha_continuous(range = c(0.05, 1)) +
+    labs(x = NULL, y = "Contributors",
+         caption = "Contributor roles\nAuthor contributions based on CRediT taxonomy") +
+    theme_light(base_size = 12, base_family = "Times") +
+    theme(
+      axis.title.y = element_text(size = rel(.9), hjust = 0.95),
+      axis.title.x = element_text(size = rel(.9), hjust = 0.95),
+      panel.grid.major = element_line(colour = 'grey90', size = 0.15),
+      panel.grid.minor = element_line(colour = 'grey90', size = 0.15), 
+      axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1, 
+        size = rel(0.6)), 
+      axis.text.y = element_text(size = rel(0.5))
+    )
+
+ggsave("figs/credit-taxonomy-all.png", width = 14, height = 10)
+```
 
 
 
