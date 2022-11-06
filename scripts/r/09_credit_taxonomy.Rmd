@@ -68,7 +68,7 @@ all_data_temp <-
   janitor::clean_names()
 
 # Create vector of surnames of initiating authors
-initiating_authors <- c("Coretta", "Casillas", "Roessig", "Franke", "Roettger")
+initiating_authors <- c("Coretta", "Casillas", "Roettger")
 
 # Subset initiating authors
 initiators <- all_data_temp %>% 
@@ -86,7 +86,7 @@ contributors <- bind_rows(initiators, analysts) %>%
   mutate(middle_name = replace_na(middle_name, ""),
     is_initiating = if_else(surname %in% initiating_authors, 1, 0), 
     initials = glue::glue("{str_sub(firstname, 1, 1)}{str_sub(middle_name, 1, 1)}{str_sub(surname, 1, 1)}")) %>% 
-  unite(name, c("firstname", "middle_name", "surname"), sep = " ") %>% 
+  unite(name, c("firstname", "middle_name", "surname"), sep = " ", remove = F) %>% 
   mutate(name = str_replace_all(name, "  ", " ")) %>% 
   bind_rows(
     slice(., which(name != "Timo B. Roettger")), 
@@ -157,9 +157,9 @@ contributor_role <- c(
 
 # Format contributors for plotting
 cr_prep <- contributors %>% 
-  select(name:writing_review_editing, is_initiating, initials) %>% 
+  select(name, surname, conceptualization:writing_review_editing, is_initiating, initials) %>% 
   pivot_longer(
-    cols = -c("name", "is_initiating", "initials"), 
+    cols = -c("name", "surname", "is_initiating", "initials"), 
     names_to = "contributor_roles", 
     values_to = "val"
     ) %>% 
@@ -175,8 +175,7 @@ cr_prep <- contributors %>%
 # Plot initiating authors
 cr_prep %>% 
   filter(is_initiating == 1) %>% 
-  mutate(name = fct_relevel(name, "Stefano Coretta", "Joseph V. Casillas", 
-                            "Simon Roessig", "Michael Franke"), 
+  mutate(name = fct_relevel(name, "Stefano Coretta", "Joseph V. Casillas"), 
     contributor_roles = str_replace_all(contributor_roles, "_", " "), 
     contributor_roles = str_replace_all(contributor_roles, "ting ", "ting - "), 
     contributor_roles = str_to_title(contributor_roles)
@@ -210,7 +209,10 @@ ggsave("figs/credit-taxonomy-initiators.png", width = 7, height = 5)
 
 cr_prep %>% 
   filter(is_initiating == 0) %>% 
-   mutate(
+  arrange(surname) %>% 
+  group_by(contributor_roles) %>% 
+  mutate(order = seq_along(name), 
+    name = fct_reorder(name, order), 
     contributor_roles = str_replace_all(contributor_roles, "_", " "), 
     contributor_roles = str_replace_all(contributor_roles, "ting ", "ting - "), 
     contributor_roles = str_to_title(contributor_roles)
@@ -246,8 +248,10 @@ ggsave("figs/credit-taxonomy-analysts.png", width = 14, height = 10)
 #| fig.height: 11
 
 cr_prep %>% 
-   mutate(
-    name = fct_reorder(name, is_initiating), 
+  arrange(surname) %>% 
+  group_by(contributor_roles) %>% 
+  mutate(order = seq_along(name), 
+    name = fct_reorder(name, order), 
     contributor_roles = str_replace_all(contributor_roles, "_", " "), 
     contributor_roles = str_replace_all(contributor_roles, "ting ", "ting - "), 
     contributor_roles = str_to_title(contributor_roles)
