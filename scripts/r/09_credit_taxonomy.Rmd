@@ -84,7 +84,8 @@ analysts <- all_data_temp %>%
 # Combine dfs in correct order
 contributors <- bind_rows(initiators, analysts) %>% 
   mutate(middle_name = replace_na(middle_name, ""),
-    is_initiating = if_else(surname %in% initiating_authors, 1, 0)) %>% 
+    is_initiating = if_else(surname %in% initiating_authors, 1, 0), 
+    initials = glue::glue("{str_sub(firstname, 1, 1)}{str_sub(middle_name, 1, 1)}{str_sub(surname, 1, 1)}")) %>% 
   unite(name, c("firstname", "middle_name", "surname"), sep = " ") %>% 
   mutate(name = str_replace_all(name, "  ", " ")) %>% 
   bind_rows(
@@ -156,9 +157,9 @@ contributor_role <- c(
 
 # Format contributors for plotting
 cr_prep <- contributors %>% 
-  select(name:writing_review_editing, is_initiating) %>% 
+  select(name:writing_review_editing, is_initiating, initials) %>% 
   pivot_longer(
-    cols = -c("name", "is_initiating"), 
+    cols = -c("name", "is_initiating", "initials"), 
     names_to = "contributor_roles", 
     values_to = "val"
     ) %>% 
@@ -168,8 +169,8 @@ cr_prep <- contributors %>%
   group_by(name) %>% 
   mutate(order_y = seq_along(name)) %>% 
   ungroup() %>% 
-  mutate(initials = gsub('\\b(\\pL)\\pL{2,}|.','\\U\\1', name, perl = TRUE), 
-    contributor_roles = fct_rev(contributor_roles))
+  mutate(contributor_roles = fct_rev(contributor_roles))
+
 
 # Plot initiating authors
 cr_prep %>% 
@@ -213,7 +214,7 @@ cr_prep %>%
     contributor_roles = str_to_title(contributor_roles)
     ) %>% 
   ggplot() +
-  aes(y = initials, x = contributor_roles, alpha = val) +
+  aes(y = name, x = contributor_roles, alpha = val) +
     geom_point(size = 1.75, pch = 18, show.legend = F) +
     scale_alpha_continuous(range = c(0.05, 1)) +
     labs(x = NULL, y = "Analysts",
