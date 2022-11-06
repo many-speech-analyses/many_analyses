@@ -22,6 +22,7 @@ knitr::opts_knit$set(root.dir = here::here())
 ```{r}
 #| label: load-libs
 library("googlesheets4")
+library("googledrive")
 library("xml2")
 library("dplyr")
 library("tidyr")
@@ -38,6 +39,17 @@ library("kableExtra")
 #| label: identify-download
 #| eval: false
 
+# give gargle permission
+drive_auth(email = TRUE)
+
+# Locate file, check ID
+drive_find(n_max = 5, type = "spreadsheet")
+
+# Old sheet
+#all_data_temp <- read_sheet("1lXmubF42sTCoOaECXGzo20GCFxX51MWFOKhX8euNtuA") %>% 
+#  janitor::clean_names()
+
+# New sheet
 all_data_temp <- read_sheet("1lXmubF42sTCoOaECXGzo20GCFxX51MWFOKhX8euNtuA") %>% 
   janitor::clean_names()
 
@@ -50,7 +62,10 @@ write_csv(all_data_temp, "data/CRediT/MSA_tenzing_contribution.csv")
 ```{r}
 #| label: load-tidy-csv
 # Load data
-all_data_temp <- read_csv("data/CRediT/MSA_tenzing_contribution.csv")
+#all_data_temp <- read_csv("data/CRediT/MSA_tenzing_contribution.csv")
+all_data_temp <- 
+  read_csv("data/CRediT/MSA_tenzing_contribution-corrected_contributions.csv") %>% 
+  janitor::clean_names()
 
 # Create vector of surnames of initiating authors
 initiating_authors <- c("Coretta", "Casillas", "Roessig", "Franke", "Roettger")
