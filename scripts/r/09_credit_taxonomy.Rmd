@@ -197,6 +197,8 @@ cr_prep %>%
       panel.grid.minor = element_line(colour = 'grey90', size = 0.15)
     )
 
+ggsave("figs/credit-taxonomy-initiators.png", width = 7, height = 5)
+
 ```
 
 
