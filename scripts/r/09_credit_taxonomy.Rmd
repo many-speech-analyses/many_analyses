@@ -69,22 +69,29 @@ all_data_temp <-
 
 # Create vector of surnames of initiating authors
 initiating_authors <- c("Coretta", "Casillas", "Roettger")
+extras <- c("Roessig", "Franke")
+
 
 # Subset initiating authors
 initiators <- all_data_temp %>% 
   filter(surname %in% initiating_authors) %>% 
   mutate(is_initiating = 1)
 
+# Subset initiating authors
+others <- all_data_temp %>% 
+  filter(surname %in% extras) %>% 
+  mutate(is_initiating = 1.5)
+
+
 # Subset analysts
 analysts <- all_data_temp %>% 
-  filter(!(surname %in% initiating_authors)) %>% 
+  filter(!(surname %in% c(initiating_authors, extras))) %>% 
   mutate(is_initiating = 0) %>% 
   arrange(surname)
 
 # Combine dfs in correct order
-contributors <- bind_rows(initiators, analysts) %>% 
+contributors <- bind_rows(initiators, others, analysts) %>% 
   mutate(middle_name = replace_na(middle_name, ""),
-    is_initiating = if_else(surname %in% initiating_authors, 1, 0), 
     initials = glue::glue("{str_sub(firstname, 1, 1)}{str_sub(middle_name, 1, 1)}{str_sub(surname, 1, 1)}")) %>% 
   unite(name, c("firstname", "middle_name", "surname"), sep = " ", remove = F) %>% 
   mutate(name = str_replace_all(name, "  ", " ")) %>% 
@@ -121,12 +128,12 @@ These are the authors:
 
 # Get count of unique affiliations
 affiliations <- contributors %>% 
-  count(primary_affiliation) %>% 
+  count(primary_affiliation_university) %>% 
   arrange(n) 
 
 # Plot affiliations as a function of n
 affiliations %>% 
-  mutate(lab_truc = str_sub(primary_affiliation, 1, 30),
+  mutate(lab_truc = str_sub(primary_affiliation_university, 1, 30),
     lab_truc = fct_reorder(lab_truc, n, min)) %>% 
   ggplot() + 
   aes(x = n, y = lab_truc) + 
@@ -137,7 +144,7 @@ affiliations %>%
 ```
 
 There were `r nrow(contributors)` contributors from `r nrow(affiliations)` institutions. 
-`r filter(affiliations, is.na(primary_affiliation)) %>% pull(n) %>% xfun::numbers_to_words() %>% str_to_sentence()` analysts did not include their primary affiliation. 
+`r filter(affiliations, is.na(primary_affiliation_university)) %>% pull(n) %>% xfun::numbers_to_words() %>% str_to_sentence()` analysts did not include their primary affiliation. 
 
 ## Contributor roles taxonomy
 
@@ -208,7 +215,7 @@ ggsave("figs/credit-taxonomy-initiators.png", width = 7, height = 5)
 #| fig.height: 10
 
 cr_prep %>% 
-  filter(is_initiating == 0) %>% 
+  filter(is_initiating != 1) %>% 
   arrange(surname) %>% 
   group_by(contributor_roles) %>% 
   mutate(order = seq_along(name), 
@@ -279,6 +286,9 @@ ggsave("figs/credit-taxonomy-all.png", width = 14, height = 10)
 
 
 
+
+
+
 ```{r}
 #| label: copy-author-list
 #| eval: false
@@ -287,5 +297,28 @@ contributors %>%
   select(name) %>% 
   mutate(name = glue::glue("- name: {name}\n")) %>% 
   pull() %>% 
+  clipr::write_clip() 
+
+
+contributors %>% 
+  select(name, primary_affiliation_university) %>% 
+  transmute(
+    name, 
+    name_man = glue::glue("- name: {name}"), 
+    num_man = glue::glue("- num: {1:nrow(.) + 1}")
+  ) %>% 
+  pivot_longer(cols = -name, names_to = "col", values_to = "print") %>% 
+  pull(print) %>% 
+  clipr::write_clip() 
+
+contributors %>% 
+  select(name, primary_affiliation_university, primary_affiliation_department) %>% 
+  transmute(
+    name, 
+    num_man = glue::glue("- num: {1:nrow(.) + 1}"), 
+    print = glue::glue("- org: {primary_affiliation_department}, {primary_affiliation_university}"), 
+  ) %>% 
+  pivot_longer(cols = -name, names_to = "col", values_to = "print") %>% 
+  pull(print) %>% 
   clipr::write_clip() 
 ```
