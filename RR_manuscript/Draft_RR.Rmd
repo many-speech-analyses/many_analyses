@@ -243,6 +243,8 @@ pm  <- function(x) {
 ```
 
 
+> Authors' affiliations to be added later.
+
 # Introduction
 
 In order to effectively accumulate knowledge, science needs (i) to produce data that can be replicated using the original methods and (ii) to arrive at robust conclusions substantiated by such data.
@@ -1081,7 +1083,7 @@ Of the analysis submitted by the `r pull_from_tib(team_desc_df, stage, "Submitte
 Reasons for exclusion were: use of Generalized Additive Models (4 teams) which do not lend themselves easily to the meta-analytic methods employed in this study, use of machine learning techniques (3 teams), use of typicality as the outcome variable/response (3 teams), or use of other methods that returned statistics that could not be included in the meta-analytic model.
 
 In what follows, we describe the characteristics of those teams whose analyses were included in the meta-analytic model.
-A complete summary of all the analyses from the `r pull_from_tib(team_desc_df, stage, "Submitted", n_teams)` submitting teams is available in the supplementary materials.
+A complete summary of all the analyses from the `r pull_from_tib(team_desc_df, stage, "Submitted", n_teams)` submitting teams is available in the supplementary materials at <https://many-speech-analyses.github.io/many_analyses/RR_manuscript/supplementary_materials.pdf>.
 
 The included analyses were provided by `r pull_from_tib(team_desc_df, stage, "Final", n_teams)` teams, comprising `r pull_from_tib(team_desc_df, stage, "Final", n_analysts)` analysts, with a median of `r pull_from_tib(tbl_team_desc, label, "team_desc_size", Median)` individuals per team.
 Upon sign-up, we collected background information from each analyst through the intake form, which was administered during Phase 1, prior to the data being released to the teams.
