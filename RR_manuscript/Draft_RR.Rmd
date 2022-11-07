@@ -243,6 +243,8 @@ pm  <- function(x) {
 ```
 
 
+> Authors' affiliations to be added later.
+
 # Introduction
 
 In order to effectively accumulate knowledge, science needs (i) to produce data that can be replicated using the original methods and (ii) to arrive at robust conclusions substantiated by such data.
