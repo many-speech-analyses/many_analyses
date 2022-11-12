@@ -1,0 +1,259 @@
+%% May 29. 2007
+
+% abstract
+
+% package includes
+\usepackage{ifxetex}
+\ifxetex
+  \usepackage{xltxtra}
+  \setmainfont[Mapping=tex-text]{Times New Roman}
+\else
+  \usepackage{mathptmx}
+  % \usepackage[latin1]{inputenc}
+  % \usepackage[T1]{fontenc}
+\fi
+
+\usepackage{calc}
+\usepackage{url}
+\usepackage{endnotes} \let\footnote\endnote
+% \usepackage[leqno,fleqn]{amsmath}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{colortbl}
+\usepackage[bf]{caption}
+\setlength{\abovecaptionskip}{12pt}
+\setlength{\belowcaptionskip}{12pt}
+\usepackage[overload]{textcase}
+\usepackage{titlesec}
+
+\linespread{.9}
+
+% No page numbers
+\pagestyle{empty}
+
+\oddsidemargin -0.20in
+\evensidemargin -0.20in
+\topmargin 0truemm
+\headheight 0truept
+\footskip 0truept
+\textheight 235truemm
+\textwidth 170truemm
+\voffset 0truept
+\headsep 0truept
+\twocolumn
+\columnsep 10truemm
+
+% Paragraph spaceing (added 6/6/2018)
+\setlength{\parskip}{0em}
+
+% Indent after first paragraph (added 6/6/2018)
+\setlength{\parindent}{2ex}
+
+% floats
+\setlength{\intextsep}{6pt}
+\setlength{\textfloatsep}{0pt}
+
+% Keywords
+\newcommand{\keywords}[1]{\medskip\noindent\textbf{Keywords:} #1}
+
+% URL definitions
+\DeclareUrlCommand\urlemail{\UrlFont{\rmfamily}}
+\urlstyle{rm}
+
+\titleformat{\section}[block]{\normalfont\bfseries\centering}{\thesection.}{1ex}{\MakeTextUppercase}
+\titlespacing*{\section}{0pt}{11pt}{11pt}
+\titleformat{\subsection}{\normalfont\small\bfseries}{\thesubsection.}{1ex}{}
+\titlespacing*{\subsection}{0pt}{11pt}{11pt}
+\titleformat{\subsubsection}{\normalfont\itshape}{\thesubsubsection.}{1ex}{}
+\titlespacing*{\subsubsection}{0pt}{11pt}{11pt}
+
+% section/subsection/subsubsection (from: article.cls -- 2004/02/16 v1.4f)
+
+% \renewcommand\thesection {\@arabic\c@section.}
+% \renewcommand\thesubsection {\thesection\@arabic\c@subsection.}
+% \renewcommand\thesubsubsection {\thesubsection \@arabic\c@subsubsection.}
+
+% \renewcommand\section{\@startsection {section}{1}{\z@}%
+%                                    {-1ex plus -3pt minus -1pt}%
+%                                    {1ex plus 3pt minus 1pt}%
+%                                    {\center\normalfont\normalsize\bfseries}}
+% \renewcommand\subsection{\@startsection{subsection}{2}{\z@}%
+%                                    {-1ex plus -3pt minus -1pt}%
+%                                    {1ex plus 3pt minus 1pt}%
+%                                      {\normalfont\normalsize\bfseries}}
+% \renewcommand\subsubsection{\@startsection{subsubsection}{3}{\z@}%
+%                                    {-1ex plus -3pt minus -1pt}%
+%                                    {1ex plus 3pt minus 1pt}%
+%                                      {\normalfont\normalsize\em}}
+
+% titlepage (from: article.cls -- 2004/02/16 v1.4f)
+\makeatletter
+
+\renewcommand\maketitle{\par
+  \begingroup
+    \renewcommand\thefootnote{\@fnsymbol\c@footnote}%
+    \def\@makefnmark{\rlap{\@textsuperscript{\normalfont\@thefnmark}}}%
+    \long\def\@makefntext##1{\parindent 1em\noindent
+            \hb@xt@1.8em{%
+                \hss\@textsuperscript{\normalfont\@thefnmark}}##1}%
+    \if@twocolumn
+      \ifnum \col@number=\@ne
+        \@maketitle
+      \else
+        \twocolumn[\@maketitle]%
+      \fi
+    \else
+      \newpage
+      \global\@topnum\z@   % Prevents figures from going at top of page.
+      \@maketitle
+    \fi
+    \thispagestyle{empty}\@thanks % no page number at all
+  \endgroup
+  \setcounter{footnote}{0}%
+  \global\let\thanks\relax
+  \global\let\maketitle\relax
+  \global\let\@maketitle\relax
+  \global\let\@thanks\@empty
+  \global\let\@author\@empty
+  \global\let\@date\@empty
+  \global\let\@title\@empty
+  \global\let\title\relax
+  \global\let\author\relax
+  \global\let\date\relax
+  \global\let\and\relax
+}
+
+\def\title#1{\gdef\@title{{\Large\MakeTextUppercase{#1}}}}
+\def\author#1{\gdef\@author{{\rmfamily #1}}}
+\def\organization#1{\gdef\@organization{{\rmfamily #1}}}
+\def\email#1{\gdef\@email{{\rmfamily\small #1}}}
+
+\def\@maketitle{%
+  \newpage
+  \null
+  \vspace{2pt}
+  \begin{center}%
+  \let \footnote \thanks
+    {\Large \bfseries\@title \par}%
+    \vskip 13pt%
+    {\large
+      \lineskip .6em%
+%      \begin{tabular}[t]{c}%
+        \@author\\[12pt]
+        \@organization\\
+        {\small\@email}}%
+%      \end{tabular}
+  \end{center}
+\vspace{14pt}
+}
+
+\makeatother
+
+
+% list environments (from: tweaklist.sty)
+\makeatletter
+\def\enumhook{}
+\def\enumhooki{}
+\def\enumhookii{}
+\def\enumhookiii{}
+\def\enumhookiv{}
+\def\itemhook{}
+\def\itemhooki{}
+\def\itemhookii{}
+\def\itemhookiii{}
+\def\itemhookiv{}
+\def\descripthook{}
+\def\enumerate{%
+  \ifnum \@enumdepth >\thr@@\@toodeep\else
+    \advance\@enumdepth\@ne
+    \edef\@enumctr{enum\romannumeral\the\@enumdepth}%
+      \expandafter
+      \list
+        \csname label\@enumctr\endcsname
+        {\usecounter\@enumctr\def\makelabel##1{\hss\llap{##1}}%
+          \enumhook \csname enumhook\romannumeral\the\@enumdepth\endcsname}%
+  \fi}
+\def\itemize{%
+  \ifnum \@itemdepth >\thr@@\@toodeep\else
+    \advance\@itemdepth\@ne
+    \edef\@itemitem{labelitem\romannumeral\the\@itemdepth}%
+    \expandafter
+    \list
+      \csname\@itemitem\endcsname
+      {\def\makelabel##1{\hss\llap{##1}}%
+        \itemhook \csname itemhook\romannumeral\the\@itemdepth\endcsname}%
+  \fi}
+
+\renewenvironment{description}
+                 {\list{}{\labelwidth\z@ \itemindent-\leftmargin
+                          \let\makelabel\descriptionlabel\descripthook}}
+                 {\endlist}
+
+\makeatother
+
+% itemize environment lengths
+\renewcommand{\itemhook}{
+  \setlength{\topsep}{0pt}%
+  \setlength{\parskip}{0pt}%
+  \setlength{\partopsep}{0pt}%
+  \setlength{\parsep}{0pt}%
+  \setlength{\itemsep}{0pt}%
+}
+
+% enumerate environment lengths
+\renewcommand{\enumhook}{
+  \setlength{\topsep}{0pt}%
+  \setlength{\parskip}{0pt}%
+  \setlength{\partopsep}{0pt}%
+  \setlength{\parsep}{0pt}%
+  \setlength{\itemsep}{0pt}%
+}
+
+%captions
+\renewcommand{\captionfont}{\small}
+\setlength{\captionmargin}{.5cm}
+
+% endnotes
+\makeatletter
+\renewcommand\footnoterule{%
+  \kern-3\p@
+  \hrule\@width.66\columnwidth
+  \kern2.6\p@}
+
+\def\enoteformat{\rightskip\z@ \leftskip\z@ \parindent=0em
+     \leavevmode{\hbox{$^{\@theenmark}$}}\hspace{.25em}}
+
+\def\enoteheading{%
+\par\leavevmode\vskip\baselineskip\footnoterule}%
+
+\def\enotesize{\small}
+\makeatother
+
+%bibliography
+\makeatletter
+\renewenvironment{thebibliography}[1]
+     {\section{References}%
+      \@mkboth{\MakeUppercase\refname}{\MakeUppercase\refname}%
+      \list{\@biblabel{\@arabic\c@enumiv}}%
+           {\settowidth\labelwidth{\@biblabel{#1}}%
+             \small
+            \leftmargin\labelwidth
+            \setlength{\topsep}{0pt}
+            \setlength{\parskip}{0pt}
+            \setlength{\partopsep}{0pt}
+            \setlength{\parsep}{0pt}
+            \setlength{\itemsep}{0pt}
+            \advance\leftmargin\labelsep
+            \@openbib@code
+            \usecounter{enumiv}%
+            \let\p@enumiv\@empty
+            \renewcommand\theenumiv{\@arabic\c@enumiv}}%
+      \sloppy
+      \clubpenalty4000
+      \@clubpenalty \clubpenalty
+      \widowpenalty4000%
+      \sfcode`\.\@m}
+     {\def\@noitemerr
+       {\@latex@warning{Empty `thebibliography' environment}}%
+      \endlist}
+\makeatother
