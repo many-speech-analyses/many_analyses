@@ -1149,7 +1149,7 @@ Teams differed with regard to how the acoustic signal was segmented ranging from
 
 The question arises whether these unique analysis pipelines led to different conclusions. 
 `r n_atleast_1 %>% xfun::numbers_to_words() %>% str_to_sentence()` teams out of the `r length(unique(msa_models$animal)) %>% xfun::numbers_to_words()` (`r perc_atleast_1`%) reported to have found at least one statistically reliable effect (based on the inferential criteria they specified).
-Of the 104 submitted models, `r n_effects` were reported to show a statistically reliable effect (`r round(perc_effects,1)`%). 
+Of the 170 critical model coefficients, `r n_effects` were claimed to show a statistically reliable effect (`r round(perc_effects,1)`%). 
 
 <!-- Begin Table --> 
 ```{r}
