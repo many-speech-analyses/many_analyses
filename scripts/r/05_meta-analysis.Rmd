@@ -291,7 +291,7 @@ meta_shrinkage <-
            size = 3,
            hjust = 0,
            color = c("black", "#ef8a62"),
-           label = c("Not compelling = 95% CrI includes 0", "Compelling = 95% CrI does not includes 0")
+           label = c("Not compelling = 95% CrI includes 0", "Compelling = 95% CrI does not include 0")
            ) +
     annotate("segment", 
              x = c(0.5,0.5), y = c(1.75,2.05),
