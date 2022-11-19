@@ -180,39 +180,65 @@ n_countries <- contributors %>%
   mutate(
     country = primary_affiliation_country, 
     labs = case_when(
-      country == "Australia" ~ glue("{open}'https://img.icons8.com/emoji/512/australia-emoji.png'{close}"), 
-      country == "Hong Kong SAR, China" ~ glue("{open}'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/325/flag-hong-kong-sar-china_1f1ed-1f1f0.png'{close}"), 
-      country == "Nigeria" ~ glue("{open}'https://img.icons8.com/emoji/512/nigeria-emoji.png'{close}"), 
-      country == "Norway" ~ glue("{open}'https://img.icons8.com/emoji/512/norway-emoji.png'{close}"), 
-      country == "Saudi Arabia" ~ glue("{open}'https://img.icons8.com/emoji/512/saudi-arabia-emoji.png'{close}"), 
-      country == "Serbia" ~ glue("{open}'https://img.icons8.com/emoji/512/serbia-emoji.png'{close}"), 
-      country == "Switzerland" ~ glue("{open}'https://img.icons8.com/emoji/512/switzerland-emoji.png'{close}"),
-      country == "Austria" ~ glue("{open}'https://img.icons8.com/emoji/512/austria-emoji.png'{close}"),
-      country == "Russia" ~ glue("{open}'https://img.icons8.com/emoji/512/russia-emoji.png'{close}"),
-      country == "Spain" ~ glue("{open}'https://img.icons8.com/emoji/512/spain-emoji.png'{close}"),
-      country == "Brazil" ~ glue("{open}'https://img.icons8.com/emoji/512/brazil-emoji.png'{close}"),
-      country == "Netherlands" ~ glue("{open}'https://img.icons8.com/emoji/512/netherlands-emoji.png'{close}"),
-      country == "New Zealand" ~ glue("{open}'https://img.icons8.com/emoji/512/new-zealand-emoji.png'{close}"),
-      country == "Canada" ~ glue("{open}'https://img.icons8.com/emoji/512/canada-emoji.png'{close}"),
-      country == "France" ~ glue("{open}'https://img.icons8.com/emoji/512/france-emoji.png'{close}"),
-      country == "Germany" ~ glue("{open}'https://img.icons8.com/emoji/512/germany-emoji.png'{close}"),
-      country == "United Kingdom" ~ glue("{open}'https://img.icons8.com/emoji/512/united-kingdom-emoji.png'{close}"),
-      country == "United States" ~ glue("{open}'https://img.icons8.com/emoji/512/united-states-emoji.png'{close}")
+      country == "Australia" ~ 
+        glue("{open}'https://img.icons8.com/emoji/512/australia-emoji.png'{close}"), 
+      country == "Hong Kong SAR, China" ~ 
+        glue("{open}'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/325/flag-hong-kong-sar-china_1f1ed-1f1f0.png'{close}"), 
+      country == "Nigeria" ~ 
+        glue("{open}'https://img.icons8.com/emoji/512/nigeria-emoji.png'{close}"), 
+      country == "Norway" ~ 
+        glue("{open}'https://img.icons8.com/emoji/512/norway-emoji.png'{close}"), 
+      country == "Saudi Arabia" ~ 
+        glue("{open}'https://img.icons8.com/emoji/512/saudi-arabia-emoji.png'{close}"), 
+      country == "Serbia" ~ 
+        glue("{open}'https://img.icons8.com/emoji/512/serbia-emoji.png'{close}"), 
+      country == "Switzerland" ~ 
+        glue("{open}'https://img.icons8.com/emoji/512/switzerland-emoji.png'{close}"),
+      country == "Austria" ~ 
+        glue("{open}'https://img.icons8.com/emoji/512/austria-emoji.png'{close}"),
+      country == "Russia" ~ 
+        glue("{open}'https://img.icons8.com/emoji/512/russia-emoji.png'{close}"),
+      country == "Spain" ~ 
+        glue("{open}'https://img.icons8.com/emoji/512/spain-emoji.png'{close}"),
+      country == "Brazil" ~ 
+        glue("{open}'https://img.icons8.com/emoji/512/brazil-emoji.png'{close}"),
+      country == "Netherlands" ~ 
+        glue("{open}'https://img.icons8.com/emoji/512/netherlands-emoji.png'{close}"),
+      country == "New Zealand" ~ 
+        glue("{open}'https://img.icons8.com/emoji/512/new-zealand-emoji.png'{close}"),
+      country == "Canada" ~ 
+        glue("{open}'https://img.icons8.com/emoji/512/canada-emoji.png'{close}"),
+      country == "France" ~ 
+        glue("{open}'https://img.icons8.com/emoji/512/france-emoji.png'{close}"),
+      country == "Germany" ~ 
+        glue("{open}'https://img.icons8.com/emoji/512/germany-emoji.png'{close}"),
+      country == "United Kingdom" ~ 
+        glue("{open}'https://img.icons8.com/emoji/512/united-kingdom-emoji.png'{close}"),
+      country == "United States" ~ 
+        glue("{open}'https://img.icons8.com/emoji/512/united-states-emoji.png'{close}")
     ), 
-    primary_affiliation_country = fct_reorder(primary_affiliation_country, n, max)) 
+    country = fct_reorder(country, n, max)) 
 
 n_countries %>% 
   ggplot() + 
-  aes(x = n, y = primary_affiliation_country) + 
-  geom_segment(aes(x = 0, xend = n, yend = primary_affiliation_country), size = 2) + 
+  aes(x = n, y = country) + 
+  geom_segment(aes(x = 0, xend = n, yend = country), size = 2, 
+    color = "grey25", lineend = "round") + 
   geom_point(size = 6) + 
   geom_text(aes(label = n), color = "white", size = 3) + 
   labs(x = "n", y = NULL, 
-    title = glue("Number of analysts by country (n = {sum(n_countries$n)})")) + 
-  theme_bw(base_size = 9) + 
+    title = "Number of analysts by country", 
+    subtitle = glue("(n = {sum(n_countries$n)})")) + 
+  theme_bw(base_size = 13, base_family = "Times") + 
   scale_y_discrete(name = NULL, labels = n_countries$labs) + 
-  theme(axis.text.y = element_markdown(color = "black"))
+  theme(axis.text.y = element_markdown(color = "black", vjust = 0.65), 
+    panel.grid.major = element_line(colour = 'grey90', size = 0.15),
+    panel.grid.minor = element_line(colour = 'grey90', size = 0.15))
 
+n_countries %>% 
+  arrange(desc(n)) %>% 
+  transmute(Country = glue("{flag} {country}"), n) %>% 
+  knitr::kable(format = "pandoc")
 ```
 
 
