@@ -26,11 +26,14 @@ library("googledrive")
 library("xml2")
 library("dplyr")
 library("tidyr")
+library("glue")
 library("stringr")
 library("ggplot2")
+library("ggtext")
 library("forcats")
 library("readr")
 library("kableExtra")
+library("countrycode")
 ```
 
 ## Get google sheet and tidy
@@ -65,12 +68,27 @@ write_csv(all_data_temp, "data/CRediT/MSA_tenzing_contribution.csv")
 #all_data_temp <- read_csv("data/CRediT/MSA_tenzing_contribution.csv")
 all_data_temp <- 
   read_csv("data/CRediT/MSA_tenzing_contribution-corrected_contributions.csv") %>% 
-  janitor::clean_names()
+  janitor::clean_names() %>% 
+  mutate(
+    primary_affiliation_country = if_else(
+      primary_affiliation_country == "Aotearoa", 
+      "New Zealand", 
+      .$primary_affiliation_country
+      ), 
+    cntry = countrycode(
+      primary_affiliation_country, 
+      origin = 'country.name', 
+      destination = 'iso3c'
+      ), 
+    flag = countrycode(
+      cntry, 
+      origin = 'iso3c', 
+      destination = 'unicode.symbol')
+    )
 
 # Create vector of surnames of initiating authors
 initiating_authors <- c("Coretta", "Casillas", "Roettger")
 extras <- c("Roessig", "Franke")
-
 
 # Subset initiating authors
 initiators <- all_data_temp %>% 
@@ -81,7 +99,6 @@ initiators <- all_data_temp %>%
 others <- all_data_temp %>% 
   filter(surname %in% extras) %>% 
   mutate(is_initiating = 1.5)
-
 
 # Subset analysts
 analysts <- all_data_temp %>% 
@@ -131,6 +148,8 @@ affiliations <- contributors %>%
   count(primary_affiliation_university) %>% 
   arrange(n) 
 
+n_no_affiliation <- sum(is.na(contributors$primary_affiliation_university))
+
 # Plot affiliations as a function of n
 affiliations %>% 
   mutate(lab_truc = str_sub(primary_affiliation_university, 1, 30),
@@ -144,7 +163,59 @@ affiliations %>%
 ```
 
 There were `r nrow(contributors)` contributors from `r nrow(affiliations)` institutions. 
-`r filter(affiliations, is.na(primary_affiliation_university)) %>% pull(n) %>% xfun::numbers_to_words() %>% str_to_sentence()` analysts did not include their primary affiliation. 
+`r n_no_affiliation %>% xfun::numbers_to_words() %>% str_to_sentence()` analysts did not include their primary affiliation. 
+
+
+## Countries
+
+```{r}
+#| label: analysts-by-country
+
+open <- "<img src="
+close <- " width='25' /><br>"
+
+n_countries <- contributors %>% 
+  count(primary_affiliation_country, flag) %>% 
+  arrange(n) %>% 
+  mutate(
+    country = primary_affiliation_country, 
+    labs = case_when(
+      country == "Australia" ~ glue("{open}'https://img.icons8.com/emoji/512/australia-emoji.png'{close}"), 
+      country == "Hong Kong SAR, China" ~ glue("{open}'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/325/flag-hong-kong-sar-china_1f1ed-1f1f0.png'{close}"), 
+      country == "Nigeria" ~ glue("{open}'https://img.icons8.com/emoji/512/nigeria-emoji.png'{close}"), 
+      country == "Norway" ~ glue("{open}'https://img.icons8.com/emoji/512/norway-emoji.png'{close}"), 
+      country == "Saudi Arabia" ~ glue("{open}'https://img.icons8.com/emoji/512/saudi-arabia-emoji.png'{close}"), 
+      country == "Serbia" ~ glue("{open}'https://img.icons8.com/emoji/512/serbia-emoji.png'{close}"), 
+      country == "Switzerland" ~ glue("{open}'https://img.icons8.com/emoji/512/switzerland-emoji.png'{close}"),
+      country == "Austria" ~ glue("{open}'https://img.icons8.com/emoji/512/austria-emoji.png'{close}"),
+      country == "Russia" ~ glue("{open}'https://img.icons8.com/emoji/512/russia-emoji.png'{close}"),
+      country == "Spain" ~ glue("{open}'https://img.icons8.com/emoji/512/spain-emoji.png'{close}"),
+      country == "Brazil" ~ glue("{open}'https://img.icons8.com/emoji/512/brazil-emoji.png'{close}"),
+      country == "Netherlands" ~ glue("{open}'https://img.icons8.com/emoji/512/netherlands-emoji.png'{close}"),
+      country == "New Zealand" ~ glue("{open}'https://img.icons8.com/emoji/512/new-zealand-emoji.png'{close}"),
+      country == "Canada" ~ glue("{open}'https://img.icons8.com/emoji/512/canada-emoji.png'{close}"),
+      country == "France" ~ glue("{open}'https://img.icons8.com/emoji/512/france-emoji.png'{close}"),
+      country == "Germany" ~ glue("{open}'https://img.icons8.com/emoji/512/germany-emoji.png'{close}"),
+      country == "United Kingdom" ~ glue("{open}'https://img.icons8.com/emoji/512/united-kingdom-emoji.png'{close}"),
+      country == "United States" ~ glue("{open}'https://img.icons8.com/emoji/512/united-states-emoji.png'{close}")
+    ), 
+    primary_affiliation_country = fct_reorder(primary_affiliation_country, n, max)) 
+
+n_countries %>% 
+  ggplot() + 
+  aes(x = n, y = primary_affiliation_country) + 
+  geom_segment(aes(x = 0, xend = n, yend = primary_affiliation_country)) + 
+  geom_point() + 
+  labs(x = "n", y = NULL, title = "Number of analysts by country") + 
+  theme_bw(base_size = 9) + 
+  scale_y_discrete(name = NULL, labels = n_countries$labs) + 
+  theme(axis.text.y = element_markdown(color = "black"))
+
+
+```
+
+
+
 
 ## Contributor roles taxonomy
 
@@ -164,7 +235,8 @@ contributor_role <- c(
 
 # Format contributors for plotting
 cr_prep <- contributors %>% 
-  select(name, surname, conceptualization:writing_review_editing, is_initiating, initials) %>% 
+  select(name, surname, conceptualization:writing_review_editing, 
+         is_initiating, initials) %>% 
   pivot_longer(
     cols = -c("name", "surname", "is_initiating", "initials"), 
     names_to = "contributor_roles", 
@@ -301,7 +373,10 @@ contributors %>%
 
 
 contributors %>% 
-  select(name, primary_affiliation_university) %>% 
+  select(name, 
+         primary_affiliation_department, 
+         primary_affiliation_university, 
+         primary_affiliation_country) %>% 
   transmute(
     name, 
     name_man = glue::glue("- name: {name}"), 
@@ -311,12 +386,16 @@ contributors %>%
   pull(print) %>% 
   clipr::write_clip() 
 
+
 contributors %>% 
-  select(name, primary_affiliation_university, primary_affiliation_department) %>% 
+  select(name, 
+         primary_affiliation_department, 
+         primary_affiliation_university, 
+         primary_affiliation_country) %>% 
   transmute(
     name, 
     num_man = glue::glue("- num: {1:nrow(.) + 1}"), 
-    print = glue::glue("- org: {primary_affiliation_department}, {primary_affiliation_university}"), 
+    print = glue::glue("- org: {primary_affiliation_department}, {primary_affiliation_university}, {primary_affiliation_country}"), 
   ) %>% 
   pivot_longer(cols = -name, names_to = "col", values_to = "print") %>% 
   pull(print) %>% 

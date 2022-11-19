@@ -7,168 +7,632 @@ author:
 - name: Joseph V. Casillas
   num: 3
 - name: Simon Roessig
-- name: Michael Franke
-- name: Ali H. Al-Hoorie
-- name: Jalal Al-Tamimi
-- name: Najd E. Alotaibi
-- name: Mohammed K. AlShakhori
-- name: Ruth M. Altmiller
-- name: Pablo Arantes
-- name: Angeliki Athanasopoulou
-- name: Melissa M. Baese-Berk
-- name: George Bailey
-- name: Cheman Baira A Sangma
-- name: Eleonora J. Beier
-- name: Gabriela M. Benavides
-- name: Nicole Benker
-- name: Emelia P. BensonMeyer
-- name: Nina R. Benway
-- name: Grant M. Berry
-- name: Liwen Bing
-- name: Christina Bjorndahl
-- name: Mariska Bolyanatz
-- name: Aaron Braver
-- name: Violet A. Brown
-- name: Alicia M. Brown
-- name: Alejna Brugos
-- name: Erin M. Buchanan
-- name: Tanna Butlin
-- name: Andrés Buxó-Lugo
-- name: Coline Caillol
-- name: Francesco Cangemi
-- name: Christopher Carignan
-- name: Sita Carraturo
-- name: Tiphaine Caudrelier
-- name: Eleanor Chodroff
-- name: Michelle Cohn
-- name: Johanna Cronenberg
-- name: Olivier Crouzet
-- name: Erica L. Dagar
-- name: Charlotte Dawson
-- name: Carissa A. Diantoro
-- name: Marie Dokovova
-- name: Wood Drake
-- name: Fengting Du
-- name: Margaux Dubuis
-- name: Florent Duême
-- name: Matthew Durward
-- name: Ander Egurtzegi
-- name: Mahmoud M. Elsherif
-- name: Janina Esser
-- name: Emmanuel Ferragne
-- name: Fernanda Ferreira
-- name: Lauren K. Fink
-- name: Sara Finley
-- name: Kurtis Foster
-- name: Paul Foulkes
-- name: Rosa Franzke
-- name: Gabriel Frazer-McKee
-- name: Robert Fromont
-- name: Christina García
-- name: Jason Geller
-- name: Camille L. Grasso
-- name: Pia Greca
-- name: Martine Grice
-- name: Magdalena S. Grose-Hodge
-- name: Amelia J. Gully
-- name: Caitlin Halfacre
-- name: Westerbeek Hans
-- name: Ivy Hauser
-- name: Jen Hay
-- name: Robert Haywood
-- name: Sam Hellmuth
-- name: Allison I. Hilger
-- name: Nicole Holliday
-- name: Damar Hoogland
-- name: Yaqian Huang
-- name: Vincent Hughes
-- name: Ane Icardo Isasa
-- name: Zlatomira G. Ilchovska
-- name: Hae-Sung Jeon
-- name: Jacq Jones
-- name: Mágat N. Junges
-- name: Stephanie Kaefer
-- name: Constantijn Kaland
-- name: Matthew C. Kelley
-- name: Niamh E. Kelly
-- name: Ghada Khattab
-- name: Emiel Krahmer
-- name: Dorota Krajewska
-- name: Andreas Krug
-- name: Abhilasha A. Kumar
-- name: Anna Lander
-- name: Tomas O. Lentz
-- name: Wanyin Li
-- name: Yanyu Li
-- name: Maria Lialiou
-- name: Ronaldo M. Lima Jr.
-- name: Justin J. H. Lo
-- name: Julio César López Otero
-- name: Bradley Mackay
-- name: Bethany MacLeod
-- name: Mel Mallard
-- name: Carol-Ann McConnellogue
-- name: George Moroz
-- name: Mridhula Murali
-- name: Ladislas Nalborczyk
-- name: Filip Nenadić
-- name: Jessica Nieder
-- name: Dušan Nikolić
-- name: Francisco G. S. Nogueira
-- name: Heather M. Offerman
-- name: Elisa Passoni
-- name: Maud Pélissier
-- name: Scott J. Perry
-- name: Alexandra M. Pfiffner
-- name: Michael Proctor
-- name: Ryan Rhodes
-- name: Nicole Rodríguez
-- name: Elizabeth Roepke
-- name: Jan P. Röer
-- name: Koolen Ruud
-- name: Lucia Sbacco
-- name: Rebecca Scarborough
-- name: Felix Schaeffler
-- name: Erik Schleef
-- name: Dominic Schmitz
-- name: Alexander Shiryaev
-- name: Márton Sóskuthy
-- name: Malin Spaniol
-- name: Joseph A. Stanley
-- name: Alyssa Strickler
-- name: Alessandro Tavano
-- name: Fabian Tomaschek
-- name: Benjamin V. Tucker
-- name: Rory Turnbull
-- name: Kingsley Ugwuanyi
-- name: Iñigo Urrestarazu-Porta
-- name: Ruben van de Vijver
-- name: Kristin J. Van Engen
-- name: Emiel van Miltenburg
-- name: Bruce Wang
-- name: Natasha Warner
-- name: Simon Wehrle
-- name: Seth Wiener
-- name: Stephen Winters
-- name: Sidney G.-J. Wong
-- name: Anna Wood
-- name: Jane Wottawa
-- name: Chenzi Xu
-- name: Germán Zárate-Sández
-- name: Georgia Zellou
-- name: Cong Zhang
-- name: Jian Zhu
-- name: Timo B. Roettger
   num: 4
+- name: Michael Franke
+  num: 5
+- name: Byron Ahn
+  num: 6
+- name: Ali H. Al-Hoorie
+  num: 7
+- name: Jalal Al-Tamimi
+  num: 8
+- name: Najd E. Alotaibi
+  num: 9
+- name: Mohammed K. AlShakhori
+  num: 10
+- name: Ruth M. Altmiller
+  num: 11
+- name: Pablo Arantes
+  num: 12
+- name: Angeliki Athanasopoulou
+  num: 13
+- name: Melissa M. Baese-Berk
+  num: 14
+- name: George Bailey
+  num: 15
+- name: Cheman Baira A Sangma
+  num: 16
+- name: Eleonora J. Beier
+  num: 17
+- name: Gabriela M. Benavides
+  num: 18
+- name: Nicole Benker
+  num: 19
+- name: Emelia P. BensonMeyer
+  num: 20
+- name: Nina R. Benway
+  num: 21
+- name: Grant M. Berry
+  num: 22
+- name: Liwen Bing
+  num: 23
+- name: Christina Bjorndahl
+  num: 24
+- name: Mariska Bolyanatz
+  num: 25
+- name: Aaron Braver
+  num: 26
+- name: Violet A. Brown
+  num: 27
+- name: Alicia M. Brown
+  num: 28
+- name: Alejna Brugos
+  num: 29
+- name: Erin M. Buchanan
+  num: 30
+- name: Tanna Butlin
+  num: 31
+- name: Andrés Buxó-Lugo
+  num: 32
+- name: Coline Caillol
+  num: 33
+- name: Francesco Cangemi
+  num: 34
+- name: Christopher Carignan
+  num: 35
+- name: Sita Carraturo
+  num: 36
+- name: Tiphaine Caudrelier
+  num: 37
+- name: Eleanor Chodroff
+  num: 38
+- name: Michelle Cohn
+  num: 39
+- name: Johanna Cronenberg
+  num: 40
+- name: Olivier Crouzet
+  num: 41
+- name: Erica L. Dagar
+  num: 42
+- name: Charlotte Dawson
+  num: 43
+- name: Carissa A. Diantoro
+  num: 44
+- name: Marie Dokovova
+  num: 45
+- name: Shiloh Drake
+  num: 46
+- name: Fengting Du
+  num: 47
+- name: Margaux Dubuis
+  num: 48
+- name: Florent Duême
+  num: 49
+- name: Matthew Durward
+  num: 50
+- name: Ander Egurtzegi
+  num: 51
+- name: Mahmoud M. Elsherif
+  num: 52
+- name: Janina Esser
+  num: 53
+- name: Emmanuel Ferragne
+  num: 54
+- name: Fernanda Ferreira
+  num: 55
+- name: Lauren K. Fink
+  num: 56
+- name: Sara Finley
+  num: 57
+- name: Kurtis Foster
+  num: 58
+- name: Paul Foulkes
+  num: 59
+- name: Rosa Franzke
+  num: 60
+- name: Gabriel Frazer-McKee
+  num: 61
+- name: Robert Fromont
+  num: 62
+- name: Christina García
+  num: 63
+- name: Jason Geller
+  num: 64
+- name: Camille L. Grasso
+  num: 65
+- name: Pia Greca
+  num: 66
+- name: Martine Grice
+  num: 67
+- name: Magdalena S. Grose-Hodge
+  num: 68
+- name: Amelia J. Gully
+  num: 69
+- name: Caitlin Halfacre
+  num: 70
+- name: Ivy Hauser
+  num: 71
+- name: Jen Hay
+  num: 72
+- name: Robert Haywood
+  num: 73
+- name: Sam Hellmuth
+  num: 74
+- name: Allison I. Hilger
+  num: 75
+- name: Nicole Holliday
+  num: 76
+- name: Damar Hoogland
+  num: 77
+- name: Yaqian Huang
+  num: 78
+- name: Vincent Hughes
+  num: 79
+- name: Ane Icardo Isasa
+  num: 80
+- name: Zlatomira G. Ilchovska
+  num: 81
+- name: Hae-Sung Jeon
+  num: 82
+- name: Jacq Jones
+  num: 83
+- name: Mágat N. Junges
+  num: 84
+- name: Stephanie Kaefer
+  num: 85
+- name: Constantijn Kaland
+  num: 86
+- name: Matthew C. Kelley
+  num: 87
+- name: Niamh E. Kelly
+  num: 88
+- name: Thomas Kettig
+  num: 89
+- name: Ghada Khattab
+  num: 90
+- name: Ruud Koolen
+  num: 91
+- name: Emiel Krahmer
+  num: 92
+- name: Dorota Krajewska
+  num: 93
+- name: Andreas Krug
+  num: 94
+- name: Abhilasha A. Kumar
+  num: 95
+- name: Anna Lander
+  num: 96
+- name: Tomas O. Lentz
+  num: 97
+- name: Wanyin Li
+  num: 98
+- name: Yanyu Li
+  num: 99
+- name: Maria Lialiou
+  num: 100
+- name: Ronaldo M. Lima Jr.
+  num: 101
+- name: Justin J. H. Lo
+  num: 102
+- name: Julio Cesar Lopez Otero
+  num: 103
+- name: Bradley Mackay
+  num: 104
+- name: Bethany MacLeod
+  num: 105
+- name: Mel Mallard
+  num: 106
+- name: Carol-Ann Mary McConnellogue
+  num: 107
+- name: George Moroz
+  num: 108
+- name: Mridhula Murali
+  num: 109
+- name: Ladislas Nalborczyk
+  num: 110
+- name: Filip Nenadić
+  num: 111
+- name: Jessica Nieder
+  num: 112
+- name: Dušan Nikolić
+  num: 113
+- name: Francisco G. S. Nogueira
+  num: 114
+- name: Heather M. Offerman
+  num: 115
+- name: Elisa Passoni
+  num: 116
+- name: Maud Pélissier
+  num: 117
+- name: Scott J. Perry
+  num: 118
+- name: Alexandra M. Pfiffner
+  num: 119
+- name: Michael Proctor
+  num: 120
+- name: Ryan Rhodes
+  num: 121
+- name: Nicole Rodríguez
+  num: 122
+- name: Elizabeth Roepke
+  num: 123
+- name: Jan P. Röer
+  num: 124
+- name: Lucia Sbacco
+  num: 125
+- name: Rebecca Scarborough
+  num: 126
+- name: Felix Schaeffler
+  num: 127
+- name: Erik Schleef
+  num: 128
+- name: Dominic Schmitz
+  num: 129
+- name: Alexander Shiryaev
+  num: 130
+- name: Márton Sóskuthy
+  num: 131
+- name: Malin Spaniol
+  num: 132
+- name: Joseph A. Stanley
+  num: 133
+- name: Alyssa Strickler
+  num: 134
+- name: Alessandro Tavano
+  num: 135
+- name: Fabian Tomaschek
+  num: 136
+- name: Benjamin V. Tucker
+  num: 137
+- name: Rory Turnbull
+  num: 138
+- name: Kingsley O. Ugwuanyi
+  num: 139
+- name: Iñigo Urrestarazu-Porta
+  num: 140
+- name: Ruben van de Vijver
+  num: 141
+- name: Kristin J. Van Engen
+  num: 142
+- name: Emiel van Miltenburg
+  num: 143
+- name: Bruce Wang
+  num: 144
+- name: Natasha Warner
+  num: 145
+- name: Simon Wehrle
+  num: 146
+- name: Hans Westerbeek
+  num: 147
+- name: Seth Wiener
+  num: 148
+- name: Stephen Winters
+  num: 149
+- name: Sidney G.-J. Wong
+  num: 150
+- name: Anna Wood
+  num: 151
+- name: Jane Wottawa
+  num: 152
+- name: Chenzi Xu
+  num: 153
+- name: Germán Zárate-Sández
+  num: 154
+- name: Georgia Zellou
+  num: 155
+- name: Cong Zhang
+  num: 156
+- name: Jian Zhu
+  num: 157
+- name: Timo B. Roettger
+  num: 158
+
 address:
-- num: 1
+- num: 1, 2
   org: Department of Linguistics and English Language, University of Edinburgh, United Kingdom
-- num: 2
-  org: Institute of Phonetics and Speech Processing, Ludwig-Maximilian University Munich, Germany
 - num: 3
-  org: Department of Spanish and Portuguese, Rutgers University, New Brunswick, United States
+  org: Department of Spanish and Portuguese, Rutgers University, United States
 - num: 4
-  org: Department of Linguistics and Scandinavian Studies, University of Oslo, Oslo, Norway
+  org: Department of Linguistics, Cornell University, United States
+- num: 5
+  org: Department of General and Computational Linguistics, University of Tübingen, Germany
+- num: 6
+  org: Program in Linguistics, Princeton University, United States
+- num: 7
+  org: Jubail English Language and Preparatory Year Institute, Royal Commission for Jubail and Yanbu, Saudi Arabia
+- num: 8
+  org: Laboratoire de Lingusitique Formelle (LLF), CNRS, Université Paris Cité, France
+- num: 9
+  org: School of Education, Communication and Language Studies - ECLS, Newcastle University, United Kingdom
+- num: 10
+  org: Department of Linguistics, University of Arizona, United States
+- num: 11
+  org: Psychological and Brain Sciences, Washington University in Saint Louis, United States
+- num: 12
+  org: Departamento de Letras, Universidade Federal de São Carlos, Brazil
+- num: 13
+  org: School of Languages, Linguistics, Literatures and Cultures, University of Calgary, Canada
+- num: 14
+  org: Department of Linguistics, University of Oregon, United States
+- num: 15
+  org: Department of Language and Linguistic Science, University of York, United Kingdom
+- num: 16
+  org: School of Languages, Linguistics, Literatures and Cultures, University of Calgary, Canada
+- num: 17
+  org: Department of Psychology, University of California, Davis, United States
+- num: 18
+  org: Department of Linguistics, University of Arizona, United States
+- num: 19
+  org: Institute of Phonetics and Speech Processing, University of Munich, Germany
+- num: 20
+  org: NA, University of Pennsylvania, United States
+- num: 21
+  org: Department of Communication Sciences and Disorders, Syracuse University, United States
+- num: 22
+  org: Department of Spanish, Villanova University, United States
+- num: 23
+  org: Department of English Language and Linguistics, University of Birmingham, United Kingdom
+- num: 24
+  org: Department of Philosophy, Carnegie Mellon University, United States
+- num: 25
+  org: Department of Spanish & French Studies, Occidental College, United States
+- num: 26
+  org: Department of English, Texas Tech University, United States
+- num: 27
+  org: Psychological and Brain Sciences, Washington University in Saint Louis, United States
+- num: 28
+  org: Department of Spanish and Portuguese, University of Arizona, United States
+- num: 29
+  org: Division of Mathematics and Computer Science, Simmons University, United States
+- num: 30
+  org: Analytics, Harrisburg University of Science and Technology, United States
+- num: 31
+  org: School of Languages, Linguistics, Literatures and Cultures, University of Calgary, Canada
+- num: 32
+  org: Department of Psychology, University at Buffalo, SUNY, United States
+- num: 33
+  org: Université Paris Cité, France
+- num: 34
+  org: IfL-Phonetik, University of Cologne, Germany
+- num: 35
+  org: Department of Speech, Hearing and Phonetic Sciences, University College London, United Kingdom
+- num: 36
+  org: Psychological and Brain Sciences, Washington University in Saint Louis, United States
+- num: 37
+  org: Basque Center on Cognition Brain and Language, Spain
+- num: 38
+  org: Department of Language and Linguistic Science, University of York, United Kingdom
+- num: 39
+  org: Department of Linguistics, University of California, Davis, United States
+- num: 40
+  org: Institute of Phonetics and Speech Processing, University of Munich, Germany
+- num: 41
+  org: LLING, UMR6310, Nantes Université / CNRS, France
+- num: 42
+  org: Department of Linguisticss and TESOL, University of Texas at Arlington, United States
+- num: 43
+  org: School of Psychology, Newcastle University, United Kingdom
+- num: 44
+  org: Department of Linguistics, University of Oregon, United States
+- num: 45
+  org: School of Psychological Sciences and Health, University of Strathclyde, United Kingdom
+- num: 46
+  org: Department of Linguistics, University of Oregon, United States
+- num: 47
+  org: School of English Literature, Language and Linguistics, Newcastle University, United Kingdom
+- num: 48
+  org: Department of comparative language science, Universität Zürich, Swizerland, Switzerland
+- num: 49
+  org: Basque Center on Cognition Brain and Language, Spain
+- num: 50
+  org: Department of Linguistics, University of Canterbury, New Zealand
+- num: 51
+  org: IKER (UMR 5478), Centre National de la Recherche Scientifique (CNRS), France
+- num: 52
+  org: Department of Neuroscience, Psychology and Behaviour, University of Leicester, United Kingdom
+- num: 53
+  org: Statistics Group, Association for Diversity in Linguistics, Germany
+- num: 54
+  org: CLILLAC-ARP, Université Paris Cité, France
+- num: 55
+  org: Department of Psychology, University of California, Davis, United States
+- num: 56
+  org: Department of Music, Max Planck Institute for Empirical Aesthetics, Germany
+- num: 57
+  org: Department of Psychology, Pacific Lutheran University, United States
+- num: 58
+  org: Department of Linguistics, University of Oregon, United States
+- num: 59
+  org: Department of Language and Linguistic Science, University of York, United Kingdom
+- num: 60
+  org: Institute of Phonetics and Speech Processing, University of Munich, Germany
+- num: 61
+  org: Department of languages, linguistics, and translation, Université Laval, Canada
+- num: 62
+  org: New Zealand Institute of Language, Brain and Behaviour, University of Canterbury, New Zealand
+- num: 63
+  org: Department of Languages, Literatures, and Cultures, Saint Louis University, United States
+- num: 64
+  org: Department of Psychology, Princeton University, United States
+- num: 65
+  org: LPC, Aix Marseille Univ, CNRS, France
+- num: 66
+  org: Institute of Phonetics and Speech Processing, University of Munich, Germany
+- num: 67
+  org: IfL-Phonetik, University of Cologne, Germany
+- num: 68
+  org: Department of English Language and Linguistics, University of Birmingham, United Kingdom
+- num: 69
+  org: Department of Language and Linguistic Science, University of York, United Kingdom
+- num: 70
+  org: School of English Literature, Language and Linguistics, Newcastle University, United Kingdom
+- num: 71
+  org: Department of Linguistics and TESOL, University of Texas at Arlington, United States
+- num: 72
+  org: New Zealand Institute of Language, Brain and Behaviour, University of Canterbury, New Zealand
+- num: 73
+  org: Ao Tawhiti Unlimited Discovery, New Zealand
+- num: 74
+  org: Department of Language and Linguistic Science, University of York, United Kingdom
+- num: 75
+  org: Department of Speech, Language, and Hearing Sciences, University of Colorado Boulder, United States
+- num: 76
+  org: Department of Linguistics and Cognitive Science, Pomona College, United States
+- num: 77
+  org: School of Education, Communication and Language Studies - ECLS, Newcastle University, United Kingdom
+- num: 78
+  org: University of California, Los Angeles, United States
+- num: 79
+  org: Department of Language and Linguistic Science, University of York, United Kingdom
+- num: 80
+  org: Department of Modern and Classical Languages and Literatures, California State University, Northridge, United States
+- num: 81
+  org: School of Psychology, University of Birmingham, United Kingdom
+- num: 82
+  org: School of Humanities, Language and Global Studies, University of Central Lancashire, United Kingdom
+- num: 83
+  org: Department of Linguistics, University of Canterbury, Aotearoa
+- num: 84
+  org: Programa de Pós-Graduação em Letras, Federal University of Rio Grande do Sul, Brazil
+- num: 85
+  org: Department of Linguistics, University of Canterbury, New Zealand
+- num: 86
+  org: Institute of Linguistics, University of Cologne, Germany
+- num: 87
+  org: Department of Linguistics, University of Washington, United States
+- num: 88
+  org: School of English Literature, Language and Linguistics, Newcastle University, United Kingdom
+- num: 89
+  org: Department of Language and Linguistic Science, University of York, United Kingdom
+- num: 90
+  org: School of Education, Communication and Language Studies - ECLS, Newcastle University, United Kingdom
+- num: 91
+  org: Department of Communication and Cognition, Tilburg University, Netherlands
+- num: 92
+  org: Department of Communication and Cognition, Tilburg University, the Netherlands
+- num: 93
+  org: Department of Linguistics and Basque Studies, University of the Basque Country UPV/EHU, Spain
+- num: 94
+  org: School of Education, Communication and Language Studies - ECLS, Newcastle University, United Kingdom
+- num: 95
+  org: Department of Psychology, Bowdoin College, ME, United States
+- num: 96
+  org: Linguistic Convergence Laboratory, HSE University, Russia
+- num: 97
+  org: Department of Communication and Cognition, Tilburg University, the Netherlands
+- num: 98
+  org: School of Psychology, University of Birmingham, United Kingdom
+- num: 99
+  org: School of Education, Communication and Language Studies - ECLS, Newcastle University, United Kingdom
+- num: 100
+  org: Institute of German Language I Linguistics, University of Cologne, Germany
+- num: 101
+  org: Department of English Language Studies, Federal University of Ceará, Brazil
+- num: 102
+  org: Department of Speech, Hearing and Phonetic Sciences, University College London, United Kingdom
+- num: 103
+  org: Department of Hispanic Studies, University of Houston, United States
+- num: 104
+  org: Department of English and American Studies, University of Salzburg, Austria
+- num: 105
+  org: School of Linguistics & Language Studies, Carleton University, Canada
+- num: 106
+  org: Psychological and Brain Sciences, Washington University in Saint Louis, United States
+- num: 107
+  org: Population Health Sciences Institute - Faculty of Medical Sciences, Newcastle University, United Kingdom
+- num: 108
+  org: HSE University, Russia
+- num: 109
+  org: Speech and Language Therapy, University of Strathclyde, United Kingdom
+- num: 110
+  org: LPC, Aix Marseille Univ, CNRS, France
+- num: 111
+  org: Department of Psychology, Faculty of Media and Communications, Singidunum University, Serbia
+- num: 112
+  org: Institute of Linguistics, Heinrich-Heine University Düsseldorf, Germany
+- num: 113
+  org: School of Languages, Linguistics, Literatures and Cultures, University of Calgary, Canada
+- num: 114
+  org: Graduate Program in Linguistics, Federal University of Ceará, Brazil
+- num: 115
+  org: World Languages, Literatures and Cultures Department, University of Arkansas, United States
+- num: 116
+  org: Deparment of Linguistics, Queen Mary University of London, United Kingdom
+- num: 117
+  org: CLILLAC-ARP, Université Paris Cité, France
+- num: 118
+  org: Department of Linguistics, University of Alberta, Canada
+- num: 119
+  org: Department of Linguistics, University of California, Berkeley, United States
+- num: 120
+  org: Department of Linguistics, Macquarie University, Australia
+- num: 121
+  org: Center for Cognitive Science, Rutgers University, United States
+- num: 122
+  org: Department of Spanish and Portuguese, Rutgers University, United States
+- num: 123
+  org: Department of Speech, Language, and Hearing Sciences, Saint Louis University, United States
+- num: 124
+  org: Department of Psychology, Witten/Herdecke University, Germany
+- num: 125
+  org: School of Education, Communication and Language Studies - ECLS, Newcastle University, United Kingdom
+- num: 126
+  org: Department of Linguistics, University of Colorado Boulder, United States
+- num: 127
+  org: Clinical Audiology, Speech and Language (CASL) Research Centre, Queen Margaret University Edinburgh, United Kingdom
+- num: 128
+  org: Department of English and American Studies, University of Salzburg, Austria
+- num: 129
+  org: Department of English and American Studies, Heinrich Heine University Düsseldorf, Germany
+- num: 130
+  org: Linguistic Convergence Laboratory, HSE University, Russia
+- num: 131
+  org: Department of Linguistics, University of British Columbia, Canada
+- num: 132
+  org: Department of Psychiatry and Psychotherapy, University Hospital Cologne, Germany
+- num: 133
+  org: Department of Linguistics, Brigham Young University, United States
+- num: 134
+  org: Department of Linguistics, University of Colorado Boulder, United States
+- num: 135
+  org: Department of Neuroscience, Max Planck Institute for Empirical Aesthetics, Germany
+- num: 136
+  org: Department of General Linguistics, University of Tübingen, Germany
+- num: 137
+  org: Department of Linguistics, University of Alberta, Canada
+- num: 138
+  org: School of English Literature, Language and Linguistics, Newcastle University, United Kingdom
+- num: 139
+  org: Department of English & Literary Studies, University of Nigeria, Nsukka, Nigeria
+- num: 140
+  org: IKER-UMR5478, Centre National de la Recherche Scientifique (CNRS), France
+- num: 141
+  org: Institute of Linguistics, Heinrich-Heine University Düsseldorf, Germany
+- num: 142
+  org: Psychological and Brain Sciences, Washington University in Saint Louis, United States
+- num: 143
+  org: Department of Communication and Cognition, Tilburg University, the Netherlands
+- num: 144
+  org: Chinese and Bilingual Studies, Hong Kong Polytechnic University, Hong Kong SAR, China
+- num: 145
+  org: Department of Linguistics, University of Arizona, United States
+- num: 146
+  org: IfL-Phonetik, University of Cologne, Germany
+- num: 147
+  org: Department of Languages, Literature and Communication, Utrecht University, Netherlands
+- num: 148
+  org: Department of Modern Languages, Carnegie Mellon University, United States
+- num: 149
+  org: School of Languages, Linguistics, Literatures and Cultures, University of Calgary, Canada
+- num: 150
+  org: Geospatial Research Institute, University of Canterbury, New Zealand
+- num: 151
+  org: Department of Linguistics, University of Oregon, United States
+- num: 152
+  org: Département de Lettres modernes, LIUM, LST, Le Mans Université, France
+- num: 153
+  org: NA, University of Oxford, United Kingdom
+- num: 154
+  org: Department of Spanish, Western Michigan University, United States
+- num: 155
+  org: Department of Linguistics, University of California, Davis, United States
+- num: 156
+  org: School of Education, Communication and Language Studies - ECLS, Newcastle University, United Kingdom
+- num: 157
+  org: School of Information, University of Michigan, Ann Arbor, United States
+- num: 158
+  org: Department of Linguistics and Scandinavian Studies, University of Oslo, Norway
+
 corrauth: "Timo B. Roettger"
 email: "timo.b.roettger@iln.uio.no"
 abstract: "Recent empirical studies have highlighted the large degree of analytic flexibility in data analysis which can lead to substantially different conclusions based on the same data set. Thus, researchers have expressed their concerns that these researcher degrees of freedom might facilitate bias and can lead to claims that do not stand the test of time. Even greater flexibility is to be expected in fields in which the primary data lend themselves to a variety of possible operationalizations. The multidimensional, temporally extended nature of speech constitutes an ideal testing ground for assessing the variability in analytic approaches, which derives not only from aspects of statistical modeling, but also from decisions regarding the quantification of the measured behavior. In the present study, we gave the same speech production data set to 46 teams of researchers and asked them to answer the same research question, resulting in substantial variability in reported effect sizes and their interpretation. Using Bayesian meta-analytic tools, we further find little to no evidence that the observed variability can be explained by analysts' prior beliefs, expertise or the perceived quality of their analyses. In light of this idiosyncratic variability, we recommend that researchers more transparently share details of their analysis, strengthen the link between theoretical construct and quantitative system and calibrate their (un)certainty in their conclusions"
@@ -242,8 +706,6 @@ pm  <- function(x) {
 }
 ```
 
-
-> Authors' affiliations to be added later.
 
 # Introduction
 
