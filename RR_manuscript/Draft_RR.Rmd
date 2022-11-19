@@ -355,7 +355,7 @@ address:
 - num: 19
   org: Institute of Phonetics and Speech Processing, University of Munich, Germany
 - num: 20
-  org: NA, University of Pennsylvania, United States
+  org: University of Pennsylvania, United States
 - num: 21
   org: Department of Communication Sciences and Disorders, Syracuse University, United States
 - num: 22
