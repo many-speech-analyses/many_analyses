@@ -204,13 +204,14 @@ n_countries <- contributors %>%
 n_countries %>% 
   ggplot() + 
   aes(x = n, y = primary_affiliation_country) + 
-  geom_segment(aes(x = 0, xend = n, yend = primary_affiliation_country)) + 
-  geom_point() + 
-  labs(x = "n", y = NULL, title = "Number of analysts by country") + 
+  geom_segment(aes(x = 0, xend = n, yend = primary_affiliation_country), size = 2) + 
+  geom_point(size = 6) + 
+  geom_text(aes(label = n), color = "white", size = 3) + 
+  labs(x = "n", y = NULL, 
+    title = glue("Number of analysts by country (n = {sum(n_countries$n)})")) + 
   theme_bw(base_size = 9) + 
   scale_y_discrete(name = NULL, labels = n_countries$labs) + 
   theme(axis.text.y = element_markdown(color = "black"))
-
 
 ```
 
