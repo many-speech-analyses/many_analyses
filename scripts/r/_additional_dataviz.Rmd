@@ -190,3 +190,141 @@ ggsave(filename = "figs/flow_outcome_f0.png",
        dpi = 500)
 
 ```
+
+
+
+```{r meta-subsets}
+msa_models <- msa_models %>% 
+  mutate(found_effect = ifelse(is.na(found_effect), "no", found_effect),
+         isolated_f0 = ifelse(outcome == "f0", 1, 0),
+         isolated_noun = ifelse(specific_domain == "noun", 1, 0),
+         f0_noun = ifelse(isolated_f0 == 1 & isolated_noun == 1, 1, 0))
+
+slides_raw_est <- 
+  ggplot(data = msa_models,
+    aes(x = reorder(model_id, estimate), 
+        y = estimate,
+        color = found_effect,
+        fill = found_effect
+        )) +
+  geom_hline(yintercept = 0, lty = "dotted") +
+  geom_point(pch = 21,
+             size = 0.8) +
+  geom_segment(aes(xend = reorder(model_id, estimate), 
+                   y = estimate - 1.96*se, 
+                   yend = estimate + 1.96*se),
+                lineend = "round",
+                size = 1,
+                alpha = 0.5) +
+  scale_x_discrete(expand =  c(0.05,0.05)) + 
+  scale_y_continuous(limits =  c(-2, 2.2)) + 
+  labs(# title = "Effect estimates across all submitted effects",
+       caption = "Reports statistically reliable effect (orange),
+       Reports null result (black)\n",
+       x = "Submitted typicality effect", 
+       y = "Standardized posterior effect size\n") +
+  scale_color_manual(values = c("black", "#ef8a62")) +
+  scale_fill_manual(values = c("black", "#ef8a62")) +
+  theme_classic() +
+  theme(legend.position = "none",
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank(),
+        axis.line = element_blank(),
+        plot.caption = element_text(vjust = -5)
+        )
+slides_raw_est
+
+ggsave(filename = "figs/slides_raw_est.png",
+       plot = slides_raw_est,
+       device = "png",
+       width = 150, 
+       height = 85,
+       units = "mm", 
+       dpi = 500)
+
+# ONLY F0
+slides_raw_est_f0 <- 
+  ggplot(data = msa_models,
+    aes(x = reorder(model_id, estimate), 
+        y = estimate,
+        color = as.factor(isolated_f0)
+        )) +
+  geom_hline(yintercept = 0, lty = "dotted") +
+  geom_point(pch = 21,
+             size = 0.8) +
+  geom_segment(aes(xend = reorder(model_id, estimate), 
+                   y = estimate - 1.96*se, 
+                   yend = estimate + 1.96*se),
+                lineend = "round",
+                size = 1,
+                alpha = 0.5) +
+  scale_x_discrete(expand =  c(0.05,0.05)) + 
+  scale_y_continuous(limits =  c(-2, 2.2)) + 
+  labs(# title = "Effect estimates across all submitted effects",
+       caption = "Analysis based on f0 (blue),
+       Analyes based on different outcomes (grey)\n",
+       x = "Submitted typicality effect", 
+       y = "Standardized posterior effect size\n") +
+  scale_color_manual(values = c("grey", "navyblue")) +
+  scale_fill_manual(values = c("grey", "navyblue")) +
+  theme_classic() +
+  theme(legend.position = "none",
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank(),
+        axis.line = element_blank(),
+        plot.caption = element_text(vjust = -5)
+        )
+slides_raw_est_f0
+
+ggsave(filename = "figs/slides_raw_est_f0.png",
+       plot = slides_raw_est_f0,
+       device = "png",
+       width = 150, 
+       height = 85,
+       units = "mm", 
+       dpi = 500)
+
+
+# ONLY F0
+slides_raw_est_f0_noun <- 
+  ggplot(data = msa_models,
+    aes(x = reorder(model_id, estimate), 
+        y = estimate,
+        color = as.factor(f0_noun)
+        )) +
+  geom_hline(yintercept = 0, lty = "dotted") +
+  geom_point(pch = 21,
+             size = 0.8) +
+  geom_segment(aes(xend = reorder(model_id, estimate), 
+                   y = estimate - 1.96*se, 
+                   yend = estimate + 1.96*se),
+                lineend = "round",
+                size = 1,
+                alpha = 0.5) +
+  scale_x_discrete(expand =  c(0.05,0.05)) + 
+  scale_y_continuous(limits =  c(-2, 2.2)) + 
+  labs(# title = "Effect estimates across all submitted effects",
+       caption = "Analysis based on f0 in the noun (blue),
+       Analyes based on other measures (grey)\n",
+       x = "Submitted typicality effect", 
+       y = "Standardized posterior effect size\n") +
+  scale_color_manual(values = c("grey", "navyblue")) +
+  scale_fill_manual(values = c("grey", "navyblue")) +
+  theme_classic() +
+  theme(legend.position = "none",
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank(),
+        axis.line = element_blank(),
+        plot.caption = element_text(vjust = -5)
+        )
+slides_raw_est_f0_noun
+
+ggsave(filename = "figs/slides_raw_est_f0_noun.png",
+       plot = slides_raw_est_f0_noun,
+       device = "png",
+       width = 150, 
+       height = 85,
+       units = "mm", 
+       dpi = 500)
+```
+
