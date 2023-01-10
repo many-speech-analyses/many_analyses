@@ -1132,7 +1132,7 @@ The expedient of using a measurement-error term (which includes the teams' stand
 
 We had initially planned to also include a measure of conservativeness of the model specification, as the number of random/group-level effects included and the number of post-hoc changes to the acoustic measurements the teams reported to have carried out. 
 When fitting the model, we realized that the measure of conservativeness is related to the standard error of the estimates (i.e. more group-level effects = higher standard error).
-Moreover, there was no team that declared to have made post-hoc changes to the analyses, this we decided against including these two preregistered predictors in the model.  
+Moreover, there was no team that declared to have made post-hoc changes to the analyses, thus we decided against including these two preregistered predictors in the model.  
 
 **Model specification**. The model was fitted as a measurement-error model, with the predictors detailed in the preceding paragraphs.
 The outcome variables of the model were the standardized effect sizes and related standard deviation.
@@ -2051,9 +2051,9 @@ The fact that the choice of measurement, measurement window, and predictor choic
 
 We should ideally specify the link between conceptual construct and quantitative system---the "derivation chain" [@dubin1970theory; @meehl1990summaries]---prior to data collection and analysis, including defining constructs and their relationship within the quantitative system, specifying auxiliary assumptions and boundary conditions, and defining target measurements, statistical expectations and possible (and impossible) effect magnitudes.
 Without well-defined derivation chains, we "are not even wrong" [@scheel2022most] because falsified expectations cannot tell us much about the conceptual constructs they are based on when the relationship between the two is underspecified.
-Some of the analysis teams explicitly recognized and acknowledged the need to formulate a more precise version of the research question by preregistering their planned data analysis pipeline.  
-
-In light of the observed analytic flexibility, there are a few things that researchers can do to appropriately calibrate confidence in their claims.
+Some of the analysis teams explicitly recognized and acknowledged the need to formulate a more precise version of the research question by preregistering their planned data analysis pipeline. 
+Preregistration, i.e. a time-stamped document in which researchers specify how they plan to collect their data and/or how they plan to conduct their confirmatory analysis, is can be a useful tool to safeguard researchers against the urge to explore many different analytical paths before choosing the one that, in hindsight, seems most justified.
+However, as long as the theoretical landscape does not allow for more precise hypotheses, the value of preregistration is limited and we need to find ways to appropriately calibrate the confidence in our claims:
 
 First of all, through sharing of materials, data and statistical protocols, we can make our idiosyncratic choices transparent to others [@munafo2017manifesto; @vazire2017quality].
 Sharing further enables the evaluation and verification of underlying claims and allows for the evaluation of empirical, computational and statistical reproducibility [@lebel2018unified]. 
