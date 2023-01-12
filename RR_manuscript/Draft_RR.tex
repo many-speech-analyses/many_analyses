@@ -439,6 +439,8 @@ Since the variables used by the analysis teams might have substantially differed
 Each \textsc{standardized model} was fitted as a Bayesian regression model with Stan \citep{stan2021}, RStan \citep{stan2020a}, and brms \citep{burkner2017} in R \citep{R-base}.
 Model refitting also constituted a way of validating the reported analyses, a step recommended by \citet{aczel2021}.
 Details about the refitting procedure can be found at \url{https://many-speech-analyses.github.io/many_analyses/scripts/r/04_refit_workflow}.
+Relative to the registered protocol, we made minor changes to the refitting procedure, specifically file and variable naming conventions and the use of treatment contrasts instead of sum coding.
+All models converged (\(\hat{R}\) was approximately 1) and only some had a small number of divergent transitions which were not deemed problematic (range XXX).
 
 The coefficients of the critical predictors (i.e.~critical according to the analysis teams' self-reported inferential criteria) obtained from the standardized models were used as the \textsc{standardized effect size} (\(\eta_i\)) of each reported model.
 Moreover, to account for the differing degree of uncertainty around each standardized effect size, we used the standard deviation of each standardized effect size as the \textsc{standardized standard error} (\(\text{se}_i\)).
@@ -515,7 +517,7 @@ The expedient of using a measurement-error term (which includes the teams' stand
 
 We had initially planned to also include a measure of conservativeness of the model specification, as the number of random/group-level effects included and the number of post-hoc changes to the acoustic measurements the teams reported to have carried out.
 When fitting the model, we realized that the measure of conservativeness is related to the standard error of the estimates (i.e.~more group-level effects = higher standard error).
-Moreover, there was no team that declared to have made post-hoc changes to the analyses, this we decided against including these two preregistered predictors in the model.
+Moreover, there was no team that declared to have made post-hoc changes to the analyses, thus we decided against including these two preregistered predictors in the model.
 
 \textbf{Model specification}. The model was fitted as a measurement-error model, with the predictors detailed in the preceding paragraphs.
 The outcome variables of the model were the standardized effect sizes and related standard deviation.
@@ -534,10 +536,11 @@ All relevant data, code, and materials have been publicly archived on the Open S
 Archived data include the original data set distributed to all analysts, any edited versions of the data analyzed by individual teams, and the data we analyzed with our meta-analyses, which include the standardized effect sizes, the statistics describing variation in model structure among analysis teams, and the anonymized answers to our questionnaires of analysts.
 Similarly, we archived both the analysis code used for each individual analysis and the code from our meta-analyses.
 We also archived copies of our survey instruments from analysts and peer-reviewers.
+Further documents concerning the collaborative editing of the Registered Report can be found at \url{https://drive.google.com/drive/folders/1-DOcj1qtEkvWfzu_FrsxkIGfPS0DyLXB?usp=sharing}.
 
 We excluded from our synthesis any individual analysis submitted after peer review (Phase 3) or those unaccompanied by analysis files without which it was not possible to follow the research protocol.
 We also excluded any individual analysis that does not produce an outcome that could be interpreted as an answer to our primary question.
-For a list of exlcusion criteria, see Section Descriptive statistics below.
+We also did no include analyses for which we could not extract standardized effect sizes. For a list of exclusion criteria, see Section Descriptive statistics below.
 
 \hypertarget{phase-5-collaborative-write-up-of-manuscript}{%
 \subsection{Phase 5: Collaborative Write-Up of Manuscript}\label{phase-5-collaborative-write-up-of-manuscript}}
@@ -569,6 +572,7 @@ Forty-six teams submitted their analyses by the established deadline.
 Only analyses from which it was possible to extract an effect size were included in the meta-analysis.
 Of the analysis submitted by the 46 teams, the initiating authors identified analyses from 30 teams to be eligible to be included in the meta-analytic model.
 Reasons for exclusion were: use of Generalized Additive Models (4 teams) which do not lend themselves easily to the meta-analytic methods employed in this study, use of machine learning techniques (3 teams), use of typicality as the outcome variable/response (3 teams), or use of other methods that returned statistics that could not be included in the meta-analytic model.
+Note that due to the unforeseen variability across teams, the latter exclusion criteria were not preregistered and were applied after sighting all analyses strategies.
 
 In what follows, we describe the characteristics of those teams whose analyses were included in the meta-analytic model.
 A complete summary of all the analyses from the 46 submitting teams is available in the supplementary materials at \url{https://many-speech-analyses.github.io/many_analyses/RR_manuscript/supplementary_materials.pdf}.
@@ -600,7 +604,7 @@ Some of these measures were normalized relative to other elements in the sentenc
 The large decision space related to how the acoustic signal was measured is further expanded by the choices in the statistical analysis, including the chosen inferential framework, the type of model, and the model specification, including choice of predictors, interactions and group-level effects.
 
 The mean of the number of different predictors included in teams' models was 2 (defined as variables or columns in the data table).
-This means that, in addition to the critical predictor (typicality of the adjective noun combinations), models had on average one additional predictor (range = 1-\texttt{r}round(predictor\_n\$max\_predictor,1)`).
+This means that, in addition to the critical predictor (typicality of the adjective noun combinations), models had on average one additional predictor (range = -4).
 Possible information that was used as predictors included the information structure of the sentence, trial number, semantic dimensions of the referent, part of speech, and speaker gender.
 
 The data given to the teams allowed them to operationalize the predictor of interest, word typicality, in different ways.
@@ -626,7 +630,7 @@ Teams differed with regard to how the acoustic signal was segmented ranging from
 
 The question arises whether these unique analysis pipelines led to different conclusions.
 Nine teams out of the thirty (30\%) reported to have found at least one statistically reliable effect (based on the inferential criteria they specified).
-Of the 104 submitted models, 37 were reported to show a statistically reliable effect (21.8\%).
+Of the 170 critical model coefficients, 37 were claimed to show a statistically reliable effect (21.8\%).
 
 \begin{table}
 
@@ -778,7 +782,7 @@ We checked correlations between predictors and while predictors do not seem to b
 
 
 \begin{figure}
-\includegraphics[width=1\linewidth]{../figs/alltogether} \caption{The effects of analytic and researcher-related predictors on the reported standardized effect sizes. (A) Posterior samples for the four most frequent outcome variables; (B) Posterior samples for the four most frequent temporal windows: Black points indicate medians; shaded areas represents 50/80/95\% highest density intervals. (C) Mean posterior samples (white circles) and 80/95\% credible intervals for all predictors.}\label{fig:plot-meta2}
+\includegraphics[width=1\linewidth]{../figs/alltogether} \caption{The effects of analytic and researcher-related predictors on the reported standardized effect sizes. (A) Posterior samples for the four most frequent outcome variables; (B) Posterior samples for the four most frequent temporal windows: Black points indicate medians; shaded areas represents 50/80/95\% highest density intervals. (C) Mean posterior samples (white circles) and 80/95\% credible intervals for all predictors grouped into predictors related to (1) temporal window, (2) outcome variable, and (3) team/analysis.}\label{fig:plot-meta2}
 \end{figure}
 
 \hypertarget{discussion}{%
@@ -897,7 +901,7 @@ The replication crisis has brought attention to scientific practices that lead t
 One of the suggested paths forward is for researchers to directly replicate previous studies more often \citep{open2015estimating, camerer2018evaluating}.
 While we agree with the importance of direct replications, our study (and similar crowd-sourced analyses before us) suggest that replicating more is simply not enough.
 There is only limited value in learning that a particular procedure is replicable if the idiosyncratic nature of the procedure itself might not yield a representative result relative to all possible procedures that could have been applied to the research question.
-Beyond a replication crisis, quantitative disciplines are going through what has been called an ``inference crisis'' \citep{rotello2015more, starns2019assessing}.
+Thus beyond a mere replication crisis, quantitative disciplines are going through an ``inference crisis'' \citep{rotello2015more, starns2019assessing}.
 As shown by the peer-ratings of the analyses reported in this study, well-trained and experienced speech researchers not only applied completely different approaches to the same research question, but also considered most of these alternative approaches acceptable.
 Being aware of this idiosyncratic variation between analysts should lead to more nuanced claims and a certain level of epistemic humility \citep[see][ for an overview of the concept]{campbell1975}.
 
@@ -907,15 +911,16 @@ The fact that the choice of measurement, measurement window, and predictor choic
 We should ideally specify the link between conceptual construct and quantitative system---the ``derivation chain'' \citep{dubin1970theory, meehl1990summaries}---prior to data collection and analysis, including defining constructs and their relationship within the quantitative system, specifying auxiliary assumptions and boundary conditions, and defining target measurements, statistical expectations and possible (and impossible) effect magnitudes.
 Without well-defined derivation chains, we ``are not even wrong'' \citep{scheel2022most} because falsified expectations cannot tell us much about the conceptual constructs they are based on when the relationship between the two is underspecified.
 Some of the analysis teams explicitly recognized and acknowledged the need to formulate a more precise version of the research question by preregistering their planned data analysis pipeline.
+Preregistration, i.e.~a time-stamped document in which researchers specify how they plan to collect their data and/or how they plan to conduct their confirmatory analysis, is can be a useful tool to safeguard researchers against the urge to explore many different analytical paths before choosing the one that, in hindsight, seems most justified.
+However, as long as the theoretical landscape does not allow for more precise hypotheses, the value of preregistration is limited and we need to find ways to appropriately calibrate the confidence in our claims:
 
-In light of the observed analytic flexibility, there are a few things that researchers can do to appropriately calibrate confidence in their claims.
 First of all, through sharing of materials, data and statistical protocols, we can make our idiosyncratic choices transparent to others \citep{munafo2017manifesto, vazire2017quality}.
 Sharing further enables the evaluation and verification of underlying claims and allows for the evaluation of empirical, computational and statistical reproducibility \citep{lebel2018unified}.
 It allows for alternative analyses to establish analytic robustness \citep{steegen2016increasing} and strengthens attempts to synthesize evidence via meta-analyses \citep[e.g.,][]{nicenboim2018using}.
 Given that minor procedural changes can sometimes drastically affect the final interpretation of the results \citep{breznau2021observing}, we should ideally share a detailed documentation of the data collection procedure, the measurement choices, the data extraction, and statistical analyses.
 Within fields that deal with speech data, open source software that permits the extraction of acoustic parameters via reproducible scripts can help other researchers to trace back seemingly inconsequential choices during the measurement process \citetext{\citealp[e.g., Praat:][]{boersma2021praat}; \citealp[EMU:][]{winkelmann2017emu}; \citealp[the Montreal Forced Aligner:][]{mcauliffe2017}}.
 
-Second, making analytic pathways completely re-traceable does not change the fact that analysts apply different analytic approaches.
+Second, making analytic pathways completely re-traceable and preregistering them in advance do not change the fact that different analysts might apply different analytic approaches (preregistered or not).
 Crowd-sourced projects such as the current one can shed light on the range of degrees of freedom during analysis and could possibly help produce a consensual estimated effect if the research hypothesis is specific enough.
 Crowd-sourcing analyses is obviously not always feasible in terms of required resources and time, but could be a consideration for claims that have large epistemological or practical consequences.
 
@@ -927,12 +932,13 @@ Finally, neither crowd-sourcing nor multiverse analyses will guarantee that all 
 Crowd-sourcing is limited by the sampled analysts and their biases.
 Multiverse analyses are limited even further by the group of researchers who define possible analytic pathways.
 Eventually, a mature scientific discipline needs to develop a set of detailed quantitative hypotheses of how conceptual constructs manifest themselves in the measured system, i.e.~in the present case how communicative pressures of certain functions are expressed in the acoustic signal.
-Possible tools to strengthen theoretical development are relate to mathematically formalizing verbal expectations or using computational models \citep[e.g.,][]{van2020formalizing, guest2021computational, scheel2021hypothesis, devezer2021case}.
+Possible tools to strengthen theoretical development relate to mathematically formalizing verbal expectations or using computational models \citep[e.g.,][]{van2020formalizing, guest2021computational, scheel2021hypothesis, devezer2021case}.
+Although conceptually promising, in their current state, such formalized models typically work in spaces that are much lower in dimensionality than the complex systems in which we measure. Thus, future research should spend resources on attempting to quantitatively relate the abstract theoretical space to the complex measurement space.
 
 \hypertarget{caveats}{%
 \subsection{Caveats}\label{caveats}}
 
-Our study has several limitations that need to be considered when evaluating our results.
+Our study has several limitations that need to be considered when interpreting our results.
 
 First, while the total number of analyses is larger than most earlier crowd-sourcing projects, it is likely to be too small to reliably estimate the impact of certain predictors.
 Since predictors' values were not systematically distributed across teams, our estimates are characterized by large uncertainty.
@@ -994,7 +1000,7 @@ We suggest that fields that use multidimensional data need to acknowledge these 
 \hypertarget{author-contributions}{%
 \section{Author contributions}\label{author-contributions}}
 
-See \url{https://github.com/many-speech-analyses/many_analyses/blob/main/figs/credit-taxonomy.png}.
+See \url{https://github.com/many-speech-analyses/many_analyses/blob/main/figs/credit-taxonomy-all.png}.
 
 \hypertarget{conflicts-of-interest}{%
 \section{Conflicts of interest}\label{conflicts-of-interest}}
