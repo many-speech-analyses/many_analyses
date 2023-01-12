@@ -419,7 +419,7 @@ divergent_transitions <-
   unnest(dts) %>% 
   select(mod_name, dts) %>% 
   filter(dts != 0) %>% 
-  summarize(min_dt = min(dts), max_dt = max(dts))
+  summarize(n = nrow(.), min_dt = min(dts), max_dt = max(dts))
 
 ```
 
