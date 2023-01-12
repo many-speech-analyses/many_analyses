@@ -1581,7 +1581,7 @@ Some of these measures were normalized relative to other elements in the sentenc
 The large decision space related to how the acoustic signal was measured is further expanded by the choices in the statistical analysis, including the chosen inferential framework, the type of model, and the model specification, including choice of predictors, interactions and group-level effects.
 
 The mean of the number of different predictors included in teams' models was `r round(predictor_n$mean_predictor,1)` (defined as variables or columns in the data table).
-This means that, in addition to the critical predictor (typicality of the adjective noun combinations), models had on average one additional predictor (range = `r round(predictor_n$min_predictor,1)`-`r `round(predictor_n$max_predictor,1)`).
+This means that, in addition to the critical predictor (typicality of the adjective noun combinations), models had on average one additional predictor (range = `r round(predictor_n$min_predictor,1)- round(predictor_n$max_predictor,1)`).
 Possible information that was used as predictors included the information structure of the sentence, trial number, semantic dimensions of the referent, part of speech, and speaker gender.
 
 The data given to the teams allowed them to operationalize the predictor of interest, word typicality, in different ways.
@@ -2136,7 +2136,7 @@ We suggest that fields that use multidimensional data need to acknowledge these 
 
 # Author contributions
 
-See <https://github.com/many-speech-analyses/many_analyses/blob/main/figs/credit-taxonomy.png>.
+See <https://github.com/many-speech-analyses/many_analyses/blob/main/figs/credit-taxonomy-all.png>.
 
 # Conflicts of interest
 
