@@ -1045,6 +1045,8 @@ Since the variables used by the analysis teams might have substantially differed
 Each \textsc{standardized model} was fitted as a Bayesian regression model with Stan [@stan2021], RStan [@stan2020a], and brms [@burkner2017] in R [@R-base].
 Model refitting also constituted a way of validating the reported analyses, a step recommended by @aczel2021.
 Details about the refitting procedure can be found at <https://many-speech-analyses.github.io/many_analyses/scripts/r/04_refit_workflow>.
+Relative to the registered protocol, we made minor changes to the refitting procedure, specifically file  and variable naming conventions and the use of treatment contrasts instead of sum coding.
+All models converged ($\hat{R}$ was approximately 1) and only some had a small number of divergent transitions which were not deemed problematic (range XXX).
 
 The coefficients of the critical predictors (i.e. critical according to the analysis teams' self-reported inferential criteria) obtained from the standardized models were used as the \textsc{standardized effect size} ($\eta_i$) of each reported model.
 Moreover, to account for the differing degree of uncertainty around each standardized effect size, we used the standard deviation of each standardized effect size as the \textsc{standardized standard error} ($\text{se}_i$).
@@ -1150,6 +1152,7 @@ All relevant data, code, and materials have been publicly archived on the Open S
 Archived data include the original data set distributed to all analysts, any edited versions of the data analyzed by individual teams, and the data we analyzed with our meta-analyses, which include the standardized effect sizes, the statistics describing variation in model structure among analysis teams, and the anonymized answers to our questionnaires of analysts.
 Similarly, we archived both the analysis code used for each individual analysis and the code from our meta-analyses.
 We also archived copies of our survey instruments from analysts and peer-reviewers.
+Further documents concerning the collaborative editing of the Registered Report can be found at <https://drive.google.com/drive/folders/1-DOcj1qtEkvWfzu_FrsxkIGfPS0DyLXB?usp=sharing>.
 
 We excluded from our synthesis any individual analysis submitted after peer review (Phase 3) or those unaccompanied by analysis files without which it was not possible to follow the research protocol.
 We also excluded any individual analysis that does not produce an outcome that could be interpreted as an answer to our primary question.
@@ -2073,7 +2076,8 @@ Finally, neither crowd-sourcing nor multiverse analyses will guarantee that all 
 Crowd-sourcing is limited by the sampled analysts and their biases.
 Multiverse analyses are limited even further by the group of researchers who define possible analytic pathways.
 Eventually, a mature scientific discipline needs to develop a set of detailed quantitative hypotheses of how conceptual constructs manifest themselves in the measured system, i.e. in the present case how communicative pressures of certain functions are expressed in the acoustic signal. 
-Possible tools to strengthen theoretical development relate to mathematically formalizing verbal expectations or using computational models [e.g., @van2020formalizing; @guest2021computational; @scheel2021hypothesis; @devezer2021case].^[Although conceptually promising, in their current state, such formalized models typically work in spaces that are much lower in dimensionality than the complex systems in which we measure. Thus, future research should spend resources on attempting to quantitatively relate the abstract theoretical space to the complex measurement space.]
+Possible tools to strengthen theoretical development relate to mathematically formalizing verbal expectations or using computational models [e.g., @van2020formalizing; @guest2021computational; @scheel2021hypothesis; @devezer2021case].
+Although conceptually promising, in their current state, such formalized models typically work in spaces that are much lower in dimensionality than the complex systems in which we measure. Thus, future research should spend resources on attempting to quantitatively relate the abstract theoretical space to the complex measurement space.
 
 ## Caveats
 Our study has several limitations that need to be considered when interpreting our results. 
