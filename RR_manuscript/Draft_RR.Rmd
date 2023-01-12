@@ -1546,7 +1546,7 @@ An important aspect that emerges from the descriptive analysis is the large vari
 Only analyses from which it was possible to extract an effect size were included in the meta-analysis. 
 Of the analysis submitted by the `r pull_from_tib(team_desc_df, stage, "Submitted", n_teams)` teams, the initiating authors identified analyses from `r pull_from_tib(team_desc_df, stage, "Final", n_teams)` teams to be eligible to be included in the meta-analytic model.
 Reasons for exclusion were: use of Generalized Additive Models (4 teams) which do not lend themselves easily to the meta-analytic methods employed in this study, use of machine learning techniques (3 teams), use of typicality as the outcome variable/response (3 teams), or use of other methods that returned statistics that could not be included in the meta-analytic model.
-Note that due to the unforeseen variability across teams, the latter exclusion criteria were not preregistered and were applied after sighting all analyses strategies. 
+Note that due to the unforeseen variability across teams, the latter exclusion criteria were not preregistered and were applied after having seen all analytic strategies. 
 
 In what follows, we describe the characteristics of those teams whose analyses were included in the meta-analytic model.
 A complete summary of all the analyses from the `r pull_from_tib(team_desc_df, stage, "Submitted", n_teams)` submitting teams is available in the supplementary materials at <https://many-speech-analyses.github.io/many_analyses/RR_manuscript/supplementary_materials.pdf>.
