@@ -622,7 +622,7 @@ forest <- post_pred_forest %>%
 
 # Revise after Stage-2 Reviews
 # add structure to forest plot
-labels_axis <- c("team's number of models", "prior belief", "years after Phd", "peer rating", "typicality operationalization", "model uniqueness", "f0", "intensity", "formants", "duration", "sentence", "segment", "word", "phrase") 
+labels_axis <- c("Team's number of models", "Prior belief", "Years after Phd", "Peer rating", "Typicality Operationalization", "Model uniqueness", "F0", "Intensity", "Formants", "Duration", "Sentence", "Segment", "Word", "Phrase") 
 
 forest_ordered <- post_pred_forest %>%
   filter(predictor != "Intercept") %>%
