@@ -2147,6 +2147,27 @@ See <https://github.com/many-speech-analyses/many_analyses/blob/main/figs/credit
 
 We have no conflicts of interest to disclose.
 
+# Acknowledgements
+
+We would like to thank the editors David Sbarra and Julia Strand, Matthew Goldrick and two anonymous reviewers for their insightful comments and suggestions.
+
+The initiating authors (SC, JVC, TR) wish to express immense gratitude to all the other authors, without which this project would not have come to be.
+
+All remaining errors are the initiating authors' (SC, JVC, TR)
+
+# Funding
+
+Stefano Coretta was partially supported by the European Research Council Grant No. 742289 Human interaction and the evolution of spoken accent (2017–2022) awarded to Prof. Jonathan Harrington.
+
+Jalal Al-Tamimi was partially supported by the French Investissements d'Avenir - Labex EFL program (ANR-10- LABX-0083), contributing to the IdEx Université Paris Cité - ANR-18-IDEX-0001.
+
+George Moroz, Sita Carraturo: The research leading to these results has received funding from the Basic Research Program at the National Research University Higher School of Economics.
+
+Iñigo	Urrestarazu-Porta: The research leading to these results has received funding from the MADPAB (National Research Agency of the French republic, ANR-20-CE27-0007) and Monumenta Linguae Vasconum 6: avances en la cronología de la historia y la prehistoria de la lengua vasca projects (Ministry of Science and Innovation of the Spanish kingdom, PID2020-118445GB-I00).
+
+Constantijn	Kaland, Martine Grice: German Research Foundation (DFG) - Project-ID 281511265 - SFB 125.
+
+Nina R. Benway: This research was supported in part through computational resources provided by Syracuse University (NSF ACI-1341006; NSF ACI-1541396).
 
 \appendix
 
