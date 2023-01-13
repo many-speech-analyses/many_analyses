@@ -1326,6 +1326,7 @@ framework_n <- msa_models_unique %>%
   summarise(prop = n / sum(n))
 
 # model
+# multivariate are counted as individual models
 model_n <- msa_models_unique %>% 
   count(model) %>% 
   summarise(prop = n / sum(n))
