@@ -33,7 +33,7 @@ saveRDS(msa_reviews, "./data/peer_review/msa_reviews.rds")
 ```{r analytic-quest}
 dir.create("data/peer_review/msa_reviews/", showWarnings = FALSE)
 
-for (team in unique(reviews$Q3)) {
+for (team in unique(msa_reviews$Q3)) {
   file_name <- as.character(glue("data/peer_review/msa_reviews/{team}.csv"))
   
   msa_reviews %>%
