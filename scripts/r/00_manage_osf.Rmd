@@ -155,40 +155,6 @@ walk(
 )
 ```
 
-# Download team components
-
-```{r teams-comps, eval=FALSE}
-osf_teams <- osf_retrieve_node("n3fyd")
-# Warning, takes a minute
-teams_comps <- osf_ls_nodes(osf_teams, n_max = Inf)
-assigned <- read_sheet("https://docs.google.com/spreadsheets/d/1OOXB-8Uk-fh_urw0Lm4DC0jBueXLIb4Bm-a9--UVXOw/edit?usp=sharing")
-```
-
-```{r teams-download, eval=FALSE}
-my_assignment <- assigned %>%
-  # ste, joseph, or timo
-  filter(assigned_to == "ste") %>%
-  pull(animal)
-
-for (team in 1:length(my_assignment)) {
-  skip_to_next <- FALSE
-  
-  name <- my_assignment[team]
-  dir.create(glue("./data/teams_analyses/{name}"), recursive = TRUE, showWarnings = FALSE)
-  
-  tryCatch(
-    osf_ls_files(teams_comps[team,], type = "folder") %>%
-      osf_download(
-        path = glue("./data/teams_analyses/{name}"),
-        recurse = TRUE, verbose = TRUE, progress = TRUE, conflicts = "skip"
-      ),
-    error = function(e) { skip_to_next <<- TRUE}
-  )
-  
-  if(skip_to_next) { next }
-}
-```
-
 # Upload analytic questionnaire answers.
 
 ```{r upload-analytic-responses}
