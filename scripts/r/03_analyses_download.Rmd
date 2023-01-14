@@ -170,5 +170,10 @@ for (comp in 1:nrow(your_comps)) {
 
 ## Refit models
 
+```{r models-dir}
+dir.create("./data/analyses/models")
+```
+
+
 Now that the components have been downloaded, we can refit the models following the instructions in `04-1_refit_workflow`.
 
