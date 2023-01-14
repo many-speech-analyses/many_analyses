@@ -19,7 +19,6 @@ library(brms)
 library(readxl)
 library(lme4)
 library(here)
-library(fs)
 
 # NOTE: one of the many packages interferes with tidyverse, so the select function throws an error!
 
@@ -1803,65 +1802,5 @@ procambarus_mahogoni_3_int_con <- brm(
   cores = 4,  
   file = "./data/analyses/models/procambarus_mahogoni_3_int_con"
   )
-
-```
-
-# summary
-
-
-## Load models
-
-```{r}
-#| label: load-models
-# This code will need to change eventually to pull rds files from OSF... for now it assumes they are stored in a folder called "models"
-
-msa_models <- dir_ls(path = here("data", "analyses", "models"), regexp = ".rds$") %>% 
-  as_tibble() %>% 
-  transmute(path = value, 
-    mod_name = str_remove(path, here("data", "analyses", "models/")), 
-    mod_name = str_remove(mod_name, ".rds"), 
-    model = map(path, ~ readRDS(file = .))) %>% 
-  separate(mod_name, 
-    into = c("word1", "word2", "mod_n", "outcome", "typicality"), 
-    sep = "_", remove = F) %>% 
-  unite(group, word1, word2, sep = "_") %>% 
-  dplyr::select(group, mod_name:model) %>% 
-  mutate(sum = map(model, clean_up)) %>% 
-  suppressWarnings() # because it warns every time that some coef have underscores and its annoying
-
-```
-
-## Table
-
-```{r}
-#| label: effect-table
-# Simple pandoc table of the models, estimates, se, etc.
-msa_models %>% 
-  unnest(sum) %>% 
-  select(-model) %>% 
-  knitr::kable(format = "pandoc")
-```
-
-## Plot
-
-```{r} 
-#| label: forest-plot
-# Simple forest plot of the estimates +/- SE
-msa_models %>% 
-  unnest(sum) %>% 
-  mutate(typicality_lab = if_else(typicality == "cat", 
-    "Typicality = categorical", "Typicality = continuous"), 
-    mod_name = fct_reorder(mod_name, estimate)) %>% 
-  ggplot() + 
-  facet_wrap(~ typicality_lab, ncol = 1, scales = "free") + 
-  aes(x = estimate, y = mod_name, color = group) + 
-  geom_segment(aes(x = estimate - se, xend = estimate + se, yend = mod_name), 
-    #color = "#cc0033", 
-    alpha = 0.5, size = 3, lineend = "round") + 
-  geom_vline(xintercept = 0, lty = "dashed", color = "grey") +
-  geom_point(pch = 21, stroke = 3, size = 3.1) + 
-  labs(y = "Model", x = "Estimate ± SE") + 
-  clean_theme() + 
-  theme(strip.text.x = element_text(hjust = 0))
 
 ```
