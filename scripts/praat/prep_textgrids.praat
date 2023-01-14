@@ -197,6 +197,6 @@ for tg from 1 to tgs_no
   selectObject(this_tg)
   Remove tier: 6
 
-  Save as text file: "../../osf/data/production/audio/'speaker$'.TextGrid"
+  Save as text file: "../../data/osf/production/audio/'speaker$'.TextGrid"
 
 endfor
