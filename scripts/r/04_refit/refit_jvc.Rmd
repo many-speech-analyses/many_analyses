@@ -129,6 +129,8 @@ print_status("anomalocaris_ornata")
 ```{r}
 #| label: anomalocaris_ornata
 
+unzip(here("data", "analyses", "jvc", "anomalocaris_ornata", "MSA.zip"), exdir = here("data", "analyses", "jvc", "anomalocaris_ornata"))
+
 # Analyst team setup
 main.df <- read.csv2(here("data", "analyses", "jvc", 
   "anomalocaris_ornata", "MSA", "data", "data_frame.csv")
