@@ -588,7 +588,7 @@ msa_data$AFI <- as.factor(phrase_df$AFI)
 
 msa_data <- msa_data %>%
   mutate(
-    eff_cont = scale(typ_mean) %>% as.numeric(),
+    effect_con = scale(typ_mean) %>% as.numeric(),
     duration = log(Duration..ms.) %>% scale() %>% as.numeric(),
     intensity = scale(Intensity) %>% as.numeric(),
     cfo1 = scale(cfo1) %>% as.numeric(),
@@ -603,7 +603,7 @@ contrasts(msa_data$condition) <- "contr.sum"
 ```{r}
 sphyrna_ellioti_1_dur_cat <- brm(
   duration ~
-    POS * condition * eff_cont +
+    POS * condition * effect_con +
     (POS|speaker) + (POS|AFI),
   data = msa_data,
   file = "./data/analyses/models/sphyrna_ellioti_1_dur_cat.rds",
@@ -615,7 +615,7 @@ sphyrna_ellioti_1_dur_cat <- brm(
 
 sphyrna_ellioti_2_int_cat <- brm(
   intensity ~
-    POS * condition * eff_cont +
+    POS * condition * effect_con +
     (POS|speaker) + (POS|AFI),
   data = msa_data,
   file = "./data/analyses/models/sphyrna_ellioti_2_int_cat.rds",
@@ -627,7 +627,7 @@ sphyrna_ellioti_2_int_cat <- brm(
 
 sphyrna_ellioti_3_cfo1_cat <- brm(
   cfo1 ~
-    POS * condition * eff_cont +
+    POS * condition * effect_con +
     (POS|speaker) + (POS|AFI),
   data = msa_data,
   file = "./data/analyses/models/sphyrna_ellioti_3_cfo1_cat.rds",
@@ -639,7 +639,7 @@ sphyrna_ellioti_3_cfo1_cat <- brm(
 
 sphyrna_ellioti_4_cfo2_cat <- brm(
   cfo2 ~
-    POS * condition * eff_cont +
+    POS * condition * effect_con +
     (POS|speaker) + (POS|AFI),
   data = msa_data,
   file = "./data/analyses/models/sphyrna_ellioti_4_cfo2_cat.rds",
@@ -650,7 +650,7 @@ sphyrna_ellioti_4_cfo2_cat <- brm(
 )
 sphyrna_ellioti_5_cf03_cat <- brm(
   cfo3 ~
-    POS * condition * eff_cont +
+    POS * condition * effect_con +
     (POS|speaker) + (POS|AFI),
   data = msa_data,
   file = "./data/analyses/models/sphyrna_ellioti_5_cf03_cat.rds",
