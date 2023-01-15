@@ -220,15 +220,15 @@ neosilurus_omanensis_2_f0ranrat_cat <- brm(
 
 # Team also had interaction effect_cat:Condition which leads to convergence issues
 # since typ:AF = 0 and atyp:ANF = 0
-neosilurus_omanensis_3_f0varrat_cat <- brm(
-  PitchVariationRatioAtoU ~ effect_cat + Condition + (1|Participant) + (1|Adjective),
-  data = msa_data,
-  cores = 4,
-  threads = threading(2, grainsize = 100), 
-  backend = "cmdstanr",
-  file = "data/analyses/models/neosilurus_omanensis_3_f0varrat_cat",
-  seed = my_seed
-)
+# neosilurus_omanensis_3_f0varrat_cat <- brm(
+#   PitchVariationRatioAtoU ~ effect_cat + Condition + (1|Participant) + (1|Adjective),
+#   data = msa_data,
+#   cores = 4,
+#   threads = threading(2, grainsize = 100), 
+#   backend = "cmdstanr",
+#   file = "data/analyses/models/neosilurus_omanensis_3_f0varrat_cat",
+#   seed = my_seed
+# )
 
 neosilurus_omanensis_4_f0riserat_cat <- brm(
   PitchRiseRatio ~ effect_cat + (1|Participant) + (1|Adjective),
