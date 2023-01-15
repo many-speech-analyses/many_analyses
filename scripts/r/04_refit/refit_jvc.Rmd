@@ -1124,6 +1124,8 @@ print_status("trapezia_cantonensis")
 ```{r}
 #| label: trapezia_cantonensis
 
+unzip(here("data", "analyses", "jvc", "trapezia_cantonensis", "audio_chunks.zip"), exdir = here("data", "analyses", "jvc", "trapezia_cantonensis"))
+
 if(T) {
 msa_raw <- tibble(
   path = Sys.glob(
@@ -1165,7 +1167,7 @@ typicality <- tribble(
     "braunen", "Waescheklammer", "non-food"
 )
 
-beast_path <- "/Users/casillas/academia/research/in_progress/many_speech_analyses/many_analyses/./data/analyses/jvc/trapezia_cantonensis//audio_chunks/"
+beast_path <- "./data/analyses/jvc/trapezia_cantonensis/audio_chunks/"
 
 msa_processed <- msa_raw %>% 
   mutate(path = str_remove_all(path, beast_path), 
