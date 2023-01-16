@@ -18,6 +18,7 @@ library(tidyverse)
 library(brms)
 library(readxl)
 library(lme4)
+library(lmerTest)
 library(here)
 
 # NOTE: one of the many packages interferes with tidyverse, so the select function throws an error!
@@ -1162,15 +1163,15 @@ getPCscores <- function(fpcaObj) {
 
 ##### load data #####
 
-data <- read.delim("./data/analyses/tr/selectedData.txt", header = T, sep = "") %>% 
+data <- read.delim("./data/analyses/tr/procambarus_maculosus/selectedData.txt", header = T, sep = "") %>% 
   as_tibble() # %>% 
   # filter(sex == "female") # only run on female data!
 
-data = read.csv("./data/analyses/tr/pervagor_meeki/Data/ManySpeech_Praat_merged_data.csv", header=T)
+# data = read.csv("./data/analyses/tr/pervagor_meeki/Data/ManySpeech_Praat_merged_data.csv", header=T)
 
 
 info <- data %>% 
-  select(sl_rowIdx, bundle, vowel, speaker, sex, typicality, word) %>% 
+  dplyr::select(sl_rowIdx, bundle, vowel, speaker, sex, typicality, word) %>% 
   unique()
 
 ##### FPCA #####
@@ -1183,19 +1184,19 @@ nOrder <- 2 + Lfdobj
 nBasis <- nKnots + nOrder - 2
 
 # create a basis for B-splines
-basis <- create.bspline.basis(rangeval = c(0, 1), nbasis = nBasis, norder = nOrder)
+basis <- fda::create.bspline.basis(rangeval = c(0, 1), nbasis = nBasis, norder = nOrder)
 
 # define functional parameter object (will be used to estimate functional parameters later)
-fdParObj <- fdPar(fdobj = basis, Lfdobj = Lfdobj, lambda = lambda)
+fdParObj <- fda::fdPar(fdobj = basis, Lfdobj = Lfdobj, lambda = lambda)
 
 coef <- data %>%
   group_by(sl_rowIdx) %>%
-  summarise(coef = c(smooth.basis(argvals = times_norm, y = F0, fdParObj)$fd$coefs),
+  summarise(coef = c(fda::smooth.basis(argvals = times_norm, y = F0, fdParObj)$fd$coefs),
             coefId = seq_len(nBasis)) %>%
   ungroup() %>%
   pivot_wider(names_from = coefId, values_from = coef) %>%
   select(-sl_rowIdx) %>% 
-  abind(along = 2) %>%
+  abind::abind(along = 2) %>%
   aperm(c(2,1))
 
 # check class and dimension
@@ -1203,11 +1204,11 @@ coef %>% class() # array
 coef %>% dim()   # 8 842; 8 671
 
 # create functional data object
-y_fd <- fd(coef = coef, basisobj = basis)
+y_fd <- fda::fd(coef = coef, basisobj = basis)
 
 # this is the actual FPCA
 nPCs <- 3
-y_pcafd <- pca.fd(y_fd, nharm = nPCs, fdParObj)
+y_pcafd <- fda::pca.fd(y_fd, nharm = nPCs, fdParObj)
 # saveRDS(y_pcafd, file = "./pcafd.rds")
 
 y_pcafd$varprop 
@@ -1227,13 +1228,13 @@ tx <- seq(1/1000, 1, by = 1/1000)
 curves <- expand.grid(time = tx,
                       PC = 1:3,
                       perturbation = c(-1, 0, 1)
-) %>% setDT
+) %>% data.table::setDT()
 
 sd_score <- info %>% summarise_at(vars(s1:s3), sd) %>% as.numeric()
 
 curves[, value := (y_pcafd$meanfd$coefs[,1] + perturbation * sd_score[PC] * y_pcafd$harmonics$coefs[,PC]) %>% 
-         fd(., basis) %>%
-         eval.fd(tx, .),
+         fda::fd(., basis) %>%
+         fda::eval.fd(tx, .),
        by = .(PC, perturbation)]
 
 reconstruct <- curves %>% mutate(per = ifelse(perturbation == 0, "mu[F0](t)",
@@ -1249,25 +1250,25 @@ levels(reconstruct$per) = list("mu[F0](t) - sigma[s[k]] %.% PCk[F0](t)" = "0",
                                "mu[F0](t)" = "1",
                                "mu[F0](t) + sigma[s[k]] %.% PCk[F0](t)" = "2")
 
-pl <- ggplot(reconstruct) + 
-  aes(x = time, y = value) + 
-  geom_line(size = 1.2) + 
-  facet_grid(k~per, labeller = label_parsed) +
-  xlab("Normalised Time") + ylab("F0 [Hz]") + theme + 
-  guides(linetype = guide_legend(override.aes = list(size = 1)))
-ggsave(filename = "./PCcurves.png", plot = pl, width = 25, height = 20, unit = "cm")
-
-pl <- ggplot(info %>% pivot_longer(cols = s1:s3) %>% 
-               mutate(score = case_when(name == "s1" ~ "s[1]",
-                                        name == "s2" ~ "s[2]",
-                                        name == "s3" ~ "s[3]"))) + 
-  aes(x = 0, y = value, fill = typicality) + 
-  facet_grid(score~., scales = "free_y", labeller = label_parsed, switch = "y") + 
-  geom_boxplot() + ylab("") + xlab("") +
-  theme + theme(strip.background.y = element_rect(fill = "white"), 
-                strip.placement = "outside",
-                legend.margin = margin(t = -15))
-ggsave(filename = "./PCscores.png", plot = pl, width = 18, height = 18, unit = "cm")
+# pl <- ggplot(reconstruct) + 
+#   aes(x = time, y = value) + 
+#   geom_line(size = 1.2) + 
+#   facet_grid(k~per, labeller = label_parsed) +
+#   xlab("Normalised Time") + ylab("F0 [Hz]") + theme + 
+#   guides(linetype = guide_legend(override.aes = list(size = 1)))
+# ggsave(filename = "./PCcurves.png", plot = pl, width = 25, height = 20, unit = "cm")
+# 
+# pl <- ggplot(info %>% pivot_longer(cols = s1:s3) %>% 
+#                mutate(score = case_when(name == "s1" ~ "s[1]",
+#                                         name == "s2" ~ "s[2]",
+#                                         name == "s3" ~ "s[3]"))) + 
+#   aes(x = 0, y = value, fill = typicality) + 
+#   facet_grid(score~., scales = "free_y", labeller = label_parsed, switch = "y") + 
+#   geom_boxplot() + ylab("") + xlab("") +
+#   theme + theme(strip.background.y = element_rect(fill = "white"), 
+#                 strip.placement = "outside",
+#                 legend.margin = margin(t = -15))
+# ggsave(filename = "./PCscores.png", plot = pl, width = 18, height = 18, unit = "cm")
 
 ##### different interpretation #####
 
@@ -1276,31 +1277,91 @@ tx <- seq(1/1000, 1, by = 1/1000)
 curves <- expand.grid(time = tx,
                       PC = 1:2,
                       perturbation = seq(-1, 1, by = .25)
-) %>% setDT
+) %>% data.table::setDT()
 
 sd_score <- info %>% summarise_at(vars(s1:s3), sd) %>% as.numeric()
 
 curves[, value := (y_pcafd$meanfd$coefs[,1] + perturbation * sd_score[PC] * y_pcafd$harmonics$coefs[,PC]) %>% 
-         fd(., basis) %>%
-         eval.fd(tx, .),
+         fda::fd(., basis) %>%
+         fda::eval.fd(tx, .),
        by = .(PC, perturbation)]
 
 PC_labeller <- as_labeller(function(x) paste0('PC', x))
 
-pl <- ggplot(curves) +
-  aes(x = time, y = value, col = perturbation, group = perturbation) +
-  geom_line(size = 1.2) +
-  scale_color_gradient2(name = "P ", low = "cornflowerblue", mid = "grey", high = "darkgoldenrod1") +
-  facet_grid(~PC, labeller = PC_labeller) +
-  geom_line(data = curves[perturbation == 0], color = "black", size = 1.5) +
-  xlab("Normalised Time") + ylab("F0 [Hz]") +
-  theme + theme(legend.direction = "horizontal", 
-                legend.title = element_text(),
-                legend.text = element_text(size = 12))
-ggsave(filename = "./PCcurves_col.png", plot = pl, width = 20, height = 12, unit = "cm")
+# pl <- ggplot(curves) +
+#   aes(x = time, y = value, col = perturbation, group = perturbation) +
+#   geom_line(size = 1.2) +
+#   scale_color_gradient2(name = "P ", low = "cornflowerblue", mid = "grey", high = "darkgoldenrod1") +
+#   facet_grid(~PC, labeller = PC_labeller) +
+#   geom_line(data = curves[perturbation == 0], color = "black", size = 1.5) +
+#   xlab("Normalised Time") + ylab("F0 [Hz]") +
+#   theme(legend.direction = "horizontal", 
+#                 legend.title = element_text(),
+#                 legend.text = element_text(size = 12))
+# ggsave(filename = "./PCcurves_col.png", plot = pl, width = 20, height = 12, unit = "cm")
 
 
 ```
+
+```{r procambarus_maculosus_models}
+
+s1.lmer <- lmer(s1 ~ typicality * sex + (sex | word) + (typicality | speaker), data = info,
+                control = lmerControl(optimizer = "optimx", optCtrl = list(method = "nlminb"))) %>% 
+  step() %>% get_model()
+
+# they did not interpret the models with typicality in there, so the minimum model we refit will be typicality + sex
+
+s2.lmer <- lmer(s2 ~ typicality * sex + (sex | word) + (typicality | speaker), data = info,
+                control = lmerControl(optimizer = "optimx", optCtrl = list(method = "nlminb"))) %>% 
+  step() %>% get_model()
+# s2 ~ typicality + (typicality | speaker), but failed to converge
+
+s2.lmer <- lmer(s2 ~ typicality + (1 | word) + (1 | speaker), data = info,
+                control = lmerControl(optimizer = "optimx", optCtrl = list(method = "nlminb"))) 
+s2.lmer %>% summary(corr = F)
+
+
+```
+
+```{r procambarus_maculosus_refitting}
+
+dat <- info %>% 
+  mutate(
+         # scale continuous variables
+         s1_s = (s1 - mean(s1, na.rm = TRUE)) / sd(s1,  na.rm = TRUE),
+         s2_s = (s2 - mean(s2, na.rm = TRUE)) / sd(s2,  na.rm = TRUE),
+         sex_s = as.factor(sex),
+         sex_s = C(sex_s, sum),
+         effect_cat = as.factor(typicality),
+         effect_cat = C(effect_cat, treatment)
+  )
+
+# run brms on standardized models
+procambarus_maculosus_1_pca1_cat <- brm(
+  s1_s ~ 
+         effect_cat + sex_s + 
+    (sex_s | word) + 
+    (effect_cat | speaker),
+  seed = 111,
+  data = dat, 
+  cores = 4,  
+  file = "./data/analyses/models/procambarus_maculosus_1_pca1_cat"
+  )
+
+# run brms on standardized models
+procambarus_maculosus_2_pca2_cat <- brm(
+  s2_s ~ 
+         effect_cat + 
+    (1 | word) +
+    (1 | speaker),
+  seed = 111,
+  data = dat, 
+  cores = 4,  
+  file = "./data/analyses/models/procambarus_maculosus_2_pca2_cat"
+  )
+
+```
+
 
 # dunkleosteus_inscriptus
 
