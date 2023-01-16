@@ -1865,3 +1865,99 @@ procambarus_mahogoni_3_int_con <- brm(
   )
 
 ```
+
+# pseudopleuronectes_assasi
+
+```{r pseudopleuronectes_assasi_setup}
+
+# read csv
+mpa <- read.delim("./data/analyses/tr/pseudopleuronectes_assasi/alldata.txt", header = T, sep = "") %>% 
+  as_tibble() 
+
+atypical <- subset(mpa,Typicality=="atypical")
+atypicalAF <- subset(atypical,Condition=="AF")
+atypicalNF <- subset(atypical,Condition=="NF")
+atypicalAF1 <- subset(atypicalAF,Vowel==1)
+atypicalAF2 <- subset(atypicalAF,Vowel==2)
+atypicalNF1 <- subset(atypicalNF,Vowel==1)
+atypicalNF2 <- subset(atypicalNF,Vowel==2)
+atypical1 <- subset(atypical,Vowel==1)
+atypical2 <- subset(atypical,Vowel==2)
+atypicalAFNF1 <- rbind(atypicalAF1,atypicalNF1)
+NF <- subset(mpa,Condition=="NF")
+NFa <- subset(NF,Typicality=="atypical")
+NFm <- subset(NF,Typicality=="medium")
+NFt <- subset(NF,Typicality=="typical")
+NF1 <- subset(NF,Vowel==1)
+NF2 <- subset(NF,Vowel==2)
+```
+
+```{r pseudopleuronectes_assasi_models}
+
+NF1DurTyp <- lmer(Duration~Typicality+(1|Speaker)+(1|TargetColor),data=NF1,REML=FALSE)
+NF1F0Typ <- lmer(MedianST~Sex+Typicality+(1|Speaker)+(1|TargetColor),data=NF1,REML=FALSE)
+NF1IntTyp <- lmer(MedianInt~Typicality+(1|Speaker)+(1|TargetColor),data=NF1,REML=FALSE)
+NF1DistTyp <- lmer(FormDist~Typicality+(1|Speaker)+(1|TargetColor),data=NF1,REML=FALSE)
+
+```
+
+```{r pseudopleuronectes_assasi_refitting}
+
+# standardize
+NF1 <- NF1 %>% 
+    mutate(
+    Duration_s = (Duration - mean(Duration, na.rm = TRUE)) / sd(Duration,  na.rm = TRUE),
+    MedianST_s = (MedianST - mean(MedianST, na.rm = TRUE)) / sd(MedianST,  na.rm = TRUE),
+    MedianInt_s = (MedianInt - mean(MedianInt, na.rm = TRUE)) / sd(MedianInt,  na.rm = TRUE),
+    FormDist_s = (FormDist - mean(FormDist, na.rm = TRUE)) / sd(FormDist,  na.rm = TRUE),
+    effect_cat = C(as.factor(Typicality), treatment),
+    sex_s = as.factor(Sex),
+    sex_s = C(sex_s, sum)
+  )
+    
+pseudopleuronectes_assasi_1_dur_cat <- brm(
+  Duration_s ~ 
+         effect_cat + 
+         (1|Speaker) + 
+         (1|TargetColor),
+  seed = 111,
+  data = NF1, 
+  cores = 4,  
+  file = "./data/analyses/models/pseudopleuronectes_assasi_1_dur_cat"
+  )
+
+pseudopleuronectes_assasi_2_f0_cat <- brm(
+  MedianST ~ 
+         effect_cat + Sex +
+         (1|Speaker) + 
+         (1|TargetColor),
+  seed = 111,
+  data = NF1, 
+  cores = 4,  
+  file = "./data/analyses/models/pseudopleuronectes_assasi_2_f0_cat"
+  )
+
+pseudopleuronectes_assasi_3_int_cat <- brm(
+  FormDist_s ~ 
+         effect_cat + 
+         (1|Speaker) + 
+         (1|TargetColor),
+  seed = 111,
+  data = NF1, 
+  cores = 4,  
+  file = "./data/analyses/models/pseudopleuronectes_assasi_3_int_cat"
+  )
+
+pseudopleuronectes_assasi_4_formants_cat <- brm(
+  MedianInt_s ~ 
+         effect_cat + 
+         (1|Speaker) + 
+         (1|TargetColor),
+  seed = 111,
+  data = NF1, 
+  cores = 4,  
+  file = "./data/analyses/models/pseudopleuronectes_assasi_4_formants_cat"
+  )
+
+
+```
