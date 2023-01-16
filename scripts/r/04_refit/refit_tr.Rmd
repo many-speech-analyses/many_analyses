@@ -1928,7 +1928,7 @@ pseudopleuronectes_assasi_1_dur_cat <- brm(
 
 pseudopleuronectes_assasi_2_f0_cat <- brm(
   MedianST ~ 
-         effect_cat + Sex +
+         effect_cat + sex_s +
          (1|Speaker) + 
          (1|TargetColor),
   seed = 111,
