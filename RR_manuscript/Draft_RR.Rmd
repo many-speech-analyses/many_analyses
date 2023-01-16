@@ -6,17 +6,633 @@ author:
   num: 1, 2
 - name: Joseph V. Casillas
   num: 3
-- name: Timo B. Roettger
+- name: Simon Roessig
   num: 4
+- name: Michael Franke
+  num: 5
+- name: Byron Ahn
+  num: 6
+- name: Ali H. Al-Hoorie
+  num: 7
+- name: Jalal Al-Tamimi
+  num: 8
+- name: Najd E. Alotaibi
+  num: 9
+- name: Mohammed K. AlShakhori
+  num: 10
+- name: Ruth M. Altmiller
+  num: 11
+- name: Pablo Arantes
+  num: 12
+- name: Angeliki Athanasopoulou
+  num: 13
+- name: Melissa M. Baese-Berk
+  num: 14
+- name: George Bailey
+  num: 15
+- name: Cheman Baira A Sangma
+  num: 16
+- name: Eleonora J. Beier
+  num: 17
+- name: Gabriela M. Benavides
+  num: 18
+- name: Nicole Benker
+  num: 19
+- name: Emelia P. BensonMeyer
+  num: 20
+- name: Nina R. Benway
+  num: 21
+- name: Grant M. Berry
+  num: 22
+- name: Liwen Bing
+  num: 23
+- name: Christina Bjorndahl
+  num: 24
+- name: Mariska Bolyanatz
+  num: 25
+- name: Aaron Braver
+  num: 26
+- name: Violet A. Brown
+  num: 27
+- name: Alicia M. Brown
+  num: 28
+- name: Alejna Brugos
+  num: 29
+- name: Erin M. Buchanan
+  num: 30
+- name: Tanna Butlin
+  num: 31
+- name: Andrés Buxó-Lugo
+  num: 32
+- name: Coline Caillol
+  num: 33
+- name: Francesco Cangemi
+  num: 34
+- name: Christopher Carignan
+  num: 35
+- name: Sita Carraturo
+  num: 36
+- name: Tiphaine Caudrelier
+  num: 37
+- name: Eleanor Chodroff
+  num: 38
+- name: Michelle Cohn
+  num: 39
+- name: Johanna Cronenberg
+  num: 40
+- name: Olivier Crouzet
+  num: 41
+- name: Erica L. Dagar
+  num: 42
+- name: Charlotte Dawson
+  num: 43
+- name: Carissa A. Diantoro
+  num: 44
+- name: Marie Dokovova
+  num: 45
+- name: Shiloh Drake
+  num: 46
+- name: Fengting Du
+  num: 47
+- name: Margaux Dubuis
+  num: 48
+- name: Florent Duême
+  num: 49
+- name: Matthew Durward
+  num: 50
+- name: Ander Egurtzegi
+  num: 51
+- name: Mahmoud M. Elsherif
+  num: 52
+- name: Janina Esser
+  num: 53
+- name: Emmanuel Ferragne
+  num: 54
+- name: Fernanda Ferreira
+  num: 55
+- name: Lauren K. Fink
+  num: 56
+- name: Sara Finley
+  num: 57
+- name: Kurtis Foster
+  num: 58
+- name: Paul Foulkes
+  num: 59
+- name: Rosa Franzke
+  num: 60
+- name: Gabriel Frazer-McKee
+  num: 61
+- name: Robert Fromont
+  num: 62
+- name: Christina García
+  num: 63
+- name: Jason Geller
+  num: 64
+- name: Camille L. Grasso
+  num: 65
+- name: Pia Greca
+  num: 66
+- name: Martine Grice
+  num: 67
+- name: Magdalena S. Grose-Hodge
+  num: 68
+- name: Amelia J. Gully
+  num: 69
+- name: Caitlin Halfacre
+  num: 70
+- name: Ivy Hauser
+  num: 71
+- name: Jen Hay
+  num: 72
+- name: Robert Haywood
+  num: 73
+- name: Sam Hellmuth
+  num: 74
+- name: Allison I. Hilger
+  num: 75
+- name: Nicole Holliday
+  num: 76
+- name: Damar Hoogland
+  num: 77
+- name: Yaqian Huang
+  num: 78
+- name: Vincent Hughes
+  num: 79
+- name: Ane Icardo Isasa
+  num: 80
+- name: Zlatomira G. Ilchovska
+  num: 81
+- name: Hae-Sung Jeon
+  num: 82
+- name: Jacq Jones
+  num: 83
+- name: Mágat N. Junges
+  num: 84
+- name: Stephanie Kaefer
+  num: 85
+- name: Constantijn Kaland
+  num: 86
+- name: Matthew C. Kelley
+  num: 87
+- name: Niamh E. Kelly
+  num: 88
+- name: Thomas Kettig
+  num: 89
+- name: Ghada Khattab
+  num: 90
+- name: Ruud Koolen
+  num: 91
+- name: Emiel Krahmer
+  num: 92
+- name: Dorota Krajewska
+  num: 93
+- name: Andreas Krug
+  num: 94
+- name: Abhilasha A. Kumar
+  num: 95
+- name: Anna Lander
+  num: 96
+- name: Tomas O. Lentz
+  num: 97
+- name: Wanyin Li
+  num: 98
+- name: Yanyu Li
+  num: 99
+- name: Maria Lialiou
+  num: 100
+- name: Ronaldo M. Lima Jr.
+  num: 101
+- name: Justin J. H. Lo
+  num: 102
+- name: Julio Cesar Lopez Otero
+  num: 103
+- name: Bradley Mackay
+  num: 104
+- name: Bethany MacLeod
+  num: 105
+- name: Mel Mallard
+  num: 106
+- name: Carol-Ann Mary McConnellogue
+  num: 107
+- name: George Moroz
+  num: 108
+- name: Mridhula Murali
+  num: 109
+- name: Ladislas Nalborczyk
+  num: 110
+- name: Filip Nenadić
+  num: 111
+- name: Jessica Nieder
+  num: 112
+- name: Dušan Nikolić
+  num: 113
+- name: Francisco G. S. Nogueira
+  num: 114
+- name: Heather M. Offerman
+  num: 115
+- name: Elisa Passoni
+  num: 116
+- name: Maud Pélissier
+  num: 117
+- name: Scott J. Perry
+  num: 118
+- name: Alexandra M. Pfiffner
+  num: 119
+- name: Michael Proctor
+  num: 120
+- name: Ryan Rhodes
+  num: 121
+- name: Nicole Rodríguez
+  num: 122
+- name: Elizabeth Roepke
+  num: 123
+- name: Jan P. Röer
+  num: 124
+- name: Lucia Sbacco
+  num: 125
+- name: Rebecca Scarborough
+  num: 126
+- name: Felix Schaeffler
+  num: 127
+- name: Erik Schleef
+  num: 128
+- name: Dominic Schmitz
+  num: 129
+- name: Alexander Shiryaev
+  num: 130
+- name: Márton Sóskuthy
+  num: 131
+- name: Malin Spaniol
+  num: 132
+- name: Joseph A. Stanley
+  num: 133
+- name: Alyssa Strickler
+  num: 134
+- name: Alessandro Tavano
+  num: 135
+- name: Fabian Tomaschek
+  num: 136
+- name: Benjamin V. Tucker
+  num: 137
+- name: Rory Turnbull
+  num: 138
+- name: Kingsley O. Ugwuanyi
+  num: 139
+- name: Iñigo Urrestarazu-Porta
+  num: 140
+- name: Ruben van de Vijver
+  num: 141
+- name: Kristin J. Van Engen
+  num: 142
+- name: Emiel van Miltenburg
+  num: 143
+- name: Bruce Wang
+  num: 144
+- name: Natasha Warner
+  num: 145
+- name: Simon Wehrle
+  num: 146
+- name: Hans Westerbeek
+  num: 147
+- name: Seth Wiener
+  num: 148
+- name: Stephen Winters
+  num: 149
+- name: Sidney G.-J. Wong
+  num: 150
+- name: Anna Wood
+  num: 151
+- name: Jane Wottawa
+  num: 152
+- name: Chenzi Xu
+  num: 153
+- name: Germán Zárate-Sández
+  num: 154
+- name: Georgia Zellou
+  num: 155
+- name: Cong Zhang
+  num: 156
+- name: Jian Zhu
+  num: 157
+- name: Timo B. Roettger
+  num: 158
+
 address:
-- num: 1
+- num: 1, 2
   org: Department of Linguistics and English Language, University of Edinburgh, United Kingdom
-- num: 2
-  org: Institute of Phonetics and Speech Processing, Ludwig-Maximilian University Munich, Germany
 - num: 3
-  org: Department of Spanish and Portuguese, Rutgers University, New Brunswick, United States
+  org: Department of Spanish and Portuguese, Rutgers University, United States
 - num: 4
-  org: Department of Linguistics and Scandinavian Studies, University of Oslo, Oslo, Norway
+  org: Department of Linguistics, Cornell University, United States
+- num: 5
+  org: Department of General and Computational Linguistics, University of Tübingen, Germany
+- num: 6
+  org: Program in Linguistics, Princeton University, United States
+- num: 7
+  org: Jubail English Language and Preparatory Year Institute, Royal Commission for Jubail and Yanbu, Saudi Arabia
+- num: 8
+  org: Laboratoire de Lingusitique Formelle (LLF), CNRS, Université Paris Cité, France
+- num: 9
+  org: School of Education, Communication and Language Studies - ECLS, Newcastle University, United Kingdom
+- num: 10
+  org: Department of Linguistics, University of Arizona, United States
+- num: 11
+  org: Psychological and Brain Sciences, Washington University in Saint Louis, United States
+- num: 12
+  org: Departamento de Letras, Universidade Federal de São Carlos, Brazil
+- num: 13
+  org: School of Languages, Linguistics, Literatures and Cultures, University of Calgary, Canada
+- num: 14
+  org: Department of Linguistics, University of Oregon, United States
+- num: 15
+  org: Department of Language and Linguistic Science, University of York, United Kingdom
+- num: 16
+  org: School of Languages, Linguistics, Literatures and Cultures, University of Calgary, Canada
+- num: 17
+  org: Department of Psychology, University of California, Davis, United States
+- num: 18
+  org: Department of Linguistics, University of Arizona, United States
+- num: 19
+  org: Institute of Phonetics and Speech Processing, University of Munich, Germany
+- num: 20
+  org: University of Pennsylvania, United States
+- num: 21
+  org: Department of Communication Sciences and Disorders, Syracuse University, United States
+- num: 22
+  org: Department of Spanish, Villanova University, United States
+- num: 23
+  org: Department of English Language and Linguistics, University of Birmingham, United Kingdom
+- num: 24
+  org: Department of Philosophy, Carnegie Mellon University, United States
+- num: 25
+  org: Department of Spanish & French Studies, Occidental College, United States
+- num: 26
+  org: Department of English, Texas Tech University, United States
+- num: 27
+  org: Psychological and Brain Sciences, Washington University in Saint Louis, United States
+- num: 28
+  org: Department of Spanish and Portuguese, University of Arizona, United States
+- num: 29
+  org: Division of Mathematics and Computer Science, Simmons University, United States
+- num: 30
+  org: Analytics, Harrisburg University of Science and Technology, United States
+- num: 31
+  org: School of Languages, Linguistics, Literatures and Cultures, University of Calgary, Canada
+- num: 32
+  org: Department of Psychology, University at Buffalo, SUNY, United States
+- num: 33
+  org: Université Paris Cité, France
+- num: 34
+  org: IfL-Phonetik, University of Cologne, Germany
+- num: 35
+  org: Department of Speech, Hearing and Phonetic Sciences, University College London, United Kingdom
+- num: 36
+  org: Psychological and Brain Sciences, Washington University in Saint Louis, United States
+- num: 37
+  org: Basque Center on Cognition Brain and Language, Spain
+- num: 38
+  org: Department of Language and Linguistic Science, University of York, United Kingdom
+- num: 39
+  org: Department of Linguistics, University of California, Davis, United States
+- num: 40
+  org: Institute of Phonetics and Speech Processing, University of Munich, Germany
+- num: 41
+  org: LLING, UMR6310, Nantes Université / CNRS, France
+- num: 42
+  org: Department of Linguisticss and TESOL, University of Texas at Arlington, United States
+- num: 43
+  org: School of Psychology, Newcastle University, United Kingdom
+- num: 44
+  org: Department of Linguistics, University of Oregon, United States
+- num: 45
+  org: School of Psychological Sciences and Health, University of Strathclyde, United Kingdom
+- num: 46
+  org: Department of Linguistics, University of Oregon, United States
+- num: 47
+  org: School of English Literature, Language and Linguistics, Newcastle University, United Kingdom
+- num: 48
+  org: Department of comparative language science, Universität Zürich, Swizerland, Switzerland
+- num: 49
+  org: Basque Center on Cognition Brain and Language, Spain
+- num: 50
+  org: Department of Linguistics, University of Canterbury, New Zealand
+- num: 51
+  org: IKER (UMR 5478), Centre National de la Recherche Scientifique (CNRS), France
+- num: 52
+  org: Department of Neuroscience, Psychology and Behaviour, University of Leicester, United Kingdom
+- num: 53
+  org: Statistics Group, Association for Diversity in Linguistics, Germany
+- num: 54
+  org: CLILLAC-ARP, Université Paris Cité, France
+- num: 55
+  org: Department of Psychology, University of California, Davis, United States
+- num: 56
+  org: Department of Music, Max Planck Institute for Empirical Aesthetics, Germany
+- num: 57
+  org: Department of Psychology, Pacific Lutheran University, United States
+- num: 58
+  org: Department of Linguistics, University of Oregon, United States
+- num: 59
+  org: Department of Language and Linguistic Science, University of York, United Kingdom
+- num: 60
+  org: Institute of Phonetics and Speech Processing, University of Munich, Germany
+- num: 61
+  org: Department of languages, linguistics, and translation, Université Laval, Canada
+- num: 62
+  org: New Zealand Institute of Language, Brain and Behaviour, University of Canterbury, New Zealand
+- num: 63
+  org: Department of Languages, Literatures, and Cultures, Saint Louis University, United States
+- num: 64
+  org: Department of Psychology, Princeton University, United States
+- num: 65
+  org: LPC, Aix Marseille Univ, CNRS, France
+- num: 66
+  org: Institute of Phonetics and Speech Processing, University of Munich, Germany
+- num: 67
+  org: IfL-Phonetik, University of Cologne, Germany
+- num: 68
+  org: Department of English Language and Linguistics, University of Birmingham, United Kingdom
+- num: 69
+  org: Department of Language and Linguistic Science, University of York, United Kingdom
+- num: 70
+  org: School of English Literature, Language and Linguistics, Newcastle University, United Kingdom
+- num: 71
+  org: Department of Linguistics and TESOL, University of Texas at Arlington, United States
+- num: 72
+  org: New Zealand Institute of Language, Brain and Behaviour, University of Canterbury, New Zealand
+- num: 73
+  org: Ao Tawhiti Unlimited Discovery, New Zealand
+- num: 74
+  org: Department of Language and Linguistic Science, University of York, United Kingdom
+- num: 75
+  org: Department of Speech, Language, and Hearing Sciences, University of Colorado Boulder, United States
+- num: 76
+  org: Department of Linguistics and Cognitive Science, Pomona College, United States
+- num: 77
+  org: School of Education, Communication and Language Studies - ECLS, Newcastle University, United Kingdom
+- num: 78
+  org: University of California, Los Angeles, United States
+- num: 79
+  org: Department of Language and Linguistic Science, University of York, United Kingdom
+- num: 80
+  org: Department of Modern and Classical Languages and Literatures, California State University, Northridge, United States
+- num: 81
+  org: School of Psychology, University of Birmingham, United Kingdom
+- num: 82
+  org: School of Humanities, Language and Global Studies, University of Central Lancashire, United Kingdom
+- num: 83
+  org: Department of Linguistics, University of Canterbury, Aotearoa
+- num: 84
+  org: Programa de Pós-Graduação em Letras, Federal University of Rio Grande do Sul, Brazil
+- num: 85
+  org: Department of Linguistics, University of Canterbury, New Zealand
+- num: 86
+  org: Institute of Linguistics, University of Cologne, Germany
+- num: 87
+  org: Department of Linguistics, University of Washington, United States
+- num: 88
+  org: School of English Literature, Language and Linguistics, Newcastle University, United Kingdom
+- num: 89
+  org: Department of Language and Linguistic Science, University of York, United Kingdom
+- num: 90
+  org: School of Education, Communication and Language Studies - ECLS, Newcastle University, United Kingdom
+- num: 91
+  org: Department of Communication and Cognition, Tilburg University, Netherlands
+- num: 92
+  org: Department of Communication and Cognition, Tilburg University, the Netherlands
+- num: 93
+  org: Department of Linguistics and Basque Studies, University of the Basque Country UPV/EHU, Spain
+- num: 94
+  org: School of Education, Communication and Language Studies - ECLS, Newcastle University, United Kingdom
+- num: 95
+  org: Department of Psychology, Bowdoin College, ME, United States
+- num: 96
+  org: Linguistic Convergence Laboratory, HSE University, Russia
+- num: 97
+  org: Department of Communication and Cognition, Tilburg University, the Netherlands
+- num: 98
+  org: School of Psychology, University of Birmingham, United Kingdom
+- num: 99
+  org: School of Education, Communication and Language Studies - ECLS, Newcastle University, United Kingdom
+- num: 100
+  org: Institute of German Language I Linguistics, University of Cologne, Germany
+- num: 101
+  org: Department of English Language Studies, Federal University of Ceará, Brazil
+- num: 102
+  org: Department of Speech, Hearing and Phonetic Sciences, University College London, United Kingdom
+- num: 103
+  org: Department of Hispanic Studies, University of Houston, United States
+- num: 104
+  org: Department of English and American Studies, University of Salzburg, Austria
+- num: 105
+  org: School of Linguistics & Language Studies, Carleton University, Canada
+- num: 106
+  org: Psychological and Brain Sciences, Washington University in Saint Louis, United States
+- num: 107
+  org: Population Health Sciences Institute - Faculty of Medical Sciences, Newcastle University, United Kingdom
+- num: 108
+  org: HSE University, Russia
+- num: 109
+  org: Speech and Language Therapy, University of Strathclyde, United Kingdom
+- num: 110
+  org: LPC, Aix Marseille Univ, CNRS, France
+- num: 111
+  org: Department of Psychology, Faculty of Media and Communications, Singidunum University, Serbia
+- num: 112
+  org: Institute of Linguistics, Heinrich-Heine University Düsseldorf, Germany
+- num: 113
+  org: School of Languages, Linguistics, Literatures and Cultures, University of Calgary, Canada
+- num: 114
+  org: Graduate Program in Linguistics, Federal University of Ceará, Brazil
+- num: 115
+  org: World Languages, Literatures and Cultures Department, University of Arkansas, United States
+- num: 116
+  org: Deparment of Linguistics, Queen Mary University of London, United Kingdom
+- num: 117
+  org: CLILLAC-ARP, Université Paris Cité, France
+- num: 118
+  org: Department of Linguistics, University of Alberta, Canada
+- num: 119
+  org: Department of Linguistics, University of California, Berkeley, United States
+- num: 120
+  org: Department of Linguistics, Macquarie University, Australia
+- num: 121
+  org: Center for Cognitive Science, Rutgers University, United States
+- num: 122
+  org: Department of Spanish and Portuguese, Rutgers University, United States
+- num: 123
+  org: Department of Speech, Language, and Hearing Sciences, Saint Louis University, United States
+- num: 124
+  org: Department of Psychology, Witten/Herdecke University, Germany
+- num: 125
+  org: School of Education, Communication and Language Studies - ECLS, Newcastle University, United Kingdom
+- num: 126
+  org: Department of Linguistics, University of Colorado Boulder, United States
+- num: 127
+  org: Clinical Audiology, Speech and Language (CASL) Research Centre, Queen Margaret University Edinburgh, United Kingdom
+- num: 128
+  org: Department of English and American Studies, University of Salzburg, Austria
+- num: 129
+  org: Department of English and American Studies, Heinrich Heine University Düsseldorf, Germany
+- num: 130
+  org: Linguistic Convergence Laboratory, HSE University, Russia
+- num: 131
+  org: Department of Linguistics, University of British Columbia, Canada
+- num: 132
+  org: Department of Psychiatry and Psychotherapy, University Hospital Cologne, Germany
+- num: 133
+  org: Department of Linguistics, Brigham Young University, United States
+- num: 134
+  org: Department of Linguistics, University of Colorado Boulder, United States
+- num: 135
+  org: Department of Neuroscience, Max Planck Institute for Empirical Aesthetics, Germany
+- num: 136
+  org: Department of General Linguistics, University of Tübingen, Germany
+- num: 137
+  org: Department of Linguistics, University of Alberta, Canada
+- num: 138
+  org: School of English Literature, Language and Linguistics, Newcastle University, United Kingdom
+- num: 139
+  org: Department of English & Literary Studies, University of Nigeria, Nsukka, Nigeria
+- num: 140
+  org: IKER-UMR5478, Centre National de la Recherche Scientifique (CNRS), France
+- num: 141
+  org: Institute of Linguistics, Heinrich-Heine University Düsseldorf, Germany
+- num: 142
+  org: Psychological and Brain Sciences, Washington University in Saint Louis, United States
+- num: 143
+  org: Department of Communication and Cognition, Tilburg University, the Netherlands
+- num: 144
+  org: Chinese and Bilingual Studies, Hong Kong Polytechnic University, Hong Kong SAR, China
+- num: 145
+  org: Department of Linguistics, University of Arizona, United States
+- num: 146
+  org: IfL-Phonetik, University of Cologne, Germany
+- num: 147
+  org: Department of Languages, Literature and Communication, Utrecht University, Netherlands
+- num: 148
+  org: Department of Modern Languages, Carnegie Mellon University, United States
+- num: 149
+  org: School of Languages, Linguistics, Literatures and Cultures, University of Calgary, Canada
+- num: 150
+  org: Geospatial Research Institute, University of Canterbury, New Zealand
+- num: 151
+  org: Department of Linguistics, University of Oregon, United States
+- num: 152
+  org: Département de Lettres modernes, LIUM, LST, Le Mans Université, France
+- num: 153
+  org: NA, University of Oxford, United Kingdom
+- num: 154
+  org: Department of Spanish, Western Michigan University, United States
+- num: 155
+  org: Department of Linguistics, University of California, Davis, United States
+- num: 156
+  org: School of Education, Communication and Language Studies - ECLS, Newcastle University, United Kingdom
+- num: 157
+  org: School of Information, University of Michigan, Ann Arbor, United States
+- num: 158
+  org: Department of Linguistics and Scandinavian Studies, University of Oslo, Norway
+
 corrauth: "Timo B. Roettger"
 email: "timo.b.roettger@iln.uio.no"
 abstract: "Recent empirical studies have highlighted the large degree of analytic flexibility in data analysis which can lead to substantially different conclusions based on the same data set. Thus, researchers have expressed their concerns that these researcher degrees of freedom might facilitate bias and can lead to claims that do not stand the test of time. Even greater flexibility is to be expected in fields in which the primary data lend themselves to a variety of possible operationalizations. The multidimensional, temporally extended nature of speech constitutes an ideal testing ground for assessing the variability in analytic approaches, which derives not only from aspects of statistical modeling, but also from decisions regarding the quantification of the measured behavior. In the present study, we gave the same speech production data set to 46 teams of researchers and asked them to answer the same research question, resulting in substantial variability in reported effect sizes and their interpretation. Using Bayesian meta-analytic tools, we further find little to no evidence that the observed variability can be explained by analysts' prior beliefs, expertise or the perceived quality of their analyses. In light of this idiosyncratic variability, we recommend that researchers more transparently share details of their analysis, strengthen the link between theoretical construct and quantitative system and calibrate their (un)certainty in their conclusions"
@@ -231,7 +847,7 @@ Do we measure f0, intensity, or something else [@stevens2000]?
 (ref:forkingPaths) Illustration of the analytic flexibility associated with acoustic analyses. (A) An example of multiple possible and justifiable decisions when comparing two utterances; (B) Waveform and f0 track of the utterances *I can't bear ANOTHER meeting on Zoom* and *I can't bear another meeting on ZOOM*. The green boxes mark the word *another* in both sentences; (C) Spectrogram and f0 track of the word *another*, exemplifying possible operationalizations of differences in f0.
 
 ```{r forkingPaths, echo=FALSE, fig.cap="(ref:forkingPaths)", out.width="100%"}
-knitr::include_graphics(here::here("figs", "ForkingPaths.tiff"), error = FALSE)
+knitr::include_graphics(here::here("figs", "ForkingPaths.png"), error = FALSE)
 ```
 <!-- END:FIGURE -->
 
@@ -336,7 +952,7 @@ We initially estimated that this process, from the time of an in-principle accep
 <!-- The factor most likely to delay our time-line is the rate of completion of the original set of analyses by independent analysis teams. -->
 Phase 4 (meta-analysis) took longer than initially anticipated and the total duration of the project was approximately 12 months.
 
-The project OSF repository contains all the materials mentioned in this paper and can be accessed at <https://bit.ly/3AqU1ul>.
+The project OSF repository contains all the materials mentioned in this paper and can be accessed at <https://osf.io/3bmcp/>.
 The repository holds three main OSF components (`Data`, `Teams analyses` and `Questionnaires`), and a link to the project's GitHub repository.
 The following sections report the criteria for sample size, data exclusions, data manipulations, and all the measures in the study.
 
@@ -353,7 +969,7 @@ Recruitment for this project commenced after having received in-principle accept
 
 As outlined above, our primary aim is to assess the variability of the reported effects, rather than the meta-analytic estimate of the investigated effect *per se*.
 To estimate the degree of uncertainty around effect variability as driven by number of teams, we ran a series of sample size simulations with values of variability extracted from @silberzahn2018many.
-The code is available at <https://many-speech-analyses.github.io/suppl/simulations.html>, Section 2.^[Cached model outputs can be found at <https://bit.ly/3AgdHAN>.]
+The code is available at <https://many-speech-analyses.github.io/many_analyses/scripts/r/simulations/simulations>, Section 2.^[Cached model outputs can be found at <https://osf.io/wds2m/>.]
 Variability among teams was operationalized as the standard deviation of the teams' reported effects from @silberzahn2018many (which we *z*-scored prior to simulations to make it comparable to our study).
 For the mean of the teams' true standard deviation (0.68 *z*-score), the simulation indicates that the degree of uncertainty around the estimated teams' standard deviation will be below 1 SD at any sample size greater than 10 teams. 
 Thus in order to achieve our main goal, i.e. estimating variability among teams, we considered a minimum sample size of 10 teams as sufficient.
@@ -369,12 +985,12 @@ Informed consent was obtained as part of the intake form.
 ## Phase 2: Primary Data Analyses
 
 The analysis teams registered for participation and each of the analysts individually answered a demographic and expertise questionnaire (`intake_form.pdf`).
-A PDF version of this and all other questionnaires are available in the repository's `Questionnaires` component, at <https://bit.ly/3Cf3fdm>.
+A PDF version of this and all other questionnaires are available in the repository's `Questionnaires` component, at <https://osf.io/h6z8w/>.
 The questionnaire collected information on the analysts' current position and self-estimated breadth and level of statistical expertise and acoustic analysis skills.
 We then requested that they answer the research question: *Do speakers acoustically modify utterances to signal atypical word combinations?*
 To do so, they were given the data generated by the experiment described in Section [The data set](#s:dataset).
 Data included the audio recordings with corresponding time-aligned transcriptions in the form of Praat TextGrid files.
-These can be found in the `Data` component at <https://bit.ly/3Ahawc7>.
+These can be found in the `Data` component at <https://osf.io/5agn9/>.
 
 Once their analysis was complete, they answered a structured questionnaire (`analytic_quest.pdf`), providing information about their analysis technique, an explanation of their analytic choices, their quantitative results, and a statement describing their conclusions.
 They also uploaded their analysis files (including the additionally derived data and text files that were used to extract and pre-process the acoustic data), their analysis code (if applicable), and a detailed journal-ready analysis section.
@@ -428,8 +1044,10 @@ Furthermore, @aczel2021 suggest that directly asking analysts to report standard
 Since the variables used by the analysis teams might have substantially differed in their measurement scales (e.g, Hertz for frequency vs. milliseconds for duration) which was indeed the case, we have standardized all reported effects by refitting each \textsc{reported model} with centered and scaled continuous variables (*z*-scores, i.e. the observed values subtracted from the mean divided by the standard deviation) and sum-coded factor variables.
 Each \textsc{standardized model} was fitted as a Bayesian regression model with Stan [@stan2021], RStan [@stan2020a], and brms [@burkner2017] in R [@R-base].
 Model refitting also constituted a way of validating the reported analyses, a step recommended by @aczel2021.
-<!-- TODO: add link to refitting procedure -->
-Details about the refitting procedure can be found at LINK.
+Details about the refitting procedure can be found at <https://many-speech-analyses.github.io/many_analyses/scripts/r/04_refit_workflow>.
+Relative to the registered protocol, we made minor changes to the refitting procedure, specifically file  and variable naming conventions and the use of treatment contrasts instead of sum coding.
+All models converged ($\hat{R}$ was approximately 1).
+Of the models with divergent transitions (n = 10), the number of divergences ranged from 1 to 143 (143 represents 3.58% of total number of samples), which the authors deemed not to be problematic.
 
 The coefficients of the critical predictors (i.e. critical according to the analysis teams' self-reported inferential criteria) obtained from the standardized models were used as the \textsc{standardized effect size} ($\eta_i$) of each reported model.
 Moreover, to account for the differing degree of uncertainty around each standardized effect size, we used the standard deviation of each standardized effect size as the \textsc{standardized standard error} ($\text{se}_i$).
@@ -445,8 +1063,7 @@ We used regularizing weakly-informative priors for the intercept $\alpha$ ($Norm
 We fit this model with 4 chains of Hamiltonian Monte-Carlo sampling for the estimation of the joint posterior distribution, using the No U-Turn Sampler (NUTS) as implemented in Stan [@stan2021], and 4000 iterations (2000 for warm-up) per chain, distributed across 8 processing cores and 2 threads in within-chain parallelization.
 <!-- In case of divergent transitions, we will increase `adapt_delta`, `tree_depth`, and the number of iterations in this order until we obtain a model fit with no divergent transitions. -->
 The model did not incur any divergent transitions ($\hat{R}$ was not greater than 1) and the estimated sample sizes were sufficient.
-<!-- TODO: add link to meta-model code -->
-The code used to run the model can be found at <>.
+The code used to run the model can be found at <https://many-speech-analyses.github.io/many_analyses/scripts/r/06_meta-analysis_prereg>.
 
 <!-- From ?brms:brmsformula -->
 <!-- For families gaussian, student and skew_normal, it is possible to
@@ -518,7 +1135,7 @@ The expedient of using a measurement-error term (which includes the teams' stand
 
 We had initially planned to also include a measure of conservativeness of the model specification, as the number of random/group-level effects included and the number of post-hoc changes to the acoustic measurements the teams reported to have carried out. 
 When fitting the model, we realized that the measure of conservativeness is related to the standard error of the estimates (i.e. more group-level effects = higher standard error).
-Moreover, there was no team that declared to have made post-hoc changes to the analyses, this we decided against including these two preregistered predictors in the model.  
+Moreover, there was no team that declared to have made post-hoc changes to the analyses, thus we decided against including these two preregistered predictors in the model.  
 
 **Model specification**. The model was fitted as a measurement-error model, with the predictors detailed in the preceding paragraphs.
 The outcome variables of the model were the standardized effect sizes and related standard deviation.
@@ -528,8 +1145,7 @@ The mean of $\alpha_{t[i]}$ was modeled on the basis of the overall intercept $\
 The numeric predictors were centered and scaled and the categorical predictors were sum coded.
 We used a normal distribution with mean 0 and standard deviation 1 as the prior for the intercept and the predictors.
 The model was run with the same settings as with the meta-analytic model.
-<!-- TODO: add link to predictor model code -->
-The code used to run the model can be found at <LINK>.
+The code used to run the model can be found at <https://many-speech-analyses.github.io/many_analyses/scripts/r/06_meta-analysis_prereg>.
 
 ### Data management {#ana-archive}
 
@@ -537,15 +1153,15 @@ All relevant data, code, and materials have been publicly archived on the Open S
 Archived data include the original data set distributed to all analysts, any edited versions of the data analyzed by individual teams, and the data we analyzed with our meta-analyses, which include the standardized effect sizes, the statistics describing variation in model structure among analysis teams, and the anonymized answers to our questionnaires of analysts.
 Similarly, we archived both the analysis code used for each individual analysis and the code from our meta-analyses.
 We also archived copies of our survey instruments from analysts and peer-reviewers.
+Further documents concerning the collaborative editing of the Registered Report can be found at <https://drive.google.com/drive/folders/1-DOcj1qtEkvWfzu_FrsxkIGfPS0DyLXB?usp=sharing>.
 
 We excluded from our synthesis any individual analysis submitted after peer review (Phase 3) or those unaccompanied by analysis files without which it was not possible to follow the research protocol.
 We also excluded any individual analysis that does not produce an outcome that could be interpreted as an answer to our primary question.
-For a list of exlcusion criteria, see Section Descriptive statistics below.
+We also did no include analyses for which we could not extract standardized effect sizes. For a list of exclusion criteria, see Section Descriptive statistics below.
 
 ## Phase 5: Collaborative Write-Up of Manuscript
 
-The initiating authors discussed the limitations, results, and implications of the study and collaborated with the analysts on writing the final manuscript for review as a stage-2 Registered Report.
-<!-- TODO: Add link to the collaborative document maybe? -->
+The initiating authors discussed the limitations, results, and implications of the study and collaborated with the analysts on writing the final manuscript for review as a stage-2 Registered Report.^[The comment history can be found at <https://docs.google.com/document/d/1CFgRo93mRgifpuFOuQE3vNBeMW-H7ps9eD--vxH-6CQ/edit?usp=sharing>.]
 
 # Results
 
@@ -674,6 +1290,7 @@ mean_analyses <- msa_models_unique %>%
     sd_models = sd(max_n_models), 
     min_models = min(max_n_models), 
     max_models = max(max_n_models), 
+    median_models = median(max_n_models), 
     n_models = sum(max_n_models)
   )
 
@@ -694,6 +1311,7 @@ predictor_n <- msa_models_unique %>%
     sd_predictor = sd(n_predictors, na.rm = TRUE), 
     min_predictor = min(n_predictors, na.rm = TRUE), 
     max_predictor = max(n_predictors, na.rm = TRUE), 
+    median_predictor = median(n_predictors, na.rm = TRUE), 
     n_predictor = sum(n_predictors, na.rm = TRUE)
     ) 
 
@@ -708,6 +1326,7 @@ framework_n <- msa_models_unique %>%
   summarise(prop = n / sum(n))
 
 # model
+# multivariate are counted as individual models
 model_n <- msa_models_unique %>% 
   count(model) %>% 
   summarise(prop = n / sum(n))
@@ -726,6 +1345,7 @@ rterms_n <- msa_models_unique %>%
     sd_rterms = sd(n_random, na.rm = TRUE), 
     min_rterms = min(n_random, na.rm = TRUE), 
     max_rterms = max(n_random, na.rm = TRUE), 
+    median_rterms = median(n_random, na.rm = TRUE), 
     n_rterms = sum(n_random, na.rm = TRUE)
     ) 
 
@@ -737,6 +1357,7 @@ rterms_int_n <- msa_models_unique %>%
     sd_rint = sd(n_random_int, na.rm = TRUE), 
     min_rint = min(n_random_int, na.rm = TRUE), 
     max_rint = max(n_random_int, na.rm = TRUE), 
+    median_rint = median(n_random_int, na.rm = TRUE), 
     n_rint = sum(n_random_int, na.rm = TRUE)
     ) 
 
@@ -748,6 +1369,7 @@ rterms_slope_n <- msa_models_unique %>%
     sd_rslope = sd(n_random_slo, na.rm = TRUE), 
     min_rslope = min(n_random_slo, na.rm = TRUE), 
     max_rslope = max(n_random_slo, na.rm = TRUE), 
+    median_rslope = median(n_random_slo, na.rm = TRUE), 
     n_rslope = sum(n_random_slo, na.rm = TRUE)
     ) 
 
@@ -774,11 +1396,13 @@ review_mean <- msa_models %>%
     sd_prating = sd(phon_rating, na.rm = TRUE), 
     min_prating = min(phon_rating, na.rm = TRUE),
     max_prating = max(phon_rating, na.rm = TRUE),
+    median_prating = median(phon_rating, na.rm = TRUE),
     n_prating = sum(phon_rating, na.rm = TRUE),
     mean_srating = mean(stat_rating, na.rm = TRUE),
     sd_srating = sd(stat_rating, na.rm = TRUE), 
     min_srating = min(stat_rating, na.rm = TRUE), 
     max_srating = max(stat_rating, na.rm = TRUE), 
+    median_srating = median(stat_rating, na.rm = TRUE), 
     n_srating = sum(stat_rating, na.rm = TRUE)
     )
 
@@ -895,7 +1519,7 @@ tbl_model_desc <- bind_rows(
     ), 
     desc = "model_desc", 
     label = glue::glue("{desc}_{item}"), 
-    Median = glue::glue("{mean}"), 
+    Median = glue::glue("{median}"), 
     Range = glue::glue("{min} -- {max}")) %>% 
   select(label, desc, Metric, Min. = min, Max = max, Median, avg = mean, 
          sd, Range) %>% 
@@ -908,7 +1532,7 @@ We first provide a statistical description of team composition, nature of acoust
 Second, we report the results of the meta-analytic model, focusing on between-team and between-model variability. 
 <!-- and the estimated meta-analytic effect of word combination typicality on speech acoustics.-->
 Finally, we present the analysis of the effect of analytic and researcher-related predictors on the meta-analytic effect.
-The research compendium of the study, containing all the code and data presented here, can be found at <https://osf.io/3bmcp/>.
+The research compendium of the study, containing all the code and data presented here, can be found in the GitHub repository linked in the research compendium at <https://osf.io/3bmcp/>, in the `scripts/r/` folder.
 
 ## Descriptive statistics {#descr-stats}
 
@@ -923,10 +1547,11 @@ An important aspect that emerges from the descriptive analysis is the large vari
 `r pull_from_tib(team_desc_df, stage, "Submitted", n_teams) %>% xfun::numbers_to_words() %>% stringr::str_to_sentence()` teams submitted their analyses by the established deadline. 
 Only analyses from which it was possible to extract an effect size were included in the meta-analysis. 
 Of the analysis submitted by the `r pull_from_tib(team_desc_df, stage, "Submitted", n_teams)` teams, the initiating authors identified analyses from `r pull_from_tib(team_desc_df, stage, "Final", n_teams)` teams to be eligible to be included in the meta-analytic model.
-Reasons for exclusion were: use of Generalised Additive Models (4 teams) which do not lend themselves easily to the meta-analytic methods employed in this study, use of machine learning techniques (3 teams), use of typicality as the outcome variable/response (3 teams), or use of other methods that returned statistics that could not be included in the meta-analytic model.
+Reasons for exclusion were: use of Generalized Additive Models (4 teams) which do not lend themselves easily to the meta-analytic methods employed in this study, use of machine learning techniques (3 teams), use of typicality as the outcome variable/response (3 teams), or use of other methods that returned statistics that could not be included in the meta-analytic model.
+Note that due to the unforeseen variability across teams, the latter exclusion criteria were not preregistered and were applied after having seen all analytic strategies. 
 
 In what follows, we describe the characteristics of those teams whose analyses were included in the meta-analytic model.
-A complete summary of all the analyses from the `r pull_from_tib(team_desc_df, stage, "Submitted", n_teams)` submitting teams is available in the supplementary materials.
+A complete summary of all the analyses from the `r pull_from_tib(team_desc_df, stage, "Submitted", n_teams)` submitting teams is available in the supplementary materials at <https://many-speech-analyses.github.io/many_analyses/RR_manuscript/supplementary_materials.pdf>.
 
 The included analyses were provided by `r pull_from_tib(team_desc_df, stage, "Final", n_teams)` teams, comprising `r pull_from_tib(team_desc_df, stage, "Final", n_analysts)` analysts, with a median of `r pull_from_tib(tbl_team_desc, label, "team_desc_size", Median)` individuals per team.
 Upon sign-up, we collected background information from each analyst through the intake form, which was administered during Phase 1, prior to the data being released to the teams.
@@ -961,7 +1586,7 @@ Some of these measures were normalized relative to other elements in the sentenc
 The large decision space related to how the acoustic signal was measured is further expanded by the choices in the statistical analysis, including the chosen inferential framework, the type of model, and the model specification, including choice of predictors, interactions and group-level effects.
 
 The mean of the number of different predictors included in teams' models was `r round(predictor_n$mean_predictor,1)` (defined as variables or columns in the data table).
-This means that, in addition to the critical predictor (typicality of the adjective noun combinations), models had on average one additional predictor (range = `round(predictor_n$min_predictor,1)`-`round(predictor_n$max_predictor,1)`).
+This means that, in addition to the critical predictor (typicality of the adjective noun combinations), models had on average one additional predictor (range = `r round(predictor_n$min_predictor,1)- round(predictor_n$max_predictor,1)`).
 Possible information that was used as predictors included the information structure of the sentence, trial number, semantic dimensions of the referent, part of speech, and speaker gender.
 
 The data given to the teams allowed them to operationalize the predictor of interest, word typicality, in different ways.
@@ -992,8 +1617,7 @@ Teams differed with regard to how the acoustic signal was segmented ranging from
 
 The question arises whether these unique analysis pipelines led to different conclusions. 
 `r n_atleast_1 %>% xfun::numbers_to_words() %>% str_to_sentence()` teams out of the `r length(unique(msa_models$animal)) %>% xfun::numbers_to_words()` (`r perc_atleast_1`%) reported to have found at least one statistically reliable effect (based on the inferential criteria they specified).
-Of the 104 submitted models, `r n_effects` were reported to show a statistically reliable effect (`r round(perc_effects,1)`%). 
-<!-- It looks like this is on the level of critical coefficients = 170, rather than submitted models, double check --> 
+Of the 170 critical model coefficients, `r n_effects` were claimed to show a statistically reliable effect (`r round(perc_effects,1)`%). 
 
 <!-- Begin Table --> 
 ```{r}
@@ -1075,10 +1699,8 @@ For reference, as mentioned in the Methods section, a score of 75 was defined as
 ## Meta-analytic estimation {#meta-est-2}
 
 This section deals with the meta-analytic analysis of the results submitted by the teams.
-<!-- TODO: repeat exclusion criteria -->
 As discussed above, the analyses of only 30 teams out of all the submitted analysis were included in the meta-analytic model discussed here.
 First, we report on the between-team variability estimate (i.e. the meta-analytic group-level standard deviation $\sigma_{\alpha_{\text{t}}}$), which is the focus of this study, followed by the meta-analytic estimate (i.e. the intercept of the meta-analytic model, in other words, the estimated effect of typicality on the acoustic production of adjective-noun combinations).
-<!-- TR: remove reference to meta-analytical estimate -->
 
 ```{r load-meta-analysis}
 # Preregistered ----
@@ -1192,7 +1814,7 @@ The primary aim of this analysis is to assess the degree of between-team variabi
 As a measure of between-team variability, we chose to use the meta-analytic group-level standard deviation ($\sigma_{\alpha_{\text{t}}}$).
 
 According to the preregistered meta-analytic model, the group-level standard deviation for teams is between `r round(meta_bm_prereg_tidy$conf.low[["sd_animal__Intercept"]], 2)` and `r round(meta_bm_prereg_tidy$conf.high[["sd_animal__Intercept"]], 2)` standard units at 95% credibility.
-In other words, the estimated range of variation across teams lies somewhere between `r pm(round((meta_bm_prereg_tidy$conf.low[['sd_animal__Intercept']] * 1.96), 2))` (0.03 * 1.96) and `r pm(round((meta_bm_prereg_tidy$conf.low[['sd_animal__Intercept']] * 1.96), 2))` (0.07 * 1.96) with 95% credibility.”
+In other words, the estimated range of variation across teams lies somewhere between `r pm(round((meta_bm_prereg_tidy$conf.low[['sd_animal__Intercept']] * 1.96), 2))` (0.03 * 1.96) and `r pm(round((meta_bm_prereg_tidy$conf.high[['sd_animal__Intercept']] * 1.96), 2))` (0.07 * 1.96) with 95% credibility.”
 
 **Non-preregistered**. However, in our preregistration we did not take into account that teams might submit multiple analyses/models which, if unaccounted for, violates the independence assumption. 
 Teams were explicitly instructed to only submit one effect size without enforcing it. 
@@ -1223,7 +1845,6 @@ In this non-preregistered model, the meta-analytic intercept estimate is between
 This suggests that the acoustic measures of typical word combinations are 0.01 standard units lower to 0.04 standard units higher than the measures of atypical word combinations, at 95% confidence.
 Relative to the preregistered model, this model suggests a somewhat positive effect of typicality (although small negative effects are also possible).
 
-<!-- TR: The meta analytical estimate is basically meaningless, given that the scale is not interpretable and artificial negative and positive estimates cancel each other out. I wonder whether we should take this out --> 
 The meta-analytic intercept conflates estimates from a variety of responses taken from very different places in the utterance (nouns, adjectives, determiners, entire phrases or sentences, etc).
 This means that some of the effects on a particular response as observed in a specific location within the utterance might naturally be positive, while other negative, resulting in a meta-analytic intercept of about zero.
 We want to stress, however, that our focus is not on the meta-analytic intercept per se, but on the fact that a seemingly straightforward research question led to so many possible outcomes.
@@ -1240,7 +1861,7 @@ While the majority of model estimates and their uncertainty after shrinkage (in 
 (ref:plot-meta1) Standardized effect sizes across all critical coefficients provided by the teams. Raw estimates are displayed in grey. Estimates after shrinkage as provided by the meta-analytic model are displayed in black/orange.
 
 ```{r plot-meta1, echo = FALSE, fig.cap="(ref:plot-meta1)", out.width="100%"}
-knitr::include_graphics(here::here("./figs/meta_plot1_raw.png"), error = FALSE)
+knitr::include_graphics(here::here("./figs/meta_plot1_shrinkage.png"), error = FALSE)
 ```
 
 ## Analytic and researcher-related predictors
@@ -1268,7 +1889,7 @@ This bias might be amplified by the fact that the scale has no natural way of be
 We checked correlations between predictors and while predictors do not seem to be highly collinear, the estimates might still be biased.  
 
 <!-- Figure --> 
-(ref:plot-meta2) The effects of analytic and researcher-related predictors on the reported standardized effect sizes. (A) Posterior samples for the four most frequent outcome variables; (B) Posterior samples for the four most frequent temporal windows: Black points indicate medians; shaded areas represents 50/80/95% highest density intervals. (C) Mean posterior samples (white circles) and 80/95% credible intervals for all predictors.
+(ref:plot-meta2) The effects of analytic and researcher-related predictors on the reported standardized effect sizes. (A) Posterior samples for the four most frequent outcome variables; (B) Posterior samples for the four most frequent temporal windows: Black points indicate medians; shaded areas represents 50/80/95% highest density intervals. (C) Mean posterior samples (white circles) and 80/95% credible intervals for all predictors grouped into predictors related to (1) temporal window, (2) outcome variable, and (3) team/analysis.
 
 ```{r plot-meta2, echo = FALSE, fig.cap="(ref:plot-meta2)", out.width="100%"}
 knitr::include_graphics(here::here("./figs/alltogether.png"), error = FALSE)
@@ -1365,8 +1986,8 @@ kableExtra::kable_styling(., font_size = 11)
 While one might find it obvious that measuring different parts of the speech signal can lead to different results, the fact that analysts (and reviewer alike) considered all these data analytic pipelines valid ways of answering the same research question points to a lack of theoretical consensus on what parts of the speech signal correspond to what types of communicative functions. 
 Importantly, even if analysts choose to measure more or less the same acoustic property within the same measurement window, they arrive at different estimates: 
 For example, six teams measured f0 in the adjective and predicted f0 based on typicality as a categorical predictor. Their standardized effect estimates ranged from -0.11 to 0.38 standard deviations. 
-While these teams in principle measured the same thing, they differed in analytical details of how f0 was operationalized (i.e. mean, min, max, or range) and how their statistical model was constructed (i.e. the number of predictors ranged from 1-3 and the number of random effect terms ranged from 1-4). 
-As shown by [-@breznau2021observing], even seemingly inconsequential analytical choices can affect conclusions in non-trivial ways.
+While these teams in principle measured the same thing, they differed in analytical details of how f0 was operationalized (i.e. mean, mininum, maximum, or range) and how their statistical model was constructed (i.e. the number of predictors ranged from 1-3 and the number of random effect terms ranged from 1-4). 
+As shown by Breznau et al.[-@breznau2021observing], even seemingly inconsequential analytical choices can affect conclusions in non-trivial ways.
 
 The observed variation does not seem to be systematic.
 For example, variation between teams was not predicted by the analysts' prior expectations about the phenomenon.
@@ -1402,7 +2023,7 @@ Rather, we simply want to point out that if the theoretical underpinnings of the
 
 In relation to this aspect, one team coordinator decided to drop out of the project because of its approach being too top-down.
 The coordinator also expressed a preference to be able to explore and run a variety of descriptive analyses followed up with inferential statistics.
-We find that this statement speaks to the main objective of the current study: investigate researchers' degrees of freedom in the speech sciences. 
+We find that this attitude speaks to the main objective of the current study: investigate researchers' degrees of freedom in the speech sciences. 
 Based on our personal experience with research in the field, it is common practice to test many different types of models, using many different types of measurements, to answer one research hypothesis.
 While this is a valid way to explore data and generate new hypotheses, it is not suitable for hypothesis testing.
 When operating within the frequentist inferential framework, testing the same hypothesis with different dependent variables is known to increase the false-positive (Type-I error) rate. 
@@ -1415,7 +2036,7 @@ Fields such as the speech sciences that make theoretical advances based on multi
 Looking at our results, one might argue (and this interpretation has been articulated by several teams during the collaborative write-up) that our sample of speech scientists actually converged on a qualitative conclusion, i.e. there is no evidence for a relationship. 
 However, if there truly was no underlying relationship, our results would suggest a concerning false positive rate with `r perc_atleast_1`% of teams reported to have found at least one statistically reliable effect. 
 This rate is substantially higher than the conventionally accepted 5% false positive rate in for example null hypothesis significance testing frameworks.
-If, on the other hand, there actually was an underlying relationship, our results would suggest a concerning false negative rate of `r 1-perc_atleast_1`, with the majority of teams not detecting the effect. 
+If, on the other hand, there actually was an underlying relationship, our results would suggest a concerning false negative rate of `r 1-perc_atleast_1`%, with the majority of teams not detecting the effect. 
 If the latter was true, the fact that the majority of teams arrived at a null result might also simply be a consequence of the sample size in the data set being too small to reliably detect an effect (which is unknown to us). 
 Thus, we do not think that our study provides convincing evidence that speech researchers converged on the same qualitative answer to a broad research question.
 
@@ -1426,7 +2047,7 @@ The replication crisis has brought attention to scientific practices that lead t
 One of the suggested paths forward is for researchers to directly replicate previous studies more often [@open2015estimating; @camerer2018evaluating].
 While we agree with the importance of direct replications, our study (and similar crowd-sourced analyses before us) suggest that replicating more is simply not enough.
 There is only limited value in learning that a particular procedure is replicable if the idiosyncratic nature of the procedure itself might not yield a representative result relative to all possible procedures that could have been applied to the research question.
-Beyond a replication crisis, quantitative disciplines are going through what has been called an "inference crisis" [@rotello2015more; @starns2019assessing].
+Thus beyond a mere replication crisis, quantitative disciplines are going through an "inference crisis" [@rotello2015more; @starns2019assessing].
 As shown by the peer-ratings of the analyses reported in this study, well-trained and experienced speech researchers not only applied completely different approaches to the same research question, but also considered most of these alternative approaches acceptable.
 Being aware of this idiosyncratic variation between analysts should lead to more nuanced claims and a certain level of epistemic humility [see @campbell1975 for an overview of the concept].
 
@@ -1435,16 +2056,17 @@ The fact that the choice of measurement, measurement window, and predictor choic
 
 We should ideally specify the link between conceptual construct and quantitative system---the "derivation chain" [@dubin1970theory; @meehl1990summaries]---prior to data collection and analysis, including defining constructs and their relationship within the quantitative system, specifying auxiliary assumptions and boundary conditions, and defining target measurements, statistical expectations and possible (and impossible) effect magnitudes.
 Without well-defined derivation chains, we "are not even wrong" [@scheel2022most] because falsified expectations cannot tell us much about the conceptual constructs they are based on when the relationship between the two is underspecified.
-Some of the analysis teams explicitly recognized and acknowledged the need to formulate a more precise version of the research question by preregistering their planned data analysis pipeline.  
+Some of the analysis teams explicitly recognized and acknowledged the need to formulate a more precise version of the research question by preregistering their planned data analysis pipeline. 
+Preregistration, i.e. a time-stamped document in which researchers specify how they plan to collect their data and/or how they plan to conduct their confirmatory analysis, is can be a useful tool to safeguard researchers against the urge to explore many different analytical paths before choosing the one that, in hindsight, seems most justified.
+However, as long as the theoretical landscape does not allow for more precise hypotheses, the value of preregistration is limited and we need to find ways to appropriately calibrate the confidence in our claims:
 
-In light of the observed analytic flexibility, there are a few things that researchers can do to appropriately calibrate confidence in their claims.
 First of all, through sharing of materials, data and statistical protocols, we can make our idiosyncratic choices transparent to others [@munafo2017manifesto; @vazire2017quality].
 Sharing further enables the evaluation and verification of underlying claims and allows for the evaluation of empirical, computational and statistical reproducibility [@lebel2018unified]. 
 It allows for alternative analyses to establish analytic robustness [@steegen2016increasing] and strengthens attempts to synthesize evidence via meta-analyses [e.g., @nicenboim2018using].
 Given that minor procedural changes can sometimes drastically affect the final interpretation of the results [@breznau2021observing], we should ideally share a detailed documentation of the data collection procedure, the measurement choices, the data extraction, and statistical analyses.
 Within fields that deal with speech data, open source software that permits the extraction of acoustic parameters via reproducible scripts can help other researchers to trace back seemingly inconsequential choices during the measurement process [e.g., Praat: @boersma2021praat; EMU: @winkelmann2017emu; the Montreal Forced Aligner: @mcauliffe2017].
 
-Second, making analytic pathways completely re-traceable does not change the fact that analysts apply different analytic approaches.
+Second, making analytic pathways completely re-traceable and preregistering them in advance do not change the fact that different analysts might apply different analytic approaches (preregistered or not).
 Crowd-sourced projects such as the current one can shed light on the range of degrees of freedom during analysis and could possibly help produce a consensual estimated effect if the research hypothesis is specific enough. 
 Crowd-sourcing analyses is obviously not always feasible in terms of required resources and time, but could be a consideration for claims that have large epistemological or practical consequences.
 
@@ -1456,10 +2078,11 @@ Finally, neither crowd-sourcing nor multiverse analyses will guarantee that all 
 Crowd-sourcing is limited by the sampled analysts and their biases.
 Multiverse analyses are limited even further by the group of researchers who define possible analytic pathways.
 Eventually, a mature scientific discipline needs to develop a set of detailed quantitative hypotheses of how conceptual constructs manifest themselves in the measured system, i.e. in the present case how communicative pressures of certain functions are expressed in the acoustic signal. 
-Possible tools to strengthen theoretical development are relate to mathematically formalizing verbal expectations or using computational models [e.g., @van2020formalizing; @guest2021computational; @scheel2021hypothesis; @devezer2021case]. 
+Possible tools to strengthen theoretical development relate to mathematically formalizing verbal expectations or using computational models [e.g., @van2020formalizing; @guest2021computational; @scheel2021hypothesis; @devezer2021case].
+Although conceptually promising, in their current state, such formalized models typically work in spaces that are much lower in dimensionality than the complex systems in which we measure. Thus, future research should spend resources on attempting to quantitatively relate the abstract theoretical space to the complex measurement space.
 
 ## Caveats
-Our study has several limitations that need to be considered when evaluating our results. 
+Our study has several limitations that need to be considered when interpreting our results. 
 
 First, while the total number of analyses is larger than most earlier crowd-sourcing projects, it is likely to be too small to reliably estimate the impact of certain predictors.
 Since predictors' values were not systematically distributed across teams, our estimates are characterized by large uncertainty.
@@ -1492,7 +2115,7 @@ We hope we were able to make these degrees of freedom as well as the timing and 
 Finally, the present study focused on a particular phenomenon within the speech sciences using a speech production data set with very specific properties.
 The generalizability of our findings to other disciplines, as well as to other sub-disciplines of the language sciences specifically, is, of course, limited.
 We focused on quantitative analyses that require the operationalization of a multidimensional signal in an artificial elicitation situation (laboratory speech). 
-While we do believe that our qualitative conclusions holds across fields exhibiting similar methodologies, the detailed quantitative results will only be able to directly inform similar disciplines that work with speech or audio/video signals. 
+While we do believe that our qualitative conclusions hold across fields exhibiting similar methodologies, the detailed quantitative results will only be able to directly inform similar disciplines that work with speech or audio/video signals. 
 This is an important point to make because cognitive sciences in general, and the language sciences in particular, have many research areas that are based on qualitative methods [@haven2019].
 It is conceivable that the discussed issues apply differently or not at all to qualitative data analyses.
 
@@ -1514,17 +2137,38 @@ Quantitatively, the between-team and between-model variation of estimates crosse
 
 In line with previous findings, neither the perceived quality of analyses, nor the experience or prior beliefs of teams explained the observed variation.
 Importantly however, we found some evidence for systematic effects on teams' estimates based on what and how they measured the speech signal. 
-This result, taken together with the meaningful between-model variation and the tendency to test the research question on multiple outcome variables, suggests that a vast plurality of acceptable approaches is expected to frequently lead to inconclusive results.
+This result, taken together with the meaningful between-model variation and the tendency to test the research question on multiple outcome variables, suggests that a vast plurality of acceptable approaches is expected to frequently lead to different conclusions.
 We suggest that fields that use multidimensional data need to acknowledge these degrees of freedom, consider crowd-sourcing and multiverse analyses when evaluating epistemologically or practically important phenomena, and strengthen the link between theoretical predictions and the measurement system by means of mathematical formalization and computational modeling. 
 
 # Author contributions
 
-<!-- TODO: add LINK to credit -->
-See image at LINK [for peer-review, see figure `credit-taxonomy.png` attached with submission].
+See <https://github.com/many-speech-analyses/many_analyses/blob/main/figs/credit-taxonomy-all.png>.
 
 # Conflicts of interest
 
 We have no conflicts of interest to disclose.
+
+# Acknowledgements
+
+We would like to thank the editors David Sbarra and Julia Strand, Matthew Goldrick and two anonymous reviewers for their insightful comments and suggestions.
+
+The initiating authors (SC, JVC, TR) wish to express immense gratitude to all the other authors, without which this project would not have come to be.
+
+All remaining errors are the initiating authors' (SC, JVC, TR)
+
+# Funding
+
+Stefano Coretta was partially supported by the European Research Council Grant No. 742289 Human interaction and the evolution of spoken accent (2017–2022) awarded to Prof. Jonathan Harrington.
+
+Jalal Al-Tamimi was partially supported by the French Investissements d'Avenir - Labex EFL program (ANR-10- LABX-0083), contributing to the IdEx Université Paris Cité - ANR-18-IDEX-0001.
+
+George Moroz, Sita Carraturo: The research leading to these results has received funding from the Basic Research Program at the National Research University Higher School of Economics.
+
+Iñigo	Urrestarazu-Porta: The research leading to these results has received funding from the MADPAB (National Research Agency of the French republic, ANR-20-CE27-0007) and Monumenta Linguae Vasconum 6: avances en la cronología de la historia y la prehistoria de la lengua vasca projects (Ministry of Science and Innovation of the Spanish kingdom, PID2020-118445GB-I00).
+
+Constantijn	Kaland, Martine Grice: German Research Foundation (DFG) - Project-ID 281511265 - SFB 125.
+
+Nina R. Benway: This research was supported in part through computational resources provided by Syracuse University (NSF ACI-1341006; NSF ACI-1541396).
 
 \appendix
 

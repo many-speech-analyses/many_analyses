@@ -395,3 +395,31 @@ coding %>%
   summarise(mean(n_models), median(n_models), sd(n_models), min(n_models), max(n_models))
 ```
 
+
+```{r}
+#| label: get-divergent-transitions
+# Function to add up all DTs from a model
+get_dts <- function(df) {
+  sum(subset(df, Parameter == "divergent__")$Value)
+}
+
+# Load all models, find those with DTs and get min/max, store in tibble
+divergent_transitions <- 
+  dir_ls(path = here("data/analyses/models"), regexp = ".rds$") %>% 
+  as_tibble() %>% 
+  transmute(
+    path = value,
+    mod_name = str_remove(path, here("data/analyses/models/")), 
+    mod_name = str_remove(mod_name, ".rds"), 
+    model = map(path, ~ readRDS(file = .))
+  ) %>% 
+  mutate(
+    nuts = map(model, nuts_params), 
+    dts = map(nuts, get_dts)) %>% 
+  unnest(dts) %>% 
+  select(mod_name, dts) %>% 
+  filter(dts != 0) %>% 
+  summarize(n = nrow(.), min_dt = min(dts), max_dt = max(dts))
+
+```
+

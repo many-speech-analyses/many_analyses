@@ -11,7 +11,7 @@
 ## 2022-06-16
 
 - As mentioned below, We decided to keep to our original protocol in terms of refitting submitted models to get standardised effect sizes.
-- However, we changed the protocol for other parts of the refitting procedure (https://docs.google.com/document/d/1ETZvJ7RR5RtN771c59bDLn3KIvItDECd1I_rOT4lyNQ/edit?usp=sharing).
+- However, we changed minor aspects of the protocol of the refitting procedure (see protocol at <https://many-speech-analyses.github.io/many_analyses/scripts/r/04_refit_workflow>), specifically file  and variable naming conventions and the use of treatment contrasts instead of sum coding.
 - ~~AND, we will include two predictors in the meta-analytic model: typicality operationalisation (to account for categorical vs continuous) and outcome variable (to account for possible differences in sign of the effect depending on the outcome).~~ >> We decided not to include these, because these are included in the Analytic and researcher-related predictors model.
 
 ## 2022-05-27

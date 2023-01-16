@@ -2,9 +2,11 @@
 title: "Supplementary materials"
 output: pdf_document
 date: "`r Sys.Date()`"
+header-includes: 
+  - \pagenumbering{gobble}
 ---
 
-```{r}
+```{r setup}
 #| label: setup
 #| include: false
 knitr::opts_chunk$set(echo = F, message = F, warning = F)
@@ -69,9 +71,9 @@ msa_models_unique <- left_join(
     group_by(animal) %>% 
     # Remove ratings from 2 teams that dropped
     filter(!(animal %in% c("pervagor_adscensionis", "pseudodax_euryzona"))) %>% 
-    summarize(phon_rating = mean(phon_rating), 
-              stat_rating = mean(stat_rating), 
-              all_rating = mean(all_rating)), 
+    summarize(phon_rating = median(phon_rating), 
+              stat_rating = median(stat_rating), 
+              all_rating = median(all_rating)), 
   by = "animal"
 ) %>% 
   left_join(., 
@@ -191,21 +193,20 @@ tbl_team_desc <- msa_models_unique %>%
   select(animal, years_from_phd, prior_belief, phon_rating, stat_rating, 
          all_rating) %>% 
   group_by(animal) %>% 
-  summarize(across(years_from_phd:all_rating, mean)) %>% 
+  summarize(across(years_from_phd:all_rating, median)) %>% 
   pivot_longer(cols = -animal, names_to = "metric", values_to = "vals") %>% 
   na.omit() %>% 
   group_by(metric) %>% 
-  summarize(min = min(vals), max = max(vals), avg = mean(vals, na.rm = T), 
+  summarize(min = min(vals), max = max(vals), Median = median(vals, na.rm = T), 
             sd = sd(vals, na.rm = T)) %>% 
   add_row(.before = 1, 
     metric = "size", 
     min = team_desc_df %>% filter(stage == "Submitted") %>% pull(min), 
     max = team_desc_df %>% filter(stage == "Submitted") %>% pull(max), 
-    avg = team_desc_df %>% filter(stage == "Submitted") %>% pull(mean_size), 
+    Median = team_desc_df %>% filter(stage == "Submitted") %>% pull(median_size), 
     sd =  team_desc_df %>% filter(stage == "Submitted") %>% pull(sd_size)) %>% 
   mutate(across(-metric, specify_decimal, k = 1)) %>% 
   mutate(desc = "team_desc", 
-   `Mean (SD)` = glue::glue("{avg} ({sd})"), 
     Range = glue::glue("{min} -- {max}"), 
     Metric = case_when(
       metric == "size" ~ "Team size", 
@@ -215,7 +216,7 @@ tbl_team_desc <- msa_models_unique %>%
       metric == "phon_rating" ~ "Acoustic analysis peer rating", 
       metric == "all_rating" ~ "Overall peer rating"), 
     label = glue::glue("{desc}_{metric}")) %>% 
-  select(label, desc, Metric, Min. = min, Max = max, `Mean (SD)`, avg, sd, Range)
+  select(label, desc, Metric, Min. = min, Max = max, Median, Range)
 
 #
 # Descriptives of categorical variables in acoustic analyses
@@ -258,6 +259,7 @@ mean_analyses <- msa_models_unique %>%
     sd_models = sd(max_n_models, na.rm = T), 
     min_models = min(max_n_models, na.rm = T), 
     max_models = max(max_n_models, na.rm = T), 
+    median_models = median(max_n_models, na.rm = T), 
     n_models = sum(max_n_models, na.rm = T)
   )
 
@@ -267,6 +269,7 @@ predictor_n <- msa_models_unique %>%
     sd_predictor = sd(n_predictors, na.rm = TRUE), 
     min_predictor = min(n_predictors, na.rm = TRUE), 
     max_predictor = max(n_predictors, na.rm = TRUE), 
+    median_predictor = median(n_predictors, na.rm = T), 
     n_predictor = sum(n_predictors, na.rm = TRUE)
     ) 
 
@@ -277,6 +280,7 @@ rterms_n <- msa_models_unique %>%
     sd_rterms = sd(n_random, na.rm = TRUE), 
     min_rterms = min(n_random, na.rm = TRUE), 
     max_rterms = max(n_random, na.rm = TRUE), 
+    median_rterms = median(n_random, na.rm = TRUE), 
     n_rterms = sum(n_random, na.rm = TRUE)
     ) 
 
@@ -288,6 +292,7 @@ rterms_int_n <- msa_models_unique %>%
     sd_rint = sd(n_random_int, na.rm = TRUE), 
     min_rint = min(n_random_int, na.rm = TRUE), 
     max_rint = max(n_random_int, na.rm = TRUE), 
+    median_rint = median(n_random_int, na.rm = TRUE), 
     n_rint = sum(n_random_int, na.rm = TRUE)
     ) 
 
@@ -299,6 +304,7 @@ rterms_slope_n <- msa_models_unique %>%
     sd_rslope = sd(n_random_slo, na.rm = TRUE), 
     min_rslope = min(n_random_slo, na.rm = TRUE), 
     max_rslope = max(n_random_slo, na.rm = TRUE), 
+    median_rslope = median(n_random_slo, na.rm = TRUE), 
     n_rslope = sum(n_random_slo, na.rm = TRUE)
     )
 
@@ -329,9 +335,9 @@ tbl_model_desc <- bind_rows(
     ), 
     desc = "model_desc", 
     label = glue::glue("{desc}_{item}"), 
-    `Mean (SD)` = glue::glue("{mean} ({sd})"), 
+    Median = glue::glue("{median}"), 
     Range = glue::glue("{min} -- {max}")) %>% 
-  select(label, desc, Metric, Min. = min, Max = max, `Mean (SD)`, avg = mean, 
+  select(label, desc, Metric, Min. = min, Max = max, Median, avg = mean, 
          sd, Range) %>% 
   mutate(across(-c("desc", "Metric"), as.character))
 
@@ -346,12 +352,12 @@ tbl_model_desc <- bind_rows(
 #| results: 'asis'
 bind_rows(
   tbl_team_desc %>% 
-    select(desc, Metric, val1 = Range, val2 = `Mean (SD)`), 
+    select(desc, Metric, val1 = Range, val2 = Median), 
   tbl_categorical_desc %>% 
     select(desc = Metric, Metric = Type, val1 = n, val2 = perc) %>% 
     mutate(val1 = glue::glue("{val1}")), 
   tbl_model_desc %>% 
-    select(desc, Metric, val1 = Range, val2 = `Mean (SD)`)
+    select(desc, Metric, val1 = Range, val2 = Median)
 ) %>% 
   mutate(order = c(
     1, 6, 4, 3, 5, 2, 
@@ -378,31 +384,31 @@ bind_rows(
     ) %>% 
   filter(Metric != "n. random smooths") %>% 
   rename("\\bf{Team characteristics}" = desc, "  " = Metric, `\\bf{Range}` = val1, 
-    `\\bf{Mean (SD)}` = val2) %>% 
+    `\\bf{Median}` = val2) %>% 
   add_row(`\\bf{Team characteristics}` = " ", `  ` = " ", `\\bf{Range}` = " ", 
-    `\\bf{Mean (SD)}` = " ", .before = 7) %>%
+    `\\bf{Median}` = " ", .before = 7) %>%
   add_row(`\\bf{Team characteristics}` = "\\bf{Acoustic analyses}", `  ` = " ", 
-    `\\bf{Range}` = "\\bf{n}", `\\bf{Mean (SD)}` = "\\bf{\\%}", .before = 8) %>%
+    `\\bf{Range}` = "\\bf{n}", `\\bf{Median}` = "\\bf{\\%}", .before = 8) %>%
   add_row(`\\bf{Team characteristics}` = " ", `  ` = " ", `\\bf{Range}` = " ", 
-    `\\bf{Mean (SD)}` = " ",  .before = 15) %>%
+    `\\bf{Median}` = " ",  .before = 15) %>%
   add_row(`\\bf{Team characteristics}` = " ", `  ` = " ", `\\bf{Range}` = " ", 
-    `\\bf{Mean (SD)}` = " ", .before = 22) %>%
+    `\\bf{Median}` = " ", .before = 22) %>%
   add_row(`\\bf{Team characteristics}` = " ", `  ` = " ", `\\bf{Range}` = " ", 
-    `\\bf{Mean (SD)}` = " ", .before = 28) %>%
+    `\\bf{Median}` = " ", .before = 28) %>%
   add_row(`\\bf{Team characteristics}` = "\\bf{Statistical analyses}", `  ` = " ", 
-    `\\bf{Range}` = "\\bf{n}", `\\bf{Mean (SD)}` = "\\bf{\\%}", .before = 29) %>%
+    `\\bf{Range}` = "\\bf{n}", `\\bf{Median}` = "\\bf{\\%}", .before = 29) %>%
   add_row(`\\bf{Team characteristics}` = " ", `  ` = " ", `\\bf{Range}` = " ",
-    `\\bf{Mean (SD)}` = " ", .before = 33) %>%
+    `\\bf{Median}` = " ", .before = 33) %>%
   add_row(`\\bf{Team characteristics}` = " ", `  ` = " ", `\\bf{Range}` = " ", 
-    `\\bf{Mean (SD)}` = " ", .before = 38) %>%
+    `\\bf{Median}` = " ", .before = 38) %>%
   add_row(`\\bf{Team characteristics}` = " ", `  ` = " ", 
-    `\\bf{Range}` = "\\bf{Range}", `\\bf{Mean (SD)}` = "\\bf{Mean (SD)}", 
+    `\\bf{Range}` = "\\bf{Range}", `\\bf{Median}` = "\\bf{Median}", 
     .before = 39) %>% 
   kbl(., booktabs = T, align = c("l", "l", "r", "r"), escape = F, 
     longtable = F, linesep = "", 
     caption = glue::glue("Descriptive statistics of all contributing teams and their acoustic and statistical analyses. The summary includes data from {pull_from_tib(team_desc_df, stage, 'Submitted', n_teams)} teams and  {pull_from_tib(team_desc_df, stage, 'Submitted', n_analysts)} analysts."), 
-    label = "descriptives-table") %>%
-  kable_styling(full_width = F, latex_options = "scale_down") %>% 
+    label = "descriptives-table") %>% 
+  kable_styling(full_width = F, font_size = 8, latex_options = "scale_down") %>% 
   add_indent(c(9, 16, 23, 30, 34, 40)) %>% 
   add_indent(43:44, all_cols = T) %>% 
   row_spec(8, hline_after = T) %>% 

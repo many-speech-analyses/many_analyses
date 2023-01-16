@@ -21,22 +21,38 @@ knitr::opts_knit$set(root.dir = here::here())
 
 ```{r}
 #| label: load-libs
-library(googlesheets4)
+library("googlesheets4")
+library("googledrive")
 library("xml2")
 library("dplyr")
 library("tidyr")
+library("glue")
 library("stringr")
 library("ggplot2")
+library("ggtext")
 library("forcats")
 library("readr")
 library("kableExtra")
+library("countrycode")
 ```
 
 ## Get google sheet and tidy
 
 ```{r}
 #| label: identify-download
+#| eval: false
 
+# give gargle permission
+drive_auth(email = TRUE)
+
+# Locate file, check ID
+drive_find(n_max = 5, type = "spreadsheet")
+
+# Old sheet
+#all_data_temp <- read_sheet("1lXmubF42sTCoOaECXGzo20GCFxX51MWFOKhX8euNtuA") %>% 
+#  janitor::clean_names()
+
+# New sheet
 all_data_temp <- read_sheet("1lXmubF42sTCoOaECXGzo20GCFxX51MWFOKhX8euNtuA") %>% 
   janitor::clean_names()
 
@@ -48,26 +64,53 @@ write_csv(all_data_temp, "data/CRediT/MSA_tenzing_contribution.csv")
 
 ```{r}
 #| label: load-tidy-csv
+# Load data
+#all_data_temp <- read_csv("data/CRediT/MSA_tenzing_contribution.csv")
+all_data_temp <- 
+  read_csv("data/CRediT/MSA_tenzing_contribution-corrected_contributions.csv") %>% 
+  janitor::clean_names() %>% 
+  mutate(
+    primary_affiliation_country = if_else(
+      primary_affiliation_country == "Aotearoa", 
+      "New Zealand", 
+      .$primary_affiliation_country
+      ), 
+    cntry = countrycode(
+      primary_affiliation_country, 
+      origin = 'country.name', 
+      destination = 'iso3c'
+      ), 
+    flag = countrycode(
+      cntry, 
+      origin = 'iso3c', 
+      destination = 'unicode.symbol')
+    )
 
 # Create vector of surnames of initiating authors
-initiating_authors <- c("Coretta", "Casillas", "Roessig", "Franke", "Roettger")
+initiating_authors <- c("Coretta", "Casillas", "Roettger")
+extras <- c("Roessig", "Franke")
 
 # Subset initiating authors
 initiators <- all_data_temp %>% 
   filter(surname %in% initiating_authors) %>% 
   mutate(is_initiating = 1)
 
+# Subset initiating authors
+others <- all_data_temp %>% 
+  filter(surname %in% extras) %>% 
+  mutate(is_initiating = 1.5)
+
 # Subset analysts
 analysts <- all_data_temp %>% 
-  filter(!(surname %in% initiating_authors)) %>% 
+  filter(!(surname %in% c(initiating_authors, extras))) %>% 
   mutate(is_initiating = 0) %>% 
   arrange(surname)
 
 # Combine dfs in correct order
-contributors <- bind_rows(initiators, analysts) %>% 
+contributors <- bind_rows(initiators, others, analysts) %>% 
   mutate(middle_name = replace_na(middle_name, ""),
-    is_initiating = if_else(surname %in% initiating_authors, 1, 0)) %>% 
-  unite(name, c("firstname", "middle_name", "surname"), sep = " ") %>% 
+    initials = glue::glue("{str_sub(firstname, 1, 1)}{str_sub(middle_name, 1, 1)}{str_sub(surname, 1, 1)}")) %>% 
+  unite(name, c("firstname", "middle_name", "surname"), sep = " ", remove = F) %>% 
   mutate(name = str_replace_all(name, "  ", " ")) %>% 
   bind_rows(
     slice(., which(name != "Timo B. Roettger")), 
@@ -102,12 +145,14 @@ These are the authors:
 
 # Get count of unique affiliations
 affiliations <- contributors %>% 
-  count(primary_affiliation) %>% 
+  count(primary_affiliation_university) %>% 
   arrange(n) 
+
+n_no_affiliation <- sum(is.na(contributors$primary_affiliation_university))
 
 # Plot affiliations as a function of n
 affiliations %>% 
-  mutate(lab_truc = str_sub(primary_affiliation, 1, 30),
+  mutate(lab_truc = str_sub(primary_affiliation_university, 1, 30),
     lab_truc = fct_reorder(lab_truc, n, min)) %>% 
   ggplot() + 
   aes(x = n, y = lab_truc) + 
@@ -118,7 +163,86 @@ affiliations %>%
 ```
 
 There were `r nrow(contributors)` contributors from `r nrow(affiliations)` institutions. 
-`r filter(affiliations, is.na(primary_affiliation)) %>% pull(n) %>% xfun::numbers_to_words() %>% str_to_sentence()` analysts did not include their primary affiliation. 
+`r n_no_affiliation %>% xfun::numbers_to_words() %>% str_to_sentence()` analysts did not include their primary affiliation. 
+
+
+## Countries
+
+```{r}
+#| label: analysts-by-country
+
+open <- "<img src="
+close <- " width='25' /><br>"
+
+n_countries <- contributors %>% 
+  count(primary_affiliation_country, flag) %>% 
+  arrange(n) %>% 
+  mutate(
+    country = primary_affiliation_country, 
+    labs = case_when(
+      country == "Australia" ~ 
+        glue("{open}'https://img.icons8.com/emoji/512/australia-emoji.png'{close}"), 
+      country == "Hong Kong SAR, China" ~ 
+        glue("{open}'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/325/flag-hong-kong-sar-china_1f1ed-1f1f0.png'{close}"), 
+      country == "Nigeria" ~ 
+        glue("{open}'https://img.icons8.com/emoji/512/nigeria-emoji.png'{close}"), 
+      country == "Norway" ~ 
+        glue("{open}'https://img.icons8.com/emoji/512/norway-emoji.png'{close}"), 
+      country == "Saudi Arabia" ~ 
+        glue("{open}'https://img.icons8.com/emoji/512/saudi-arabia-emoji.png'{close}"), 
+      country == "Serbia" ~ 
+        glue("{open}'https://img.icons8.com/emoji/512/serbia-emoji.png'{close}"), 
+      country == "Switzerland" ~ 
+        glue("{open}'https://img.icons8.com/emoji/512/switzerland-emoji.png'{close}"),
+      country == "Austria" ~ 
+        glue("{open}'https://img.icons8.com/emoji/512/austria-emoji.png'{close}"),
+      country == "Russia" ~ 
+        glue("{open}'https://img.icons8.com/emoji/512/russia-emoji.png'{close}"),
+      country == "Spain" ~ 
+        glue("{open}'https://img.icons8.com/emoji/512/spain-emoji.png'{close}"),
+      country == "Brazil" ~ 
+        glue("{open}'https://img.icons8.com/emoji/512/brazil-emoji.png'{close}"),
+      country == "Netherlands" ~ 
+        glue("{open}'https://img.icons8.com/emoji/512/netherlands-emoji.png'{close}"),
+      country == "New Zealand" ~ 
+        glue("{open}'https://img.icons8.com/emoji/512/new-zealand-emoji.png'{close}"),
+      country == "Canada" ~ 
+        glue("{open}'https://img.icons8.com/emoji/512/canada-emoji.png'{close}"),
+      country == "France" ~ 
+        glue("{open}'https://img.icons8.com/emoji/512/france-emoji.png'{close}"),
+      country == "Germany" ~ 
+        glue("{open}'https://img.icons8.com/emoji/512/germany-emoji.png'{close}"),
+      country == "United Kingdom" ~ 
+        glue("{open}'https://img.icons8.com/emoji/512/united-kingdom-emoji.png'{close}"),
+      country == "United States" ~ 
+        glue("{open}'https://img.icons8.com/emoji/512/united-states-emoji.png'{close}")
+    ), 
+    country = fct_reorder(country, n, max)) 
+
+n_countries %>% 
+  ggplot() + 
+  aes(x = n, y = country) + 
+  geom_segment(aes(x = 0, xend = n, yend = country), size = 2, 
+    color = "grey25", lineend = "round") + 
+  geom_point(size = 6) + 
+  geom_text(aes(label = n), color = "white", size = 3) + 
+  labs(x = "n", y = NULL, 
+    title = "Number of analysts by country", 
+    subtitle = glue("(n = {sum(n_countries$n)})")) + 
+  theme_bw(base_size = 13, base_family = "Times") + 
+  scale_y_discrete(name = NULL, labels = n_countries$labs) + 
+  theme(axis.text.y = element_markdown(color = "black", vjust = 0.65), 
+    panel.grid.major = element_line(colour = 'grey90', size = 0.15),
+    panel.grid.minor = element_line(colour = 'grey90', size = 0.15))
+
+n_countries %>% 
+  arrange(desc(n)) %>% 
+  transmute(Country = glue("{flag} {country}"), n) %>% 
+  knitr::kable(format = "pandoc")
+```
+
+
+
 
 ## Contributor roles taxonomy
 
@@ -128,7 +252,7 @@ There were `r nrow(contributors)` contributors from `r nrow(affiliations)` insti
 #| fig.height: 4
 
 # Vector of formated contributor roles
-contributor_roles <- c(
+contributor_role <- c(
     "Conceptualization", "Data curation", "Formal Analysis",
     "Funding acquisition", "Investigation", "Methodology",
     "Project administration", "Resources", "Software", "Supervision",
@@ -138,9 +262,10 @@ contributor_roles <- c(
 
 # Format contributors for plotting
 cr_prep <- contributors %>% 
-  select(name:writing_review_editing, is_initiating) %>% 
+  select(name, surname, conceptualization:writing_review_editing, 
+         is_initiating, initials) %>% 
   pivot_longer(
-    cols = -c("name", "is_initiating"), 
+    cols = -c("name", "surname", "is_initiating", "initials"), 
     names_to = "contributor_roles", 
     values_to = "val"
     ) %>% 
@@ -150,19 +275,22 @@ cr_prep <- contributors %>%
   group_by(name) %>% 
   mutate(order_y = seq_along(name)) %>% 
   ungroup() %>% 
-  mutate(initials = gsub('\\b(\\pL)\\pL{2,}|.','\\U\\1', name, perl = TRUE), 
-    contributor_roles = fct_rev(contributor_roles))
+  mutate(contributor_roles = fct_rev(contributor_roles))
+
 
 # Plot initiating authors
 cr_prep %>% 
   filter(is_initiating == 1) %>% 
-  mutate(name = fct_relevel(name, "Stefano Coretta", "Joseph V. Casillas", 
-                            "Simon Roessig", "Michael Franke")) %>% 
+  mutate(name = fct_relevel(name, "Stefano Coretta", "Joseph V. Casillas"), 
+    contributor_roles = str_replace_all(contributor_roles, "_", " "), 
+    contributor_roles = str_replace_all(contributor_roles, "ting ", "ting - "), 
+    contributor_roles = str_to_title(contributor_roles)
+    ) %>% 
   ggplot() +
   aes(x = name, y = contributor_roles, alpha = val) +
     geom_point(size = 3.5, pch = 18, show.legend = F) +
     scale_x_discrete(position = "top") + 
-    scale_y_discrete(limits = rev, labels = rev(contributor_roles)) + 
+    scale_y_discrete(limits = rev) + 
     scale_alpha_continuous(range = c(0.05, 1)) +
     labs(x = "Initiating authors", y = "Contributor roles",
          caption = "Author contributions based on CRediT taxonomy") +
@@ -174,6 +302,8 @@ cr_prep %>%
       panel.grid.minor = element_line(colour = 'grey90', size = 0.15)
     )
 
+ggsave("figs/credit-taxonomy-initiators.png", width = 7, height = 5)
+
 ```
 
 
@@ -184,12 +314,20 @@ cr_prep %>%
 #| fig.height: 10
 
 cr_prep %>% 
-  filter(is_initiating == 0) %>% 
+  filter(is_initiating != 1) %>% 
+  arrange(surname) %>% 
+  group_by(contributor_roles) %>% 
+  mutate(order = seq_along(name), 
+    name = fct_reorder(name, order), 
+    contributor_roles = str_replace_all(contributor_roles, "_", " "), 
+    contributor_roles = str_replace_all(contributor_roles, "ting ", "ting - "), 
+    contributor_roles = str_to_title(contributor_roles)
+    ) %>% 
   ggplot() +
-  aes(y = initials, x = contributor_roles, alpha = val) +
+  aes(y = name, x = contributor_roles, alpha = val) +
     geom_point(size = 1.75, pch = 18, show.legend = F) +
-    scale_x_discrete(labels = contributor_roles) + 
     scale_alpha_continuous(range = c(0.05, 1)) +
+    scale_y_discrete(limits = rev) + 
     labs(x = NULL, y = "Analysts",
          caption = "Contributor roles\nAuthor contributions based on CRediT taxonomy") +
     theme_light(base_size = 12, base_family = "Times") +
@@ -203,6 +341,90 @@ cr_prep %>%
       axis.text.y = element_text(size = rel(0.5))
     )
 
-ggsave("figs/credit-taxonomy.png", width = 14, height = 10)
+ggsave("figs/credit-taxonomy-analysts.png", width = 14, height = 10)
 ```
 
+
+
+
+
+```{r}
+#| label: contributor-roles-plot-all
+#| out.width: 100%
+#| fig.height: 11
+
+cr_prep %>% 
+  arrange(surname) %>% 
+  group_by(contributor_roles) %>% 
+  mutate(order = seq_along(name), 
+    name = fct_reorder(name, order), 
+    contributor_roles = str_replace_all(contributor_roles, "_", " "), 
+    contributor_roles = str_replace_all(contributor_roles, "ting ", "ting - "), 
+    contributor_roles = str_to_title(contributor_roles)
+    ) %>% 
+  ggplot() +
+  aes(y = name, x = contributor_roles, alpha = val) +
+    geom_point(size = 1.75, pch = 18, show.legend = F) + 
+    scale_y_discrete(limits = rev) + 
+    scale_alpha_continuous(range = c(0.05, 1)) +
+    labs(x = NULL, y = "Contributors",
+         caption = "Contributor roles\nAuthor contributions based on CRediT taxonomy") +
+    theme_light(base_size = 12, base_family = "Times") +
+    theme(
+      axis.title.y = element_text(size = rel(.9), hjust = 0.95),
+      axis.title.x = element_text(size = rel(.9), hjust = 0.95),
+      panel.grid.major = element_line(colour = 'grey90', size = 0.15),
+      panel.grid.minor = element_line(colour = 'grey90', size = 0.15), 
+      axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1, 
+        size = rel(0.6)), 
+      axis.text.y = element_text(size = rel(0.5))
+    )
+
+ggsave("figs/credit-taxonomy-all.png", width = 14, height = 10)
+```
+
+
+
+
+
+
+```{r}
+#| label: copy-author-list
+#| eval: false
+# Copy author list to the clipboard so it can be pasted in RR
+contributors %>% 
+  select(name) %>% 
+  mutate(name = glue::glue("- name: {name}\n")) %>% 
+  pull() %>% 
+  clipr::write_clip() 
+
+
+contributors %>% 
+  select(name, 
+         primary_affiliation_department, 
+         primary_affiliation_university, 
+         primary_affiliation_country) %>% 
+  transmute(
+    name, 
+    name_man = glue::glue("- name: {name}"), 
+    num_man = glue::glue("- num: {1:nrow(.) + 1}")
+  ) %>% 
+  pivot_longer(cols = -name, names_to = "col", values_to = "print") %>% 
+  pull(print) %>% 
+  clipr::write_clip() 
+
+
+contributors %>% 
+  select(name, 
+         primary_affiliation_department, 
+         primary_affiliation_university, 
+         primary_affiliation_country) %>% 
+  transmute(
+    name, 
+    num_man = glue::glue("- num: {1:nrow(.) + 1}"), 
+    print = glue::glue("- org: {primary_affiliation_department}, {primary_affiliation_university}, {primary_affiliation_country}"), 
+  ) %>% 
+  pivot_longer(cols = -name, names_to = "col", values_to = "print") %>% 
+  pull(print) %>% 
+  clipr::write_clip() 
+```

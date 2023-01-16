@@ -291,7 +291,7 @@ meta_shrinkage <-
            size = 3,
            hjust = 0,
            color = c("black", "#ef8a62"),
-           label = c("Not compelling = 95% CrI includes 0", "Compelling = 95% CrI does not includes 0")
+           label = c("Not compelling = 95% CrI includes 0", "Compelling = 95% CrI does not include 0")
            ) +
     annotate("segment", 
              x = c(0.5,0.5), y = c(1.75,2.05),
@@ -299,7 +299,7 @@ meta_shrinkage <-
            size = 2.5,
            hjust = 0,
            color = c("black", "#ef8a62"),
-           label = c("95% CrI includes 0", "95% CrI does not includes 0")
+           label = c("95% CrI includes 0", "95% CrI does not include 0")
            ) +
   labs(# title = "Effect estimates across all submitted effects",
        caption = "Raw estimates extracted from teams' models (grey),\nshrunken estimates from meta-analytical model (black/orange)\n",
@@ -620,8 +620,54 @@ forest <- post_pred_forest %>%
     theme_classic() +
     theme(legend.position = "none", axis.line = element_blank())
 
+# Revise after Stage-2 Reviews
+# add structure to forest plot
+labels_axis <- c("Team's number of models", "Prior belief", "Years after Phd", "Peer rating", "Typicality Operationalization", "Model uniqueness", "F0", "Intensity", "Formants", "Duration", "Sentence", "Segment", "Word", "Phrase") 
 
-alltogether <- ( outcome / window ) | forest
+forest_ordered <- post_pred_forest %>%
+  filter(predictor != "Intercept") %>%
+  mutate(predictor = factor(predictor, levels=c("team's number of models", "prior belief", "years after Phd", "peer rating", "typicality operationalization", "model uniqueness", "f0", "intensity", "formants", "duration", "sentence", "segment", "word", "phrase"))) %>%
+  ggplot(aes(x = post_mean, y = as.numeric(predictor))) +
+    geom_vline(xintercept = 0, lty = "dashed") +
+    geom_hline(yintercept = c(6.5, 10.5), lty = "dotted") +
+    geom_segment(aes(x = lower95, xend = higher95, yend = as.numeric(predictor)),
+                 size = 1) +
+    geom_segment(aes(x = lower80, xend = higher80, yend = as.numeric(predictor)),
+                 size = 2) +
+    geom_point(pch = 21, fill = "white", color = "black", size = 4) +
+    # annotate
+    geom_point(x = 0.125, 
+               y = 1.1, 
+               pch = 1, 
+               color = "grey", 
+               size = 9, 
+               inherit.aes = FALSE) +
+    geom_point(x = 0.125, 
+               y = 7.1, 
+               pch = 1, 
+               color = "grey", 
+               size = 9, 
+               inherit.aes = FALSE) +
+   geom_point(x = 0.125, 
+               y = 11.1, 
+               pch = 1, 
+               color = "grey", 
+               size = 9, 
+               inherit.aes = FALSE) +
+    annotate("text",
+             x = c(0.125, 0.125, 0.125),
+             y = c(1.1,7.1,11.1),
+             label = c("3", "2", "1")) +
+    labs(title = "C: Forest plot",
+         subtitle = "Model coefficients for all predictors",
+         y = "", x = "\nEffect size difference to the overall mean") +
+    scale_y_continuous(breaks = 1:14, labels = labels_axis) +
+    theme_classic() +
+    theme(legend.position = "none", axis.line = element_blank())
+forest_ordered
+
+
+alltogether <- ( outcome / window ) | forest_ordered
 
 ggsave(filename = "figs/alltogether.png",
        plot = alltogether,
