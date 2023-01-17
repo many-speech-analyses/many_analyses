@@ -531,7 +531,7 @@ Currently, the GitHub repo "many_speech" is not available. We have added a zippe
 
 unzip(here("data", "analyses", "jvc", "cromileptes_saxatilis", "many_speech.zip"), exdir = here("data", "analyses", "jvc", "cromileptes_saxatilis"))
 
-cromileptes_saxatilis_durs <- read_csv(here("data", "analyses", "jvc", "cromileptes_saxatilis", "many_speech", "processed_data", "NF_durations.csv")) %>% 
+cromileptes_saxatilis_durs <- read_csv(here("data", "analyses", "jvc", "cromileptes_saxatilis", "processed_data", "NF_durations.csv")) %>% 
   filter(typicality != "medium")
 
 mod_priors <- c(
