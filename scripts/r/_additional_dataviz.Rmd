@@ -44,12 +44,19 @@ msa_models_unique <- msa_models %>%
 #aggregate
 msa_models_unique_agg <- msa_models_unique %>% 
   select(-pop_pred) %>% 
-  mutate(operationalisation = replace_na(operationalisation, "unclear"),
-         temporal_window = replace_na(temporal_window, "other")
-         ) %>% 
+  mutate(operationalisation = replace_na(operationalisation, "other"),
+         temporal_window = replace_na(temporal_window, "other"),
+         operationalisation = ifelse(operationalisation == "euclidean distance", 
+                                     "other", operationalisation),
+         operationalisation = ifelse(operationalisation == "unclear", 
+                                     "other", operationalisation)) %>% 
   group_by(outcome,temporal_window,operationalisation,found_effect) %>% 
   count() %>% 
   mutate(highlight = ifelse(outcome == "f0", "f0", "no f0"))
+
+```
+
+```{r alluvium, echo=FALSE}
 
 # ggaluvium 
 flow_outcome <- 
@@ -100,6 +107,9 @@ ggsave(filename = "figs/flow_outcome.png",
        bg = "white",
        dpi = 500)
 
+```
+
+```{r alluvium2, echo=FALSE}
 
 flow_outcome_f0 <- 
 ggplot(msa_models_unique_agg,
@@ -111,11 +121,11 @@ ggplot(msa_models_unique_agg,
                     color = highlight),
                 alpha = 0.7) +
   geom_stratum(fill = c("white", "white",
-                        "white", "#DA964D",
+                        "white", "#CC6677",
                         "white",
                          rep("white", 14)),
                color = c("grey", "grey",
-                        "grey", "#DA964D",
+                        "grey", "#CC6677",
                         "grey",
                          rep("grey", 14)), 
                width = 1/3) +
@@ -124,9 +134,9 @@ ggplot(msa_models_unique_agg,
             color = "black") +
   scale_x_discrete(limits = c("what?", "where?", "how?"), 
                    expand = c(.05, .05)) +
-  scale_fill_manual(values = c("#DA964D",
+  scale_fill_manual(values = c("#CC6677",
                                alpha("white",0.1))) +
-  scale_color_manual(values = c("#DA964D",
+  scale_color_manual(values = c("#CC6677",
                                alpha("white",0.1))) +
   labs(y = "") +
   theme_minimal() +
@@ -155,24 +165,18 @@ ggplot(msa_models_unique_agg,
   geom_alluvium(aes(fill = found_effect,
                     color = found_effect),
                 alpha = 0.7) +
-  # geom_stratum(fill = c("white", "white",
-  #                       "white", "#DA964D",
-  #                       "white",
-  #                        rep("white", 14)),
-  #              color = c("white", "white",
-  #                       "white", "#DA964D",
-  #                       "white",
-  #                        rep("grey", 14)), 
-  #              width = 1/3) +
+  geom_stratum(fill = c(rep("white", 19),
+                         "#CC6677", "white"),
+               color = c(rep("grey", 19),
+                         "#CC6677", "grey"),,
+               width = 1/3) +
   geom_text(stat = "stratum", 
             aes(label = after_stat(stratum)),
             color = "black") +
-  scale_x_discrete(limits = c("what?", "where?", "how?"), 
+  scale_x_discrete(limits = c("what?", "where?", "how?", "effect?"), 
                    expand = c(.05, .05)) +
-  scale_fill_manual(values = c("#DA964D",
-                               alpha("white",0.1))) +
-  scale_color_manual(values = c("#DA964D",
-                               alpha("white",0.1))) +
+  scale_fill_manual(values = c(alpha("grey",0.2), "#CC6677")) +
+  scale_color_manual(values = c(alpha("grey",0.2), "#CC6677")) +
   labs(y = "") +
   theme_minimal() +
   theme(legend.position = "none",
