@@ -1,5 +1,11 @@
 ---
-title: "Supplementary materials"
+title: |
+  Multidimensional signals and analytic flexibility:  
+  Estimating degrees of freedom in human speech analyses
+subtitle: "Supplementary materials"
+author: |
+  Initiating authors:  
+  Stefano Coretta, Joseph V. Casillas, and Timo Roettger
 output: pdf_document
 date: "`r Sys.Date()`"
 header-includes: 
@@ -10,7 +16,6 @@ header-includes:
 #| label: setup
 #| include: false
 knitr::opts_chunk$set(echo = F, message = F, warning = F)
-knitr::opts_knit$set(root.dir = here::here())
 library("dplyr")
 library("ggplot2")
 library("tidyr")
@@ -24,6 +29,18 @@ library("purrr")
 library("stringr")
 library("kableExtra")
 ```
+
+
+```{r}
+#| label: sankey-plot
+#| fig.cap: "Sankey plot illustrating workflow choices from analyst teams."
+#| out.width: "100%"
+knitr::include_graphics(path = here("figs", "flow_outcome.png"))
+```
+
+
+
+
 
 
 ```{r}
@@ -65,7 +82,7 @@ msa_models_unique <- left_join(
       n_random_slo, n_random_smooth, n_models
       ) %>%
     distinct(), 
-  readRDS("./data/peer_review/msa_reviews.rds") %>% 
+  readRDS(here("./data/peer_review/msa_reviews.rds")) %>% 
     select(animal = Q3, phon_rating = Q5_2, stat_rating = Q5_3, 
            all_rating = Q5_4) %>% 
     group_by(animal) %>% 
@@ -77,7 +94,7 @@ msa_models_unique <- left_join(
   by = "animal"
 ) %>% 
   left_join(., 
-    read_csv("./data/questionnaires/msa_intake_form_untidy.csv") %>%
+    read_csv(here("./data/questionnaires/msa_intake_form_untidy.csv")) %>%
       filter(added_on_osf == "yes", 
         !(animal %in% c("pervagor_adscensionis", "pseudodax_euryzona"))) %>% 
       select(animal, years_from_phd, prior_belief), 
