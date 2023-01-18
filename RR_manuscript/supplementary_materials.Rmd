@@ -34,7 +34,7 @@ library("kableExtra")
 #| label: sankey-plot
 #| fig.cap: "Sankey plot illustrating workflow choices from analyst teams."
 #| out.width: "100%"
-knitr::include_graphics(path = "./figs/flow_outcome.png")
+knitr::include_graphics("../figs/flow_outcome.png", error = FALSE)
 ```
 
 
