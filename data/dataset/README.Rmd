@@ -1,0 +1,15 @@
+---
+title: "dataset"
+output: github_document
+date: 'Last update: `r Sys.Date()`'
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = F)
+```
+
+This directory contains all of the relevant files of the typicality experiment. 
+
+```{r, 'basic-scripts-structure', comment=NA, echo=F}
+fs::dir_tree(recurse = 0)
+```
