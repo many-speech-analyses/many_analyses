@@ -44,7 +44,7 @@ The purpose of this script is to extract the mean and standard deviation of ever
 Most of the code needed to accomplish this is already written, thus the script recycles already completed work and, where necessary, we use a few helpers to reduce work. 
 The workflow is the following: 
 
-1. Get a list of the subset of teams that need to be downloaded (Max = 30 because the final model only includes 30 teams). 
+1. Get a list of the subset of teams that need to be downloaded (Max = 33 because the final model only includes 33 teams). 
 2. Download the OSF components of the aforementioned subset of teams.
 3. Use the code found in `04_refit` (i.e., `refit_jvc.Rmd`, `refit_sc.Rmd` and `refit_tr.Rmd`) to get the final data frames used in the original analyses. 
 4. Calculate mean/SD of the raw DVs (only f0, duration, and intensity). 
@@ -83,7 +83,7 @@ final_team_name_and_coder <- final_teams %>%
   distinct()
 ```
 
-Of the 30 teams included in the meta-analysis, `r length(final_team_names)` included either F0, duration or intensity in the analyses. 
+Of the `r length(teams)` teams included in the meta-analysis, `r length(final_team_names)` included either F0, duration or intensity in the analyses. 
 Next, we download the OSF components of those `r length(final_team_names)` teams.
 
 # Download OSF team components
@@ -142,13 +142,15 @@ download_components(coder = "sc")
 download_components(coder = "tr")
 ```
 
+Note: Downloading from OSF can be buggy due to server limitations. 
+If you have any issues getting all of the components, you can download them manually here: <https://osf.io/n3fyd/>.
 
 
 # Get means and SDs
 
 In order to get the data frame from each teams analysis, we will recycle code from `04_refit` (i.e., `refit_jvc.Rmd`, `refit_sc.Rmd` and `refit_tr.Rmd`). 
 We can pull in specific lines of code with the `source_part` function. 
-If we can't source the lines directly without touching the refit_xx.Rmd files (because *some* people refuse to use `here`), then we will have to copy/paste code to this file and adjusts the paths like heathens. 
+If we can't source the lines directly without touching the refit_xx.Rmd files, then we will have to copy/paste code to this file and adjusts the paths. 
 
 
 ```{r}
@@ -202,7 +204,7 @@ final_team_name_and_coder %>%
 source_part(
   file = here("scripts", "r", "04_refit", "refit_jvc.Rmd"), 
   start = 131, 
-  end = 181
+  end = 183
   )
 
 # Means and SDs
@@ -257,8 +259,8 @@ final_teams %>% filter(animal == "anthracoceros_coronata") %>% pull(outcome) == 
 #| eval: true
 source_part(
   file = here("scripts", "r", "04_refit", "refit_jvc.Rmd"), 
-  start = 392, 
-  end = 441
+  start = 394, 
+  end = 443
   )
 
 # Means and SDs
@@ -281,8 +283,8 @@ final_teams %>% filter(animal == "arapaima_modularis") %>% pull(outcome) == arap
 #| eval: true
 source_part(
   file = here("scripts", "r", "04_refit", "refit_jvc.Rmd"), 
-  start = 1379, 
-  end = 1395
+  start = 1387, 
+  end = 1403
   )
 
 # Means and SDs
@@ -305,8 +307,8 @@ final_teams %>% filter(animal == "clione_dorsalis") %>% pull(outcome) == clione_
 #| eval: true
 source_part(
   file = here("scripts", "r", "04_refit", "refit_jvc.Rmd"), 
-  start = 478, 
-  end = 489
+  start = 480, 
+  end = 491
   )
 
 # Means and SDs
@@ -331,8 +333,8 @@ final_teams %>% filter(animal == "comanthina_maculatus") %>% pull(outcome) == co
 #| eval: true
 source_part(
   file = here("scripts", "r", "04_refit", "refit_jvc.Rmd"), 
-  start = 527, 
-  end = 530
+  start = 533, 
+  end = 536
   )
 
 # Means and SDs
@@ -355,8 +357,8 @@ final_teams %>% filter(animal == "cromileptes_saxatilis") %>% pull(outcome) == c
 #| eval: true
 source_part(
   file = here("scripts", "r", "04_refit", "refit_jvc.Rmd"), 
-  start = 602, 
-  end = 606
+  start = 608, 
+  end = 612
   )
 
 # Means and SDs
@@ -379,8 +381,8 @@ final_teams %>% filter(animal == "gnathosaurus_canadensis") %>% pull(outcome) ==
 #| eval: true
 source_part(
   file = here("scripts", "r", "04_refit", "refit_jvc.Rmd"), 
-  start = 644, 
-  end = 662
+  start = 650, 
+  end = 668
   )
 
 # Means and SDs
@@ -403,8 +405,8 @@ final_teams %>% filter(animal == "gymnothorax_spinulosus") %>% pull(outcome) == 
 #| eval: true
 source_part(
   file = here("scripts", "r", "04_refit", "refit_jvc.Rmd"), 
-  start = 714, 
-  end = 845
+  start = 720, 
+  end = 859
   )
 
 # Means and SDs
@@ -433,8 +435,8 @@ final_teams %>% filter(animal == "haematopus_fossor") %>% pull(outcome) == haema
 #| eval: true
 source_part(
   file = here("scripts", "r", "04_refit", "refit_jvc.Rmd"), 
-  start = 955, 
-  end = 962
+  start = 961, 
+  end = 968
   )
 
 # Means and SDs
@@ -457,8 +459,8 @@ final_teams %>% filter(animal == "lasionycteris_altavela") %>% pull(outcome) == 
 #| eval: true
 source_part(
   file = here("scripts", "r", "04_refit", "refit_jvc.Rmd"), 
-  start = 1054, 
-  end = 1067
+  start = 1060, 
+  end = 1073
   )
 
 # Means and SDs
@@ -482,8 +484,8 @@ final_teams %>% filter(animal == "naso_cassivellaunos") %>% pull(outcome) == nas
 #| eval: true
 source_part(
   file = here("scripts", "r", "04_refit", "refit_jvc.Rmd"), 
-  start = 1295, 
-  end = 1327
+  start = 1303, 
+  end = 1335
   )
 
 # Means and SDs
@@ -506,8 +508,8 @@ final_teams %>% filter(animal == "psittacula_scabriculus") %>% pull(outcome) == 
 #| eval: true
 source_part(
   file = here("scripts", "r", "04_refit", "refit_jvc.Rmd"), 
-  start = 1206, 
-  end = 1214
+  start = 1214, 
+  end = 1222
   )
 
 # Means and SDs
@@ -794,7 +796,6 @@ final_teams %>% filter(animal == "petauroides_fistulator") %>% pull(outcome) == 
 #  end = 
 #  )
 
-# Super long because somebody refuses to use `here` and I don't want to modify `refit_sc.Rmd`
 # The following code reads in the thirty different .csv files with the trial-level data and merges them into a single dataframe
 trial_dat <- list.files(path = here("data", "osf", "production", "trial-lists"),
                        pattern = "*.csv",
@@ -864,6 +865,38 @@ final_teams %>% filter(animal == "saron_pictus") %>% nrow == nrow(saron_pictus_d
 # Check DVs are the same as those listen in model excel
 final_teams %>% filter(animal == "saron_pictus") %>% pull(outcome) == saron_pictus_df %>% pull(dv)
 ```
+
+
+### sphyrna_ellioti
+
+```{r}
+#| label: sphyrna_ellioti
+#| eval: true
+
+source_part(
+  file = here("scripts", "r", "04_refit", "refit_sc.Rmd"), 
+  start = 537, 
+  end = 558
+  )
+
+# Means and SDs
+sphyrna_ellioti_df <- tribble(
+  ~"animal", ~"model_n", ~"dv", ~"mean", ~"sd", 
+  "sphyrna_ellioti", 1, "duration",  mean(pro_df$Duration..ms.), sd(pro_df$Duration..ms.), 
+  "sphyrna_ellioti", 2, "intensity", mean(pro_df$Intensity),     sd(pro_df$Intensity), 
+  "sphyrna_ellioti", 3, "f0",        mean(pro_df$fo1),          sd(pro_df$fo1), 
+  "sphyrna_ellioti", 4, "f0",        mean(pro_df$fo2),          sd(pro_df$fo2), 
+  "sphyrna_ellioti", 5, "f0",        mean(pro_df$fo3),          sd(pro_df$fo3)
+)
+
+# Check n models == n DVs
+final_teams %>% filter(animal == "sphyrna_ellioti") %>% nrow == nrow(sphyrna_ellioti_df)
+
+# Check DVs are the same as those listen in model excel
+final_teams %>% filter(animal == "sphyrna_ellioti") %>% pull(outcome) == sphyrna_ellioti_df %>% pull(dv)
+```
+
+
 
 ### trachurus_riukiuensis
 
@@ -1033,8 +1066,8 @@ final_teams %>% filter(animal == "alosa_atun") %>% pull(outcome) == alosa_atun_d
 #| eval: true
 source_part(
   file = here("scripts", "r", "04_refit", "refit_tr.Rmd"), 
-  start = 1532, 
-  end = 1600
+  start = 1592, 
+  end = 1661
   )
 
 # Means and SDs
@@ -1060,8 +1093,8 @@ final_teams %>% filter(animal == "chelonia_brummeri") %>% pull(outcome) == chelo
 #| eval: true
 source_part(
   file = here("scripts", "r", "04_refit", "refit_tr.Rmd"), 
-  start = 1309, 
-  end = 1420
+  start = 1369, 
+  end = 1480
   )
 
 # Means and SDs
@@ -1112,6 +1145,33 @@ final_teams %>% filter(animal == "pervagor_meeki") %>% nrow == nrow(pervagor_mee
 final_teams %>% filter(animal == "pervagor_meeki") %>% pull(outcome) == pervagor_meeki_df %>% pull(dv)
 ```
 
+
+### procambarus_maculosus
+
+```{r}
+#| label: procambarus_maculosus
+#| eval: true
+source_part(
+  file = here("scripts", "r", "04_refit", "refit_tr.Rmd"), 
+  start = 1153, 
+  end = 1288
+  )
+
+# Means and SDs
+procambarus_maculosus_df <- tribble(
+  ~"animal", ~"model_n", ~"dv", ~"mean", ~"sd", 
+  "procambarus_maculosus", 1,  "f0",  mean(info$s1), sd(info$s1), 
+  "procambarus_maculosus", 2,  "f0",  mean(info$s2), sd(info$s2)
+)
+
+# Check n models == n DVs
+final_teams %>% filter(animal == "procambarus_maculosus") %>% nrow == nrow(procambarus_maculosus_df)
+
+# Check DVs are the same as those listen in model excel
+final_teams %>% filter(animal == "procambarus_maculosus") %>% pull(outcome) == procambarus_maculosus_df %>% pull(dv)
+
+```
+
 ### procambarus_mahogoni
 
 ```{r}
@@ -1119,8 +1179,8 @@ final_teams %>% filter(animal == "pervagor_meeki") %>% pull(outcome) == pervagor
 #| eval: true
 source_part(
   file = here("scripts", "r", "04_refit", "refit_tr.Rmd"), 
-  start = 1742, 
-  end = 1745
+  start = 1802, 
+  end = 1812
   )
 
 # Means and SDs
@@ -1138,6 +1198,34 @@ final_teams %>% filter(animal == "procambarus_mahogoni") %>% nrow == nrow(procam
 final_teams %>% filter(animal == "procambarus_mahogoni") %>% pull(outcome) == procambarus_mahogoni_df %>% pull(dv)
 ```
 
+
+### pseudopleuronectes_assasi
+
+```{r}
+#| label: pseudopleuronectes_assasi
+#| eval: true
+source_part(
+  file = here("scripts", "r", "04_refit", "refit_tr.Rmd"), 
+  start = 1872, 
+  end = 1892
+  )
+
+# Means and SDs
+pseudopleuronectes_assasi_df <- tribble(
+  ~"animal", ~"model_n", ~"dv", ~"mean", ~"sd", 
+  "pseudopleuronectes_assasi", 1,  "duration",  mean(NF1$Duration), sd(NF1$Duration), 
+  "pseudopleuronectes_assasi", 2,  "f0",        mean(NF1$MedianST), sd(NF1$MedianST), 
+  "pseudopleuronectes_assasi", 3,  "intensity", mean(NF1$MedianInt), sd(NF1$MedianInt)
+)
+
+# Check n models == n DVs
+final_teams %>% filter(animal == "pseudopleuronectes_assasi") %>% nrow == nrow(pseudopleuronectes_assasi_df)
+
+# Check DVs are the same as those listen in model excel
+final_teams %>% filter(animal == "pseudopleuronectes_assasi") %>% pull(outcome) == pseudopleuronectes_assasi_df %>% pull(dv)
+```
+
+
 ### trachyphyllia_lappa
 
 ```{r}
@@ -1145,8 +1233,8 @@ final_teams %>% filter(animal == "procambarus_mahogoni") %>% pull(outcome) == pr
 #| eval: true
 source_part(
   file = here("scripts", "r", "04_refit", "refit_tr.Rmd"), 
-  start = 49, 
-  end = 134
+  start = 50, 
+  end = 135
   )
 
 duration_adj_data <- durations %>% filter(word == 9) %>% mutate(type = "adjective")
@@ -1204,13 +1292,16 @@ msa_mean_sd <- bind_rows(
   paralichthys_undulatus_df, 
   petauroides_fistulator_df, 
   saron_pictus_df, 
+  sphyrna_ellioti_df, 
   trachurus_riukiuensis_df, 
   varanus_eulophotes_df, 
   alosa_atun_df, 
   chelonia_brummeri_df, 
   dunkleosteus_inscriptus_df, 
   pervagor_meeki_df, 
+  procambarus_maculosus_df, 
   procambarus_mahogoni_df, 
+  pseudopleuronectes_assasi_df,
   trachyphyllia_lappa_df
 ) 
 
