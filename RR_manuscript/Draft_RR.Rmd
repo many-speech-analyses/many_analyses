@@ -1818,7 +1818,7 @@ In other words, the estimated range of variation across teams lies somewhere bet
 Teams were explicitly instructed to only submit one effect size without enforcing it. 
 As a result, some teams followed the instruction and submitted only one model while others submitted multiple models.
 To account for this added layer of dependency, we have run a model with team and model ID nested within team as group-level effects (`(1|team) + (1|team:model_id)`), which allows us to estimate both the between-team variation and the between-analysis variation.
-This analysis was not preregistered and should thus be interpreted with caution.^[Note that before fitting this model, we fit a separate one in which model ID was the only (non-nested) group-level effect. 
+This analysis was not preregistered and should thus be interpreted with caution.^[Note that before fitting this model, we fitted a separate one in which model ID was the only (non-nested) group-level effect. 
 The estimated group-level effect of model ID is identical to that of the nested model, so we will not discuss it further.]
 
 <!-- Based on the first non-preregistered model, the group-level standard deviation for model ID is between `r round(meta_bm_tidy$conf.low[["sd_model_id__Intercept"]], 2)` and `r round(meta_bm_tidy$conf.high[["sd_model_id__Intercept"]], 2)` standard units, at 95% credibility.
@@ -1836,12 +1836,12 @@ We return to this important observation later.
 
 After assessing the variation between teams and analyses, we now turn to the meta-analytic estimate of the effect of typicality on the acoustic realization of sentences with adjective-noun combinations.
 The meta-analytic model estimates the range of probable values of the standardized effect size to be between `r round(meta_intercept_prereg[3],3)` and `r round(meta_intercept_prereg[4],3)` standard units (95\% CrI, mean = `r round(meta_intercept_prereg[1],3)`).
-In other words, our best guess is that speakers might not encode typicality in the acoustic signal (e.g. by duration, f0, etc,) or, if they do, they do so by a maximum of `r pm(x = 0.02)` standard units.
+In other words, our best guess is that speakers might not encode typicality in the acoustic signal (e.g. by duration, f0, etc,) or, if they do, they do so by a maximum of `r pm(x = 0.03)` standard units.
 
 **Non-preregistered**. As mentioned in the previous section, we have run an additional model, using team and model ID nested within team as group-level effects.
 In this non-preregistered model, the meta-analytic intercept estimate is between `r round(meta_intercept_nest[3],3)` and `r round(meta_intercept_nest[4],3)` standard units (95\% CrI, $\beta$ = `r round(meta_intercept_nest[1],3)`).
-This suggests that the acoustic measures of typical word combinations are 0.01 standard units lower to 0.04 standard units higher than the measures of atypical word combinations, at 95% confidence.
-Relative to the preregistered model, this model suggests a somewhat positive effect of typicality (although small negative effects are also possible).
+This suggests that the acoustic measures of typical word combinations are `r -round(meta_intercept_nest[3],2)` standard units lower to `r round(meta_intercept_nest[4],2)` standard units higher than the measures of atypical word combinations, at 95% confidence.
+This result is qualitatively similar to the results obtained in the preregistered model.
 
 The meta-analytic intercept conflates estimates from a variety of responses taken from very different places in the utterance (nouns, adjectives, determiners, entire phrases or sentences, etc).
 This means that some of the effects on a particular response as observed in a specific location within the utterance might naturally be positive, while other negative, resulting in a meta-analytic intercept of about zero.
@@ -1853,7 +1853,7 @@ Given the nature and wide variety of acoustic operationalizations, there is no n
 When looking at the raw estimates and their variance (grey triangles and lines), it is striking how much estimates differed. 
 Estimates ranged from `r round(min(msa_models$estimate),2)` to `r round(max(msa_models$estimate),2)` standard units. 
 
-While the majority of model estimates and their uncertainty after shrinkage (in black) yields inconclusive results (i.e. are compatible with a point null hypothesis), there are `r compelling_count_nest[[1]] + compelling_count_nest[[3]]` model estimates for which the 95\% credible interval does not contain zero (in blue, `r round((compelling_results_nest[[1,1]] + compelling_results_nest[[3,1]]), 2) * 100`\%).
+While the majority of model estimates and their uncertainty after shrinkage (in black) yields inconclusive results (i.e. are compatible with a point null hypothesis), there are `r compelling_count_nest[[1]] + compelling_count_nest[[3]]` model estimates for which the 95\% credible interval does not contain zero (in orange, `r round((compelling_results_nest[[1,1]] + compelling_results_nest[[3,1]]), 2) * 100`\%).
 
 <!-- FIGURE -->
 (ref:plot-meta1) Standardized effect sizes across all critical coefficients provided by the teams. Raw estimates are displayed in grey. Estimates after shrinkage as provided by the meta-analytic model are displayed in black/orange.
@@ -1897,32 +1897,6 @@ knitr::include_graphics(here::here("./figs/alltogether.png"), error = FALSE)
 
 ## Summary
 
-We gave `r pull_from_tib(team_desc_df, stage, "Submitted", n_teams)` analyst teams the same speech data set to answer the same research question: *Do 
-speakers acoustically modify utterances to signal atypical word combinations?*
-In order to answer this question, teams had to interpret the research question by
-operationalizing constructs within multidimensional signals, operationalizing and choosing appropriate model predictors, and constructing appropriate statistical models.
-This complex process has led to a vast "garden of forking paths", i.e. to a wide range of combinations of possible analytic decisions.
-The submitted analyses exhibited at least `r nrow(unique_model_specs)` unique ways of operationalizing the acoustic signal alongside `r nrow(unique_acou_oper)` unique ways of constructing the statistical model.
-By multiplying the numbers of acoustic and model specifications, there are in principle `r nrow(unique_model_specs) * nrow(unique_acou_oper)` possible unique combinations. 
-Note that this is a conservative estimate of the number of possible analytic choices for our research question, ignoring many other degrees of freedom like e.g. acoustic parameter extraction, outlier treatment, and transformations, all of which might have an impact on the final results [@breznau2021observing].
-
-Different analysis paths led to different categorical conclusions with `r perc_atleast_1`% of teams reported to have found at least one statistically reliable effect.
-To gain a better understanding of whether the observed quantitative variability can result in theoretically different claims, we will contextualize them in actual acoustic measures.
-We calculated the standard deviation of a selection of acoustic measurements, as submitted by the analysis teams: duration, f0 and intensity, taken from different time windows. 
-These standard deviations can be considered as a coarse indication of the variability in the obtained acoustic measures.
-We can now use these values to interpret the meta-analytic estimates, which are in standardized units, by transforming the standardized units to measures of duration, f0 and intensity.^[Note that these categories necessarily refer to a variegated set of measures, for example the domain "word" includes words that differed along several dimensions, including their length and their metrical structure.]
-
-For example, for those analyses that investigated the duration of vowels (e.g. the duration of the stressed vowel in *Banane*), the reported duration measures exhibit standard deviations that range from 33.4 to 51.4 ms.
-These standard deviations allow us to convert the meta analytic estimates into milliseconds by multiplying those values with the standard units.
-The reported effect estimates from teams varied between `r round(min(msa_models$estimate),2)` and `r round(max(msa_models$estimate),2)` standard units, which corresponds to duration values ranging from `r round(min(msa_models$estimate) * 33.4,2) ` to `r round(max(msa_models$estimate) * 51.4,2)` ms.
-A more conservative approach is to convert the meta-analytic estimates of between-model variation, thus obtaining an estimate of between-model variability in milliseconds that ranges between `r round(3.8*1.96, 1)` and `r round(7.7*1.96, 1)` ms at 95% credibility.^[The calculation is thus: the minimum standard deviation of duration multiplied by the lower limit of the 95% CrI of the between-models variability estimate, times 1.96 to obtain a 95% CrI: $33.4 * 0.11 = 3.8$, $3.8 * 1.96 = 7.4$ ms; the maximum standard deviation of duration multiplied by the upper limit of the 95% CrI of the between-models variability estimate, times 1.96: $51.4 * 0.15 = 7.7$, $7.7 * 1.96 = 15.1$ ms.]
-
-While this might not immediately strike one as highly variable, it crosses several theoretically relevant thresholds for perception and articulation:
-for example, the widely studied phenomenon of incomplete neutralization involves vowel duration effects ranging from 7 to 15 ms [@nicenboim2018using]. 
-This particular phenomenon has sparked long-lasting methodological and theoretical debates about the very nature of linguistic representations [@port2005against] and has been replicated several times in both production and perception.
-Vowel duration differences within this range have also been reported across phenomena associated with segmental contrasts [@coretta2019], reduction phenomena [@nowak2006], and biomechanical reflexes of prominence [@mucke2014effect]. 
-Thus, variation between different analyst teams of `r round(3.8*1.96)` to `r round(7.7*1.96)` ms in one or the other direction can be theoretically relevant and might lead to opposing theoretical conclusions.
-
 ```{r msa-sd}
 # MSA SD ----
 
@@ -1964,6 +1938,48 @@ msa_sd_sd <- bind_rows(msa_sd_sd_lo, msa_sd_sd_hi) %>%
   rename("temporal window" = "temporal_window")
 ```
 
+We gave `r pull_from_tib(team_desc_df, stage, "Submitted", n_teams)` analyst teams the same speech data set to answer the same research question: *Do 
+speakers acoustically modify utterances to signal atypical word combinations?*
+In order to answer this question, teams had to interpret the research question by
+operationalizing constructs within multidimensional signals, operationalizing and choosing appropriate model predictors, and constructing appropriate statistical models.
+This complex process has led to a vast "garden of forking paths", i.e. to a wide range of combinations of possible analytic decisions.
+The submitted analyses exhibited at least `r nrow(unique_model_specs)` unique ways of operationalizing the acoustic signal alongside `r nrow(unique_acou_oper)` unique ways of constructing the statistical model.
+By multiplying the numbers of acoustic and model specifications, there are in principle `r nrow(unique_model_specs) * nrow(unique_acou_oper)` possible unique combinations. 
+Note that this is a conservative estimate of the number of possible analytic choices for our research question, ignoring many other degrees of freedom like e.g. acoustic parameter extraction, outlier treatment, and transformations, all of which might have an impact on the final results [@breznau2021observing].
+
+Different analysis paths led to different categorical conclusions with `r round(perc_atleast_1, 1)`% of teams reported to have found at least one statistically reliable effect.
+To gain a better understanding of whether the observed quantitative variability can result in theoretically different claims, we will contextualize them in actual acoustic measures.
+We calculated the standard deviation of a selection of acoustic measurements, as submitted by the analysis teams: duration, f0 and intensity, taken from different time windows. 
+These standard deviations can be considered as a coarse indication of the variability in the obtained acoustic measures.
+We can now use these values to interpret the meta-analytic estimates, which are in standardized units, by transforming the standardized units to measures of duration, f0 and intensity.^[Note that these categories necessarily refer to a variegated set of measures, for example the domain "word" includes words that differed along several dimensions, including their length and their metrical structure.]
+
+```{r ms}
+meta_low <- round(meta_bm_nest_tidy$conf.low[["sd_animal:model_id__Intercept"]], 2)
+meta_high <- round(meta_bm_nest_tidy$conf.high[["sd_animal:model_id__Intercept"]], 2)
+
+ms_low <- round(min(msa_models$estimate) * round(msa_sd$sd_min[1], 1), 2)
+ms_high <- round(max(msa_models$estimate) * round(msa_sd$sd_min[1], 1), 2)
+
+ms_sd_min <- round(msa_sd$sd_min[1], 1)
+ms_sd_max <- round(msa_sd$sd_max[1], 1)
+
+ms_meta_low <- round(ms_sd_min * meta_low * 1.96, 1)
+ms_meta_high <- round(ms_sd_max * meta_high * 1.96, 1)
+```
+
+
+For example, for those analyses that investigated the duration of vowels (e.g. the duration of the stressed vowel in *Banáne*), the reported duration measures exhibit standard deviations that range from `r ms_sd_min` to `r ms_sd_max` ms.
+These standard deviations allow us to convert the meta-analytic estimates into milliseconds by multiplying those values with the meta-analytic estimates standard units.
+The reported effect estimates from teams varied between `r round(min(msa_models$estimate),2)` and `r round(max(msa_models$estimate),2)` standard units, which corresponds to estimated segment duration differences (for atypical vs typical combinations) ranging from `r ms_low` to `r ms_high` ms.
+A more conservative approach is to convert the meta-analytic estimates of between-model variation, thus obtaining an estimate of between-model variability in milliseconds that ranges between `r ms_meta_low` and `r ms_meta_high` ms at 95% credibility.
+The calculation is thus: the minimum standard deviation of duration multiplied by the lower limit of the 95% CrI of the between-models variability estimate, times 1.96 to obtain a 95% CrI: `r ms_sd_min` * `r meta_low` * 1.96 = `r ms_meta_low` ms; the maximum standard deviation of duration multiplied by the upper limit of the 95% CrI of the between-models variability estimate, times 1.96: `r ms_sd_max` * `r meta_high` * 1.96 = `r ms_meta_high` ms.
+
+While this might not immediately strike one as highly variable, it crosses several theoretically relevant thresholds for perception and articulation:
+for example, the widely studied phenomenon of incomplete neutralization involves vowel duration effects ranging from 7 to 15 ms [@nicenboim2018using]. 
+This particular phenomenon has sparked long-lasting methodological and theoretical debates about the very nature of linguistic representations [@port2005against] and has been replicated several times in both production and perception.
+Vowel duration differences within this range have also been reported across phenomena associated with segmental contrasts [@coretta2019], reduction phenomena [@nowak2006], and biomechanical reflexes of prominence [@mucke2014effect]. 
+Thus, variation between different analyst teams of `r ms_meta_low` to `r ms_meta_high` ms in one or the other direction can be theoretically relevant and might lead to opposing theoretical conclusions.
+
 ```{r}
 #| label: msa-sd-table
 #| results: 'asis'
@@ -1985,7 +2001,7 @@ While one might find it obvious that measuring different parts of the speech sig
 Importantly, even if analysts choose to measure more or less the same acoustic property within the same measurement window, they arrive at different estimates: 
 For example, six teams measured f0 in the adjective and predicted f0 based on typicality as a categorical predictor. Their standardized effect estimates ranged from -0.11 to 0.38 standard deviations. 
 While these teams in principle measured the same thing, they differed in analytical details of how f0 was operationalized (i.e. mean, mininum, maximum, or range) and how their statistical model was constructed (i.e. the number of predictors ranged from 1-3 and the number of random effect terms ranged from 1-4). 
-As shown by Breznau et al.[-@breznau2021observing], even seemingly inconsequential analytical choices can affect conclusions in non-trivial ways.
+As shown by Breznau et al. [-@breznau2021observing], even seemingly inconsequential analytical choices can affect conclusions in non-trivial ways.
 
 The observed variation does not seem to be systematic.
 For example, variation between teams was not predicted by the analysts' prior expectations about the phenomenon.
@@ -2032,9 +2048,9 @@ Another possible outcome of analytic flexibility as seen in this study is select
 Fields such as the speech sciences that make theoretical advances based on multidimensional data should be aware of this flexibility and calibrate their confidence in empirical claims accordingly. 
 
 Looking at our results, one might argue (and this interpretation has been articulated by several teams during the collaborative write-up) that our sample of speech scientists actually converged on a qualitative conclusion, i.e. there is no evidence for a relationship. 
-However, if there truly was no underlying relationship, our results would suggest a concerning false positive rate with `r perc_atleast_1`% of teams reported to have found at least one statistically reliable effect. 
+However, if there truly was no underlying relationship, our results would suggest a concerning false positive rate with `r round(perc_atleast_1, 1)`% of teams reported to have found at least one statistically reliable effect. 
 This rate is substantially higher than the conventionally accepted 5% false positive rate in for example null hypothesis significance testing frameworks.
-If, on the other hand, there actually was an underlying relationship, our results would suggest a concerning false negative rate of `r 1-perc_atleast_1`%, with the majority of teams not detecting the effect. 
+If, on the other hand, there actually was an underlying relationship, our results would suggest a concerning false negative rate of `r round(1-perc_atleast_1, 1)`%, with the majority of teams not detecting the effect. 
 If the latter was true, the fact that the majority of teams arrived at a null result might also simply be a consequence of the sample size in the data set being too small to reliably detect an effect (which is unknown to us). 
 Thus, we do not think that our study provides convincing evidence that speech researchers converged on the same qualitative answer to a broad research question.
 
