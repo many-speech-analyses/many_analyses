@@ -181,16 +181,17 @@ team_desc_df <- bind_rows(
               max = max(n_members)) %>% 
     mutate(stage = "Submitted"), 
   team_leaders %>% 
+    left_join(select(teams, animal, leader = coordinator), by = "leader") %>% 
     filter(leader %in% teams_used_in_analysis) %>% 
-    group_by(leader) %>% 
+    group_by(animal) %>% 
     mutate(member_num = seq_along(ResponseId)) %>% 
-    group_by(leader) %>% 
+    group_by(animal) %>% 
     mutate(n_members = max(member_num)) %>% 
-    distinct(leader, n_members) %>% 
+    distinct(animal, n_members) %>% 
     ungroup() %>% 
     summarize(n_teams = nrow(.), 
               n_analysts = sum(n_members), 
-              mean_size = mean(n_members), 
+              median_size = median(n_members), 
               sd_size = sd(n_members), 
               median_size = median(n_members), 
               min = min(n_members), 
