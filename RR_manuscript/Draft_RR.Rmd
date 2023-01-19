@@ -1586,12 +1586,12 @@ Some of these measures were normalized relative to other elements in the sentenc
 The large decision space related to how the acoustic signal was measured is further expanded by the choices in the statistical analysis, including the chosen inferential framework, the type of model, and the model specification, including choice of predictors, interactions and group-level effects.
 
 The mean of the number of different predictors included in teams' models was `r round(predictor_n$mean_predictor,1)` (defined as variables or columns in the data table).
-This means that, in addition to the critical predictor (typicality of the adjective noun combinations), models had on average one additional predictor (range = `r round(predictor_n$min_predictor,1)- round(predictor_n$max_predictor,1)`).
+This means that, in addition to the critical predictor (typicality of the adjective noun combinations), models had on average one additional predictor (range = `r round(predictor_n$min_predictor,1)` - `r round(predictor_n$max_predictor,1)`).
 Possible information that was used as predictors included the information structure of the sentence, trial number, semantic dimensions of the referent, part of speech, and speaker gender.
 
 The data given to the teams allowed them to operationalize the predictor of interest, word typicality, in different ways.
 Among the possible operationalizations, `r round(typicality_n[[1,1]],2) * 100`\% of models contained typicality as a categorical variable (e.g. atypical vs. typical), `r round(typicality_n[[2,1]],2) * 100`\%  used a continuous typicality scale from 0-100 by calculating the mean typicality for each word combination as obtained from the norming study, while `r round(typicality_n[[3,1]],2) * 100`\% of the models used the median typicality rating.
-Note that the design of the experiment alongside its description indicated that the experiment was designed to categorically operationalize typicality. This possibly explains analysts' strong preference. 
+Note that the design of the experiment alongside its description indicated that the experiment was designed to categorically operationalize typicality. This possibly explains the analysts' strong preference. 
 
 The majority of models were run within a frequentist framework (`r round(framework_n[[2,1]],2) * 100`\%).
 `r (round(framework_n[[1,1]],2) * 100) %>% xfun::numbers_to_words() %>% str_to_sentence()` percent were run within a Bayesian framework.
@@ -1605,8 +1605,6 @@ An appropriate way to account for this non-independence is by using models that 
 On average, teams that specified random effects included `r round(rterms_n$mean_rterms,1)` random terms in their models. 
 Based on statistical framework, type of model, distribution family, fixed terms, and not including random effects, there were a total of `r nrow(unique_model_specs)` different model specifications.
   
-<!-- TR: I am still confused, so if we were to ignore different random effect specifications that the number is x? Can we find a clearer way to express this, e.g. "When considering choices related to only statistical framework, type of model, distribution family and fixed terms, there were..." --> 
-
 <!-- Moved 'found-effect' code to beginning of results section --> 
 
 When considering both acoustic and statistical analyses, we have found a grand total of `r nrow(unique_acou_stat)` different analytic pipelines.
@@ -1616,8 +1614,8 @@ Our quantitative assessment did not include other degrees of freedom, all of whi
 Teams differed with regard to how the acoustic signal was segmented ranging from fully automated forced-alignment with minimal manual correction to complete manual alignment performed by the analysts; teams differed in whether the statistical analysis was based on a subset of the data or the whole dataset; and they differed whether and if so how measurements were excluded based on both qualitative (i.e. whether specific speech production instances were excluded or not) and quantitative grounds (i.e. whether data were trimmed or not).
 
 The question arises whether these unique analysis pipelines led to different conclusions. 
-`r n_atleast_1 %>% xfun::numbers_to_words() %>% str_to_sentence()` teams out of the `r length(unique(msa_models$animal)) %>% xfun::numbers_to_words()` (`r perc_atleast_1`%) reported to have found at least one statistically reliable effect (based on the inferential criteria they specified).
-Of the 170 critical model coefficients, `r n_effects` were claimed to show a statistically reliable effect (`r round(perc_effects,1)`%). 
+`r n_atleast_1 %>% xfun::numbers_to_words() %>% str_to_sentence()` teams out of the `r length(unique(msa_models$animal)) %>% xfun::numbers_to_words()` (`r round( perc_atleast_1, 1)`%) reported to have found at least one statistically reliable effect (based on the inferential criteria they specified).
+Of the `r nrow(msa_models)` critical model coefficients, `r n_effects` were claimed to show a statistically reliable effect (`r round(perc_effects,1)`%). 
 
 <!-- Begin Table --> 
 ```{r}
