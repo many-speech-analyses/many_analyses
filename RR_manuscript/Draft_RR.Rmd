@@ -1812,7 +1812,7 @@ The primary aim of this analysis is to assess the degree of between-team variabi
 As a measure of between-team variability, we chose to use the meta-analytic group-level standard deviation ($\sigma_{\alpha_{\text{t}}}$).
 
 According to the preregistered meta-analytic model, the group-level standard deviation for teams is between `r round(meta_bm_prereg_tidy$conf.low[["sd_animal__Intercept"]], 2)` and `r round(meta_bm_prereg_tidy$conf.high[["sd_animal__Intercept"]], 2)` standard units at 95% credibility.
-In other words, the estimated range of variation across teams lies somewhere between `r pm(round((meta_bm_prereg_tidy$conf.low[['sd_animal__Intercept']] * 1.96), 2))` (0.03 * 1.96) and `r pm(round((meta_bm_prereg_tidy$conf.high[['sd_animal__Intercept']] * 1.96), 2))` (0.07 * 1.96) with 95% credibility.”
+In other words, the estimated range of variation across teams lies somewhere between `r pm(round((meta_bm_prereg_tidy$conf.low[['sd_animal__Intercept']] * 1.96), 2))` (0.03 * 1.96) and `r pm(round((meta_bm_prereg_tidy$conf.high[['sd_animal__Intercept']] * 1.96), 2))` (0.07 * 1.96) standard units with 95% credibility.
 
 **Non-preregistered**. However, in our preregistration we did not take into account that teams might submit multiple analyses/models which, if unaccounted for, violates the independence assumption. 
 Teams were explicitly instructed to only submit one effect size without enforcing it. 
@@ -1826,7 +1826,7 @@ This means that the deviations of any individual analysis model from the meta-an
 
 The nested model yields a posterior 95% CrI for between-team variability of `r round(meta_bm_nest_tidy$conf.low[["sd_animal__Intercept"]], 2)` to `r round(meta_bm_nest_tidy$conf.high[["sd_animal__Intercept"]], 2)` standard units ($\beta$ = 0.02, SD = 0.01), corresponding to a mean deviation range of about `r pm(x = 0)` to `r pm(x = 0.1)` standard units and 95% probability.
 The posterior 95% CrI for between-analysis variability (nested within teams) is `r round(meta_bm_nest_tidy$conf.low[["sd_animal:model_id__Intercept"]], 2)` to `r round(meta_bm_nest_tidy$conf.high[["sd_animal:model_id__Intercept"]], 2)` standard units ($\beta$ = 0.132, SD = 0.01).
-For the sake of illustration, these would correspond to an estimate of between-model variability in milliseconds (if looking for example at segment duration) that ranges between `r round(3.8*1.96, 1)` and `r round(7.7*1.96, 1)` ms at 95% credibility.
+For the sake of illustration, these would correspond to an estimate of between-model variability in segment and word durations that ranges between 7 to 14 ms for segments and between 7 and 33 ms for words at 95% credibility.
 We interpret these values in more details in the Discussion section.
 
 Taken together, the models suggest that the variability of reported effects between any model (within team or across) is substantially larger than the variability across individual teams.
