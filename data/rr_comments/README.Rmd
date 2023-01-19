@@ -1,0 +1,15 @@
+---
+title: "rr_comments"
+output: github_document
+date: 'Last update: `r Sys.Date()`'
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = F)
+```
+
+This directory contains a csv file of all comments made by team analysts on the first complete draft of the MSA paper. 
+
+```{r, 'basic-scripts-structure', comment=NA, echo=F}
+fs::dir_tree(recurse = 0)
+```

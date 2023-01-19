@@ -1,0 +1,15 @@
+---
+title: "questionnaires"
+output: github_document
+date: 'Last update: `r Sys.Date()`'
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = F)
+```
+
+This directory contains the results from the intake form and the data analysis questionnaires. 
+
+```{r, 'basic-scripts-structure', comment=NA, echo=F}
+fs::dir_tree(recurse = 0)
+```

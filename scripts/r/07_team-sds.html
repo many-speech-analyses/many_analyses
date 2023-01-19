@@ -357,7 +357,7 @@ display: none;
 
 <h1 class="title toc-ignore">Extract team means and SDs</h1>
 <h4 class="author">Joseph V. Casillas</h4>
-<h4 class="date">Last update: 2023-01-17</h4>
+<h4 class="date">Last update: 2023-01-18</h4>
 
 </div>
 
@@ -1581,7 +1581,7 @@ msa_mean_sd_df &lt;- left_join(
          temporal_window, dv, outcome, transformation, mean, sd) 
 
 # Save as .csv
-if(F) {
+if(T) {
 write_csv(msa_mean_sd_df, here(&quot;data&quot;, &quot;analyses&quot;, &quot;msa_mean_sd_df.csv&quot;))
 }
 

@@ -1,0 +1,15 @@
+---
+title: "CRediT"
+output: github_document
+date: 'Last update: `r Sys.Date()`'
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = F)
+```
+
+This directory contains csv files of the CRediT contributions of all MSA participants. 
+
+```{r, 'basic-scripts-structure', comment=NA, echo=F}
+fs::dir_tree(recurse = 0)
+```

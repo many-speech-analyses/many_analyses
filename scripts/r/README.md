@@ -5,7 +5,6 @@ This folder contains all of the scripts necessary to reproduce the
 plots, tables, and analyses conducted in R.
 
     .
-    ├── 00_credit_taxonomy.R
     ├── 00_manage_osf.Rmd
     ├── 01_teams_analytic_questionnaires.Rmd
     ├── 02_teams_reviews.Rmd
@@ -31,6 +30,12 @@ plots, tables, and analyses conducted in R.
     ├── README.Rmd
     ├── README.md
     ├── _additional_dataviz.Rmd
+    ├── figs
+    │   ├── flow_outcome.png
+    │   ├── flow_outcome_f0.png
+    │   ├── slides_raw_est.png
+    │   ├── slides_raw_est_f0.png
+    │   └── slides_raw_est_f0_noun.png
     └── simulations
         ├── Crowdsourcing_Effects_in_OR.csv
         ├── simulations.Rmd
