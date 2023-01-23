@@ -2083,7 +2083,7 @@ It allows for alternative analyses to establish analytic robustness [@steegen201
 Given that minor procedural changes can sometimes drastically affect the final interpretation of the results [@breznau2021observing], we should ideally share a detailed documentation of the data collection procedure, the measurement choices, the data extraction, and statistical analyses.
 Within fields that deal with speech data, open source software that permits the extraction of acoustic parameters via reproducible scripts can help other researchers to trace back seemingly inconsequential choices during the measurement process [e.g., Praat: @boersma2021praat; EMU: @winkelmann2017emu; the Montreal Forced Aligner: @mcauliffe2017].
 
-Making analytic pathways completely re-traceable and preregistering them in advance do not change the fact that different analysts might apply different analytic approaches (preregistered or not).
+Making analytic pathways completely re-traceable and preregistering them in advance does not change the fact that different analysts might apply different analytic approaches (preregistered or not).
 Crowd-sourced projects such as the current one can shed light on the range of degrees of freedom during analysis and could possibly help produce a consensual estimated effect if the research hypothesis is specific enough. 
 Crowd-sourcing analyses is obviously not always feasible in terms of required resources and time, but could be a consideration for claims that have large epistemological or practical consequences.
 
