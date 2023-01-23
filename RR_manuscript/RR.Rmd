@@ -2075,19 +2075,19 @@ We should ideally specify the link between conceptual construct and quantitative
 Without well-defined derivation chains, we "are not even wrong" [@scheel2022most] because falsified expectations cannot tell us much about the conceptual constructs they are based on when the relationship between the two is underspecified.
 Some of the analysis teams explicitly recognized and acknowledged the need to formulate a more precise version of the research question by preregistering their planned data analysis pipeline. 
 Preregistration, i.e. a time-stamped document in which researchers specify how they plan to collect their data and/or how they plan to conduct their confirmatory analysis, is can be a useful tool to safeguard researchers against the urge to explore many different analytical paths before choosing the one that, in hindsight, seems most justified.
-However, as long as the theoretical landscape does not allow for more precise hypotheses, the value of preregistration is limited and we need to find ways to appropriately calibrate the confidence in our claims:
+However, as long as the theoretical landscape does not allow for more precise hypotheses, the value of preregistration is limited and we need to find ways to appropriately calibrate the confidence in our claims.
 
-First of all, through sharing of materials, data and statistical protocols, we can make our idiosyncratic choices transparent to others [@munafo2017manifesto; @vazire2017quality].
+Through sharing of materials, data and statistical protocols, we can make our idiosyncratic choices transparent to others [@munafo2017manifesto; @vazire2017quality].
 Sharing further enables the evaluation and verification of underlying claims and allows for the evaluation of empirical, computational and statistical reproducibility [@lebel2018unified]. 
 It allows for alternative analyses to establish analytic robustness [@steegen2016increasing] and strengthens attempts to synthesize evidence via meta-analyses [e.g., @nicenboim2018using].
 Given that minor procedural changes can sometimes drastically affect the final interpretation of the results [@breznau2021observing], we should ideally share a detailed documentation of the data collection procedure, the measurement choices, the data extraction, and statistical analyses.
 Within fields that deal with speech data, open source software that permits the extraction of acoustic parameters via reproducible scripts can help other researchers to trace back seemingly inconsequential choices during the measurement process [e.g., Praat: @boersma2021praat; EMU: @winkelmann2017emu; the Montreal Forced Aligner: @mcauliffe2017].
 
-Second, making analytic pathways completely re-traceable and preregistering them in advance do not change the fact that different analysts might apply different analytic approaches (preregistered or not).
+Making analytic pathways completely re-traceable and preregistering them in advance do not change the fact that different analysts might apply different analytic approaches (preregistered or not).
 Crowd-sourced projects such as the current one can shed light on the range of degrees of freedom during analysis and could possibly help produce a consensual estimated effect if the research hypothesis is specific enough. 
 Crowd-sourcing analyses is obviously not always feasible in terms of required resources and time, but could be a consideration for claims that have large epistemological or practical consequences.
 
-Third, if we develop a good understanding of relevant analytic degrees of freedom, we could apply all conceivable analytic strategies and compare the results across all combinations of these choices.
+If we develop a good understanding of relevant analytic degrees of freedom, we could apply all conceivable analytic strategies and compare the results across all combinations of these choices.
 Such an analysis can provide insight into how much the conclusions change due to analytic choices as well as which choices have neglible or large impact on the result. 
 This approach is called a "multiverse analysis" [e.g, @steegen2016increasing; @harder2020multiverse] and has recently gained popularity across disciplines.
 
