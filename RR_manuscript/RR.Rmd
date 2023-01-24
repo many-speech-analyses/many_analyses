@@ -1611,7 +1611,7 @@ Based on statistical framework, type of model, distribution family, fixed terms,
 <!-- Moved 'found-effect' code to beginning of results section --> 
 
 When considering both acoustic and statistical analyses, we have found a grand total of `r nrow(unique_acou_stat)` different analytic pipelines.
-In other words, each individual analysis submitted was unique.
+In other words, each individual analysis submitted was unique.^[A sankey diagram illustrating the relationship between choices related to outcome, temporal window and operationalization can be found in the supplementary materials at <https://many-speech-analyses.github.io/many_analyses/RR_manuscript/supplementary_materials.pdf>.]
 
 Our quantitative assessment did not include other degrees of freedom, all of which are additional sources of variation: 
 Teams differed with regard to how the acoustic signal was segmented ranging from fully automated forced-alignment with minimal manual correction to complete manual alignment performed by the analysts; teams differed in whether the statistical analysis was based on a subset of the data or the whole dataset; and they differed whether and if so how measurements were excluded based on both qualitative (i.e. whether specific speech production instances were excluded or not) and quantitative grounds (i.e. whether data were trimmed or not).
@@ -1972,7 +1972,7 @@ ms_meta_high <- round(ms_sd_max * meta_high * 1.96, 1)
 
 
 For example, for those analyses that investigated the duration of vowels (e.g. the duration of the stressed vowel in *Banáne*), the reported duration measures exhibit standard deviations that range from `r ms_sd_min` to `r ms_sd_max` ms.
-These standard deviations allow us to convert the meta-analytic estimates into milliseconds by multiplying those values with the meta-analytic estimates standard units.
+These standard deviations allow us to convert the meta-analytic estimates into milliseconds by multiplying those values with the meta-analytic estimated standard units.
 The reported effect estimates from teams varied between `r round(min(msa_models$estimate),2)` and `r round(max(msa_models$estimate),2)` standard units, which corresponds to estimated segment duration differences (for atypical vs typical combinations) ranging from `r ms_low` to `r ms_high` ms.
 A more conservative approach is to convert the meta-analytic estimates of between-model variation, thus obtaining an estimate of between-model variability in milliseconds that ranges between `r ms_meta_low` and `r ms_meta_high` ms at 95% credibility.
 The calculation is thus: the minimum standard deviation of duration multiplied by the lower limit of the 95% CrI of the between-models variability estimate, times 1.96 to obtain a 95% CrI: `r ms_sd_min` * `r meta_low` * 1.96 = `r ms_meta_low` ms; the maximum standard deviation of duration multiplied by the upper limit of the 95% CrI of the between-models variability estimate, times 1.96: `r ms_sd_max` * `r meta_high` * 1.96 = `r ms_meta_high` ms.
@@ -2002,8 +2002,8 @@ kableExtra::kable_styling(., font_size = 11)
 
 While one might find it obvious that measuring different parts of the speech signal can lead to different results, the fact that analysts (and reviewer alike) considered all these data analytic pipelines valid ways of answering the same research question points to a lack of theoretical consensus on what parts of the speech signal correspond to what types of communicative functions. 
 Importantly, even if analysts choose to measure more or less the same acoustic property within the same measurement window, they arrive at different estimates: 
-For example, six teams measured f0 in the adjective and predicted f0 based on typicality as a categorical predictor. Their standardized effect estimates ranged from -0.11 to 0.38 standard deviations. 
-While these teams in principle measured the same thing, they differed in analytical details of how f0 was operationalized (i.e. mean, mininum, maximum, or range) and how their statistical model was constructed (i.e. the number of predictors ranged from 1-3 and the number of random effect terms ranged from 1-4). 
+For example, five teams measured f0 in the noun and predicted f0 based on typicality as a categorical predictor. Their standardized effect estimates ranged from -0.35 to 0.19 standard deviations. 
+While these teams in principle measured the same thing, they differed in analytical details of how f0 was operationalized (i.e. mean, minimum, maximum, point or range) and how their statistical model was constructed (i.e. the number of predictors ranged from 1-2 and the number of random effect terms ranged from 1-10). 
 As shown by Breznau et al. [-@breznau2021observing], even seemingly inconsequential analytical choices can affect conclusions in non-trivial ways.
 
 The observed variation does not seem to be systematic.
@@ -2074,7 +2074,7 @@ The fact that the choice of measurement, measurement window, and predictor choic
 We should ideally specify the link between conceptual construct and quantitative system---the "derivation chain" [@dubin1970theory; @meehl1990summaries]---prior to data collection and analysis, including defining constructs and their relationship within the quantitative system, specifying auxiliary assumptions and boundary conditions, and defining target measurements, statistical expectations and possible (and impossible) effect magnitudes.
 Without well-defined derivation chains, we "are not even wrong" [@scheel2022most] because falsified expectations cannot tell us much about the conceptual constructs they are based on when the relationship between the two is underspecified.
 Some of the analysis teams explicitly recognized and acknowledged the need to formulate a more precise version of the research question by preregistering their planned data analysis pipeline. 
-Preregistration, i.e. a time-stamped document in which researchers specify how they plan to collect their data and/or how they plan to conduct their confirmatory analysis, is can be a useful tool to safeguard researchers against the urge to explore many different analytical paths before choosing the one that, in hindsight, seems most justified.
+Preregistration, i.e. a time-stamped document in which researchers specify how they plan to collect their data and/or how they plan to conduct their confirmatory analysis, can be a useful tool to safeguard researchers against the urge to explore many different analytical paths before choosing the one that, in hindsight, seems most justified.
 However, as long as the theoretical landscape does not allow for more precise hypotheses, the value of preregistration is limited and we need to find ways to appropriately calibrate the confidence in our claims.
 
 Through sharing of materials, data and statistical protocols, we can make our idiosyncratic choices transparent to others [@munafo2017manifesto; @vazire2017quality].
