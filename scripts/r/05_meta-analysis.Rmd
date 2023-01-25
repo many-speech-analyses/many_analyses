@@ -267,7 +267,8 @@ merged <-
 ```{r meta-shrinkage}
 meta_shrinkage <- 
   ggplot(data = merged,
-    aes(x = reorder(model_id, post_mean), y = post_mean, colour = compelling)) +
+    #aes(x = reorder(model_id, post_mean), y = post_mean, colour = compelling)) +
+    aes(x = reorder(model_id, post_mean), y = post_mean)) +
   geom_hline(yintercept = 0, lty = "dotted") +
   geom_point(aes(y = estimate),
              size = 0.8,
@@ -287,23 +288,23 @@ meta_shrinkage <-
                 width = 0) +
   scale_x_discrete(expand =  c(0.05,0.05)) + 
   scale_y_continuous(limits =  c(-2, 2.2)) + 
-  annotate("text", x = c(5,5), y = c(1.8,2.1),
-           size = 3,
-           hjust = 0,
-           color = c("black", "#ef8a62"),
-           label = c("Not compelling = 95% CrI includes 0", "Compelling = 95% CrI does not include 0")
-           ) +
-    annotate("segment", 
-             x = c(0.5,0.5), y = c(1.75,2.05),
-             xend = c(0.5,0.5), yend = c(1.85,2.15),
-           size = 2.5,
-           hjust = 0,
-           color = c("black", "#ef8a62"),
-           label = c("95% CrI includes 0", "95% CrI does not include 0")
-           ) +
+  # annotate("text", x = c(5,5), y = c(1.8,2.1),
+  #          size = 3,
+  #          hjust = 0,
+  #          color = c("black", "#ef8a62"),
+  #          label = c("Not compelling = 95% CrI includes 0", "Compelling = 95% CrI does not include 0")
+  #          ) +
+  #   annotate("segment", 
+  #            x = c(0.5,0.5), y = c(1.75,2.05),
+  #            xend = c(0.5,0.5), yend = c(1.85,2.15),
+  #          size = 2.5,
+  #          hjust = 0,
+  #          color = c("black", "#ef8a62"),
+  #          label = c("95% CrI includes 0", "95% CrI does not include 0")
+  #          ) +
   labs(# title = "Effect estimates across all submitted effects",
-       caption = "Raw estimates extracted from teams' models (grey),\nshrunken estimates from meta-analytical model (black/orange)\n",
-       x = "Submitted typicality effect", 
+       caption = "Raw estimates extracted from teams' models (grey),\nshrunken estimates from meta-analytical model (black)\n",
+       x = "All models", 
        y = "Standardized posterior effect size\n") +
   scale_color_manual(values = c("#ef8a62","black","#ef8a62")) + 
   theme_classic() +
@@ -471,9 +472,9 @@ post_pred_window_agg <- post_pred_agg %>%
 
 ```{r pred-plot}
 outcome <- post_pred_outcome %>%
-  ggplot(aes(x = reorder(predictor, posterior), y = posterior)) +
+  ggplot(aes(x = reorder(str_to_title(predictor), posterior), y = posterior)) +
     geom_hline(yintercept = 0, lty = "dotted") +
-    stat_slab(aes(y = posterior,
+    stat_slab(aes(y = str_to_title(predictor),
                   fill = predictor,
                   fill_ramp = stat(cut_cdf_qi(cdf, 
                                               .width = c(.5, .8, .95),
@@ -483,7 +484,7 @@ outcome <- post_pred_outcome %>%
               side = "both") +
     scale_fill_ramp_discrete(from = "white", range = c(0.8,0.3)) +
     geom_point(data = post_pred_outcome_agg,
-               aes(x = predictor, y = post_mean)) +
+               aes(x = str_to_title(predictor), y = post_mean)) +
     scale_fill_viridis_d(begin = 0, end = 0.8) +
     # annotate("text", x = 1.6, y = -0.02,
     #          hjust= 0, 
@@ -504,11 +505,11 @@ outcome <- post_pred_outcome %>%
           axis.line = element_blank())
 
 window <- post_pred_window %>%
-  ggplot(aes(x = reorder(predictor, posterior), y = posterior)) +
+  ggplot(aes(x = reorder(str_to_title(predictor), posterior), y = posterior)) +
   geom_hline(yintercept = 0,
              lty = "dotted") +
   stat_slab(aes(y = posterior,
-                fill = predictor,
+                fill = str_to_title(predictor),
                 fill_ramp = stat(cut_cdf_qi(cdf, 
                                             .width = c(.5, .8, .95),
                                             labels = scales::percent_format()))), 
@@ -518,7 +519,7 @@ window <- post_pred_window %>%
   scale_fill_ramp_discrete(from = "white", 
                            range = c(0.8,0.3)) +
   geom_point(data = post_pred_window_agg,
-             aes(x = predictor,
+             aes(x = str_to_title(predictor),
                  y = post_mean)) +
   scale_fill_viridis_d(begin = 0,
                        end = 0.8) +
