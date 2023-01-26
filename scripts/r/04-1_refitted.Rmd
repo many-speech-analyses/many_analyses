@@ -25,6 +25,7 @@ library("strex")
 library("purrr")
 library("broom")
 library("broom.mixed")
+library("brms")
 
 # Plotting theme
 clean_theme <- function(...) {
