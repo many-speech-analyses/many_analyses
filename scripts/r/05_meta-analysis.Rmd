@@ -461,26 +461,30 @@ post_pred_agg <-  post_pred %>%
 
 # subset for quicker plotting
 post_pred_outcome <- post_pred %>% 
-  filter(predictor %in% c("duration", "f0", "intensity", "formants"))
+  filter(predictor %in% c("duration", "f0", "intensity", "formants")) %>% 
+  droplevels()
+
 post_pred_window <- post_pred %>% 
   filter(predictor %in% c("segment", "word", "phrase", "sentence"))
 post_pred_outcome_agg <- post_pred_agg %>% 
   filter(predictor %in% c("duration", "f0", "intensity", "formants"))
 post_pred_window_agg <- post_pred_agg %>% 
   filter(predictor %in% c("segment", "word", "phrase", "sentence"))
+
 ```
 
 ```{r pred-plot}
-outcome <- post_pred_outcome %>%
+outcome <- 
+  post_pred_outcome %>%
   ggplot(aes(x = reorder(str_to_title(predictor), posterior), y = posterior)) +
     geom_hline(yintercept = 0, lty = "dotted") +
-    stat_slab(aes(y = str_to_title(predictor),
-                  fill = predictor,
-                  fill_ramp = stat(cut_cdf_qi(cdf, 
-                                              .width = c(.5, .8, .95),
-                                              labels = scales::percent_format()))), 
-              color = NA, 
-              scale = 0.5, 
+    stat_slab(aes(y = posterior,
+                  fill = str_to_title(predictor),
+                  fill_ramp = stat(cut_cdf_qi(cdf,
+                                               .width = c(.5, .8, .95),
+                                               labels = scales::percent_format()))),
+              #color = NA,
+              scale = 0.5,
               side = "both") +
     scale_fill_ramp_discrete(from = "white", range = c(0.8,0.3)) +
     geom_point(data = post_pred_outcome_agg,
