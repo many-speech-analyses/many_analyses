@@ -1047,7 +1047,7 @@ Model refitting also constituted a way of validating the reported analyses, a st
 Details about the refitting procedure can be found at <https://many-speech-analyses.github.io/many_analyses/scripts/r/04_refit_workflow>.
 Relative to the registered protocol, we made minor changes to the refitting procedure, specifically file  and variable naming conventions and the use of treatment contrasts instead of sum coding.
 All models converged ($\hat{R}$ was approximately 1).
-Of the models with divergent transitions (n = 10), the number of divergences ranged from 1 to 143 (143 represents 3.58% of total number of samples), which the authors deemed not to be problematic.
+Of the models with divergent transitions (n = 10), the number of divergences ranged from 1 to 156 (143 represents 3.9% of total number of samples), which the authors deemed not to be problematic.
 
 The coefficients of the critical predictors (i.e. critical according to the analysis teams' self-reported inferential criteria) obtained from the standardized models were used as the \textsc{standardized effect size} ($\eta_i$) of each reported model.
 Moreover, to account for the differing degree of uncertainty around each standardized effect size, we used the standard deviation of each standardized effect size as the \textsc{standardized standard error} ($\text{se}_i$).
