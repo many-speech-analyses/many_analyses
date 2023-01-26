@@ -127,37 +127,39 @@ msa_reviews_teams <- msa_reviews %>%
 
 Once all your models have been refitted, you can upload them to the OSF, in the Cache component, `models/refitted/` folder.
 
-Here's the code that does that for you.
+~~Here's the code that does that for you.~~ The code has repeatedly failed to upload ALL models. Please upload manually.
 
 ```{r upload-refitted, eval=FALSE}
-cache <- osf_retrieve_node("wds2m")
-refitted <- osf_ls_files(osf_ls_files(cache, type = "folder")) %>%
-  filter(name == "refitted")
-models <- list.files(
-  "./data/analyses/models",
-  full.names = TRUE
-)
-
-osf_upload(
-  refitted,
-  path = models,
-  recurse = TRUE, conflicts = "skip", progress = TRUE, verbose = TRUE
-)
+# cache <- osf_retrieve_node("wds2m")
+# refitted <- osf_ls_files(osf_ls_files(cache, type = "folder")) %>%
+#   filter(name == "refitted")
+# models <- list.files(
+#   "./data/analyses/models",
+#   full.names = TRUE
+# )
+# 
+# osf_upload(
+#   refitted,
+#   path = models,
+#   recurse = TRUE, conflicts = "skip", progress = TRUE, verbose = TRUE
+# )
 ```
 
 ## Download all refitted models
 
 We download all the refitted models `.rds` files from the OSF.
 
-```{r download-refitted, eval=FALSE}
-cache <- osf_retrieve_node("wds2m")
-refitted_rds <- osf_ls_files(cache, "models/refitted", n_max = Inf)
+The code has repeatedly failed to download ALL models. Please download manually.
 
-osf_download(
-  refitted_rds,
-  path = "./data/analyses/models/",
-  conflicts = "skip", progress = TRUE, verbose = TRUE
-)
+```{r download-refitted, eval=FALSE}
+# cache <- osf_retrieve_node("wds2m")
+# refitted_rds <- osf_ls_files(cache, "models/refitted", n_max = Inf)
+# 
+# osf_download(
+#   refitted_rds,
+#   path = "./data/analyses/models/",
+#   conflicts = "skip", progress = TRUE, verbose = TRUE
+# )
 ```
 
 
