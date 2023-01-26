@@ -415,6 +415,7 @@ divergent_transitions <-
     mod_name = str_remove(mod_name, ".rds"), 
     model = map(path, ~ readRDS(file = .))
   ) %>% 
+  filter(mod_name != "petauroides_fistulator_1_f0_cat") %>% 
   mutate(
     nuts = map(model, nuts_params), 
     dts = map(nuts, get_dts)) %>% 
