@@ -396,8 +396,9 @@ coding %>%
 ```
 
 
-```{r}
-#| label: get-divergent-transitions
+For the following to run, it is necessary to have the individual refitted models in `data/analyses/models`.
+
+```{r get-divergent-transitions}
 # Function to add up all DTs from a model
 get_dts <- function(df) {
   sum(subset(df, Parameter == "divergent__")$Value)
