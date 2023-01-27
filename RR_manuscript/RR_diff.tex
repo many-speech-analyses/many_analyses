@@ -1,7 +1,7 @@
 \documentclass[Review,times,sageh]{sagej}
 %DIF LATEXDIFF DIFFERENCE FILE
-%DIF DEL RR_stage_2.tex   Fri Jan 20 09:31:08 2023
-%DIF ADD RR.tex           Fri Jan 20 09:18:27 2023
+%DIF DEL RR_stage_2.tex   Mon Jan 23 10:12:52 2023
+%DIF ADD RR.tex           Fri Jan 27 13:25:19 2023
 
 \usepackage{moreverb,url,natbib, multirow, tabularx}
 \usepackage[hidelinks,bookmarksopen,bookmarksnumbered,citecolor=red,urlcolor=red]{hyperref}
@@ -483,7 +483,7 @@ Model refitting also constituted a way of validating the reported analyses, a st
 Details about the refitting procedure can be found at \url{https://many-speech-analyses.github.io/many_analyses/scripts/r/04_refit_workflow}.
 \DIFaddbegin \DIFadd{Relative to the registered protocol, we made minor changes to the refitting procedure, specifically file and variable naming conventions and the use of treatment contrasts instead of sum coding.
 All models converged (\(\hat{R}\) was approximately 1).
-Of the models with divergent transitions (n = 10), the number of divergences ranged from 1 to 143 (143 represents 3.58\% of total number of samples), which the authors deemed not to be problematic.
+Of the models with divergent transitions (n = 10), the number of divergences ranged from 1 to 156 (143 represents 3.9\% of total number of samples), which the authors deemed not to be problematic.
 }\DIFaddend 
 
 The coefficients of the critical predictors (i.e.~critical according to the analysis teams' self-reported inferential criteria) obtained from the standardized models were used as the \textsc{standardized effect size} (\(\eta_i\)) of each reported model.
@@ -615,7 +615,7 @@ Thirty-eight of the signed-up teams dropped out during the analysis phase.
 
 Forty-six teams submitted their analyses by the established deadline.
 Only analyses from which it was possible to extract an effect size were included in the meta-analysis.
-Of the \DIFdelbegin \DIFdel{analysis }\DIFdelend \DIFaddbegin \DIFadd{analyses }\DIFaddend submitted by the 46 teams, the initiating authors identified analyses from \DIFdelbegin \DIFdel{30 }\DIFdelend \DIFaddbegin \DIFadd{33 }\DIFaddend teams to be eligible to be included in the meta-analytic model.
+Of the \DIFdelbegin \DIFdel{analysis }\DIFdelend \DIFaddbegin \DIFadd{analyses }\DIFaddend submitted by the 46 teams, the initiating authors identified \DIFdelbegin \DIFdel{analyses from 30 teams to be eligible to be included }\DIFdelend \DIFaddbegin \DIFadd{33 teams with submissions meeting the criteria for inclusion }\DIFaddend in the meta-analytic model.
 Reasons for exclusion were: use of Generalized Additive Models (4 teams) which do not lend themselves easily to the meta-analytic methods employed in this study, use of machine learning techniques (3 teams), use of typicality as the outcome variable/response (3 teams), or use of other methods that returned statistics that could not be included in the meta-analytic model.
 \DIFaddbegin \DIFadd{Note that due to the unforeseen variability across teams, the latter exclusion criteria were not preregistered and were applied after having seen all analytic strategies.
 }\DIFaddend 
@@ -904,7 +904,7 @@ These standard deviations can be considered as a coarse indication of the variab
 We can now use these values to interpret the meta-analytic estimates, which are in standardized units, by transforming the standardized units to measures of duration, f0 and intensity.\footnote{Note that these categories necessarily refer to a variegated set of measures, for example the domain ``word'' includes words that differed along several dimensions, including their length and their metrical structure.}
 
 For example, for those analyses that investigated the duration of vowels (e.g.~the duration of the stressed vowel in \emph{\DIFdelbegin \DIFdel{Banane}\DIFdelend \DIFaddbegin \DIFadd{Banáne}\DIFaddend }), the reported duration measures exhibit standard deviations that range from 33.4 to 51.4 ms.
-These standard deviations allow us to convert the \DIFdelbegin \DIFdel{meta analytic }\DIFdelend \DIFaddbegin \DIFadd{meta-analytic }\DIFaddend estimates into milliseconds by multiplying those values with the \DIFaddbegin \DIFadd{meta-analytic estimates }\DIFaddend standard units.
+These standard deviations allow us to convert the \DIFdelbegin \DIFdel{meta analytic }\DIFdelend \DIFaddbegin \DIFadd{meta-analytic }\DIFaddend estimates into milliseconds by multiplying those values with the \DIFdelbegin \DIFdel{standard units}\DIFdelend \DIFaddbegin \DIFadd{the standard unit values of the meta-analytic estimates}\DIFaddend .
 The reported effect estimates from teams varied between \DIFdelbegin \DIFdel{-0.65 and 0.99 }\DIFdelend \DIFaddbegin \DIFadd{-0.7 and 1.01 }\DIFaddend standard units, which corresponds to \DIFdelbegin \DIFdel{duration values ranging from -21.86 to 50.81 }\DIFdelend \DIFaddbegin \DIFadd{estimated segment duration differences (for atypical vs typical combinations) ranging from -23.34 to 33.84 }\DIFaddend ms.
 A more conservative approach is to convert the meta-analytic estimates of between-model variation, thus obtaining an estimate of between-model variability in milliseconds that ranges between \DIFdelbegin \DIFdel{7.4 and 15.1 }\DIFdelend \DIFaddbegin \DIFadd{7.2 and 14.1 }\DIFaddend ms at 95\% credibility.
 \DIFdelbegin \footnote{\DIFdel{The calculation is thus: the minimum standard deviation of duration multiplied by the lower limit of the 95\% CrI of the between-models variability estimate, times 1.96 to obtain a 95\% CrI: \(33.4 * 0.11 = 3.8\), \(3.8 * 1.96 = 7.4\) ms; the maximum standard deviation of duration multiplied by the upper limit of the 95\% CrI of the between-models variability estimate, times 1.96: \(51.4 * 0.15 = 7.7\), \(7.7 * 1.96 = 15.1\) ms.}}
@@ -1014,21 +1014,21 @@ We should ideally specify the link between conceptual construct and quantitative
 Without well-defined derivation chains, we ``are not even wrong'' \citep{scheel2022most} because falsified expectations cannot tell us much about the conceptual constructs they are based on when the relationship between the two is underspecified.
 Some of the analysis teams explicitly recognized and acknowledged the need to formulate a more precise version of the research question by preregistering their planned data analysis pipeline.
 \DIFaddbegin \DIFadd{Preregistration, i.e.~a time-stamped document in which researchers specify how they plan to collect their data and/or how they plan to conduct their confirmatory analysis, is can be a useful tool to safeguard researchers against the urge to explore many different analytical paths before choosing the one that, in hindsight, seems most justified.
-However, as long as the theoretical landscape does not allow for more precise hypotheses, the value of preregistration is limited and we need to find ways to appropriately calibrate the confidence in our claims:
+However, as long as the theoretical landscape does not allow for more precise hypotheses, the value of preregistration is limited and we need to find ways to appropriately calibrate the confidence in our claims.
 }\DIFaddend 
 
 \DIFdelbegin \DIFdel{In light of the observed analytic flexibility, there are a few things that researchers can do to appropriately calibrate confidence in their claims.
-}\DIFdelend First of all, through sharing of materials, data and statistical protocols, we can make our idiosyncratic choices transparent to others \citep{munafo2017manifesto, vazire2017quality}.
+First of all, through }\DIFdelend \DIFaddbegin \DIFadd{Through }\DIFaddend sharing of materials, data and statistical protocols, we can make our idiosyncratic choices transparent to others \citep{munafo2017manifesto, vazire2017quality}.
 Sharing further enables the evaluation and verification of underlying claims and allows for the evaluation of empirical, computational and statistical reproducibility \citep{lebel2018unified}.
 It allows for alternative analyses to establish analytic robustness \citep{steegen2016increasing} and strengthens attempts to synthesize evidence via meta-analyses \citep[e.g.,][]{nicenboim2018using}.
 Given that minor procedural changes can sometimes drastically affect the final interpretation of the results \citep{breznau2021observing}, we should ideally share a detailed documentation of the data collection procedure, the measurement choices, the data extraction, and statistical analyses.
 Within fields that deal with speech data, open source software that permits the extraction of acoustic parameters via reproducible scripts can help other researchers to trace back seemingly inconsequential choices during the measurement process \citetext{\citealp[e.g., Praat:][]{boersma2021praat}; \citealp[EMU:][]{winkelmann2017emu}; \citealp[the Montreal Forced Aligner:][]{mcauliffe2017}}.
 
-Second, making analytic pathways completely re-traceable \DIFdelbegin \DIFdel{does }\DIFdelend \DIFaddbegin \DIFadd{and preregistering them in advance do }\DIFaddend not change the fact that \DIFdelbegin \DIFdel{analysts }\DIFdelend \DIFaddbegin \DIFadd{different analysts might }\DIFaddend apply different analytic approaches \DIFaddbegin \DIFadd{(preregistered or not)}\DIFaddend .
+\DIFdelbegin \DIFdel{Second, making }\DIFdelend \DIFaddbegin \DIFadd{Making }\DIFaddend analytic pathways completely re-traceable \DIFaddbegin \DIFadd{and preregistering them in advance }\DIFaddend does not change the fact that \DIFdelbegin \DIFdel{analysts }\DIFdelend \DIFaddbegin \DIFadd{different analysts might }\DIFaddend apply different analytic approaches \DIFaddbegin \DIFadd{(preregistered or not)}\DIFaddend .
 Crowd-sourced projects such as the current one can shed light on the range of degrees of freedom during analysis and could possibly help produce a consensual estimated effect if the research hypothesis is specific enough.
 Crowd-sourcing analyses is obviously not always feasible in terms of required resources and time, but could be a consideration for claims that have large epistemological or practical consequences.
 
-Third, if we develop a good understanding of relevant analytic degrees of freedom, we could apply all conceivable analytic strategies and compare the results across all combinations of these choices.
+\DIFdelbegin \DIFdel{Third, if }\DIFdelend \DIFaddbegin \DIFadd{If }\DIFaddend we develop a good understanding of relevant analytic degrees of freedom, we could apply all conceivable analytic strategies and compare the results across all combinations of these choices.
 Such an analysis can provide insight into how much the conclusions change due to analytic choices as well as which choices have neglible or large impact on the result.
 This approach is called a ``multiverse analysis'' \citep[e.g,][]{steegen2016increasing, harder2020multiverse} and has recently gained popularity across disciplines.
 
