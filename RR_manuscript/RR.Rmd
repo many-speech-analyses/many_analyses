@@ -2055,7 +2055,7 @@ Fields such as the speech sciences that make theoretical advances based on multi
 Looking at our results, one might argue (and this interpretation has been articulated by several teams during the collaborative write-up) that our sample of speech scientists actually converged on a qualitative conclusion, i.e. there is no evidence for a relationship. 
 However, if there truly was no underlying relationship, our results would suggest a concerning false positive rate with `r round(perc_atleast_1, 1)`% of teams reported to have found at least one statistically reliable effect. 
 This rate is substantially higher than the conventionally accepted 5% false positive rate in for example null hypothesis significance testing frameworks.
-If, on the other hand, there actually was an underlying relationship, our results would suggest a concerning false negative rate of `r round(1-perc_atleast_1, 1)`%, with the majority of teams not detecting the effect. 
+If, on the other hand, there actually was an underlying relationship, our results would suggest a concerning false negative rate of `r round(100 - perc_atleast_1, 1)`%, with the majority of teams not detecting the effect. 
 If the latter was true, the fact that the majority of teams arrived at a null result might also simply be a consequence of the sample size in the data set being too small to reliably detect an effect (which is unknown to us). 
 Thus, we do not think that our study provides convincing evidence that speech researchers converged on the same qualitative answer to a broad research question.
 
